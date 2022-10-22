@@ -23,6 +23,12 @@ public class RandomBGGenerator : MonoBehaviour
     [SerializeField] private float _minTimeOtherObjSpawn;
     private float _lastTimeOtherObjSpawn;
 
+
+    [SerializeField] private Transform _cloudPointSpawn;
+    [SerializeField] private List<GameObject> _cloud = new List<GameObject>();
+    [SerializeField] private float _minTimeCloudSpawn;
+    private float _lastTimeCloudSpawn;
+
     private List<BackGroundObject> _backGroundObjects = new List<BackGroundObject>();
     private void Start()
     {
@@ -40,7 +46,11 @@ public class RandomBGGenerator : MonoBehaviour
             groundObject._lastTimeSpawn += Time.deltaTime;
             if (groundObject._lastTimeSpawn >= groundObject._minTimeSpawn)
             {
-                groundObject._lastTimeSpawn = Random.Range(-groundObject._minTimeSpawn/2, 0);
+                if (Random.Range(0, 10) == 0) 
+                    groundObject._lastTimeSpawn = groundObject._minTimeSpawn/3;
+                else
+                    groundObject._lastTimeSpawn = Random.Range(-groundObject._minTimeSpawn/2, 0);
+                
                 SpawnObject(groundObject);
                 if (groundObject._minTimeSpawn != _minTimeGrassSpawn) // Если заспавненный объект не трава
                 {
@@ -55,6 +65,14 @@ public class RandomBGGenerator : MonoBehaviour
                 }
             }
         }
+
+        _lastTimeCloudSpawn += Time.deltaTime;
+        if (_lastTimeCloudSpawn >= _minTimeCloudSpawn)
+        {
+            Instantiate(_cloud[Random.Range(0, _cloud.Count)],
+                 _cloudPointSpawn.position + new Vector3(0, Random.Range(0f, 1.25f)), Quaternion.identity);
+            _lastTimeCloudSpawn = Random.Range(-_minTimeCloudSpawn/2, 0);
+        }
     }
 
     private void SpawnObject(BackGroundObject groundObject)
@@ -63,7 +81,7 @@ public class RandomBGGenerator : MonoBehaviour
         // выбираем случайный объект из перечня и немного его редактируем случайным образом 
         
         GameObject spawnedObj = Instantiate(randObj, _spawnPoint.position, Quaternion.identity);
-        
+        spawnedObj.AddComponent<CircleCollider2D>();
         SpriteRenderer renderer = spawnedObj.GetComponent<SpriteRenderer>();
 
         Vector3 localScale = spawnedObj.transform.localScale;
@@ -72,14 +90,14 @@ public class RandomBGGenerator : MonoBehaviour
         spawnedObj.transform.localScale = localScale;
 
         // на сцене буду объекты которые будут спавнить перед игроком (его sortingOrder = 0), их sortingOrder = 1
-        // и за игроком, их sortingOrder = -1 и они будут немного темнее, что бы показать, что они позади
+        // и за игроком, их sortingOrder = -2 и они будут немного темнее, что бы показать, что они позади
         if (Random.Range(0, 2) == 0)
         {
-            renderer.sortingOrder = -1;
+            renderer.sortingOrder = -2;
             Color color = renderer.color;
-            color.r /= 1.1f;
-            color.g /= 1.1f;
-            color.b /= 1.1f;
+            color.r /= 1.08f;
+            color.g /= 1.08f;
+            color.b /= 1.08f;
             renderer.color = color;
             if (renderer.gameObject.transform.childCount != 0) 
             {
@@ -98,7 +116,7 @@ public class RandomBGGenerator : MonoBehaviour
                 for (int i = 0; i < renderer.gameObject.transform.childCount; i++)
                 {
                     SpriteRenderer childRenderer = renderer.gameObject.transform.GetChild(i).GetComponent<SpriteRenderer>();
-                    childRenderer.sortingOrder = 1;
+                    childRenderer.sortingOrder = 2;
                 }
         }
         if (Random.Range(0, 2) == 0)
