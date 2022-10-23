@@ -8,80 +8,86 @@ using UnityEngine.Rendering.Universal;
 [RequireComponent(typeof(Volume))]
 public class DayNightCycle : MonoBehaviour
 {
-    [SerializeField] private float _timeScale;
-
-    [SerializeField] private int hours;           //Только для тестирования
-    [SerializeField] private int minutes;         //Только для тестирования. В GameTime уже есть метод
-                                                  //GameTime.TimeSet(int days, int hours, int minutes, int seconds)
+    [SerializeField] GameObject _celestialBodies; //РЎСЋРґР° РЅСѓР¶РЅРѕ РІСЃС‚Р°РІРёС‚СЊ РЎРѕР»РЅС†Рµ, Р›СѓРЅСѓ Рё Р—РІС‘Р·РґС‹ РІ РІРёРґРµ РѕРґРЅРѕРіРѕ РіРµР№РјРѕР±СЉРµРєС‚Р° (РїСЂРµС„Р°Р± СЃРѕР·РґР°Рј)
 
     private Volume _volume;
+    Transform moonAndSun;
+    Transform stars;
+    private const float _convertTimeToRotation = 4f; //Р’ СЃСѓС‚РєР°С… 24*60 = 1440 РјРёРЅСѓС‚. 1440/360 = 4
+                                                     //(РєР°Р¶РґС‹Рµ 4 РјРёРЅСѓС‚С‹ РЅСѓР¶РЅРѕ РїРѕРІРѕСЂР°С‡РёРІР°С‚СЊ РѕР±СЉРµРєС‚С‹ РЅР° 1 РіСЂР°РґСѓСЃ)
+    Quaternion _currentTimeRotation = Quaternion.identity;
+    float _currentTimeDegrees = 0f; // Р·РЅР°С‡РµРЅРёРµ РІ РїСЂРѕРјРµР¶СѓС‚РєРµ (0;360), РіРґРµ 0 == 00:00, 359 == 23:56) 
 
-    public bool activateLights;
+    private bool _activateLights;
     [SerializeField] List<Light2D> _lights;
     void Start()
     {
         _volume = GetComponent<Volume>();
-
-        GameTime.Hours = hours;                 //Только для тестирования
-        GameTime.Minutes = minutes;             //Только для тестирования
+        moonAndSun = _celestialBodies.transform.Find("Moon and Sun");
+        stars = _celestialBodies.transform.Find("Stars");
+        AdjustToCurrentTime();
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        CalcTime();
-        DisplayTime();
-
+        AdjustToCurrentTime();
     }
-
-    public void CalcTime()
+    private void AdjustToCurrentTime()
     {
-        GameTime.Seconds += Time.fixedDeltaTime * _timeScale;
-
-        VolumeAdjust();
-    }
-
-    public void VolumeAdjust()
-    {
-        if (GameTime.Hours >= 21 && GameTime.Hours < 22)
+        _currentTimeDegrees = (GameTime.Hours * 60 + GameTime.Minutes) / _convertTimeToRotation;
+        _currentTimeRotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, -_currentTimeDegrees);
+        moonAndSun.rotation = _currentTimeRotation;
+        switch (_currentTimeDegrees)
         {
-            _volume.weight = (float)GameTime.Minutes / 60; //Деление на 60 это пока что костыль, делить нужно на общую длину заката в минутах.
-                                                           //Какая общая длина заката - решим потом
+            case float n when (n > 315f && n <= 360f) || (n >= 0f && n <= 75f): //РїРѕР»РЅРѕСЃС‚СЊСЋ С‚РµРјРЅРѕ, 21:00 - 05:00
+                _volume.weight = 1;
+                StarsSetAlpha(stars, 1f);
+                break;
 
-            if (activateLights == false) 
-            {
-                if (GameTime.Minutes > 45) //Тот же костыль - вместо 45 должно быть 3/4 от общей длины заката
-                {
-                    foreach (var light in _lights)
-                    {
-                        light.transform.parent.gameObject.SetActive(true);
-                    }
-                    activateLights = true;
-                }    
-            }
+            case float n when n > 75f && n <= 135f:   //СЂР°СЃСЃРІРµС‚, 05:00 - 09:00
+                _volume.weight = 1f - ((n - 75f) / 60f);
+                StarsSetAlpha(stars, 1f - (n - 75f) / 60f);
+                break;
+
+            case float n when n > 135f && n <= 255f:  //РїРѕР»РЅРѕСЃС‚СЊСЋ СЃРІРµС‚Р»Рѕ, 09:00 - 17:00
+                _volume.weight = 0;
+                StarsSetAlpha(stars, 0f);
+                break;
+
+            case float n when n > 255f && n <= 315f:  //Р·Р°РєР°С‚, 17:00 - 21:00 
+                _volume.weight = (n - 255f) / 60f;
+                StarsSetAlpha(stars, (n - 255f) / 60f);
+                break;
         }
-
-
-        if (GameTime.Hours >= 6 && GameTime.Hours < 7)
+        if (!_activateLights)
         {
-            _volume.weight = 1 - (float)GameTime.Minutes / 60;
-
-            if (activateLights == true)
+            if (_volume.weight >= 0.75f)
             {
-                if (GameTime.Minutes > 45)
+                foreach (var light in _lights)
                 {
-                    foreach (var light in _lights)
-                    {
-                        light.transform.parent.gameObject.SetActive(false);
-                    }
-                    activateLights = false;
+                    light.transform.gameObject.SetActive(true);
                 }
+                _activateLights = true;
+            }
+        }
+        else
+        {
+            if (_volume.weight <= 0.56f)
+            {
+                foreach (var light in _lights)
+                {
+                    light.transform.gameObject.SetActive(false);
+                }
+                _activateLights = false;
             }
         }
     }
-
-    public void DisplayTime()
+    private void StarsSetAlpha(Transform stars, float alpha) 
     {
-        Debug.Log($"{GameTime.Days} день {GameTime.Hours} часов {GameTime.Minutes} минут {(int)GameTime.Seconds} секунд");
+        foreach (SpriteRenderer star in stars.GetComponentsInChildren<SpriteRenderer>())
+        {
+            star.color = new Color(star.color.r, star.color.g, star.color.b, alpha);
+        }
     }
 
 }
