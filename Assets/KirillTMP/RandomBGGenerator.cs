@@ -12,9 +12,9 @@ public class RandomBGGenerator : MonoBehaviour
     [SerializeField] private List<GameObject> _trees = new List<GameObject>();
     [SerializeField] private float _minTimeTreeSpawn;
     private float _lastTimeTreeSpawn;
-    [SerializeField] private List<GameObject> _brushes = new List<GameObject>();
-    [SerializeField] private float _minTimeBrushSpawn;
-    private float _lastTimeBrushSpawn;
+    [SerializeField] private List<GameObject> _bush = new List<GameObject>();
+    [SerializeField] private float _minTimeBushSpawn;
+    private float _lastTimeBushSpawn;
     [SerializeField] private List<GameObject> _stones = new List<GameObject>();
     [SerializeField] private float _minTimeStoneSpawn;
     private float _lastTimeStoneSpawn;
@@ -36,7 +36,7 @@ public class RandomBGGenerator : MonoBehaviour
     private void Start()
     {
         _backGroundObjects.Add(new BackGroundObject(_trees, _minTimeTreeSpawn));
-        _backGroundObjects.Add(new BackGroundObject(_brushes, _minTimeBrushSpawn));
+        _backGroundObjects.Add(new BackGroundObject(_bush, _minTimeBushSpawn));
         _backGroundObjects.Add(new BackGroundObject(_stones, _minTimeStoneSpawn));
         _backGroundObjects.Add(new BackGroundObject(_grass, _minTimeGrassSpawn));
         _backGroundObjects.Add(new BackGroundObject(_other, _minTimeOtherObjSpawn));
@@ -73,7 +73,7 @@ public class RandomBGGenerator : MonoBehaviour
         if (_lastTimeCloudSpawn >= _minTimeCloudSpawn)
         {
             Instantiate(_cloud[Random.Range(0, _cloud.Count)],
-                 _cloudPointSpawn.position + new Vector3(0, Random.Range(0f, 1.25f)), Quaternion.identity);
+                 _cloudPointSpawn.position + new Vector3(0, Random.Range(0f, 1.4f)), Quaternion.identity);
             if (Random.Range(0, 4) == 0) 
                 _lastTimeCloudSpawn = _minTimeCloudSpawn/3;
             else
