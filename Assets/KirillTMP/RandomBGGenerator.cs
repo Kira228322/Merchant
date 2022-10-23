@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 using Random = UnityEngine.Random;
 
 public class RandomBGGenerator : MonoBehaviour
@@ -30,6 +32,7 @@ public class RandomBGGenerator : MonoBehaviour
     private float _lastTimeCloudSpawn;
 
     private List<BackGroundObject> _backGroundObjects = new List<BackGroundObject>();
+    
     private void Start()
     {
         _backGroundObjects.Add(new BackGroundObject(_trees, _minTimeTreeSpawn));
@@ -71,7 +74,10 @@ public class RandomBGGenerator : MonoBehaviour
         {
             Instantiate(_cloud[Random.Range(0, _cloud.Count)],
                  _cloudPointSpawn.position + new Vector3(0, Random.Range(0f, 1.25f)), Quaternion.identity);
-            _lastTimeCloudSpawn = Random.Range(-_minTimeCloudSpawn/2, 0);
+            if (Random.Range(0, 4) == 0) 
+                _lastTimeCloudSpawn = _minTimeCloudSpawn/3;
+            else
+                _lastTimeCloudSpawn = Random.Range(-_lastTimeCloudSpawn/2, 0);
         }
     }
 
