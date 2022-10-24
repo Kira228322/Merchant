@@ -117,12 +117,12 @@ public class RandomBGGenerator : MonoBehaviour
         }
         else
         {
-            renderer.sortingOrder = 1;
+            renderer.sortingOrder = 8;
             if (renderer.gameObject.transform.childCount != 0)
                 for (int i = 0; i < renderer.gameObject.transform.childCount; i++)
                 {
                     SpriteRenderer childRenderer = renderer.gameObject.transform.GetChild(i).GetComponent<SpriteRenderer>();
-                    childRenderer.sortingOrder = 2;
+                    childRenderer.sortingOrder = 9;
                 }
         }
         if (Random.Range(0, 2) == 0)
