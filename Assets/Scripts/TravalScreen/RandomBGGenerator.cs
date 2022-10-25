@@ -109,20 +109,26 @@ public class RandomBGGenerator : MonoBehaviour
             {
                 for (int i = 0; i < renderer.gameObject.transform.childCount; i++)
                 {
-                    SpriteRenderer childRenderer = renderer.gameObject.transform.GetChild(i).GetComponent<SpriteRenderer>();
-                    childRenderer.color = color;
-                    childRenderer.sortingOrder = -1;
+                    if (renderer.gameObject.transform.GetChild(i).TryGetComponent(out SpriteRenderer childRenderer))
+                    {
+                        childRenderer.color = color;
+                        childRenderer.sortingOrder = -1;
+                    }
                 }
             }
         }
         else
         {
+            spawnedObj.transform.position += new Vector3(0, -0.105f); // объекты что ближе, ниже (так выглядит лучше)
             renderer.sortingOrder = 8;
             if (renderer.gameObject.transform.childCount != 0)
                 for (int i = 0; i < renderer.gameObject.transform.childCount; i++)
                 {
-                    SpriteRenderer childRenderer = renderer.gameObject.transform.GetChild(i).GetComponent<SpriteRenderer>();
-                    childRenderer.sortingOrder = 9;
+                    if (renderer.gameObject.transform.GetChild(i).TryGetComponent(out SpriteRenderer childRenderer))
+                    {
+                        childRenderer = renderer.gameObject.transform.GetChild(i).GetComponent<SpriteRenderer>();
+                        childRenderer.sortingOrder = 9;
+                    }
                 }
         }
         if (Random.Range(0, 2) == 0)
