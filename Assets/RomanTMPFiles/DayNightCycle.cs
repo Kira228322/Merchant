@@ -8,19 +8,18 @@ using UnityEngine.Rendering.Universal;
 [RequireComponent(typeof(Volume))]
 public class DayNightCycle : MonoBehaviour
 {
-    [SerializeField] GameObject _celestialBodies; //Сюда нужно вставить Солнце, Луну и Звёзды в виде одного геймобъекта (префаб создам)
+    [SerializeField] private GameObject _celestialBodies; //Сюда нужно вставить Солнце, Луну и Звёзды в виде одного геймобъекта (префаб создам)
+    [SerializeField] private List<Light2D> _lights;
 
     private Volume _volume;
-    Transform moonAndSun;
-    Transform stars;
-    private const float _convertTimeToRotation = 4f; //В сутках 24*60 = 1440 минут. 1440/360 = 4
+    private Transform moonAndSun;
+    private Transform stars;
+    private const float _convertTimeToRotation = 4f; // В сутках 24*60 = 1440 минут. 1440/360 = 4
                                                      //(каждые 4 минуты нужно поворачивать объекты на 1 градус)
-    Quaternion _currentTimeRotation = Quaternion.identity;
-    float _currentTimeDegrees = 0f; // значение в промежутке (0;360), где 0 == 00:00, 359 == 23:56) 
-
+    private Quaternion _currentTimeRotation = Quaternion.identity;
+    private float _currentTimeDegrees = 0f; // Значение в промежутке (0;360), где 0 == 00:00, 359 == 23:56) 
     private bool _activateLights;
-    [SerializeField] List<Light2D> _lights;
-    void Start()
+    private void Start()
     {
         _volume = GetComponent<Volume>();
         moonAndSun = _celestialBodies.transform.Find("Moon and Sun");
@@ -28,7 +27,7 @@ public class DayNightCycle : MonoBehaviour
         AdjustToCurrentTime();
     }
 
-    void Update()
+    private void Update()
     {
         AdjustToCurrentTime();
     }
