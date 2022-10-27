@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
@@ -8,7 +9,8 @@ public class Merchant : MonoBehaviour
 {
     // Хоть у каждого Item'a уже указана цена, за которую его можно купить у торговца
     // каждый торговец будет иметь свою цену на этот товар. ИБО В ЭТОМ И СМЫСЛ ИГРЫ епт
-    
+    [SerializeField] private string _name;
+    public string Name => _name;
     public List<Item> Goods;
     [HideInInspector] public List<Item> MerchantGoods;
 
