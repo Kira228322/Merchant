@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class InventoryController : MonoBehaviour
 {
-    [SerializeField] InventoryItemGrid selectedItemGrid;
+    [HideInInspector] public InventoryItemGrid SelectedItemGrid;
 
     private void Update()
     {
-        if (selectedItemGrid == null) { return; }
-
-        Debug.Log(selectedItemGrid.GetTileGridPosition(Input.mousePosition));
+        if (SelectedItemGrid == null) { return; }
     }
 }
