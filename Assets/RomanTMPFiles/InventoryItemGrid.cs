@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class InventoryItemGrid : MonoBehaviour
 {
-    private const float _tileSizeWidth = 32;
-    private const float _tileSizeHeight = 32;
+    public const float TileSizeWidth = 32;
+    public const float TileSizeHeight = 32;
 
     [SerializeField] private int _gridSizeWidth;
     [SerializeField] private int _gridSizeHeight;
 
-    private Item[,] _storedInventoryItems;
+    private InventoryItem[,] _storedInventoryItems;
 
     RectTransform rectTransform;
-    Vector2 positionOnTheGrid = new Vector2();
-    Vector2Int gridPositionInTiles = new Vector2Int();
-    private void Start()
+    Vector2 positionOnTheGrid = new();
+    Vector2Int gridPositionInTiles = new();
+    private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
         Initialize(_gridSizeWidth, _gridSizeHeight);
@@ -25,20 +25,24 @@ public class InventoryItemGrid : MonoBehaviour
         positionOnTheGrid.x = mouseposition.x - rectTransform.position.x;
         positionOnTheGrid.y = mouseposition.y - rectTransform.position.y;
 
-        gridPositionInTiles.x = (int)(positionOnTheGrid.x / _tileSizeWidth);
-        gridPositionInTiles.y = (int)(positionOnTheGrid.y / _tileSizeHeight);
+        gridPositionInTiles.x = (int)(positionOnTheGrid.x / TileSizeWidth);
+        gridPositionInTiles.y = (int)(positionOnTheGrid.y / TileSizeHeight);
 
         return gridPositionInTiles;
     }
 
     private void Initialize(int width, int height)
     {
-        _storedInventoryItems = new Item[width, height];
-        rectTransform.sizeDelta = new Vector2(width * _tileSizeWidth, height * _tileSizeHeight);
+        _storedInventoryItems = new InventoryItem[width, height];
+        rectTransform.sizeDelta = new Vector2(width * TileSizeWidth, height * TileSizeHeight);
     }
 
-    private void PlaceItem(Roman.Item item, int gridPositionX, int gridPositionY)
+    public void PlaceItemInGrid(InventoryItem item, Vector2Int gridPosition)
     {
-
+        _storedInventoryItems[gridPosition.x, gridPosition.y] = item;
+    }
+    public void RemoveItemFromGrid(Vector2Int gridPosition)
+    {
+        _storedInventoryItems[gridPosition.x, gridPosition.y] = null;
     }
 }

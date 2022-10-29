@@ -136,7 +136,6 @@ GameObject:
   - component: {fileID: 253160849}
   - component: {fileID: 253160852}
   - component: {fileID: 253160853}
-  - component: {fileID: 253160854}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -256,45 +255,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SelectedItemGrid: {fileID: 0}
---- !u!114 &253160854
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 253160848}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: bece3baff4e579040bef9e9126d6ae05, type: 3}
-  m_NotificationBehavior: 2
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls:
-      - {m_Target: {fileID: 842412165}, m_TargetAssemblyTypeName: , m_MethodName: , m_Mode: 1, m_Arguments: {m_ObjectArgument: {fileID: 0}, m_ObjectArgumentAssemblyTypeName: , m_IntArgument: 0, m_FloatArgument: 0, m_StringArgument: , m_BoolArgument: 0}, m_CallState: 2}
-    m_ActionId: 3fdd31b5-9e67-4f5e-b595-ff2b7e8e706d
-    m_ActionName: Player/SingleTouch[/Mouse/leftButton]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 327ae032-fc8f-4d93-a9d6-e25876840e75
-    m_ActionName: Player/PressAndHold[/Mouse/leftButton]
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 253160850}
 --- !u!1 &661468065
 GameObject:
   m_ObjectHideFlags: 0
@@ -509,11 +469,11 @@ RectTransform:
   m_Father: {fileID: 1509965516}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 338.5, y: -120.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 355, y: 182}
   m_SizeDelta: {x: 320, y: 320}
-  m_Pivot: {x: 0, y: 1}
+  m_Pivot: {x: 0, y: 0}
 --- !u!114 &842412167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -526,8 +486,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c250aecd0e0a4248bfa2111d78677a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gridSizeWidth: 11
-  _gridSizeHeight: 6
+  _gridSizeWidth: 7
+  _gridSizeHeight: 9
 --- !u!114 &842412168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1206,5 +1166,25 @@ PrefabInstance:
       propertyPath: _canvas
       value: 
       objectReference: {fileID: 1509965515}
+    - target: {fileID: 4353466255965984367, guid: dc7e74917cc051440a163a246af98351, type: 3}
+      propertyPath: DEBUGITEMGRID
+      value: 
+      objectReference: {fileID: 842412167}
+    - target: {fileID: 4353466255965984367, guid: dc7e74917cc051440a163a246af98351, type: 3}
+      propertyPath: _DEBUGItemGrid
+      value: 
+      objectReference: {fileID: 842412167}
+    - target: {fileID: 4353466255965984367, guid: dc7e74917cc051440a163a246af98351, type: 3}
+      propertyPath: _startingInventory
+      value: 
+      objectReference: {fileID: 842412167}
+    - target: {fileID: 4353466255965984367, guid: dc7e74917cc051440a163a246af98351, type: 3}
+      propertyPath: _startingPositionInInventory.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4353466255965984367, guid: dc7e74917cc051440a163a246af98351, type: 3}
+      propertyPath: _startingPositionInInventory.y
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc7e74917cc051440a163a246af98351, type: 3}
