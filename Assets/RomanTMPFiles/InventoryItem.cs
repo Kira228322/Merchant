@@ -3,22 +3,56 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-    [RequireComponent(typeof(Image))]
-    public class InventoryItem : MonoBehaviour
+public class InventoryItem : MonoBehaviour
+{
+    public Roman.Item ItemData;
+
+    public int Width
     {
-        [SerializeField] private Roman.Item _item;
-
-
-        private Image _icon;
-        private RectTransform _rectTransform;
-        void Awake()
+        get
         {
-            _icon = GetComponent<Image>();
-            _rectTransform = GetComponent<RectTransform>();
-            _icon.sprite = _item.Icon;
-            gameObject.name = _item.Name;
-
-        _rectTransform.sizeDelta = new Vector2(_item.CellSizeWidth * InventoryItemGrid.TileSizeWidth, _item.CellSizeHeight * InventoryItemGrid.TileSizeHeight);
+            if (!IsRotated)
+            {
+                return ItemData.CellSizeWidth;
+            }
+            return ItemData.CellSizeHeight;
         }
-
     }
+    public int Height
+    {
+        get
+        {
+            if (!IsRotated)
+            {
+                return ItemData.CellSizeHeight;
+            }
+            return ItemData.CellSizeWidth;
+        }
+    }
+
+    public int XPositionOnTheGrid;
+    public int YPositionOnTheGrid;
+
+    public bool IsRotated = false;
+
+    public void SetItemFromData(Roman.Item itemData) //Присвоение значений из SO. 
+        //Когда буду делать менюшку, нужно будет добавить остальную информацию
+    {
+        ItemData = itemData;
+
+        GetComponent<Image>().sprite = itemData.Icon;
+
+        Vector2 size = new();
+        size.x = itemData.CellSizeWidth * ItemGrid.TileSizeWidth;
+        size.y = itemData.CellSizeHeight * ItemGrid.TileSizeHeight;
+        GetComponent<RectTransform>().sizeDelta = size;
+    }
+
+    public void Rotate()
+    {
+        IsRotated = !IsRotated;
+
+        RectTransform rectTransform = GetComponent<RectTransform>();
+        rectTransform.rotation = Quaternion.Euler(0, 0, IsRotated == true ? 90f : 0f); //нихуя умный способ задавать значения, запомню
+    }
+}

@@ -3,18 +3,17 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 
 namespace Roman
 {
 
-    [CreateAssetMenu(fileName = "newItemRoman", menuName = "Item Roman")]
+    [CreateAssetMenu(fileName = "newItem", menuName = "Roman Item")]
     public class Item : ScriptableObject
     {
         public string Name;
         public string Description;
         public Sprite Icon;
-        public int Price;
+        public int Price;       
 
         public float Weight;
         public int MaxCountInSlot;
@@ -23,9 +22,8 @@ namespace Roman
         public int CellSizeHeight;
 
         [HideInInspector] public bool IsPerishable;
-        [HideInInspector] public float DaysToHalfSpoil;
-        [HideInInspector] public float DaysToSpoil;
-
+        [HideInInspector] public float _daysToHalfSpoil; 
+        [HideInInspector] public float _daysToSpoil;
         [CustomEditor(typeof(Item))]
         public class ItemEditor : Editor
         {
@@ -37,7 +35,7 @@ namespace Roman
 
                 EditorGUILayout.Space(10);
                 EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.LabelField("Is Perishable?", GUILayout.MaxWidth(80));
+                EditorGUILayout.LabelField("Perishable", GUILayout.MaxWidth(80));
                 item.IsPerishable = EditorGUILayout.Toggle(item.IsPerishable);
                 EditorGUILayout.EndHorizontal();
 
@@ -47,13 +45,13 @@ namespace Roman
                     EditorGUILayout.BeginHorizontal();
                     EditorGUILayout.Space(20, true);
                     EditorGUILayout.LabelField("Days to half spoil", GUILayout.MaxWidth(110));
-                    item.DaysToHalfSpoil = EditorGUILayout.FloatField(item.DaysToHalfSpoil);
+                    item._daysToHalfSpoil = EditorGUILayout.FloatField(item._daysToHalfSpoil);
                     EditorGUILayout.EndHorizontal();
 
                     EditorGUILayout.BeginHorizontal();
                     EditorGUILayout.Space(20, true);
                     EditorGUILayout.LabelField("Days to spoil", GUILayout.MaxWidth(110));
-                    item.DaysToSpoil = EditorGUILayout.FloatField(item.DaysToSpoil);
+                    item._daysToSpoil = EditorGUILayout.FloatField(item._daysToSpoil);
                     EditorGUILayout.EndHorizontal();
                 }
             }
