@@ -1,22 +1,34 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PlaceOnMap : MonoBehaviour
 {
-    [SerializeField] private string _travelingScene; // Но лучше будет сделать какой-то MapManager в котором
-                                                     // будет будет ссылка на эту сцену поездки и другие функции,
-                                                     // чтобы не давать одну и туже ссылку каждому Plac'у на карте  
-    
-    [SerializeField] private bool _playerIsHere; // Потом это поле будет не сериалайз
+    public string _currentScene;
+    public int NumberOfPlace;
+    public bool PlayerIsHere; // потом будет HideInInspector и как-то надо начальную локацию плееру указать
 
+    [SerializeField] private List<PlaceOnMap> _relatedPLaces;
+    // места в которые можно попасть из данного места (как ребра в графе) 
+    
     public void OnPlaceClick()
     {
-        if (_playerIsHere)
+        if (PlayerIsHere)
+            return;
+        bool related = false;
+        for (int i = 0; i < _relatedPLaces.Count; i++)
+        {
+            if (MapManager.CurrentNumberOfPlace == _relatedPLaces[i].NumberOfPlace) // Если есть связь между городами
+            {
+                related = true;
+                break;
+            }
+        }
+        if (!related)
             return;
 
-        SceneManager.LoadSceneAsync(_travelingScene);
-        // анимация затухания экрана и загрузки
+        PlayerIsHere = false;
+        MapManager.TransitionToTravelScene(this);
     }
 }
