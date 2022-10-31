@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class ItemGrid : MonoBehaviour
 {
-    public const float TileSizeWidth = 32;
-    public const float TileSizeHeight = 32;
+    public const float TileSizeWidth = 64;
+    public const float TileSizeHeight = 64;
 
     [SerializeField] private int _gridSizeWidth;
     [SerializeField] private int _gridSizeHeight;
@@ -28,13 +28,13 @@ public class ItemGrid : MonoBehaviour
         Vector2 size = new(width * TileSizeWidth, height * TileSizeHeight);
         _rectTransform.sizeDelta = size;
     }
-    public Vector2Int GetTileGridPosition(Vector2 mousePosition) //Получить позицию в клетках из позиции мышки, т.е (0;1) или (3;4)
+    public Vector2Int GetTileGridPosition(Vector2 mousePosition, Vector2 canvasLocalScale) //Получить позицию в клетках из позиции мышки, т.е (0;1) или (3;4)
     {
         _positionOnTheGrid.x = mousePosition.x - _rectTransform.position.x;
         _positionOnTheGrid.y = _rectTransform.position.y - mousePosition.y;
 
-        _tileGridPosition.x = (int)(_positionOnTheGrid.x / TileSizeWidth);
-        _tileGridPosition.y = (int)(_positionOnTheGrid.y / TileSizeHeight);
+        _tileGridPosition.x = (int)(_positionOnTheGrid.x / TileSizeWidth / canvasLocalScale.x);
+        _tileGridPosition.y = (int)(_positionOnTheGrid.y / TileSizeHeight / canvasLocalScale.y);
 
         return _tileGridPosition;
     }
@@ -62,22 +62,16 @@ public class ItemGrid : MonoBehaviour
         }
     }
 
-    public bool TryPlaceItem(InventoryItem item, int positionX, int positionY, ref InventoryItem overlappingItem)
+    public bool TryPlaceItem(InventoryItem item, int positionX, int positionY)
     {
         if (IsInCorrectPosition(positionX, positionY, item.Width, item.Height) == false)
         {
             return false;
         }
 
-        if (IsNotOverlapping(positionX, positionY, item.Width, item.Height, ref overlappingItem) == false)
+        if (IsNotOverlapping(positionX, positionY, item.Width, item.Height) == false)
         {
-            overlappingItem = null;
             return false;
-        }
-
-        if (overlappingItem != null)
-        {
-            CleanGridReference(overlappingItem);
         }
 
         PlaceItem(item, positionX, positionY);
@@ -112,7 +106,7 @@ public class ItemGrid : MonoBehaviour
     }
 
     public Vector2 CalculatePositionOnTheGrid(InventoryItem item, int positionX, int positionY)
-        // Понять, где расположить предмет (нужно для предметов, больших чем 1x1)
+        // Понять, где визуально расположить предмет (нужно для предметов, больших чем 1x1)
     {
         Vector2 position = new();
 
@@ -152,34 +146,15 @@ public class ItemGrid : MonoBehaviour
         return null;
     }
 
-    private bool IsNotOverlapping(int positionX, int positionY, int width, int height, ref InventoryItem overlappingItem)
-        //Переделать в будущем, вероятно убрать-упростить
-
-        //Пересекается ли выбранный предмет с предметами в инвентаре?
-        //Т.е если мы пытаемся положить на какой-либо предмет
-        //true - ни с чем не пересекается, false - с чем-то пересекается
+    private bool IsNotOverlapping(int positionX, int positionY, int width, int height)
     {
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
             {
-                if(_storedInventoryItems[positionX + x, positionY + y] != null) //В этот момент стало ясно,
-                    //что точно пересекается с одним предметом. Дальше выяснить, только лишь с одним или с более чем одним?
+                if(_storedInventoryItems[positionX + x, positionY + y] != null)
                 {
-                    if (overlappingItem == null) 
-                    {
-                        overlappingItem = _storedInventoryItems[positionX + x, positionY + y];
-                        //Запомнили этот первый пересекающийся предмет
-                    }
-                    else //else, т.е уже был найден первый пересекающийся предмет
-                    {
-                        if (overlappingItem != _storedInventoryItems[positionX + x, positionY + y]) //если теперь мы смотрим
-                            //на предмет, который не является тем же самым первым пересекающимся предметом, следовательно
-                        // пересечесение с двумя предметами одновременно
-                        {
-                            return false; 
-                        }
-                    }
+                    return false;
                 }
             }
         }

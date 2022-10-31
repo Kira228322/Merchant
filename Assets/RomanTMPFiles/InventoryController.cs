@@ -13,7 +13,6 @@ public class InventoryController : MonoBehaviour
     [SerializeField] private List<Roman.Item> items; //Для тестирования
 
     private InventoryItem _selectedItem;
-    private InventoryItem _overlappingItem;
     private RectTransform _rectTransform;
 
     private InventoryHighlight _inventoryHighlight;
@@ -91,7 +90,7 @@ public class InventoryController : MonoBehaviour
             position.y += (_selectedItem.Height - 1) * ItemGrid.TileSizeHeight / 2;
         }
  
-        return SelectedItemGrid.GetTileGridPosition(position);
+        return SelectedItemGrid.GetTileGridPosition(position, _canvasTransform.localScale);
     }
 
     private void PickUp(Vector2Int tileGridPosition)
@@ -104,23 +103,16 @@ public class InventoryController : MonoBehaviour
     }
     private void PlaceDown(Vector2Int tileGridPosition)
     {
-        bool isSuccessful = SelectedItemGrid.TryPlaceItem(_selectedItem, tileGridPosition.x, tileGridPosition.y, ref _overlappingItem);
+        bool isSuccessful = SelectedItemGrid.TryPlaceItem(_selectedItem, tileGridPosition.x, tileGridPosition.y);
         if (isSuccessful)
         {
             _selectedItem = null;
-            if (_overlappingItem != null)
-            {
-                _selectedItem = _overlappingItem;
-                _overlappingItem = null;
-                _rectTransform = _selectedItem.GetComponent<RectTransform>();
-                _rectTransform.SetAsLastSibling();
-            }
-
         }
     }
     private void RotateItem()
     {
         if (_selectedItem == null) { return; }
+        if (_selectedItem.ItemData.CellSizeHeight == 1 && _selectedItem.ItemData.CellSizeWidth == 1) { return; }
 
         _selectedItem.Rotate();
     }
@@ -143,6 +135,8 @@ public class InventoryController : MonoBehaviour
         _rectTransform.SetParent(_canvasTransform);
         _rectTransform.SetAsLastSibling();
 
+        _selectedItem.transform.localScale = Vector2.one;
+
         int selectedItemID = UnityEngine.Random.Range(0, items.Count);
         item.SetItemFromData(items[selectedItemID]);
     }
@@ -156,8 +150,10 @@ public class InventoryController : MonoBehaviour
     }
     private void InsertItem (InventoryItem itemToInsert)
     {
+        //itemToInsert.transform.localScale = canvasTransform.localScale;
+        //^^возможно пригодится в будущем в качестве подсказки, когда будем делать спавн объектов 
+
         Vector2Int? posOnGrid = SelectedItemGrid.FindSpaceForObject(itemToInsert);
-        Debug.Log(posOnGrid);
 
         if (posOnGrid == null) 
         { 

@@ -36,7 +36,7 @@ public class InventoryItem : MonoBehaviour
     public bool IsRotated = false;
 
     public void SetItemFromData(Roman.Item itemData) //Присвоение значений из SO. 
-        //Когда буду делать менюшку, нужно будет добавить остальную информацию
+        //Когда буду делать менюшку, нужно будет добавить остальную информацию (стоп нахуя, здесь же нужна только картинка?)
     {
         ItemData = itemData;
 
