@@ -11,7 +11,23 @@ public class PlaceOnMap : MonoBehaviour
 
     [SerializeField] private List<PlaceOnMap> _relatedPLaces;
     // места в которые можно попасть из данного места (как ребра в графе) 
-    
+    private List<Road> _roads = new List<Road>();
+
+    private void Start()
+    {
+        Road[] roads = FindObjectsOfType<Road>();
+        foreach (var road in roads)
+        {
+            if (road.Points[0] = this)
+            {
+                _roads.Add(road);
+                continue;
+            }
+            if (road.Points[1] = this)
+                _roads.Add(road);
+        }
+    }
+
     public void OnPlaceClick()
     {
         if (PlayerIsHere)
