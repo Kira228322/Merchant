@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class PlaceOnMap : MonoBehaviour
 {
@@ -12,9 +10,10 @@ public class PlaceOnMap : MonoBehaviour
     [SerializeField] private List<PlaceOnMap> _relatedPLaces;
     // места в которые можно попасть из данного места (как ребра в графе) 
     private List<Road> _roads = new List<Road>();
-
+    private Canvas _canvas;
     private void Start()
     {
+        _canvas = FindObjectOfType<Canvas>();
         Road[] roads = FindObjectsOfType<Road>();
         foreach (var road in roads)
         {
@@ -44,7 +43,11 @@ public class PlaceOnMap : MonoBehaviour
         if (!related)
             return;
 
-        PlayerIsHere = false;
-        MapManager.TransitionToTravelScene(this);
+        GameObject win;
+        win = Instantiate(MapManager.RoarWindow, _canvas.transform);
+        win.GetComponent<RoadWindow>().Init(_roads);
+        
+        // PlayerIsHere = false;
+        // MapManager.TransitionToTravelScene(this);
     }
 }

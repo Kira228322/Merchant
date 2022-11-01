@@ -9,9 +9,11 @@ public class GameManager : MonoBehaviour
     
     [SerializeField] private string _travelingScene;
     [SerializeField] private SceneTransiter _loadScreen;
+    [SerializeField] private GameObject _roadWindow;
+    
     void Start()
     {
-        MapManager.Init(_travelingScene, _loadScreen);
+        MapManager.Init(_travelingScene, _loadScreen, _roadWindow);
     }
 
 }

@@ -375,10 +375,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1978296540}
-  - {fileID: 1274748911}
-  - {fileID: 230749746}
-  - {fileID: 675230796}
+  - {fileID: 1214882612}
+  - {fileID: 1218914937}
   m_Father: {fileID: 976912649}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1390,13 +1388,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 230749745}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 206554852}
-  m_RootOrder: 2
+  m_Father: {fileID: 1218914937}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1415,7 +1413,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19fec4436d0a4f49b00ed2105cf7174, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _roadName: road 1
+  _description: papsld aspl daspld alsd alpd
   _travelingTime: 2
+  _quality: 6
+  _danger: 1
+  _coast: 0
+  _image: {fileID: 21300108, guid: 142ff8784e552734f9d6a895491d0ae8, type: 3}
   Points:
   - {fileID: 1978296543}
   - {fileID: 1274748914}
@@ -2270,13 +2274,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 675230795}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 206554852}
-  m_RootOrder: 3
+  m_Father: {fileID: 1218914937}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2295,7 +2299,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19fec4436d0a4f49b00ed2105cf7174, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _roadName: road 2
+  _description: la lal lalalal lalalalal
   _travelingTime: 3
+  _quality: 8
+  _danger: 1
+  _coast: 0
+  _image: {fileID: 21300112, guid: 142ff8784e552734f9d6a895491d0ae8, type: 3}
   Points:
   - {fileID: 1978296543}
   - {fileID: 1274748914}
@@ -3187,6 +3197,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _travelingScene: Kirill'sScene
   _loadScreen: {fileID: 1293305609}
+  _roadWindow: {fileID: 5013232437122515196, guid: de00a2e83833b79428e44e562cc42361, type: 3}
 --- !u!4 &1031996479
 Transform:
   m_ObjectHideFlags: 0
@@ -3269,6 +3280,82 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e3923ce12ac7289418d3157a9b65dfa6, type: 3}
+--- !u!1 &1214882611
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1214882612}
+  m_Layer: 5
+  m_Name: Points
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1214882612
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1214882611}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1978296540}
+  - {fileID: 1274748911}
+  m_Father: {fileID: 206554852}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1218914936
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1218914937}
+  m_Layer: 5
+  m_Name: Roads
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1218914937
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1218914936}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 230749746}
+  - {fileID: 675230796}
+  m_Father: {fileID: 206554852}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!4 &1269281547 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6930122694965717509, guid: f98d0f39fcc67a34f844abd8a50f2c03, type: 3}
@@ -3301,18 +3388,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1274748910}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 206554852}
+  m_Father: {fileID: 1214882612}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.23436932, y: 0.65385425}
   m_AnchorMax: {x: 0.32852638, y: 0.82385427}
-  m_AnchoredPosition: {x: 3, y: -0.5}
-  m_SizeDelta: {x: 0.97859955, y: -0.021400452}
+  m_AnchoredPosition: {x: -123.454254, y: 66.84735}
+  m_SizeDelta: {x: 55.457867, y: 47.91179}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1274748912
 MonoBehaviour:
@@ -4676,18 +4763,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1978296539}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 206554852}
+  m_Father: {fileID: 1214882612}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.097, y: 0.122236155}
   m_AnchorMax: {x: 0.1946319, y: 0.28638193}
-  m_AnchoredPosition: {x: 4.4892883, y: -1.0107117}
-  m_SizeDelta: {x: -1.0213928, y: 1.9785995}
+  m_AnchoredPosition: {x: -200.4416, y: -84.38374}
+  m_SizeDelta: {x: 55.468437, y: 48.261147}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1978296541
 MonoBehaviour:

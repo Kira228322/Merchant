@@ -6,11 +6,13 @@ public static class MapManager
     public static int CurrentNumberOfPlace => _currenNumberOfPlace;
     private static string _travelingScene;
     private static SceneTransiter _loadScreen;
-
-    public static void Init(string travelingScene, SceneTransiter loadScreen) // ¬ начале игры надо будет инициализировать
+    private static GameObject _roadWindow;
+    public static GameObject RoarWindow => _roadWindow;
+    public static void Init(string travelingScene, SceneTransiter loadScreen, GameObject roadWin) // ¬ начале игры надо будет инициализировать
     {
         _travelingScene = travelingScene;
         _loadScreen = loadScreen;
+        _roadWindow = roadWin;
     }
 
     public static void TransitionToTravelScene(PlaceOnMap placeOnMap)
