@@ -44,7 +44,7 @@ public class PlaceOnMap : MonoBehaviour
             return;
 
         GameObject win;
-        win = Instantiate(MapManager.RoarWindow, _canvas.transform);
+        win = Instantiate(MapManager.RoadWindow, _canvas.transform);
         win.GetComponent<RoadWindow>().Init(_roads);
         
         // PlayerIsHere = false;

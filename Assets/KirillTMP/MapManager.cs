@@ -7,7 +7,7 @@ public static class MapManager
     private static string _travelingScene;
     private static SceneTransiter _loadScreen;
     private static GameObject _roadWindow;
-    public static GameObject RoarWindow => _roadWindow;
+    public static GameObject RoadWindow => _roadWindow;
     public static void Init(string travelingScene, SceneTransiter loadScreen, GameObject roadWin) // ¬ начале игры надо будет инициализировать
     {
         _travelingScene = travelingScene;

@@ -18,8 +18,8 @@ public class Road : MonoBehaviour
     public int Quality => _quality;
     [SerializeField] private int _danger;
     public int Danger => _danger;
-    [SerializeField] private int _coast;
-    public int Coast => _coast;
+    [SerializeField] private int _cost;
+    public int Cost => _cost;
     [SerializeField] private Sprite _image;
     public Sprite Image => _image;
 

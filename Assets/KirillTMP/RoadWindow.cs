@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class RoadWindow : MonoBehaviour
@@ -12,7 +13,7 @@ public class RoadWindow : MonoBehaviour
     [SerializeField] private TMP_Text _duration;
     [SerializeField] private TMP_Text _quality;
     [SerializeField] private TMP_Text _danger;
-    [SerializeField] private TMP_Text _coast;
+    [SerializeField] private TMP_Text _cost;
     private int _numberOfRoad;
     private Road[] _roads;
     public void Init(List<Road> road)
@@ -27,7 +28,7 @@ public class RoadWindow : MonoBehaviour
         _duration.text = "Длительность: " + road[0].TravelingTime;
         _quality.text = "Качество: " + road[0].Quality;
         _danger.text = "Опасность: " + road[0].Danger;
-        _coast.text = "Стоимость: " + road[0].Coast;
+        _cost.text = "Стоимость: " + road[0].Cost;
         _numberOfRoad = 0;
     }
 
@@ -43,6 +44,6 @@ public class RoadWindow : MonoBehaviour
         _duration.text = "Длительность: " + _roads[_numberOfRoad].TravelingTime;
         _quality.text = "Качество: " + _roads[_numberOfRoad].Quality;
         _danger.text = "Опасность: " + _roads[_numberOfRoad].Danger;
-        _coast.text = "Стоимость: " + _roads[_numberOfRoad].Coast;
+        _cost.text = "Стоимость: " + _roads[_numberOfRoad].Cost;
     }
 }
