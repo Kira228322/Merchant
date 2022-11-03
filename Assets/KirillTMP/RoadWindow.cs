@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class RoadWindow : MonoBehaviour
+public class RoadWindow : Window
 {
     [SerializeField] private Image _image;
     [SerializeField] private TMP_Text _name;
@@ -16,8 +16,10 @@ public class RoadWindow : MonoBehaviour
     [SerializeField] private TMP_Text _cost;
     private int _numberOfRoad;
     private Road[] _roads;
-    public void Init(List<Road> road)
+    private PlaceOnMap _place;
+    public void Init(List<Road> road, PlaceOnMap placeOnMap)
     {
+        _place = placeOnMap;
         _roads = new Road[road.Count];
         for (int i = 0; i < _roads.Length; i++)
             _roads[i] = road[i];
@@ -45,5 +47,11 @@ public class RoadWindow : MonoBehaviour
         _quality.text = "Качество: " + _roads[_numberOfRoad].Quality;
         _danger.text = "Опасность: " + _roads[_numberOfRoad].Danger;
         _cost.text = "Стоимость: " + _roads[_numberOfRoad].Cost;
+    }
+
+    public void OnTravelButtonClick()
+    { 
+        MapManager.TransitionToTravelScene(_place);
+        Destroy(gameObject);
     }
 }

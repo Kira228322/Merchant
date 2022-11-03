@@ -307,11 +307,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e2f5851c35ac714993e47e8bfd4da5e, type: 3}
---- !u!224 &201918271 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 206261255061392118, guid: 3b587cbc31ff6204cac6caf95bf63443, type: 3}
-  m_PrefabInstance: {fileID: 206261255128042953}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &206554849
 GameObject:
   m_ObjectHideFlags: 0
@@ -323,6 +318,7 @@ GameObject:
   - component: {fileID: 206554852}
   - component: {fileID: 206554851}
   - component: {fileID: 206554850}
+  - component: {fileID: 206554853}
   m_Layer: 5
   m_Name: Map
   m_TagString: Untagged
@@ -390,6 +386,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0.000030518}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &206554853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 206554849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35cb50bd9bc786f4ba1b7bb1f6f3c437, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &223056533
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2838,6 +2846,7 @@ GameObject:
   - component: {fileID: 953056772}
   - component: {fileID: 953056771}
   - component: {fileID: 953056770}
+  - component: {fileID: 953056774}
   m_Layer: 5
   m_Name: MapButton
   m_TagString: Untagged
@@ -2973,6 +2982,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 953056768}
   m_CullTransparentMesh: 1
+--- !u!114 &953056774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953056768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35cb50bd9bc786f4ba1b7bb1f6f3c437, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &976912645
 GameObject:
   m_ObjectHideFlags: 0
@@ -3069,7 +3090,6 @@ RectTransform:
   - {fileID: 206554852}
   - {fileID: 953056769}
   - {fileID: 1293305605}
-  - {fileID: 201918271}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3201,9 +3221,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f00145429fcd8fb42aa2afa58720ae8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _travelingScene: Kirill'sScene
+  _travelingScene: UnitedScene
   _loadScreen: {fileID: 1293305609}
   _roadWindow: {fileID: 5013232437122515196, guid: de00a2e83833b79428e44e562cc42361, type: 3}
+  _villageWindow: {fileID: 206261255061392119, guid: 3b587cbc31ff6204cac6caf95bf63443, type: 3}
+  _canvas: {fileID: 976912648}
 --- !u!4 &1031996479
 Transform:
   m_ObjectHideFlags: 0
@@ -3380,6 +3402,7 @@ GameObject:
   - component: {fileID: 1274748912}
   - component: {fileID: 1274748915}
   - component: {fileID: 1274748914}
+  - component: {fileID: 1274748916}
   m_Layer: 5
   m_Name: Point (1)
   m_TagString: Untagged
@@ -3457,11 +3480,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentScene: OneYetScene
+  _icone: {fileID: 21300000, guid: da7129ed6a246f048a49d8d97de2d2d4, type: 3}
+  _villageName: South Village
+  _description: Village with apples. A lot of apples.
   NumberOfPlace: 1
-  PlayerIsHere: 0
-  _relatedPLaces:
+  _relatedPlaces:
   - {fileID: 1978296543}
+  _roads: []
 --- !u!114 &1274748915
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3518,6 +3543,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1274748916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1274748910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35cb50bd9bc786f4ba1b7bb1f6f3c437, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1293305604
 GameObject:
   m_ObjectHideFlags: 0
@@ -4755,6 +4792,7 @@ GameObject:
   - component: {fileID: 1978296541}
   - component: {fileID: 1978296544}
   - component: {fileID: 1978296543}
+  - component: {fileID: 1978296545}
   m_Layer: 5
   m_Name: Point
   m_TagString: Untagged
@@ -4832,11 +4870,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentScene: SecKirScene
+  _icone: {fileID: 21300000, guid: ce993d5f7ca6ea8459974fd88e71861d, type: 3}
+  _villageName: Small Village
+  _description: It is good village if you want to escape from goverment
   NumberOfPlace: 0
-  PlayerIsHere: 1
-  _relatedPLaces:
+  _relatedPlaces:
   - {fileID: 1274748914}
+  _roads: []
 --- !u!114 &1978296544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4893,6 +4933,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1978296545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1978296539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35cb50bd9bc786f4ba1b7bb1f6f3c437, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1991759857
 GameObject:
   m_ObjectHideFlags: 0
@@ -5038,100 +5090,3 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2183321564951531329, guid: 2f54e7022d76f09478e2e1124e212cc5, type: 3}
   m_PrefabInstance: {fileID: 1540957529}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &206261255128042953
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 976912649}
-    m_Modifications:
-    - target: {fileID: 206261255061392118, guid: 3b587cbc31ff6204cac6caf95bf63443, type: 3}
-      propertyPath: m_Pivot.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 206261255061392118, guid: 3b587cbc31ff6204cac6caf95bf63443, type: 3}
-      propertyPath: m_Pivot.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 206261255061392118, guid: 3b587cbc31ff6204cac6caf95bf63443, type: 3}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 206261255061392118, guid: 3b587cbc31ff6204cac6caf95bf63443, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 206261255061392118, guid: 3b587cbc31ff6204cac6caf95bf63443, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0.72300005
-      objectReference: {fileID: 0}
-    - target: {fileID: 206261255061392118, guid: 3b587cbc31ff6204cac6caf95bf63443, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0.22867374
-      objectReference: {fileID: 0}
-    - target: {fileID: 206261255061392118, guid: 3b587cbc31ff6204cac6caf95bf63443, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0.33864376
-      objectReference: {fileID: 0}
-    - target: {fileID: 206261255061392118, guid: 3b587cbc31ff6204cac6caf95bf63443, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0.11540222
-      objectReference: {fileID: 0}
-    - target: {fileID: 206261255061392118, guid: 3b587cbc31ff6204cac6caf95bf63443, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: -4.342697
-      objectReference: {fileID: 0}
-    - target: {fileID: 206261255061392118, guid: 3b587cbc31ff6204cac6caf95bf63443, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 206261255061392118, guid: 3b587cbc31ff6204cac6caf95bf63443, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 206261255061392118, guid: 3b587cbc31ff6204cac6caf95bf63443, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 206261255061392118, guid: 3b587cbc31ff6204cac6caf95bf63443, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 206261255061392118, guid: 3b587cbc31ff6204cac6caf95bf63443, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 206261255061392118, guid: 3b587cbc31ff6204cac6caf95bf63443, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 206261255061392118, guid: 3b587cbc31ff6204cac6caf95bf63443, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 206261255061392118, guid: 3b587cbc31ff6204cac6caf95bf63443, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -0.05999756
-      objectReference: {fileID: 0}
-    - target: {fileID: 206261255061392118, guid: 3b587cbc31ff6204cac6caf95bf63443, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 206261255061392118, guid: 3b587cbc31ff6204cac6caf95bf63443, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 206261255061392118, guid: 3b587cbc31ff6204cac6caf95bf63443, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 206261255061392118, guid: 3b587cbc31ff6204cac6caf95bf63443, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 206261255061392119, guid: 3b587cbc31ff6204cac6caf95bf63443, type: 3}
-      propertyPath: m_Name
-      value: VillageWindow
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 3b587cbc31ff6204cac6caf95bf63443, type: 3}

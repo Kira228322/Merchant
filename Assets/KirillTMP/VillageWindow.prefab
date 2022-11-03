@@ -33,10 +33,10 @@ RectTransform:
   m_Father: {fileID: 206261255061392118}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.055000003, y: 0.725}
-  m_AnchorMax: {x: 0.20160487, y: 0.9437366}
-  m_AnchoredPosition: {x: 0.93618774, y: 0.5}
-  m_SizeDelta: {x: 0, y: -5}
+  m_AnchorMin: {x: 0.055000003, y: 0.7187019}
+  m_AnchorMax: {x: 0.21633022, y: 0.9437366}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -1.9999996, y: -2.0000048}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &206261254469069860
 CanvasRenderer:
@@ -169,12 +169,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 23
+  m_fontSize: 24.5
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 19
-  m_fontSizeMax: 23
+  m_fontSizeMax: 50
   m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
@@ -222,6 +222,7 @@ GameObject:
   - component: {fileID: 206261255061392118}
   - component: {fileID: 206261255061392008}
   - component: {fileID: 206261255061392009}
+  - component: {fileID: 442670016475718873}
   m_Layer: 5
   m_Name: VillageWindow
   m_TagString: Untagged
@@ -291,6 +292,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &442670016475718873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 206261255061392119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ab587ee9e5697f47a79de287ae43c4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _icone: {fileID: 206261254469069861}
+  _villageName: {fileID: 206261254906662618}
+  _description: {fileID: 4332293954969221309}
+  _button: {fileID: 7103485249148600119}
 --- !u!1 &2917369545860819716
 GameObject:
   m_ObjectHideFlags: 0
@@ -394,7 +411,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.8039216, g: 0.8039216, b: 0.8039216, a: 0.8235294}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -412,7 +429,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2682808898618321158}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 442670016475718873}
+        m_TargetAssemblyTypeName: VillageWindow, Assembly-CSharp
+        m_MethodName: OnChooseRoadButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3908519291327397868
 GameObject:
   m_ObjectHideFlags: 0
@@ -446,10 +475,10 @@ RectTransform:
   m_Father: {fileID: 206261255061392118}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.6206, y: 0.7284}
-  m_SizeDelta: {x: 181.5477, y: 65.5387}
+  m_AnchorMin: {x: 0.055000003, y: 0.29880762}
+  m_AnchorMax: {x: 0.9402528, y: 0.7061057}
+  m_AnchoredPosition: {x: 1.1206055, y: 0.22840118}
+  m_SizeDelta: {x: 0.547699, y: 0.5386963}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4705173618900291168
 CanvasRenderer:
@@ -512,7 +541,7 @@ MonoBehaviour:
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 13
-  m_fontSizeMax: 18
+  m_fontSizeMax: 35
   m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
@@ -582,10 +611,10 @@ RectTransform:
   m_Father: {fileID: 7239770901736021924}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.48560333, y: 0}
-  m_SizeDelta: {x: -37.8757, y: 0}
+  m_AnchorMin: {x: 0.11250173, y: 0}
+  m_AnchorMax: {x: 0.88124746, y: 1}
+  m_AnchoredPosition: {x: 0.014404297, y: 0}
+  m_SizeDelta: {x: -0.8757019, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6471694005993866887
 CanvasRenderer:
@@ -642,12 +671,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 16
+  m_fontSize: 16.5
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 14
-  m_fontSizeMax: 16
+  m_fontSizeMax: 45
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
