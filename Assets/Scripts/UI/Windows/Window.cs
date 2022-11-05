@@ -22,7 +22,7 @@ public abstract class Window : MonoBehaviour
         
         Image image = GetComponent<Image>();
         Color color = image.color;
-        color.a = 0.63f;
+        color.a = 0.65f;
         
         WaitForSeconds frequency = new WaitForSeconds(animationFrequency);
         
@@ -35,7 +35,7 @@ public abstract class Window : MonoBehaviour
             transform.position += delta;
             alpha += 0.8f / count; // конечная альфа канвас группы = 0.9 (окна будут немного прозрачные) 
             canvasGroup.alpha = alpha;
-            color.a += 0.2f / count; // конечная альфа самого окна, на котором расположены элементы = 0.83
+            color.a += 0.2f / count; // конечная альфа самого окна, на котором расположены элементы = 0.85
             image.color = color;
             yield return frequency;
         }
