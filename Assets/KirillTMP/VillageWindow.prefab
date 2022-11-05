@@ -35,8 +35,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.055000003, y: 0.7187019}
   m_AnchorMax: {x: 0.21633022, y: 0.9437366}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -1.9999996, y: -2.0000048}
+  m_AnchoredPosition: {x: 0, y: 0.5051}
+  m_SizeDelta: {x: -2, y: -3.0102}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &206261254469069860
 CanvasRenderer:
@@ -223,6 +223,7 @@ GameObject:
   - component: {fileID: 206261255061392008}
   - component: {fileID: 206261255061392009}
   - component: {fileID: 442670016475718873}
+  - component: {fileID: 765964304897608497}
   m_Layer: 5
   m_Name: VillageWindow
   m_TagString: Untagged
@@ -308,6 +309,18 @@ MonoBehaviour:
   _villageName: {fileID: 206261254906662618}
   _description: {fileID: 4332293954969221309}
   _button: {fileID: 7103485249148600119}
+--- !u!225 &765964304897608497
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 206261255061392119}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &2917369545860819716
 GameObject:
   m_ObjectHideFlags: 0
