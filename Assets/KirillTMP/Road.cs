@@ -12,8 +12,8 @@ public class Road : MonoBehaviour
     [SerializeField] private string _description;
     public string Description => _description;
     
-    [SerializeField] private float _travelingTime; // пока неясно в каких единицах будет измеряться (игровых часах
-    public float TravelingTime => _travelingTime;  // или в реальных секундах/минутах) 
+    [SerializeField] private int _travelingTime; // измеряется в игровых часах
+    public int TravelingTime => _travelingTime;  
     [SerializeField] private int _quality;
     public int Quality => _quality;
     [SerializeField] private int _danger;

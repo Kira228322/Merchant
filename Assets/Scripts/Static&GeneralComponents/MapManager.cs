@@ -25,10 +25,10 @@ public static class MapManager
         Canvas = canvas;
     }
 
-    public static void TransitionToTravelScene(PlaceOnMap placeOnMap)
+    public static void TransitionToTravelScene(PlaceOnMap placeOnMap, Road road)
     {
         _currenNumberOfPlace = placeOnMap.NumberOfPlace;
         
-        _loadScreen.StartTransit(_travelingScene);
+        _loadScreen.StartTransit(_travelingScene, road);
     }
 }

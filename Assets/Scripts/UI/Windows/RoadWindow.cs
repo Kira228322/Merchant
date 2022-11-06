@@ -27,7 +27,12 @@ public class RoadWindow : Window
         _image.sprite = road[0].Image;
         _name.text = road[0].RoadName;
         _description.text = road[0].Description;
-        _duration.text = "Длительность: " + road[0].TravelingTime;
+        if (_roads[_numberOfRoad].TravelingTime / 24 == 0)
+            _duration.text = _roads[_numberOfRoad].TravelingTime + " часов";
+        else
+            _duration.text = _roads[_numberOfRoad].TravelingTime / 24 + " дней  " +
+                             _roads[_numberOfRoad].TravelingTime % 24 + " часов";
+        
         _quality.text = "Качество: " + road[0].Quality;
         _danger.text = "Опасность: " + road[0].Danger;
         _cost.text = "Стоимость: " + road[0].Cost;
@@ -43,7 +48,12 @@ public class RoadWindow : Window
         _image.sprite = _roads[_numberOfRoad].Image;
         _name.text = _roads[_numberOfRoad].RoadName;
         _description.text = _roads[_numberOfRoad].Description;
-        _duration.text = "Длительность: " + _roads[_numberOfRoad].TravelingTime;
+        if (_roads[_numberOfRoad].TravelingTime / 24 == 0)
+            _duration.text = _roads[_numberOfRoad].TravelingTime + " часов";
+        else
+            _duration.text = _roads[_numberOfRoad].TravelingTime / 24 + " дней  " +
+                             _roads[_numberOfRoad].TravelingTime % 24 + " часов";
+
         _quality.text = "Качество: " + _roads[_numberOfRoad].Quality;
         _danger.text = "Опасность: " + _roads[_numberOfRoad].Danger;
         _cost.text = "Стоимость: " + _roads[_numberOfRoad].Cost;
@@ -51,7 +61,8 @@ public class RoadWindow : Window
 
     public void OnTravelButtonClick()
     { 
-        MapManager.TransitionToTravelScene(_place);
+        MapManager.TransitionToTravelScene(_place, _roads[_numberOfRoad]);
+        TravelManager.Travel = true;
         Destroy(gameObject);
     }
 }

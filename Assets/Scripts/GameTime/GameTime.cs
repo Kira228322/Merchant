@@ -4,6 +4,7 @@ using UnityEngine;
 
 public static class GameTime
 {
+    private static Timeflow _timeflow;
     private static int _days = 1;
     private static int _hours = 0;
     private static float _minutes = 0f;
@@ -50,5 +51,20 @@ public static class GameTime
         Days = days;
         Hours = hours;
         Minutes = minutes;
+    }
+
+    public static void Init(Timeflow timeflow)
+    {
+        _timeflow = timeflow;
+    }
+
+    public static void SetTimeScale(float value)
+    {
+        _timeflow.TimeScale = value;
+    }
+
+    public static float GetTimeScale()
+    {
+        return _timeflow.TimeScale;
     }
 }
