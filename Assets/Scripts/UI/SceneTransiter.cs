@@ -12,6 +12,7 @@ public class SceneTransiter : MonoBehaviour
     
     private Animator _animator;
     private AsyncOperation _loadingSceneOperation;
+    private Road _road;
     
     private void Awake()
     {
@@ -23,6 +24,16 @@ public class SceneTransiter : MonoBehaviour
         enabled = false;
     }
 
+    public void StartTransit(string scene, Road road)
+    {
+        _road = road;
+        enabled = true;
+        _animator.SetTrigger("StartTransition");
+
+        _loadingSceneOperation = SceneManager.LoadSceneAsync(scene);
+        _loadingSceneOperation.allowSceneActivation = false;
+    }
+    
     public void StartTransit(string scene)
     {
         enabled = true;
@@ -39,6 +50,8 @@ public class SceneTransiter : MonoBehaviour
         if (_loadingSceneOperation.isDone)
         {
             _animator.SetTrigger("EndTransition");
+            if (TravelManager.Travel)
+                TravelManager.StartTravel(_road);
             enabled = false;
         }
     }

@@ -4,13 +4,9 @@ using UnityEngine;
 
 public class Timeflow : MonoBehaviour
 {
-    public bool IsTimeFlowing;
-    public float TimeScale;
+    public float TimeScale; // TimeScale должен влиять на скорость времени суток и на скорость порчи продуктов
     private void Update()
     {
-        if (IsTimeFlowing)
-        {
-            GameTime.Minutes += Time.deltaTime * TimeScale;
-        }
+        GameTime.Minutes += Time.deltaTime * TimeScale;
     }
 }

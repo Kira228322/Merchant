@@ -1,19 +1,32 @@
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class PlaceOnMap : MonoBehaviour
 {
-    public string _currentScene;
+    [Header("Village information")]
+    [SerializeField]private Sprite _icone;
+    public Sprite Icone => _icone;
+    [SerializeField] private string _villageName;
+    public string VillageName => _villageName;
+    [SerializeField] [TextArea(2,4)] private string _description;
+    public string Description => _description;
+    
+    
+    [Space(12)]
+    [Header("Initialization")]
     public int NumberOfPlace;
-    public bool PlayerIsHere; // потом будет HideInInspector и как-то надо начальную локацию плееру указать
 
-    [SerializeField] private List<PlaceOnMap> _relatedPLaces;
+    [SerializeField]private string _sceneName;
+    public string SceneName => _sceneName;
+    [SerializeField] private List<PlaceOnMap> _relatedPlaces;
     // места в которые можно попасть из данного места (как ребра в графе) 
-    private List<Road> _roads = new List<Road>();
-    private Canvas _canvas;
+    public List<PlaceOnMap> RelatedPlaces => _relatedPlaces;
+    [HideInInspector] public List<Road> _roads = new List<Road>();
+    
+    
     private void Start()
     {
-        _canvas = FindObjectOfType<Canvas>();
         Road[] roads = FindObjectsOfType<Road>();
         foreach (var road in roads)
         {
@@ -29,25 +42,7 @@ public class PlaceOnMap : MonoBehaviour
 
     public void OnPlaceClick()
     {
-        if (PlayerIsHere)
-            return;
-        bool related = false;
-        for (int i = 0; i < _relatedPLaces.Count; i++)
-        {
-            if (MapManager.CurrentNumberOfPlace == _relatedPLaces[i].NumberOfPlace) // Если есть связь между городами
-            {
-                related = true;
-                break;
-            }
-        }
-        if (!related)
-            return;
-
-        GameObject win;
-        win = Instantiate(MapManager.RoarWindow, _canvas.transform);
-        win.GetComponent<RoadWindow>().Init(_roads);
-        
-        // PlayerIsHere = false;
-        // MapManager.TransitionToTravelScene(this);
+        GameObject win = Instantiate(MapManager.VillageWindow, MapManager.Canvas.transform);
+        win.GetComponent<VillageWindow>().Init(this);
     }
 }
