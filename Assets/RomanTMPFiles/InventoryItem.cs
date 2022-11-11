@@ -5,7 +5,10 @@ using UnityEngine.UI;
 
 public class InventoryItem : MonoBehaviour
 {
-    public Roman.Item ItemData;
+    [SerializeField] private TMPro.TMP_Text _currentItemsInAStackText;
+    public Item ItemData;
+
+    private int _currentItemsInAStack;
 
     public int Width
     {
@@ -33,9 +36,20 @@ public class InventoryItem : MonoBehaviour
     public int XPositionOnTheGrid;
     public int YPositionOnTheGrid;
 
+    //public int MaxItemsInAStack { get; private set; } Эту информацию можно получать из SO
+    public int CurrentItemsInAStack 
+    {
+        get { return _currentItemsInAStack; }
+        set
+        {
+            _currentItemsInAStack = value;
+            _currentItemsInAStackText.text = _currentItemsInAStack.ToString();
+        }
+    }
+
     public bool IsRotated = false;
 
-    public void SetItemFromData(Roman.Item itemData) //Присвоение значений из SO. 
+    public void SetItemFromData(Item itemData) //Присвоение значений из SO. 
         //Когда буду делать менюшку, нужно будет добавить остальную информацию (стоп нахуя, здесь же нужна только картинка?)
     {
         ItemData = itemData;
@@ -54,5 +68,9 @@ public class InventoryItem : MonoBehaviour
 
         RectTransform rectTransform = GetComponent<RectTransform>();
         rectTransform.rotation = Quaternion.Euler(0, 0, IsRotated == true ? 90f : 0f); //нихуя умный способ задавать значения, запомню
+
+        _currentItemsInAStackText.rectTransform.anchorMin = new Vector2(IsRotated == true ? 0 : 1, 0);
+        _currentItemsInAStackText.rectTransform.anchorMax = new Vector2(IsRotated == true ? 0 : 1, 0);
+        _currentItemsInAStackText.rectTransform.localRotation = Quaternion.Euler(0, 0, IsRotated == true ? 270f : 0f);
     }
 }

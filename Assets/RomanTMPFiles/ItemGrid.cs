@@ -5,11 +5,13 @@ using UnityEngine;
 
 public class ItemGrid : MonoBehaviour
 {
-    public const float TileSizeWidth = 64;
-    public const float TileSizeHeight = 64;
+
+    public const float TileSizeWidth = 160;
+    public const float TileSizeHeight = 160;
 
     [SerializeField] private int _gridSizeWidth;
     [SerializeField] private int _gridSizeHeight;
+    [SerializeField] Sprite _inventoryTileSprite;
 
     private InventoryItem[,] _storedInventoryItems; //Массив, хранящий информацию о всех клеточках в сетке и предметах в них
     private RectTransform _rectTransform;
@@ -18,6 +20,7 @@ public class ItemGrid : MonoBehaviour
 
     private void Start()
     {
+
         _rectTransform = GetComponent<RectTransform>();
         Init(_gridSizeWidth, _gridSizeHeight);
     }

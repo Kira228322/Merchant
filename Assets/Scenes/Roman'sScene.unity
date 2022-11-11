@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!224 &80347967 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 627543255316917608, guid: dc7e74917cc051440a163a246af98351, type: 3}
+  m_PrefabInstance: {fileID: 1961995088}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &253160848
 GameObject:
   m_ObjectHideFlags: 0
@@ -254,7 +259,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e7f605d38f95044c9a6bf97a55d39b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SelectedItemGrid: {fileID: 0}
 --- !u!1 &661468065
 GameObject:
   m_ObjectHideFlags: 0
@@ -486,8 +490,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c250aecd0e0a4248bfa2111d78677a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gridSizeWidth: 7
-  _gridSizeHeight: 9
 --- !u!114 &842412168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -538,12 +540,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e7f605d38f95044c9a6bf97a55d39b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SelectedItemGrid: {fileID: 0}
---- !u!224 &1322224435 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3879424099658656754, guid: dc7e74917cc051440a163a246af98351, type: 3}
-  m_PrefabInstance: {fileID: 1961995088}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1509965512
 GameObject:
   m_ObjectHideFlags: 0
@@ -620,7 +616,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -637,7 +633,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 842412166}
-  - {fileID: 1322224435}
+  - {fileID: 80347967}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1066,6 +1062,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1509965516}
     m_Modifications:
+    - target: {fileID: 627543255316917608, guid: dc7e74917cc051440a163a246af98351, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3879424099658656752, guid: dc7e74917cc051440a163a246af98351, type: 3}
       propertyPath: m_RaycastTarget
       value: 1

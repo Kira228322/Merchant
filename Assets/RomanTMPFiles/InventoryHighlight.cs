@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InventoryHighlight : MonoBehaviour
 {
-    [SerializeField] RectTransform _highlighter;
+    [SerializeField] private RectTransform _highlighter;
 
     public void Show(bool b)
     {

@@ -9,8 +9,10 @@ public class InventoryController : MonoBehaviour
 
     [SerializeField] private GameObject _itemPrefab;
     [SerializeField] Transform _canvasTransform;
+    [SerializeField] ItemInfo _itemInfoPanel;
 
-    [SerializeField] private List<Roman.Item> items; //Для тестирования
+
+    [SerializeField] private List<Item> items; //Для тестирования
 
     private InventoryItem _selectedItem;
     private RectTransform _rectTransform;
@@ -18,6 +20,14 @@ public class InventoryController : MonoBehaviour
     private InventoryHighlight _inventoryHighlight;
     private InventoryItem _itemToHighlight;
     private Vector2Int _previousHighlightPosition;
+
+    public InventoryItem CurrentSelectedItem { get 
+        { return _selectedItem; }
+        private set 
+        {
+            _selectedItem = value;
+        } 
+    }
 
     public ItemGrid SelectedItemGrid
     {
@@ -32,24 +42,20 @@ public class InventoryController : MonoBehaviour
     private void Awake()
     {
         _inventoryHighlight = GetComponent<InventoryHighlight>();
+
     }
 
     private void Update()
     {
         ItemIconDrag();
 
-
-        if (Input.GetKeyDown(KeyCode.Q))  //Ради тестирования
+        if (Input.touchCount == 1 && Input.GetMouseButtonDown(0))
         {
-            CreateRandomItem();
+            LeftMouseButtonPress();
         }
-        if (Input.GetKeyDown(KeyCode.W)) //Ради тестирования (..что такое юнит тесты?)
+        if (Input.touchCount == 3 && CurrentSelectedItem == null) //Ради тестирования (..что такое юнит тесты?)
         {
             InsertRandomItem();
-        }
-        if (Input.GetKeyDown(KeyCode.R)) //Позже сделать UI менюшку с этой кнопкой
-        {
-            RotateItem();
         }
 
         if (SelectedItemGrid == null) 
@@ -60,17 +66,14 @@ public class InventoryController : MonoBehaviour
 
         HighlightUpdate(); //Обновить информацию о подсветке предметов
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            LeftMouseButtonPress();
-        }
     }
 
     private void LeftMouseButtonPress()
     {
-        Vector2Int tileGridPosition = GetTileGridPosition();
+        /* Переработать под мобильный инпут, поднятие по удержанию, PlaceDown как сейчас, убрать в другой метод
+         * Vector2Int tileGridPosition = GetTileGridPosition();
 
-        if (_selectedItem == null)
+        if (CurrentSelectedItem == null)
         {
             PickUp(tileGridPosition);
         }
@@ -78,16 +81,26 @@ public class InventoryController : MonoBehaviour
         {
             PlaceDown(tileGridPosition);
         }
+        */
+        if (SelectedItemGrid.GetItem(GetTileGridPosition().x, GetTileGridPosition().y) != null)
+        {
+            ShowItemStats(SelectedItemGrid.GetItem(GetTileGridPosition().x, GetTileGridPosition().y));
+        }
+    }
+
+    private void ShowItemStats(InventoryItem item)
+    {
+            _itemInfoPanel.Show(item);
     }
 
     private Vector2Int GetTileGridPosition()
     {
         Vector2 position = Input.mousePosition;
 
-        if (_selectedItem != null)
+        if (CurrentSelectedItem != null)
         {
-            position.x -= (_selectedItem.Width - 1) * ItemGrid.TileSizeWidth / 2;
-            position.y += (_selectedItem.Height - 1) * ItemGrid.TileSizeHeight / 2;
+            position.x -= (CurrentSelectedItem.Width - 1) * ItemGrid.TileSizeWidth / 2;
+            position.y += (CurrentSelectedItem.Height - 1) * ItemGrid.TileSizeHeight / 2;
         }
  
         return SelectedItemGrid.GetTileGridPosition(position, _canvasTransform.localScale);
@@ -95,32 +108,32 @@ public class InventoryController : MonoBehaviour
 
     private void PickUp(Vector2Int tileGridPosition)
     {
-        _selectedItem = SelectedItemGrid.PickUpItem(tileGridPosition.x, tileGridPosition.y);
-        if (_selectedItem != null)
+        CurrentSelectedItem = SelectedItemGrid.PickUpItem(tileGridPosition.x, tileGridPosition.y);
+        if (CurrentSelectedItem != null)
         {
-            _rectTransform = _selectedItem.GetComponent<RectTransform>();
+            _rectTransform = CurrentSelectedItem.GetComponent<RectTransform>();
         }
     }
     private void PlaceDown(Vector2Int tileGridPosition)
     {
-        bool isSuccessful = SelectedItemGrid.TryPlaceItem(_selectedItem, tileGridPosition.x, tileGridPosition.y);
+        bool isSuccessful = SelectedItemGrid.TryPlaceItem(CurrentSelectedItem, tileGridPosition.x, tileGridPosition.y);
         if (isSuccessful)
         {
-            _selectedItem = null;
+            CurrentSelectedItem = null;
         }
     }
     private void RotateItem()
     {
-        if (_selectedItem == null) { return; }
-        if (_selectedItem.ItemData.CellSizeHeight == 1 && _selectedItem.ItemData.CellSizeWidth == 1) { return; }
+        if (CurrentSelectedItem == null) { return; }
+        if (CurrentSelectedItem.ItemData.CellSizeHeight == CurrentSelectedItem.ItemData.CellSizeWidth) { return; }
 
-        _selectedItem.Rotate();
+        CurrentSelectedItem.Rotate();
     }
 
 
     private void ItemIconDrag()
     {
-        if (_selectedItem != null)
+        if (CurrentSelectedItem != null)
         {
             _rectTransform.position = Input.mousePosition;
         }
@@ -129,13 +142,15 @@ public class InventoryController : MonoBehaviour
     private void CreateRandomItem() //Для тестирования
     {
         InventoryItem item = Instantiate(_itemPrefab).GetComponent<InventoryItem>();
-        _selectedItem = item;
+        CurrentSelectedItem = item;
+
+        item.CurrentItemsInAStack = 1;
 
         _rectTransform = item.GetComponent<RectTransform>();
         _rectTransform.SetParent(_canvasTransform);
         _rectTransform.SetAsLastSibling();
 
-        _selectedItem.transform.localScale = Vector2.one;
+        CurrentSelectedItem.transform.localScale = Vector2.one;
 
         int selectedItemID = UnityEngine.Random.Range(0, items.Count);
         item.SetItemFromData(items[selectedItemID]);
@@ -144,8 +159,8 @@ public class InventoryController : MonoBehaviour
     {
         if (SelectedItemGrid == null) { return; }
         CreateRandomItem();
-        InventoryItem itemToInsert = _selectedItem;
-        _selectedItem = null;
+        InventoryItem itemToInsert = CurrentSelectedItem;
+        CurrentSelectedItem = null;
         InsertItem(itemToInsert);
     }
     private void InsertItem (InventoryItem itemToInsert)
@@ -167,7 +182,7 @@ public class InventoryController : MonoBehaviour
         Vector2Int positionOnGrid = GetTileGridPosition();
         if (_previousHighlightPosition == positionOnGrid) { return; }
         _previousHighlightPosition = positionOnGrid;
-        if (_selectedItem == null)
+        if (CurrentSelectedItem == null)
         {
             _itemToHighlight = SelectedItemGrid.GetItem(positionOnGrid.x, positionOnGrid.y);
 
@@ -186,12 +201,12 @@ public class InventoryController : MonoBehaviour
         {
             _inventoryHighlight.Show(SelectedItemGrid.IsInCorrectPosition(
                 positionOnGrid.x, 
-                positionOnGrid.y, 
-                _selectedItem.Width, 
-                _selectedItem.Height)
+                positionOnGrid.y,
+                CurrentSelectedItem.Width,
+                CurrentSelectedItem.Height)
                 );
-            _inventoryHighlight.SetSize(_selectedItem);
-            _inventoryHighlight.SetPosition(SelectedItemGrid, _selectedItem, positionOnGrid.x, positionOnGrid.y);
+            _inventoryHighlight.SetSize(CurrentSelectedItem);
+            _inventoryHighlight.SetPosition(SelectedItemGrid, CurrentSelectedItem, positionOnGrid.x, positionOnGrid.y);
         }
     }
 }
