@@ -33,7 +33,7 @@ public class TravelTimeCounter : MonoBehaviour
                 _travelTime.text = _duration/24 + " дней " + _duration % 24 + " часов";
             if (_duration == 0)
             {
-                // TODO Переход на сцену, в которую игрок ехал
+                TravelManager.EndTravel();
             }
         }
     }

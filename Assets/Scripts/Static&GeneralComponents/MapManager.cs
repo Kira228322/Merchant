@@ -31,4 +31,9 @@ public static class MapManager
         
         _loadScreen.StartTransit(_travelingScene, road);
     }
+    
+    public static void TransitionToVillageScene()
+    {
+        _loadScreen.StartTransit(TravelManager.TargetSceneName);
+    }
 }

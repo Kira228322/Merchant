@@ -14,8 +14,11 @@ public class PlaceOnMap : MonoBehaviour
     
     
     [Space(12)]
+    [Header("Initialization")]
     public int NumberOfPlace;
 
+    [SerializeField]private string _sceneName;
+    public string SceneName => _sceneName;
     [SerializeField] private List<PlaceOnMap> _relatedPlaces;
     // места в которые можно попасть из данного места (как ребра в графе) 
     public List<PlaceOnMap> RelatedPlaces => _relatedPlaces;
@@ -41,7 +44,5 @@ public class PlaceOnMap : MonoBehaviour
     {
         GameObject win = Instantiate(MapManager.VillageWindow, MapManager.Canvas.transform);
         win.GetComponent<VillageWindow>().Init(this);
-        
-        
     }
 }

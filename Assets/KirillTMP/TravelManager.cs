@@ -5,6 +5,7 @@ using UnityEngine;
 public static class TravelManager
 {
     public static bool Travel;
+    public static string TargetSceneName;
     private static int _timeScale = 12;
     
     private static int _travelDuration;
@@ -43,6 +44,9 @@ public static class TravelManager
     public static void EndTravel()
     {
         GameTime.SetTimeScale(1);
+        MapManager.TransitionToVillageScene();
+        Travel = false;
+        _travelBlock.SetActive(false);
     }
     
     

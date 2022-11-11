@@ -33,6 +33,15 @@ public class SceneTransiter : MonoBehaviour
         _loadingSceneOperation = SceneManager.LoadSceneAsync(scene);
         _loadingSceneOperation.allowSceneActivation = false;
     }
+    
+    public void StartTransit(string scene)
+    {
+        enabled = true;
+        _animator.SetTrigger("StartTransition");
+
+        _loadingSceneOperation = SceneManager.LoadSceneAsync(scene);
+        _loadingSceneOperation.allowSceneActivation = false;
+    }
 
     private void Update()
     {
