@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -24,4 +25,21 @@ public class Road : MonoBehaviour
     public Sprite Image => _image;
 
     public PlaceOnMap[] Points = new PlaceOnMap[2];
+    public List<Transform> WayPoints = new List<Transform>(); // путь для иконки игрока на карте
+    private float[] _lengthsOfWays;
+    public float[] LengthOfWays => _lengthsOfWays;
+    private float _lengthOfRoad;
+    public float LengthOfRoad => _lengthOfRoad;
+
+    private void Start()
+    {
+        _lengthsOfWays = new float[WayPoints.Count];
+        for (int i = 0; i < WayPoints.Count - 1; i++)
+        {
+            _lengthsOfWays[i] = Convert.ToSingle(Math.Sqrt
+                (Math.Pow(WayPoints[i+1].position.y - WayPoints[i].position.y, 2) +
+                 Math.Pow(WayPoints[i+1].position.x - WayPoints[i].position.x, 2)));
+            _lengthOfRoad += _lengthsOfWays[i];
+        }
+    }
 }

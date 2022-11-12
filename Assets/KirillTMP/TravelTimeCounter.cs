@@ -12,12 +12,22 @@ public class TravelTimeCounter : MonoBehaviour
     [SerializeField] private TMP_Text _travelTime;
     private int _duration;
     private float _minutes;
+    private Road _road;
+    private GameObject _playerIcone;
+    private int _travelingTime;
+    private int _currentWay;
+    private int count;
     
-    public void Init(int duration)
+    public void Init(int duration, Road road, GameObject playerIcone)
     {
+        _travelingTime = duration;
         _duration = duration;
         _minutes = 0;
         enabled = true;
+        _road = road;
+        _playerIcone = playerIcone;
+        _currentWay = 0;
+        count = 0;
     }
 
     private void Update() 
@@ -25,6 +35,7 @@ public class TravelTimeCounter : MonoBehaviour
         _minutes += Time.deltaTime * GameTime.GetTimeScale();
         if (_minutes >= 60)
         {
+            MoveIconeOnMap();
             _minutes -= 60;
             _duration--;
             if (_duration / 24 == 0)
@@ -35,6 +46,20 @@ public class TravelTimeCounter : MonoBehaviour
             {
                 TravelManager.EndTravel();
             }
+        }
+    }
+
+    private void MoveIconeOnMap()
+    {
+        count++;
+        float elementRoad = _road.LengthOfRoad / _travelingTime;
+        _playerIcone.transform.position = Vector3.Lerp(_road.WayPoints[_currentWay].position, 
+            _road.WayPoints[_currentWay+1].position, elementRoad*count/_road.LengthOfWays[_currentWay]);
+        if (elementRoad * count >= _road.LengthOfWays[_currentWay])
+        {
+            count = 0;
+            _currentWay++;
+            _playerIcone.transform.position = _road.WayPoints[_currentWay].position;
         }
     }
 }

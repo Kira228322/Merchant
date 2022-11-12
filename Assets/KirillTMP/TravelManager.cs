@@ -16,13 +16,15 @@ public static class TravelManager
     private static GameObject _travelBlock;
     private static TMP_Text _travelTime;
     private static TravelTimeCounter _timeCounter;
+    private static GameObject _playerIcone;
 
-    public static void Init(GameObject trBlock, TMP_Text trTime, TravelTimeCounter timeCounter)
+    public static void Init(GameObject trBlock, TMP_Text trTime, TravelTimeCounter timeCounter, GameObject playerIcone)
     {
         _travelBlock = trBlock;
         _travelBlock.SetActive(false);
         _travelTime = trTime;
         _timeCounter = timeCounter;
+        _playerIcone = playerIcone;
     }
     public static void StartTravel(Road road)
     {
@@ -38,7 +40,8 @@ public static class TravelManager
             _travelTime.text = _travelDuration/24 + " дней " + _travelDuration % 24 + " часов";
 
         GameTime.SetTimeScale(_timeScale);
-        _timeCounter.Init(_travelDuration);
+        _timeCounter.Init(_travelDuration, road, _playerIcone);
+        _playerIcone.transform.position = road.WayPoints[0].position;
     }
 
     public static void EndTravel()

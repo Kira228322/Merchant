@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,15 +14,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _roadWindow;
     [SerializeField] private GameObject _villageWindow;
     [SerializeField] private Canvas _canvas;
-    [SerializeField] private GameObject TravelBlock;
-    [SerializeField] private TMP_Text TravelTime;
-    [SerializeField] private Timeflow Timeflow;
+    [FormerlySerializedAs("TravelBlock")] [SerializeField] private GameObject _travelBlock;
+    [FormerlySerializedAs("TravelTime")] [SerializeField] private TMP_Text _travelTime;
+    [FormerlySerializedAs("Timeflow")] [SerializeField] private Timeflow _timeflow;
     [SerializeField] private TravelTimeCounter _timeCounter;
+    [SerializeField] private GameObject _playerIcone;
         void Start()
     {
         MapManager.Init(_travelingScene, _loadScreen, _roadWindow, _villageWindow, _canvas);
-        TravelManager.Init(TravelBlock, TravelTime, _timeCounter);
-        GameTime.Init(Timeflow);
+        TravelManager.Init(_travelBlock, _travelTime, _timeCounter, _playerIcone);
+        GameTime.Init(_timeflow);
     }
 
 }
