@@ -156,13 +156,12 @@ public class InventoryController : MonoBehaviour
 
     private void CreateRandomItem() //Для тестирования
     {
-        InventoryItem item = Instantiate(_itemPrefab).GetComponent<InventoryItem>();
+        InventoryItem item = Instantiate(_itemPrefab, _canvasTransform).GetComponent<InventoryItem>();
         CurrentSelectedItem = item;
 
         item.CurrentItemsInAStack = 1;
 
         _rectTransform = item.GetComponent<RectTransform>();
-        _rectTransform.SetParent(_canvasTransform);
         _rectTransform.SetAsLastSibling();
 
         CurrentSelectedItem.transform.localScale = Vector2.one;
