@@ -6,7 +6,7 @@ public static class TravelManager
 {
     public static bool Travel;
     public static string TargetSceneName;
-    private static int _timeScale = 12;
+    private static int _timeScale = 15; // Игровой час длится 1 минуту ирл. В поездке 1 час - 4 секунды ирл
     
     private static int _travelDuration;
     private static int _quality;
@@ -34,6 +34,7 @@ public static class TravelManager
         _cost = road.Cost;
         
         _travelBlock.SetActive(true);
+        _travelBlock.GetComponent<Animator>().SetTrigger("StartTravel");
         if (_travelDuration / 24 == 0)
             _travelTime.text = _travelDuration + " часов";
         else
