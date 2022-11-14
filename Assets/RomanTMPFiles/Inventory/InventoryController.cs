@@ -12,7 +12,7 @@ public class InventoryController : MonoBehaviour
     [SerializeField] ItemInfo _itemInfoPanel;
 
 
-    [SerializeField] private List<Item> items; //Для тестирования
+    [SerializeField] private List<Item> items; //Для тестирования, список предметов, которые могут вылезти рандомно по нажатию ПКМ
 
     private InventoryItem _selectedItem;
     private RectTransform _rectTransform;
@@ -20,6 +20,10 @@ public class InventoryController : MonoBehaviour
     private InventoryHighlight _inventoryHighlight;
     private InventoryItem _itemToHighlight;
     private Vector2Int _previousHighlightPosition;
+
+    private float _pressAndHoldTime = 0f;
+    private Vector2Int _currentTileGridPosition;
+    private Vector2Int _itemPickedUpFromPosition;
 
     public InventoryItem CurrentSelectedItem { get 
         { return _selectedItem; }
@@ -48,12 +52,8 @@ public class InventoryController : MonoBehaviour
     private void Update()
     {
         ItemIconDrag();
-
-        if (Input.touchCount == 1 && Input.GetMouseButtonDown(0))
-        {
-            LeftMouseButtonPress();
-        }
-        if (Input.touchCount == 3 && CurrentSelectedItem == null) //Ради тестирования (..что такое юнит тесты?)
+        
+        if (Input.GetMouseButtonDown(1)) //Ради тестирования (..что такое юнит тесты?)
         {
             InsertRandomItem();
         }
@@ -63,28 +63,46 @@ public class InventoryController : MonoBehaviour
             _inventoryHighlight.Show(false);
             return; 
         }
+        
+        if (SelectedItemGrid != null)
+        {
+            _currentTileGridPosition = GetTileGridPosition();
+        }
 
-        HighlightUpdate(); //Обновить информацию о подсветке предметов
+        if (Input.GetMouseButtonUp(0))
+        {
+            _pressAndHoldTime = 0;
+            if (_selectedItem != null)
+            {
+                PlaceDown(_currentTileGridPosition);
+            }
+            else LeftMouseButtonPress();
+        }
+        if (Input.GetMouseButton(0))
+        {
+            if (_selectedItem == null)
+            {
+                _pressAndHoldTime += Time.deltaTime;
+                if (_pressAndHoldTime >= 0.3f)
+                {
+                    PickUp(_currentTileGridPosition);
+                }
+            }
+        }
+
+
+        HighlightUpdate();
 
     }
 
     private void LeftMouseButtonPress()
     {
-        /* Переработать под мобильный инпут, поднятие по удержанию, PlaceDown как сейчас, убрать в другой метод
-         * Vector2Int tileGridPosition = GetTileGridPosition();
-
-        if (CurrentSelectedItem == null)
+        if (SelectedItemGrid != null)
         {
-            PickUp(tileGridPosition);
-        }
-        else
-        {
-            PlaceDown(tileGridPosition);
-        }
-        */
-        if (SelectedItemGrid.GetItem(GetTileGridPosition().x, GetTileGridPosition().y) != null)
-        {
-            ShowItemStats(SelectedItemGrid.GetItem(GetTileGridPosition().x, GetTileGridPosition().y));
+            if (SelectedItemGrid.GetItem(GetTileGridPosition().x, GetTileGridPosition().y) != null)
+            {
+                ShowItemStats(SelectedItemGrid.GetItem(GetTileGridPosition().x, GetTileGridPosition().y));
+            }
         }
     }
 
@@ -109,6 +127,7 @@ public class InventoryController : MonoBehaviour
     private void PickUp(Vector2Int tileGridPosition)
     {
         CurrentSelectedItem = SelectedItemGrid.PickUpItem(tileGridPosition.x, tileGridPosition.y);
+        _itemPickedUpFromPosition = new Vector2Int (CurrentSelectedItem.XPositionOnTheGrid, CurrentSelectedItem.YPositionOnTheGrid);
         if (CurrentSelectedItem != null)
         {
             _rectTransform = CurrentSelectedItem.GetComponent<RectTransform>();
@@ -121,15 +140,11 @@ public class InventoryController : MonoBehaviour
         {
             CurrentSelectedItem = null;
         }
+        else
+        {
+            PlaceDown(_itemPickedUpFromPosition);
+        }
     }
-    private void RotateItem()
-    {
-        if (CurrentSelectedItem == null) { return; }
-        if (CurrentSelectedItem.ItemData.CellSizeHeight == CurrentSelectedItem.ItemData.CellSizeWidth) { return; }
-
-        CurrentSelectedItem.Rotate();
-    }
-
 
     private void ItemIconDrag()
     {

@@ -49,7 +49,6 @@ public class ItemGrid : MonoBehaviour
         if (itemToReturn == null) { return null; }
 
         CleanGridReference(itemToReturn);
-
         return itemToReturn;
     }
 
@@ -78,7 +77,6 @@ public class ItemGrid : MonoBehaviour
         }
 
         PlaceItem(item, positionX, positionY);
-
         return true;
     }
 
