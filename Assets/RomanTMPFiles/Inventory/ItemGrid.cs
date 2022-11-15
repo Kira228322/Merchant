@@ -127,7 +127,6 @@ public class ItemGrid : MonoBehaviour
         {
             return false;
         }
-
         return true;
     }
 

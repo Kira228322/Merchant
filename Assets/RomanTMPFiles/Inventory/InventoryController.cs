@@ -23,6 +23,7 @@ public class InventoryController : MonoBehaviour
 
     private float _pressAndHoldTime = 0f;
     private Vector2Int _currentTileGridPosition;
+    private ItemGrid _gridPickedUpFrom;
     private Vector2Int _itemPickedUpFromPosition;
 
     public InventoryItem CurrentSelectedItem { get 
@@ -61,7 +62,6 @@ public class InventoryController : MonoBehaviour
         if (SelectedItemGrid == null) 
         {
             _inventoryHighlight.Show(false);
-            return; 
         }
         
         if (SelectedItemGrid != null)
@@ -71,25 +71,35 @@ public class InventoryController : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
+            Debug.Log("GetMBUp");
             _pressAndHoldTime = 0;
             if (_selectedItem != null)
             {
-                PlaceDown(_currentTileGridPosition);
+                if(SelectedItemGrid == null)
+                {
+                    SelectedItemGrid = _gridPickedUpFrom;
+                    PlaceDown(_itemPickedUpFromPosition);
+                    SelectedItemGrid = null;
+                }
+                else PlaceDown(_currentTileGridPosition);
             }
             else LeftMouseButtonPress();
         }
+
         if (Input.GetMouseButton(0))
         {
+            if (SelectedItemGrid == null) { return; }
             if (_selectedItem == null)
             {
                 _pressAndHoldTime += Time.deltaTime;
                 if (_pressAndHoldTime >= 0.3f)
                 {
-                    PickUp(_currentTileGridPosition);
+                    if (SelectedItemGrid.GetItem(_currentTileGridPosition.x, _currentTileGridPosition.y) != null)
+                        PickUp(_currentTileGridPosition);
+                    else _pressAndHoldTime = 0;
                 }
             }
         }
-
 
         HighlightUpdate();
 
@@ -127,10 +137,12 @@ public class InventoryController : MonoBehaviour
     private void PickUp(Vector2Int tileGridPosition)
     {
         CurrentSelectedItem = SelectedItemGrid.PickUpItem(tileGridPosition.x, tileGridPosition.y);
+        _gridPickedUpFrom = SelectedItemGrid;
         _itemPickedUpFromPosition = new Vector2Int (CurrentSelectedItem.XPositionOnTheGrid, CurrentSelectedItem.YPositionOnTheGrid);
         if (CurrentSelectedItem != null)
         {
             _rectTransform = CurrentSelectedItem.GetComponent<RectTransform>();
+            _rectTransform.SetAsLastSibling();
         }
     }
     private void PlaceDown(Vector2Int tileGridPosition)
@@ -193,6 +205,7 @@ public class InventoryController : MonoBehaviour
 
     private void HighlightUpdate()
     {
+        if(SelectedItemGrid == null) { return; }
         Vector2Int positionOnGrid = GetTileGridPosition();
         if (_previousHighlightPosition == positionOnGrid) { return; }
         _previousHighlightPosition = positionOnGrid;
