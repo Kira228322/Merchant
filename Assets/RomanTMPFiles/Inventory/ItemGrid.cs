@@ -23,6 +23,7 @@ public class ItemGrid : MonoBehaviour
 
         _rectTransform = GetComponent<RectTransform>();
         Init(_gridSizeWidth, _gridSizeHeight);
+
     }
 
     private void Init(int width, int height)
@@ -73,6 +74,14 @@ public class ItemGrid : MonoBehaviour
 
         if (IsNotOverlapping(positionX, positionY, item.Width, item.Height) == false)
         {
+            if (IsOverlappingWithTheSameItemType(item, positionX, positionY, item.Width, item.Height, out InventoryItem itemInInventory))
+            {
+                if (TryPlaceItemInAStack(item, itemInInventory))
+                {
+                return true;
+                }
+                return false;
+            }
             return false;
         }
 
@@ -99,6 +108,18 @@ public class ItemGrid : MonoBehaviour
         Vector2 position = CalculatePositionOnTheGrid(item, positionX, positionY);
 
         rectTransform.localPosition = position;
+    }
+    public bool TryPlaceItemInAStack(InventoryItem itemToPlace, InventoryItem itemToReceive)
+    {
+        if (itemToReceive.CurrentItemsInAStack + itemToPlace.CurrentItemsInAStack > itemToReceive.ItemData.MaxItemsInAStack)
+        {
+            itemToPlace.CurrentItemsInAStack -= (itemToReceive.ItemData.MaxItemsInAStack - itemToReceive.CurrentItemsInAStack);
+            itemToReceive.CurrentItemsInAStack = itemToReceive.ItemData.MaxItemsInAStack;
+            return false;
+        }
+        itemToReceive.CurrentItemsInAStack += itemToPlace.CurrentItemsInAStack;
+        Destroy(itemToPlace.gameObject);
+        return true;
     }
 
     public InventoryItem GetItem(int x, int y)
@@ -160,6 +181,27 @@ public class ItemGrid : MonoBehaviour
         }
 
         return true;
+    }
+
+    public bool IsOverlappingWithTheSameItemType(InventoryItem item, int positionX, int positionY, int width, int height, out InventoryItem itemInInventory)
+    {
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                if (_storedInventoryItems[positionX + x, positionY + y] != null)
+                {
+                    if (_storedInventoryItems[positionX + x, positionY + y].ItemData.name == item.ItemData.name)
+                    {
+                        itemInInventory = _storedInventoryItems[positionX + x, positionY + y];
+                        return true;
+                    }
+                }
+            }
+        }
+
+        itemInInventory = null;
+        return false;
     }
     public bool IsInCorrectPosition(int positionX, int positionY, int width, int height)
     {

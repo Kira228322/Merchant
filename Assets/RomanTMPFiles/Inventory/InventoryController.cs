@@ -26,7 +26,8 @@ public class InventoryController : MonoBehaviour
     private ItemGrid _gridPickedUpFrom;
     private Vector2Int _itemPickedUpFromPosition;
 
-    public InventoryItem CurrentSelectedItem { get 
+    public InventoryItem CurrentSelectedItem { 
+        get 
         { return _selectedItem; }
         private set 
         {
@@ -71,7 +72,6 @@ public class InventoryController : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
-            Debug.Log("GetMBUp");
             _pressAndHoldTime = 0;
             if (_selectedItem != null)
             {
