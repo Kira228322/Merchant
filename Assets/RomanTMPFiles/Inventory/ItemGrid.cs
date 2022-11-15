@@ -111,12 +111,21 @@ public class ItemGrid : MonoBehaviour
     }
     public bool TryPlaceItemInAStack(InventoryItem itemToPlace, InventoryItem itemToReceive)
     {
+        //Если прибавить количество айтемов в помещаемом к количеству айтемов в имеющемся, то получится больше, чем макс.стак?
         if (itemToReceive.CurrentItemsInAStack + itemToPlace.CurrentItemsInAStack > itemToReceive.ItemData.MaxItemsInAStack)
         {
+            //...Да, т.е. поместится не полностью, значит стак должен укомплектоваться до максимума,
+            //а какое-то количество предметов должно вернуться обратно. Чтобы найти, сколько предметов должно вернуться обратно,
+            //отнимаю Макс.стак минус сколько уже лежит -> получаю сколько не хватает.
+            //сколько не хватает вычитаю из текущего количества в стаке и возвращаю на место остатки (return false)
+
+            //Я понимаю, что это математика для 4 класса,
+            //но подробные объяснения лучше помогут в том числе и мне разобраться в том, что здесь будет, если в будущем нужна будет отладка.
             itemToPlace.CurrentItemsInAStack -= (itemToReceive.ItemData.MaxItemsInAStack - itemToReceive.CurrentItemsInAStack);
             itemToReceive.CurrentItemsInAStack = itemToReceive.ItemData.MaxItemsInAStack;
             return false;
         }
+        //...Нет, т.е. поместится полностью, помещаемый предмет можно уничтожать.
         itemToReceive.CurrentItemsInAStack += itemToPlace.CurrentItemsInAStack;
         Destroy(itemToPlace.gameObject);
         return true;
@@ -151,21 +160,37 @@ public class ItemGrid : MonoBehaviour
         return true;
     }
 
-    public Vector2Int? FindSpaceForObject(InventoryItem itemToInsert)
-        //Алгоритм поиска свободного места для автоматического добавления предметов
+    public Vector2Int? FindSpaceForItemInsertion(InventoryItem itemToInsert, bool isFillingStackFirst)
     {
-        for (int y = 0; y < _gridSizeHeight - itemToInsert.Height + 1; y++)
+        //Буль определяет порядок заполнения - если true, сначала будет искать незаполненные стаки и заполнять их (как в майнкрафте)
+        //Если false, сначала будет создавать новые стаки, а если места не останется, заполнять имеющиеся.
+        //Такая неоднозначность нужна поскольку сейчас, когда я это пишу, я планирую использовать это для создания
+        //кнопки разделения айтемов:
+        //Очевидно, обычным режимом работы должно быть сперва заполнение стаков, но при разделении ведь нужно обязательно создавать
+        //новый стак, потому что если просто делать InsertItem() по нажатию кнопки разделения, то предмет просто вернется в стак,
+        //из которого его разделили 
+        //
+        //Поэтому, кнопка разделения айтемов будет использовать этот метод с false, а обычное поведение заполнения с true.
+        if (isFillingStackFirst)
         {
-            for (int x = 0; x < _gridSizeWidth - itemToInsert.Width + 1; x++)
+            Vector2Int? result = FindUnfilledStackOfSameItems(itemToInsert);
+            if (result == null)
             {
-                if (AnyAvailableSpace(x,y,itemToInsert.Width, itemToInsert.Height))
-                {
-                    return new Vector2Int(x, y);
-                }
+                result = FindAvailableSpaceForNewStack(itemToInsert);
             }
+            return result;
         }
-        return null;
+        else
+        {
+            Vector2Int? result = FindAvailableSpaceForNewStack(itemToInsert);
+            if (result == null)
+            {
+                result = FindUnfilledStackOfSameItems(itemToInsert);
+            }
+            return result;
+        }
     }
+
 
     private bool IsNotOverlapping(int positionX, int positionY, int width, int height)
     {
@@ -220,8 +245,37 @@ public class ItemGrid : MonoBehaviour
 
         return true;
     }
+    private Vector2Int? FindAvailableSpaceForNewStack(InventoryItem itemToInsert)
+    {
+        for (int y = 0; y < _gridSizeHeight - itemToInsert.Height + 1; y++)
+        {
+            for (int x = 0; x < _gridSizeWidth - itemToInsert.Width + 1; x++)
+            {
+                if (AnyAvailableSpace(x, y, itemToInsert.Width, itemToInsert.Height))
+                {
+                    return new Vector2Int(x, y);
+                }
+            }
+        }
+        return null;
+    }
+
+    private Vector2Int? FindUnfilledStackOfSameItems(InventoryItem itemToInsert)
+    {
+        for (int y = 0; y < _gridSizeHeight; y++)
+        {
+            for (int x = 0; x < _gridSizeWidth; x++)
+            {
+                if (AnyUnfilledStack(x, y, itemToInsert))
+                {
+                    return new Vector2Int(x, y);
+                }
+            }
+        }
+        return null;
+    }
     private bool AnyAvailableSpace(int positionX, int positionY, int width, int height)
-        //Присутствует ли где-то в инвентаре свободное место чтобы поместить предмет размера {width} x {height}?
+        //Присутствует ли на этом месте в инвентаре свободное место чтобы поместить предмет размера {width} x {height}?
     {
         for (int x = 0; x < width; x++)
         {
@@ -236,5 +290,22 @@ public class ItemGrid : MonoBehaviour
         }
 
         return true;
+    }
+    private bool AnyUnfilledStack(int positionX, int positionY, InventoryItem targetItem)
+    {
+        //Если тип предмета, лежащий в инвентаре такой же, как предмет, который мы пытаемся установить И
+        //И стак этого предмета неполный, т.е может вместить в себя ещё столько предметов, сколько в помещаемом стаке, то true.
+        if (_storedInventoryItems[positionX, positionY] != null)
+        {
+            if (_storedInventoryItems[positionX, positionY].ItemData.name == targetItem.ItemData.name)
+            {
+                if ((_storedInventoryItems[positionX, positionY].ItemData.MaxItemsInAStack -
+                _storedInventoryItems[positionX, positionY].CurrentItemsInAStack) >= targetItem.CurrentItemsInAStack)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

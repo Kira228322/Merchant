@@ -194,13 +194,13 @@ public class InventoryController : MonoBehaviour
         //itemToInsert.transform.localScale = canvasTransform.localScale;
         //^^возможно пригодится в будущем в качестве подсказки, когда будем делать спавн объектов 
 
-        Vector2Int? posOnGrid = SelectedItemGrid.FindSpaceForObject(itemToInsert);
+        Vector2Int? posOnGrid = SelectedItemGrid.FindSpaceForItemInsertion(itemToInsert, isFillingStackFirst: true);
 
         if (posOnGrid == null) 
         { 
             return; 
         }
-        SelectedItemGrid.PlaceItem(itemToInsert, posOnGrid.Value.x, posOnGrid.Value.y);
+        SelectedItemGrid.TryPlaceItem(itemToInsert, posOnGrid.Value.x, posOnGrid.Value.y);
     }
 
     private void HighlightUpdate()
