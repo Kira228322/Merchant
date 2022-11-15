@@ -118,7 +118,7 @@ public class InventoryController : MonoBehaviour
 
     private void ShowItemStats(InventoryItem item)
     {
-            _itemInfoPanel.Show(item);
+            _itemInfoPanel.Show(item, SelectedItemGrid);
     }
 
     private Vector2Int GetTileGridPosition()
@@ -166,6 +166,33 @@ public class InventoryController : MonoBehaviour
         }
     }
 
+    public void CreateAndInsertItem(ItemGrid itemGrid, Item item, int amount, bool isFillingStackFirst)
+    {
+        CreateItem(item, amount);
+        InventoryItem itemToInsert = CurrentSelectedItem;
+        CurrentSelectedItem = null;
+        SelectedItemGrid = itemGrid;
+
+        InsertItem(itemToInsert, isFillingStackFirst);
+
+        SelectedItemGrid = null; //itemGrid обнуляется после установки предмета
+    }
+
+    private void CreateItem(Item item, int amount)
+    {
+        InventoryItem spawnedItem = Instantiate(_itemPrefab, _canvasTransform).GetComponent<InventoryItem>();
+        CurrentSelectedItem = spawnedItem;
+
+        spawnedItem.CurrentItemsInAStack = amount;
+
+        _rectTransform = spawnedItem.GetComponent<RectTransform>();
+        _rectTransform.SetAsLastSibling();
+
+        CurrentSelectedItem.transform.localScale = Vector2.one;
+
+        spawnedItem.SetItemFromData(item);
+
+    }
     private void CreateRandomItem() //Для тестирования
     {
         InventoryItem item = Instantiate(_itemPrefab, _canvasTransform).GetComponent<InventoryItem>();
@@ -187,14 +214,14 @@ public class InventoryController : MonoBehaviour
         CreateRandomItem();
         InventoryItem itemToInsert = CurrentSelectedItem;
         CurrentSelectedItem = null;
-        InsertItem(itemToInsert);
+        InsertItem(itemToInsert, true);
     }
-    private void InsertItem (InventoryItem itemToInsert)
+    private void InsertItem (InventoryItem itemToInsert, bool isFillingStackFirst)
     {
         //itemToInsert.transform.localScale = canvasTransform.localScale;
         //^^возможно пригодится в будущем в качестве подсказки, когда будем делать спавн объектов 
 
-        Vector2Int? posOnGrid = SelectedItemGrid.FindSpaceForItemInsertion(itemToInsert, isFillingStackFirst: true);
+        Vector2Int? posOnGrid = SelectedItemGrid.FindSpaceForItemInsertion(itemToInsert, isFillingStackFirst);
 
         if (posOnGrid == null) 
         { 

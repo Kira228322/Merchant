@@ -36,7 +36,7 @@ public class InventoryItem : MonoBehaviour
     public int XPositionOnTheGrid;
     public int YPositionOnTheGrid;
 
-    //public int MaxItemsInAStack { get; private set; } Ёту информацию можно получать из SO
+    //public int MaxItemsInAStack { get; private set; } Ёту информацию можно получать из SO  //UPD 16.11.22: ƒа и Width и Height можно получать из SO, зачем € тогда сделал по разному? ¬озможно потом исправлю
     public int CurrentItemsInAStack 
     {
         get { return _currentItemsInAStack; }

@@ -6,9 +6,14 @@ using TMPro;
 
 public class ItemInfo : MonoBehaviour
 {
-    [SerializeField] private Image _itemIcon;
-    [SerializeField] private TMP_Text _itemName;
+    [SerializeField] private InventoryController _inventoryController;
 
+    [SerializeField] private Image _itemIcon;
+    [SerializeField] private Button _splitButton;
+    [SerializeField] private Button _rotateButton;
+    [SerializeField] private ItemInfoSplitSlider _splitSliderPanel;
+
+    [SerializeField] private TMP_Text _itemName;
     [SerializeField] private TMP_Text _weightText;
     [SerializeField] private TMP_Text _averagePriceText;
     [SerializeField] private TMP_Text _maxItemsInAStackText;
@@ -17,6 +22,7 @@ public class ItemInfo : MonoBehaviour
     [SerializeField] private TMP_Text _daysToSpoilText;
 
     private InventoryItem _currentItemSelected;
+    private ItemGrid _lastItemGridSelected;
 
     public void OnRotateButtonPressed()
     {
@@ -28,16 +34,34 @@ public class ItemInfo : MonoBehaviour
     }
     public void OnSplitButtonPressed()
     {
-        //Ещё одно меню: выберите сколько предметов отделить в другой стак (слайдер от 1 до текущего количества предметов в стаке)
+        _splitSliderPanel.Show(_currentItemSelected);
+    }
+    public void Split(int amountToSplit)
+    {
+        _currentItemSelected.CurrentItemsInAStack -= amountToSplit; //вроде бы предусмотрено на случай всех невозможных ситуаций через другие скрипты и свойства кнопок
+        _inventoryController.CreateAndInsertItem(_lastItemGridSelected, _currentItemSelected.ItemData, amountToSplit, isFillingStackFirst: false);
     }
 
-    public void Show(InventoryItem item)
+    public void Show(InventoryItem item, ItemGrid itemGrid)
     {
         _currentItemSelected = item;
+        _lastItemGridSelected = itemGrid;
 
         //присвоение текста и иконок
         _itemIcon.sprite = item.ItemData.Icon;
         _itemName.text = item.ItemData.Name;
+
+        if (item.CurrentItemsInAStack == 1)
+        {
+            _splitButton.interactable = false;
+        }
+        else _splitButton.interactable = true;
+
+        if (item.ItemData.CellSizeWidth == item.ItemData.CellSizeHeight)
+        {
+            _rotateButton.interactable = false;
+        }
+        else _rotateButton.interactable = true;
 
         _weightText.text = $"Вес: {item.ItemData.Weight}";
         _averagePriceText.text = $"Средняя цена: {item.ItemData.Price}";

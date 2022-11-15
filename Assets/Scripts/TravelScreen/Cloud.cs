@@ -25,6 +25,6 @@ public class Cloud : MonoBehaviour
 
     void Update()
     {
-        transform.position += Vector3.right * _speed * Time.deltaTime;
+        transform.position += _speed * Time.deltaTime * Vector3.right;
     }
 }
