@@ -91,13 +91,15 @@ public class InventoryController : MonoBehaviour
             if (SelectedItemGrid == null) { return; }
             if (_selectedItem == null)
             {
-                _pressAndHoldTime += Time.deltaTime;
-                if (_pressAndHoldTime >= 0.3f)
+                if (SelectedItemGrid.GetItem(_currentTileGridPosition.x, _currentTileGridPosition.y) != null)
                 {
-                    if (SelectedItemGrid.GetItem(_currentTileGridPosition.x, _currentTileGridPosition.y) != null)
+                    _pressAndHoldTime += Time.deltaTime;
+                    if (_pressAndHoldTime >= 0.3f)
+                    {
                         PickUp(_currentTileGridPosition);
-                    else _pressAndHoldTime = 0;
+                    }
                 }
+                else _pressAndHoldTime = 0;
             }
         }
 
