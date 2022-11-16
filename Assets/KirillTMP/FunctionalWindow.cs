@@ -7,15 +7,16 @@ using UnityEngine.PlayerLoop;
 public class FunctionalWindow : MonoBehaviour
 {
     [SerializeField] private TMP_Text _merchantName;
-    private Merchant _merchant;
+
+    private Trader _trader;
 
     
     
-    public void Init(Merchant merchant)
+    public void Init(Trader trader)
     {
-        _merchant = merchant;
+        _trader = trader;
         
-        _merchantName.text = _merchant.Name; 
+        _merchantName.text = _trader.Name; 
     }
     
     public void OnTalkButtonClick()
@@ -25,7 +26,12 @@ public class FunctionalWindow : MonoBehaviour
 
     public void OnBuyButtonClick()
     {
-        
+        TradeManager.TraderPanel.SetActive(true);
+        for (int i = 0; i < _trader.Goods.Count; i++)
+        {
+            GameObject tradersGoods = Instantiate(TradeManager.GoodsPanel.gameObject, TradeManager.TraderPanelContent);
+            tradersGoods.GetComponent<GoodsPanel>().Init(_trader.Goods[i], _trader.CountOfGood[i]);
+        }
     }
 
     public void OnSellButtonClick()
