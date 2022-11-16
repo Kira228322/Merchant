@@ -27,11 +27,15 @@ public class FunctionalWindow : MonoBehaviour
     public void OnBuyButtonClick()
     {
         TradeManager.TraderPanel.SetActive(true);
+        for (int i =  TradeManager.TraderPanelContent.childCount -1; i >= 0; i--)
+            Destroy(TradeManager.TraderPanelContent.GetChild(i).gameObject);
+        
         for (int i = 0; i < _trader.Goods.Count; i++)
         {
             GameObject tradersGoods = Instantiate(TradeManager.GoodsPanel.gameObject, TradeManager.TraderPanelContent);
             tradersGoods.GetComponent<GoodsPanel>().Init(_trader.Goods[i], _trader.CountOfGood[i]);
         }
+        Destroy(gameObject);
     }
 
     public void OnSellButtonClick()
