@@ -5,7 +5,7 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
-public class Merchant : MonoBehaviour
+public class Trader : MonoBehaviour
 {
     // Хоть у каждого Item'a уже указана цена, за которую его можно купить у торговца
     // каждый торговец будет иметь свою цену на этот товар. ИБО В ЭТОМ И СМЫСЛ ИГРЫ епт
@@ -32,7 +32,7 @@ public class Merchant : MonoBehaviour
 
 
 
-    [CustomEditor(typeof(Merchant))]
+    [CustomEditor(typeof(Trader))]
     public class MerchantEditor : Editor 
     {
         public override void OnInspectorGUI()
@@ -40,39 +40,39 @@ public class Merchant : MonoBehaviour
             base.OnInspectorGUI();
             
             
-            Merchant merchant = (Merchant)target;
+            Trader trader = (Trader)target;
             
             
             
             
-            while (merchant.NewPrice.Count < merchant.Goods.Count)
+            while (trader.NewPrice.Count < trader.Goods.Count)
             {
-                merchant.NewPrice.Add(0);
-                merchant.CountOfGood.Add(0);
+                trader.NewPrice.Add(0);
+                trader.CountOfGood.Add(0);
             }
-            while (merchant.NewPrice.Count > merchant.Goods.Count)
+            while (trader.NewPrice.Count > trader.Goods.Count)
             {
-                merchant.NewPrice.RemoveAt(merchant.NewPrice.Count-1);
-                merchant.CountOfGood.RemoveAt(merchant.CountOfGood.Count-1);
+                trader.NewPrice.RemoveAt(trader.NewPrice.Count-1);
+                trader.CountOfGood.RemoveAt(trader.CountOfGood.Count-1);
             }
             
-            for (int i = 0; i < merchant.Goods.Count; i++)
+            for (int i = 0; i < trader.Goods.Count; i++)
             {
-                if (merchant.Goods[i] == null)
+                if (trader.Goods[i] == null)
                     continue;
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.Space(-18, true);
-                EditorGUILayout.LabelField(merchant.Goods[i].Name, GUILayout.MaxWidth(90));
+                EditorGUILayout.LabelField(trader.Goods[i].Name, GUILayout.MaxWidth(90));
                 EditorGUILayout.Space(1, true);
-                EditorGUILayout.LabelField(merchant.Goods[i].Price + "-AvgPrice", GUILayout.MaxWidth(75));
+                EditorGUILayout.LabelField(trader.Goods[i].Price + "-AvgPrice", GUILayout.MaxWidth(75));
                 
                 EditorGUILayout.Space(2, true);
                 EditorGUILayout.LabelField("Price", GUILayout.MaxWidth(31));
-                merchant.NewPrice[i] = EditorGUILayout.IntField(merchant.NewPrice[i]);
+                trader.NewPrice[i] = EditorGUILayout.IntField(trader.NewPrice[i]);
                 
                 EditorGUILayout.Space(2, true);
                 EditorGUILayout.LabelField("Count", GUILayout.MaxWidth(36.5f));
-                merchant.CountOfGood[i] = EditorGUILayout.IntField(merchant.CountOfGood[i]);
+                trader.CountOfGood[i] = EditorGUILayout.IntField(trader.CountOfGood[i]);
                 EditorGUILayout.EndHorizontal();
             }
         }

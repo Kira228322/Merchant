@@ -4,17 +4,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-[RequireComponent(typeof(Merchant))]
+[RequireComponent(typeof(Trader))]
 public class TraiderFunctional : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private GameObject _functionalWindow;
-    private Merchant _merchant;
+    private Trader _trader;
     private Canvas _canvas;
 
     private void Start()
     {
         _canvas = FindObjectOfType<Canvas>();
-        _merchant = GetComponent<Merchant>();
+        _trader = GetComponent<Trader>();
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -24,6 +24,6 @@ public class TraiderFunctional : MonoBehaviour, IPointerClickHandler
         GameObject window = Instantiate(_functionalWindow, _canvas.transform);
         RectTransform rectTransform = window.GetComponent<RectTransform>();
         rectTransform.position = Input.mousePosition;
-        window.GetComponent<FunctionalWindow>().Init(_merchant);
+        window.GetComponent<FunctionalWindow>().Init(_trader);
     }
 }
