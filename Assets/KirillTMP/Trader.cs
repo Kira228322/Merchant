@@ -29,6 +29,17 @@ public class Trader : MonoBehaviour
         }
     }
 
+    public void SellItem(Item item)
+    {
+        for (int i = 0; i < Goods.Count; i++)
+        {
+            if (item == Goods[i])
+            {
+                CountOfGood[i]--;
+                break;
+            }
+        }
+    }
 
 
 

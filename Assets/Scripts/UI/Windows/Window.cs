@@ -44,9 +44,8 @@ public abstract class Window : MonoBehaviour
     private void CorrectPosition()
     {
         RectTransform rectTransform = GetComponent<RectTransform>();
-        Image image = GetComponent<Image>();
+        // Image image = GetComponent<Image>();
         transform.position = Input.mousePosition;
-
         switch (rectTransform.position)
         {// Спавним окно не ровно в точке, куда тыкнули, а рядом с ним, чтобы угол окна касался точки нажатия и находился в
             // в пространстве, где больше всего места 

@@ -33,7 +33,7 @@ public class FunctionalWindow : MonoBehaviour
         for (int i = 0; i < _trader.Goods.Count; i++)
         {
             GameObject tradersGoods = Instantiate(TradeManager.GoodsPanel.gameObject, TradeManager.TraderPanelContent);
-            tradersGoods.GetComponent<GoodsPanel>().Init(_trader.Goods[i], _trader.CountOfGood[i]);
+            tradersGoods.GetComponent<GoodsPanel>().Init(_trader, _trader.Goods[i], _trader.CountOfGood[i]);
         }
         Destroy(gameObject);
     }
