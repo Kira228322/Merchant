@@ -11,7 +11,6 @@ public class ItemGrid : MonoBehaviour
 
     [SerializeField] private int _gridSizeWidth;
     [SerializeField] private int _gridSizeHeight;
-    [SerializeField] Sprite _inventoryTileSprite;
 
     private InventoryItem[,] _storedInventoryItems; //ћассив, хран€щий информацию о всех клеточках в сетке и предметах в них
     private RectTransform _rectTransform;
@@ -170,7 +169,7 @@ public class ItemGrid : MonoBehaviour
         //новый стак, потому что если просто делать InsertItem() по нажатию кнопки разделени€, то предмет просто вернетс€ в стак,
         //из которого его разделили 
         //
-        //ѕоэтому, кнопка разделени€ айтемов будет использовать этот метод с false, а обычное поведение заполнени€ с true.
+        //ѕоэтому кнопка разделени€ айтемов будет использовать этот метод с false, а обычное поведение заполнени€ с true.
         if (isFillingStackFirst)
         {
             Vector2Int? result = FindUnfilledStackOfSameItems(itemToInsert);

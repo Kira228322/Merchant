@@ -2,17 +2,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InventoryController : MonoBehaviour
 {
+    #region Поля и свойства
+
     [HideInInspector] private ItemGrid _selectedItemGrid;
 
     [SerializeField] private GameObject _itemPrefab;
     [SerializeField] Transform _canvasTransform;
     [SerializeField] ItemInfo _itemInfoPanel;
-
-    [SerializeField] Item abobaItem;
-    [SerializeField] ItemGrid abobaItemGrid;
 
     [SerializeField] private List<Item> items; //Для тестирования, список предметов, которые могут вылезти рандомно по нажатию ПКМ
 
@@ -36,7 +36,6 @@ public class InventoryController : MonoBehaviour
             _selectedItem = value;
         } 
     }
-
     public ItemGrid SelectedItemGrid
     {
         get => _selectedItemGrid;
@@ -47,85 +46,93 @@ public class InventoryController : MonoBehaviour
         }
     }
 
+    #endregion
+
     private void Awake()
     {
         _inventoryHighlight = GetComponent<InventoryHighlight>();
-
     }
 
     private void Update()
     {
         ItemIconDrag();
         
-        if (Input.GetMouseButtonDown(1)) //Ради тестирования (..что такое юнит тесты?)
-        {
-            //InsertRandomItem();
-            TryCreateAndInsertItem(abobaItemGrid, abobaItem, 1, true);
-        }
-
-        if (SelectedItemGrid == null) 
-        {
-            _inventoryHighlight.Show(false);
-        }
-        
         if (SelectedItemGrid != null)
         {
             _currentTileGridPosition = GetTileGridPosition();
         }
-
+        if (Input.GetMouseButtonDown(1)) //Ради тестирования
+        {
+            InsertRandomItem();
+        }
         if (Input.GetMouseButtonUp(0))
         {
-            _pressAndHoldTime = 0;
-            if (_selectedItem != null)
-            {
-                if(SelectedItemGrid == null)
-                {
-                    SelectedItemGrid = _gridPickedUpFrom;
-                    PlaceDown(_itemPickedUpFromPosition);
-                    SelectedItemGrid = null;
-                }
-                else PlaceDown(_currentTileGridPosition);
-            }
-            else LeftMouseButtonPress();
+            OnLeftMouseButtonRelease();
         }
-
         if (Input.GetMouseButton(0))
         {
-            if (SelectedItemGrid == null) { return; }
-            if (_selectedItem == null)
-            {
-                if (SelectedItemGrid.GetItem(_currentTileGridPosition.x, _currentTileGridPosition.y) != null)
-                {
-                    _pressAndHoldTime += Time.deltaTime;
-                    if (_pressAndHoldTime >= 0.3f)
-                    {
-                        PickUp(_currentTileGridPosition);
-                    }
-                }
-                else _pressAndHoldTime = 0;
-            }
+            WhileLeftMouseButtonIsPressed();
         }
 
         HighlightUpdate();
 
     }
 
-    private void LeftMouseButtonPress()
+    #region Методы, связанные с инпутом
+    private void WhileLeftMouseButtonIsPressed()
     {
-        if (SelectedItemGrid != null)
+        if (IsHoveringOverItem())
         {
-            if (SelectedItemGrid.GetItem(GetTileGridPosition().x, GetTileGridPosition().y) != null)
+            if (_selectedItem == null)
             {
-                ShowItemStats(SelectedItemGrid.GetItem(GetTileGridPosition().x, GetTileGridPosition().y));
+                _pressAndHoldTime += Time.deltaTime;
+                if (_pressAndHoldTime >= 0.3f)
+                {
+                    PickUp(_currentTileGridPosition);
+                    SelectedItemGrid.GetComponentInParent<ScrollRect>().StopMovement();
+                    SelectedItemGrid.GetComponentInParent<ScrollRect>().enabled = false;
+                    _pressAndHoldTime = 0;
+                }
             }
         }
     }
-
-    private void ShowItemStats(InventoryItem item)
+    private void OnLeftMouseButtonRelease()
     {
-            _itemInfoPanel.Show(item, SelectedItemGrid);
+        _pressAndHoldTime = 0;
+        if (CurrentSelectedItem != null)
+        {
+            _gridPickedUpFrom.GetComponentInParent<ScrollRect>().enabled = true;
+            if (SelectedItemGrid == null)
+            {
+                SelectedItemGrid = _gridPickedUpFrom;
+                PlaceDown(_itemPickedUpFromPosition);
+                SelectedItemGrid = null;
+            }
+            else
+            {
+                PlaceDown(_currentTileGridPosition);
+            }
+        }
+        else LeftMouseButtonPress();
     }
-
+    private void LeftMouseButtonPress()
+    {
+        if (IsHoveringOverItem())
+        {
+            ShowItemStats(SelectedItemGrid.GetItem(GetTileGridPosition().x, GetTileGridPosition().y));
+        }
+    }
+    private bool IsHoveringOverItem()
+    {
+        if (SelectedItemGrid != null && _selectedItem == null)
+        {
+            if (SelectedItemGrid.GetItem(GetTileGridPosition().x, GetTileGridPosition().y) != null)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
     private Vector2Int GetTileGridPosition()
     {
         Vector2 position = Input.mousePosition;
@@ -139,6 +146,32 @@ public class InventoryController : MonoBehaviour
         return SelectedItemGrid.GetTileGridPosition(position, _canvasTransform.localScale);
     }
 
+    #endregion
+
+    #region Методы, связанные с взаимодействием с айтемом
+    public bool TryCreateAndInsertItem(ItemGrid itemGrid, Item item, int amount, bool isFillingStackFirst)
+    {
+        CreateItem(item, amount);
+        InventoryItem itemToInsert = CurrentSelectedItem;
+        SelectedItemGrid = itemGrid;
+
+        if (TryInsertItem(itemToInsert, isFillingStackFirst))
+        {
+            CurrentSelectedItem = null;
+            SelectedItemGrid = null;
+            //itemGrid обнуляется после установки предмета
+            return true;
+        }
+        //Не получилось поместить
+        Destroy(itemToInsert.gameObject);
+        CurrentSelectedItem = null;
+        SelectedItemGrid = null;
+        return false;
+    }
+    private void ShowItemStats(InventoryItem item)
+    {
+            _itemInfoPanel.Show(item, SelectedItemGrid);
+    }
     private void PickUp(Vector2Int tileGridPosition)
     {
         CurrentSelectedItem = SelectedItemGrid.PickUpItem(tileGridPosition.x, tileGridPosition.y);
@@ -162,7 +195,6 @@ public class InventoryController : MonoBehaviour
             PlaceDown(_itemPickedUpFromPosition);
         }
     }
-
     private void ItemIconDrag()
     {
         if (CurrentSelectedItem != null)
@@ -170,27 +202,6 @@ public class InventoryController : MonoBehaviour
             _rectTransform.position = Input.mousePosition;
         }
     }
-
-    public bool TryCreateAndInsertItem(ItemGrid itemGrid, Item item, int amount, bool isFillingStackFirst)
-    {
-        CreateItem(item, amount);
-        InventoryItem itemToInsert = CurrentSelectedItem;
-        SelectedItemGrid = itemGrid;
-
-        if (TryInsertItem(itemToInsert, isFillingStackFirst))
-        {
-            CurrentSelectedItem = null;
-            SelectedItemGrid = null;
-            //itemGrid обнуляется после установки предмета
-            return true;
-        }
-        //Не получилось поместить
-        Destroy(itemToInsert.gameObject);
-        CurrentSelectedItem = null;
-        SelectedItemGrid = null;
-        return false;
-    }
-
     private void CreateItem(Item item, int amount)
     {
         InventoryItem spawnedItem = Instantiate(_itemPrefab, _canvasTransform).GetComponent<InventoryItem>();
@@ -221,13 +232,32 @@ public class InventoryController : MonoBehaviour
         int selectedItemID = UnityEngine.Random.Range(0, items.Count);
         item.SetItemFromData(items[selectedItemID]);
     }
-    private void InsertRandomItem() //Для тестирования, но пригодится в дальнейшем
+    private void InsertRandomItem() //Для тестирования
     {
         if (SelectedItemGrid == null) { return; }
         CreateRandomItem();
         InventoryItem itemToInsert = CurrentSelectedItem;
         CurrentSelectedItem = null;
         TryInsertItem(itemToInsert, true);
+    }
+    public bool PickUpRotateInsert(InventoryItem itemInInventory, ItemGrid itemGrid)
+    {
+        SelectedItemGrid = itemGrid;
+        Vector2Int initialPositionOnTheGrid = new(itemInInventory.XPositionOnTheGrid, itemInInventory.YPositionOnTheGrid);
+        PickUp(initialPositionOnTheGrid);
+        itemInInventory.Rotate();
+        if (TryInsertItem(itemInInventory, false))
+        {
+            return true;
+        }
+        else
+        {
+            //Не нашлось места для повернутого предмета, значит надо вернуть всё взад
+            itemInInventory.Rotate();
+            PlaceDown(initialPositionOnTheGrid);
+            return false;
+        }
+
     }
     private bool TryInsertItem (InventoryItem itemToInsert, bool isFillingStackFirst)
     {
@@ -244,9 +274,15 @@ public class InventoryController : MonoBehaviour
         return true;
     }
 
+    #endregion
     private void HighlightUpdate()
     {
-        if(SelectedItemGrid == null) { return; }
+        if (SelectedItemGrid == null) 
+        {
+            _inventoryHighlight.Show(false);
+            return; 
+        }
+
         Vector2Int positionOnGrid = GetTileGridPosition();
         if (_previousHighlightPosition == positionOnGrid) { return; }
         _previousHighlightPosition = positionOnGrid;

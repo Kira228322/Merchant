@@ -14,6 +14,7 @@ public class ItemInfo : MonoBehaviour
     [SerializeField] private ItemInfoSplitSlider _splitSliderPanel;
 
     [SerializeField] private TMP_Text _itemName;
+    [SerializeField] private TMP_Text _itemDescription;
     [SerializeField] private TMP_Text _weightText;
     [SerializeField] private TMP_Text _averagePriceText;
     [SerializeField] private TMP_Text _maxItemsInAStackText;
@@ -28,7 +29,7 @@ public class ItemInfo : MonoBehaviour
     {
         if (_currentItemSelected.ItemData.CellSizeHeight != _currentItemSelected.ItemData.CellSizeWidth)
         {
-            _currentItemSelected.Rotate();
+            _inventoryController.PickUpRotateInsert(_currentItemSelected, _lastItemGridSelected);
         }
         gameObject.SetActive(false);
     }
@@ -50,6 +51,7 @@ public class ItemInfo : MonoBehaviour
         //присвоение текста и иконок
         _itemIcon.sprite = item.ItemData.Icon;
         _itemName.text = item.ItemData.Name;
+        _itemDescription.text = "Описание: " + item.ItemData.Description;
 
         if (item.CurrentItemsInAStack == 1)
         {
@@ -71,9 +73,9 @@ public class ItemInfo : MonoBehaviour
             _isPerishableText.text = "Портится? Да";
             _daysToHalfSpoilText.alpha = 1;
             _daysToSpoilText.alpha = 1;
-            _daysToHalfSpoilText.text = $"Количество дней до потери свежести: {item.ItemData._daysToHalfSpoil}"; 
+            _daysToHalfSpoilText.text = $"Дней до потери свежести: {item.ItemData._daysToHalfSpoil}"; 
             //Вопросы к тому кто писал изначальный Item.cs - почему эти поля публичные и начинаются с '_'? Так необходимо для инспектора или это просто нарушение условий именования?
-            _daysToSpoilText.text = $"Количество дней до порчи: {item.ItemData._daysToSpoil}";
+            _daysToSpoilText.text = $"Дней до порчи: {item.ItemData._daysToSpoil}";
         }
         else
         {
