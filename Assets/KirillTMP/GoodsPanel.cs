@@ -12,13 +12,15 @@ public class GoodsPanel : MonoBehaviour
     private int _currentCount;
     private Item _item;
     private InventoryController _inventoryController;
+    private Trader _trader;
 
     private void Start()
     {
         _inventoryController = FindObjectOfType<InventoryController>();
     }
-    public void Init(Item goods, int count)
+    public void Init(Trader trader,Item goods, int count)
     {
+        _trader = trader;
         _item = goods;
         _currentCount = count;
         _cost.text = goods.Price.ToString();
@@ -30,10 +32,11 @@ public class GoodsPanel : MonoBehaviour
     {
         if (_currentCount > 0)
         {
-            if (_inventoryController.TryCreateAndInsertItem(FindObjectOfType<ItemGrid>(), _item, 1, isFillingStackFirst: true))
+            if (_inventoryController.TryCreateAndInsertItem(FindObjectOfType<ItemGrid>(), _item, 1,true))
             {
                 _currentCount--;
                 _countText.text = _currentCount.ToString();
+                _trader.SellItem(_item);
             }
         }
     }
