@@ -7,19 +7,34 @@ using UnityEngine.UI;
 public class GoodsPanel : MonoBehaviour
 {
     [SerializeField] private TMP_Text _cost;
-    [SerializeField] private TMP_Text _count;
-    [SerializeField] private Image _icone;
-    private Item item;
+    [SerializeField] private TMP_Text _countText;
+    [SerializeField] private Image _icon;
+    private int _currentCount;
+    private Item _item;
+    private InventoryController _inventoryController;
+
+    private void Start()
+    {
+        _inventoryController = FindObjectOfType<InventoryController>();
+    }
     public void Init(Item goods, int count)
     {
-        item = goods;
+        _item = goods;
+        _currentCount = count;
         _cost.text = goods.Price.ToString();
-        _count.text = count.ToString();
-        _icone.sprite = item.Icon;
+        _countText.text = _currentCount.ToString();
+        _icon.sprite = _item.Icon;
     }
 
-    private void OnBuyButtonClick()
+    public void OnBuyButtonClick()
     {
-        // TODO тут, Роман, ты поработаешь в будущем
+        if (_currentCount > 0)
+        {
+            if (_inventoryController.TryCreateAndInsertItem(FindObjectOfType<ItemGrid>(), _item, 1, isFillingStackFirst: true))
+            {
+                _currentCount--;
+                _countText.text = _currentCount.ToString();
+            }
+        }
     }
 }

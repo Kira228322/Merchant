@@ -39,7 +39,7 @@ public class ItemInfo : MonoBehaviour
     public void Split(int amountToSplit)
     {
         _currentItemSelected.CurrentItemsInAStack -= amountToSplit; //вроде бы предусмотрено на случай всех невозможных ситуаций через другие скрипты и свойства кнопок
-        _inventoryController.CreateAndInsertItem(_lastItemGridSelected, _currentItemSelected.ItemData, amountToSplit, isFillingStackFirst: false);
+        _inventoryController.TryCreateAndInsertItem(_lastItemGridSelected, _currentItemSelected.ItemData, amountToSplit, isFillingStackFirst: false);
     }
 
     public void Show(InventoryItem item, ItemGrid itemGrid)

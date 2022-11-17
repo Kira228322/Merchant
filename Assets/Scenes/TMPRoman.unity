@@ -335,7 +335,7 @@ RectTransform:
   - {fileID: 1680168608}
   - {fileID: 2575271090434916180}
   m_Father: {fileID: 1221455618}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1431,8 +1431,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67256bd78f55db0409e98f4e8adfc398, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gridSizeWidth: 10
-  _gridSizeHeight: 22
+  _gridSizeWidth: 3
+  _gridSizeHeight: 4
   _inventoryTileSprite: {fileID: 0}
 --- !u!114 &589487894
 MonoBehaviour:
@@ -2699,9 +2699,9 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1403444637}
   - {fileID: 1685199874}
   - {fileID: 18928005}
-  - {fileID: 1403444637}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3507,7 +3507,7 @@ RectTransform:
   - {fileID: 1380085483}
   - {fileID: 556186309}
   m_Father: {fileID: 1221455618}
-  m_RootOrder: 2
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4127,7 +4127,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1221455618}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -5148,6 +5148,14 @@ PrefabInstance:
       propertyPath: _highlighter
       value: 
       objectReference: {fileID: 1685199874}
+    - target: {fileID: 935504573068894055, guid: 49fe145df14d05f41b30997686f37688, type: 3}
+      propertyPath: abobaItem
+      value: 
+      objectReference: {fileID: 11400000, guid: 934d977f079cae542b316dc9cde310c2, type: 2}
+    - target: {fileID: 935504573068894055, guid: 49fe145df14d05f41b30997686f37688, type: 3}
+      propertyPath: abobaItemGrid
+      value: 
+      objectReference: {fileID: 589487893}
     - target: {fileID: 935504573068894055, guid: 49fe145df14d05f41b30997686f37688, type: 3}
       propertyPath: _itemInfoPanel
       value: 

@@ -111,7 +111,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.043, y: 0.04825823}
   m_AnchorMax: {x: 0.72, y: 0.93437093}
-  m_AnchoredPosition: {x: 0.49199677, y: 0.5}
+  m_AnchoredPosition: {x: 0.49198914, y: 0.5}
   m_SizeDelta: {x: -2.800003, y: -1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5969306959552453134
@@ -169,7 +169,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 39.3
+  m_fontSize: 45.25
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -246,7 +246,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.33839166, y: 0.26252958}
   m_AnchorMax: {x: 0.70074666, y: 0.48648098}
-  m_AnchoredPosition: {x: 0.534996, y: 0}
+  m_AnchoredPosition: {x: 0.5349884, y: 0}
   m_SizeDelta: {x: -1.322998, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5969306959584064596
@@ -304,7 +304,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 39.25
+  m_fontSize: 44.8
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -439,7 +439,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 38.9
+  m_fontSize: 44.55
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -493,7 +493,7 @@ GameObject:
   - component: {fileID: 5969306959722233168}
   - component: {fileID: 5969306959722233169}
   m_Layer: 5
-  m_Name: ItemIcone
+  m_Name: ItemIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -516,7 +516,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.07819038, y: 0.13179176}
   m_AnchorMax: {x: 0.24800001, y: 0.76757824}
-  m_AnchoredPosition: {x: 0.7582092, y: 0.19999695}
+  m_AnchoredPosition: {x: 0.75823975, y: 0.19999695}
   m_SizeDelta: {x: -2.4413, y: -2.4398}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5969306959722233168
@@ -690,8 +690,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cost: {fileID: 5969306959552453135}
-  _count: {fileID: 5969306960852473505}
-  _icone: {fileID: 5969306959722233169}
+  _countText: {fileID: 5969306960852473505}
+  _icon: {fileID: 5969306959722233169}
 --- !u!1 &5969306960782668937
 GameObject:
   m_ObjectHideFlags: 0
@@ -785,7 +785,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 34.9
+  m_fontSize: 40.7
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -862,7 +862,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.043533556, y: 0.06666117}
   m_AnchorMax: {x: 0.72053355, y: 0.9506777}
-  m_AnchoredPosition: {x: 0.49199677, y: -0.5}
+  m_AnchoredPosition: {x: 0.49198914, y: -0.5}
   m_SizeDelta: {x: -2.800003, y: -1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5969306960852473504
@@ -920,7 +920,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 39.4
+  m_fontSize: 45.25
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1315,4 +1315,16 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5969306961410054586}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5264023920249485065}
+        m_TargetAssemblyTypeName: GoodsPanel, Assembly-CSharp
+        m_MethodName: OnBuyButtonClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

@@ -11,6 +11,8 @@ public class InventoryController : MonoBehaviour
     [SerializeField] Transform _canvasTransform;
     [SerializeField] ItemInfo _itemInfoPanel;
 
+    [SerializeField] Item abobaItem;
+    [SerializeField] ItemGrid abobaItemGrid;
 
     [SerializeField] private List<Item> items; //Для тестирования, список предметов, которые могут вылезти рандомно по нажатию ПКМ
 
@@ -57,7 +59,8 @@ public class InventoryController : MonoBehaviour
         
         if (Input.GetMouseButtonDown(1)) //Ради тестирования (..что такое юнит тесты?)
         {
-            InsertRandomItem();
+            //InsertRandomItem();
+            TryCreateAndInsertItem(abobaItemGrid, abobaItem, 1, true);
         }
 
         if (SelectedItemGrid == null) 
@@ -168,16 +171,24 @@ public class InventoryController : MonoBehaviour
         }
     }
 
-    public void CreateAndInsertItem(ItemGrid itemGrid, Item item, int amount, bool isFillingStackFirst)
+    public bool TryCreateAndInsertItem(ItemGrid itemGrid, Item item, int amount, bool isFillingStackFirst)
     {
         CreateItem(item, amount);
         InventoryItem itemToInsert = CurrentSelectedItem;
-        CurrentSelectedItem = null;
         SelectedItemGrid = itemGrid;
 
-        InsertItem(itemToInsert, isFillingStackFirst);
-
-        SelectedItemGrid = null; //itemGrid обнуляется после установки предмета
+        if (TryInsertItem(itemToInsert, isFillingStackFirst))
+        {
+            CurrentSelectedItem = null;
+            SelectedItemGrid = null;
+            //itemGrid обнуляется после установки предмета
+            return true;
+        }
+        //Не получилось поместить
+        Destroy(itemToInsert.gameObject);
+        CurrentSelectedItem = null;
+        SelectedItemGrid = null;
+        return false;
     }
 
     private void CreateItem(Item item, int amount)
@@ -216,9 +227,9 @@ public class InventoryController : MonoBehaviour
         CreateRandomItem();
         InventoryItem itemToInsert = CurrentSelectedItem;
         CurrentSelectedItem = null;
-        InsertItem(itemToInsert, true);
+        TryInsertItem(itemToInsert, true);
     }
-    private void InsertItem (InventoryItem itemToInsert, bool isFillingStackFirst)
+    private bool TryInsertItem (InventoryItem itemToInsert, bool isFillingStackFirst)
     {
         //itemToInsert.transform.localScale = canvasTransform.localScale;
         //^^возможно пригодится в будущем в качестве подсказки, когда будем делать спавн объектов 
@@ -226,10 +237,11 @@ public class InventoryController : MonoBehaviour
         Vector2Int? posOnGrid = SelectedItemGrid.FindSpaceForItemInsertion(itemToInsert, isFillingStackFirst);
 
         if (posOnGrid == null) 
-        { 
-            return; 
+        {
+            return false; 
         }
         SelectedItemGrid.TryPlaceItem(itemToInsert, posOnGrid.Value.x, posOnGrid.Value.y);
+        return true;
     }
 
     private void HighlightUpdate()
