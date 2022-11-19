@@ -206,7 +206,7 @@ public class InventoryController : MonoBehaviour
     }
     private void ShowItemStats(InventoryItem item)
     {
-            _itemInfoPanel.Show(item, SelectedItemGrid);
+        _itemInfoPanel.Show(item, SelectedItemGrid);
     }
     private void PickUp(Vector2Int tileGridPosition)
     {

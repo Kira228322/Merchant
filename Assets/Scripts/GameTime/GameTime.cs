@@ -23,6 +23,7 @@ public static class GameTime
         { return _hours; }
         set
         {
+            TradeManager.PlayersInventory.CheckSpoilItems();
             _hours = value;
             if (_hours >= 24) 
             {

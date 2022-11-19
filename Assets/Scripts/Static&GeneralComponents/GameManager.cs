@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     // ¬ этом классе будут все инициализации, которые необходимы только в самом начале игры
     // ¬роде как преимущественно он только дл€ статических классов, но потом посмотрим 
     [SerializeField] private Canvas _canvas;
-    
+    [SerializeField] private PlayersInventory _playersInventory;
     [Header("MapManager")] 
     [SerializeField] private string _travelingScene;
     [SerializeField] private SceneTransiter _loadScreen;
@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
         MapManager.Init(_travelingScene, _loadScreen, _roadWindow, _villageWindow, _canvas);
         TravelManager.Init(_travelBlock, _travelTime, _timeCounter, _playerIcone);
         GameTime.Init(_timeflow);
-        TradeManager.Init(TraderPanel, TraderPanelContent, GoodsPanelPrefab);
+        TradeManager.Init(TraderPanel, TraderPanelContent, GoodsPanelPrefab, _playersInventory);
     }
 
 }
