@@ -9,6 +9,7 @@ public class GoodsPanel : MonoBehaviour
     [SerializeField] private TMP_Text _cost;
     [SerializeField] private TMP_Text _countText;
     [SerializeField] private Image _icon;
+    [SerializeField] private TMP_Text _itemName;
     private int _currentCount;
     private Item _item;
     private InventoryController _inventoryController;
@@ -26,6 +27,7 @@ public class GoodsPanel : MonoBehaviour
         _cost.text = goods.Price.ToString();
         _countText.text = _currentCount.ToString();
         _icon.sprite = _item.Icon;
+        _itemName.text = goods.Name;
     }
 
     public void OnBuyButtonClick()
