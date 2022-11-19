@@ -30,6 +30,7 @@ public class ItemInfo : MonoBehaviour
         if (_currentItemSelected.ItemData.CellSizeHeight != _currentItemSelected.ItemData.CellSizeWidth)
         {
             _inventoryController.PickUpRotateInsert(_currentItemSelected, _lastItemGridSelected);
+            //^Этот метод возвращает буль, т.е потом можно будет добавить какое нибудь микросообщение вроде "Не получилось повернуть"
         }
         gameObject.SetActive(false);
     }

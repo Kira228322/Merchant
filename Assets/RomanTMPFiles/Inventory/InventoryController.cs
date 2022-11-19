@@ -16,6 +16,8 @@ public class InventoryController : MonoBehaviour
 
     [SerializeField] private List<Item> items; //Для тестирования, список предметов, которые могут вылезти рандомно по нажатию ПКМ
 
+    private Vector2 _mousePositionOnPress;
+
     private InventoryItem _selectedItem;
     private RectTransform _rectTransform;
 
@@ -65,6 +67,10 @@ public class InventoryController : MonoBehaviour
         {
             InsertRandomItem();
         }
+        if (Input.GetMouseButtonDown(0))
+        {
+            OnLeftMouseButtonPress();
+        }
         if (Input.GetMouseButtonUp(0))
         {
             OnLeftMouseButtonRelease();
@@ -79,6 +85,10 @@ public class InventoryController : MonoBehaviour
     }
 
     #region Методы, связанные с инпутом
+    private void OnLeftMouseButtonPress()
+    {
+        _mousePositionOnPress = Input.mousePosition;
+    }
     private void WhileLeftMouseButtonIsPressed()
     {
         if (IsHoveringOverItem())
@@ -86,7 +96,7 @@ public class InventoryController : MonoBehaviour
             if (_selectedItem == null)
             {
                 _pressAndHoldTime += Time.deltaTime;
-                if (_pressAndHoldTime >= 0.3f)
+                if (_pressAndHoldTime >= 0.3f && Vector2.Distance(Input.mousePosition, _mousePositionOnPress) < 30)
                 {
                     PickUp(_currentTileGridPosition);
                     SelectedItemGrid.GetComponentInParent<ScrollRect>().StopMovement();
@@ -113,7 +123,10 @@ public class InventoryController : MonoBehaviour
                 PlaceDown(_currentTileGridPosition);
             }
         }
-        else LeftMouseButtonPress();
+        else if (Vector2.Distance(Input.mousePosition, _mousePositionOnPress) < 30)
+        {
+            LeftMouseButtonPress();
+        }
     }
     private void LeftMouseButtonPress()
     {
