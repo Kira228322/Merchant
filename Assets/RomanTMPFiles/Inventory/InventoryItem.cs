@@ -6,7 +6,9 @@ using UnityEngine.UI;
 public class InventoryItem : MonoBehaviour
 {
     [SerializeField] private TMPro.TMP_Text _currentItemsInAStackText;
+    [SerializeField] private SlidersController _spoilSlider;
     public Item ItemData;
+    public float BoughtDaysAgo;
 
     private int _currentItemsInAStack;
 
@@ -71,5 +73,15 @@ public class InventoryItem : MonoBehaviour
         _currentItemsInAStackText.rectTransform.anchorMin = new Vector2(IsRotated == true ? 0 : 1, 0);
         _currentItemsInAStackText.rectTransform.anchorMax = new Vector2(IsRotated == true ? 0 : 1, 0);
         _currentItemsInAStackText.rectTransform.localRotation = Quaternion.Euler(0, 0, IsRotated == true ? 270f : 0f);
+    }
+
+    public void RefreshSliderValue()
+    {
+        _spoilSlider.SetValue(ItemData._daysToSpoil - BoughtDaysAgo, ItemData._daysToSpoil);
+        if (BoughtDaysAgo > ItemData._daysToHalfSpoil)
+        {
+            Color yellow = new Color(178f/255, 179f/255, 73f/255);
+            _spoilSlider.SetColour(yellow);
+        }
     }
 }
