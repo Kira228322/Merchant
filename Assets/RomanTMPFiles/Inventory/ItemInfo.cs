@@ -7,7 +7,6 @@ using TMPro;
 
 public class ItemInfo : MonoBehaviour
 {
-    [SerializeField] private InventoryController _inventoryController;
 
     [SerializeField] private Image _itemIcon;
     [SerializeField] private Button _splitButton;
@@ -16,26 +15,29 @@ public class ItemInfo : MonoBehaviour
 
     [SerializeField] private TMP_Text _itemName;
     [SerializeField] private TMP_Text _itemDescription;
+    [SerializeField] private TMP_Text _quantityText;
     [SerializeField] private TMP_Text _weightText;
-    [SerializeField] private TMP_Text _averagePriceText;
-    [SerializeField] private TMP_Text _maxItemsInAStackText;
-    [SerializeField] private TMP_Text _flagility;
     [SerializeField] private TMP_Text _totalWeightText;
-    [SerializeField] private TMP_Text _boughtDaysAgoText;
+    [SerializeField] private TMP_Text _maxItemsInAStackText;
+    [SerializeField] private TMP_Text _fragilityText;
+    [SerializeField] private TMP_Text _averagePriceText;
     [SerializeField] private TMP_Text _daysToHalfSpoilText;
     [SerializeField] private TMP_Text _daysToSpoilText;
+    [SerializeField] private TMP_Text _boughtDaysAgoText;
 
     private InventoryItem _currentItemSelected;
     private ItemGrid _lastItemGridSelected;
+    private InventoryController _inventoryController;
 
     public void OnRotateButtonPressed()
     {
         if (_currentItemSelected.ItemData.CellSizeHeight != _currentItemSelected.ItemData.CellSizeWidth)
         {
-            _inventoryController.PickUpRotateInsert(_currentItemSelected, _lastItemGridSelected);
-            //^Этот метод возвращает буль, т.е потом можно будет добавить какое нибудь микросообщение вроде "Не получилось повернуть"
+            if (_inventoryController.PickUpRotateInsert(_currentItemSelected, _lastItemGridSelected))
+            {
+                Destroy(gameObject);
+            }
         }
-        Destroy(gameObject);
     }
     public void OnSplitButtonPressed()
     {
@@ -49,13 +51,18 @@ public class ItemInfo : MonoBehaviour
     public void Split(int amountToSplit)
     {
         _currentItemSelected.CurrentItemsInAStack -= amountToSplit; //вроде бы предусмотрено на случай всех невозможных ситуаций через другие скрипты и свойства кнопок
-        _inventoryController.TryCreateAndInsertItem(_lastItemGridSelected, _currentItemSelected.ItemData, amountToSplit, isFillingStackFirst: false);
+        if(_inventoryController.TryCreateAndInsertItem(_lastItemGridSelected, _currentItemSelected.ItemData, amountToSplit, isFillingStackFirst: false))
+        {
+            Destroy(gameObject);
+        }
+
     }
 
-    public void Show(InventoryItem item, ItemGrid itemGrid)
+    public void Initialize(InventoryItem item, ItemGrid itemGrid, InventoryController inventoryController)
     {
         _currentItemSelected = item;
         _lastItemGridSelected = itemGrid;
+        _inventoryController = inventoryController;
 
         //присвоение текста и иконок
         _itemIcon.sprite = item.ItemData.Icon;
@@ -74,17 +81,21 @@ public class ItemInfo : MonoBehaviour
         }
         else _rotateButton.interactable = true;
 
+        _quantityText.text = $"Количество: {item.CurrentItemsInAStack}";
         _weightText.text = $"Вес: {item.ItemData.Weight}";
+        _totalWeightText.text = $"Общий вес: {item.ItemData.Weight * item.CurrentItemsInAStack}";
+        _maxItemsInAStackText.text = $"Макс. количество: {item.ItemData.MaxItemsInAStack}";
+        _fragilityText.text = $"Хрупкость: {item.ItemData.Fragility}";
         _averagePriceText.text = $"Средняя цена: {item.ItemData.Price}";
-        _maxItemsInAStackText.text = $"Макс. количество предметов в стаке: {item.ItemData.MaxItemsInAStack}";
+        
         if (item.ItemData.IsPerishable)
         {
             _daysToHalfSpoilText.alpha = 1;
             _daysToSpoilText.alpha = 1;
             _boughtDaysAgoText.alpha = 1;
+            _daysToHalfSpoilText.text = $"Дней до потери свежести: {item.ItemData.DaysToHalfSpoil}";
+            _daysToSpoilText.text = $"Дней до порчи: {item.ItemData.DaysToSpoil}";
             _boughtDaysAgoText.text = "Хранится уже: " + Math.Round(item.BoughtDaysAgo, 1);
-            _daysToHalfSpoilText.text = $"Дней до потери свежести: {item.ItemData._daysToHalfSpoil}";
-            _daysToSpoilText.text = $"Дней до порчи: {item.ItemData._daysToSpoil}";
         }
         else
         {
@@ -92,7 +103,5 @@ public class ItemInfo : MonoBehaviour
             _daysToSpoilText.alpha = 0;
             _boughtDaysAgoText.alpha = 0;
         }
-
-        gameObject.SetActive(true);
     }
 }

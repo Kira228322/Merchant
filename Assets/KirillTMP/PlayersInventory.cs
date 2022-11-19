@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(ItemGrid))] //Договорились, что будем это вешать на сетку инвентаря
 public class PlayersInventory : MonoBehaviour
 {
-    //TMP public
-    public List<InventoryItem> _inventory;
+    private List<InventoryItem> _inventory = new();
     public void AddItemInInventory(InventoryItem item)
     {
         _inventory.Add(item);

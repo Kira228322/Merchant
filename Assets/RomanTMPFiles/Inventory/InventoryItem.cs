@@ -76,8 +76,8 @@ public class InventoryItem : MonoBehaviour
 
     public void RefreshSliderValue()
     {
-        _spoilSlider.SetValue(ItemData._daysToSpoil - BoughtDaysAgo, ItemData._daysToSpoil);
-        if (BoughtDaysAgo > ItemData._daysToHalfSpoil)
+        _spoilSlider.SetValue(ItemData.DaysToSpoil - BoughtDaysAgo, ItemData.DaysToSpoil);
+        if (BoughtDaysAgo > ItemData.DaysToHalfSpoil)
         {
             Color yellow = new(178f/255, 179f/255, 73f/255);
             _spoilSlider.SetColour(yellow);

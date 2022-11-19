@@ -12,8 +12,8 @@ public class InventoryController : MonoBehaviour
     [HideInInspector] private ItemGrid _selectedItemGrid;
 
     [SerializeField] private GameObject _itemPrefab;
-    [SerializeField] Transform _canvasTransform;
-    [SerializeField] ItemInfo _itemInfoPanel;
+    [SerializeField] private GameObject _itemInfoPanelPrefab;
+    [SerializeField] private Transform _canvasTransform;
 
     [SerializeField] private List<Item> items; //Для тестирования, список предметов, которые могут вылезти рандомно по нажатию ПКМ
 
@@ -30,7 +30,6 @@ public class InventoryController : MonoBehaviour
     private Vector2Int _currentTileGridPosition;
     private ItemGrid _gridPickedUpFrom;
     private Vector2Int _itemPickedUpFromPosition;
-    //Первый аргумент - тот предмет, который изменился. Второй аргумент - true, если предмет добавился, false, если предмет удалился.
 
     public InventoryItem CurrentSelectedItem { 
         get 
@@ -76,14 +75,6 @@ public class InventoryController : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             OnLeftMouseButtonRelease();
-        }
-        if (Input.GetMouseButtonDown(2))
-        {
-            Debug.Log("It is as follows:");
-            foreach (var item in TradeManager.PlayersInventory._inventory)
-            {
-                Debug.Log(item.ItemData.Name);
-            }
         }
         if (Input.GetMouseButton(0))
         {
@@ -215,7 +206,8 @@ public class InventoryController : MonoBehaviour
     }
     private void ShowItemStats(InventoryItem item)
     {
-        _itemInfoPanel.Show(item, SelectedItemGrid);
+        ItemInfo itemInfoPanel = Instantiate(_itemInfoPanelPrefab, _canvasTransform).GetComponent<ItemInfo>();
+        itemInfoPanel.Initialize(item, SelectedItemGrid, this);
     }
     private void PickUp(Vector2Int tileGridPosition)
     {
@@ -291,7 +283,7 @@ public class InventoryController : MonoBehaviour
 
         int selectedItemID = UnityEngine.Random.Range(0, items.Count);
         item.SetItemFromData(items[selectedItemID]);
-        TradeManager.PlayersInventory.AddItemInInventory(item);
+        TradeManager.PlayersInventory.AddItemInInventory(item); 
     }
     private void InsertRandomItem() //Для тестирования
     {

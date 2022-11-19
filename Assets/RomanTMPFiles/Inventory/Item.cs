@@ -11,7 +11,7 @@ public class Item : ScriptableObject
     [TextArea(2,5)]public string Description;
     public Sprite Icon;
     public int Price;
-    [Range(0,100)]public int Flagility; // Величина, показывающая насколько хрупкий предмет.Чем больше - тем более хрупок. max = 100
+    [Range(0,100)]public int Fragility; // Величина, показывающая насколько хрупкий предмет.Чем больше - тем более хрупок. max = 100
         //  Влият на вероятность разбиться во время перевозки. Например ваза будет иметь 50, а у яблок = 7.
         // Так же за то, разобьется предмет или нет отвечает "качество" дороги - ее параметр.
 
@@ -22,8 +22,8 @@ public class Item : ScriptableObject
     public int CellSizeHeight;
 
     [HideInInspector] public bool IsPerishable;
-    [HideInInspector] public float _daysToHalfSpoil;
-    [HideInInspector] public float _daysToSpoil;
+    [HideInInspector] public float DaysToHalfSpoil;
+    [HideInInspector] public float DaysToSpoil;
     [CustomEditor(typeof(Item))]
     public class ItemEditor : Editor
     {
@@ -45,13 +45,13 @@ public class Item : ScriptableObject
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.Space(20, true);
                 EditorGUILayout.LabelField("Days to half spoil", GUILayout.MaxWidth(110));
-                item._daysToHalfSpoil = EditorGUILayout.FloatField(item._daysToHalfSpoil);
+                item.DaysToHalfSpoil = EditorGUILayout.FloatField(item.DaysToHalfSpoil);
                 EditorGUILayout.EndHorizontal();
 
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.Space(20, true);
                 EditorGUILayout.LabelField("Days to spoil", GUILayout.MaxWidth(110));
-                item._daysToSpoil = EditorGUILayout.FloatField(item._daysToSpoil);
+                item.DaysToSpoil = EditorGUILayout.FloatField(item.DaysToSpoil);
                 EditorGUILayout.EndHorizontal();
             }
         }
