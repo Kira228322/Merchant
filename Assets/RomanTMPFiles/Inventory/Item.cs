@@ -11,6 +11,9 @@ public class Item : ScriptableObject
     [TextArea(2,5)]public string Description;
     public Sprite Icon;
     public int Price;
+    [Range(0,100)]public int Flagility; // Величина, показывающая насколько хрупкий предмет.Чем больше - тем более хрупок. max = 100
+        //  Влият на вероятность разбиться во время перевозки. Например ваза будет иметь 50, а у яблок = 7.
+        // Так же за то, разобьется предмет или нет отвечает "качество" дороги - ее параметр.
 
     public float Weight;
     public int MaxItemsInAStack;

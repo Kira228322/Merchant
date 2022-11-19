@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,7 +19,9 @@ public class ItemInfo : MonoBehaviour
     [SerializeField] private TMP_Text _weightText;
     [SerializeField] private TMP_Text _averagePriceText;
     [SerializeField] private TMP_Text _maxItemsInAStackText;
-    [SerializeField] private TMP_Text _isPerishableText;
+    [SerializeField] private TMP_Text _flagility;
+    [SerializeField] private TMP_Text _totalWeightText;
+    [SerializeField] private TMP_Text _boughtDaysAgoText;
     [SerializeField] private TMP_Text _daysToHalfSpoilText;
     [SerializeField] private TMP_Text _daysToSpoilText;
 
@@ -32,11 +35,16 @@ public class ItemInfo : MonoBehaviour
             _inventoryController.PickUpRotateInsert(_currentItemSelected, _lastItemGridSelected);
             //^Этот метод возвращает буль, т.е потом можно будет добавить какое нибудь микросообщение вроде "Не получилось повернуть"
         }
-        gameObject.SetActive(false);
+        Destroy(gameObject);
     }
     public void OnSplitButtonPressed()
     {
         _splitSliderPanel.Show(_currentItemSelected);
+    }
+
+    public void OnExitButtonPressed()
+    {
+        Destroy(gameObject);
     }
     public void Split(int amountToSplit)
     {
@@ -71,18 +79,18 @@ public class ItemInfo : MonoBehaviour
         _maxItemsInAStackText.text = $"Макс. количество предметов в стаке: {item.ItemData.MaxItemsInAStack}";
         if (item.ItemData.IsPerishable)
         {
-            _isPerishableText.text = "Портится? Да";
             _daysToHalfSpoilText.alpha = 1;
             _daysToSpoilText.alpha = 1;
-            _daysToHalfSpoilText.text = $"Дней до потери свежести: {item.ItemData._daysToHalfSpoil}"; 
-            //Вопросы к тому кто писал изначальный Item.cs - почему эти поля публичные и начинаются с '_'? Так необходимо для инспектора или это просто нарушение условий именования?
+            _boughtDaysAgoText.alpha = 1;
+            _boughtDaysAgoText.text = "Хранится уже: " + Math.Round(item.BoughtDaysAgo, 1);
+            _daysToHalfSpoilText.text = $"Дней до потери свежести: {item.ItemData._daysToHalfSpoil}";
             _daysToSpoilText.text = $"Дней до порчи: {item.ItemData._daysToSpoil}";
         }
         else
         {
-            _isPerishableText.text = "Портится? Нет";
             _daysToHalfSpoilText.alpha = 0;
             _daysToSpoilText.alpha = 0;
+            _boughtDaysAgoText.alpha = 0;
         }
 
         gameObject.SetActive(true);
