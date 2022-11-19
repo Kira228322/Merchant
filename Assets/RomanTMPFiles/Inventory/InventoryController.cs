@@ -151,6 +151,9 @@ public class InventoryController : MonoBehaviour
     #region Методы, связанные с взаимодействием с айтемом
     public bool TryCreateAndInsertItem(ItemGrid itemGrid, Item item, int amount, bool isFillingStackFirst)
     {
+        ItemGrid initialItemGridState = SelectedItemGrid;
+
+
         CreateItem(item, amount);
         InventoryItem itemToInsert = CurrentSelectedItem;
         SelectedItemGrid = itemGrid;
@@ -158,14 +161,34 @@ public class InventoryController : MonoBehaviour
         if (TryInsertItem(itemToInsert, isFillingStackFirst))
         {
             CurrentSelectedItem = null;
-            SelectedItemGrid = null;
+            SelectedItemGrid = initialItemGridState;
+            return true;
+        }
+        //Не получилось поместить
+        Destroy(itemToInsert.gameObject);
+        CurrentSelectedItem = null;
+        SelectedItemGrid = initialItemGridState;
+        return false;
+    }
+    public bool TryCreateAndInsertItemRotated(ItemGrid itemGrid, Item item, int amount, bool isFillingStackFirst)
+    {
+        ItemGrid initialItemGridState = SelectedItemGrid;
+
+        CreateItemRotated(item, amount);
+        InventoryItem itemToInsert = CurrentSelectedItem;
+        SelectedItemGrid = itemGrid;
+
+        if (TryInsertItem(itemToInsert, isFillingStackFirst))
+        {
+            CurrentSelectedItem = null;
+            SelectedItemGrid = initialItemGridState;
             //itemGrid обнуляется после установки предмета
             return true;
         }
         //Не получилось поместить
         Destroy(itemToInsert.gameObject);
         CurrentSelectedItem = null;
-        SelectedItemGrid = null;
+        SelectedItemGrid = initialItemGridState;
         return false;
     }
     private void ShowItemStats(InventoryItem item)
@@ -217,6 +240,21 @@ public class InventoryController : MonoBehaviour
         spawnedItem.SetItemFromData(item);
 
     }
+    private void CreateItemRotated(Item item, int amount)
+    {
+        InventoryItem spawnedItem = Instantiate(_itemPrefab, _canvasTransform).GetComponent<InventoryItem>();
+        spawnedItem.Rotate();
+        CurrentSelectedItem = spawnedItem;
+
+        spawnedItem.CurrentItemsInAStack = amount;
+
+        _rectTransform = spawnedItem.GetComponent<RectTransform>();
+        _rectTransform.SetAsLastSibling();
+
+        CurrentSelectedItem.transform.localScale = Vector2.one;
+
+        spawnedItem.SetItemFromData(item);
+    }
     private void CreateRandomItem() //Для тестирования
     {
         InventoryItem item = Instantiate(_itemPrefab, _canvasTransform).GetComponent<InventoryItem>();
@@ -242,19 +280,34 @@ public class InventoryController : MonoBehaviour
     }
     public bool PickUpRotateInsert(InventoryItem itemInInventory, ItemGrid itemGrid)
     {
+        ItemGrid initialItemGridState = SelectedItemGrid;
         SelectedItemGrid = itemGrid;
-        Vector2Int initialPositionOnTheGrid = new(itemInInventory.XPositionOnTheGrid, itemInInventory.YPositionOnTheGrid);
-        PickUp(initialPositionOnTheGrid);
-        itemInInventory.Rotate();
-        if (TryInsertItem(itemInInventory, false))
+
+        Vector2Int itemPosition = new(itemInInventory.XPositionOnTheGrid, itemInInventory.YPositionOnTheGrid);
+        PickUp(itemPosition);
+        InventoryItem pickedUpItem = CurrentSelectedItem;
+        if (itemInInventory.IsRotated)
         {
-            return true;
+            if (TryCreateAndInsertItem(itemGrid, itemInInventory.ItemData, itemInInventory.CurrentItemsInAStack, isFillingStackFirst: false))
+            {
+                Destroy(pickedUpItem.gameObject);
+                SelectedItemGrid = initialItemGridState;
+                return true;
+            }
+            else PlaceDown(itemPosition);
+            SelectedItemGrid = initialItemGridState;
+            return false;
         }
         else
         {
-            //Не нашлось места для повернутого предмета, значит надо вернуть всё взад
-            itemInInventory.Rotate();
-            PlaceDown(initialPositionOnTheGrid);
+            if (TryCreateAndInsertItemRotated(itemGrid, itemInInventory.ItemData, itemInInventory.CurrentItemsInAStack, isFillingStackFirst: false))
+            {
+                Destroy(pickedUpItem.gameObject);
+                SelectedItemGrid = initialItemGridState;
+                return true;
+            }
+            else PlaceDown(itemPosition);
+            SelectedItemGrid = initialItemGridState;
             return false;
         }
 
