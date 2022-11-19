@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ItemGrid : MonoBehaviour
 {
@@ -49,6 +50,7 @@ public class ItemGrid : MonoBehaviour
         if (itemToReturn == null) { return null; }
 
         CleanGridReference(itemToReturn);
+        TradeManager.PlayersInventory.RemoveItemInInventory(itemToReturn);
         return itemToReturn;
     }
 
@@ -77,7 +79,8 @@ public class ItemGrid : MonoBehaviour
             {
                 if (TryPlaceItemInAStack(item, itemInInventory))
                 {
-                return true;
+                    TradeManager.PlayersInventory.RemoveItemInInventory(item);
+                    return true;
                 }
                 return false;
             }
@@ -85,10 +88,11 @@ public class ItemGrid : MonoBehaviour
         }
 
         PlaceItem(item, positionX, positionY);
+        TradeManager.PlayersInventory.AddItemInInventory(item);
         return true;
     }
 
-    public void PlaceItem(InventoryItem item, int positionX, int positionY)
+    private void PlaceItem(InventoryItem item, int positionX, int positionY)
     {
         RectTransform rectTransform = item.GetComponent<RectTransform>();
         rectTransform.SetParent(_rectTransform);
@@ -294,13 +298,15 @@ public class ItemGrid : MonoBehaviour
     {
         //Если тип предмета, лежащий в инвентаре такой же, как предмет, который мы пытаемся установить И
         //И стак этого предмета неполный, т.е может вместить в себя ещё столько предметов, сколько в помещаемом стаке, то true.
-        if (_storedInventoryItems[positionX, positionY] != null)
+        //И должен
+        InventoryItem itemInInventory = _storedInventoryItems[positionX, positionY];
+        if (itemInInventory != null)
         {
-            if (_storedInventoryItems[positionX, positionY].ItemData.name == targetItem.ItemData.name)
+            if (itemInInventory.ItemData.name == targetItem.ItemData.name)
             {
-                if ((_storedInventoryItems[positionX, positionY].ItemData.MaxItemsInAStack -
-                _storedInventoryItems[positionX, positionY].CurrentItemsInAStack) >= targetItem.CurrentItemsInAStack)
+                if ((itemInInventory.ItemData.MaxItemsInAStack - itemInInventory.CurrentItemsInAStack) >= targetItem.CurrentItemsInAStack)
                 {
+                    if ((itemInInventory.BoughtDaysAgo - targetItem.BoughtDaysAgo) < 1)
                     return true;
                 }
             }

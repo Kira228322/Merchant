@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class InventoryController : MonoBehaviour
@@ -29,6 +30,7 @@ public class InventoryController : MonoBehaviour
     private Vector2Int _currentTileGridPosition;
     private ItemGrid _gridPickedUpFrom;
     private Vector2Int _itemPickedUpFromPosition;
+    //Первый аргумент - тот предмет, который изменился. Второй аргумент - true, если предмет добавился, false, если предмет удалился.
 
     public InventoryItem CurrentSelectedItem { 
         get 
@@ -74,6 +76,14 @@ public class InventoryController : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             OnLeftMouseButtonRelease();
+        }
+        if (Input.GetMouseButtonDown(2))
+        {
+            Debug.Log("It is as follows:");
+            foreach (var item in TradeManager.PlayersInventory._inventory)
+            {
+                Debug.Log(item.ItemData.Name);
+            }
         }
         if (Input.GetMouseButton(0))
         {
@@ -195,7 +205,6 @@ public class InventoryController : MonoBehaviour
         {
             CurrentSelectedItem = null;
             SelectedItemGrid = initialItemGridState;
-            //itemGrid обнуляется после установки предмета
             return true;
         }
         //Не получилось поместить
@@ -282,6 +291,7 @@ public class InventoryController : MonoBehaviour
 
         int selectedItemID = UnityEngine.Random.Range(0, items.Count);
         item.SetItemFromData(items[selectedItemID]);
+        TradeManager.PlayersInventory.AddItemInInventory(item);
     }
     private void InsertRandomItem() //Для тестирования
     {
@@ -298,6 +308,7 @@ public class InventoryController : MonoBehaviour
 
         Vector2Int itemPosition = new(itemInInventory.XPositionOnTheGrid, itemInInventory.YPositionOnTheGrid);
         PickUp(itemPosition);
+        TradeManager.PlayersInventory.RemoveItemInInventory(itemInInventory); //Нужно убрать здесь, потому что ниже в этом методе оно добавится обратно в любом случае через методы TryCreate.
         InventoryItem pickedUpItem = CurrentSelectedItem;
         if (itemInInventory.IsRotated)
         {
@@ -307,9 +318,13 @@ public class InventoryController : MonoBehaviour
                 SelectedItemGrid = initialItemGridState;
                 return true;
             }
-            else PlaceDown(itemPosition);
-            SelectedItemGrid = initialItemGridState;
-            return false;
+            else
+            {
+                PlaceDown(itemPosition);
+                SelectedItemGrid = initialItemGridState;
+                TradeManager.PlayersInventory.AddItemInInventory(itemInInventory);
+                return false;
+            }
         }
         else
         {
@@ -319,9 +334,13 @@ public class InventoryController : MonoBehaviour
                 SelectedItemGrid = initialItemGridState;
                 return true;
             }
-            else PlaceDown(itemPosition);
-            SelectedItemGrid = initialItemGridState;
-            return false;
+            else
+            {
+                PlaceDown(itemPosition);
+                SelectedItemGrid = initialItemGridState;
+                TradeManager.PlayersInventory.AddItemInInventory(itemInInventory);
+                return false;
+            }
         }
 
     }

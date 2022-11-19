@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class PlayersInventory : MonoBehaviour
 {
-    private List<InventoryItem> _inventory;
-
+    //TMP public
+    public List<InventoryItem> _inventory;
     public void AddItemInInventory(InventoryItem item)
     {
         _inventory.Add(item);

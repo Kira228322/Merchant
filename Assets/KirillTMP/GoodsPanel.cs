@@ -34,12 +34,16 @@ public class GoodsPanel : MonoBehaviour
     {
         if (_currentCount > 0)
         {
-            if (_inventoryController.TryCreateAndInsertItem(FindObjectOfType<ItemGrid>(), _item, 1,true))
+            if (!_inventoryController.TryCreateAndInsertItem(TradeManager.PlayersInventory.GetComponent<ItemGrid>(), _item, 1,true))
             {
-                _currentCount--;
-                _countText.text = _currentCount.ToString();
-                _trader.SellItem(_item);
+                if (!_inventoryController.TryCreateAndInsertItemRotated(TradeManager.PlayersInventory.GetComponent<ItemGrid>(), _item, 1, true))
+                {
+                    return;
+                }
             }
+            _currentCount--;
+            _countText.text = _currentCount.ToString();
+            _trader.SellItem(_item);
         }
     }
 }

@@ -1528,8 +1528,9 @@ GameObject:
   - component: {fileID: 589487895}
   - component: {fileID: 589487894}
   - component: {fileID: 589487893}
+  - component: {fileID: 589487897}
   m_Layer: 5
-  m_Name: InventoryGrid (1)
+  m_Name: PlayerInventory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1619,6 +1620,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 589487891}
   m_CullTransparentMesh: 1
+--- !u!114 &589487897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 589487891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74ea4de35d623b94aa2fac2ade2afe7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inventory: []
 --- !u!1 &608344259
 GameObject:
   m_ObjectHideFlags: 0
