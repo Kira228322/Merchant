@@ -72,6 +72,12 @@ public class InventoryController : MonoBehaviour
         {
             OnLeftMouseButtonPress();
         }
+
+        if (Input.GetMouseButtonDown(2))
+        {
+            //Тестовый скрипт по нажатию средней кнопки мыши
+        }
+
         if (Input.GetMouseButtonUp(0))
         {
             OnLeftMouseButtonRelease();
@@ -204,6 +210,7 @@ public class InventoryController : MonoBehaviour
         SelectedItemGrid = initialItemGridState;
         return false;
     }
+
     private void ShowItemStats(InventoryItem item)
     {
         ItemInfo itemInfoPanel = Instantiate(_itemInfoPanelPrefab, _canvasTransform).GetComponent<ItemInfo>();

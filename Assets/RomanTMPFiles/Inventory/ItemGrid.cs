@@ -65,7 +65,7 @@ public class ItemGrid : MonoBehaviour
         return _tileGridPosition;
     }
 
-    public InventoryItem PickUpItem(int positionX, int positionY) //”брать айтем из €чеек
+    public InventoryItem PickUpItem(int positionX, int positionY) //”брать айтем из €чеек и return его, чтобы вз€ть в "руку"
     {
         InventoryItem itemToReturn = _storedInventoryItems[positionX, positionY];
 
@@ -74,6 +74,23 @@ public class ItemGrid : MonoBehaviour
         CleanGridReference(itemToReturn);
         TradeManager.PlayersInventory.RemoveItemInInventory(itemToReturn);
         return itemToReturn;
+    }
+
+    public void DestroyItem(int positionX, int positionY)
+    {
+        InventoryItem itemToDestroy = _storedInventoryItems[positionX, positionY];
+
+        if (itemToDestroy == null) { return; }
+
+        CleanGridReference(itemToDestroy);
+        TradeManager.PlayersInventory.RemoveItemInInventory(itemToDestroy);
+        Destroy(itemToDestroy.gameObject);
+    }
+    public void DestroyItem(InventoryItem itemToDestroy)
+    {
+        CleanGridReference(itemToDestroy);
+        TradeManager.PlayersInventory.RemoveItemInInventory(itemToDestroy);
+        Destroy(itemToDestroy.gameObject);
     }
 
     private void CleanGridReference(InventoryItem item) //ќчистить сетку, убрать предмет
