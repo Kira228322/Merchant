@@ -258,6 +258,7 @@ public class InventoryController : MonoBehaviour
     private void CreateItemRotated(Item item, int amount, float boughtDaysAgo)
     {
         InventoryItem spawnedItem = Instantiate(_itemPrefab, _canvasTransform).GetComponent<InventoryItem>();
+        spawnedItem.SetItemFromData(item);
         spawnedItem.Rotate();
         CurrentSelectedItem = spawnedItem;
 
@@ -269,7 +270,6 @@ public class InventoryController : MonoBehaviour
 
         CurrentSelectedItem.transform.localScale = Vector2.one;
 
-        spawnedItem.SetItemFromData(item);
     }
     private void CreateRandomItem() //Для тестирования
     {
@@ -310,6 +310,7 @@ public class InventoryController : MonoBehaviour
             {
                 Destroy(pickedUpItem.gameObject);
                 SelectedItemGrid = initialItemGridState;
+                //AddItemInInventory??
                 return true;
             }
             else
@@ -326,6 +327,7 @@ public class InventoryController : MonoBehaviour
             {
                 Destroy(pickedUpItem.gameObject);
                 SelectedItemGrid = initialItemGridState;
+                // AddItemInInventory ??
                 return true;
             }
             else

@@ -9,7 +9,7 @@ public class SlidersController : MonoBehaviour
     [SerializeField] private Image _fillArea;
     [SerializeField] private Gradient _colour;
     private Slider _slider; 
-    private void Start()
+    private void Awake()
     {
         _slider = GetComponent<Slider>();
     }
