@@ -11,6 +11,7 @@ public class ItemInfo : MonoBehaviour
     [SerializeField] private Image _itemIcon;
     [SerializeField] private Button _splitButton;
     [SerializeField] private Button _rotateButton;
+    [SerializeField] private Button _eatButton;
     [SerializeField] private ItemInfoSplitSlider _splitSliderPanel;
 
     [SerializeField] private TMP_Text _itemName;
@@ -24,11 +25,17 @@ public class ItemInfo : MonoBehaviour
     [SerializeField] private TMP_Text _daysToHalfSpoilText;
     [SerializeField] private TMP_Text _daysToSpoilText;
     [SerializeField] private TMP_Text _boughtDaysAgoText;
+    [SerializeField] private TMP_Text _foodValueText;
 
     private InventoryItem _currentItemSelected;
     private ItemGrid _lastItemGridSelected;
     private InventoryController _inventoryController;
 
+
+    public void OnEatButtonPressed()
+    {
+        // TODO 
+    }
     public void OnRotateButtonPressed()
     {
         if (_currentItemSelected.ItemData.CellSizeHeight != _currentItemSelected.ItemData.CellSizeWidth)
@@ -93,15 +100,21 @@ public class ItemInfo : MonoBehaviour
             _daysToHalfSpoilText.alpha = 1;
             _daysToSpoilText.alpha = 1;
             _boughtDaysAgoText.alpha = 1;
+            _foodValueText.alpha = 1;
+            _eatButton.gameObject.SetActive(true);
             _daysToHalfSpoilText.text = $"ƒней до потери свежести: {item.ItemData.DaysToHalfSpoil}";
             _daysToSpoilText.text = $"ƒней до порчи: {item.ItemData.DaysToSpoil}";
             _boughtDaysAgoText.text = "’ранитс€ уже: " + Math.Round(item.BoughtDaysAgo, 1);
+            _foodValueText.text = $"+{item.ItemData.FoodValue} сытости";
         }
         else
         {
             _daysToHalfSpoilText.alpha = 0;
             _daysToSpoilText.alpha = 0;
             _boughtDaysAgoText.alpha = 0;
+            _foodValueText.alpha = 0;
+            _eatButton.interactable = false;
+            _eatButton.gameObject.SetActive(false);
         }
     }
 }

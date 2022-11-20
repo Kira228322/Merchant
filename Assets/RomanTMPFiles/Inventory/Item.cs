@@ -24,6 +24,7 @@ public class Item : ScriptableObject
     [HideInInspector] public bool IsPerishable;
     [HideInInspector] public float DaysToHalfSpoil;
     [HideInInspector] public float DaysToSpoil;
+    [HideInInspector] public int FoodValue; // питательность
     [CustomEditor(typeof(Item))]
     public class ItemEditor : Editor
     {
@@ -52,6 +53,12 @@ public class Item : ScriptableObject
                 EditorGUILayout.Space(20, true);
                 EditorGUILayout.LabelField("Days to spoil", GUILayout.MaxWidth(110));
                 item.DaysToSpoil = EditorGUILayout.FloatField(item.DaysToSpoil);
+                EditorGUILayout.EndHorizontal();
+                
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.Space(20, true);
+                EditorGUILayout.LabelField("Food value", GUILayout.MaxWidth(110));
+                item.FoodValue = EditorGUILayout.IntField(item.FoodValue);
                 EditorGUILayout.EndHorizontal();
             }
         }
