@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class InventoryItem : MonoBehaviour
 {
-    [SerializeField] private TMPro.TMP_Text _currentItemsInAStackText;
+    [SerializeField] private TMP_Text _currentItemsInAStackText;
+    [SerializeField] private TMP_Text _sellValueText;
     [SerializeField] private SlidersController _spoilSlider;
     public Item ItemData;
     public float BoughtDaysAgo;
@@ -81,10 +83,14 @@ public class InventoryItem : MonoBehaviour
         _currentItemsInAStackText.rectTransform.anchorMax = new Vector2(IsRotated == true ? 0 : 1, 0);
         _currentItemsInAStackText.rectTransform.localRotation = Quaternion.Euler(0, 0, IsRotated == true ? 270f : 0f);
 
+        _sellValueText.rectTransform.anchorMin = new Vector2(IsRotated == true ? 1 : 0, 1);
+        _sellValueText.rectTransform.anchorMax = new Vector2(IsRotated == true ? 1 : 0, 1);
+        _sellValueText.rectTransform.localRotation = Quaternion.Euler(0, 0, IsRotated == true ? 270f : 0f);
+
         sliderRectTransform.anchorMin = new Vector2(IsRotated == true ? 0 : 1, 0);
         sliderRectTransform.anchorMax = new Vector2(IsRotated == true ? 0 : 1, 0);
         sliderRectTransform.localRotation = Quaternion.Euler(0, 0, IsRotated == true ? 270f : 0f);
-        sliderRectTransform.sizeDelta = new(Width * ItemGrid.TileSizeWidth, sliderRectTransform.sizeDelta.y);
+        sliderRectTransform.sizeDelta = new Vector2(Width * ItemGrid.TileSizeWidth, sliderRectTransform.sizeDelta.y);
     }
 
     public void RefreshSliderValue()

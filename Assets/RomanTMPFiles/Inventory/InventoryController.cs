@@ -284,8 +284,7 @@ public class InventoryController : MonoBehaviour
         CurrentSelectedItem.transform.localScale = Vector2.one;
 
         int selectedItemID = UnityEngine.Random.Range(0, items.Count);
-        item.SetItemFromData(items[selectedItemID]);
-        TradeManager.PlayersInventory.AddItemInInventory(item); 
+        item.SetItemFromData(items[selectedItemID]); 
     }
     private void InsertRandomItem() //Для тестирования
     {

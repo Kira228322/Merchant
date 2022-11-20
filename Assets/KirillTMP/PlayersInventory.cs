@@ -10,7 +10,6 @@ public class PlayersInventory : MonoBehaviour
     {
         _inventory.Add(item);
     }
-
     public void RemoveItemInInventory(InventoryItem item)
     {
         _inventory.Remove(item);
