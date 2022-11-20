@@ -8,6 +8,11 @@ using UnityEngine.UI;
 public class Item : ScriptableObject
 {
     public string Name;
+    public enum ItemType
+    {Food, Drink ,Metal, Gem, MeleeWeapon, RangeWeapon, MagicThing} // Список нужно будет дополнять 
+
+    public ItemType TypeOfItem;
+    
     [TextArea(2,5)]public string Description;
     public Sprite Icon;
     public int Price;
