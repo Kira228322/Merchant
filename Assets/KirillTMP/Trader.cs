@@ -2,25 +2,68 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
 
 public class Trader : MonoBehaviour
 {
-    // Хоть у каждого Item'a уже указана цена, за которую его можно купить у торговца
-    // каждый торговец будет иметь свою цену на этот товар. ИБО В ЭТОМ И СМЫСЛ ИГРЫ епт
     [SerializeField] private string _name;
+    [SerializeField] private List<TraderType> _traderTypes;
     public string Name => _name;
+    
     public List<Item> Goods;
     [HideInInspector] public List<Item> MerchantGoods;
+    
+    [HideInInspector] public List<float> Coefficient = new List<float>();
+    [HideInInspector] public List<Item.ItemType> GoodsType = new List<Item.ItemType>();
+    [HideInInspector] public List<int> CountToBuy = new List<int>();
 
     [HideInInspector] public List<int> NewPrice;
     [HideInInspector] public List<int> CountOfGood;
-    // private int[] _newPrice;
-    // private int[] _countOfGood;
 
     private void Start()
     {
+        if (_traderTypes.Count == 1)  // Если торговец одного типа
+            for (int i = 0; i < _traderTypes[0].GoodsType.Count; i ++)
+            {
+                GoodsType.Add(_traderTypes[0].GoodsType[i]); 
+                Coefficient.Add(_traderTypes[0].Coefficient[i]);
+                CountToBuy.Add(_traderTypes[0].CountToBuy[i]);
+            }
+        else // Если торговец смешанного типа
+        {
+            foreach (var goodsType in _traderTypes[0].GoodsType)
+            {
+                GoodsType.Add(goodsType);
+                Coefficient.Add(0);
+                CountToBuy.Add(0);
+            }
+
+            for (int i = 0; i < GoodsType.Count; i++)
+            {
+                for (int j = 0; j < _traderTypes.Count; j++)
+                    CountToBuy[i] += _traderTypes[j].CountToBuy[i];
+                
+                // Среднее значение, округленное вверх 
+                CountToBuy[i] = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(CountToBuy[i]) / _traderTypes.Count));
+                
+                for (int j = 0; j < _traderTypes.Count; j++)
+                {
+                    if (_traderTypes[j].Coefficient[i] == 1) // Если данный тип продукта это его специализация 
+                    { // (коэф за который покупает этот товар == 1), то конечный коэф = 1
+                        Coefficient[i] = 1;
+                        break;
+                    } // Если не спеца, то складываем все, потом делим на колличество => среднее значение
+                    Coefficient[i] += _traderTypes[j].Coefficient[i];
+                    
+                }
+
+                if (Coefficient[i] != 1)
+                    Coefficient[i] = Convert.ToSingle(Math.Round(Coefficient[i] / _traderTypes.Count, 2));
+            }
+        }
+        
         MerchantGoods = new List<Item>();
         for (int i = 0; i < Goods.Count; i++)
         {

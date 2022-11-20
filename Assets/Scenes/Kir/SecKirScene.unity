@@ -1980,10 +1980,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Piter
+  _traderTypes:
+  - {fileID: 11400000, guid: 756e2d63740575f4cb957e254533cb3d, type: 2}
+  - {fileID: 11400000, guid: a3c9654c0fb3e3e418c0be3d3c4f6a4a, type: 2}
   Goods:
   - {fileID: 11400000, guid: 47b264f5ad831994ca7460ce0d509778, type: 2}
   - {fileID: 11400000, guid: adc79b250ea31fa488ceb89a335a019f, type: 2}
   MerchantGoods: []
+  Coefficient: []
+  GoodsType: 
+  CountToBuy: 
   NewPrice: 2b00000028000000
   CountOfGood: 0700000002000000
 --- !u!224 &250721927
@@ -8221,6 +8227,7 @@ MonoBehaviour:
   _itemIcon: {fileID: 2452092753942323276}
   _splitButton: {fileID: 2452092754927454500}
   _rotateButton: {fileID: 2452092754399716275}
+  _eatButton: {fileID: 0}
   _splitSliderPanel: {fileID: 0}
   _itemName: {fileID: 2452092753841430681}
   _itemDescription: {fileID: 0}
@@ -8233,6 +8240,7 @@ MonoBehaviour:
   _daysToHalfSpoilText: {fileID: 2452092754700173282}
   _daysToSpoilText: {fileID: 2452092754705706597}
   _boughtDaysAgoText: {fileID: 0}
+  _foodValueText: {fileID: 0}
 --- !u!114 &2452092753836731144
 MonoBehaviour:
   m_ObjectHideFlags: 0
