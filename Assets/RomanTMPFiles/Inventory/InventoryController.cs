@@ -163,12 +163,12 @@ public class InventoryController : MonoBehaviour
     #endregion
 
     #region ћетоды, св€занные с взаимодействием с айтемом
-    public bool TryCreateAndInsertItem(ItemGrid itemGrid, Item item, int amount, bool isFillingStackFirst)
+    public bool TryCreateAndInsertItem(ItemGrid itemGrid, Item item, int amount, float daysBoughtAgo, bool isFillingStackFirst)
     {
         ItemGrid initialItemGridState = SelectedItemGrid;
 
 
-        CreateItem(item, amount);
+        CreateItem(item, amount, daysBoughtAgo);
         InventoryItem itemToInsert = CurrentSelectedItem;
         SelectedItemGrid = itemGrid;
 
@@ -184,11 +184,11 @@ public class InventoryController : MonoBehaviour
         SelectedItemGrid = initialItemGridState;
         return false;
     }
-    public bool TryCreateAndInsertItemRotated(ItemGrid itemGrid, Item item, int amount, bool isFillingStackFirst)
+    public bool TryCreateAndInsertItemRotated(ItemGrid itemGrid, Item item, int amount, float daysBoughtAgo, bool isFillingStackFirst)
     {
         ItemGrid initialItemGridState = SelectedItemGrid;
 
-        CreateItemRotated(item, amount);
+        CreateItemRotated(item, amount, daysBoughtAgo);
         InventoryItem itemToInsert = CurrentSelectedItem;
         SelectedItemGrid = itemGrid;
 
@@ -239,12 +239,13 @@ public class InventoryController : MonoBehaviour
             _rectTransform.position = Input.mousePosition;
         }
     }
-    private void CreateItem(Item item, int amount)
+    private void CreateItem(Item item, int amount, float boughtDaysAgo)
     {
         InventoryItem spawnedItem = Instantiate(_itemPrefab, _canvasTransform).GetComponent<InventoryItem>();
         CurrentSelectedItem = spawnedItem;
 
         spawnedItem.CurrentItemsInAStack = amount;
+        spawnedItem.BoughtDaysAgo = boughtDaysAgo;
 
         _rectTransform = spawnedItem.GetComponent<RectTransform>();
         _rectTransform.SetAsLastSibling();
@@ -254,13 +255,14 @@ public class InventoryController : MonoBehaviour
         spawnedItem.SetItemFromData(item);
 
     }
-    private void CreateItemRotated(Item item, int amount)
+    private void CreateItemRotated(Item item, int amount, float boughtDaysAgo)
     {
         InventoryItem spawnedItem = Instantiate(_itemPrefab, _canvasTransform).GetComponent<InventoryItem>();
         spawnedItem.Rotate();
         CurrentSelectedItem = spawnedItem;
 
         spawnedItem.CurrentItemsInAStack = amount;
+        spawnedItem.BoughtDaysAgo = boughtDaysAgo;
 
         _rectTransform = spawnedItem.GetComponent<RectTransform>();
         _rectTransform.SetAsLastSibling();
@@ -304,7 +306,7 @@ public class InventoryController : MonoBehaviour
         InventoryItem pickedUpItem = CurrentSelectedItem;
         if (itemInInventory.IsRotated)
         {
-            if (TryCreateAndInsertItem(itemGrid, itemInInventory.ItemData, itemInInventory.CurrentItemsInAStack, isFillingStackFirst: false))
+            if (TryCreateAndInsertItem(itemGrid, itemInInventory.ItemData, itemInInventory.CurrentItemsInAStack, itemInInventory.BoughtDaysAgo, isFillingStackFirst: false))
             {
                 Destroy(pickedUpItem.gameObject);
                 SelectedItemGrid = initialItemGridState;
@@ -320,7 +322,7 @@ public class InventoryController : MonoBehaviour
         }
         else
         {
-            if (TryCreateAndInsertItemRotated(itemGrid, itemInInventory.ItemData, itemInInventory.CurrentItemsInAStack, isFillingStackFirst: false))
+            if (TryCreateAndInsertItemRotated(itemGrid, itemInInventory.ItemData, itemInInventory.CurrentItemsInAStack, itemInInventory.BoughtDaysAgo, isFillingStackFirst: false))
             {
                 Destroy(pickedUpItem.gameObject);
                 SelectedItemGrid = initialItemGridState;

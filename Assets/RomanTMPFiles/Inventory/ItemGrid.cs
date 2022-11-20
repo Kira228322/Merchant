@@ -77,10 +77,13 @@ public class ItemGrid : MonoBehaviour
         {
             if (IsOverlappingWithTheSameItemType(item, positionX, positionY, item.Width, item.Height, out InventoryItem itemInInventory))
             {
-                if (TryPlaceItemInAStack(item, itemInInventory))
+                if (AreRotDifferenceBetweenTwoItemsLessThanOne(item, itemInInventory))
                 {
-                    TradeManager.PlayersInventory.RemoveItemInInventory(item);
-                    return true;
+                    if (TryPlaceItemInAStack(item, itemInInventory))
+                    {
+                        TradeManager.PlayersInventory.RemoveItemInInventory(item);
+                        return true;
+                    }
                 }
                 return false;
             }
@@ -161,6 +164,19 @@ public class ItemGrid : MonoBehaviour
             return false;
         }
         return true;
+    }
+
+    private bool AreRotDifferenceBetweenTwoItemsLessThanOne(InventoryItem item1, InventoryItem item2)
+    {
+        if (item1.ItemData.IsPerishable || item2.ItemData.IsPerishable)
+        {
+            if (Math.Abs(item1.BoughtDaysAgo - item2.BoughtDaysAgo) < 1)
+            {
+                return true;
+            }
+            return false;
+        }
+        return true; //≈сли сравнены две вещи, которые не порт€тс€, то всегда true 
     }
 
     public Vector2Int? FindSpaceForItemInsertion(InventoryItem itemToInsert, bool isFillingStackFirst)

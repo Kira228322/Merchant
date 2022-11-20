@@ -67,11 +67,16 @@ public class InventoryItem : MonoBehaviour
         IsRotated = !IsRotated;
 
         RectTransform rectTransform = GetComponent<RectTransform>();
+        RectTransform sliderRectTransform = _spoilSlider.GetComponent<RectTransform>();
         rectTransform.rotation = Quaternion.Euler(0, 0, IsRotated == true ? 90f : 0f); //ниху€ умный способ задавать значени€, запомню
 
         _currentItemsInAStackText.rectTransform.anchorMin = new Vector2(IsRotated == true ? 0 : 1, 0);
         _currentItemsInAStackText.rectTransform.anchorMax = new Vector2(IsRotated == true ? 0 : 1, 0);
         _currentItemsInAStackText.rectTransform.localRotation = Quaternion.Euler(0, 0, IsRotated == true ? 270f : 0f);
+
+        sliderRectTransform.anchorMin = new Vector2(IsRotated == true ? 0 : 1, 0);
+        sliderRectTransform.anchorMax = new Vector2(IsRotated == true ? 0 : 1, 0);
+        sliderRectTransform.localRotation = Quaternion.Euler(0, 0, IsRotated == true ? 270f : 0f);
     }
 
     public void RefreshSliderValue()
