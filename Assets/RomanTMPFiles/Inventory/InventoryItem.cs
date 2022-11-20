@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class InventoryItem : MonoBehaviour
 {
-    [SerializeField] private TMPro.TMP_Text _currentItemsInAStackText;
+    [SerializeField] private TMP_Text _currentItemsInAStackText;
+    [SerializeField] private TMP_Text _sellValueText;
     [SerializeField] private SlidersController _spoilSlider;
     public Item ItemData;
     public float BoughtDaysAgo;
@@ -54,12 +56,19 @@ public class InventoryItem : MonoBehaviour
     {
         ItemData = itemData;
 
-        GetComponent<Image>().sprite = itemData.Icon;
+        GetComponent<Image>().sprite = ItemData.Icon;
 
         Vector2 size = new();
-        size.x = itemData.CellSizeWidth * ItemGrid.TileSizeWidth;
-        size.y = itemData.CellSizeHeight * ItemGrid.TileSizeHeight;
+        size.x = ItemData.CellSizeWidth * ItemGrid.TileSizeWidth;
+        size.y = ItemData.CellSizeHeight * ItemGrid.TileSizeHeight;
         GetComponent<RectTransform>().sizeDelta = size;
+        if (ItemData.IsPerishable)
+        {
+            _spoilSlider.gameObject.SetActive(true);
+            _spoilSlider.GetComponent<RectTransform>().sizeDelta = new(Width * ItemGrid.TileSizeWidth, _spoilSlider.GetComponent<RectTransform>().sizeDelta.y);
+            //Wtf is sizeDelta?? -> https://stackoverflow.com/questions/44471568/how-to-calculate-sizedelta-in-recttransform
+            RefreshSliderValue();
+        }
     }
 
     public void Rotate()
@@ -68,15 +77,20 @@ public class InventoryItem : MonoBehaviour
 
         RectTransform rectTransform = GetComponent<RectTransform>();
         RectTransform sliderRectTransform = _spoilSlider.GetComponent<RectTransform>();
-        rectTransform.rotation = Quaternion.Euler(0, 0, IsRotated == true ? 90f : 0f); //ниху€ умный способ задавать значени€, запомню
+        rectTransform.rotation = Quaternion.Euler(0, 0, IsRotated == true ? 90f : 0f);
 
         _currentItemsInAStackText.rectTransform.anchorMin = new Vector2(IsRotated == true ? 0 : 1, 0);
         _currentItemsInAStackText.rectTransform.anchorMax = new Vector2(IsRotated == true ? 0 : 1, 0);
         _currentItemsInAStackText.rectTransform.localRotation = Quaternion.Euler(0, 0, IsRotated == true ? 270f : 0f);
 
+        _sellValueText.rectTransform.anchorMin = new Vector2(IsRotated == true ? 1 : 0, 1);
+        _sellValueText.rectTransform.anchorMax = new Vector2(IsRotated == true ? 1 : 0, 1);
+        _sellValueText.rectTransform.localRotation = Quaternion.Euler(0, 0, IsRotated == true ? 270f : 0f);
+
         sliderRectTransform.anchorMin = new Vector2(IsRotated == true ? 0 : 1, 0);
         sliderRectTransform.anchorMax = new Vector2(IsRotated == true ? 0 : 1, 0);
         sliderRectTransform.localRotation = Quaternion.Euler(0, 0, IsRotated == true ? 270f : 0f);
+        sliderRectTransform.sizeDelta = new Vector2(Width * ItemGrid.TileSizeWidth, sliderRectTransform.sizeDelta.y);
     }
 
     public void RefreshSliderValue()

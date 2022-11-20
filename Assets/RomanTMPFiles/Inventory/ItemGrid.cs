@@ -32,6 +32,28 @@ public class ItemGrid : MonoBehaviour
         Vector2 size = new(width * TileSizeWidth, height * TileSizeHeight);
         _rectTransform.sizeDelta = size;
     }
+
+    /*public void SetInventorySize(int width, int height)
+    {
+        var newArray = new InventoryItem[width, height];
+        int columnCount = _storedInventoryItems.GetLength(1);
+        int columnCount2 = height;
+        int columns = _storedInventoryItems.GetUpperBound(0);
+        for (int co = 0; co <= columns; co++)
+            Array.Copy(_storedInventoryItems, co * columnCount, newArray, co * columnCount2, columnCount);
+        _storedInventoryItems = newArray;
+        Vector2 size = new(width * TileSizeWidth, height * TileSizeHeight);
+        _rectTransform.sizeDelta = size;
+    }
+    public void AddInventorySize(int width, int height)
+    {
+        SetInventorySize(_gridSizeWidth + width, _gridSizeHeight + height);
+    }
+    public void RemoveInventorySize(int width, int height)
+    {
+        SetInventorySize(_gridSizeWidth - width, _gridSizeHeight - height);
+    }
+    */
     public Vector2Int GetTileGridPosition(Vector2 mousePosition, Vector2 canvasLocalScale) //Получить позицию в клетках из позиции мышки, т.е (0;1) или (3;4)
     {
         _positionOnTheGrid.x = mousePosition.x - _rectTransform.position.x;
@@ -43,7 +65,7 @@ public class ItemGrid : MonoBehaviour
         return _tileGridPosition;
     }
 
-    public InventoryItem PickUpItem(int positionX, int positionY) //Убрать айтем из ячеек
+    public InventoryItem PickUpItem(int positionX, int positionY) //Убрать айтем из ячеек и return его, чтобы взять в "руку"
     {
         InventoryItem itemToReturn = _storedInventoryItems[positionX, positionY];
 
@@ -54,8 +76,24 @@ public class ItemGrid : MonoBehaviour
         return itemToReturn;
     }
 
-    private void CleanGridReference(InventoryItem item)
-        //Очистить сетку, убрать предмет
+    public void DestroyItem(int positionX, int positionY)
+    {
+        InventoryItem itemToDestroy = _storedInventoryItems[positionX, positionY];
+
+        if (itemToDestroy == null) { return; }
+
+        CleanGridReference(itemToDestroy);
+        TradeManager.PlayersInventory.RemoveItemInInventory(itemToDestroy);
+        Destroy(itemToDestroy.gameObject);
+    }
+    public void DestroyItem(InventoryItem itemToDestroy)
+    {
+        CleanGridReference(itemToDestroy);
+        TradeManager.PlayersInventory.RemoveItemInInventory(itemToDestroy);
+        Destroy(itemToDestroy.gameObject);
+    }
+
+    private void CleanGridReference(InventoryItem item) //Очистить сетку, убрать предмет
     {
         for (int x = 0; x < item.Width; x++)
         {
@@ -77,7 +115,7 @@ public class ItemGrid : MonoBehaviour
         {
             if (IsOverlappingWithTheSameItemType(item, positionX, positionY, item.Width, item.Height, out InventoryItem itemInInventory))
             {
-                if (AreRotDifferenceBetweenTwoItemsLessThanOne(item, itemInInventory))
+                if (IsRotDifferenceBetweenTwoItemsLessThanOne(item, itemInInventory))
                 {
                     if (TryPlaceItemInAStack(item, itemInInventory))
                     {
@@ -142,8 +180,7 @@ public class ItemGrid : MonoBehaviour
         return _storedInventoryItems[x, y];
     }
 
-    public Vector2 CalculatePositionOnTheGrid(InventoryItem item, int positionX, int positionY)
-        // Понять, где визуально расположить предмет (нужно для предметов, больших чем 1x1)
+    public Vector2 CalculatePositionOnTheGrid(InventoryItem item, int positionX, int positionY) // Понять, где визуально расположить предмет (нужно для предметов, больших чем 1x1)
     {
         Vector2 position = new();
 
@@ -166,18 +203,6 @@ public class ItemGrid : MonoBehaviour
         return true;
     }
 
-    private bool AreRotDifferenceBetweenTwoItemsLessThanOne(InventoryItem item1, InventoryItem item2)
-    {
-        if (item1.ItemData.IsPerishable || item2.ItemData.IsPerishable)
-        {
-            if (Math.Abs(item1.BoughtDaysAgo - item2.BoughtDaysAgo) < 1)
-            {
-                return true;
-            }
-            return false;
-        }
-        return true; //Если сравнены две вещи, которые не портятся, то всегда true 
-    }
 
     public Vector2Int? FindSpaceForItemInsertion(InventoryItem itemToInsert, bool isFillingStackFirst)
     {
@@ -263,6 +288,18 @@ public class ItemGrid : MonoBehaviour
         }
 
         return true;
+    }
+    private bool IsRotDifferenceBetweenTwoItemsLessThanOne(InventoryItem item1, InventoryItem item2)
+    {
+        if (item1.ItemData.IsPerishable || item2.ItemData.IsPerishable)
+        {
+            if (Math.Abs(item1.BoughtDaysAgo - item2.BoughtDaysAgo) < 1)
+            {
+                return true;
+            }
+            return false;
+        }
+        return true; //Если сравнены две вещи, которые не портятся, то всегда true. По сути, item1 и item2 - всегда вещи одного типа 
     }
     private Vector2Int? FindAvailableSpaceForNewStack(InventoryItem itemToInsert)
     {

@@ -72,6 +72,12 @@ public class InventoryController : MonoBehaviour
         {
             OnLeftMouseButtonPress();
         }
+
+        if (Input.GetMouseButtonDown(2))
+        {
+            //Тестовый скрипт по нажатию средней кнопки мыши
+        }
+
         if (Input.GetMouseButtonUp(0))
         {
             OnLeftMouseButtonRelease();
@@ -204,6 +210,7 @@ public class InventoryController : MonoBehaviour
         SelectedItemGrid = initialItemGridState;
         return false;
     }
+
     private void ShowItemStats(InventoryItem item)
     {
         ItemInfo itemInfoPanel = Instantiate(_itemInfoPanelPrefab, _canvasTransform).GetComponent<ItemInfo>();
@@ -258,6 +265,7 @@ public class InventoryController : MonoBehaviour
     private void CreateItemRotated(Item item, int amount, float boughtDaysAgo)
     {
         InventoryItem spawnedItem = Instantiate(_itemPrefab, _canvasTransform).GetComponent<InventoryItem>();
+        spawnedItem.SetItemFromData(item);
         spawnedItem.Rotate();
         CurrentSelectedItem = spawnedItem;
 
@@ -269,7 +277,6 @@ public class InventoryController : MonoBehaviour
 
         CurrentSelectedItem.transform.localScale = Vector2.one;
 
-        spawnedItem.SetItemFromData(item);
     }
     private void CreateRandomItem() //Для тестирования
     {
@@ -284,8 +291,7 @@ public class InventoryController : MonoBehaviour
         CurrentSelectedItem.transform.localScale = Vector2.one;
 
         int selectedItemID = UnityEngine.Random.Range(0, items.Count);
-        item.SetItemFromData(items[selectedItemID]);
-        TradeManager.PlayersInventory.AddItemInInventory(item); 
+        item.SetItemFromData(items[selectedItemID]); 
     }
     private void InsertRandomItem() //Для тестирования
     {
@@ -310,6 +316,7 @@ public class InventoryController : MonoBehaviour
             {
                 Destroy(pickedUpItem.gameObject);
                 SelectedItemGrid = initialItemGridState;
+                //AddItemInInventory??
                 return true;
             }
             else
@@ -326,6 +333,7 @@ public class InventoryController : MonoBehaviour
             {
                 Destroy(pickedUpItem.gameObject);
                 SelectedItemGrid = initialItemGridState;
+                // AddItemInInventory ??
                 return true;
             }
             else

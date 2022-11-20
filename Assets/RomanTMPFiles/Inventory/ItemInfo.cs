@@ -55,6 +55,12 @@ public class ItemInfo : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+    public void OnDestroyButtonPressed()
+    {
+        _lastItemGridSelected.DestroyItem(_currentItemSelected);
+        Destroy(gameObject);
+    }
     public void Split(int amountToSplit)
     {
         _currentItemSelected.CurrentItemsInAStack -= amountToSplit; //вроде бы предусмотрено на случай всех невозможных ситуаций через другие скрипты и свойства кнопок
