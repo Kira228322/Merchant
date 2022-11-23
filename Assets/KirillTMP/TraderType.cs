@@ -50,9 +50,6 @@ public class TraderType : ScriptableObject
 
             for (int i = 0; i < traderType.GoodsType.Count; i++)
             {
-                if (traderType.GoodsType[i] == null)
-                    continue;
-                
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.Space(-18, true);
                 EditorGUILayout.LabelField(traderType.GoodsType[i].ToString(), GUILayout.MaxWidth(100));
@@ -63,7 +60,6 @@ public class TraderType : ScriptableObject
                 EditorGUILayout.LabelField("countToBuy", GUILayout.MaxWidth(80));
                 traderType.CountToBuy[i] = EditorGUILayout.IntField(traderType.CountToBuy[i]);
                 EditorGUILayout.EndHorizontal();
-                
             }
         }
     }
