@@ -33,27 +33,20 @@ public class ItemGrid : MonoBehaviour
         _rectTransform.sizeDelta = size;
     }
 
-    /*public void SetInventorySize(int width, int height)
+    public void AddRowsToInventory(int numberOfRowsToAdd)
     {
-        var newArray = new InventoryItem[width, height];
-        int columnCount = _storedInventoryItems.GetLength(1);
-        int columnCount2 = height;
-        int columns = _storedInventoryItems.GetUpperBound(0);
-        for (int co = 0; co <= columns; co++)
-            Array.Copy(_storedInventoryItems, co * columnCount, newArray, co * columnCount2, columnCount);
+        InventoryItem[,] newArray = new InventoryItem[numberOfRowsToAdd + _gridSizeHeight, _gridSizeWidth];
+
+        Array.Copy(_storedInventoryItems, newArray, _storedInventoryItems.Length);
+
         _storedInventoryItems = newArray;
-        Vector2 size = new(width * TileSizeWidth, height * TileSizeHeight);
+        _gridSizeHeight += numberOfRowsToAdd;
+
+        Vector2 size = new(_gridSizeWidth * TileSizeWidth, _gridSizeHeight * TileSizeHeight);
         _rectTransform.sizeDelta = size;
+
     }
-    public void AddInventorySize(int width, int height)
-    {
-        SetInventorySize(_gridSizeWidth + width, _gridSizeHeight + height);
-    }
-    public void RemoveInventorySize(int width, int height)
-    {
-        SetInventorySize(_gridSizeWidth - width, _gridSizeHeight - height);
-    }
-    */
+
     public Vector2Int GetTileGridPosition(Vector2 mousePosition, Vector2 canvasLocalScale) //ѕолучить позицию в клетках из позиции мышки, т.е (0;1) или (3;4)
     {
         _positionOnTheGrid.x = mousePosition.x - _rectTransform.position.x;

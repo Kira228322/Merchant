@@ -1984,11 +1984,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Piter
+  _traderTypes:
+  - {fileID: 11400000, guid: 756e2d63740575f4cb957e254533cb3d, type: 2}
   Goods:
   - {fileID: 11400000, guid: 47b264f5ad831994ca7460ce0d509778, type: 2}
   - {fileID: 11400000, guid: adc79b250ea31fa488ceb89a335a019f, type: 2}
   - {fileID: 11400000, guid: c51137506052a204090b07cad53242db, type: 2}
   MerchantGoods: []
+  Coefficient: []
+  GoodsType: 
+  CountToBuy: 
   NewPrice: 2b0000002800000005000000
   CountOfGood: 070000000200000013000000
 --- !u!224 &250721927
@@ -4612,7 +4617,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gridSizeWidth: 5
-  _gridSizeHeight: 22
+  _gridSizeHeight: 4
 --- !u!114 &1270634432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6497,7 +6502,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -1.8048706, y: 15.02478}
+  m_AnchoredPosition: {x: -1.8048096, y: 15.02478}
   m_SizeDelta: {x: 32, y: 32}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1898063462

@@ -75,7 +75,7 @@ public class InventoryController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(2))
         {
-            //Тестовый скрипт по нажатию средней кнопки мыши
+            SelectedItemGrid.AddRowsToInventory(1);
         }
 
         if (Input.GetMouseButtonUp(0))
@@ -162,7 +162,7 @@ public class InventoryController : MonoBehaviour
             position.x -= (CurrentSelectedItem.Width - 1) * ItemGrid.TileSizeWidth / 2;
             position.y += (CurrentSelectedItem.Height - 1) * ItemGrid.TileSizeHeight / 2;
         }
- 
+
         return SelectedItemGrid.GetTileGridPosition(position, _canvasTransform.localScale);
     }
 
