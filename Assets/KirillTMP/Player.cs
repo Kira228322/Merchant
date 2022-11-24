@@ -7,18 +7,56 @@ public class Player : MonoBehaviour
 {
     [SerializeField] private SlidersController _hungerScale;
     [SerializeField] private SlidersController _sleepScale;
-    
-    public int MaxHunger; // Максимальное значение голода и сна можно будет поднять отдав скилл поинт в стат
-    public int MaxSleep; // "Стойкость" или типо того.
-    public int CurrentHunger;
-    public int CurrentSleep; // пока хз как быть с доступом этих полей. Пусть пока будут public
 
-    public void EatFood(int foodValue)
+    private int _currentHunger;
+    private int _currentSleep;
+    
+    public int MaxHunger;
+    public int MaxSleep;
+    public int CurrentHunger 
+    {
+        get
+        {
+            return _currentHunger;
+        }
+        set
+        {
+            _currentHunger = value;
+            if (_currentHunger < 0)
+            {
+                _currentHunger = 0;
+            }
+            if (_currentHunger > MaxHunger) 
+            {
+                _currentHunger = MaxHunger;
+            }
+            _hungerScale.SetValue(CurrentHunger, MaxHunger);
+        }
+    }
+    public int CurrentSleep
+    {
+        get
+        {
+            return _currentSleep;
+        }
+        set
+        {
+            _currentSleep = value;
+            if (_currentSleep < 0)
+            {
+                _currentSleep = 0;
+            }
+            if (_currentSleep > MaxSleep)
+            {
+                _currentSleep = MaxSleep;
+            }
+            _sleepScale.SetValue(CurrentSleep, MaxSleep);
+        }
+    }
+
+    public void RestoreHunger(int foodValue)
     {
         CurrentHunger += foodValue;
-        if (CurrentHunger > MaxHunger)
-            CurrentHunger = MaxHunger;
-        _hungerScale.SetValue(CurrentHunger, MaxHunger);
     }
 
     public void Sleep()
