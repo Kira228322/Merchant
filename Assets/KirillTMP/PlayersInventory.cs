@@ -6,6 +6,15 @@ using UnityEngine;
 public class PlayersInventory : MonoBehaviour
 {
     private List<InventoryItem> _inventory = new();
+
+    private void OnEnable()
+    {
+        GameTime.HourChanged += OnHourChanged;
+    }
+    private void OnDisable()
+    {
+        GameTime.HourChanged -= OnHourChanged;
+    }
     public void AddItemInInventory(InventoryItem item)
     {
         _inventory.Add(item);
@@ -15,7 +24,12 @@ public class PlayersInventory : MonoBehaviour
         _inventory.Remove(item);
     }
 
-    public void CheckSpoilItems()
+    private void OnHourChanged()
+    {
+        CheckSpoilItems();
+    }
+
+    private void CheckSpoilItems()
     {
         foreach (var item in _inventory)
         {

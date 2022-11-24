@@ -8,8 +8,14 @@ public class Player : MonoBehaviour
     [SerializeField] private SlidersController _hungerScale;
     [SerializeField] private SlidersController _sleepScale;
 
+    [Tooltip("Сколько нужно минут, чтобы сон уменьшился на 1")][SerializeField] int _sleepDecayRate;
+    [Tooltip("Сколько нужно минут, чтобы голод уменьшился на 1")][SerializeField] int _hungerDecayRate;
+    [Tooltip("Сколько нужно минут во время сна, чтобы сон восстановился на 1")][SerializeField] int _sleepRestorationRate;
+
     private int _currentHunger;
     private int _currentSleep;
+
+    private int _timeCounter = 0;
     
     public int MaxHunger;
     public int MaxSleep;
@@ -54,15 +60,36 @@ public class Player : MonoBehaviour
         }
     }
 
+    public bool IsSleeping;
+
+    private void OnEnable() => GameTime.MinuteChanged += OnMinuteChange;
+    private void OnDisable() => GameTime.MinuteChanged -= OnMinuteChange;
+
     public void RestoreHunger(int foodValue)
     {
         CurrentHunger += foodValue;
     }
-
-    public void Sleep()
-    {
-        // TODO думаю сделать так, чтобы было можно было выбирать время сна и за каждый час сна восстанавливать
-        // 1/8 от MaxSleep (то есть максимум можно поспать 8 часов, больше нет смысла) 
-    }
     
+    private void OnMinuteChange()
+    {
+        _timeCounter++;
+        if (_timeCounter == _hungerDecayRate) 
+            CurrentHunger--;
+        if (!IsSleeping)
+        {
+            if (_timeCounter == _sleepDecayRate)
+            {
+                CurrentSleep--;
+                _timeCounter = 0;
+            }
+        }
+        else
+        {
+            if (_timeCounter == _sleepRestorationRate)
+            {
+                CurrentSleep++;
+                _timeCounter = 0;
+            }
+        }
+    }
 }

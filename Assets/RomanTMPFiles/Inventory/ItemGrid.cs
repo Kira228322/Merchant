@@ -38,7 +38,6 @@ public class ItemGrid : MonoBehaviour
 
         Vector2 size = new(width * TileSizeWidth, height * TileSizeHeight);
         _rectTransform.sizeDelta = size;
-        Debug.Log(_storedInventoryItems.Count);
     }
 
     public void AddRowsToInventory(int numberOfRowsToAdd)
@@ -144,7 +143,6 @@ public class ItemGrid : MonoBehaviour
             for (int y = 0; y < item.Height; y++)
             {
                 _storedInventoryItems[positionY + y][positionX + x] = item;
-
             }
         }
 

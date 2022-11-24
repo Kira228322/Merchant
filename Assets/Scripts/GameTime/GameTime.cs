@@ -1,13 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Events;
 public static class GameTime
 {
     private static Timeflow _timeflow;
     private static int _days = 1;
     private static int _hours = 0;
     private static float _minutes = 0f;
+
+    public static event UnityAction HourChanged;
+    public static event UnityAction MinuteChanged;
+
     public static int Days
     {
         get
@@ -23,13 +27,14 @@ public static class GameTime
         { return _hours; }
         set
         {
-            TradeManager.PlayersInventory.CheckSpoilItems();
+            //TradeManager.PlayersInventory.CheckSpoilItems(); “еперь сам PlayersInventory занимаетс€ этим по событию HourChanged
             _hours = value;
             if (_hours >= 24) 
             {
                 _hours = 0;
                 Days++;
             }
+            HourChanged.Invoke();
         }
     }
     public static float Minutes
@@ -44,6 +49,7 @@ public static class GameTime
                 _minutes = 0f;
                 Hours++;
             }
+            MinuteChanged.Invoke();
         }
     }
 
