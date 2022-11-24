@@ -10,14 +10,18 @@ public class Player : MonoBehaviour
     [SerializeField] private SlidersController _hungerScale;
     [SerializeField] private SlidersController _sleepScale;
 
-private PlayerMover _playerMover;
-    public PlayerMover PlayerMover => _playerMover;[Tooltip("—колько нужно минут, чтобы сон уменьшилс€ на 1")][SerializeField] int _sleepDecayRate;
+    [Tooltip("—колько нужно минут, чтобы сон уменьшилс€ на 1")][SerializeField] int _sleepDecayRate;
     [Tooltip("—колько нужно минут, чтобы голод уменьшилс€ на 1")][SerializeField] int _hungerDecayRate;
-    [Tooltip("—колько нужно минут во врем€ сна, чтобы сон восстановилс€ на 1")][SerializeField] int _sleepRestorationRate;    private int _currentHunger;
+    [Tooltip("—колько нужно минут во врем€ сна, чтобы сон восстановилс€ на 1")][SerializeField] int _sleepRestorationRate;  
+    
+    private PlayerMover _playerMover;
+
+    private int _currentHunger;
     private int _currentSleep;
 
     private int _timeCounter = 0;
     
+    public PlayerMover PlayerMover => _playerMover;
     public int MaxHunger;
     public int MaxSleep;
     public int CurrentHunger 
@@ -60,20 +64,17 @@ private PlayerMover _playerMover;
             _sleepScale.SetValue(CurrentSleep, MaxSleep);
         }
     }
+    public bool IsSleeping;
 
-<<<<<<< .mine
     private void Start()
     {
         _playerMover = GetComponent<PlayerMover>();
     }
 
-=======
-    public bool IsSleeping;
 
     private void OnEnable() => GameTime.MinuteChanged += OnMinuteChange;
     private void OnDisable() => GameTime.MinuteChanged -= OnMinuteChange;
 
->>>>>>> .theirs
     public void RestoreHunger(int foodValue)
     {
         CurrentHunger += foodValue;
