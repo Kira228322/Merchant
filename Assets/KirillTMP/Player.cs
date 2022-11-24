@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,9 +6,13 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
+    
     [SerializeField] private SlidersController _hungerScale;
     [SerializeField] private SlidersController _sleepScale;
 
+    private PlayerMover _playerMover;
+    public PlayerMover PlayerMover => _playerMover;
+    
     private int _currentHunger;
     private int _currentSleep;
     
@@ -52,6 +57,11 @@ public class Player : MonoBehaviour
             }
             _sleepScale.SetValue(CurrentSleep, MaxSleep);
         }
+    }
+
+    private void Start()
+    {
+        _playerMover = GetComponent<PlayerMover>();
     }
 
     public void RestoreHunger(int foodValue)
