@@ -27,48 +27,14 @@ public class ItemInfo : MonoBehaviour
     [SerializeField] private TMP_Text _boughtDaysAgoText;
     [SerializeField] private TMP_Text _foodValueText;
 
+    private Player _player;
     private InventoryItem _currentItemSelected;
     private ItemGrid _lastItemGridSelected;
     private InventoryController _inventoryController;
 
-
-    public void OnEatButtonPressed()
+    private void Start()
     {
-        // TODO 
-    }
-    public void OnRotateButtonPressed()
-    {
-        if (_currentItemSelected.ItemData.CellSizeHeight != _currentItemSelected.ItemData.CellSizeWidth)
-        {
-            if (_inventoryController.PickUpRotateInsert(_currentItemSelected, _lastItemGridSelected))
-            {
-                Destroy(gameObject);
-            }
-        }
-    }
-    public void OnSplitButtonPressed()
-    {
-        _splitSliderPanel.Show(_currentItemSelected);
-    }
-
-    public void OnExitButtonPressed()
-    {
-        Destroy(gameObject);
-    }
-
-    public void OnDestroyButtonPressed()
-    {
-        _lastItemGridSelected.DestroyItem(_currentItemSelected);
-        Destroy(gameObject);
-    }
-    public void Split(int amountToSplit)
-    {
-        _currentItemSelected.CurrentItemsInAStack -= amountToSplit; //вроде бы предусмотрено на случай всех невозможных ситуаций через другие скрипты и свойства кнопок
-        if(_inventoryController.TryCreateAndInsertItem(_lastItemGridSelected, _currentItemSelected.ItemData, amountToSplit, _currentItemSelected.BoughtDaysAgo, isFillingStackFirst: false))
-        {
-            Destroy(gameObject);
-        }
-
+        _player = FindObjectOfType<Player>();
     }
 
     public void Initialize(InventoryItem item, ItemGrid itemGrid, InventoryController inventoryController)
@@ -123,4 +89,50 @@ public class ItemInfo : MonoBehaviour
             _eatButton.gameObject.SetActive(false);
         }
     }
+    public void OnEatButtonPressed()
+    {
+        _player.RestoreHunger(_currentItemSelected.ItemData.FoodValue);
+        _currentItemSelected.CurrentItemsInAStack--;
+        _quantityText.text = _currentItemSelected.CurrentItemsInAStack.ToString();
+        if (_currentItemSelected.CurrentItemsInAStack == 0)
+        {
+            _lastItemGridSelected.DestroyItem(_currentItemSelected);
+            Destroy(gameObject);
+        }
+    }
+    public void OnRotateButtonPressed()
+    {
+        if (_currentItemSelected.ItemData.CellSizeHeight != _currentItemSelected.ItemData.CellSizeWidth)
+        {
+            if (_inventoryController.PickUpRotateInsert(_currentItemSelected, _lastItemGridSelected))
+            {
+                Destroy(gameObject);
+            }
+        }
+    }
+    public void OnSplitButtonPressed()
+    {
+        _splitSliderPanel.Show(_currentItemSelected);
+    }
+
+    public void OnExitButtonPressed()
+    {
+        Destroy(gameObject);
+    }
+
+    public void OnDestroyButtonPressed()
+    {
+        _lastItemGridSelected.DestroyItem(_currentItemSelected);
+        Destroy(gameObject);
+    }
+    public void Split(int amountToSplit)
+    {
+        _currentItemSelected.CurrentItemsInAStack -= amountToSplit; //вроде бы предусмотрено на случай всех невозможных ситуаций через другие скрипты и свойства кнопок
+        if(_inventoryController.TryCreateAndInsertItem(_lastItemGridSelected, _currentItemSelected.ItemData, amountToSplit, _currentItemSelected.BoughtDaysAgo, isFillingStackFirst: false))
+        {
+            Destroy(gameObject);
+        }
+
+    }
+
 }
