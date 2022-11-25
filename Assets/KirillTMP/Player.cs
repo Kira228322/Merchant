@@ -61,19 +61,17 @@ private PlayerMover _playerMover;
         }
     }
 
-<<<<<<< .mine
+
     private void Start()
     {
         _playerMover = GetComponent<PlayerMover>();
     }
 
-=======
+
     public bool IsSleeping;
 
     private void OnEnable() => GameTime.MinuteChanged += OnMinuteChange;
     private void OnDisable() => GameTime.MinuteChanged -= OnMinuteChange;
-
->>>>>>> .theirs
     public void RestoreHunger(int foodValue)
     {
         CurrentHunger += foodValue;

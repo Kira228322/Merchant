@@ -10,7 +10,6 @@ public class Ground : MonoBehaviour, IPointerClickHandler
 {
     private PlayerMover _playerMover;
     private float _speed;  
-    private Coroutine _currentMove;
     
     private void Start()
     {
@@ -22,12 +21,8 @@ public class Ground : MonoBehaviour, IPointerClickHandler
     {
         Vector3 targetPosition = Camera.main.ScreenPointToRay(eventData.position).origin;
         targetPosition = new Vector3(targetPosition.x, _playerMover.transform.position.y);
-        if (_currentMove != null)
-        {
-            StopCoroutine(_currentMove);
-            _currentMove = null;
-        }
-        _currentMove = StartCoroutine(_playerMover.Move(_playerMover.transform.position ,targetPosition));
+        
+        _playerMover.StartMove(_playerMover.transform.position ,targetPosition);
     }
 
     
