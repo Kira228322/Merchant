@@ -57,6 +57,7 @@ public class InventoryItem : MonoBehaviour
         ItemData = itemData;
 
         GetComponent<Image>().sprite = ItemData.Icon;
+        _sellValueText.text = itemData.Price.ToString(); //Вот и нихуя, цена должна показываться та, которая при продаже будет у торговца. Как это сделать - пока хз. (27.11.22)
 
         Vector2 size = new();
         size.x = ItemData.CellSizeWidth * ItemGrid.TileSizeWidth;

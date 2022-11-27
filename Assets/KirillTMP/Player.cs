@@ -71,6 +71,9 @@ public class Player : MonoBehaviour
     private void Start()
     {
         _playerMover = GetComponent<PlayerMover>();
+
+        _sleepScale.SetValue(CurrentSleep, MaxSleep);
+        _hungerScale.SetValue(CurrentHunger, MaxHunger);
     }
 
 
