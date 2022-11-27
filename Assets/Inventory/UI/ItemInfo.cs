@@ -93,7 +93,7 @@ public class ItemInfo : MonoBehaviour
     {
         _player.RestoreHunger(_currentItemSelected.ItemData.FoodValue);
         _currentItemSelected.CurrentItemsInAStack--;
-        _quantityText.text = _currentItemSelected.CurrentItemsInAStack.ToString();
+        _quantityText.text = "Количество: " +_currentItemSelected.CurrentItemsInAStack.ToString();
         if (_currentItemSelected.CurrentItemsInAStack == 0)
         {
             _lastItemGridSelected.DestroyItem(_currentItemSelected);
