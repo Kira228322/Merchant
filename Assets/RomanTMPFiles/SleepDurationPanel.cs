@@ -7,33 +7,40 @@ public class SleepDurationPanel : MonoBehaviour
 {
     [SerializeField] private Slider _slider;
     [SerializeField] private Button _doneButton;
+    [SerializeField] private Timeflow _timeflow;
+    [SerializeField] private int _timeScaleWhenSleeping;
+
     private Player _player;
 
     private void OnEnable()
     {
-        GameTime.HourChanged += OnHourChanged;
+        _player.FinishedSleeping += OnFinishedSleeping;
+        _player.SleptOneHourEvent += OnSleptOneHour;
     }
     private void OnDisable()
     {
-        GameTime.HourChanged -= OnHourChanged;
+        _player.FinishedSleeping -= OnFinishedSleeping;
+        _player.SleptOneHourEvent -= OnSleptOneHour;
     }
 
-    private void Start()
+    private void Awake() //OnEnable גûחûגאועסÿ המ Start(), םמ ןמסכו Awake().
     {
         _player = FindObjectOfType<Player>();
     }
 
-    private void OnHourChanged()
+    private void OnSleptOneHour()
     {
-        if (_player.IsSleeping)
-        {
-            _slider.value--;
-        }
-        else if (_doneButton.interactable == false) _doneButton.interactable = true;
+        _slider.value--;
+    }
+    private void OnFinishedSleeping()
+    {
+        _timeflow.TimeScale = 1;
+        _doneButton.interactable = true;
     }
 
     public void OnDoneButtonPressed()
     {
-        _player.Sleep((int)_slider.value);
+        _player.StartSleeping((int)_slider.value);
+        _timeflow.TimeScale = _timeScaleWhenSleeping;
     }
 }

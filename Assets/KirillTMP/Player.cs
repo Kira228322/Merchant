@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
@@ -10,21 +10,27 @@ public class Player : MonoBehaviour
     [SerializeField] private SlidersController _hungerScale;
     [SerializeField] private SlidersController _sleepScale;
 
-    [Tooltip("—колько нужно минут, чтобы сон уменьшилс€ на 1")][SerializeField] int _sleepDecayRate;
-    [Tooltip("—колько нужно минут, чтобы голод уменьшилс€ на 1")][SerializeField] int _hungerDecayRate;
-    [Tooltip("—колько нужно минут во врем€ сна, чтобы сон восстановилс€ на 1")][SerializeField] int _sleepRestorationRate;    
-	[SerializeField] private int _currentHunger; 
+    [Tooltip("—колько нужно минут, чтобы голод уменьшилс€ на 1")] [SerializeField] int _hungerDecayRate;
+    [Tooltip("¬о сколько раз замедл€етс€ падение голода во врем€ сна")] [SerializeField] int _hungerDivisorWhenSleeping;
+    [Tooltip("—колько нужно минут, чтобы сон уменьшилс€ на 1")] [SerializeField] int _sleepDecayRate;
+    [Tooltip("—колько нужно минут во врем€ сна, чтобы сон восстановилс€ на 1")] [SerializeField] int _sleepRestorationRate;  
     
-    private PlayerMover _playerMover;
 
+	[SerializeField] private int _currentHunger; 
     [SerializeField] private int _currentSleep;
 
-    private int _timeCounter = 0;
+    private PlayerMover _playerMover;
+    private int _generalTimeCounter = 0;
+    private int _timeCounterWhenSleeping = 0;
     private int _hoursLeftToSleep = 0;
     
     public PlayerMover PlayerMover => _playerMover;
     public int MaxHunger;
     public int MaxSleep;
+
+    public event UnityAction SleptOneHourEvent;
+    public event UnityAction FinishedSleeping;
+
     public int CurrentHunger 
     {
         get
@@ -80,17 +86,22 @@ public class Player : MonoBehaviour
     private void OnEnable()
     {
         GameTime.MinuteChanged += OnMinuteChanged;
-        GameTime.HourChanged += OnHourChanged;
     }
     private void OnDisable() 
     { 
         GameTime.MinuteChanged -= OnMinuteChanged;
-        GameTime.HourChanged -= OnHourChanged;
     }
-    public void Sleep(int hours)
+    public void StartSleeping(int hours)
     {
+        _hungerDecayRate *= _hungerDivisorWhenSleeping; //голод замедл€етс€ в _hungerMultiplierWhenSleeping раз
         _hoursLeftToSleep = hours;
         IsSleeping = true;
+    }
+    public void StopSleeping()
+    {
+        _hungerDecayRate /= _hungerDivisorWhenSleeping; //голод возвращаетс€ в предыдущую скорость падени€
+        IsSleeping = false;
+        FinishedSleeping?.Invoke();
     }
 
     public void RestoreHunger(int foodValue)
@@ -98,40 +109,42 @@ public class Player : MonoBehaviour
         CurrentHunger += foodValue;
     }
 
-    private void OnHourChanged() //—чЄтчик часов уменьшаетс€ при окончании текущего часа.
-                                 //“.е. если начать сон длиной в 1 час в 12:45 то проспит 15 минут. ≈сли длиной в 2 часа, то проспит 75 минут.
-                                 //Ќе знаю, оставить так или сделать нормально?
+    private void SleptOneHour()
     {
-        if (IsSleeping)
-        {
-            _hoursLeftToSleep--;
+        _hoursLeftToSleep--;
 
-            if (_hoursLeftToSleep <= 0)
-            {
-                IsSleeping = false;
-            }
+        if (_hoursLeftToSleep <= 0)
+        {
+            StopSleeping();
         }
+        SleptOneHourEvent?.Invoke();
     }
     
     private void OnMinuteChanged()
     {
-        _timeCounter++;
-        if (_timeCounter % _hungerDecayRate == 0) 
-            CurrentHunger--;
-        if (!IsSleeping)
+        _generalTimeCounter++;
+        if (_generalTimeCounter % _hungerDecayRate == 0)
         {
-            if (_timeCounter >= _sleepDecayRate)
+            CurrentHunger--;
+        }
+        if (IsSleeping)
+        {
+            _timeCounterWhenSleeping++;
+            if (_timeCounterWhenSleeping % _sleepRestorationRate == 0)
             {
-                CurrentSleep--;
-                _timeCounter = 0;
+                CurrentSleep++;
+            }
+            if (_timeCounterWhenSleeping == 60)
+            {
+                _timeCounterWhenSleeping = 0;
+                SleptOneHour();
             }
         }
         else
         {
-            if (_timeCounter >= _sleepRestorationRate)
+            if (_generalTimeCounter % _sleepDecayRate == 0)
             {
-                CurrentSleep++;
-                _timeCounter = 0;
+                CurrentSleep--;
             }
         }
     }

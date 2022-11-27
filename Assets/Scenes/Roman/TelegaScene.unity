@@ -169,8 +169,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hungerScale: {fileID: 2054009211}
   _sleepScale: {fileID: 593485736}
-  _sleepDecayRate: 30
   _hungerDecayRate: 6
+  _hungerDivisorWhenSleeping: 2
+  _sleepDecayRate: 30
   _sleepRestorationRate: 5
   _currentHunger: 55
   _currentSleep: 55
@@ -824,6 +825,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _slider: {fileID: 1749612234}
   _doneButton: {fileID: 1470164842}
+  _timeflow: {fileID: 676400924}
+  _timeScaleWhenSleeping: 1
 --- !u!1 &769490217
 GameObject:
   m_ObjectHideFlags: 0
