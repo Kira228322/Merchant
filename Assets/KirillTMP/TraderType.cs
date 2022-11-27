@@ -8,17 +8,14 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "newTraderType", menuName = "Trader")]
 public class TraderType : ScriptableObject
 {
-    [HideInInspector] public List<Item.ItemType> GoodsType;
+    public List<Item.ItemType> GoodsType = new List<Item.ItemType>();
     [HideInInspector] public List<float> Coefficient; // коэф * стоимость предмета, за которую купит товар этот торговец
     [HideInInspector] public List<int> CountToBuy; // максимальное число предметов данного типа, которое готов купить продавец
         // будет обновляться с restorom 
-    
 
     [CustomEditor(typeof(TraderType))]
     public class TraderTypeEditor : Editor
     {
-        private int n = -1;
-        
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
@@ -26,27 +23,17 @@ public class TraderType : ScriptableObject
             TraderType traderType = (TraderType)target;
             
             
-            for (int i = 0; i < 100; i++)
-            {
-                if (Enum.IsDefined(typeof(Item.ItemType), i))
-                {
-                    traderType.GoodsType.Add((Item.ItemType)i);
-                    traderType.Coefficient.Add(0);
-                    traderType.CountToBuy.Add(0);
-                }
-                else
-                {
-                    n = i;
-                    while (traderType.GoodsType.Count > n)
-                    {
-                        traderType.GoodsType.RemoveAt(traderType.GoodsType.Count -1);
-                        traderType.Coefficient.RemoveAt(traderType.Coefficient.Count - 1);
-                        traderType.CountToBuy.RemoveAt(traderType.CountToBuy.Count - 1);
-                    }
-                    break;
-                }
-            }
             
+            while (traderType.Coefficient.Count < traderType.GoodsType.Count)
+            {
+                traderType.Coefficient.Add(0);
+                traderType.CountToBuy.Add(0);
+            }
+            while (traderType.Coefficient.Count > traderType.GoodsType.Count)
+            {
+                traderType.Coefficient.RemoveAt(traderType.Coefficient.Count - 1);
+                traderType.CountToBuy.RemoveAt(traderType.CountToBuy.Count - 1);
+            }
 
             for (int i = 0; i < traderType.GoodsType.Count; i++)
             {

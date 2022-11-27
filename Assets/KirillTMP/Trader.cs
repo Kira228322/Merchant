@@ -24,6 +24,19 @@ public class Trader : MonoBehaviour
 
     private void Start()
     {
+        SetTradersStats();
+        
+        
+        MerchantGoods = new List<Item>();
+        for (int i = 0; i < Goods.Count; i++)
+        {
+            MerchantGoods.Add(Instantiate(Goods[i])); // Важно продублировать объект типа ScriptableObject, тк иначе
+            MerchantGoods[i].Price = NewPrice[i]; // он будет ссылаться на оригинал и изменять его понял. нужен дубликат
+        }
+    }
+
+    private void SetTradersStats()
+    {
         if (_traderTypes.Count == 1)  // Если торговец одного типа
             for (int i = 0; i < _traderTypes[0].GoodsType.Count; i ++)
             {
@@ -62,13 +75,6 @@ public class Trader : MonoBehaviour
                 if (Coefficient[i] != 1)
                     Coefficient[i] = Convert.ToSingle(Math.Round(Coefficient[i] / _traderTypes.Count, 2));
             }
-        }
-        
-        MerchantGoods = new List<Item>();
-        for (int i = 0; i < Goods.Count; i++)
-        {
-            MerchantGoods.Add(Instantiate(Goods[i])); // Важно продублировать объект типа ScriptableObject, тк иначе
-            MerchantGoods[i].Price = NewPrice[i]; // он будет ссылаться на оригинал и изменять его понял. нужен дубликат
         }
     }
 
