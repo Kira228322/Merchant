@@ -11,6 +11,7 @@ public static class GameTime
 
     public static event UnityAction HourChanged;
     public static event UnityAction MinuteChanged;
+    public static event UnityAction DayChanged;
 
     public static int Days
     {
@@ -19,6 +20,7 @@ public static class GameTime
         set
         {
             _days = value;
+            DayChanged.Invoke();
         }
     }
     public static int Hours

@@ -7,14 +7,8 @@ public class PlayersInventory : MonoBehaviour
 {
     private List<InventoryItem> _inventory = new();
 
-    private void OnEnable()
-    {
-        GameTime.HourChanged += OnHourChanged;
-    }
-    private void OnDisable()
-    {
-        GameTime.HourChanged -= OnHourChanged;
-    }
+    private void OnEnable() => GameTime.HourChanged += OnHourChanged;
+    private void OnDisable() => GameTime.HourChanged -= OnHourChanged;
     public void AddItemInInventory(InventoryItem item)
     {
         _inventory.Add(item);

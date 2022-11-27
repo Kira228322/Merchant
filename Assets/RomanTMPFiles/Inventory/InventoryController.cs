@@ -73,7 +73,7 @@ public class InventoryController : MonoBehaviour
             OnLeftMouseButtonPress();
         }
 
-        if (Input.GetMouseButtonDown(2))
+        if (Input.GetMouseButtonDown(2)) //Ради тестирования
         {
             SelectedItemGrid.AddRowsToInventory(1);
         }

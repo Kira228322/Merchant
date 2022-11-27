@@ -17,7 +17,6 @@ public class Player : MonoBehaviour
     
     private PlayerMover _playerMover;
 
-    private int _currentHunger;
     private int _currentSleep;
 
     private int _timeCounter = 0;
@@ -74,15 +73,15 @@ public class Player : MonoBehaviour
     }
 
 
-    private void OnEnable() => GameTime.MinuteChanged += OnMinuteChange;
-    private void OnDisable() => GameTime.MinuteChanged -= OnMinuteChange;
+    private void OnEnable() => GameTime.MinuteChanged += OnMinuteChanged;
+    private void OnDisable() => GameTime.MinuteChanged -= OnMinuteChanged;
 
     public void RestoreHunger(int foodValue)
     {
         CurrentHunger += foodValue;
     }
     
-    private void OnMinuteChange()
+    private void OnMinuteChanged()
     {
         _timeCounter++;
         if (_timeCounter == _hungerDecayRate) 

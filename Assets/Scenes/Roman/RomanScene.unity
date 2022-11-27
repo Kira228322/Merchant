@@ -240,6 +240,58 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8257635091583749940, guid: dec444958216f0b468dea0bc11180e5f, type: 3}
   m_PrefabInstance: {fileID: 406838398}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &100308663
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 100308665}
+  - component: {fileID: 100308664}
+  m_Layer: 0
+  m_Name: TMP Player
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &100308664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100308663}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e59141d112fe47c44b1395cb3a61d5ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hungerScale: {fileID: 0}
+  _sleepScale: {fileID: 0}
+  _sleepDecayRate: 30
+  _hungerDecayRate: 6
+  _sleepRestorationRate: 12
+  MaxHunger: 155
+  MaxSleep: 166
+  IsSleeping: 0
+--- !u!4 &100308665
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100308663}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 400.64175, y: 257.48865, z: -2.8513777}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &102696343
 GameObject:
   m_ObjectHideFlags: 0
