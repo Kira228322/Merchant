@@ -20,7 +20,7 @@ public static class GameTime
         set
         {
             _days = value;
-            DayChanged.Invoke();
+            DayChanged?.Invoke();
         }
     }
     public static int Hours
@@ -36,7 +36,7 @@ public static class GameTime
                 _hours = 0;
                 Days++;
             }
-            HourChanged.Invoke();
+            HourChanged?.Invoke();
         }
     }
     public static float Minutes
@@ -51,7 +51,7 @@ public static class GameTime
                 _minutes = 0f;
                 Hours++;
             }
-            MinuteChanged.Invoke();
+            MinuteChanged?.Invoke();
         }
     }
 
