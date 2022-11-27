@@ -13,13 +13,14 @@ public class Player : MonoBehaviour
     [Tooltip("—колько нужно минут, чтобы сон уменьшилс€ на 1")][SerializeField] int _sleepDecayRate;
     [Tooltip("—колько нужно минут, чтобы голод уменьшилс€ на 1")][SerializeField] int _hungerDecayRate;
     [Tooltip("—колько нужно минут во врем€ сна, чтобы сон восстановилс€ на 1")][SerializeField] int _sleepRestorationRate;    
-	private int _currentHunger; 
+	[SerializeField] private int _currentHunger; 
     
     private PlayerMover _playerMover;
 
-    private int _currentSleep;
+    [SerializeField] private int _currentSleep;
 
     private int _timeCounter = 0;
+    private int _hoursLeftToSleep = 0;
     
     public PlayerMover PlayerMover => _playerMover;
     public int MaxHunger;
@@ -73,22 +74,50 @@ public class Player : MonoBehaviour
     }
 
 
-    private void OnEnable() => GameTime.MinuteChanged += OnMinuteChanged;
-    private void OnDisable() => GameTime.MinuteChanged -= OnMinuteChanged;
+    private void OnEnable()
+    {
+        GameTime.MinuteChanged += OnMinuteChanged;
+        GameTime.HourChanged += OnHourChanged;
+    }
+    private void OnDisable() 
+    { 
+        GameTime.MinuteChanged -= OnMinuteChanged;
+        GameTime.HourChanged -= OnHourChanged;
+    }
+    public void Sleep(int hours)
+    {
+        _hoursLeftToSleep = hours;
+        IsSleeping = true;
+    }
 
     public void RestoreHunger(int foodValue)
     {
         CurrentHunger += foodValue;
     }
+
+    private void OnHourChanged() //—чЄтчик часов уменьшаетс€ при окончании текущего часа.
+                                 //“.е. если начать сон длиной в 1 час в 12:45 то проспит 15 минут. ≈сли длиной в 2 часа, то проспит 75 минут.
+                                 //Ќе знаю, оставить так или сделать нормально?
+    {
+        if (IsSleeping)
+        {
+            _hoursLeftToSleep--;
+
+            if (_hoursLeftToSleep <= 0)
+            {
+                IsSleeping = false;
+            }
+        }
+    }
     
     private void OnMinuteChanged()
     {
         _timeCounter++;
-        if (_timeCounter == _hungerDecayRate) 
+        if (_timeCounter % _hungerDecayRate == 0) 
             CurrentHunger--;
         if (!IsSleeping)
         {
-            if (_timeCounter == _sleepDecayRate)
+            if (_timeCounter >= _sleepDecayRate)
             {
                 CurrentSleep--;
                 _timeCounter = 0;
@@ -96,7 +125,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            if (_timeCounter == _sleepRestorationRate)
+            if (_timeCounter >= _sleepRestorationRate)
             {
                 CurrentSleep++;
                 _timeCounter = 0;

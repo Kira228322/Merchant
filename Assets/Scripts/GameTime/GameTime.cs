@@ -7,7 +7,7 @@ public static class GameTime
     private static Timeflow _timeflow;
     private static int _days = 1;
     private static int _hours = 0;
-    private static float _minutes = 0f;
+    private static int _minutes = 0;
 
     public static event UnityAction HourChanged;
     public static event UnityAction MinuteChanged;
@@ -39,16 +39,16 @@ public static class GameTime
             HourChanged?.Invoke();
         }
     }
-    public static float Minutes
+    public static int Minutes
     {
         get
         { return _minutes; }
         set
         {
             _minutes = value;
-            if (_minutes >= 60f)
+            if (_minutes >= 60)
             {
-                _minutes = 0f;
+                _minutes = 0;
                 Hours++;
             }
             MinuteChanged?.Invoke();
