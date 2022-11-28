@@ -14,8 +14,7 @@ public class Player : MonoBehaviour
     [Tooltip("¬о сколько раз замедл€етс€ падение голода во врем€ сна")] [SerializeField] int _hungerDivisorWhenSleeping;
     [Tooltip("—колько нужно минут, чтобы сон уменьшилс€ на 1")] [SerializeField] int _sleepDecayRate;
     [Tooltip("—колько нужно минут во врем€ сна, чтобы сон восстановилс€ на 1")] [SerializeField] int _sleepRestorationRate;  
-    
-
+   
 	[SerializeField] private int _currentHunger; 
     [SerializeField] private int _currentSleep;
 
@@ -27,6 +26,8 @@ public class Player : MonoBehaviour
     public PlayerMover PlayerMover => _playerMover;
     public int MaxHunger;
     public int MaxSleep;
+    public PlayerExperience Experience = new();
+    public PlayerStats Statistics = new();
 
     public event UnityAction SleptOneHourEvent;
     public event UnityAction FinishedSleeping;
@@ -147,5 +148,10 @@ public class Player : MonoBehaviour
                 CurrentSleep--;
             }
         }
+    }
+
+    public void AddExperience(int amount)
+    {
+        Experience.AddExperience(amount);
     }
 }
