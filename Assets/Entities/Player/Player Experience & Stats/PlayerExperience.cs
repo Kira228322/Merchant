@@ -18,17 +18,23 @@ public class PlayerExperience
 
     public int ExperienceNeededForNextLevel()
     {
+        return ExperienceNeededForAllLevelsBefore(CurrentLevel);
+    }
+    public int ExperienceNeededForAllLevelsBefore(int level)
+    {
         int result = 0;
-        for (int i = 0; i <= CurrentLevel; i++)
+        for (int i = 0; i <= level; i++)
         {
             result += ExperienceNeededForLevel(i);
         }
         return result;
     }
-    private int ExperienceNeededForLevel(int level)
+    public int ExperienceNeededForLevel(int level)
     {
+        if (level <= -1) return 0; //Если игрок 0 уровня и хотим узнать, сколько нужно было опыта, чтобы получить 0 уровень. Сейчас это используется в ЭКСП - баре
         if (level <= 30)
         {
+            //y = 50 + 10x + 2* x^2 - 0.1 * (x - (2x)^(1/2) - 1)^3
             return (int)Mathf.Ceil((float)(50 + 10 * level + 2 * level * level - 0.1 * Mathf.Pow(level - Mathf.Sqrt(2 * level) - 1, 3)));
         }
         else return 1200;
