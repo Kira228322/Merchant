@@ -15,7 +15,6 @@ public class GridInteract : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         _itemGrid = GetComponent<ItemGrid>();
     }
 
-    //Я надеюсь, это будет нормально работать для пальцев, касающихся мобильника
     public void OnPointerEnter(PointerEventData eventData)
     {
         _inventoryController.SelectedItemGrid = _itemGrid;

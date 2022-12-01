@@ -26,6 +26,7 @@ public class FunctionalWindow : MonoBehaviour
 
     public void OnBuyButtonClick()
     {
+        TradeManager.PlayersInventory.InventoryPanel.SetActive(true);
         TradeManager.TraderPanel.SetActive(true);
         for (int i =  TradeManager.TraderPanelContent.childCount -1; i >= 0; i--)
             Destroy(TradeManager.TraderPanelContent.GetChild(i).gameObject);
@@ -40,6 +41,8 @@ public class FunctionalWindow : MonoBehaviour
 
     public void OnSellButtonClick()
     {
-        
+        TradeManager.PlayersInventory.InventoryPanel.SetActive(true);
+        TradeManager.SellPanel.SetActive(true);
+        Destroy(gameObject);
     }
 }

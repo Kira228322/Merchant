@@ -106,8 +106,12 @@ public class InventoryController : MonoBehaviour
                 if (_pressAndHoldTime >= 0.3f && Vector2.Distance(Input.mousePosition, _mousePositionOnPress) < 30)
                 {
                     PickUp(_currentTileGridPosition);
-                    SelectedItemGrid.GetComponentInParent<ScrollRect>().StopMovement();
-                    SelectedItemGrid.GetComponentInParent<ScrollRect>().enabled = false;
+                    var parentScrollRect = SelectedItemGrid.GetComponentInParent<ScrollRect>();
+                    if (parentScrollRect != null)
+                    {
+                        parentScrollRect.StopMovement();
+                        parentScrollRect.enabled = false;
+                    }
                     _pressAndHoldTime = 0;
                 }
             }
@@ -118,7 +122,11 @@ public class InventoryController : MonoBehaviour
         _pressAndHoldTime = 0;
         if (CurrentSelectedItem != null)
         {
-            _gridPickedUpFrom.GetComponentInParent<ScrollRect>().enabled = true;
+            var gridPickedUpFromScrollRect = _gridPickedUpFrom.GetComponentInParent<ScrollRect>();
+            if (gridPickedUpFromScrollRect != null) 
+            {
+                gridPickedUpFromScrollRect.enabled = true; 
+            }
             if (SelectedItemGrid == null)
             {
                 SelectedItemGrid = _gridPickedUpFrom;
@@ -224,6 +232,7 @@ public class InventoryController : MonoBehaviour
         if (CurrentSelectedItem != null)
         {
             _rectTransform = CurrentSelectedItem.GetComponent<RectTransform>();
+            _rectTransform.SetParent(_canvasTransform);
             _rectTransform.SetAsLastSibling();
         }
     }
@@ -236,7 +245,14 @@ public class InventoryController : MonoBehaviour
         }
         else
         {
-            PlaceDown(_itemPickedUpFromPosition);
+            if (_gridPickedUpFrom != SelectedItemGrid)
+            {
+                ItemGrid tempItemGrid = SelectedItemGrid;
+                SelectedItemGrid = _gridPickedUpFrom;
+                PlaceDown(_itemPickedUpFromPosition);
+                SelectedItemGrid = tempItemGrid;
+            }
+            else PlaceDown(_itemPickedUpFromPosition);
         }
     }
     private void ItemIconDrag()
@@ -316,7 +332,6 @@ public class InventoryController : MonoBehaviour
             {
                 Destroy(pickedUpItem.gameObject);
                 SelectedItemGrid = initialItemGridState;
-                //AddItemInInventory??
                 return true;
             }
             else
@@ -333,7 +348,6 @@ public class InventoryController : MonoBehaviour
             {
                 Destroy(pickedUpItem.gameObject);
                 SelectedItemGrid = initialItemGridState;
-                // AddItemInInventory ??
                 return true;
             }
             else
@@ -348,9 +362,6 @@ public class InventoryController : MonoBehaviour
     }
     private bool TryInsertItem (InventoryItem itemToInsert, bool isFillingStackFirst)
     {
-        //itemToInsert.transform.localScale = canvasTransform.localScale;
-        //^^возможно пригодится в будущем в качестве подсказки, когда будем делать спавн объектов 
-
         Vector2Int? posOnGrid = SelectedItemGrid.FindSpaceForItemInsertion(itemToInsert, isFillingStackFirst);
 
         if (posOnGrid == null) 

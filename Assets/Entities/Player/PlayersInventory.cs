@@ -2,13 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(ItemGrid))] //Договорились, что будем это вешать на сетку инвентаря
+[RequireComponent(typeof(ItemGrid))]
 public class PlayersInventory : MonoBehaviour
 {
     private List<InventoryItem> _inventory = new();
 
-    private void OnEnable() => GameTime.HourChanged += OnHourChanged;
-    private void OnDisable() => GameTime.HourChanged -= OnHourChanged;
+    public GameObject InventoryPanel; //в инспекторе нужно задать ссылку на главную панель, содержащую весь инвентарь
+
+    private ItemGrid _inventoryItemGrid;
+
+    private void Awake()
+    {
+        _inventoryItemGrid = GetComponent<ItemGrid>();
+    }
+
+    private void OnEnable() 
+    { 
+        GameTime.HourChanged += OnHourChanged;
+        _inventoryItemGrid.ItemPlacedInTheGrid += AddItemInInventory;
+        _inventoryItemGrid.ItemRemovedFromTheGrid += RemoveItemInInventory;
+
+    }
+    private void OnDisable() 
+    { 
+        GameTime.HourChanged -= OnHourChanged;
+        _inventoryItemGrid.ItemPlacedInTheGrid -= AddItemInInventory;
+        _inventoryItemGrid.ItemRemovedFromTheGrid -= RemoveItemInInventory;
+    }
     public void AddItemInInventory(InventoryItem item)
     {
         _inventory.Add(item);
