@@ -9,7 +9,7 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] private ContactFilter2D _contactFilter2D;
     private float _speed = 3;
     public float Speed => _speed;
-    private Rigidbody2D _rigidbody = new Rigidbody2D();
+    private Rigidbody2D _rigidbody;
     private Collider2D _collider;
     private float _minDistToLet;
     private Coroutine _currentMove;
@@ -36,15 +36,11 @@ public class PlayerMover : MonoBehaviour
             if (_currentMove != null)
             {
                 StopCoroutine(_currentMove);
-                Debug.Log("Break");
                 _currentMove = null;
             }
 
             if (_collider.IsTouchingLayers()) // двигаться можно, только если ты не в прыжке
-            {
                 _currentMove = StartCoroutine(Move(startPos, targetPos));
-                Debug.Log("Start");
-            }
         }
     }
 
