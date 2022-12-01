@@ -18,6 +18,9 @@ public class ItemGrid : MonoBehaviour
     private Vector2 _positionOnTheGrid = new();
     private Vector2Int _tileGridPosition = new();
 
+    public event UnityAction<InventoryItem> ItemPlacedInTheGrid;
+    public event UnityAction<InventoryItem> ItemRemovedFromTheGrid;
+
     private void Start()
     {
 
@@ -72,7 +75,7 @@ public class ItemGrid : MonoBehaviour
         if (itemToReturn == null) { return null; }
 
         CleanGridReference(itemToReturn);
-        TradeManager.PlayersInventory.RemoveItemInInventory(itemToReturn);
+        ItemRemovedFromTheGrid?.Invoke(itemToReturn);
         return itemToReturn;
     }
 
@@ -83,13 +86,13 @@ public class ItemGrid : MonoBehaviour
         if (itemToDestroy == null) { return; }
 
         CleanGridReference(itemToDestroy);
-        TradeManager.PlayersInventory.RemoveItemInInventory(itemToDestroy);
+        ItemRemovedFromTheGrid?.Invoke(itemToDestroy);
         Destroy(itemToDestroy.gameObject);
     }
     public void DestroyItem(InventoryItem itemToDestroy)
     {
         CleanGridReference(itemToDestroy);
-        TradeManager.PlayersInventory.RemoveItemInInventory(itemToDestroy);
+        ItemRemovedFromTheGrid?.Invoke(itemToDestroy);
         Destroy(itemToDestroy.gameObject);
     }
 
@@ -119,7 +122,7 @@ public class ItemGrid : MonoBehaviour
                 {
                     if (TryPlaceItemInAStack(item, itemInInventory))
                     {
-                        TradeManager.PlayersInventory.RemoveItemInInventory(item);
+                        ItemRemovedFromTheGrid?.Invoke(item);
                         return true;
                     }
                 }
@@ -129,7 +132,7 @@ public class ItemGrid : MonoBehaviour
         }
 
         PlaceItem(item, positionX, positionY);
-        TradeManager.PlayersInventory.AddItemInInventory(item);
+        ItemPlacedInTheGrid?.Invoke(item);
         return true;
     }
 
@@ -177,6 +180,25 @@ public class ItemGrid : MonoBehaviour
     public InventoryItem GetItem(int x, int y)
     {
         return _storedInventoryItems[y][x];
+    }
+    public List<InventoryItem> GetAllItemsInTheGrid()
+        //Дорогой метод, на данный момент нигде не используется, но может быть нужен в будущем.
+        //По сути, его функционал и так выполняет PlayersInventory, следя за всеми айтемами в любой момент (и эффективнее),
+        //но такой метод может быть нужен, если нужно получить все предметы в другой сетке инвентаря (инвентаря не игрока)
+        //может какой нибудь сундук или я хуй знает, в общем, если не найдет своё применение, потом уберу.
+    {
+        List<InventoryItem> result = new();
+        for (int i = 0; i < _storedInventoryItems.Count; i++)
+        {
+            for (int j = 0; j < _storedInventoryItems[i].Length; j++)
+            {
+                if (_storedInventoryItems[i][j] != null && !result.Contains(_storedInventoryItems[i][j]))
+                {
+                    result.Add(_storedInventoryItems[i][j]);
+                }
+            }
+        }
+        return result;
     }
 
     public Vector2 CalculatePositionOnTheGrid(InventoryItem item, int positionX, int positionY) // Понять, где визуально расположить предмет (нужно для предметов, больших чем 1x1)
@@ -314,7 +336,6 @@ public class ItemGrid : MonoBehaviour
         }
         return null;
     }
-
     private Vector2Int? FindUnfilledStackOfSameItems(InventoryItem itemToInsert)
     {
         for (int y = 0; y < _gridSizeHeight; y++)

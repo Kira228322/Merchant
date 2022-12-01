@@ -26,7 +26,9 @@ public class GameManager : MonoBehaviour
     [FormerlySerializedAs("Timeflow")] [SerializeField] private Timeflow _timeflow;
     
     [Header("TradeManager")] 
+    //Ахтунг, нарушение конвенции именования! Бан
     [SerializeField] private GameObject TraderPanel;
+    [SerializeField] private GameObject SellPanel;
     [SerializeField] private Transform TraderPanelContent;
     [SerializeField] private GoodsPanel GoodsPanelPrefab;
 
@@ -35,7 +37,7 @@ public class GameManager : MonoBehaviour
         MapManager.Init(_travelingScene, _loadScreen, _roadWindow, _villageWindow, _canvas);
         TravelManager.Init(_travelBlock, _travelTime, _timeCounter, _playerIcone);
         GameTime.Init(_timeflow);
-        TradeManager.Init(TraderPanel, TraderPanelContent, GoodsPanelPrefab, _playersInventory);
+        TradeManager.Init(TraderPanel, SellPanel, TraderPanelContent, GoodsPanelPrefab, _playersInventory);
     }
 
 }
