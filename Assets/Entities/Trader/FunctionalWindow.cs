@@ -42,6 +42,7 @@ public class FunctionalWindow : MonoBehaviour
     public void OnSellButtonClick()
     {
         TradeManager.PlayersInventory.InventoryPanel.SetActive(true);
+        TradeManager.PlayersInventory.ShowItemsSellValue(true);
         TradeManager.SellPanel.SetActive(true);
         Destroy(gameObject);
     }

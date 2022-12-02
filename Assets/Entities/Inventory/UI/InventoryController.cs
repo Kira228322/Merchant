@@ -317,7 +317,7 @@ public class InventoryController : MonoBehaviour
         CurrentSelectedItem = null;
         TryInsertItem(itemToInsert, true);
     }
-    public bool PickUpRotateInsert(InventoryItem itemInInventory, ItemGrid itemGrid)
+    public bool TryPickUpRotateInsert(InventoryItem itemInInventory, ItemGrid itemGrid)
     {
         ItemGrid initialItemGridState = SelectedItemGrid;
         SelectedItemGrid = itemGrid;

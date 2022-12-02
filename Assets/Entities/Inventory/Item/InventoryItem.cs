@@ -9,10 +9,13 @@ public class InventoryItem : MonoBehaviour
     [SerializeField] private TMP_Text _currentItemsInAStackText;
     [SerializeField] private TMP_Text _sellValueText;
     [SerializeField] private SlidersController _spoilSlider;
+
+    private int _currentItemsInAStack;
+
+    
     public Item ItemData;
     public float BoughtDaysAgo;
 
-    private int _currentItemsInAStack;
 
     public int Width
     {
@@ -52,21 +55,29 @@ public class InventoryItem : MonoBehaviour
 
     public bool IsRotated = false;
 
+    public void ShowSellValue(bool b)
+    {
+        _sellValueText.gameObject.SetActive(b);
+    }
     public void SetItemFromData(Item itemData) //Присвоение значений из SO. 
     {
+        Image image = GetComponent<Image>();
+        RectTransform rectTransform = GetComponent<RectTransform>();
         ItemData = itemData;
 
-        GetComponent<Image>().sprite = ItemData.Icon;
+        image.sprite = ItemData.Icon;
         _sellValueText.text = itemData.Price.ToString(); //Вот и нихуя, цена должна показываться та, которая при продаже будет у торговца. Как это сделать - пока хз. (27.11.22)
 
         Vector2 size = new();
         size.x = ItemData.CellSizeWidth * ItemGrid.TileSizeWidth;
         size.y = ItemData.CellSizeHeight * ItemGrid.TileSizeHeight;
-        GetComponent<RectTransform>().sizeDelta = size;
+        rectTransform.sizeDelta = size;
         if (ItemData.IsPerishable)
         {
+            RectTransform spoilSliderRectTransform = _spoilSlider.GetComponent<RectTransform>();
             _spoilSlider.gameObject.SetActive(true);
-            _spoilSlider.GetComponent<RectTransform>().sizeDelta = new(Width * ItemGrid.TileSizeWidth, _spoilSlider.GetComponent<RectTransform>().sizeDelta.y);
+            spoilSliderRectTransform.localPosition = new(spoilSliderRectTransform.localPosition.x - 5, spoilSliderRectTransform.localPosition.y);
+            _spoilSlider.GetComponent<RectTransform>().sizeDelta = new(Width * ItemGrid.TileSizeWidth - 10, spoilSliderRectTransform.sizeDelta.y);
             //Wtf is sizeDelta?? -> https://stackoverflow.com/questions/44471568/how-to-calculate-sizedelta-in-recttransform
             RefreshSliderValue();
         }

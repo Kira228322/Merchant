@@ -104,7 +104,7 @@ public class ItemInfo : MonoBehaviour
     {
         if (_currentItemSelected.ItemData.CellSizeHeight != _currentItemSelected.ItemData.CellSizeWidth)
         {
-            if (_inventoryController.PickUpRotateInsert(_currentItemSelected, _lastItemGridSelected))
+            if (_inventoryController.TryPickUpRotateInsert(_currentItemSelected, _lastItemGridSelected))
             {
                 Destroy(gameObject);
             }

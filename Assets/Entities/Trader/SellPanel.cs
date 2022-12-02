@@ -47,6 +47,11 @@ public class SellPanel : MonoBehaviour
         //}
         CommenceSellingAllItems();
     }
+    public void OnCloseButtonPressed()
+    {
+        TradeManager.PlayersInventory.ShowItemsSellValue(false);
+        gameObject.SetActive(false);
+    }
     private void Refresh()
     {
         _currentSellingValue = 0;
