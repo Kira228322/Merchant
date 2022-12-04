@@ -11,7 +11,7 @@ public class InventoryItem : MonoBehaviour
     [SerializeField] private SlidersController _spoilSlider;
 
     private int _currentItemsInAStack;
-
+    private bool _isSellPriceShown;
     
     public Item ItemData;
     public float BoughtDaysAgo;
@@ -54,10 +54,17 @@ public class InventoryItem : MonoBehaviour
     }
 
     public bool IsRotated = false;
-
-    public void ShowSellValue(bool b)
+    public bool IsSellPriceShown
     {
-        _sellValueText.gameObject.SetActive(b);
+        get
+        {
+            return _isSellPriceShown;
+        }
+        set
+        {
+            _isSellPriceShown = value;
+            _sellValueText.gameObject.SetActive(value);
+        }
     }
     public void SetItemFromData(Item itemData) //Присвоение значений из SO. 
     {
@@ -67,6 +74,8 @@ public class InventoryItem : MonoBehaviour
 
         image.sprite = ItemData.Icon;
         _sellValueText.text = itemData.Price.ToString(); //Вот и нихуя, цена должна показываться та, которая при продаже будет у торговца. Как это сделать - пока хз. (27.11.22)
+                                                         //UPD 05.12.22: похуй что рисовать сюда в момент спавна вещи, важно то, какая цена будет в момент продажи.
+                                                         //Следовательно, окно продажи просто обновит цену для всех предметов в инвентаре. Сделаю, когда будет готов алгоритм расчета новой цены
 
         Vector2 size = new();
         size.x = ItemData.CellSizeWidth * ItemGrid.TileSizeWidth;
@@ -79,6 +88,10 @@ public class InventoryItem : MonoBehaviour
             spoilSliderRectTransform.localPosition = new(spoilSliderRectTransform.localPosition.x - 5, spoilSliderRectTransform.localPosition.y);
             _spoilSlider.GetComponent<RectTransform>().sizeDelta = new(Width * ItemGrid.TileSizeWidth - 10, spoilSliderRectTransform.sizeDelta.y);
             //Wtf is sizeDelta?? -> https://stackoverflow.com/questions/44471568/how-to-calculate-sizedelta-in-recttransform
+            //spoilSliderRectTransform.localPosition.x - 5 и TileSizeWidth - 10:
+            //-5 и -10 для того, чтобы слайдер остался по центру, но не был растятут на всю протяженность айтема,
+            //чтобы слайдеры рядом находящихся предметов не сливались в один визуально
+
             RefreshSliderValue();
         }
     }

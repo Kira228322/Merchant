@@ -7,6 +7,8 @@ using UnityEngine.Events;
 public class ItemGrid : MonoBehaviour
 {
 
+    #region Поля, свойства и события
+
     public const float TileSizeWidth = 160;
     public const float TileSizeHeight = 160;
 
@@ -20,6 +22,9 @@ public class ItemGrid : MonoBehaviour
 
     public event UnityAction<InventoryItem> ItemPlacedInTheGrid;
     public event UnityAction<InventoryItem> ItemRemovedFromTheGrid;
+
+    #endregion
+    #region Методы инициализации
 
     private void Start()
     {
@@ -42,21 +47,124 @@ public class ItemGrid : MonoBehaviour
         Vector2 size = new(width * TileSizeWidth, height * TileSizeHeight);
         _rectTransform.sizeDelta = size;
     }
-
-    public void AddRowsToInventory(int numberOfRowsToAdd)
+    #endregion
+    #region Методы проверки положения айтема (свободный стак, находится ли внутри границ и др.)
+    private bool IsInBounds(int positionX, int positionY) //Находится ли внутри границ сетки?
     {
-        for (int i = 0; i < numberOfRowsToAdd; i++)
+        if (positionX < 0 || positionY < 0)
         {
-            InventoryItem[] rowArray = new InventoryItem[_gridSizeWidth];
-            _storedInventoryItems.Add(rowArray);
+            return false;
         }
-        _gridSizeHeight += numberOfRowsToAdd;
 
-        Vector2 size = new(_gridSizeWidth * TileSizeWidth, _gridSizeHeight * TileSizeHeight);
-        _rectTransform.sizeDelta = size;
+        if (positionX >= _gridSizeWidth || positionY >= _gridSizeHeight)
+        {
+            return false;
+        }
+        return true;
+    }
+    private bool IsNotOverlapping(int positionX, int positionY, int width, int height)
+    {
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                if(_storedInventoryItems[positionY + y][positionX + x] != null)
+                {
+                    return false;
+                }
+            }
+        }
 
+        return true;
+    }
+    public bool IsOverlappingWithTheSameItemType(InventoryItem item, int positionX, int positionY, int width, int height, out InventoryItem itemInInventory)
+    {
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                if (_storedInventoryItems[positionY + y][positionX + x] != null)
+                {
+                    if (_storedInventoryItems[positionY + y][positionX + x].ItemData.name == item.ItemData.name)
+                    {
+                        itemInInventory = _storedInventoryItems[positionY + y][positionX + x];
+                        return true;
+                    }
+                }
+            }
+        }
+
+        itemInInventory = null;
+        return false;
+    }
+    public bool IsInCorrectPosition(int positionX, int positionY, int width, int height)
+    {
+        if (IsInBounds(positionX, positionY) == false)
+        {
+            return false;
+        }
+
+        positionX += width - 1;
+        positionY += height - 1;
+
+        if (IsInBounds(positionX, positionY) == false)
+        {
+            return false;
+        }
+
+        return true;
+    }
+    private bool IsRotDifferenceBetweenTwoItemsLessThanOne(InventoryItem item1, InventoryItem item2)
+    {
+        if (item1.ItemData.IsPerishable || item2.ItemData.IsPerishable)
+        {
+            if (Math.Abs(item1.BoughtDaysAgo - item2.BoughtDaysAgo) < 1)
+            {
+                return true;
+            }
+            return false;
+        }
+        return true; //Если сравнены две вещи, которые не портятся, то всегда true. По сути, item1 и item2 - всегда вещи одного типа 
+    }
+    private bool AnyAvailableSpace(int positionX, int positionY, int width, int height)
+        //Присутствует ли на этом месте в инвентаре свободное место чтобы поместить предмет размера {width} x {height}?
+    {
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                if (_storedInventoryItems[positionY + y][positionX + x] != null)
+                {
+
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+    private bool AnyUnfilledStack(int positionX, int positionY, InventoryItem targetItem)
+    {
+        //Если тип предмета, лежащий в инвентаре такой же, как предмет, который мы пытаемся установить И
+        //И стак этого предмета неполный, т.е может вместить в себя ещё столько предметов, сколько в помещаемом стаке, то true.
+        //И должен
+        InventoryItem itemInInventory = _storedInventoryItems[positionY][positionX];
+        if (itemInInventory != null)
+        {
+            if (itemInInventory.ItemData.name == targetItem.ItemData.name)
+            {
+                if ((itemInInventory.ItemData.MaxItemsInAStack - itemInInventory.CurrentItemsInAStack) >= targetItem.CurrentItemsInAStack)
+                {
+                    if ((itemInInventory.BoughtDaysAgo - targetItem.BoughtDaysAgo) < 1)
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
+    #endregion
+    #region Методы получения информации об инвентаре
     public Vector2Int GetTileGridPosition(Vector2 mousePosition, Vector2 canvasLocalScale) //Получить позицию в клетках из позиции мышки, т.е (0;1) или (3;4)
     {
         _positionOnTheGrid.x = mousePosition.x - _rectTransform.position.x;
@@ -68,6 +176,100 @@ public class ItemGrid : MonoBehaviour
         return _tileGridPosition;
     }
 
+    public InventoryItem GetItem(int x, int y)
+    {
+        return _storedInventoryItems[y][x];
+    }
+    public List<InventoryItem> GetAllItemsInTheGrid()
+        //Дорогой метод, на данный момент нигде не используется, но может быть нужен в будущем.
+        //По сути, его функционал и так выполняет PlayersInventory, следя за всеми айтемами в любой момент (и эффективнее),
+        //но такой метод может быть нужен, если нужно получить все предметы в другой сетке инвентаря (инвентаря не игрока)
+        //может какой нибудь сундук или я хуй знает, в общем, если не найдет своё применение, потом уберу.
+    {
+        List<InventoryItem> result = new();
+        for (int i = 0; i < _storedInventoryItems.Count; i++)
+        {
+            for (int j = 0; j < _storedInventoryItems[i].Length; j++)
+            {
+                if (_storedInventoryItems[i][j] != null && !result.Contains(_storedInventoryItems[i][j]))
+                {
+                    result.Add(_storedInventoryItems[i][j]);
+                }
+            }
+        }
+        return result;
+    }
+
+    public Vector2 CalculatePositionOnTheGrid(InventoryItem item, int positionX, int positionY) // Понять, где визуально расположить предмет (нужно для предметов, больших чем 1x1)
+    {
+        Vector2 position = new();
+
+        position.x = positionX * TileSizeWidth + TileSizeWidth * item.Width / 2;
+        position.y = -(positionY * TileSizeHeight + TileSizeHeight * item.Height / 2);
+        return position;
+    }
+
+    public Vector2Int? FindSpaceForItemInsertion(InventoryItem itemToInsert, bool isFillingStackFirst)
+    {
+        //Буль определяет порядок заполнения - если true, сначала будет искать незаполненные стаки и заполнять их (как в майнкрафте)
+        //Если false, сначала будет создавать новые стаки, а если места не останется, заполнять имеющиеся.
+        //Такая неоднозначность нужна поскольку сейчас, когда я это пишу, я планирую использовать это для создания
+        //кнопки разделения айтемов:
+        //Очевидно, обычным режимом работы должно быть сперва заполнение стаков, но при разделении ведь нужно обязательно создавать
+        //новый стак, потому что если просто делать InsertItem() по нажатию кнопки разделения, то предмет просто вернется в стак,
+        //из которого его разделили 
+        //
+        //Поэтому кнопка разделения айтемов будет использовать этот метод с false, а обычное поведение заполнения с true.
+        if (isFillingStackFirst)
+        {
+            Vector2Int? result = FindUnfilledStackOfSameItems(itemToInsert);
+            if (result == null)
+            {
+                result = FindAvailableSpaceForNewStack(itemToInsert);
+            }
+            return result;
+        }
+        else
+        {
+            Vector2Int? result = FindAvailableSpaceForNewStack(itemToInsert);
+            if (result == null)
+            {
+                result = FindUnfilledStackOfSameItems(itemToInsert);
+            }
+            return result;
+        }
+    }
+    private Vector2Int? FindAvailableSpaceForNewStack(InventoryItem itemToInsert)
+    {
+        for (int y = 0; y < _gridSizeHeight - itemToInsert.Height + 1; y++)
+        {
+            for (int x = 0; x < _gridSizeWidth - itemToInsert.Width + 1; x++)
+            {
+                if (AnyAvailableSpace(x, y, itemToInsert.Width, itemToInsert.Height))
+                {
+                    return new Vector2Int(x, y);
+                }
+            }
+        }
+        return null;
+    }
+    private Vector2Int? FindUnfilledStackOfSameItems(InventoryItem itemToInsert)
+    {
+        for (int y = 0; y < _gridSizeHeight; y++)
+        {
+            for (int x = 0; x < _gridSizeWidth; x++)
+            {
+                if (AnyUnfilledStack(x, y, itemToInsert))
+                {
+                    return new Vector2Int(x, y);
+                }
+            }
+        }
+        return null;
+    }
+
+    #endregion
+    #region Методы действий с айтемом (поднять, уничтожить и др.)
     public InventoryItem PickUpItem(int positionX, int positionY) //Убрать айтем из ячеек и return его, чтобы взять в "руку"
     {
         InventoryItem itemToReturn = _storedInventoryItems[positionY][positionX];
@@ -78,7 +280,6 @@ public class ItemGrid : MonoBehaviour
         ItemRemovedFromTheGrid?.Invoke(itemToReturn);
         return itemToReturn;
     }
-
     public void DestroyItem(int positionX, int positionY)
     {
         InventoryItem itemToDestroy = _storedInventoryItems[positionY][positionX];
@@ -95,7 +296,6 @@ public class ItemGrid : MonoBehaviour
         ItemRemovedFromTheGrid?.Invoke(itemToDestroy);
         Destroy(itemToDestroy.gameObject);
     }
-
     private void CleanGridReference(InventoryItem item) //Очистить сетку, убрать предмет
     {
         for (int x = 0; x < item.Width; x++)
@@ -106,7 +306,6 @@ public class ItemGrid : MonoBehaviour
             }
         }
     }
-
     public bool TryPlaceItem(InventoryItem item, int positionX, int positionY)
     {
         if (IsInCorrectPosition(positionX, positionY, item.Width, item.Height) == false)
@@ -177,213 +376,18 @@ public class ItemGrid : MonoBehaviour
         return true;
     }
 
-    public InventoryItem GetItem(int x, int y)
+    #endregion
+    public void AddRowsToInventory(int numberOfRowsToAdd) 
     {
-        return _storedInventoryItems[y][x];
-    }
-    public List<InventoryItem> GetAllItemsInTheGrid()
-        //Дорогой метод, на данный момент нигде не используется, но может быть нужен в будущем.
-        //По сути, его функционал и так выполняет PlayersInventory, следя за всеми айтемами в любой момент (и эффективнее),
-        //но такой метод может быть нужен, если нужно получить все предметы в другой сетке инвентаря (инвентаря не игрока)
-        //может какой нибудь сундук или я хуй знает, в общем, если не найдет своё применение, потом уберу.
-    {
-        List<InventoryItem> result = new();
-        for (int i = 0; i < _storedInventoryItems.Count; i++)
+        for (int i = 0; i < numberOfRowsToAdd; i++)
         {
-            for (int j = 0; j < _storedInventoryItems[i].Length; j++)
-            {
-                if (_storedInventoryItems[i][j] != null && !result.Contains(_storedInventoryItems[i][j]))
-                {
-                    result.Add(_storedInventoryItems[i][j]);
-                }
-            }
+            InventoryItem[] rowArray = new InventoryItem[_gridSizeWidth];
+            _storedInventoryItems.Add(rowArray);
         }
-        return result;
-    }
+        _gridSizeHeight += numberOfRowsToAdd;
 
-    public Vector2 CalculatePositionOnTheGrid(InventoryItem item, int positionX, int positionY) // Понять, где визуально расположить предмет (нужно для предметов, больших чем 1x1)
-    {
-        Vector2 position = new();
+        Vector2 size = new(_gridSizeWidth * TileSizeWidth, _gridSizeHeight * TileSizeHeight);
+        _rectTransform.sizeDelta = size;
 
-        position.x = positionX * TileSizeWidth + TileSizeWidth * item.Width / 2;
-        position.y = -(positionY * TileSizeHeight + TileSizeHeight * item.Height / 2);
-        return position;
-    }
-
-    private bool IsInBounds(int positionX, int positionY) //Находится ли внутри границ сетки?
-    {
-        if (positionX < 0 || positionY < 0)
-        {
-            return false;
-        }
-
-        if (positionX >= _gridSizeWidth || positionY >= _gridSizeHeight)
-        {
-            return false;
-        }
-        return true;
-    }
-
-
-    public Vector2Int? FindSpaceForItemInsertion(InventoryItem itemToInsert, bool isFillingStackFirst)
-    {
-        //Буль определяет порядок заполнения - если true, сначала будет искать незаполненные стаки и заполнять их (как в майнкрафте)
-        //Если false, сначала будет создавать новые стаки, а если места не останется, заполнять имеющиеся.
-        //Такая неоднозначность нужна поскольку сейчас, когда я это пишу, я планирую использовать это для создания
-        //кнопки разделения айтемов:
-        //Очевидно, обычным режимом работы должно быть сперва заполнение стаков, но при разделении ведь нужно обязательно создавать
-        //новый стак, потому что если просто делать InsertItem() по нажатию кнопки разделения, то предмет просто вернется в стак,
-        //из которого его разделили 
-        //
-        //Поэтому кнопка разделения айтемов будет использовать этот метод с false, а обычное поведение заполнения с true.
-        if (isFillingStackFirst)
-        {
-            Vector2Int? result = FindUnfilledStackOfSameItems(itemToInsert);
-            if (result == null)
-            {
-                result = FindAvailableSpaceForNewStack(itemToInsert);
-            }
-            return result;
-        }
-        else
-        {
-            Vector2Int? result = FindAvailableSpaceForNewStack(itemToInsert);
-            if (result == null)
-            {
-                result = FindUnfilledStackOfSameItems(itemToInsert);
-            }
-            return result;
-        }
-    }
-
-
-    private bool IsNotOverlapping(int positionX, int positionY, int width, int height)
-    {
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
-            {
-                if(_storedInventoryItems[positionY + y][positionX + x] != null)
-                {
-                    return false;
-                }
-            }
-        }
-
-        return true;
-    }
-
-    public bool IsOverlappingWithTheSameItemType(InventoryItem item, int positionX, int positionY, int width, int height, out InventoryItem itemInInventory)
-    {
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
-            {
-                if (_storedInventoryItems[positionY + y][positionX + x] != null)
-                {
-                    if (_storedInventoryItems[positionY + y][positionX + x].ItemData.name == item.ItemData.name)
-                    {
-                        itemInInventory = _storedInventoryItems[positionY + y][positionX + x];
-                        return true;
-                    }
-                }
-            }
-        }
-
-        itemInInventory = null;
-        return false;
-    }
-    public bool IsInCorrectPosition(int positionX, int positionY, int width, int height)
-    {
-        if (IsInBounds(positionX, positionY) == false)
-        {
-            return false;
-        }
-
-        positionX += width - 1;
-        positionY += height - 1;
-
-        if (IsInBounds(positionX, positionY) == false)
-        {
-            return false;
-        }
-
-        return true;
-    }
-    private bool IsRotDifferenceBetweenTwoItemsLessThanOne(InventoryItem item1, InventoryItem item2)
-    {
-        if (item1.ItemData.IsPerishable || item2.ItemData.IsPerishable)
-        {
-            if (Math.Abs(item1.BoughtDaysAgo - item2.BoughtDaysAgo) < 1)
-            {
-                return true;
-            }
-            return false;
-        }
-        return true; //Если сравнены две вещи, которые не портятся, то всегда true. По сути, item1 и item2 - всегда вещи одного типа 
-    }
-    private Vector2Int? FindAvailableSpaceForNewStack(InventoryItem itemToInsert)
-    {
-        for (int y = 0; y < _gridSizeHeight - itemToInsert.Height + 1; y++)
-        {
-            for (int x = 0; x < _gridSizeWidth - itemToInsert.Width + 1; x++)
-            {
-                if (AnyAvailableSpace(x, y, itemToInsert.Width, itemToInsert.Height))
-                {
-                    return new Vector2Int(x, y);
-                }
-            }
-        }
-        return null;
-    }
-    private Vector2Int? FindUnfilledStackOfSameItems(InventoryItem itemToInsert)
-    {
-        for (int y = 0; y < _gridSizeHeight; y++)
-        {
-            for (int x = 0; x < _gridSizeWidth; x++)
-            {
-                if (AnyUnfilledStack(x, y, itemToInsert))
-                {
-                    return new Vector2Int(x, y);
-                }
-            }
-        }
-        return null;
-    }
-    private bool AnyAvailableSpace(int positionX, int positionY, int width, int height)
-        //Присутствует ли на этом месте в инвентаре свободное место чтобы поместить предмет размера {width} x {height}?
-    {
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
-            {
-                if (_storedInventoryItems[positionY + y][positionX + x] != null)
-                {
-
-                    return false;
-                }
-            }
-        }
-
-        return true;
-    }
-    private bool AnyUnfilledStack(int positionX, int positionY, InventoryItem targetItem)
-    {
-        //Если тип предмета, лежащий в инвентаре такой же, как предмет, который мы пытаемся установить И
-        //И стак этого предмета неполный, т.е может вместить в себя ещё столько предметов, сколько в помещаемом стаке, то true.
-        //И должен
-        InventoryItem itemInInventory = _storedInventoryItems[positionY][positionX];
-        if (itemInInventory != null)
-        {
-            if (itemInInventory.ItemData.name == targetItem.ItemData.name)
-            {
-                if ((itemInInventory.ItemData.MaxItemsInAStack - itemInInventory.CurrentItemsInAStack) >= targetItem.CurrentItemsInAStack)
-                {
-                    if ((itemInInventory.BoughtDaysAgo - targetItem.BoughtDaysAgo) < 1)
-                    return true;
-                }
-            }
-        }
-        return false;
     }
 }

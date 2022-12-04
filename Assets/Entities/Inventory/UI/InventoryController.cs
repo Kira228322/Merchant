@@ -50,7 +50,7 @@ public class InventoryController : MonoBehaviour
     }
 
     #endregion
-
+    #region Методы инициализации
     private void Awake()
     {
         _inventoryHighlight = GetComponent<InventoryHighlight>();
@@ -91,6 +91,7 @@ public class InventoryController : MonoBehaviour
 
     }
 
+    #endregion
     #region Методы, связанные с инпутом
     private void OnLeftMouseButtonPress()
     {
@@ -175,14 +176,13 @@ public class InventoryController : MonoBehaviour
     }
 
     #endregion
-
     #region Методы, связанные с взаимодействием с айтемом
-    public bool TryCreateAndInsertItem(ItemGrid itemGrid, Item item, int amount, float daysBoughtAgo, bool isFillingStackFirst)
+    public bool TryCreateAndInsertItem(ItemGrid itemGrid, Item item, int amount, float daysBoughtAgo, bool isSellPriceShown, bool isFillingStackFirst)
     {
         ItemGrid initialItemGridState = SelectedItemGrid;
 
 
-        CreateItem(item, amount, daysBoughtAgo);
+        CreateItem(item, amount, isSellPriceShown, daysBoughtAgo);
         InventoryItem itemToInsert = CurrentSelectedItem;
         SelectedItemGrid = itemGrid;
 
@@ -262,13 +262,14 @@ public class InventoryController : MonoBehaviour
             _rectTransform.position = Input.mousePosition;
         }
     }
-    private void CreateItem(Item item, int amount, float boughtDaysAgo)
+    private void CreateItem(Item item, int amount, bool isSellPriceShown, float boughtDaysAgo)
     {
         InventoryItem spawnedItem = Instantiate(_itemPrefab, _canvasTransform).GetComponent<InventoryItem>();
         CurrentSelectedItem = spawnedItem;
 
         spawnedItem.CurrentItemsInAStack = amount;
         spawnedItem.BoughtDaysAgo = boughtDaysAgo;
+        spawnedItem.IsSellPriceShown = isSellPriceShown;
 
         _rectTransform = spawnedItem.GetComponent<RectTransform>();
         _rectTransform.SetAsLastSibling();
@@ -324,11 +325,10 @@ public class InventoryController : MonoBehaviour
 
         Vector2Int itemPosition = new(itemInInventory.XPositionOnTheGrid, itemInInventory.YPositionOnTheGrid);
         PickUp(itemPosition);
-        TradeManager.PlayersInventory.RemoveItemInInventory(itemInInventory); //Нужно убрать здесь, потому что ниже в этом методе оно добавится обратно в любом случае через методы TryCreate.
         InventoryItem pickedUpItem = CurrentSelectedItem;
         if (itemInInventory.IsRotated)
         {
-            if (TryCreateAndInsertItem(itemGrid, itemInInventory.ItemData, itemInInventory.CurrentItemsInAStack, itemInInventory.BoughtDaysAgo, isFillingStackFirst: false))
+            if (TryCreateAndInsertItem(itemGrid, itemInInventory.ItemData, itemInInventory.CurrentItemsInAStack, itemInInventory.BoughtDaysAgo, itemInInventory.IsSellPriceShown, isFillingStackFirst: false))
             {
                 Destroy(pickedUpItem.gameObject);
                 SelectedItemGrid = initialItemGridState;
@@ -338,7 +338,6 @@ public class InventoryController : MonoBehaviour
             {
                 PlaceDown(itemPosition);
                 SelectedItemGrid = initialItemGridState;
-                TradeManager.PlayersInventory.AddItemInInventory(itemInInventory);
                 return false;
             }
         }
@@ -354,11 +353,32 @@ public class InventoryController : MonoBehaviour
             {
                 PlaceDown(itemPosition);
                 SelectedItemGrid = initialItemGridState;
-                TradeManager.PlayersInventory.AddItemInInventory(itemInInventory);
                 return false;
             }
         }
 
+    }
+    public bool TryPickUpInsertToOtherGrid(InventoryItem item, ItemGrid initialGrid, ItemGrid targetGrid) 
+    {
+        ItemGrid initialItemGridState = SelectedItemGrid;
+        SelectedItemGrid = initialGrid;
+
+        Vector2Int itemPosition = new(item.XPositionOnTheGrid, item.YPositionOnTheGrid);
+        PickUp(itemPosition);
+        InventoryItem pickedUpItem = CurrentSelectedItem;
+
+        SelectedItemGrid = targetGrid;
+
+        if (TryInsertItem(pickedUpItem, true))
+        {
+            SelectedItemGrid = initialItemGridState;
+            return true;
+        }
+        else
+        {
+            SelectedItemGrid = initialItemGridState;
+            return false;
+        }
     }
     private bool TryInsertItem (InventoryItem itemToInsert, bool isFillingStackFirst)
     {

@@ -7,7 +7,7 @@ using TMPro;
 
 public class ItemInfo : MonoBehaviour
 {
-
+    #region Поля
     [SerializeField] private Image _itemIcon;
     [SerializeField] private Button _splitButton;
     [SerializeField] private Button _rotateButton;
@@ -31,7 +31,8 @@ public class ItemInfo : MonoBehaviour
     private InventoryItem _currentItemSelected;
     private ItemGrid _lastItemGridSelected;
     private InventoryController _inventoryController;
-
+    #endregion
+    #region Методы инициализации
     private void Start()
     {
         _player = FindObjectOfType<Player>();
@@ -89,6 +90,8 @@ public class ItemInfo : MonoBehaviour
             _eatButton.gameObject.SetActive(false);
         }
     }
+    #endregion
+    #region Методы работы с кнопками
     public void OnEatButtonPressed()
     {
         _player.RestoreHunger(_currentItemSelected.ItemData.FoodValue);
@@ -125,10 +128,11 @@ public class ItemInfo : MonoBehaviour
         _lastItemGridSelected.DestroyItem(_currentItemSelected);
         Destroy(gameObject);
     }
-    public void Split(int amountToSplit)
+    #endregion
+    public void Split(int amountToSplit) //Мб переместить его в InventoryController?
     {
         _currentItemSelected.CurrentItemsInAStack -= amountToSplit; //вроде бы предусмотрено на случай всех невозможных ситуаций через другие скрипты и свойства кнопок
-        if(_inventoryController.TryCreateAndInsertItem(_lastItemGridSelected, _currentItemSelected.ItemData, amountToSplit, _currentItemSelected.BoughtDaysAgo, isFillingStackFirst: false))
+        if(_inventoryController.TryCreateAndInsertItem(_lastItemGridSelected, _currentItemSelected.ItemData, amountToSplit, _currentItemSelected.BoughtDaysAgo, _currentItemSelected.IsSellPriceShown, isFillingStackFirst: false))
         {
             Destroy(gameObject);
         }

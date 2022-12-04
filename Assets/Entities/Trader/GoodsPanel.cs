@@ -34,7 +34,7 @@ public class GoodsPanel : MonoBehaviour
     {
         if (_currentCount > 0)
         {
-            if (!_inventoryController.TryCreateAndInsertItem(TradeManager.PlayersInventory.GetComponent<ItemGrid>(), _item, 1, 0f, true))
+            if (!_inventoryController.TryCreateAndInsertItem(TradeManager.PlayersInventory.GetComponent<ItemGrid>(), _item, 1, 0f, false, true))
             {
                 if (!_inventoryController.TryCreateAndInsertItemRotated(TradeManager.PlayersInventory.GetComponent<ItemGrid>(), _item, 1, 0f, true))
                 {

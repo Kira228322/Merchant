@@ -41,7 +41,7 @@ public class PlayersInventory : MonoBehaviour
     {
         foreach (InventoryItem item in _inventory)
         {
-            item.ShowSellValue(b);
+            item.IsSellPriceShown = b;
         }
     }
 

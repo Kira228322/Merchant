@@ -2,20 +2,34 @@ using UnityEngine;
 using UnityEngine.Events;
 public class PlayerExperience
 {
-    public int CurrentExperience { get; private set; }
-    public int CurrentLevel { get; private set; }
-    public int UnspentSkillPoints { get; set; }
+    #region Поля, свойства и события
+
+    private int _currentExperience;
+    private int _currentLevel;
+    private int _unspentSkillPoints;
+
+    public int CurrentExperience => _currentExperience;
+    public int CurrentLevel => _currentLevel;
+    public int UnspentSkillPoints
+    {
+        get
+        {
+            return _unspentSkillPoints;
+        }
+        set
+        {
+            _unspentSkillPoints = value;
+            if (_unspentSkillPoints < 0)
+            {
+                _unspentSkillPoints = 0;
+            }
+        }
+    }
+
 
     public event UnityAction LevelUp;
     public event UnityAction ExperienceChanged;
-
-    public PlayerExperience()
-    {
-        CurrentLevel = 0;
-        CurrentExperience = 0;
-        UnspentSkillPoints = 0;
-    }
-
+    #endregion
     public int ExperienceNeededForNextLevel()
     {
         return ExperienceNeededForAllLevelsBefore(CurrentLevel);
@@ -31,10 +45,10 @@ public class PlayerExperience
     }
     public int ExperienceNeededForLevel(int level)
     {
-        if (level <= -1) return 0; //Если игрок 0 уровня и хотим узнать, сколько нужно было опыта, чтобы получить 0 уровень. Сейчас это используется в ЭКСП - баре
+        if (level <= -1) return 0;
         if (level <= 30)
         {
-            //y = 50 + 10x + 2* x^2 - 0.1 * (x - (2x)^(1/2) - 1)^3
+            //y = 50 + 10x + 2 * x^2 - 0.1 * (x - (2x)^(1/2) - 1)^3
             return (int)Mathf.Ceil((float)(50 + 10 * level + 2 * level * level - 0.1 * Mathf.Pow(level - Mathf.Sqrt(2 * level) - 1, 3)));
         }
         else return 1200;
@@ -42,18 +56,18 @@ public class PlayerExperience
 
     public void IncreaseLevel()
     {
-        CurrentLevel++;
-        UnspentSkillPoints++;
+        _currentLevel++;
+        _unspentSkillPoints++;
         LevelUp?.Invoke();
     }
 
     public void AddExperience (int amount) 
     {
-        CurrentExperience += amount;
+        _currentExperience += amount;
         if (CurrentExperience >= ExperienceNeededForNextLevel())
         {
             IncreaseLevel();
-            AddExperience(0); //Если получил опыта сразу на 2 и более уровня
+            AddExperience(0); //Если получил опыта сразу на 2 и более уровня. Это конечно глупая рекурсия и может даже считаться костылём, но будет работать
         }
         ExperienceChanged?.Invoke();
     }

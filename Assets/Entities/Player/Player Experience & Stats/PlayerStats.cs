@@ -4,27 +4,24 @@ using UnityEngine;
 
 public class PlayerStats
 {
-    public int Diplomacy { get; private set; } //Влияет на цены и успешность переговоров
-    public int Toughness { get; private set; } //Влияет на скорость убывания сна
-    public int Luck { get; private set; } //???
-    public PlayerStats()
-    {
-        Diplomacy = 0;
-        Toughness = 0;
-        Luck = 0;
-    }
+    private int _diplomacy;
+    private int _toughness;
+    private int _luck;
+    public int Diplomacy => _diplomacy; //Влияет на цены и успешность переговоров
+    public int Toughness => _toughness; //Влияет на скорость убывания сна
+    public int Luck => _luck; //???
 
     public void IncreaseDiplomacy()
     {
-        Diplomacy++;
+        _diplomacy++;
     }
     public void IncreaseToughness()
     {
-        Toughness++;
+        _toughness++;
     }
     public void IncreaseLuck()
     {
-        Luck++;
+        _luck++;
     }
     
 }

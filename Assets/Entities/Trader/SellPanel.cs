@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class SellPanel : MonoBehaviour
@@ -9,6 +10,7 @@ public class SellPanel : MonoBehaviour
     // Во вторых, нужно, чтобы правильно рассчитывалась новая цена на основе всех коэффициентов продажи
     // В третьих, добавлять игроку деньги и убирать их у торговца.
     [SerializeField] private ItemGrid _sellItemGrid;
+    [SerializeField] private Button _closeButton; 
     [SerializeField] private TMP_Text _currentValueText;
     [SerializeField] private TMP_Text _traderTotalMoneyText;
 
@@ -55,11 +57,20 @@ public class SellPanel : MonoBehaviour
     private void Refresh()
     {
         _currentSellingValue = 0;
-        foreach (InventoryItem item in _currentItemsInGrid)
+        if (_currentItemsInGrid.Count == 0)
         {
-            _currentSellingValue += item.CurrentItemsInAStack * item.ItemData.Price;
+            _currentValueText.text = "Сумма сделки: " + _currentSellingValue;
+            _closeButton.interactable = true;
         }
-        _currentValueText.text = "Сумма сделки: " +  _currentSellingValue;
+        else
+        {
+            _closeButton.interactable = false;
+            foreach (InventoryItem item in _currentItemsInGrid)
+            {
+                _currentSellingValue += item.CurrentItemsInAStack * item.ItemData.Price;
+            }
+            _currentValueText.text = "Сумма сделки: " + _currentSellingValue;
+        }
     }
     private void CommenceSellingAllItems()
     {
@@ -68,7 +79,7 @@ public class SellPanel : MonoBehaviour
             _sellItemGrid.DestroyItem(_currentItemsInGrid[i - 1]);
         }
         //Player.AddMoney(_currentSellingValue);
-        //Torgovec.RemoveMoney(_currentSellingValue);
+        //Torgovec.RemoveMoney(_currentSellingValue); Свойство Money торговца должно учитывать невозможность отрицательности
         Refresh();
     }
 }
