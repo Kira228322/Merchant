@@ -32,7 +32,7 @@ public class RandomBGGenerator : MonoBehaviour
     private float _lastTimeCloudSpawn;
 
     private List<BackGroundObject> _backGroundObjects = new List<BackGroundObject>();
-    
+    public List<Cloud> CloudsOnScene = new();
     private void Start()
     {
         _backGroundObjects.Add(new BackGroundObject(_trees, _minTimeTreeSpawn));
@@ -72,8 +72,9 @@ public class RandomBGGenerator : MonoBehaviour
         _lastTimeCloudSpawn += Time.deltaTime;
         if (_lastTimeCloudSpawn >= _minTimeCloudSpawn)
         {
-            Instantiate(_cloud[Random.Range(0, _cloud.Count)],
-                 _cloudPointSpawn.position + new Vector3(0, Random.Range(0f, 1.4f)), Quaternion.identity);
+            CloudsOnScene.Add(Instantiate(_cloud[Random.Range(0, _cloud.Count)],
+                 _cloudPointSpawn.position + new Vector3(0, Random.Range(0f, 1.4f)), Quaternion.identity)
+                .GetComponent<Cloud>());
             if (Random.Range(0, 4) == 0) 
                 _lastTimeCloudSpawn = _minTimeCloudSpawn/3;
             else
@@ -101,9 +102,9 @@ public class RandomBGGenerator : MonoBehaviour
         {
             renderer.sortingOrder = -2;
             Color color = renderer.color;
-            color.r /= 1.08f;
-            color.g /= 1.08f;
-            color.b /= 1.08f;
+            color.r /= 1.1f;
+            color.g /= 1.1f;
+            color.b /= 1.1f;
             renderer.color = color;
             if (renderer.gameObject.transform.childCount != 0) 
             {

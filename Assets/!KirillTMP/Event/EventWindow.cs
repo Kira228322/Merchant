@@ -14,29 +14,27 @@ public class EventWindow : MonoBehaviour
     [SerializeField] private Transform _sceneContainer;
     [SerializeField] private GameObject _buttonPrefub;
 
-    [SerializeField] private EventInTravel TEST;
-    private UnityAction _unityAction;
 
     public void Init(EventInTravel eventInTravel)
     {
         _eventNameText.text = eventInTravel.EventName;
         _description.text = eventInTravel.Description;
+        
+        if (_sceneContainer.childCount == 1)
+            Destroy(_sceneContainer.GetChild(0));
+        
         EventInTravel travelEvent = Instantiate(eventInTravel.gameObject, _sceneContainer).GetComponent<EventInTravel>();
         travelEvent.SetButtons();
+        
+        for (int i = 0; i < _contentButtons.childCount; i++)
+            Destroy(_contentButtons.GetChild(_contentButtons.childCount-1));
+        
         for (int i = 0; i < travelEvent.ButtonsLabel.Count; i++)
         {
             EventInTravelButton button = Instantiate(_buttonPrefub, _contentButtons).GetComponent<EventInTravelButton>();
             button.number = i;
             button.ButtonComponent.onClick.AddListener(() => travelEvent.OnButtonClick(button.number));
             button.ButtonText.text = travelEvent.ButtonsLabel[i];
-        }
-    }
-
-    private void Update() // –¿ƒ» “≈—“¿, Õ≈ «¿¡€“‹ ”ƒ¿À»“‹
-    {
-        if (Input.GetMouseButtonDown(1))
-        {
-            Init(TEST);
         }
     }
 }

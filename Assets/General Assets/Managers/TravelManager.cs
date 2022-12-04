@@ -7,7 +7,7 @@ public static class TravelManager
     public static bool Travel;
     public static string TargetSceneName;
     private static int _timeScale = 15; // Игровой час длится 1 минуту ирл. В поездке 1 час - 4 секунды ирл
-    
+    public static int TimeScale => _timeScale;
     private static int _travelDuration;
     private static int _quality;
     private static int _danger;
