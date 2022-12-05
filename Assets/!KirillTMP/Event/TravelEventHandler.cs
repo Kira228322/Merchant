@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class TravelEventHandler : MonoBehaviour
 {
@@ -10,7 +11,8 @@ public class TravelEventHandler : MonoBehaviour
     [SerializeField] private Mover _mover;
     [SerializeField] private RandomBGGenerator _generator;
 
-    public EventInTravel TEST;
+    private bool _banditEvent;
+    
     private void EventStart(EventInTravel eventInTravel)
     {
         _generator.enabled = false;
@@ -35,12 +37,31 @@ public class TravelEventHandler : MonoBehaviour
         GameTime.SetTimeScale(TravelManager.TimeScale);
         _eventWindow.gameObject.SetActive(false);
     }
-    
-    private void Update()
+
+    private void OnTravelSceneEnter()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (EventFire(TravelManager.Danger, false, true))
+            _banditEvent = true;
+        // Еще думаю каким образом будет работать определение ивентов в дороге
+        // Что точно должно быть, это вычисление будет ли нападение бандитов или нет
+    }
+
+    private bool EventFire(float value, bool positiveEvent = true, bool luckImpl = false)  
+    {
+        if (luckImpl)
         {
-            EventStart(TEST);
+            if (positiveEvent)
+            {
+                if (Random.Range(0, 101) <= value * TravelManager.PlayerStats.GetCoefForPositiveEvent())
+                    return true;
+                return false;
+            }
+            if (Random.Range(0, 101) <= value * TravelManager.PlayerStats.GetCoefForNegativeEvent())
+                return true;
+            return false;
         }
+        if (Random.Range(0, 101) <= value)
+            return true;
+        return false;
     }
 }

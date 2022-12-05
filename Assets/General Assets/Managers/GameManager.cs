@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     [FormerlySerializedAs("TravelTime")] [SerializeField] private TMP_Text _travelTime;
     [SerializeField] private TravelTimeCounter _timeCounter;
     [SerializeField] private GameObject _playerIcone;
+    [SerializeField] private PlayerStats _playerStats;
     
     [Header("GameTime")] 
     [FormerlySerializedAs("Timeflow")] [SerializeField] private Timeflow _timeflow;
@@ -35,7 +36,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         MapManager.Init(_travelingScene, _loadScreen, _roadWindow, _villageWindow, _canvas);
-        TravelManager.Init(_travelBlock, _travelTime, _timeCounter, _playerIcone);
+        TravelManager.Init(_travelBlock, _travelTime, _timeCounter, _playerIcone, _playerStats);
         GameTime.Init(_timeflow);
         TradeManager.Init(TraderPanel, SellPanel, TraderPanelContent, GoodsPanelPrefab, _playersInventory);
     }
