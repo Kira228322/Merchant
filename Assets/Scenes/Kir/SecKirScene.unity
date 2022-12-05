@@ -2367,7 +2367,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 372934437}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.97, y: 1.22465, z: -10}
+  m_LocalPosition: {x: 0, y: 1.2, z: -10}
   m_LocalScale: {x: 1, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4396,6 +4396,7 @@ MonoBehaviour:
   _playerIcone: {fileID: 2066869501}
   _timeflow: {fileID: 2136708195}
   TraderPanel: {fileID: 1194665628}
+  SellPanel: {fileID: 0}
   TraderPanelContent: {fileID: 805073295}
   GoodsPanelPrefab: {fileID: 5264023920249485065, guid: f39ed2560c4c1e84a9daccc9bf052c55, type: 3}
 --- !u!4 &1031996479
@@ -4574,7 +4575,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1075578021}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.58, y: -2.02, z: 0}
+  m_LocalPosition: {x: 1.01, y: -2.02, z: 0}
   m_LocalScale: {x: 0.82, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4641,6 +4642,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0af5e841cec8d15459af11135b09820c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _camera: {fileID: 372934440}
   _contactFilter2D:
     useTriggers: 0
     useLayerMask: 1

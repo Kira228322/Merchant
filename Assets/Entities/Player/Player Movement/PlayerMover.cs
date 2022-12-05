@@ -6,13 +6,17 @@ using UnityEngine;
 
 public class PlayerMover : MonoBehaviour
 {
+    [SerializeField] private Transform _camera;
+    private Vector3 _defaultCameraPos;
     [SerializeField] private ContactFilter2D _contactFilter2D;
     private float _speed = 3;
     public float Speed => _speed;
     private Rigidbody2D _rigidbody;
     private Collider2D _collider;
     private float _minDistToLet;
+    
     private Coroutine _currentMove;
+    private Coroutine _currentCameraMove;
     private float _lastValue;
 
     private float _moveCD = 0.2f;
@@ -20,6 +24,7 @@ public class PlayerMover : MonoBehaviour
     private const float MinConstDist = 0.2f; // минимальное расстояние, которое может возникнуть между игроком и стеной 
     private void Start()
     {
+        _defaultCameraPos = _camera.localPosition;
         _collider = GetComponent<Collider2D>();
         _rigidbody = GetComponent<Rigidbody2D>();
         _minDistToLet = MinConstDist + _collider.bounds.size.x/2; 
@@ -36,11 +41,16 @@ public class PlayerMover : MonoBehaviour
             if (_currentMove != null)
             {
                 StopCoroutine(_currentMove);
+                StopCoroutine(_currentCameraMove);
                 _currentMove = null;
             }
 
             if (_collider.IsTouchingLayers()) // двигаться можно, только если ты не в прыжке
+            {
                 _currentMove = StartCoroutine(Move(startPos, targetPos));
+                _currentCameraMove = StartCoroutine(CameraMove(startPos));
+            }
+            
         }
     }
 
@@ -54,6 +64,9 @@ public class PlayerMover : MonoBehaviour
     public IEnumerator Move(Vector3 startPos,Vector3 targetPos)
     {
         bool moveIsDone = false;
+        
+        
+        
         WaitForSeconds waitForSeconds = new WaitForSeconds(0.02f);
         RaycastHit2D[] raycastHit2D = new RaycastHit2D[8];
 
@@ -112,7 +125,7 @@ public class PlayerMover : MonoBehaviour
 
             if (!moveIsDone)
             {
-                waitForSeconds = new WaitForSeconds(0.08f); // задержка перед подпрыгиванием 
+                waitForSeconds = new WaitForSeconds(0.07f); // задержка перед подпрыгиванием 
                 yield return waitForSeconds;
                 castDirection = new Vector2(raycastHit2D[0].point.x - transform.position.x, 0).normalized;
                 castDirection += new Vector2(0, 2f); // max высота ступеньки, на которую может
@@ -139,6 +152,40 @@ public class PlayerMover : MonoBehaviour
                     StartCoroutine(Move(transform.position, targetPos));
                 }
             }
+        }
+    }
+
+    private IEnumerator CameraMove(Vector3 startPos)
+    {
+        Vector3 previousePos = startPos;
+
+        WaitForSeconds waitForSeconds = new WaitForSeconds(0.02f);
+        for (int i = 0; i < 25; i++)
+        {
+            if (Math.Abs(_camera.localPosition.x) > 1.5f)
+                break;
+            
+            _camera.localPosition += new Vector3(previousePos.x - transform.position.x, 0);
+            if (previousePos.y > transform.position.y)
+                _camera.localPosition += new Vector3(0, previousePos.y - transform.position.y);
+            previousePos = transform.position;
+            yield return waitForSeconds;
+        }
+
+        waitForSeconds = new WaitForSeconds(0.11f);
+        yield return waitForSeconds;
+        while (previousePos != transform.position)
+        {
+            previousePos = transform.position;
+            yield return waitForSeconds;
+        }
+
+        Vector3 currentCameraPos = _camera.localPosition;
+        waitForSeconds = new WaitForSeconds(0.02f);
+        for (float i = 2; i <= 20; i++)
+        {
+            _camera.localPosition = Vector3.Lerp(currentCameraPos, _defaultCameraPos, (i*i + 2*i)/440);
+            yield return waitForSeconds;
         }
     }
 }
