@@ -826,7 +826,7 @@ MonoBehaviour:
   _slider: {fileID: 1749612234}
   _doneButton: {fileID: 1470164842}
   _timeflow: {fileID: 676400924}
-  _timeScaleWhenSleeping: 1
+  _timeScaleWhenSleeping: 20
 --- !u!1 &769490217
 GameObject:
   m_ObjectHideFlags: 0
@@ -1502,7 +1502,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 65.25
+  m_fontSize: 72
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1882,7 +1882,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -2.5002, y: 0}
+  m_AnchoredPosition: {x: -2.5002136, y: 0}
   m_SizeDelta: {x: 5.0005, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1441462407
@@ -2354,6 +2354,7 @@ MonoBehaviour:
   _playerIcone: {fileID: 0}
   _timeflow: {fileID: 676400924}
   TraderPanel: {fileID: 0}
+  SellPanel: {fileID: 0}
   TraderPanelContent: {fileID: 0}
   GoodsPanelPrefab: {fileID: 5264023920249485065, guid: f39ed2560c4c1e84a9daccc9bf052c55, type: 3}
 --- !u!4 &1580020508

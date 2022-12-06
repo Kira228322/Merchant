@@ -4245,7 +4245,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &656347143
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4321,6 +4321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _sellItemGrid: {fileID: 1290671207}
+  _closeButton: {fileID: 1482762950}
   _currentValueText: {fileID: 642192440}
   _traderTotalMoneyText: {fileID: 595859772}
 --- !u!1 &669636001
@@ -5793,18 +5794,6 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 100308664}
-        m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: AddExperience
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 10
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -8352,6 +8341,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 976912649}
     m_Modifications:
+    - target: {fileID: 1388978057279542689, guid: 00054eb66b5d065439df9226119deea6, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1388978057279542689, guid: 00054eb66b5d065439df9226119deea6, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1388978057279542689, guid: 00054eb66b5d065439df9226119deea6, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1388978057821864645, guid: 00054eb66b5d065439df9226119deea6, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -8439,6 +8440,10 @@ PrefabInstance:
     - target: {fileID: 1388978057821864648, guid: 00054eb66b5d065439df9226119deea6, type: 3}
       propertyPath: m_Name
       value: InventoryPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 1388978057821864648, guid: 00054eb66b5d065439df9226119deea6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 00054eb66b5d065439df9226119deea6, type: 3}

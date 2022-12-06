@@ -19,19 +19,37 @@ public class Player : MonoBehaviour
     [SerializeField] private int _currentSleep;
 
     private PlayerMover _playerMover;
+    private int _money;
     private int _generalTimeCounter = 0;
     private int _timeCounterWhenSleeping = 0;
     private int _hoursLeftToSleep = 0;
     
     public PlayerMover PlayerMover => _playerMover;
+
     public int MaxHunger;
     public int MaxSleep;
+
     public PlayerExperience Experience = new();
     public PlayerStats Statistics = new();
 
     public event UnityAction SleptOneHourEvent;
     public event UnityAction FinishedSleeping;
 
+    public int Money 
+    { 
+        get
+        {
+            return _money;
+        }
+        set
+        {
+            _money = value;
+            if (_money < 0)
+            {
+                _money = 0;
+            }
+        }
+    }
     public int CurrentHunger 
     {
         get

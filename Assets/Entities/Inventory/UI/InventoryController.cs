@@ -50,7 +50,7 @@ public class InventoryController : MonoBehaviour
     }
 
     #endregion
-    #region Методы инициализации
+    #region Инициализация и Update
     private void Awake()
     {
         _inventoryHighlight = GetComponent<InventoryHighlight>();
@@ -89,6 +89,44 @@ public class InventoryController : MonoBehaviour
 
         HighlightUpdate();
 
+    }
+    private void HighlightUpdate()
+    {
+        if (SelectedItemGrid == null) 
+        {
+            _inventoryHighlight.Show(false);
+            return; 
+        }
+
+        Vector2Int positionOnGrid = GetTileGridPosition();
+        if (_previousHighlightPosition == positionOnGrid) { return; }
+        _previousHighlightPosition = positionOnGrid;
+        if (CurrentSelectedItem == null)
+        {
+            _itemToHighlight = SelectedItemGrid.GetItem(positionOnGrid.x, positionOnGrid.y);
+
+            if (_itemToHighlight != null)
+            {
+                _inventoryHighlight.Show(true);
+                _inventoryHighlight.SetSize(_itemToHighlight);
+                _inventoryHighlight.SetPosition(SelectedItemGrid, _itemToHighlight);
+            }
+            else
+            {
+                _inventoryHighlight.Show(false);
+            }
+        }
+        else
+        {
+            _inventoryHighlight.Show(SelectedItemGrid.IsInCorrectPosition(
+                positionOnGrid.x, 
+                positionOnGrid.y,
+                CurrentSelectedItem.Width,
+                CurrentSelectedItem.Height)
+                );
+            _inventoryHighlight.SetSize(CurrentSelectedItem);
+            _inventoryHighlight.SetPosition(SelectedItemGrid, CurrentSelectedItem, positionOnGrid.x, positionOnGrid.y);
+        }
     }
 
     #endregion
@@ -316,7 +354,7 @@ public class InventoryController : MonoBehaviour
         CreateRandomItem();
         InventoryItem itemToInsert = CurrentSelectedItem;
         CurrentSelectedItem = null;
-        TryInsertItem(itemToInsert, true);
+        if (!TryInsertItem(itemToInsert, true)) Destroy(itemToInsert.gameObject);
     }
     public bool TryPickUpRotateInsert(InventoryItem itemInInventory, ItemGrid itemGrid)
     {
@@ -358,28 +396,6 @@ public class InventoryController : MonoBehaviour
         }
 
     }
-    public bool TryPickUpInsertToOtherGrid(InventoryItem item, ItemGrid initialGrid, ItemGrid targetGrid) 
-    {
-        ItemGrid initialItemGridState = SelectedItemGrid;
-        SelectedItemGrid = initialGrid;
-
-        Vector2Int itemPosition = new(item.XPositionOnTheGrid, item.YPositionOnTheGrid);
-        PickUp(itemPosition);
-        InventoryItem pickedUpItem = CurrentSelectedItem;
-
-        SelectedItemGrid = targetGrid;
-
-        if (TryInsertItem(pickedUpItem, true))
-        {
-            SelectedItemGrid = initialItemGridState;
-            return true;
-        }
-        else
-        {
-            SelectedItemGrid = initialItemGridState;
-            return false;
-        }
-    }
     private bool TryInsertItem (InventoryItem itemToInsert, bool isFillingStackFirst)
     {
         Vector2Int? posOnGrid = SelectedItemGrid.FindSpaceForItemInsertion(itemToInsert, isFillingStackFirst);
@@ -393,42 +409,4 @@ public class InventoryController : MonoBehaviour
     }
 
     #endregion
-    private void HighlightUpdate()
-    {
-        if (SelectedItemGrid == null) 
-        {
-            _inventoryHighlight.Show(false);
-            return; 
-        }
-
-        Vector2Int positionOnGrid = GetTileGridPosition();
-        if (_previousHighlightPosition == positionOnGrid) { return; }
-        _previousHighlightPosition = positionOnGrid;
-        if (CurrentSelectedItem == null)
-        {
-            _itemToHighlight = SelectedItemGrid.GetItem(positionOnGrid.x, positionOnGrid.y);
-
-            if (_itemToHighlight != null)
-            {
-                _inventoryHighlight.Show(true);
-                _inventoryHighlight.SetSize(_itemToHighlight);
-                _inventoryHighlight.SetPosition(SelectedItemGrid, _itemToHighlight);
-            }
-            else
-            {
-                _inventoryHighlight.Show(false);
-            }
-        }
-        else
-        {
-            _inventoryHighlight.Show(SelectedItemGrid.IsInCorrectPosition(
-                positionOnGrid.x, 
-                positionOnGrid.y,
-                CurrentSelectedItem.Width,
-                CurrentSelectedItem.Height)
-                );
-            _inventoryHighlight.SetSize(CurrentSelectedItem);
-            _inventoryHighlight.SetPosition(SelectedItemGrid, CurrentSelectedItem, positionOnGrid.x, positionOnGrid.y);
-        }
-    }
 }
