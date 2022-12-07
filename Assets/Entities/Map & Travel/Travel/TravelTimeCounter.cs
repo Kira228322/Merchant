@@ -18,6 +18,7 @@ public class TravelTimeCounter : MonoBehaviour
     private int _currentWay;
     private int count;
     
+    
     public void Init(int duration, Road road, GameObject playerIcone)
     {
         _travelingTime = duration;
@@ -28,6 +29,7 @@ public class TravelTimeCounter : MonoBehaviour
         _playerIcone = playerIcone;
         _currentWay = 0;
         count = 0;
+        SetTravelTimeText();
     }
 
     private void Update() 
@@ -38,15 +40,22 @@ public class TravelTimeCounter : MonoBehaviour
             MoveIconeOnMap();
             _minutes -= 60;
             _duration--;
-            if (_duration / 24 == 0)
-                _travelTime.text = _duration + " часов";
-            else
-                _travelTime.text = _duration/24 + " дней " + _duration % 24 + " часов";
+            SetTravelTimeText();
             if (_duration == 0)
             {
-                TravelManager.EndTravel();
+                GameTime.SetTimeScale(1);
+                MapManager.TransitionToVillageScene();
+                gameObject.SetActive(false);
             }
         }
+    }
+
+    private void SetTravelTimeText()
+    {
+        if (_duration / 24 == 0)
+            _travelTime.text = _duration + " часов";
+        else
+            _travelTime.text = _duration/24 + " дней " + _duration % 24 + " часов";
     }
 
     private void MoveIconeOnMap()

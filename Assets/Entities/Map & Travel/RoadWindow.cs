@@ -62,8 +62,7 @@ public class RoadWindow : Window
     public void OnTravelButtonClick()
     { 
         MapManager.TransitionToTravelScene(_place, _roads[_numberOfRoad]);
-        TravelManager.TargetSceneName = _place.SceneName;
-        TravelManager.Travel = true;
+        MapManager.TargetSceneName = _place.SceneName;
         Destroy(gameObject);
     }
 }

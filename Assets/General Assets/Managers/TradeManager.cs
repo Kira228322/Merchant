@@ -1,23 +1,21 @@
 
+using System;
 using UnityEngine;
 
-public static class TradeManager 
+public  class TradeManager : MonoBehaviour
 {
-    private static GameObject _traderPanel;
-    public static GameObject TraderPanel => _traderPanel;
-    private static GameObject _sellPanel;
-    public static GameObject SellPanel => _sellPanel;
-    private static Transform _traderPanelContent;
-    public static Transform TraderPanelContent => _traderPanelContent;
-    private static GoodsPanel _goodsPanel;
-    public static GoodsPanel GoodsPanel => _goodsPanel;
-    public static PlayersInventory PlayersInventory;
-    public static void Init(GameObject traderPanel, GameObject sellPanel, Transform content, GoodsPanel goodsPanel, PlayersInventory playersInventory)
+    public static TradeManager Singleton;
+    [SerializeField] private  GameObject _BuyPanel;
+    public  GameObject BuyPanel => _BuyPanel;
+    [SerializeField] private  GameObject _sellPanel;
+    public  GameObject SellPanel => _sellPanel;
+    [SerializeField] private  Transform _BuyPanelContent;
+    public  Transform BuyPanelContent => _BuyPanelContent;
+    [SerializeField] private  GoodsPanel _goodsPanelPrefub;
+    public  GoodsPanel GoodsPanelPrefub => _goodsPanelPrefub;
+
+    private void Start()
     {
-        _traderPanel = traderPanel;
-        _sellPanel = sellPanel;
-        _traderPanelContent = content;
-        _goodsPanel = goodsPanel;
-        PlayersInventory = playersInventory;
+        Singleton = this;
     }
 }

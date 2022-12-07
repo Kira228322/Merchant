@@ -13,6 +13,8 @@ public class TravelEventHandler : MonoBehaviour
 
     private bool _banditEvent;
     
+    
+    
     private void EventStart(EventInTravel eventInTravel)
     {
         _generator.enabled = false;
@@ -34,16 +36,17 @@ public class TravelEventHandler : MonoBehaviour
             cloud.enabled = true;
         }
         _mover.enabled = true;
-        GameTime.SetTimeScale(TravelManager.TimeScale);
+        GameTime.SetTimeScale(GameTime.TimeScaleInTravel);
         _eventWindow.gameObject.SetActive(false);
     }
 
     private void OnTravelSceneEnter()
     {
-        if (EventFire(TravelManager.Danger, false, true))
+        if (EventFire(MapManager.CurrentRoad.Danger, false, true))
             _banditEvent = true;
         // Еще думаю каким образом будет работать определение ивентов в дороге
         // Что точно должно быть, это вычисление будет ли нападение бандитов или нет
+        // TODO
     }
 
     private bool EventFire(float value, bool positiveEvent = true, bool luckImpl = false)  
@@ -52,11 +55,11 @@ public class TravelEventHandler : MonoBehaviour
         {
             if (positiveEvent)
             {
-                if (Random.Range(0, 101) <= value * TravelManager.PlayerStats.GetCoefForPositiveEvent())
+                if (Random.Range(0, 101) <= value * Player.Singleton.Statistics.GetCoefForPositiveEvent())
                     return true;
                 return false;
             }
-            if (Random.Range(0, 101) <= value * TravelManager.PlayerStats.GetCoefForNegativeEvent())
+            if (Random.Range(0, 101) <= value * Player.Singleton.Statistics.GetCoefForNegativeEvent())
                 return true;
             return false;
         }

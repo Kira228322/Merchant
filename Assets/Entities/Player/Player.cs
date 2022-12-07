@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
-    
+    public static Player Singleton;
     [SerializeField] private SlidersController _hungerScale;
     [SerializeField] private SlidersController _sleepScale;
 
@@ -19,28 +19,28 @@ public class Player : MonoBehaviour
     [SerializeField] private int _currentSleep;
 
     private PlayerMover _playerMover;
+    private PlayersInventory _inventory;
     private int _money;
     private int _generalTimeCounter = 0;
     private int _timeCounterWhenSleeping = 0;
     private int _hoursLeftToSleep = 0;
     
     public PlayerMover PlayerMover => _playerMover;
+    public PlayersInventory Inventory => _inventory;
 
     public int MaxHunger;
     public int MaxSleep;
 
     public PlayerExperience Experience = new();
     public PlayerStats Statistics = new();
+    
 
     public event UnityAction SleptOneHourEvent;
     public event UnityAction FinishedSleeping;
 
     public int Money 
     { 
-        get
-        {
-            return _money;
-        }
+        get => _money;
         set
         {
             _money = value;
@@ -52,10 +52,7 @@ public class Player : MonoBehaviour
     }
     public int CurrentHunger 
     {
-        get
-        {
-            return _currentHunger;
-        }
+        get => _currentHunger;
         set
         {
             _currentHunger = value;
@@ -72,10 +69,7 @@ public class Player : MonoBehaviour
     }
     public int CurrentSleep
     {
-        get
-        {
-            return _currentSleep;
-        }
+        get => _currentSleep;
         set
         {
             _currentSleep = value;
@@ -95,6 +89,8 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        Singleton = this;
+        _inventory = (PlayersInventory)FindObjectOfType(typeof(PlayersInventory), true);
         _playerMover = GetComponent<PlayerMover>();
 
         _sleepScale.SetValue(CurrentSleep, MaxSleep);

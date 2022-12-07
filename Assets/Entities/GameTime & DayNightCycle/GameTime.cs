@@ -5,6 +5,8 @@ using UnityEngine.Events;
 public static class GameTime
 {
     private static Timeflow _timeflow;
+    private static float _timeScaleInTravel = 15;
+    public static float TimeScaleInTravel => _timeScaleInTravel; 
     private static int _days = 1;
     private static int _hours = 0;
     private static int _minutes = 0;
@@ -15,8 +17,7 @@ public static class GameTime
 
     public static int Days
     {
-        get
-        { return _days; }
+        get => _days;
         set
         {
             _days = value;
@@ -25,8 +26,7 @@ public static class GameTime
     }
     public static int Hours
     {
-        get
-        { return _hours; }
+        get { return _hours;}
         set
         {
             //TradeManager.PlayersInventory.CheckSpoilItems(); “еперь сам PlayersInventory занимаетс€ этим по событию HourChanged
@@ -41,8 +41,7 @@ public static class GameTime
     }
     public static int Minutes
     {
-        get
-        { return _minutes; }
+        get => _minutes; 
         set
         {
             _minutes = value;

@@ -9,11 +9,14 @@ public class SceneTransiter : MonoBehaviour
 {
     [SerializeField] private Image _loadingBar;
     [SerializeField] private TMP_Text _loadingText;
-    
+    [SerializeField] private TravelTimeCounter _timeCounter;
+    public TravelTimeCounter TimeCounter => _timeCounter;
     private Animator _animator;
     private AsyncOperation _loadingSceneOperation;
     private Road _road;
+    private GameObject _travelBlock;
     
+
     private void Awake()
     {
         _animator = GetComponent<Animator>();
@@ -29,13 +32,15 @@ public class SceneTransiter : MonoBehaviour
         _road = road;
         enabled = true;
         _animator.SetTrigger("StartTransition");
-
+        
+        
         _loadingSceneOperation = SceneManager.LoadSceneAsync(scene);
         _loadingSceneOperation.allowSceneActivation = false;
     }
     
     public void StartTransit(string scene)
     {
+        _road = null;
         enabled = true;
         _animator.SetTrigger("StartTransition");
 
@@ -50,8 +55,10 @@ public class SceneTransiter : MonoBehaviour
         if (_loadingSceneOperation.isDone)
         {
             _animator.SetTrigger("EndTransition");
-            if (TravelManager.Travel)
-                TravelManager.StartTravel(_road);
+            if (_road != null)
+            {
+                MapManager.StartTravel(_road);
+            }
             enabled = false;
         }
     }
@@ -59,5 +66,11 @@ public class SceneTransiter : MonoBehaviour
     public void OnAnimationOver()
     {
         _loadingSceneOperation.allowSceneActivation = true;
+        if (_road != null)
+        {
+            GameTime.SetTimeScale(GameTime.TimeScaleInTravel);
+            _travelBlock.SetActive(true);
+            _travelBlock.GetComponent<Animator>().SetTrigger("StartTravel");
+        }
     }
 }

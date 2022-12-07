@@ -18,8 +18,8 @@ public class CollectItemsGoal : Goal
     public override void Initialize()
     {
         base.Initialize();
-        TradeManager.PlayersInventory.GetComponent<ItemGrid>().ItemPlacedInTheGrid += ItemCollected;
-        TradeManager.PlayersInventory.GetComponent<ItemGrid>().ItemRemovedFromTheGrid += ItemRemoved;
+        Player.Singleton.Inventory.GetComponent<ItemGrid>().ItemPlacedInTheGrid += ItemCollected;
+        Player.Singleton.Inventory.GetComponent<ItemGrid>().ItemRemovedFromTheGrid += ItemRemoved;
     }
 
     private void ItemCollected(InventoryItem item)
