@@ -25,7 +25,7 @@ public class SleepDurationPanel : MonoBehaviour
 
     private void Awake() //OnEnable גûחûגאועסÿ המ Start(), םמ ןמסכו Awake().
     {
-        _player = FindObjectOfType<Player>();
+        _player = Player.Singleton;
     }
 
     private void OnSleptOneHour()

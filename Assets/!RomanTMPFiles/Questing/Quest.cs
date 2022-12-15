@@ -5,6 +5,7 @@ using System.Linq;
 
 public class Quest
 {
+    private Quest _nextQuest;
     public List<Goal> Goals { get; set; } = new();
     public string QuestName { get; set; }
     public string Description { get; set; }
@@ -32,6 +33,7 @@ public class Quest
 
     private void GiveReward()
     {
-
+        Player.Singleton.AddExperience(ExperienceReward);
+        Player.Singleton.Money += MoneyReward;
     }
 }

@@ -123,6 +123,61 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &107819671
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 107819673}
+  - component: {fileID: 107819672}
+  m_Layer: 0
+  m_Name: TMP Player
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &107819672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107819671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e59141d112fe47c44b1395cb3a61d5ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hungerScale: {fileID: 0}
+  _sleepScale: {fileID: 0}
+  _hungerDecayRate: 0
+  _hungerDivisorWhenSleeping: 0
+  _sleepDecayRate: 0
+  _sleepRestorationRate: 0
+  _currentHunger: 0
+  _currentSleep: 0
+  MaxHunger: 0
+  MaxSleep: 0
+  IsSleeping: 0
+--- !u!4 &107819673
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 107819671}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.68460804, y: 2.7733972, z: 0.0077436697}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &170530903
 GameObject:
   m_ObjectHideFlags: 0
@@ -1282,6 +1337,7 @@ MonoBehaviour:
   - {fileID: 2513453143299310062, guid: ee36e875679d2534c892c581f7942c70, type: 3}
   - {fileID: 1895149570319862473, guid: b514c28ef8a1f87448b10205de3ecff8, type: 3}
   _minTimeCloudSpawn: 7
+  CloudsOnScene: []
 --- !u!1 &1211488194
 GameObject:
   m_ObjectHideFlags: 0
@@ -2406,7 +2462,6 @@ MonoBehaviour:
   _eventWindow: {fileID: 1498094328}
   _mover: {fileID: 1671313636}
   _generator: {fileID: 1180428259}
-  TEST: {fileID: 7555400876554805685, guid: e7e5fc12082c1814c8dfa4e584ca9445, type: 3}
 --- !u!1 &1718948585
 GameObject:
   m_ObjectHideFlags: 0
