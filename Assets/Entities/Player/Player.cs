@@ -87,11 +87,13 @@ public class Player : MonoBehaviour
     }
     public bool IsSleeping;
 
+    private void Awake()
+    {
+        Singleton = this;
+    }
 
     private void Start()
     {
-        Singleton = this;
-
         _inventory = FindObjectOfType<PlayersInventory>(true);
 
         _playerMover = GetComponent<PlayerMover>();
@@ -170,5 +172,16 @@ public class Player : MonoBehaviour
     public void AddExperience(int amount)
     {
         Experience.AddExperience(amount);
+    }
+
+    public void SaveData(SaveData saveData)
+    {
+        saveData.Player = Singleton;
+    }
+
+    public void LoadData(Player player)
+    {
+        Money = player.Money;
+        MaxSleep = player.MaxSleep;
     }
 }

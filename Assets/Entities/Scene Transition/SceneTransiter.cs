@@ -10,11 +10,12 @@ public class SceneTransiter : MonoBehaviour
     [SerializeField] private Image _loadingBar;
     [SerializeField] private TMP_Text _loadingText;
     [SerializeField] private TravelTimeCounter _timeCounter;
+    [SerializeField] private GameObject _travelBlock;
     public TravelTimeCounter TimeCounter => _timeCounter;
     private Animator _animator;
     private AsyncOperation _loadingSceneOperation;
     private Road _road;
-    private GameObject _travelBlock;
+    
     
 
     private void Awake()

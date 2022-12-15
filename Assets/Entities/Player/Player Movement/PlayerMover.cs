@@ -19,7 +19,7 @@ public class PlayerMover : MonoBehaviour
     private Coroutine _currentCameraMove;
     private float _lastValue;
 
-    private float _moveCD = 0.2f;
+    private float _moveCD = 0.3f;
     private float _currentMoveCD;
     private const float MinConstDist = 0.2f; // минимальное расстояние, которое может возникнуть между игроком и стеной 
     private void Start()
@@ -43,6 +43,7 @@ public class PlayerMover : MonoBehaviour
                 StopCoroutine(_currentMove);
                 StopCoroutine(_currentCameraMove);
                 _currentMove = null;
+                _rigidbody.velocity = new Vector2(0,0);
             }
 
             if (_collider.IsTouchingLayers()) // двигаться можно, только если ты не в прыжке
@@ -64,10 +65,11 @@ public class PlayerMover : MonoBehaviour
     public IEnumerator Move(Vector3 startPos,Vector3 targetPos)
     {
         bool moveIsDone = false;
-        
-        
-        
-        WaitForSeconds waitForSeconds = new WaitForSeconds(0.02f);
+
+
+        float deltaTime = 0.02f;
+        WaitForSeconds waitForSeconds = new WaitForSeconds(deltaTime);
+        yield return waitForSeconds;
         RaycastHit2D[] raycastHit2D = new RaycastHit2D[8];
 
         Vector2 castDirection = new Vector3(targetPos.x - startPos.x, 0.05f); //+0.05y,чтобы не коллизился с полом
@@ -76,7 +78,7 @@ public class PlayerMover : MonoBehaviour
                 Math.Abs(targetPos.x - startPos.x) ) == 0)
         { // Если препятствий нет
             
-            count = Convert.ToInt32(Math.Abs(targetPos.x - startPos.x) / (_speed * 0.02f));
+            count = Convert.ToInt32(Math.Abs(targetPos.x - startPos.x) / (_speed * deltaTime));
             for (float i = 1; i <= count; i++) 
             {
                 transform.position = new Vector3(math.lerp(startPos.x, targetPos.x, i/count), transform.position.y);
@@ -99,7 +101,7 @@ public class PlayerMover : MonoBehaviour
             Vector2 jumpDirection;
             float distToLet = raycastHit2D[0].distance - MinConstDist; 
 
-            count = Convert.ToInt32(Math.Abs(distToLet) / (_speed * 0.02f));
+            count = Convert.ToInt32(Math.Abs(distToLet) / (_speed * deltaTime));
             
             float targetPosX = raycastHit2D[0].point.x;
             if (targetPosX > startPos.x)
@@ -136,7 +138,7 @@ public class PlayerMover : MonoBehaviour
                         jumpDirection = new Vector2(0.34f, 0.94f); // 70 градусов
                     else jumpDirection = new Vector2(-0.34f, 0.94f);
 
-                    _rigidbody.AddForce(jumpDirection * 180);
+                    _rigidbody.AddForce(jumpDirection * 200);
                 }
 
                 
@@ -149,7 +151,8 @@ public class PlayerMover : MonoBehaviour
                 if (Math.Abs(transform.position.x - targetPos.x) > 0.4f && _lastValue != transform.position.x)
                 { // (transform.position.x - targetPos.x) > 0.4f - небольшая погрешность, на всякий случай
                     _lastValue = transform.position.x; // надо если игрок задал движение в недостижимую точку
-                    StartCoroutine(Move(transform.position, targetPos));
+                    yield return waitForSeconds;
+                    _currentMove = StartCoroutine(Move(transform.position, targetPos));
                 }
             }
         }
@@ -160,9 +163,9 @@ public class PlayerMover : MonoBehaviour
         Vector3 previousePos = startPos;
 
         WaitForSeconds waitForSeconds = new WaitForSeconds(0.02f);
-        for (int i = 0; i < 25; i++)
+        for (int i = 0; i < 50; i++)
         {
-            if (Math.Abs(_camera.localPosition.x) > 1.5f)
+            if (Math.Abs(_camera.localPosition.x) > 1.75f)
                 break;
             
             _camera.localPosition += new Vector3(previousePos.x - transform.position.x, 0);
@@ -182,9 +185,9 @@ public class PlayerMover : MonoBehaviour
 
         Vector3 currentCameraPos = _camera.localPosition;
         waitForSeconds = new WaitForSeconds(0.02f);
-        for (float i = 2; i <= 20; i++)
+        for (float i = 2; i <= 30; i++)
         {
-            _camera.localPosition = Vector3.Lerp(currentCameraPos, _defaultCameraPos, (i*i + 2*i)/440);
+            _camera.localPosition = Vector3.Lerp(currentCameraPos, _defaultCameraPos, (i*i/2 + 2*i)/510);
             yield return waitForSeconds;
         }
     }
