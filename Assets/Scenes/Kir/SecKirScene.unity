@@ -3995,6 +3995,7 @@ GameObject:
   - component: {fileID: 976912647}
   - component: {fileID: 976912646}
   - component: {fileID: 976912650}
+  - component: {fileID: 976912651}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -4102,6 +4103,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5eb6e811fede60458dc1bfcddc40daa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &976912651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 976912645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d07056edc4c586248bd76d0fa6bfc00e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _saveData: {fileID: 11400000, guid: bc153f562bd1bb1498f57828f84d9b93, type: 2}
 --- !u!1001 &984329244
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9679,6 +9693,42 @@ PrefabInstance:
     - target: {fileID: 6893747379577424940, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
+      propertyPath: MaxSleep
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
+      propertyPath: MaxHunger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
+      propertyPath: _currentSleep
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
+      propertyPath: _currentHunger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
+      propertyPath: _sleepDecayRate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
+      propertyPath: _hungerDecayRate
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
+      propertyPath: _sleepRestorationRate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
+      propertyPath: _hungerDivisorWhenSleeping
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6893747380413829025, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6893747380413829026, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
       propertyPath: _highlighter
