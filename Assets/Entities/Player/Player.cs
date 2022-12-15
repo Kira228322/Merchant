@@ -7,6 +7,7 @@ using UnityEngine.Events;
 public class Player : MonoBehaviour
 {
     public static Player Singleton;
+
     [SerializeField] private SlidersController _hungerScale;
     [SerializeField] private SlidersController _sleepScale;
 
@@ -93,8 +94,8 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        _inventory = FindObjectOfType<PlayersInventory>(true);
 
-        _inventory = (PlayersInventory)FindObjectOfType(typeof(PlayersInventory), true);
         _playerMover = GetComponent<PlayerMover>();
 
         _sleepScale.SetValue(CurrentSleep, MaxSleep);

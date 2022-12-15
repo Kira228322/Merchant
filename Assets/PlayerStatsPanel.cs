@@ -24,7 +24,7 @@ public class PlayerStatsPanel : MonoBehaviour
     private PlayerExperience _playerExperience;
     private void Awake()
     {
-        _player = FindObjectOfType<Player>();
+        _player = Player.Singleton;
         _playerStats = _player.Statistics;
         _playerExperience = _player.Experience;
 
