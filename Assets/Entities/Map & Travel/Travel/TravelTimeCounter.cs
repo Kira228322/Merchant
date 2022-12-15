@@ -30,6 +30,11 @@ public class TravelTimeCounter : MonoBehaviour
         _currentWay = 0;
         count = 0;
         SetTravelTimeText();
+
+        if ((_playerIcone.transform.position - _road.WayPoints[0].position).magnitude
+            > (_playerIcone.transform.position - _road.WayPoints[_road.WayPoints.Count - 1].position).magnitude)
+            _road.WayPoints.Reverse();
+        
     }
 
     private void Update() 
