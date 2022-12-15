@@ -156,7 +156,6 @@ public class PlayerMover : MonoBehaviour
                 }
             }
         }
-        Debug.Log("NULL");
     }
 
     private IEnumerator CameraMove(Vector3 startPos)
