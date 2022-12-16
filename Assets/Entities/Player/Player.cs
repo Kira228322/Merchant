@@ -90,14 +90,14 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         Singleton = this;
+
+        _inventory = FindObjectOfType<PlayersInventory>(true);
+
+        _playerMover = GetComponent<PlayerMover>();
     }
 
     private void Start()
     {
-        _inventory = FindObjectOfType<PlayersInventory>(true);
-
-        _playerMover = GetComponent<PlayerMover>();
-
         _sleepScale.SetValue(CurrentSleep, MaxSleep);
         _hungerScale.SetValue(CurrentHunger, MaxHunger);
     }

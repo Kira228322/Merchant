@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-public class Quest
+public class Quest : MonoBehaviour
 {
     private Quest _nextQuest;
     public List<Goal> Goals { get; set; } = new();
@@ -28,7 +28,7 @@ public class Quest
     private void Complete()
     {
         IsCompleted = true;
-        GiveReward();
+        GiveReward(); //Пусть QuestHandler выдает награду потом мб а не здесь? А нахуя?
     }
 
     private void GiveReward()

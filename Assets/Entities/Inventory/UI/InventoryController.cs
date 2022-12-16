@@ -75,7 +75,7 @@ public class InventoryController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(2)) //Ради тестирования
         {
-            SelectedItemGrid.AddRowsToInventory(1);
+            QuestHandler.Singleton.AddQuest("TestQuestFindApples");
         }
 
         if (Input.GetMouseButtonUp(0))

@@ -7,9 +7,11 @@ public class PlayersInventory : MonoBehaviour
 {
     private List<InventoryItem> _inventory = new();
 
+    private ItemGrid _inventoryItemGrid;
+
     public GameObject InventoryPanel; //в инспекторе нужно задать ссылку на главную панель, содержащую весь инвентарь
 
-    private ItemGrid _inventoryItemGrid;
+    public List<InventoryItem> ItemList { get => _inventory; }
 
     private void Awake()
     {

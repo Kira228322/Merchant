@@ -21,7 +21,9 @@ public class ItemGrid : MonoBehaviour
     private Vector2Int _tileGridPosition = new();
 
     public event UnityAction<InventoryItem> ItemPlacedInTheGrid;
+    public event UnityAction<InventoryItem> ItemPlacedInTheStack;
     public event UnityAction<InventoryItem> ItemRemovedFromTheGrid;
+    public event UnityAction<InventoryItem, int> ItemsRemovedFromTheStack;
 
     #endregion
     #region ћетоды инициализации
@@ -321,7 +323,11 @@ public class ItemGrid : MonoBehaviour
                 {
                     if (TryPlaceItemInAStack(item, itemInInventory))
                     {
-                        ItemRemovedFromTheGrid?.Invoke(item);
+                        //ItemRemovedFromTheGrid?.Invoke(item); 16.12.22: я не знаю, зачем это здесь было нужно: предмет удал€етс€ 
+                        //из сетки ещЄ в момент его подн€ти€. –аботало и с этим, и щас вроде работает.
+                        //≈сли что-то сломаетс€, то стоит обратить внимание сюда
+                        //ѕотенциально может сломатьс€, если игрок переносит в стек предмет из другой сетки, но другой сетки в игре пока нет
+                        ItemPlacedInTheStack?.Invoke(item);
                         return true;
                     }
                 }
@@ -374,6 +380,15 @@ public class ItemGrid : MonoBehaviour
         itemToReceive.CurrentItemsInAStack += itemToPlace.CurrentItemsInAStack;
         Destroy(itemToPlace.gameObject);
         return true;
+    }
+    public void RemoveItemsFromAStack(InventoryItem itemToTruncate, int amount)
+    {
+        itemToTruncate.CurrentItemsInAStack -= amount;
+        ItemsRemovedFromTheStack?.Invoke(itemToTruncate, amount);
+        if (itemToTruncate.CurrentItemsInAStack <= 0)
+        {
+            DestroyItem(itemToTruncate);
+        }
     }
 
     #endregion
