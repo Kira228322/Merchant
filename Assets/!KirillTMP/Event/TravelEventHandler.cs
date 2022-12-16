@@ -11,6 +11,7 @@ public class TravelEventHandler : MonoBehaviour
     [SerializeField] private Mover _mover;
     [SerializeField] private RandomBGGenerator _generator;
 
+    [SerializeField] private List<EventInTravel> _eventInTravels = new (); 
     private bool _banditEvent;
     
     

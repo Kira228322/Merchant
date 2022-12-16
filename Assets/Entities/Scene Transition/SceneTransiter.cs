@@ -31,7 +31,7 @@ public class SceneTransiter : MonoBehaviour
     {
         _map.SetActive(false);
         _road = road;
-        MapManager.StartTravel(_road);
+        MapManager.TravelInit(_road);
         
         enabled = true;
         _animator.SetTrigger("StartTransition");

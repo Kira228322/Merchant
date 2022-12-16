@@ -16,7 +16,7 @@ public class DayNightCycle : MonoBehaviour
     private Transform stars;
     private const float _convertTimeToRotation = 4f; // В сутках 24*60 = 1440 минут. 1440/360 = 4
                                                      //(каждые 4 минуты нужно поворачивать объекты на 1 градус)
-    private Quaternion _currentTimeRotation = Quaternion.identity;
+    // private Quaternion _currentTimeRotation = Quaternion.identity;
     private float _currentTimeDegrees = 0f; // Значение в промежутке (0;360), где 0 == 00:00, 359 == 23:56) 
     private bool _activateLights;
     private void Start()
@@ -34,8 +34,9 @@ public class DayNightCycle : MonoBehaviour
     private void AdjustToCurrentTime()
     {
         _currentTimeDegrees = (GameTime.Hours * 60 + GameTime.Minutes) / _convertTimeToRotation;
-        _currentTimeRotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, -_currentTimeDegrees);
-        moonAndSun.rotation = _currentTimeRotation;
+        // _currentTimeRotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, -_currentTimeDegrees);
+        // moonAndSun.rotation = _currentTimeRotation;
+        moonAndSun.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, -_currentTimeDegrees);
         switch (_currentTimeDegrees)
         {
             case float n when (n > 315f && n <= 360f) || (n >= 0f && n <= 75f): //полностью темно, 21:00 - 05:00

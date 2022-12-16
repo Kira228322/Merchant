@@ -48,7 +48,7 @@ public static class MapManager
         _loadScreen.StartTransit(TargetSceneName);
     }
 
-    public static void StartTravel(Road road)
+    public static void TravelInit(Road road)
     {
         CurrentRoad = road;  
         
