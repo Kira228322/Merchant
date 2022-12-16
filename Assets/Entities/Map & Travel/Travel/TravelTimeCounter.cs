@@ -17,12 +17,16 @@ public class TravelTimeCounter : MonoBehaviour
     private int _travelingTime;
     private int _currentWay;
     private int count;
-    
-    
-    public void Init(int duration, Road road, GameObject playerIcone)
+
+    private void Awake()
     {
-        _travelingTime = duration;
-        _duration = duration;
+        Init(MapManager.CurrentRoad, MapManager.PlayerIcon);
+    }
+
+    public void Init(Road road, GameObject playerIcone)
+    {
+        _travelingTime = road.TravelingTime;
+        _duration = road.TravelingTime;
         _minutes = 0;
         enabled = true;
         _road = road;

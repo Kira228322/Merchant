@@ -44,6 +44,8 @@ public class TravelEventHandler : MonoBehaviour
     {
         if (EventFire(MapManager.CurrentRoad.Danger, false, true))
             _banditEvent = true;
+        else _banditEvent = false;
+        
         // Еще думаю каким образом будет работать определение ивентов в дороге
         // Что точно должно быть, это вычисление будет ли нападение бандитов или нет
         // TODO

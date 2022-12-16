@@ -7,11 +7,10 @@ using UnityEngine.UI;
 
 public class SceneTransiter : MonoBehaviour
 {
+    [SerializeField] private GameObject _map;
     [SerializeField] private Image _loadingBar;
     [SerializeField] private TMP_Text _loadingText;
-    [SerializeField] private TravelTimeCounter _timeCounter;
-    [SerializeField] private GameObject _travelBlock;
-    public TravelTimeCounter TimeCounter => _timeCounter;
+    
     private Animator _animator;
     private AsyncOperation _loadingSceneOperation;
     private Road _road;
@@ -30,7 +29,10 @@ public class SceneTransiter : MonoBehaviour
 
     public void StartTransit(string scene, Road road)
     {
+        _map.SetActive(false);
         _road = road;
+        MapManager.StartTravel(_road);
+        
         enabled = true;
         _animator.SetTrigger("StartTransition");
         
@@ -41,6 +43,7 @@ public class SceneTransiter : MonoBehaviour
     
     public void StartTransit(string scene)
     {
+        _map.SetActive(false);
         _road = null;
         enabled = true;
         _animator.SetTrigger("StartTransition");
@@ -56,10 +59,6 @@ public class SceneTransiter : MonoBehaviour
         if (_loadingSceneOperation.isDone)
         {
             _animator.SetTrigger("EndTransition");
-            if (_road != null)
-            {
-                MapManager.StartTravel(_road);
-            }
             enabled = false;
         }
     }
@@ -70,8 +69,6 @@ public class SceneTransiter : MonoBehaviour
         if (_road != null)
         {
             GameTime.SetTimeScale(GameTime.TimeScaleInTravel);
-            _travelBlock.SetActive(true);
-            _travelBlock.GetComponent<Animator>().SetTrigger("StartTravel");
         }
     }
 }

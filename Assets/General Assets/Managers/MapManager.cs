@@ -52,7 +52,6 @@ public static class MapManager
     {
         CurrentRoad = road;  
         
-        _loadScreen.TimeCounter.Init(road.TravelingTime, road, _playerIcon);
         _playerIcon.transform.position = road.WayPoints[0].position;
     }
 }
