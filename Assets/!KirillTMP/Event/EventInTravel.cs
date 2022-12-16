@@ -1,12 +1,11 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 
 public abstract class EventInTravel : MonoBehaviour
 {
     public string EventName;
+    public int Weight;
     [TextArea(2,6)]public string Description;
     [HideInInspector] public List<string> ButtonsLabel; // задается количество кнопок + их описание 
     public abstract void SetButtons();

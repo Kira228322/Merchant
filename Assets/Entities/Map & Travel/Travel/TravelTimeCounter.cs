@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class TravelTimeCounter : MonoBehaviour
@@ -11,6 +7,7 @@ public class TravelTimeCounter : MonoBehaviour
     // каждый фрейм постоянно, а проверять лишь тогда, когда это надо (во время поездки) 
     [SerializeField] private TMP_Text _travelTime;
     private int _duration;
+    public int Duration => _duration;
     private float _minutes;
     private Road _road;
     private GameObject _playerIcone;
