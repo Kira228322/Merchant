@@ -5,7 +5,7 @@ using System.Linq;
 
 public class Quest : MonoBehaviour
 {
-    private Quest _nextQuest;
+    protected string NextQuestName;
     public List<Goal> Goals { get; set; } = new();
     public string QuestName { get; set; }
     public string Description { get; set; }
@@ -13,7 +13,7 @@ public class Quest : MonoBehaviour
     public int MoneyReward { get; set; }
     public bool IsCompleted { get; set; }
 
-    public void CheckGoals()
+    public virtual void CheckGoals()
     {
         foreach (var goal in Goals)
         {
@@ -25,10 +25,17 @@ public class Quest : MonoBehaviour
         Complete();
 
     }
-    private void Complete()
+    protected void Complete()
     {
         IsCompleted = true;
         GiveReward(); //Пусть QuestHandler выдает награду потом мб а не здесь? А нахуя?
+        Debug.Log("Quest complete, time to feed");
+        QuestHandler.RemoveQuest(this.GetType()); //Пока что решил сразу убирать этот компонент по завершении,
+                                             //мб потом ещё будем сохранять его куда-то для истории в квестлоге 
+        if (NextQuestName != null)
+        {
+            QuestHandler.AddQuest(NextQuestName);
+        }
     }
 
     private void GiveReward()

@@ -7,22 +7,26 @@ public class QuestHandler : MonoBehaviour
     //Этот типчик будет раздавать квесты. Пока думаю сделать ему синглтон. Вероятно, на этом же объекте будут отслеживаться все текущие квесты в виде компонентов 
     //Вместо синглтона можно было бы сделать ссылку в GameManager, или какой нибудь QuestManager
 
-    public static QuestHandler Singleton;
+    private static QuestHandler Singleton;
 
     [SerializeField] private GameObject _questsGameObject; //Объект, на котором висят все квесты. Возможно, этот объект.
 
     private void Awake()
     {
-        Singleton = this;
+        if (Singleton == null)
+        {
+            Singleton = this;
+        }
+        else Destroy(gameObject);
     }
 
-    public void AddQuest(string questName)
+    public static void AddQuest(string questName)
     {
-        _questsGameObject.AddComponent(System.Type.GetType(questName));
+        Singleton._questsGameObject.AddComponent(System.Type.GetType(questName));
     }
-    public void RemoveQuest(string questName)
+    public static void RemoveQuest(System.Type quest)
     {
-        Destroy(_questsGameObject.GetComponent(questName));
+        Destroy(Singleton._questsGameObject.GetComponent(quest));
     }
     //public void GiveReward(Quest quest) { } //Добавить это сюда или оставить в Quest.cs? Думаю
 }
