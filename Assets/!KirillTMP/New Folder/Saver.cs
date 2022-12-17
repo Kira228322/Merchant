@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class Saver : MonoBehaviour
 {
     [SerializeField] private SaveData _saveData;
-    private void OnEnable()
+    private void Start()
     {
         SceneManager.sceneLoaded += LoadData;
         SceneManager.sceneUnloaded += SaveData;

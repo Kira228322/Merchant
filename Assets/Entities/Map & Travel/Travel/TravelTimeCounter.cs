@@ -6,6 +6,7 @@ public class TravelTimeCounter : MonoBehaviour
     // Вынес отсчет времени во время сцены в отдельный скрипт, что бы не проверять кучу проверок (см update этого скрипта)
     // каждый фрейм постоянно, а проверять лишь тогда, когда это надо (во время поездки) 
     [SerializeField] private TMP_Text _travelTime;
+    [SerializeField] private TravelEventHandler _eventHandler;
     private int _duration;
     public int Duration => _duration;
     private float _minutes;
@@ -47,6 +48,9 @@ public class TravelTimeCounter : MonoBehaviour
             _minutes -= 60;
             _duration--;
             SetTravelTimeText();
+            
+            _eventHandler.StartEventIfTimerExpired();
+            
             if (_duration == 0)
             {
                 GameTime.SetTimeScale(1);

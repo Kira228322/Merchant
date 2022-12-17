@@ -14,10 +14,20 @@ public class TravelEventHandler : MonoBehaviour
     [SerializeField] private List<EventInTravel> _eventsInTravels = new ();
     [SerializeField] private EventInTravel _eventInTravelBandits;
     private EventInTravel _nextEvent;
+    private int _delayToNextEvent;
 
     private bool _banditEvent;
-    
-    
+
+
+    public void StartEventIfTimerExpired() 
+    {
+        _delayToNextEvent--;
+        if (_delayToNextEvent == 0)
+        {
+            EventStart(_nextEvent);
+            RollNextEvent();
+        }
+    }
     
     private void EventStart(EventInTravel eventInTravel)
     {
@@ -55,11 +65,11 @@ public class TravelEventHandler : MonoBehaviour
 
     private void RollNextEvent()
     {
-        int delayToNextEvent = 2; // события максимум каждые 2 часа или реже  
-        while (delayToNextEvent < _timeCounter.Duration-1) // За 2 часа до конца поездки ивента быть не может
+        _delayToNextEvent = 2; // события максимум каждые 2 часа или реже  
+        while (_delayToNextEvent < _timeCounter.Duration-1) // За 2 часа до конца поездки ивента быть не может
         {
             if (_banditEvent) // ролим событие разбiйники, если оно должно случиться
-                if (Random.Range(0, _timeCounter.Duration-2 - delayToNextEvent) == 0)
+                if (Random.Range(0, _timeCounter.Duration-2 - _delayToNextEvent) == 0)
                 {
                     _banditEvent = false;
                     _nextEvent = _eventInTravelBandits;
@@ -67,14 +77,17 @@ public class TravelEventHandler : MonoBehaviour
                 }
 
             if (Random.Range(0, Convert.ToInt32(Math.Floor(
-                    28/(Math.Pow(delayToNextEvent, 0.2f) + Math.Pow(delayToNextEvent, 0.8f)))) + 1) == 0)
+                    28/(Math.Pow(_delayToNextEvent, 0.2f) + Math.Pow(_delayToNextEvent, 0.8f)))) + 1) == 0)
             {
                 _nextEvent = ChooseEvent();
                 break;
             }
 
-            delayToNextEvent++;
+            _delayToNextEvent++;
         }
+
+        if (_delayToNextEvent == _timeCounter.Duration - 1)
+            _delayToNextEvent += 10; // событие не случится 
     }
 
     private EventInTravel ChooseEvent()

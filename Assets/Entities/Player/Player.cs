@@ -87,9 +87,7 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         Singleton = this;
-
         _inventory = FindObjectOfType<PlayersInventory>(true);
-
         _playerMover = GetComponent<PlayerMover>();
     }
 
@@ -180,12 +178,12 @@ public class Player : MonoBehaviour
     {
         _hungerScale = player._hungerScale;
         _sleepScale = player._sleepScale;
-
+        
         _hungerDecayRate = player._hungerDecayRate;
         _hungerDivisorWhenSleeping = player._hungerDivisorWhenSleeping;
         _sleepDecayRate = player._sleepDecayRate;
-        _sleepRestorationRate = player._sleepRestorationRate;  
-   
+        _sleepRestorationRate = player._sleepRestorationRate;
+        
         _currentHunger = player._currentHunger; 
         _currentSleep = player._currentSleep;
         MaxSleep = player.MaxSleep;

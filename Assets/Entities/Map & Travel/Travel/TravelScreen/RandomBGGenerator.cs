@@ -11,19 +11,14 @@ public class RandomBGGenerator : MonoBehaviour
     [SerializeField] private Transform _spawnPoint;
     [SerializeField] private List<GameObject> _trees = new List<GameObject>();
     [SerializeField] private float _minTimeTreeSpawn;
-    private float _lastTimeTreeSpawn;
     [SerializeField] private List<GameObject> _bush = new List<GameObject>();
     [SerializeField] private float _minTimeBushSpawn;
-    private float _lastTimeBushSpawn;
     [SerializeField] private List<GameObject> _stones = new List<GameObject>();
     [SerializeField] private float _minTimeStoneSpawn;
-    private float _lastTimeStoneSpawn;
     [SerializeField] private List<GameObject> _grass = new List<GameObject>();
     [SerializeField] private float _minTimeGrassSpawn;
-    private float _lastTimeGrassObjSpawn;
     [SerializeField] private List<GameObject> _other = new List<GameObject>();
     [SerializeField] private float _minTimeOtherObjSpawn;
-    private float _lastTimeOtherObjSpawn;
 
 
     [SerializeField] private Transform _cloudPointSpawn;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,6 +20,8 @@ public class DayNightCycle : MonoBehaviour
     // private Quaternion _currentTimeRotation = Quaternion.identity;
     private float _currentTimeDegrees = 0f; // Значение в промежутке (0;360), где 0 == 00:00, 359 == 23:56) 
     private bool _activateLights;
+    private float _seconds;
+    private int _cheakMinute;
     private void Start()
     {
         _volume = GetComponent<Volume>();
@@ -29,11 +32,17 @@ public class DayNightCycle : MonoBehaviour
 
     private void Update()
     {
+        _seconds += Time.deltaTime * GameTime.GetTimeScale() * 100;
+        if (_cheakMinute != GameTime.Minutes)
+        {
+            _cheakMinute = GameTime.Minutes;
+            _seconds = 0;
+        }
         AdjustToCurrentTime();
     }
     private void AdjustToCurrentTime()
     {
-        _currentTimeDegrees = (GameTime.Hours * 60 + GameTime.Minutes) / _convertTimeToRotation;
+        _currentTimeDegrees = Convert.ToSingle(GameTime.Hours * 60 + GameTime.Minutes + _seconds/60) / _convertTimeToRotation;
         // _currentTimeRotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, -_currentTimeDegrees);
         // moonAndSun.rotation = _currentTimeRotation;
         moonAndSun.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, -_currentTimeDegrees);
