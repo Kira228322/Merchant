@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System.Linq;
 public class CollectItemsGoal : Goal 
 {
     public Item _requiredItemType;
 
-    public CollectItemsGoal(Item requiredItemType, string description, bool isCompleted, int currentAmount, int requiredAmount)
+    public CollectItemsGoal(Quest quest, Item requiredItemType, string description, bool isCompleted, int currentAmount, int requiredAmount)
     {
+        Quest = quest;
         _requiredItemType = requiredItemType;
         Description = description;
         IsCompleted = isCompleted;
@@ -18,15 +19,29 @@ public class CollectItemsGoal : Goal
     public override void Initialize()
     {
         base.Initialize();
-        Player.Singleton.Inventory.GetComponent<ItemGrid>().ItemPlacedInTheGrid += ItemCollected;
-        Player.Singleton.Inventory.GetComponent<ItemGrid>().ItemRemovedFromTheGrid += ItemRemoved;
+
+        //Надо найти, сколько таких вещей уже есть у игрока в инвентаре
+        foreach (InventoryItem item in Player.Singleton.Inventory.ItemList)
+        {
+            if (item.ItemData == _requiredItemType)
+            {
+                CurrentAmount += item.CurrentItemsInAStack;
+            }
+        }
+
+        ItemGrid playerInventoryItemGrid = Player.Singleton.Inventory.GetComponent<ItemGrid>();
+        playerInventoryItemGrid.ItemPlacedInTheGrid += ItemCollected;
+        playerInventoryItemGrid.ItemPlacedInTheStack += ItemCollected;
+        playerInventoryItemGrid.ItemRemovedFromTheGrid += ItemRemoved;
+        playerInventoryItemGrid.ItemsRemovedFromTheStack += ItemRemoved;
     }
 
     private void ItemCollected(InventoryItem item)
     {
         if (item.ItemData == _requiredItemType)
         {
-            CurrentAmount++;
+            CurrentAmount += item.CurrentItemsInAStack;
+            Debug.Log($"Шото подобрал, щас у меня {CurrentAmount}");
             Evaluate();
         }
     }
@@ -34,7 +49,17 @@ public class CollectItemsGoal : Goal
     {
         if (item.ItemData == _requiredItemType)
         {
-            CurrentAmount--;
+            CurrentAmount -= item.CurrentItemsInAStack;
+            Debug.Log($"Шото выкинул, щас у меня {CurrentAmount}");
+            Evaluate();
+        }
+    }
+    private void ItemRemoved(InventoryItem item, int amount)
+    {
+        if (item.ItemData == _requiredItemType)
+        {
+            CurrentAmount -= amount;
+            Debug.Log($"Шото выкинул, щас у меня {CurrentAmount}");
             Evaluate();
         }
     }

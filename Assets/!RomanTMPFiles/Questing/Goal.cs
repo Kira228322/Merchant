@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Goal
 {
+    public Quest Quest { get; set; } //к какому квесту принадлежит эта цель
     public string Description { get; set; }
     public bool IsCompleted { get; set; }
     public int CurrentAmount { get; set; }
@@ -19,6 +20,8 @@ public class Goal
     private void Complete()
     {
         IsCompleted = true;
+        Quest.CheckGoals();
+        Debug.Log("Goal completed");
     }
     public virtual void Initialize()
     {
