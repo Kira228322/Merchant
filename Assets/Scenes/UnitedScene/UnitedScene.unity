@@ -2460,9 +2460,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04554d0b54571914d83a915ab493c71b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _timeCounter: {fileID: 0}
   _eventWindow: {fileID: 1498094328}
   _mover: {fileID: 1671313636}
   _generator: {fileID: 1180428259}
+  _eventsInTravels: []
+  _eventInTravelBandits: {fileID: 0}
 --- !u!1 &1718948585
 GameObject:
   m_ObjectHideFlags: 0
@@ -3659,6 +3662,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3199234432445299280}
   - component: {fileID: 386099570}
+  - component: {fileID: 3199234432445299287}
   m_Layer: 0
   m_Name: PF Village Props - Wheelbarrow
   m_TagString: Untagged
@@ -3666,6 +3670,29 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &3199234432445299287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3199234432445299286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e59141d112fe47c44b1395cb3a61d5ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hungerScale: {fileID: 0}
+  _sleepScale: {fileID: 0}
+  _hungerDecayRate: 0
+  _hungerDivisorWhenSleeping: 0
+  _sleepDecayRate: 0
+  _sleepRestorationRate: 0
+  _currentHunger: 0
+  _currentSleep: 0
+  MaxHunger: 0
+  MaxSleep: 0
+  IsSleeping: 0
 --- !u!4 &3199234432938693216
 Transform:
   m_ObjectHideFlags: 0
