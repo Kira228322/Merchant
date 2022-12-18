@@ -19,6 +19,7 @@ public class TravelTimeCounter : MonoBehaviour
     private void Awake()
     {
         Init(MapManager.CurrentRoad, MapManager.PlayerIcon);
+        _eventHandler.OnTravelSceneEnter();
     }
 
     public void Init(Road road, GameObject playerIcone)
