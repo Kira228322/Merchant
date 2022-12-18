@@ -19,7 +19,7 @@ public class Quest : MonoBehaviour
         {
             if (!goal.IsCompleted)
             {
-                break;
+                return;
             }
         }
         Complete();
