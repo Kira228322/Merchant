@@ -6,10 +6,10 @@ public class CollectItemsGoal : Goal
 {
     public Item _requiredItemType;
 
-    public CollectItemsGoal(Quest quest, Item requiredItemType, string description, bool isCompleted, int currentAmount, int requiredAmount)
+    public CollectItemsGoal(Quest quest, string requiredItemTypeName, string description, bool isCompleted, int currentAmount, int requiredAmount)
     {
         Quest = quest;
-        _requiredItemType = requiredItemType;
+        _requiredItemType = ItemDatabase.GetItem(requiredItemTypeName);
         Description = description;
         IsCompleted = isCompleted;
         CurrentAmount = currentAmount;
@@ -19,7 +19,6 @@ public class CollectItemsGoal : Goal
     public override void Initialize()
     {
         base.Initialize();
-
         //Надо найти, сколько таких вещей уже есть у игрока в инвентаре
         foreach (InventoryItem item in Player.Singleton.Inventory.ItemList)
         {
@@ -28,6 +27,7 @@ public class CollectItemsGoal : Goal
                 CurrentAmount += item.CurrentItemsInAStack;
             }
         }
+        Evaluate();
 
         ItemGrid playerInventoryItemGrid = Player.Singleton.Inventory.GetComponent<ItemGrid>();
         playerInventoryItemGrid.ItemPlacedInTheGrid += ItemCollected;

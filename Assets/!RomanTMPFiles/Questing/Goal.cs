@@ -12,16 +12,27 @@ public class Goal
 
     public void Evaluate()
     {
-        if (CurrentAmount >= RequiredAmount)
+        if (!IsCompleted)
         {
-            Complete();
+            if (CurrentAmount >= RequiredAmount)
+            {
+                Complete();
+            }
+        }
+        else if (CurrentAmount < RequiredAmount) //Развыполнение цели: Если например квест состоит из двух целей
+                                                 //1) собрать 3 яблока
+                                                 //2) поговорить с челом (ну типа отнести ему 3 яблока)
+                                                 //То если собрал 3 яблока а потом одно выкинул то нельзя ему их принести
+                                                            
+        {
+            IsCompleted = false; //Вызвать CheckGoals, в нём предусмотреть деинициализацию? Конечно, только в тех Quest, где это нужно.
         }
     }
     private void Complete()
     {
         IsCompleted = true;
-        Quest.CheckGoals();
         Debug.Log("Goal completed");
+        Quest.CheckGoals();
     }
     public virtual void Initialize()
     {
