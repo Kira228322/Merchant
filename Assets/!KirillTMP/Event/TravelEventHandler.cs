@@ -54,7 +54,7 @@ public class TravelEventHandler : MonoBehaviour
         _eventWindow.gameObject.SetActive(false);
     }
 
-    private void OnTravelSceneEnter()
+    public void OnTravelSceneEnter()
     {
         if (EventFire(MapManager.CurrentRoad.Danger, false, true))
             _banditEvent = true;
