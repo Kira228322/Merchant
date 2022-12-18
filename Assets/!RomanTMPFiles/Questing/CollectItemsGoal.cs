@@ -36,6 +36,17 @@ public class CollectItemsGoal : Goal
         playerInventoryItemGrid.ItemsRemovedFromTheStack += ItemRemoved;
     }
 
+    public override void Deinitialize()
+    {
+        base.Deinitialize();
+
+        ItemGrid playerInventoryItemGrid = Player.Singleton.Inventory.GetComponent<ItemGrid>();
+        playerInventoryItemGrid.ItemPlacedInTheGrid -= ItemCollected;
+        playerInventoryItemGrid.ItemPlacedInTheStack -= ItemCollected;
+        playerInventoryItemGrid.ItemRemovedFromTheGrid -= ItemRemoved;
+        playerInventoryItemGrid.ItemsRemovedFromTheStack -= ItemRemoved;
+    }
+
     private void ItemCollected(InventoryItem item)
     {
         if (item.ItemData == _requiredItemType)

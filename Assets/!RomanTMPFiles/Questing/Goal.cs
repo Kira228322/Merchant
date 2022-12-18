@@ -19,14 +19,6 @@ public class Goal
                 Complete();
             }
         }
-        else if (CurrentAmount < RequiredAmount) //Развыполнение цели: Если например квест состоит из двух целей
-                                                 //1) собрать 3 яблока
-                                                 //2) поговорить с челом (ну типа отнести ему 3 яблока)
-                                                 //То если собрал 3 яблока а потом одно выкинул то нельзя ему их принести
-                                                            
-        {
-            IsCompleted = false; //Вызвать CheckGoals, в нём предусмотреть деинициализацию? Конечно, только в тех Quest, где это нужно.
-        }
     }
     private void Complete()
     {
@@ -35,6 +27,10 @@ public class Goal
         Quest.CheckGoals();
     }
     public virtual void Initialize()
+    {
+
+    }
+    public virtual void Deinitialize()
     {
 
     }

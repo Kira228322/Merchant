@@ -13,9 +13,9 @@ public class Quest : MonoBehaviour
     public int MoneyReward { get; set; }
     public bool IsCompleted { get; set; }
 
-    public virtual void CheckGoals()
+    public void CheckGoals()
     {
-        foreach (var goal in Goals)
+        foreach (Goal goal in Goals)
         {
             if (!goal.IsCompleted)
             {
@@ -35,6 +35,11 @@ public class Quest : MonoBehaviour
         if (NextQuestName != null)
         {
             QuestHandler.AddQuest(NextQuestName);
+        }
+
+        foreach (Goal goal in Goals)
+        {
+            goal.Deinitialize();
         }
     }
 
