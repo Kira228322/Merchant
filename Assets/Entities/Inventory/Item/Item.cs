@@ -27,6 +27,7 @@ public class Item : ScriptableObject
     public int CellSizeHeight;
 
     [HideInInspector] public bool IsPerishable;
+    [HideInInspector] public bool IsEdible;
     [HideInInspector] public float DaysToHalfSpoil;
     [HideInInspector] public float DaysToSpoil;
     [HideInInspector] public int FoodValue; // питательность
@@ -41,9 +42,25 @@ public class Item : ScriptableObject
 
             EditorGUILayout.Space(10);
             EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("Edible", GUILayout.MaxWidth(80));
+            item.IsEdible = EditorGUILayout.Toggle(item.IsEdible);
+            EditorGUILayout.EndHorizontal();
+            
+            if (item.IsEdible)
+            {
+                EditorGUILayout.Space(-4);
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.Space(20, true);
+                EditorGUILayout.LabelField("Food value", GUILayout.MaxWidth(110));
+                item.FoodValue = EditorGUILayout.IntField(item.FoodValue);
+                EditorGUILayout.EndHorizontal();
+            }
+
+            EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Perishable", GUILayout.MaxWidth(80));
             item.IsPerishable = EditorGUILayout.Toggle(item.IsPerishable);
             EditorGUILayout.EndHorizontal();
+
 
             if (item.IsPerishable)
             {
@@ -58,13 +75,7 @@ public class Item : ScriptableObject
                 EditorGUILayout.Space(20, true);
                 EditorGUILayout.LabelField("Days to spoil", GUILayout.MaxWidth(110));
                 item.DaysToSpoil = EditorGUILayout.FloatField(item.DaysToSpoil);
-                EditorGUILayout.EndHorizontal();
-                
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.Space(20, true);
-                EditorGUILayout.LabelField("Food value", GUILayout.MaxWidth(110));
-                item.FoodValue = EditorGUILayout.IntField(item.FoodValue);
-                EditorGUILayout.EndHorizontal();
+                EditorGUILayout.EndHorizontal();                          
             }
         }
     }

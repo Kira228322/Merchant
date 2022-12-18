@@ -30,7 +30,6 @@ public class ItemInfo : MonoBehaviour
     private Player _player;
     private InventoryItem _currentItemSelected;
     private ItemGrid _lastItemGridSelected;
-    private InventoryController _inventoryController;
     #endregion
     #region ћетоды инициализации
     private void Start()
@@ -38,11 +37,10 @@ public class ItemInfo : MonoBehaviour
         _player = Player.Singleton;
     }
 
-    public void Initialize(InventoryItem item, ItemGrid itemGrid, InventoryController inventoryController)
+    public void Initialize(InventoryItem item, ItemGrid itemGrid)
     {
         _currentItemSelected = item;
         _lastItemGridSelected = itemGrid;
-        _inventoryController = inventoryController;
 
         //присвоение текста и иконок
         _itemIcon.sprite = item.ItemData.Icon;
@@ -73,18 +71,24 @@ public class ItemInfo : MonoBehaviour
             _daysToHalfSpoilText.alpha = 1;
             _daysToSpoilText.alpha = 1;
             _boughtDaysAgoText.alpha = 1;
-            _foodValueText.alpha = 1;
-            _eatButton.gameObject.SetActive(true);
             _daysToHalfSpoilText.text = $"ƒней до потери свежести: {item.ItemData.DaysToHalfSpoil}";
             _daysToSpoilText.text = $"ƒней до порчи: {item.ItemData.DaysToSpoil}";
             _boughtDaysAgoText.text = "’ранитс€ уже: " + Math.Round(item.BoughtDaysAgo, 1);
-            _foodValueText.text = $"+{item.ItemData.FoodValue} сытости";
         }
         else
         {
             _daysToHalfSpoilText.alpha = 0;
             _daysToSpoilText.alpha = 0;
             _boughtDaysAgoText.alpha = 0;
+        }
+        if (item.ItemData.IsEdible)
+        {
+            _foodValueText.alpha = 1;
+            _foodValueText.text = $"+{item.ItemData.FoodValue} сытости";
+            _eatButton.gameObject.SetActive(true);
+        }
+        else
+        {
             _foodValueText.alpha = 0;
             _eatButton.interactable = false;
             _eatButton.gameObject.SetActive(false);
@@ -107,7 +111,7 @@ public class ItemInfo : MonoBehaviour
     {
         if (_currentItemSelected.ItemData.CellSizeHeight != _currentItemSelected.ItemData.CellSizeWidth)
         {
-            if (_inventoryController.TryPickUpRotateInsert(_currentItemSelected, _lastItemGridSelected))
+            if (InventoryController.Instance.TryPickUpRotateInsert(_currentItemSelected, _lastItemGridSelected))
             {
                 Destroy(gameObject);
             }
@@ -132,7 +136,7 @@ public class ItemInfo : MonoBehaviour
     public void Split(int amountToSplit) //ћб переместить его в InventoryController?
     {
         _lastItemGridSelected.RemoveItemsFromAStack(_currentItemSelected, amountToSplit); //вроде бы предусмотрено на случай всех невозможных ситуаций через другие скрипты и свойства кнопок
-        if(_inventoryController.TryCreateAndInsertItem(_lastItemGridSelected, _currentItemSelected.ItemData, amountToSplit, _currentItemSelected.BoughtDaysAgo, _currentItemSelected.IsSellPriceShown, isFillingStackFirst: false))
+        if(InventoryController.Instance.TryCreateAndInsertItem(_lastItemGridSelected, _currentItemSelected.ItemData, amountToSplit, _currentItemSelected.BoughtDaysAgo, _currentItemSelected.IsSellPriceShown, isFillingStackFirst: false))
         {
             Destroy(gameObject);
         }

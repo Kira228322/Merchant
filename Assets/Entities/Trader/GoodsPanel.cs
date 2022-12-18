@@ -17,7 +17,7 @@ public class GoodsPanel : MonoBehaviour
 
     private void Start()
     {
-        _inventoryController = FindObjectOfType<InventoryController>();
+        _inventoryController = InventoryController.Instance;
     }
     public void Init(Trader trader,Item goods, int count)
     {

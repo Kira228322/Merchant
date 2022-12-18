@@ -1,13 +1,12 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class InventoryController : MonoBehaviour
 {
     #region Поля и свойства
+
+    public static InventoryController Instance;
 
     [HideInInspector] private ItemGrid _selectedItemGrid;
 
@@ -53,6 +52,12 @@ public class InventoryController : MonoBehaviour
     #region Инициализация и Update
     private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else Destroy(gameObject);
+
         _inventoryHighlight = GetComponent<InventoryHighlight>();
     }
 
@@ -260,7 +265,7 @@ public class InventoryController : MonoBehaviour
     private void ShowItemStats(InventoryItem item)
     {
         ItemInfo itemInfoPanel = Instantiate(_itemInfoPanelPrefab, _canvasTransform).GetComponent<ItemInfo>();
-        itemInfoPanel.Initialize(item, SelectedItemGrid, this);
+        itemInfoPanel.Initialize(item, SelectedItemGrid);
     }
     private void PickUp(Vector2Int tileGridPosition)
     {

@@ -19,11 +19,21 @@ public class Goal
                 Complete();
             }
         }
+        else if (CurrentAmount < RequiredAmount)
+        {
+            Uncomplete();
+        }
     }
     private void Complete()
     {
         IsCompleted = true;
         Debug.Log("Goal completed");
+        Quest.CheckGoals();
+    }
+    private void Uncomplete()
+    {
+        IsCompleted = false;
+        Debug.Log("Goal uncompleted");
         Quest.CheckGoals();
     }
     public virtual void Initialize()
