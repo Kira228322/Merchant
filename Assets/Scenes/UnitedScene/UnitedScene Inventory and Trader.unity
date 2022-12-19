@@ -492,7 +492,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 6f87c4193d14de847b3738e2164efddd, type: 3}
+  m_Sprite: {fileID: -1347245092, guid: 6f87c4193d14de847b3738e2164efddd, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2043,6 +2043,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _travelTime: {fileID: 1575937779}
+  _eventHandler: {fileID: 0}
 --- !u!95 &239079711
 Animator:
   serializedVersion: 4
@@ -4370,7 +4371,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.75899506, y: 0}
+  m_AnchoredPosition: {x: -0.000048637, y: 5.4}
   m_SizeDelta: {x: -18.216, y: -29.854}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &782725528
@@ -4628,7 +4629,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0.00008227285, y: 0}
-  m_SizeDelta: {x: 0, y: -1004.7185}
+  m_SizeDelta: {x: 0, y: -1007.7184}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &805073296
 MonoBehaviour:
@@ -4643,15 +4644,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 2
+    m_Left: -8
     m_Right: 0
     m_Top: 25
     m_Bottom: 0
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 540, y: 178}
-  m_Spacing: {x: 0, y: 15}
+  m_CellSize: {x: 580, y: 150}
+  m_Spacing: {x: 0, y: 18}
   m_Constraint: 1
   m_ConstraintCount: 1
 --- !u!114 &805073297
@@ -7401,10 +7402,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71899de4c1cca46489ead0f73e0d5690, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _map: {fileID: 0}
   _loadingBar: {fileID: 1698167517}
   _loadingText: {fileID: 1991759859}
-  _timeCounter: {fileID: 0}
-  _travelBlock: {fileID: 0}
 --- !u!4 &1299510271 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 662194080356567718, guid: 366bd147d3b568843ab9463d10b7fb98, type: 3}
@@ -10835,7 +10835,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 562343b2c9d046545891a2b93cb3376f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TEST_requiredItemType: {fileID: 11400000, guid: c51137506052a204090b07cad53242db, type: 2}
 --- !u!4 &2006196087 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 662194080356567718, guid: 366bd147d3b568843ab9463d10b7fb98, type: 3}

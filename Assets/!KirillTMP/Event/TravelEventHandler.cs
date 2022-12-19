@@ -34,7 +34,8 @@ public class TravelEventHandler : MonoBehaviour
         _generator.enabled = false;
         foreach (var cloud in _generator.CloudsOnScene)
         {
-            cloud.enabled = false;
+            if (cloud != null)
+                cloud.enabled = false;
         }
         _mover.enabled = false;
         GameTime.SetTimeScale(0);
@@ -42,16 +43,18 @@ public class TravelEventHandler : MonoBehaviour
         _eventWindow.Init(eventInTravel);
     }
 
-    private void EventEnd()
+    public void EventEnd()
     {
         _generator.enabled = true;
         foreach (var cloud in _generator.CloudsOnScene)
         {
-            cloud.enabled = true;
+            if (cloud != null)
+                cloud.enabled = true;
         }
         _mover.enabled = true;
         GameTime.SetTimeScale(GameTime.TimeScaleInTravel);
-        _eventWindow.gameObject.SetActive(false);
+        
+        StartCoroutine(_eventWindow.EventEnd());
     }
 
     public void OnTravelSceneEnter()
@@ -77,12 +80,12 @@ public class TravelEventHandler : MonoBehaviour
                 }
 
             if (Random.Range(0, Convert.ToInt32(Math.Floor(
-                    28/(Math.Pow(_delayToNextEvent, 0.2f) + Math.Pow(_delayToNextEvent, 0.8f)))) + 1) == 0)
+                    28/(Math.Pow(_delayToNextEvent, 0.2f) + Math.Pow(_delayToNextEvent, 0.8f))))) == 0)
             {
                 _nextEvent = ChooseEvent();
                 break;
             }
-
+            
             _delayToNextEvent++;
         }
 

@@ -25,5 +25,6 @@ public class EventBandits : EventInTravel
                 // TODO забираем деньги у игрока
                 break;
         }
+        _eventHandler.EventEnd();
     }
 }
