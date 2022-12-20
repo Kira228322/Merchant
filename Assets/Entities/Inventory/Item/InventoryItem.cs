@@ -7,7 +7,6 @@ using TMPro;
 public class InventoryItem : MonoBehaviour
 {
     [SerializeField] private TMP_Text _currentItemsInAStackText;
-    [SerializeField] private TMP_Text _sellValueText;
     [SerializeField] private SlidersController _spoilSlider;
 
     private int _currentItemsInAStack;
@@ -54,18 +53,6 @@ public class InventoryItem : MonoBehaviour
     }
 
     public bool IsRotated = false;
-    public bool IsSellPriceShown
-    {
-        get
-        {
-            return _isSellPriceShown;
-        }
-        set
-        {
-            _isSellPriceShown = value;
-            _sellValueText.gameObject.SetActive(value);
-        }
-    }
     public void SetItemFromData(Item itemData) //Присвоение значений из SO. 
     {
         Image image = GetComponent<Image>();
@@ -73,9 +60,6 @@ public class InventoryItem : MonoBehaviour
         ItemData = itemData;
 
         image.sprite = ItemData.Icon;
-        _sellValueText.text = itemData.Price.ToString(); //Вот и нихуя, цена должна показываться та, которая при продаже будет у торговца. Как это сделать - пока хз. (27.11.22)
-                                                         //UPD 05.12.22: похуй что рисовать сюда в момент спавна вещи, важно то, какая цена будет в момент продажи.
-                                                         //Следовательно, окно продажи просто обновит цену для всех предметов в инвентаре. Сделаю, когда будет готов алгоритм расчета новой цены
 
         Vector2 size = new();
         size.x = ItemData.CellSizeWidth * ItemGrid.TileSizeWidth;
@@ -107,10 +91,6 @@ public class InventoryItem : MonoBehaviour
         _currentItemsInAStackText.rectTransform.anchorMin = new Vector2(IsRotated == true ? 0 : 1, 0);
         _currentItemsInAStackText.rectTransform.anchorMax = new Vector2(IsRotated == true ? 0 : 1, 0);
         _currentItemsInAStackText.rectTransform.localRotation = Quaternion.Euler(0, 0, IsRotated == true ? 270f : 0f);
-
-        _sellValueText.rectTransform.anchorMin = new Vector2(IsRotated == true ? 1 : 0, 1);
-        _sellValueText.rectTransform.anchorMax = new Vector2(IsRotated == true ? 1 : 0, 1);
-        _sellValueText.rectTransform.localRotation = Quaternion.Euler(0, 0, IsRotated == true ? 270f : 0f);
 
         sliderRectTransform.anchorMin = new Vector2(IsRotated == true ? 0 : 1, 0);
         sliderRectTransform.anchorMax = new Vector2(IsRotated == true ? 0 : 1, 0);

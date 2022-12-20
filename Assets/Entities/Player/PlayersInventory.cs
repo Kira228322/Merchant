@@ -39,13 +39,6 @@ public class PlayersInventory : MonoBehaviour
     {
         _inventory.Remove(item);
     }
-    public void ShowItemsSellValue(bool b)
-    {
-        foreach (InventoryItem item in _inventory)
-        {
-            item.IsSellPriceShown = b;
-        }
-    }
 
     private void OnHourChanged()
     {

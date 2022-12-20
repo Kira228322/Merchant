@@ -136,7 +136,7 @@ public class ItemInfo : MonoBehaviour
     public void Split(int amountToSplit) //ћб переместить его в InventoryController?
     {
         _lastItemGridSelected.RemoveItemsFromAStack(_currentItemSelected, amountToSplit); //вроде бы предусмотрено на случай всех невозможных ситуаций через другие скрипты и свойства кнопок
-        if(InventoryController.Instance.TryCreateAndInsertItem(_lastItemGridSelected, _currentItemSelected.ItemData, amountToSplit, _currentItemSelected.BoughtDaysAgo, _currentItemSelected.IsSellPriceShown, isFillingStackFirst: false))
+        if(InventoryController.Instance.TryCreateAndInsertItem(_lastItemGridSelected, _currentItemSelected.ItemData, amountToSplit, _currentItemSelected.BoughtDaysAgo, isFillingStackFirst: false))
         {
             Destroy(gameObject);
         }

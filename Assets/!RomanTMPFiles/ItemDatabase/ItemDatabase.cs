@@ -15,7 +15,7 @@ public class ItemDatabase : MonoBehaviour
         {
             Singleton = this;
         }
-        else
+        else if (Singleton != this)
         {
             Destroy(gameObject);
         }

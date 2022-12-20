@@ -51,7 +51,6 @@ public class SellPanel : MonoBehaviour
     }
     public void OnCloseButtonPressed()
     {
-        Player.Singleton.Inventory.ShowItemsSellValue(false);
         gameObject.SetActive(false);
     }
     private void Refresh()

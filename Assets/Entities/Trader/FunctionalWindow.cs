@@ -21,29 +21,36 @@ public class FunctionalWindow : MonoBehaviour
     
     public void OnTalkButtonClick()
     {
-        
+        Destroy(gameObject);
     }
 
     public void OnBuyButtonClick()
     {
-        Player.Singleton.Inventory.InventoryPanel.SetActive(true);
-        TradeManager.Singleton.BuyPanel.SetActive(true);
-        for (int i =  TradeManager.Singleton.BuyPanelContent.childCount -1; i >= 0; i--)
-            Destroy(TradeManager.Singleton.BuyPanelContent.GetChild(i).gameObject);
-        
-        for (int i = 0; i < _trader.Goods.Count; i++)
-        {
-            GameObject tradersGoods = Instantiate(TradeManager.Singleton.GoodsPanelPrefub.gameObject, TradeManager.Singleton.BuyPanelContent);
-            tradersGoods.GetComponent<GoodsPanel>().Init(_trader, _trader.Goods[i], _trader.CountOfGood[i]);
-        }
+        OpenBuyPanel();
         Destroy(gameObject);
     }
 
     public void OnSellButtonClick()
     {
-        Player.Singleton.Inventory.InventoryPanel.SetActive(true);
-        Player.Singleton.Inventory.ShowItemsSellValue(true);
-        TradeManager.Singleton.SellPanel.SetActive(true);
+        OpenSellPanel();
         Destroy(gameObject);
+    }
+    private void OpenBuyPanel()
+    {
+        Player.Singleton.Inventory.InventoryPanel.SetActive(true);
+        TradeManager.Singleton.BuyPanel.SetActive(true);
+        for (int i = TradeManager.Singleton.BuyPanelContent.childCount - 1; i >= 0; i--)
+            Destroy(TradeManager.Singleton.BuyPanelContent.GetChild(i).gameObject);
+
+        for (int i = 0; i < _trader.Goods.Count; i++)
+        {
+            GameObject tradersGoods = Instantiate(TradeManager.Singleton.GoodsBuyPanelPrefab.gameObject, TradeManager.Singleton.BuyPanelContent);
+            tradersGoods.GetComponent<GoodsBuyPanel>().Init(_trader, _trader.Goods[i], _trader.CountOfGood[i]);
+        }
+    }
+    private void OpenSellPanel()
+    {
+        Player.Singleton.Inventory.InventoryPanel.SetActive(true);
+        TradeManager.Singleton.SellPanel.SetActive(true);
     }
 }

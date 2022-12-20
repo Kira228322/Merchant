@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GoodsPanel : MonoBehaviour
+public class GoodsBuyPanel : MonoBehaviour
 {
     [SerializeField] private TMP_Text _cost;
     [SerializeField] private TMP_Text _countText;
@@ -34,7 +34,7 @@ public class GoodsPanel : MonoBehaviour
     {
         if (_currentCount > 0)
         {
-            if (!_inventoryController.TryCreateAndInsertItem(Player.Singleton.Inventory.GetComponent<ItemGrid>(), _item, 1, 0f, false, true))
+            if (!_inventoryController.TryCreateAndInsertItem(Player.Singleton.Inventory.GetComponent<ItemGrid>(), _item, 1, 0f, true))
             {
                 if (!_inventoryController.TryCreateAndInsertItemRotated(Player.Singleton.Inventory.GetComponent<ItemGrid>(), _item, 1, 0f, true))
                 {
