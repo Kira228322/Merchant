@@ -9,10 +9,14 @@ public abstract class EventInTravel : MonoBehaviour
     public int Weight;
     [TextArea(2,6)]public string Description;
     [HideInInspector] public List<string> ButtonsLabel; // задается количество кнопок + их описание 
+    [SerializeField] private Transform _celestialBodies;
     protected TravelEventHandler _eventHandler;
+    
 
     private void Start()
     {
+        _celestialBodies.rotation = Quaternion.Euler(_celestialBodies.rotation.x, _celestialBodies.rotation.y, 
+            -(float)(GameTime.Hours * 60 + GameTime.Minutes)/4); // 4 - это _convertTimeToRotation в DayNightCycle
         _eventHandler = FindObjectOfType<TravelEventHandler>();
     }
 

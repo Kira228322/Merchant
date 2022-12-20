@@ -80,7 +80,7 @@ public class TravelEventHandler : MonoBehaviour
                 }
 
             if (Random.Range(0, Convert.ToInt32(Math.Floor(
-                    28/(Math.Pow(_delayToNextEvent, 0.2f) + Math.Pow(_delayToNextEvent, 0.8f))))) == 0)
+                    28/(Math.Pow(_delayToNextEvent, 0.2f) + Math.Pow(_delayToNextEvent, 0.8f)))) -2) == 0)
             {
                 _nextEvent = ChooseEvent();
                 break;
@@ -108,21 +108,21 @@ public class TravelEventHandler : MonoBehaviour
         return _eventsInTravels[index[Random.Range(0, index.Count)]];
     }
 
-    private bool EventFire(float value, bool positiveEvent = true, bool luckImpl = false)  
+    private bool EventFire(float probability, bool positiveEvent = true, bool luckImpl = false)  
     {
         if (luckImpl)
         {
             if (positiveEvent)
             {
-                if (Random.Range(0, 101) <= value * Player.Singleton.Statistics.GetCoefForPositiveEvent())
+                if (Random.Range(0, 101) <= probability * Player.Singleton.Statistics.GetCoefForPositiveEvent())
                     return true;
                 return false;
             }
-            if (Random.Range(0, 101) <= value * Player.Singleton.Statistics.GetCoefForNegativeEvent())
+            if (Random.Range(0, 101) <= probability * Player.Singleton.Statistics.GetCoefForNegativeEvent())
                 return true;
             return false;
         }
-        if (Random.Range(0, 101) <= value)
+        if (Random.Range(0, 101) <= probability)
             return true;
         return false;
     }
