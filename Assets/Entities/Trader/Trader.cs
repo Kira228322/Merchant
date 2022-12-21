@@ -16,7 +16,6 @@ public class Trader : MonoBehaviour
     [HideInInspector] public List<Item> MerchantGoods;
     
     [HideInInspector] public List<float> Coefficient = new List<float>();
-    [HideInInspector] public List<Item.ItemType> GoodsType = new List<Item.ItemType>();
     [HideInInspector] public List<int> CountToBuy = new List<int>();
     [HideInInspector] public List<int> CurrentCountToBuy = new List<int>();
 
@@ -43,20 +42,18 @@ public class Trader : MonoBehaviour
         if (_traderTypes.Count == 1)  // Если торговец одного типа
             for (int i = 0; i < _traderTypes[0].GoodsType.Count; i ++)
             {
-                GoodsType.Add(_traderTypes[0].GoodsType[i]); 
                 Coefficient.Add(_traderTypes[0].Coefficient[i]);
                 CountToBuy.Add(_traderTypes[0].CountToBuy[i]);
             }
         else // Если торговец смешанного типа
         {
-            foreach (var goodsType in _traderTypes[0].GoodsType)
+            foreach (var unused in _traderTypes[0].GoodsType)
             {
-                GoodsType.Add(goodsType);
                 Coefficient.Add(0);
                 CountToBuy.Add(0);
             }
 
-            for (int i = 0; i < GoodsType.Count; i++)
+            for (int i = 0; i < CountToBuy.Count; i++)
             {
                 for (int j = 0; j < _traderTypes.Count; j++)
                     CountToBuy[i] += _traderTypes[j].CountToBuy[i];

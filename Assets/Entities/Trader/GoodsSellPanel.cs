@@ -37,7 +37,7 @@ public class GoodsSellPanel : MonoBehaviour
             _spoilSlider.SetValue(_item.ItemData.DaysToSpoil - _item.BoughtDaysAgo, _item.ItemData.DaysToSpoil);
             if (_item.BoughtDaysAgo > _item.ItemData.DaysToHalfSpoil)
             {
-                Color yellow = new(178f / 255, 179f / 255, 73f / 255);
+                Color yellow = new Color(178f / 255, 179f / 255, 73f / 255);
                 _spoilSlider.SetColour(yellow);
             }
         }

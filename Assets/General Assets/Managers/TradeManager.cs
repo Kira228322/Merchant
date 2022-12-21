@@ -5,6 +5,8 @@ using UnityEngine;
 public class TradeManager : MonoBehaviour
 {
     public static TradeManager Singleton;
+    [SerializeField] private CanvasGroup _playerBlock;
+    [SerializeField] private GameObject _closeTradeButton;
     [SerializeField] private GameObject _BuyPanel;
     public GameObject BuyPanel => _BuyPanel;
     [SerializeField] private GameObject _sellPanel;
@@ -32,6 +34,8 @@ public class TradeManager : MonoBehaviour
     public void OpenTradeWindow(Trader trader)
     {
         InventoryController.Instance.enabled = false;
+        _playerBlock.alpha = 0;
+        _closeTradeButton.SetActive(true);
         OpenBuyPanel(trader);
         OpenSellPanel(trader);
         OpenInventory();
@@ -39,6 +43,8 @@ public class TradeManager : MonoBehaviour
     public void CloseTradeWindow()
     {
         InventoryController.Instance.enabled = true;
+        _playerBlock.alpha = 1;
+        _closeTradeButton.SetActive(false);
         Singleton.BuyPanel.SetActive(false);
         Singleton.SellPanel.SetActive(false);
         Player.Singleton.Inventory.InventoryPanel.SetActive(false);
@@ -52,7 +58,7 @@ public class TradeManager : MonoBehaviour
 
         for (int i = 0; i < trader.Goods.Count; i++)
         {
-            GameObject tradersGoods = Instantiate(TradeManager.Singleton.GoodsBuyPanelPrefab.gameObject, TradeManager.Singleton.BuyPanelContent);
+            GameObject tradersGoods = Instantiate(GoodsBuyPanelPrefab.gameObject, BuyPanelContent);
             tradersGoods.GetComponent<GoodsBuyPanel>().Init(trader, trader.Goods[i], 0f, true, trader.CountOfGood[i]);
         }
 
@@ -67,7 +73,7 @@ public class TradeManager : MonoBehaviour
 
         for (int i = 0; i < Player.Singleton.Inventory.ItemList.Count; i++)
         {
-            GameObject tradersGoods = Instantiate(TradeManager.Singleton.GoodsSellPanelPrefab.gameObject, TradeManager.Singleton.SellPanelContent);
+            GameObject tradersGoods = Instantiate(GoodsSellPanelPrefab.gameObject, SellPanelContent);
             tradersGoods.GetComponent<GoodsSellPanel>().Init(trader, Player.Singleton.Inventory.ItemList[i], Player.Singleton.Inventory.GetComponent<ItemGrid>());
         }
     }
