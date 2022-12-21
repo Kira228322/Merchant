@@ -47,6 +47,10 @@ public class GoodsBuyPanel : MonoBehaviour
     {
         if (CurrentCount > 0)
         {
+            if (!IsOriginatedFromTrader) 
+            {
+                _trader.CurrentCountToBuy[(int)_item.TypeOfItem]++; 
+            }
             if (!_inventoryController.TryCreateAndInsertItem(Player.Singleton.Inventory.GetComponent<ItemGrid>(), _item, 1, _boughtDaysAgo, true))
             {
                 if (!_inventoryController.TryCreateAndInsertItemRotated(Player.Singleton.Inventory.GetComponent<ItemGrid>(), _item, 1, _boughtDaysAgo, true))
@@ -56,13 +60,15 @@ public class GoodsBuyPanel : MonoBehaviour
             }
             CurrentCount--;
             _trader.SellItem(_item);
+            //Пересасывание SellPanel (в будущем бы оптимизировать как нибудь)
+            for (int i = TradeManager.Singleton.SellPanelContent.childCount - 1; i >= 0; i--)
+                Destroy(TradeManager.Singleton.SellPanelContent.GetChild(i).gameObject);
 
-            if () 
+            for (int i = 0; i < Player.Singleton.Inventory.ItemList.Count; i++)
             {
                 GameObject tradersGoods = Instantiate(TradeManager.Singleton.GoodsSellPanelPrefab.gameObject, TradeManager.Singleton.SellPanelContent);
-                tradersGoods.GetComponent<GoodsSellPanel>().Init(_trader, _item, Player.Singleton.Inventory.GetComponent<ItemGrid>());
+                tradersGoods.GetComponent<GoodsSellPanel>().Init(_trader, Player.Singleton.Inventory.ItemList[i], Player.Singleton.Inventory.GetComponent<ItemGrid>());
             }
-
         }
     }
 }

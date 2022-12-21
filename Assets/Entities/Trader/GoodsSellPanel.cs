@@ -45,7 +45,7 @@ public class GoodsSellPanel : MonoBehaviour
     }
     public void Refresh()
     {
-        if (_trader.CurrentCountToBuy[(int)_item.ItemData.TypeOfItem] <= 0)
+        if (_trader.CurrentCountToBuy[(int)_item.ItemData.TypeOfItem] == 0)
         {
             _sellButton.interactable = false;
         }
@@ -76,8 +76,10 @@ public class GoodsSellPanel : MonoBehaviour
             Destroy(gameObject);
         }
 
-        Refresh();
-
-
+        //рефрешить нужно все панельки в —еллѕанели
+        foreach (GoodsSellPanel sellPanel in transform.parent.GetComponentsInChildren<GoodsSellPanel>())
+        {
+            sellPanel.Refresh();
+        }
     }
 }

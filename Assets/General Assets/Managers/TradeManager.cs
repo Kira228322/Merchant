@@ -29,4 +29,50 @@ public class TradeManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    public void OpenTradeWindow(Trader trader)
+    {
+        InventoryController.Instance.enabled = false;
+        OpenBuyPanel(trader);
+        OpenSellPanel(trader);
+        OpenInventory();
+    }
+    public void CloseTradeWindow()
+    {
+        InventoryController.Instance.enabled = true;
+        Singleton.BuyPanel.SetActive(false);
+        Singleton.SellPanel.SetActive(false);
+        Player.Singleton.Inventory.InventoryPanel.SetActive(false);
+    }
+    private void OpenBuyPanel(Trader trader)
+    {
+
+        Singleton.BuyPanel.SetActive(true);
+        for (int i = Singleton.BuyPanelContent.childCount - 1; i >= 0; i--)
+            Destroy(Singleton.BuyPanelContent.GetChild(i).gameObject);
+
+        for (int i = 0; i < trader.Goods.Count; i++)
+        {
+            GameObject tradersGoods = Instantiate(TradeManager.Singleton.GoodsBuyPanelPrefab.gameObject, TradeManager.Singleton.BuyPanelContent);
+            tradersGoods.GetComponent<GoodsBuyPanel>().Init(trader, trader.Goods[i], 0f, true, trader.CountOfGood[i]);
+        }
+
+    }
+    private void OpenSellPanel(Trader trader)
+    {
+
+        Singleton.SellPanel.SetActive(true);
+
+        for (int i = Singleton.SellPanelContent.childCount - 1; i >= 0; i--)
+            Destroy(Singleton.SellPanelContent.GetChild(i).gameObject);
+
+        for (int i = 0; i < Player.Singleton.Inventory.ItemList.Count; i++)
+        {
+            GameObject tradersGoods = Instantiate(TradeManager.Singleton.GoodsSellPanelPrefab.gameObject, TradeManager.Singleton.SellPanelContent);
+            tradersGoods.GetComponent<GoodsSellPanel>().Init(trader, Player.Singleton.Inventory.ItemList[i], Player.Singleton.Inventory.GetComponent<ItemGrid>());
+        }
+    }
+    private void OpenInventory()
+    {
+        Player.Singleton.Inventory.InventoryPanel.SetActive(true);
+    }
 }
