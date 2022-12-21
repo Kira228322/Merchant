@@ -1612,9 +1612,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _BuyPanel: {fileID: 1634123603}
   _sellPanel: {fileID: 1807972470}
-  _BuyPanelContent: {fileID: 1241937483}
+  _buyPanelContent: {fileID: 1241937483}
   _goodsBuyPanelPrefab: {fileID: 4188013682753787979, guid: f39ed2560c4c1e84a9daccc9bf052c55, type: 3}
   _goodsSellPanelPrefab: {fileID: 2059007788025654950, guid: 155fea386fe4a2347932544db440ecca, type: 3}
+  _sellPanelContent: {fileID: 1560570438}
 --- !u!1 &411170701
 GameObject:
   m_ObjectHideFlags: 0
@@ -4856,6 +4857,7 @@ MonoBehaviour:
   Coefficient: []
   GoodsType: 
   CountToBuy: 
+  CurrentCountToBuy: 
   NewPrice: 2b00000028000000050000000200000003000000
   CountOfGood: 0700000002000000130000000f00000004000000
 --- !u!95 &1037131638

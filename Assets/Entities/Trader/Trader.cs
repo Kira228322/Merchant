@@ -18,6 +18,7 @@ public class Trader : MonoBehaviour
     [HideInInspector] public List<float> Coefficient = new List<float>();
     [HideInInspector] public List<Item.ItemType> GoodsType = new List<Item.ItemType>();
     [HideInInspector] public List<int> CountToBuy = new List<int>();
+    [HideInInspector] public List<int> CurrentCountToBuy = new List<int>();
 
     [HideInInspector] public List<int> NewPrice;
     [HideInInspector] public List<int> CountOfGood;
@@ -33,6 +34,8 @@ public class Trader : MonoBehaviour
             MerchantGoods.Add(Instantiate(Goods[i])); // Важно продублировать объект типа ScriptableObject, тк иначе
             MerchantGoods[i].Price = NewPrice[i]; // он будет ссылаться на оригинал и изменять его понял. нужен дубликат
         }
+
+
     }
 
     private void SetTradersStats()
@@ -76,6 +79,7 @@ public class Trader : MonoBehaviour
                     Coefficient[i] = Convert.ToSingle(Math.Round(Coefficient[i] / _traderTypes.Count, 2));
             }
         }
+        CurrentCountToBuy = new List<int>(CountToBuy);
     }
 
     public void SellItem(Item item)

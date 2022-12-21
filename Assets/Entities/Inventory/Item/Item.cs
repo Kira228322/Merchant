@@ -55,7 +55,7 @@ public class Item : ScriptableObject
                 item.FoodValue = EditorGUILayout.IntField(item.FoodValue);
                 EditorGUILayout.EndHorizontal();
             }
-
+            
             EditorGUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Perishable", GUILayout.MaxWidth(80));
             item.IsPerishable = EditorGUILayout.Toggle(item.IsPerishable);
