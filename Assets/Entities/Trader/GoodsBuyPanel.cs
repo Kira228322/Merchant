@@ -57,10 +57,11 @@ public class GoodsBuyPanel : MonoBehaviour
             CurrentCount--;
             _trader.SellItem(_item);
 
-            
-            GameObject tradersGoods = Instantiate(TradeManager.Singleton.GoodsSellPanelPrefab.gameObject, TradeManager.Singleton.SellPanelContent);
-            tradersGoods.GetComponent<GoodsSellPanel>().Init(_trader, Player.Singleton.Inventory.ItemList[i], Player.Singleton.Inventory.GetComponent<ItemGrid>());
-
+            if () 
+            {
+                GameObject tradersGoods = Instantiate(TradeManager.Singleton.GoodsSellPanelPrefab.gameObject, TradeManager.Singleton.SellPanelContent);
+                tradersGoods.GetComponent<GoodsSellPanel>().Init(_trader, _item, Player.Singleton.Inventory.GetComponent<ItemGrid>());
+            }
 
         }
     }

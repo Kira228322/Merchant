@@ -308,11 +308,10 @@ public class ItemGrid : MonoBehaviour
             }
         }
     }
-    public bool TryPlaceItem(InventoryItem item, int positionX, int positionY, out bool? didFillStack)
+    public bool TryPlaceItem(InventoryItem item, int positionX, int positionY)
     {
         if (IsInCorrectPosition(positionX, positionY, item.Width, item.Height) == false)
         {
-            didFillStack = null;
             return false;
         }
 
@@ -329,21 +328,16 @@ public class ItemGrid : MonoBehaviour
                         //Если что-то сломается, то стоит обратить внимание сюда
                         //Потенциально может сломаться, если игрок переносит в стек предмет из другой сетки, но другой сетки в игре пока нет
                         ItemPlacedInTheStack?.Invoke(item);
-                        didFillStack = true;
                         return true;
                     }
-                    else didFillStack = false;
                 }
-                didFillStack = null;
                 return false;
             }
-            didFillStack = null;
             return false;
         }
 
         PlaceItem(item, positionX, positionY);
         ItemPlacedInTheGrid?.Invoke(item);
-        didFillStack = false;
         return true;
     }
 
