@@ -69,7 +69,7 @@ public class TravelEventHandler : MonoBehaviour
     private void RollNextEvent()
     {
         _delayToNextEvent = 2; // события максимум каждые 2 часа или реже  
-        while (_delayToNextEvent < _timeCounter.Duration-1) // За 2 часа до конца поездки ивента быть не может
+        while (_delayToNextEvent < _timeCounter.Duration-2) // За 2 часа до конца поездки ивента быть не может
         {
             if (_banditEvent) // ролим событие разбiйники, если оно должно случиться
                 if (Random.Range(0, _timeCounter.Duration-2 - _delayToNextEvent) == 0)
@@ -108,9 +108,9 @@ public class TravelEventHandler : MonoBehaviour
         return _eventsInTravels[index[Random.Range(0, index.Count)]];
     }
 
-    private bool EventFire(float probability, bool positiveEvent = true, bool luckImpl = false)  
+    public static bool EventFire(float probability, bool positiveEvent = true, bool luckMultiplier = false)  
     {
-        if (luckImpl)
+        if (luckMultiplier)
         {
             if (positiveEvent)
             {

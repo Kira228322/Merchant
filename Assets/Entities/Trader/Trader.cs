@@ -6,11 +6,10 @@ using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
 
-public class Trader : MonoBehaviour
+public class Trader : NPC
 {
-    [SerializeField] private string _name;
     [SerializeField] private List<TraderType> _traderTypes;
-    public string Name => _name;
+    
     
     public List<Item> Goods;
     [HideInInspector] public List<Item> MerchantGoods;
