@@ -51,7 +51,6 @@ public class TradeManager : MonoBehaviour
     }
     private void OpenBuyPanel(Trader trader)
     {
-
         Singleton.BuyPanel.SetActive(true);
         for (int i = Singleton.BuyPanelContent.childCount - 1; i >= 0; i--)
             Destroy(Singleton.BuyPanelContent.GetChild(i).gameObject);
@@ -65,7 +64,6 @@ public class TradeManager : MonoBehaviour
     }
     private void OpenSellPanel(Trader trader)
     {
-
         Singleton.SellPanel.SetActive(true);
 
         for (int i = Singleton.SellPanelContent.childCount - 1; i >= 0; i--)

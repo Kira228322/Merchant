@@ -60,7 +60,7 @@ public class GoodsBuyPanel : MonoBehaviour
             }
             CurrentCount--;
             _trader.SellItem(_item);
-            //Пересасывание SellPanel (в будущем бы оптимизировать как нибудь)
+            //Пересасывание SellPanel 
             for (int i = TradeManager.Singleton.SellPanelContent.childCount - 1; i >= 0; i--)
                 Destroy(TradeManager.Singleton.SellPanelContent.GetChild(i).gameObject);
 

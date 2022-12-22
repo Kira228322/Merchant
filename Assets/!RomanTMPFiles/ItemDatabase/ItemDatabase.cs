@@ -29,14 +29,9 @@ public class ItemDatabase : MonoBehaviour
         {
             return result;
         }
-        else
-        {
-            Debug.LogWarning("Такого айтема не существует!");
-            return null;
-        }
-    }
-    public static Item GetItem(Item item) //Нахуя этот метод вообще?
-    {
-        return Singleton.Items.ItemList.FirstOrDefault(i => item);
+        
+        Debug.LogWarning("Такого айтема не существует!");
+        return null;
+        
     }
 }
