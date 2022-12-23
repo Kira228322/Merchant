@@ -17,6 +17,7 @@ public class TestQuestFindApples : Quest
         foreach (Goal goal in Goals)
         {
             goal.Initialize();
+            goal.GoalUpdated += QuestUpdated;
         }
     }
 
