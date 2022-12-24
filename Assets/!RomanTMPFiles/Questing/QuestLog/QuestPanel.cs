@@ -12,12 +12,17 @@ public class QuestPanel : MonoBehaviour
     [SerializeField] private List<TMP_Text> _goalTexts = new();
     [SerializeField] private List<TMP_Text> _rewardTexts = new();
 
+    [SerializeField] private Color _activeGoalColor;
+    [SerializeField] private Color _completedGoalColor;
+    [SerializeField] private Color _completedQuestNameColor;
+
     public Quest Quest;
 
     public void Initialize(Quest quest)
     {
         Quest = quest;
         _questNameText.text = Quest.QuestName;
+        if (quest.IsCompleted) _questNameText.color = _completedGoalColor;
         _descriptionText.text = "ќписание: " + Quest.Description;
 
         for (int i = 0; i < Quest.Goals.Count; i++)
@@ -40,15 +45,27 @@ public class QuestPanel : MonoBehaviour
         {
             for (int i = 0; i < Quest.Goals.Count; i++)
             {
-                _goalTexts[i].text = Quest.Goals[i].Description + ": " + Quest.Goals[i].CurrentAmount + " / " + Quest.Goals[i].RequiredAmount;
+                if (Quest.Goals[i].CurrentAmount < Quest.Goals[i].RequiredAmount)
+                {
+                    _goalTexts[i].text = Quest.Goals[i].Description + ": " + Quest.Goals[i].CurrentAmount + " / " + Quest.Goals[i].RequiredAmount;
+                    _goalTexts[i].color = _activeGoalColor;
+                }
+                else 
+                {
+                    _goalTexts[i].text = Quest.Goals[i].Description + ": " + Quest.Goals[i].RequiredAmount + " / " + Quest.Goals[i].RequiredAmount;
+                    _goalTexts[i].color = _completedGoalColor;
+                }
             }
         }
         
     }
-    private void OnComplete()
+    private void OnComplete(Quest quest)
     {
+        //Ёто не выполнитс€, если квест был сделан в тот же фрейм, как только вз€т.
+        //ќднако на этот случай смена цвета учтена в инициализации, а отписки от ивентов должны происходить и так,
+                                                                   //поскольку экземпл€р квеста скоро уничтожитс€.
         Quest.QuestUpdatedEvent -= Refresh;
         Quest.QuestCompletedEvent -= OnComplete;
-        _questNameText.color = Color.green; //пока так, потом можно будет как-то иначе показывать что сделано
+        _questNameText.color = _completedQuestNameColor;
     }
 }

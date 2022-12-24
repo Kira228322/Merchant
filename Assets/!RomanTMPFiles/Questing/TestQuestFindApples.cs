@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TestQuestFindApples : Quest
 {
-    void Start()
+    void Awake()
     {
         QuestName = "Apple Finding";
         Description = "Find apples, ok?";
