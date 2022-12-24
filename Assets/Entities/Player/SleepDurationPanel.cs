@@ -14,13 +14,13 @@ public class SleepDurationPanel : MonoBehaviour
 
     private void OnEnable()
     {
-        _player.FinishedSleeping += OnFinishedSleeping;
-        _player.SleptOneHourEvent += OnSleptOneHour;
+        _player.Needs.FinishedSleeping += OnFinishedSleeping;
+        _player.Needs.SleptOneHourEvent += OnSleptOneHour;
     }
     private void OnDisable()
     {
-        _player.FinishedSleeping -= OnFinishedSleeping;
-        _player.SleptOneHourEvent -= OnSleptOneHour;
+        _player.Needs.FinishedSleeping -= OnFinishedSleeping;
+        _player.Needs.SleptOneHourEvent -= OnSleptOneHour;
     }
 
     private void Awake() //OnEnable גûחûגאועסÿ המ Start(), םמ ןמסכו Awake().
@@ -40,7 +40,7 @@ public class SleepDurationPanel : MonoBehaviour
 
     public void OnDoneButtonPressed()
     {
-        _player.StartSleeping((int)_slider.value);
+        _player.Needs.StartSleeping((int)_slider.value);
         _timeflow.TimeScale = _timeScaleWhenSleeping;
     }
 }
