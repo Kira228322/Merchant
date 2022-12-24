@@ -55,6 +55,14 @@ public class CollectItemsGoal : Goal
             Evaluate();
         }
     }
+    private void ItemCollected(InventoryItem item, int howManyWereInserted)
+    {
+        if (item.ItemData == _requiredItemType)
+        {
+            CurrentAmount += howManyWereInserted;
+            Evaluate();
+        }
+    }
     private void ItemRemoved(InventoryItem item)
     {
         if (item.ItemData == _requiredItemType)

@@ -31,7 +31,10 @@ public class Player : MonoBehaviour
 
     public PlayerExperience Experience = new();
     public PlayerStats Statistics = new();
-    
+
+    public static event UnityAction PlayerSingletonChanged;
+
+    public event UnityAction<int> MoneyChanged;
 
     public event UnityAction SleptOneHourEvent;
     public event UnityAction FinishedSleeping;
@@ -46,6 +49,7 @@ public class Player : MonoBehaviour
             {
                 _money = 0;
             }
+            MoneyChanged?.Invoke(Money);
         }
     }
     public int CurrentHunger 
@@ -86,9 +90,28 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
-        Singleton = this;
+
+/* Надо тестировать переход между сценами. Прямое обращение к синглтону будет работать в любом случае (e.g. Player.Singleton.AddExperience()),
+   однако ивенты ловятся неправильно. Если какой-нибудь наш DontDestroyOnLoad подписывается на ивент экземпляра Player.Singleton,
+   то при изменении этого PlayerSingleton он не обновит подписку и продолжит получать ивент от уже исчезнувшего экземпляра.
+   Поэтому наверное стоит добавить *статический* ивент PlayerSingletonChanged и для объектов, которые подписываются на ивенты игрока,
+   сделать также подписку на этот ивент, при срабатывании этого ивента обновлять ссылку на текущий синглтон.
+*/
+
+        if (Singleton == null) 
+        {
+            Singleton = this; 
+        }
+        else
+        {
+            Singleton = this; //Возлагаю надежды на гарбаж коллектора, что он сам удаляет неиспользуемый старый экземпляр.
+            PlayerSingletonChanged?.Invoke(); //При переходе между сценами 
+        }
+
         _inventory = FindObjectOfType<PlayersInventory>(true);
         _playerMover = GetComponent<PlayerMover>();
+        if (_playerMover == null) Debug.LogError("Ты делаешь GetComponent<PlayerMover>, но ты делаешь его без уважения (но на этой сцене игрок не должен двигаться). Наверное, нужно что-то исправить в коде.");
+        
     }
 
     private void Start()

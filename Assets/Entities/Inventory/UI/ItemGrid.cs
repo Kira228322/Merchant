@@ -21,7 +21,7 @@ public class ItemGrid : MonoBehaviour
     private Vector2Int _tileGridPosition = new();
 
     public event UnityAction<InventoryItem> ItemPlacedInTheGrid;
-    public event UnityAction<InventoryItem> ItemPlacedInTheStack;
+    public event UnityAction<InventoryItem, int> ItemPlacedInTheStack;
     public event UnityAction<InventoryItem> ItemRemovedFromTheGrid;
     public event UnityAction<InventoryItem, int> ItemsRemovedFromTheStack;
 
@@ -321,15 +321,21 @@ public class ItemGrid : MonoBehaviour
             {
                 if (IsRotDifferenceBetweenTwoItemsLessThanOne(item, itemInInventory))
                 {
-                    if (TryPlaceItemInAStack(item, itemInInventory))
+                    //ItemRemovedFromTheGrid?.Invoke(item); 16.12.22: я не знаю, зачем это здесь было нужно: предмет удал€етс€ 
+                    //из сетки ещЄ в момент его подн€ти€. –аботало и с этим, и щас вроде работает.
+                    //≈сли что-то сломаетс€, то стоит обратить внимание сюда
+                    //ѕотенциально может сломатьс€, если игрок переносит в стек предмет из другой сетки, но другой сетки в игре пока нет
+                    //UPD 24.12.22: ћожет быть, если происходит инсерт в стак, если больше нет места дл€ предметов?
+                    if (!TryPlaceItemInAStack(item, itemInInventory, out int howManyWereInserted))
                     {
-                        //ItemRemovedFromTheGrid?.Invoke(item); 16.12.22: я не знаю, зачем это здесь было нужно: предмет удал€етс€ 
-                        //из сетки ещЄ в момент его подн€ти€. –аботало и с этим, и щас вроде работает.
-                        //≈сли что-то сломаетс€, то стоит обратить внимание сюда
-                        //ѕотенциально может сломатьс€, если игрок переносит в стек предмет из другой сетки, но другой сетки в игре пока нет
-                        ItemPlacedInTheStack?.Invoke(item);
+                        ItemPlacedInTheStack?.Invoke(itemInInventory, howManyWereInserted);
+                    }
+                    else
+                    {
+                        ItemPlacedInTheStack?.Invoke(itemInInventory, howManyWereInserted);
                         return true;
                     }
+
                 }
                 return false;
             }
@@ -360,7 +366,7 @@ public class ItemGrid : MonoBehaviour
 
         rectTransform.localPosition = position;
     }
-    public bool TryPlaceItemInAStack(InventoryItem itemToPlace, InventoryItem itemToReceive)
+    public bool TryPlaceItemInAStack(InventoryItem itemToPlace, InventoryItem itemToReceive, out int howManyWereInserted)
     {
         //≈сли прибавить количество айтемов в помещаемом к количеству айтемов в имеющемс€, то получитс€ больше, чем макс.стак?
         if (itemToReceive.CurrentItemsInAStack + itemToPlace.CurrentItemsInAStack > itemToReceive.ItemData.MaxItemsInAStack)
@@ -372,12 +378,14 @@ public class ItemGrid : MonoBehaviour
 
             //я понимаю, что это математика дл€ 4 класса,
             //но подробные объ€снени€ лучше помогут в том числе и мне разобратьс€ в том, что здесь будет, если в будущем нужна будет отладка.
-            itemToPlace.CurrentItemsInAStack -= (itemToReceive.ItemData.MaxItemsInAStack - itemToReceive.CurrentItemsInAStack);
+            howManyWereInserted = itemToReceive.ItemData.MaxItemsInAStack - itemToReceive.CurrentItemsInAStack;
+            itemToPlace.CurrentItemsInAStack -= howManyWereInserted;
             itemToReceive.CurrentItemsInAStack = itemToReceive.ItemData.MaxItemsInAStack;
             return false;
         }
         //...Ќет, т.е. поместитс€ полностью, помещаемый предмет можно уничтожать.
         itemToReceive.CurrentItemsInAStack += itemToPlace.CurrentItemsInAStack;
+        howManyWereInserted = itemToPlace.CurrentItemsInAStack;
         Destroy(itemToPlace.gameObject);
         return true;
     }
