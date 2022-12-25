@@ -56,7 +56,7 @@ public class GoodsSellPanel : MonoBehaviour
     {
         //TODO начислять денежек за айтем, списывать деньги у торговца
 
-        _item.CurrentItemsInAStack--;
+        _playerInventoryItemGrid.RemoveItemsFromAStack(_item, 1);
         _currentCount--;
 
         _trader.CurrentCountToBuy[(int)_item.ItemData.TypeOfItem]--;
