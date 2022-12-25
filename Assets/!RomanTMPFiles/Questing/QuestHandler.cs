@@ -27,28 +27,23 @@ public class QuestHandler : MonoBehaviour
     public static void AddQuest(string questName)
     {
         Quest quest = (Quest)Singleton._questsGameObject.AddComponent(System.Type.GetType(questName));
-        Singleton.StartCoroutine(AddQuestCoroutine(quest));
-    }
-    public static IEnumerator AddQuestCoroutine(Quest quest)
-        //К сожалению, пришлось впихнуть костыль.
-        //Связано с тем, что если просто передавать квест, он не успевает сделать свой Awake в том же кадре
-        //и панель не получит правильной информации о нём.
-        //Нужно подождать следующего кадра, пока сработает Awake, тогда всё ок. В целом похуй, нам же не критично создать панель
-                                                                                            //в том же кадре, что появился квест
-
-
-        //UPD 15 минут спустя: Ебать, а вообще-то критично. Если у игрока уже есть всё что надо для выполнения квеста,
-        //То панель должна реагировать сразу, иначе всё улетает в Exception
-
-    {
-        yield return new WaitForFixedUpdate();
+        quest.QuestCompletedEvent += Singleton.OnQuestComplete;
         Singleton._questLog.AddToActiveQuests(quest);
+        if (quest.IsCompleted) Singleton.OnQuestComplete(quest); //Если выполнился моментально, в тот же фрейм как был взят
     }
     public static void RemoveQuest(System.Type questType)
     {
         Quest quest = (Quest)Singleton._questsGameObject.GetComponent(questType);
         Singleton._questLog.RemoveFromActiveQuests(quest);
         Destroy(Singleton._questsGameObject.GetComponent(questType));
+    }
+    private void OnQuestComplete(Quest quest)
+    {
+        if(quest.NextQuestName != null)
+        {
+            AddQuest(quest.NextQuestName);
+        }
+        RemoveQuest(quest.GetType());
     }
     
 }

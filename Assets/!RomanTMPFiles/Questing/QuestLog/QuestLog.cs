@@ -22,8 +22,8 @@ public class QuestLog : MonoBehaviour
     {
         QuestPanel questPanel = GetPanelFromActiveQuest(quest);
         CopyToCompleteQuests(questPanel);
-        Destroy(questPanel.gameObject);
         _activeQuests.Remove(questPanel);
+        Destroy(questPanel.gameObject);
     }
     public void CopyToCompleteQuests(QuestPanel questPanel)
     {
@@ -35,7 +35,6 @@ public class QuestLog : MonoBehaviour
     }
     private QuestPanel GetPanelFromActiveQuest(Quest quest)
     {
-        Debug.Log(_activeQuests.Count);
         return _activeQuests.FirstOrDefault(q => q.Quest == quest);
     }
 }

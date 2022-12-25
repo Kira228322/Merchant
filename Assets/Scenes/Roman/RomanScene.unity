@@ -10188,7 +10188,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6893747379577424929, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.76877743
+      value: 1.96
       objectReference: {fileID: 0}
     - target: {fileID: 6893747379577424929, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -10251,8 +10251,16 @@ PrefabInstance:
       value: 111
       objectReference: {fileID: 0}
     - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
+      propertyPath: Needs.MaxSleep
+      value: 333
+      objectReference: {fileID: 0}
+    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
       propertyPath: _currentHunger
       value: 111
+      objectReference: {fileID: 0}
+    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
+      propertyPath: Needs.MaxHunger
+      value: 222
       objectReference: {fileID: 0}
     - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
       propertyPath: _sleepDecayRate
@@ -10263,11 +10271,43 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
+      propertyPath: Needs._sleepScale
+      value: 
+      objectReference: {fileID: 96427202}
+    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
+      propertyPath: Needs._hungerScale
+      value: 
+      objectReference: {fileID: 1498829814}
+    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
+      propertyPath: Needs._currentSleep
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
+      propertyPath: Needs._currentHunger
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
+      propertyPath: Needs._sleepDecayRate
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
       propertyPath: _sleepRestorationRate
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
+      propertyPath: Needs._hungerDecayRate
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
       propertyPath: _hungerDivisorWhenSleeping
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
+      propertyPath: Needs._sleepRestorationRate
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
+      propertyPath: Needs._hungerDivisorWhenSleeping
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6893747380413829026, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}

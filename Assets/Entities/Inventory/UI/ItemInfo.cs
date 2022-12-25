@@ -98,7 +98,7 @@ public class ItemInfo : MonoBehaviour
     #region Методы работы с кнопками
     public void OnEatButtonPressed()
     {
-        _player.RestoreHunger(_currentItemSelected.ItemData.FoodValue);
+        _player.Needs.RestoreHunger(_currentItemSelected.ItemData.FoodValue);
         _currentItemSelected.CurrentItemsInAStack--;
         _quantityText.text = "Количество: " +_currentItemSelected.CurrentItemsInAStack.ToString();
         if (_currentItemSelected.CurrentItemsInAStack == 0)

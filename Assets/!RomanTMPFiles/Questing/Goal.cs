@@ -31,13 +31,11 @@ public class Goal
     private void Complete()
     {
         IsCompleted = true;
-        Debug.Log("Goal completed");
         Quest.CheckGoals();
     }
     private void Uncomplete()
     {
         IsCompleted = false;
-        Debug.Log("Goal uncompleted");
         Quest.CheckGoals();
     }
     public virtual void Initialize()

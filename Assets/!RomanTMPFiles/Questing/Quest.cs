@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class Quest: MonoBehaviour
 {
-    protected string NextQuestName;
+    public string NextQuestName;
     public List<Goal> Goals { get; set; } = new();
     public string QuestName { get; set; }
     public string Description { get; set; }
@@ -15,7 +15,7 @@ public class Quest: MonoBehaviour
     public bool IsCompleted { get; set; }
 
     public event UnityAction QuestUpdatedEvent;
-    public event UnityAction QuestCompletedEvent;
+    public event UnityAction<Quest> QuestCompletedEvent;
 
     public void CheckGoals()
     {
@@ -34,19 +34,12 @@ public class Quest: MonoBehaviour
     {
         IsCompleted = true;
         GiveReward(); //Пусть QuestHandler выдает награду потом мб а не здесь? А нахуя?
-        
-        if (NextQuestName != null)
-        {
-            QuestHandler.AddQuest(NextQuestName);
-        }
 
         foreach (Goal goal in Goals)
         {
             goal.Deinitialize();
         }
-        QuestCompletedEvent?.Invoke();
-        QuestHandler.RemoveQuest(this.GetType()); //Пока что решил сразу убирать этот компонент по завершении,
-                                             //мб потом ещё будем сохранять его куда-то для истории в квестлоге 
+        QuestCompletedEvent?.Invoke(this);
     }
 
     protected virtual void GiveReward()
