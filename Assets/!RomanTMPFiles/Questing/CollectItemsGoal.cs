@@ -52,7 +52,6 @@ public class CollectItemsGoal : Goal
         if (item.ItemData == _requiredItemType)
         {
             CurrentAmount += item.CurrentItemsInAStack;
-            Debug.Log($"Шото подобрал, щас у меня {CurrentAmount}");
             Evaluate();
         }
     }
@@ -61,7 +60,6 @@ public class CollectItemsGoal : Goal
         if (item.ItemData == _requiredItemType)
         {
             CurrentAmount -= item.CurrentItemsInAStack;
-            Debug.Log($"Шото выкинул, щас у меня {CurrentAmount}");
             Evaluate();
         }
     }
@@ -70,7 +68,6 @@ public class CollectItemsGoal : Goal
         if (item.ItemData == _requiredItemType)
         {
             CurrentAmount -= amount;
-            Debug.Log($"Шото выкинул, щас у меня {CurrentAmount}");
             Evaluate();
         }
     }

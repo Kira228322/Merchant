@@ -5,7 +5,7 @@ using UnityEngine;
 public class TestQuestFindSteakAndFindArrow : Quest
 {
 
-    void Start()
+    void Awake()
     {
         QuestName = "SteakThenArrowFinding";
         Description = "Find 1 steak and find 1 arrow";
@@ -18,6 +18,7 @@ public class TestQuestFindSteakAndFindArrow : Quest
         foreach (Goal goal in Goals)
         {
             goal.Initialize();
+            goal.GoalUpdated += QuestUpdated;
         }
     }
     /*public override void CheckGoals()

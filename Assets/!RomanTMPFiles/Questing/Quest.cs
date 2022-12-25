@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.Events;
 
-public class Quest : MonoBehaviour
+public class Quest: MonoBehaviour
 {
     protected string NextQuestName;
     public List<Goal> Goals { get; set; } = new();
@@ -12,6 +13,9 @@ public class Quest : MonoBehaviour
     public int ExperienceReward { get; set; }
     public int MoneyReward { get; set; }
     public bool IsCompleted { get; set; }
+
+    public event UnityAction QuestUpdatedEvent;
+    public event UnityAction QuestCompletedEvent;
 
     public void CheckGoals()
     {
@@ -22,6 +26,7 @@ public class Quest : MonoBehaviour
                 return;
             }
         }
+        QuestUpdatedEvent?.Invoke();
         Complete();
 
     }
@@ -29,9 +34,7 @@ public class Quest : MonoBehaviour
     {
         IsCompleted = true;
         GiveReward(); //Пусть QuestHandler выдает награду потом мб а не здесь? А нахуя?
-        Debug.Log("Quest complete, time to feed");
-        QuestHandler.RemoveQuest(this.GetType()); //Пока что решил сразу убирать этот компонент по завершении,
-                                             //мб потом ещё будем сохранять его куда-то для истории в квестлоге 
+        
         if (NextQuestName != null)
         {
             QuestHandler.AddQuest(NextQuestName);
@@ -41,11 +44,18 @@ public class Quest : MonoBehaviour
         {
             goal.Deinitialize();
         }
+        QuestCompletedEvent?.Invoke();
+        QuestHandler.RemoveQuest(this.GetType()); //Пока что решил сразу убирать этот компонент по завершении,
+                                             //мб потом ещё будем сохранять его куда-то для истории в квестлоге 
     }
 
-    private void GiveReward()
+    protected virtual void GiveReward()
     {
         Player.Singleton.AddExperience(ExperienceReward);
         Player.Singleton.Money += MoneyReward;
+    }
+    protected void QuestUpdated()
+    {
+        QuestUpdatedEvent?.Invoke();
     }
 }

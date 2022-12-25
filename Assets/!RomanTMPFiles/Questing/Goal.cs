@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Goal
 {
@@ -10,8 +11,11 @@ public class Goal
     public int CurrentAmount { get; set; }
     public int RequiredAmount { get; set; }
 
+    public event UnityAction GoalUpdated;
+
     public void Evaluate()
     {
+        GoalUpdated?.Invoke();
         if (!IsCompleted)
         {
             if (CurrentAmount >= RequiredAmount)

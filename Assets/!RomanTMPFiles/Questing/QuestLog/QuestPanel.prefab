@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 871666783627260350}
   - component: {fileID: 3962763394181407457}
   m_Layer: 5
-  m_Name: ExampleText
+  m_Name: ExperienceReward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -152,7 +152,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8389169020534491694
 RectTransform:
   m_ObjectHideFlags: 0
@@ -288,7 +288,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6274893495098281736
 RectTransform:
   m_ObjectHideFlags: 0
@@ -423,7 +423,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &269461154963419615
 RectTransform:
   m_ObjectHideFlags: 0
@@ -558,7 +558,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6407572140659802553
 RectTransform:
   m_ObjectHideFlags: 0
@@ -912,7 +912,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5992810503705168041
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1042,7 +1042,7 @@ GameObject:
   - component: {fileID: 2258437057731619963}
   - component: {fileID: 238152567667335070}
   m_Layer: 5
-  m_Name: ExampleText
+  m_Name: MoneyReward
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1737,6 +1737,7 @@ GameObject:
   - component: {fileID: 7784202688492422165}
   - component: {fileID: 7784202688492422170}
   - component: {fileID: 7784202688492422171}
+  - component: {fileID: 7348894743355772166}
   m_Layer: 5
   m_Name: QuestPanel
   m_TagString: Untagged
@@ -1806,6 +1807,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 2
+--- !u!114 &7348894743355772166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7784202688492422164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71e5ca06026322342930851db50fdfa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _questNameText: {fileID: 7784202688471611242}
+  _descriptionText: {fileID: 5935073337902388060}
+  _goalTexts:
+  - {fileID: 8558179677093357266}
+  - {fileID: 3560979966575780496}
+  - {fileID: 3874338766216077711}
+  - {fileID: 128203944826525728}
+  - {fileID: 4273730470561031073}
+  _rewardTexts:
+  - {fileID: 3962763394181407457}
+  - {fileID: 238152567667335070}
+  - {fileID: 1481388085036705381}
+  - {fileID: 2627507345782097355}
+  - {fileID: 8531886795597552716}
+  Quest: {fileID: 0}
 --- !u!1 &7784202688551822429
 GameObject:
   m_ObjectHideFlags: 0
@@ -2415,7 +2443,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3350503369081641585
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2551,7 +2579,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7068680798643931246
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2687,7 +2715,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2416463905967244725
 RectTransform:
   m_ObjectHideFlags: 0
