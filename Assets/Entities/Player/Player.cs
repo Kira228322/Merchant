@@ -7,9 +7,11 @@ public class Player : MonoBehaviour
 
     private PlayerMover _playerMover;
     private PlayersInventory _inventory;
+    private Wagon _wagon;
     private int _money;
-    
-    
+
+
+    public Wagon Wagon => _wagon;
     public PlayerMover PlayerMover => _playerMover;
     public PlayersInventory Inventory => _inventory;
 
