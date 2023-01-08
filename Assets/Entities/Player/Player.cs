@@ -58,6 +58,7 @@ public class Player : MonoBehaviour
         }
 
         _inventory = FindObjectOfType<PlayersInventory>(true);
+        _wagon = FindObjectOfType<Wagon>();
         _playerMover = GetComponent<PlayerMover>();
         if (_playerMover == null) Debug.LogError("“ы делаешь GetComponent<PlayerMover>, но ты делаешь его без уважени€ (но на этой сцене игрок не должен двигатьс€). Ќаверное, нужно что-то исправить в коде.");
         
