@@ -11,18 +11,18 @@ public abstract class Window : MonoBehaviour
         MapManager.Windows.Add(this);
         
         CorrectPosition();
-        StartCoroutine(AppearenceAnimation(0.7f, 0.02f, 40));
+        StartCoroutine(AppearenceAnimation(0.74f, 0.02f, 50));
     }
 
     private IEnumerator AppearenceAnimation(float duration, float animationFrequency, float appearDistance)
     { // duration must divide by frequency
         CanvasGroup canvasGroup = GetComponent<CanvasGroup>();
         float alpha = canvasGroup.alpha;
-        alpha = 0.4f;
+        alpha = 0.27f;
         
         Image image = GetComponent<Image>();
         Color color = image.color;
-        color.a = 0.6f;
+        color.a = 0.75f;
         
         WaitForSeconds frequency = new WaitForSeconds(animationFrequency);
         
@@ -33,9 +33,9 @@ public abstract class Window : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             transform.position += delta;
-            alpha += 0.5f / count; // конечная альфа канвас группы = 0.9 (окна будут немного прозрачные) 
+            alpha += 0.6f / count; // конечная альфа канвас группы = 0.87 (окна будут немного прозрачные) 
             canvasGroup.alpha = alpha;
-            color.a += 0.2f / count; // конечная альфа самого окна, на котором расположены элементы = 0.8
+            color.a += 0.2f / count; // конечная альфа самого окна, на котором расположены элементы = 0.95
             image.color = color;
             yield return frequency;
         }
