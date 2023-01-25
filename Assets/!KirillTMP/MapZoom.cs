@@ -9,11 +9,12 @@ public class MapZoom : MonoBehaviour
     private float _minScale = 1;
     private float _maxScale = 1.8f;
     [SerializeField] private ScrollRect _scrollRect;
-    private RectTransform _rectTransform;
+    [SerializeField] private GameObject _content;
+    private RectTransform _contentRectTransform;
 
     private void Start()
     {
-        _rectTransform = GetComponent<RectTransform>();
+        _contentRectTransform = _content.GetComponent<RectTransform>();
     }
 
     private void Update()
@@ -43,7 +44,7 @@ public class MapZoom : MonoBehaviour
             else
             {
                 _scrollRect.enabled = false;
-                _rectTransform.position = new Vector3(Screen.width/2, Screen.height/2);
+                _contentRectTransform.position = new Vector3(Screen.width/2, Screen.height/2);
             }
 
         }
@@ -63,7 +64,7 @@ public class MapZoom : MonoBehaviour
             else
             {
                 _scrollRect.enabled = false;
-                _rectTransform.position = new Vector3(Screen.width/2, Screen.height/2);
+                _contentRectTransform.position = new Vector3(Screen.width/2, Screen.height/2);
             }
         }
         if (Input.GetKeyDown(KeyCode.X))
@@ -81,7 +82,7 @@ public class MapZoom : MonoBehaviour
             else
             {
                 _scrollRect.enabled = false;
-                _rectTransform.position = new Vector3(Screen.width/2, Screen.height/2);
+                _contentRectTransform.position = new Vector3(Screen.width/2, Screen.height/2);
             }
         }
         
@@ -90,7 +91,7 @@ public class MapZoom : MonoBehaviour
     private void OnDisable()
     {
         _scrollRect.enabled = false;
-        _rectTransform.position = new Vector3(Screen.width/2, Screen.height/2);
+        _contentRectTransform.position = new Vector3(Screen.width/2, Screen.height/2);
         transform.localScale = Vector3.one;
     }
 }
