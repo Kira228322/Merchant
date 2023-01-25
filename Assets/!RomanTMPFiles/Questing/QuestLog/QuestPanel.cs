@@ -12,9 +12,12 @@ public class QuestPanel : MonoBehaviour
     [SerializeField] private List<TMP_Text> _goalTexts = new();
     [SerializeField] private List<TMP_Text> _rewardTexts = new();
 
+    [SerializeField] private Button _rewardButton;
+
     [SerializeField] private Color _activeGoalColor;
     [SerializeField] private Color _completedGoalColor;
     [SerializeField] private Color _completedQuestNameColor;
+    [SerializeField] private Color _completedAndRewardAcquiredQuestNameColor;
 
     public Quest Quest;
 
@@ -22,7 +25,11 @@ public class QuestPanel : MonoBehaviour
     {
         Quest = quest;
         _questNameText.text = Quest.QuestName;
-        if (quest.IsCompleted) _questNameText.color = _completedGoalColor;
+        if (quest.IsCompleted)
+        {
+            _rewardButton.gameObject.SetActive(true);
+            _questNameText.color = _completedGoalColor;
+        }
         _descriptionText.text = "Описание: " + Quest.Description;
 
         for (int i = 0; i < Quest.Goals.Count; i++)
@@ -33,13 +40,20 @@ public class QuestPanel : MonoBehaviour
 
         _rewardTexts[0].text = Quest.ExperienceReward.ToString() + " опыта";
         _rewardTexts[1].text = Quest.MoneyReward.ToString() + " золота";
-
-        Quest.QuestUpdatedEvent += Refresh;
-        Quest.QuestCompletedEvent += OnComplete;
-
+        if (Quest.ItemRewards.Count != 0)
+        {
+            int i = 2;
+            foreach (var reward in Quest.ItemRewards)
+            {
+                _rewardTexts[i].gameObject.SetActive(true);
+                _rewardTexts[i].text = reward.Key.Name + ". Кол-во: " + reward.Value;
+                i++;
+            }
+        }
+        Quest.questPanel = this;
         Refresh();
     }
-    private void Refresh()
+    public void Refresh()
     {
         if (Quest != null)
         {
@@ -59,13 +73,17 @@ public class QuestPanel : MonoBehaviour
         }
         
     }
-    private void OnComplete(Quest quest)
+    public void OnComplete()
     {
-        //Это не выполнится, если квест был сделан в тот же фрейм, как только взят.
-        //Однако на этот случай смена цвета учтена в инициализации, а отписки от ивентов должны происходить и так,
-                                                                   //поскольку экземпляр квеста скоро уничтожится.
-        Quest.QuestUpdatedEvent -= Refresh;
-        Quest.QuestCompletedEvent -= OnComplete;
+        _rewardButton.gameObject.SetActive(true);
         _questNameText.color = _completedQuestNameColor;
+    }
+    public void OnRewardButtonClick()
+    {
+        //if (есть свободное место) {
+        Quest.GiveReward(); 
+        QuestHandler.RemoveQuest(Quest.GetType());
+        _questNameText.color = _completedAndRewardAcquiredQuestNameColor;
+        //} else {послать игрока нахуй}
     }
 }

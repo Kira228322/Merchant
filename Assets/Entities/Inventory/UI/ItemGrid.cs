@@ -64,7 +64,7 @@ public class ItemGrid : MonoBehaviour
         }
         return true;
     }
-    private bool IsNotOverlapping(int positionX, int positionY, int width, int height)
+    private bool IsOverlapping(int positionX, int positionY, int width, int height) //ѕересечЄтс€ ли этот предмет с другими предметами, будучи поставленным в эту клетку?
     {
         for (int x = 0; x < width; x++)
         {
@@ -72,12 +72,12 @@ public class ItemGrid : MonoBehaviour
             {
                 if(_storedInventoryItems[positionY + y][positionX + x] != null)
                 {
-                    return false;
+                    return true;
                 }
             }
         }
 
-        return true;
+        return false;
     }
     public bool IsOverlappingWithTheSameItemType(InventoryItem item, int positionX, int positionY, int width, int height, out InventoryItem itemInInventory)
     {
@@ -103,6 +103,7 @@ public class ItemGrid : MonoBehaviour
     {
         if (IsInBounds(positionX, positionY) == false)
         {
+            Debug.Log($"Not in the correct position, because starting point {positionX},{positionY} is not in grid");
             return false;
         }
 
@@ -111,6 +112,7 @@ public class ItemGrid : MonoBehaviour
 
         if (IsInBounds(positionX, positionY) == false)
         {
+            Debug.Log($"Not in the correct position, because ending point (BR) {positionX},{positionY} is not in grid");
             return false;
         }
 
@@ -118,7 +120,7 @@ public class ItemGrid : MonoBehaviour
     }
     private bool IsRotDifferenceBetweenTwoItemsLessThanOne(InventoryItem item1, InventoryItem item2)
     {
-        if (item1.ItemData.IsPerishable || item2.ItemData.IsPerishable)
+        if (item1.ItemData.IsPerishable && item2.ItemData.IsPerishable)
         {
             if (Math.Abs(item1.BoughtDaysAgo - item2.BoughtDaysAgo) < 1)
             {
@@ -127,23 +129,6 @@ public class ItemGrid : MonoBehaviour
             return false;
         }
         return true; //≈сли сравнены две вещи, которые не порт€тс€, то всегда true. ѕо сути, item1 и item2 - всегда вещи одного типа 
-    }
-    private bool AnyAvailableSpace(int positionX, int positionY, int width, int height)
-        //ѕрисутствует ли на этом месте в инвентаре свободное место чтобы поместить предмет размера {width} x {height}?
-    {
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
-            {
-                if (_storedInventoryItems[positionY + y][positionX + x] != null)
-                {
-
-                    return false;
-                }
-            }
-        }
-
-        return true;
     }
     private bool AnyUnfilledStack(int positionX, int positionY, InventoryItem targetItem)
     {
@@ -247,7 +232,7 @@ public class ItemGrid : MonoBehaviour
         {
             for (int x = 0; x < _gridSizeWidth - itemToInsert.Width + 1; x++)
             {
-                if (AnyAvailableSpace(x, y, itemToInsert.Width, itemToInsert.Height))
+                if (!IsOverlapping(x, y, itemToInsert.Width, itemToInsert.Height))
                 {
                     return new Vector2Int(x, y);
                 }
@@ -310,12 +295,7 @@ public class ItemGrid : MonoBehaviour
     }
     public bool TryPlaceItem(InventoryItem item, int positionX, int positionY)
     {
-        if (IsInCorrectPosition(positionX, positionY, item.Width, item.Height) == false)
-        {
-            return false;
-        }
-
-        if (IsNotOverlapping(positionX, positionY, item.Width, item.Height) == false)
+        if (IsOverlapping(positionX, positionY, item.Width, item.Height))
         {
             if (IsOverlappingWithTheSameItemType(item, positionX, positionY, item.Width, item.Height, out InventoryItem itemInInventory))
             {
@@ -326,22 +306,30 @@ public class ItemGrid : MonoBehaviour
                     //≈сли что-то сломаетс€, то стоит обратить внимание сюда
                     //ѕотенциально может сломатьс€, если игрок переносит в стек предмет из другой сетки, но другой сетки в игре пока нет
                     //UPD 24.12.22: ћожет быть, если происходит инсерт в стак, если больше нет места дл€ предметов?
-                    if (!TryPlaceItemInAStack(item, itemInInventory, out int howManyWereInserted))
+                    if (!TryPlaceItemInAStack(item, itemInInventory, out int amountInserted))
                     {
-                        ItemPlacedInTheStack?.Invoke(itemInInventory, howManyWereInserted);
+                        //ќзначает, что сколько-то поместилось, но не весь стак целиком
+                        ItemPlacedInTheStack?.Invoke(itemInInventory, amountInserted);
+                        Debug.LogWarning("Ќе весь стак поставлен");
+                        return false; 
                     }
                     else
                     {
-                        ItemPlacedInTheStack?.Invoke(itemInInventory, howManyWereInserted);
+                        //ќзначает, что поместилс€ весь стак целиком
+                        ItemPlacedInTheStack?.Invoke(itemInInventory, amountInserted);
                         return true;
                     }
-
                 }
                 return false;
             }
             return false;
         }
-
+        //IsOverlapping == false, следовательно в этих клеточках нет предметов, можно спокойно ставить
+        //ќсталось лишь проверить, если он вообще в границах сетки
+        if (!IsInCorrectPosition(positionX, positionY, item.Width, item.Height))
+        {
+            return false;
+        }
         PlaceItem(item, positionX, positionY);
         ItemPlacedInTheGrid?.Invoke(item);
         return true;
@@ -366,7 +354,7 @@ public class ItemGrid : MonoBehaviour
 
         rectTransform.localPosition = position;
     }
-    public bool TryPlaceItemInAStack(InventoryItem itemToPlace, InventoryItem itemToReceive, out int howManyWereInserted)
+    public bool TryPlaceItemInAStack(InventoryItem itemToPlace, InventoryItem itemToReceive, out int amountInserted)
     {
         //≈сли прибавить количество айтемов в помещаемом к количеству айтемов в имеющемс€, то получитс€ больше, чем макс.стак?
         if (itemToReceive.CurrentItemsInAStack + itemToPlace.CurrentItemsInAStack > itemToReceive.ItemData.MaxItemsInAStack)
@@ -378,14 +366,14 @@ public class ItemGrid : MonoBehaviour
 
             //я понимаю, что это математика дл€ 4 класса,
             //но подробные объ€снени€ лучше помогут в том числе и мне разобратьс€ в том, что здесь будет, если в будущем нужна будет отладка.
-            howManyWereInserted = itemToReceive.ItemData.MaxItemsInAStack - itemToReceive.CurrentItemsInAStack;
-            itemToPlace.CurrentItemsInAStack -= howManyWereInserted;
+            amountInserted = itemToReceive.ItemData.MaxItemsInAStack - itemToReceive.CurrentItemsInAStack;
+            itemToPlace.CurrentItemsInAStack -= amountInserted;
             itemToReceive.CurrentItemsInAStack = itemToReceive.ItemData.MaxItemsInAStack;
             return false;
         }
         //...Ќет, т.е. поместитс€ полностью, помещаемый предмет можно уничтожать.
         itemToReceive.CurrentItemsInAStack += itemToPlace.CurrentItemsInAStack;
-        howManyWereInserted = itemToPlace.CurrentItemsInAStack;
+        amountInserted = itemToPlace.CurrentItemsInAStack;
         Destroy(itemToPlace.gameObject);
         return true;
     }

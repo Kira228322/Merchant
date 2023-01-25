@@ -27,23 +27,32 @@ public class QuestHandler : MonoBehaviour
     public static void AddQuest(string questName)
     {
         Quest quest = (Quest)Singleton._questsGameObject.AddComponent(System.Type.GetType(questName));
-        quest.QuestCompletedEvent += Singleton.OnQuestComplete;
+        quest.QuestUpdatedEvent += Singleton.OnQuestUpdated;
+        quest.QuestCompletedEvent += Singleton.OnQuestCompleted;
         Singleton._questLog.AddToActiveQuests(quest);
-        if (quest.IsCompleted) Singleton.OnQuestComplete(quest); //Если выполнился моментально, в тот же фрейм как был взят
+        if (quest.IsCompleted) Singleton.OnQuestCompleted(quest); //Если выполнился моментально, в тот же фрейм как был взят
     }
     public static void RemoveQuest(System.Type questType)
     {
         Quest quest = (Quest)Singleton._questsGameObject.GetComponent(questType);
-        Singleton._questLog.RemoveFromActiveQuests(quest);
         Destroy(Singleton._questsGameObject.GetComponent(questType));
     }
-    private void OnQuestComplete(Quest quest)
+    public static void MoveToCompleted(Quest quest)
     {
+        Singleton._questLog.MoveToCompletedQuests(quest);
+    }
+    private void OnQuestUpdated(Quest quest)
+    {
+        quest.questPanel.Refresh();
+    }
+    private void OnQuestCompleted(Quest quest)
+    {
+        quest.questPanel.OnComplete();
         if(quest.NextQuestName != null)
         {
             AddQuest(quest.NextQuestName);
         }
-        RemoveQuest(quest.GetType());
+        Singleton._questLog.MoveToCompletedQuests(quest);
     }
     
 }

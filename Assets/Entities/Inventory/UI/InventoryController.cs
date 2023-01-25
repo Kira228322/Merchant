@@ -225,6 +225,18 @@ public class InventoryController : MonoBehaviour
     #region ћетоды, св€занные с взаимодействием с айтемом
     public bool TryCreateAndInsertItem(ItemGrid itemGrid, Item item, int amount, float daysBoughtAgo, bool isFillingStackFirst)
     {
+        if (!TryCreateAndInsertItemUnrotated(itemGrid, item, amount, daysBoughtAgo, isFillingStackFirst))
+        {
+            if (!TryCreateAndInsertItemRotated(itemGrid, item, amount, daysBoughtAgo, isFillingStackFirst))
+            {
+                return false;
+            }
+            return true;
+        }
+        return true;
+    }
+    private bool TryCreateAndInsertItemUnrotated(ItemGrid itemGrid, Item item, int amount, float daysBoughtAgo, bool isFillingStackFirst)
+    {
         ItemGrid initialItemGridState = SelectedItemGrid;
 
 
@@ -244,7 +256,7 @@ public class InventoryController : MonoBehaviour
         SelectedItemGrid = initialItemGridState;
         return false;
     }
-    public bool TryCreateAndInsertItemRotated(ItemGrid itemGrid, Item item, int amount, float daysBoughtAgo, bool isFillingStackFirst)
+    private bool TryCreateAndInsertItemRotated(ItemGrid itemGrid, Item item, int amount, float daysBoughtAgo, bool isFillingStackFirst)
     {
         ItemGrid initialItemGridState = SelectedItemGrid;
 
@@ -320,6 +332,7 @@ public class InventoryController : MonoBehaviour
     private void CreateItem(Item item, int amount, float boughtDaysAgo)
     {
         InventoryItem spawnedItem = Instantiate(_itemPrefab, _canvasTransform).GetComponent<InventoryItem>();
+        spawnedItem.SetItemFromData(item);
         CurrentSelectedItem = spawnedItem;
 
         spawnedItem.CurrentItemsInAStack = amount;
@@ -330,7 +343,6 @@ public class InventoryController : MonoBehaviour
 
         CurrentSelectedItem.transform.localScale = Vector2.one;
 
-        spawnedItem.SetItemFromData(item);
 
     }
     private void CreateItemRotated(Item item, int amount, float boughtDaysAgo)
@@ -415,7 +427,6 @@ public class InventoryController : MonoBehaviour
     private bool TryInsertItem (InventoryItem itemToInsert, bool isFillingStackFirst)
     {
         Vector2Int? posOnGrid = SelectedItemGrid.FindSpaceForItemInsertion(itemToInsert, isFillingStackFirst);
-
         if (posOnGrid == null) 
         {
             return false; 

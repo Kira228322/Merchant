@@ -21,16 +21,10 @@ public class GoodsBuyPanel : MonoBehaviour
     }
     private int _currentCount;
     private Item _item;
-    private InventoryController _inventoryController;
     private Trader _trader;
     private float _boughtDaysAgo;
     public bool IsOriginatedFromTrader;
     public Item Item => _item;
-
-    private void Start()
-    {
-        _inventoryController = InventoryController.Instance;
-    }
     public void Init(Trader trader, Item goods, float boughtDaysAgo, bool isOriginatedFromTrader, int count)
     {
         _trader = trader;
@@ -51,12 +45,9 @@ public class GoodsBuyPanel : MonoBehaviour
             {
                 _trader.CurrentCountToBuy[(int)_item.TypeOfItem]++; 
             }
-            if (!_inventoryController.TryCreateAndInsertItem(Player.Singleton.Inventory.GetComponent<ItemGrid>(), _item, 1, _boughtDaysAgo, true))
+            if (!InventoryController.Instance.TryCreateAndInsertItem(Player.Singleton.Inventory.GetComponent<ItemGrid>(), _item, 1, _boughtDaysAgo, true))
             {
-                if (!_inventoryController.TryCreateAndInsertItemRotated(Player.Singleton.Inventory.GetComponent<ItemGrid>(), _item, 1, _boughtDaysAgo, true))
-                {
-                    return;
-                }
+                return;
             }
             CurrentCount--;
             _trader.SellItem(_item);

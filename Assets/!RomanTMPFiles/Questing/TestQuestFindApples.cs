@@ -10,7 +10,13 @@ public class TestQuestFindApples : Quest
         Description = "Find apples, ok?";
         ExperienceReward = 100;
         MoneyReward = 69;
+        ItemRewards = new()
+        {
+            { ItemDatabase.GetItem("Sugoma"), 1 },
+            { ItemDatabase.GetItem("Arrow"), 3 }
+        };
         NextQuestName = "TestQuestFindSteakAndFindArrow";
+
 
         Goals.Add(new CollectItemsGoal(this, "Sugus", "собери 3 €блока", false, 0, 3)); 
 

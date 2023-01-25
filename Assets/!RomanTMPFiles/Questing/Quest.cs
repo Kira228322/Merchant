@@ -12,9 +12,12 @@ public class Quest: MonoBehaviour
     public string Description { get; set; }
     public int ExperienceReward { get; set; }
     public int MoneyReward { get; set; }
+    public Dictionary<Item, int> ItemRewards { get; set; } = new();
     public bool IsCompleted { get; set; }
 
-    public event UnityAction QuestUpdatedEvent;
+    public QuestPanel questPanel = null; //она сама себя назначит
+
+    public event UnityAction<Quest> QuestUpdatedEvent;
     public event UnityAction<Quest> QuestCompletedEvent;
 
     public void CheckGoals()
@@ -26,14 +29,14 @@ public class Quest: MonoBehaviour
                 return;
             }
         }
-        QuestUpdatedEvent?.Invoke();
+        QuestUpdatedEvent?.Invoke(this);
         Complete();
 
     }
     protected void Complete()
     {
         IsCompleted = true;
-        GiveReward(); //Пусть QuestHandler выдает награду потом мб а не здесь? А нахуя?
+        //GiveReward(); //Пусть QuestHandler выдает награду потом мб а не здесь? А нахуя?
 
         foreach (Goal goal in Goals)
         {
@@ -42,13 +45,18 @@ public class Quest: MonoBehaviour
         QuestCompletedEvent?.Invoke(this);
     }
 
-    protected virtual void GiveReward()
+    public virtual void GiveReward()
     {
         Player.Singleton.AddExperience(ExperienceReward);
         Player.Singleton.Money += MoneyReward;
+        if (ItemRewards.Count != 0)
+        foreach (var item in ItemRewards)
+        {
+            InventoryController.Instance.TryCreateAndInsertItem(Player.Singleton.Inventory.GetComponent<ItemGrid>(), item.Key, item.Value, 0, true);
+        }
     }
     protected void QuestUpdated()
     {
-        QuestUpdatedEvent?.Invoke();
+        QuestUpdatedEvent?.Invoke(this);
     }
 }
