@@ -103,7 +103,6 @@ public class ItemGrid : MonoBehaviour
     {
         if (IsInBounds(positionX, positionY) == false)
         {
-            Debug.Log($"Not in the correct position, because starting point {positionX},{positionY} is not in grid");
             return false;
         }
 
@@ -112,7 +111,6 @@ public class ItemGrid : MonoBehaviour
 
         if (IsInBounds(positionX, positionY) == false)
         {
-            Debug.Log($"Not in the correct position, because ending point (BR) {positionX},{positionY} is not in grid");
             return false;
         }
 
@@ -310,7 +308,6 @@ public class ItemGrid : MonoBehaviour
                     {
                         //ќзначает, что сколько-то поместилось, но не весь стак целиком
                         ItemPlacedInTheStack?.Invoke(itemInInventory, amountInserted);
-                        Debug.LogWarning("Ќе весь стак поставлен");
                         return false; 
                     }
                     else
@@ -401,4 +398,6 @@ public class ItemGrid : MonoBehaviour
         _rectTransform.sizeDelta = size;
 
     }
+
+
 }

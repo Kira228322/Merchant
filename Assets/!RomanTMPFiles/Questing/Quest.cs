@@ -6,13 +6,28 @@ using UnityEngine.Events;
 
 public class Quest: MonoBehaviour
 {
+    public struct ItemReward
+    {
+        public Item item;
+        public int amount;
+        public float daysBoughtAgo;
+
+        public ItemReward(Item item, int amount, float daysBoughtAgo)
+        {
+            this.item = item;
+            this.amount = amount;
+            this.daysBoughtAgo = daysBoughtAgo;
+        }
+    }
+
     public string NextQuestName;
     public List<Goal> Goals { get; set; } = new();
     public string QuestName { get; set; }
     public string Description { get; set; }
     public int ExperienceReward { get; set; }
     public int MoneyReward { get; set; }
-    public Dictionary<Item, int> ItemRewards { get; set; } = new();
+    public List<ItemReward> ItemRewards = new();
+
     public bool IsCompleted { get; set; }
 
     public QuestPanel questPanel = null; //она сама себя назначит
@@ -36,7 +51,6 @@ public class Quest: MonoBehaviour
     protected void Complete()
     {
         IsCompleted = true;
-        //GiveReward(); //Пусть QuestHandler выдает награду потом мб а не здесь? А нахуя?
 
         foreach (Goal goal in Goals)
         {
@@ -49,10 +63,13 @@ public class Quest: MonoBehaviour
     {
         Player.Singleton.AddExperience(ExperienceReward);
         Player.Singleton.Money += MoneyReward;
-        if (ItemRewards.Count != 0)
-        foreach (var item in ItemRewards)
+
+        if (ItemRewards.Count != 0) 
         {
-            InventoryController.Instance.TryCreateAndInsertItem(Player.Singleton.Inventory.GetComponent<ItemGrid>(), item.Key, item.Value, 0, true);
+            foreach (var item in ItemRewards)
+            {
+                InventoryController.Instance.TryCreateAndInsertItem(Player.Singleton.Inventory.GetComponent<ItemGrid>(), item.item, item.amount, item.daysBoughtAgo, true);
+            }
         }
     }
     protected void QuestUpdated()

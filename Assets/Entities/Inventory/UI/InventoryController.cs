@@ -223,6 +223,33 @@ public class InventoryController : MonoBehaviour
 
     #endregion
     #region Методы, связанные с взаимодействием с айтемом
+    public bool IsThereASpaceForMultipleItemsInsertion(ItemGrid itemGrid, List<Quest.ItemReward> items)
+    {
+        //Суть: этот метод просто *проверяет*, есть ли свободное место для размещения нескольких айтемов.
+        //Проверяет тем образом, что создает дубликат сетки инвентаря и помещает в неё.
+        //Если всё норм, значит место есть. Если не всё норм, то игрок пошел нахуй.
+
+        if (items.Count == 0)
+        {
+            return false;
+        }
+
+        GameObject theoreticalItemGridGameObject = Instantiate(itemGrid).gameObject;
+        ItemGrid theoreticalItemGrid = theoreticalItemGridGameObject.GetComponent<ItemGrid>();
+        for (int i = 0; i < items.Count; i++)
+        {
+            if(!TryCreateAndInsertItem(theoreticalItemGrid, items[i].item, items[i].amount, items[i].daysBoughtAgo, true))
+            {
+                Destroy(theoreticalItemGrid.gameObject);
+                Debug.Log("not unfalse");
+                return false;
+            }
+        }
+        Destroy(theoreticalItemGrid.gameObject);
+        Debug.Log("true");
+        return true;
+
+    }
     public bool TryCreateAndInsertItem(ItemGrid itemGrid, Item item, int amount, float daysBoughtAgo, bool isFillingStackFirst)
     {
         if (!TryCreateAndInsertItemUnrotated(itemGrid, item, amount, daysBoughtAgo, isFillingStackFirst))

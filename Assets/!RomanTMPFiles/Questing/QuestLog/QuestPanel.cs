@@ -46,7 +46,7 @@ public class QuestPanel : MonoBehaviour
             foreach (var reward in Quest.ItemRewards)
             {
                 _rewardTexts[i].gameObject.SetActive(true);
-                _rewardTexts[i].text = reward.Key.Name + ". Кол-во: " + reward.Value;
+                _rewardTexts[i].text = reward.item.Name + ". Кол-во: " + reward.amount;
                 i++;
             }
         }
@@ -80,10 +80,16 @@ public class QuestPanel : MonoBehaviour
     }
     public void OnRewardButtonClick()
     {
-        //if (есть свободное место) {
-        Quest.GiveReward(); 
-        QuestHandler.RemoveQuest(Quest.GetType());
-        _questNameText.color = _completedAndRewardAcquiredQuestNameColor;
-        //} else {послать игрока нахуй}
+        if (InventoryController.Instance.IsThereASpaceForMultipleItemsInsertion(Player.Singleton.Inventory.GetComponent<ItemGrid>(), Quest.ItemRewards))
+        {
+            Quest.GiveReward();
+            QuestHandler.RemoveQuest(Quest.GetType());
+            _questNameText.color = _completedAndRewardAcquiredQuestNameColor;
+            _rewardButton.gameObject.SetActive(false);
+        }
+        else
+        {
+            //Предупреждение, что игрок пошел нахуй
+        }
     }
 }
