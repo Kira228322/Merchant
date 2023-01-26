@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Linq;
 
 public class GoodsBuyPanel : MonoBehaviour
 {
@@ -45,21 +46,32 @@ public class GoodsBuyPanel : MonoBehaviour
             {
                 _trader.CurrentCountToBuy[(int)_item.TypeOfItem]++; 
             }
-            if (!InventoryController.Instance.TryCreateAndInsertItem(Player.Singleton.Inventory.GetComponent<ItemGrid>(), _item, 1, _boughtDaysAgo, true))
+            InventoryItem boughtItem = InventoryController.Instance.TryCreateAndInsertItem(Player.Singleton.Inventory.GetComponent<ItemGrid>(), _item, 1, _boughtDaysAgo, true);
+            if (boughtItem == null) //не было места поместить вещь
             {
                 return;
             }
             CurrentCount--;
             _trader.SellItem(_item);
-            //Пересасывание SellPanel 
-            for (int i = TradeManager.Singleton.SellPanelContent.childCount - 1; i >= 0; i--)
-                Destroy(TradeManager.Singleton.SellPanelContent.GetChild(i).gameObject);
 
-            for (int i = 0; i < Player.Singleton.Inventory.ItemList.Count; i++)
+            if (CurrentCount <= 0)
             {
-                GameObject tradersGoods = Instantiate(TradeManager.Singleton.GoodsSellPanelPrefab.gameObject, TradeManager.Singleton.SellPanelContent);
-                tradersGoods.GetComponent<GoodsSellPanel>().Init(_trader, Player.Singleton.Inventory.ItemList[i], Player.Singleton.Inventory.GetComponent<ItemGrid>());
+                Destroy(gameObject);
             }
+
+            //Пересасывание SellPanel заменено на обновление только одной панели / создание новой
+            foreach (GoodsSellPanel sellPanel in TradeManager.Singleton.SellPanelContent.GetComponentsInChildren<GoodsSellPanel>())
+            {
+                if (sellPanel.Item == boughtItem)
+                {
+                    sellPanel.Refresh();
+                    return;
+                }
+            }
+            //Такой селлПанели не обнаружено:
+            GameObject tradersGoods = Instantiate(TradeManager.Singleton.GoodsSellPanelPrefab.gameObject, TradeManager.Singleton.SellPanelContent);
+            tradersGoods.GetComponent<GoodsSellPanel>().Init(_trader, boughtItem, Player.Singleton.Inventory.GetComponent<ItemGrid>());
+
         }
     }
 }

@@ -223,46 +223,71 @@ public class InventoryController : MonoBehaviour
 
     #endregion
     #region Методы, связанные с взаимодействием с айтемом
-    public bool IsThereASpaceForMultipleItemsInsertion(ItemGrid itemGrid, List<Quest.ItemReward> items)
+    public bool IsThereAvailableSpaceForInsertingMultipleItems(ItemGrid itemGrid, List<Quest.ItemReward> items)
     {
-        //Суть: этот метод просто *проверяет*, есть ли свободное место для размещения нескольких айтемов.
-        //Проверяет тем образом, что создает дубликат сетки инвентаря и помещает в неё.
-        //Если всё норм, значит место есть. Если не всё норм, то игрок пошел нахуй.
-
+        /*
+         Метод проверяет, есть ли место для размещения нескольких предметов. Сам не размещает (почему - комментарий внизу)
+        */
         if (items.Count == 0)
         {
-            return false;
-        }
-
-        GameObject theoreticalItemGridGameObject = Instantiate(itemGrid).gameObject;
-        ItemGrid theoreticalItemGrid = theoreticalItemGridGameObject.GetComponent<ItemGrid>();
-        for (int i = 0; i < items.Count; i++)
-        {
-            if(!TryCreateAndInsertItem(theoreticalItemGrid, items[i].item, items[i].amount, items[i].daysBoughtAgo, true))
-            {
-                Destroy(theoreticalItemGrid.gameObject);
-                Debug.Log("not unfalse");
-                return false;
-            }
-        }
-        Destroy(theoreticalItemGrid.gameObject);
-        Debug.Log("true");
-        return true;
-
-    }
-    public bool TryCreateAndInsertItem(ItemGrid itemGrid, Item item, int amount, float daysBoughtAgo, bool isFillingStackFirst)
-    {
-        if (!TryCreateAndInsertItemUnrotated(itemGrid, item, amount, daysBoughtAgo, isFillingStackFirst))
-        {
-            if (!TryCreateAndInsertItemRotated(itemGrid, item, amount, daysBoughtAgo, isFillingStackFirst))
-            {
-                return false;
-            }
             return true;
         }
+        //Начнем с того, что отсортируем лист помещаемых предметов от самого крупного к самому маленькому
+        //Если поместить сначала мелкие, для крупных может не остаться места.
+
+        items.Sort((x, y) => (y.item.CellSizeWidth * y.item.CellSizeHeight).CompareTo(x.item.CellSizeWidth * x.item.CellSizeHeight));
+        //^ сортировка по занимаемой площади https://stackoverflow.com/a/3309292
+
+        Dictionary<InventoryItem, int> placedInventoryItems = new();
+        //^Дикционарий для того, чтобы запомнить, какие вещи были помещены и сколько каждой вещи было помещено.
+        //Это нужно, чтобы если не получится поместить все, знать сколько чего и куда было помещено и убрать столько, сколько нужно.
+        //(Если некоторые были помещены в стак, то нужно убрать не весь стак, а столько, сколько в него положили, так ведь?)
+
+        foreach(Quest.ItemReward itemReward in items)
+        {
+            InventoryItem placedItem = TryCreateAndInsertItem(itemGrid, itemReward.item, itemReward.amount, itemReward.daysBoughtAgo, true);
+            if (placedItem != null)
+            {
+                placedInventoryItems.Add(placedItem, itemReward.amount); 
+            }
+            else
+            {
+                foreach (var item in placedInventoryItems)
+                {
+                    itemGrid.RemoveItemsFromAStack(item.Key, item.Value);
+                }
+                return false;
+            }
+        }
+        foreach (var item in placedInventoryItems)
+        {
+            itemGrid.RemoveItemsFromAStack(item.Key, item.Value);
+        }
         return true;
+
+        /*Почему удаляются айтемы вне зависимости от результата:
+        Данный метод всего лишь *проверяет*, есть ли возможность поставить несколько вещей.
+        Он сам их не помещает в инвентарь. Прекрасно осознаю, что это неэффективно, однако
+        такое разделение проще для понимания, например в Quest есть метод GiveReward().
+        Он выдает экспу, рубли и айтемы, если таковые есть. Если бы метод, в котором этот комментарий,
+        выдавал вещи, то об этом бы пришлось помнить и в том методе, соответственно выдавать там только деньги и опыт.
+        Это было бы запутанно, потому что кто-нибудь зашел бы через несколько месяцев и не понял почему там не выдаются предметы.
+
+        Поэтому считаю неэффективность оправданной, к тому же эта группа методов срабатывает только по нажатию кнопки завершения квеста,
+        что в игре не будет часто происходить. (26.01.23)
+        */
+
     }
-    private bool TryCreateAndInsertItemUnrotated(ItemGrid itemGrid, Item item, int amount, float daysBoughtAgo, bool isFillingStackFirst)
+    public InventoryItem TryCreateAndInsertItem(ItemGrid itemGrid, Item item, int amount, float daysBoughtAgo, bool isFillingStackFirst)
+    {
+        InventoryItem result = TryCreateAndInsertItemUnrotated(itemGrid, item, amount, daysBoughtAgo, isFillingStackFirst);
+        if (result == null)
+        {
+            result = TryCreateAndInsertItemRotated(itemGrid, item, amount, daysBoughtAgo, isFillingStackFirst);
+        }
+        return result;
+    }
+    private InventoryItem TryCreateAndInsertItemUnrotated(ItemGrid itemGrid, Item item, int amount, float daysBoughtAgo, bool isFillingStackFirst)
     {
         ItemGrid initialItemGridState = SelectedItemGrid;
 
@@ -271,19 +296,20 @@ public class InventoryController : MonoBehaviour
         InventoryItem itemToInsert = CurrentSelectedItem;
         SelectedItemGrid = itemGrid;
 
-        if (TryInsertItem(itemToInsert, isFillingStackFirst))
+        InventoryItem result = TryInsertItem(itemToInsert, isFillingStackFirst);
+        if (result != null)
         {
             CurrentSelectedItem = null;
             SelectedItemGrid = initialItemGridState;
-            return true;
+            return result;
         }
         //Не получилось поместить
         Destroy(itemToInsert.gameObject);
         CurrentSelectedItem = null;
         SelectedItemGrid = initialItemGridState;
-        return false;
+        return null;
     }
-    private bool TryCreateAndInsertItemRotated(ItemGrid itemGrid, Item item, int amount, float daysBoughtAgo, bool isFillingStackFirst)
+    private InventoryItem TryCreateAndInsertItemRotated(ItemGrid itemGrid, Item item, int amount, float daysBoughtAgo, bool isFillingStackFirst)
     {
         ItemGrid initialItemGridState = SelectedItemGrid;
 
@@ -291,17 +317,18 @@ public class InventoryController : MonoBehaviour
         InventoryItem itemToInsert = CurrentSelectedItem;
         SelectedItemGrid = itemGrid;
 
-        if (TryInsertItem(itemToInsert, isFillingStackFirst))
+        InventoryItem result = TryInsertItem(itemToInsert, isFillingStackFirst);
+        if (result != null)
         {
             CurrentSelectedItem = null;
             SelectedItemGrid = initialItemGridState;
-            return true;
+            return result;
         }
         //Не получилось поместить
         Destroy(itemToInsert.gameObject);
         CurrentSelectedItem = null;
         SelectedItemGrid = initialItemGridState;
-        return false;
+        return null;
     }
 
     public void DestroyItem(ItemGrid itemGrid, InventoryItem item)
@@ -332,8 +359,8 @@ public class InventoryController : MonoBehaviour
     }
     private void PlaceDown(Vector2Int tileGridPosition)
     {
-        bool isSuccessful = SelectedItemGrid.TryPlaceItem(CurrentSelectedItem, tileGridPosition.x, tileGridPosition.y);
-        if (isSuccessful)
+        InventoryItem itemPlaced = SelectedItemGrid.TryPlaceItem(CurrentSelectedItem, tileGridPosition.x, tileGridPosition.y);
+        if (itemPlaced != null)
         {
             CurrentSelectedItem = null;
         }
@@ -400,18 +427,23 @@ public class InventoryController : MonoBehaviour
 
         CurrentSelectedItem.transform.localScale = Vector2.one;
 
-        int selectedItemID = UnityEngine.Random.Range(0, items.Count);
+        int selectedItemID = Random.Range(0, items.Count);
         item.SetItemFromData(items[selectedItemID]); 
     }
-    private void InsertRandomItem() //Для тестирования
+    private InventoryItem InsertRandomItem() //Для тестирования
     {
-        if (SelectedItemGrid == null) { return; }
+        if (SelectedItemGrid == null) { return null; }
         CreateRandomItem();
         InventoryItem itemToInsert = CurrentSelectedItem;
         CurrentSelectedItem = null;
-        if (!TryInsertItem(itemToInsert, true)) Destroy(itemToInsert.gameObject);
+        InventoryItem result = TryInsertItem(itemToInsert, true);
+        if (result == null)
+        {
+            Destroy(itemToInsert.gameObject);
+        }
+        return result;
     }
-    public bool TryPickUpRotateInsert(InventoryItem itemInInventory, ItemGrid itemGrid)
+    public InventoryItem TryPickUpRotateInsert(InventoryItem itemInInventory, ItemGrid itemGrid)
     {
         ItemGrid initialItemGridState = SelectedItemGrid;
         SelectedItemGrid = itemGrid;
@@ -421,45 +453,47 @@ public class InventoryController : MonoBehaviour
         InventoryItem pickedUpItem = CurrentSelectedItem;
         if (itemInInventory.IsRotated)
         {
-            if (TryCreateAndInsertItem(itemGrid, itemInInventory.ItemData, itemInInventory.CurrentItemsInAStack, itemInInventory.BoughtDaysAgo, isFillingStackFirst: false))
+            InventoryItem result = TryCreateAndInsertItem(itemGrid, itemInInventory.ItemData, itemInInventory.CurrentItemsInAStack, itemInInventory.BoughtDaysAgo, isFillingStackFirst: false);
+            if (result != null)
             {
                 Destroy(pickedUpItem.gameObject);
                 SelectedItemGrid = initialItemGridState;
-                return true;
+                return result;
             }
             else
             {
                 PlaceDown(itemPosition);
                 SelectedItemGrid = initialItemGridState;
-                return false;
+                return null;
             }
         }
         else
         {
-            if (TryCreateAndInsertItemRotated(itemGrid, itemInInventory.ItemData, itemInInventory.CurrentItemsInAStack, itemInInventory.BoughtDaysAgo, isFillingStackFirst: false))
+            InventoryItem result = TryCreateAndInsertItemRotated(itemGrid, itemInInventory.ItemData, itemInInventory.CurrentItemsInAStack, itemInInventory.BoughtDaysAgo, isFillingStackFirst: false);
+            if (result != null)
             {
                 Destroy(pickedUpItem.gameObject);
                 SelectedItemGrid = initialItemGridState;
-                return true;
+                return result;
             }
             else
             {
                 PlaceDown(itemPosition);
                 SelectedItemGrid = initialItemGridState;
-                return false;
+                return null;
             }
         }
 
     }
-    private bool TryInsertItem (InventoryItem itemToInsert, bool isFillingStackFirst)
+    private InventoryItem TryInsertItem (InventoryItem itemToInsert, bool isFillingStackFirst)
     {
         Vector2Int? posOnGrid = SelectedItemGrid.FindSpaceForItemInsertion(itemToInsert, isFillingStackFirst);
         if (posOnGrid == null) 
         {
-            return false; 
+            return null; 
         }
-        SelectedItemGrid.TryPlaceItem(itemToInsert, posOnGrid.Value.x, posOnGrid.Value.y);
-        return true;
+        InventoryItem result = SelectedItemGrid.TryPlaceItem(itemToInsert, posOnGrid.Value.x, posOnGrid.Value.y);
+        return result;
     }
 
     #endregion

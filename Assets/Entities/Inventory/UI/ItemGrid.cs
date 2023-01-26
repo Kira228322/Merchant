@@ -291,7 +291,7 @@ public class ItemGrid : MonoBehaviour
             }
         }
     }
-    public bool TryPlaceItem(InventoryItem item, int positionX, int positionY)
+    public InventoryItem TryPlaceItem(InventoryItem item, int positionX, int positionY)
     {
         if (IsOverlapping(positionX, positionY, item.Width, item.Height))
         {
@@ -304,32 +304,33 @@ public class ItemGrid : MonoBehaviour
                     //Если что-то сломается, то стоит обратить внимание сюда
                     //Потенциально может сломаться, если игрок переносит в стек предмет из другой сетки, но другой сетки в игре пока нет
                     //UPD 24.12.22: Может быть, если происходит инсерт в стак, если больше нет места для предметов?
-                    if (!TryPlaceItemInAStack(item, itemInInventory, out int amountInserted))
+                    InventoryItem result = TryPlaceItemInAStack(item, itemInInventory, out InventoryItem leftoverItem);
+                    if (leftoverItem != null)
                     {
                         //Означает, что сколько-то поместилось, но не весь стак целиком
-                        ItemPlacedInTheStack?.Invoke(itemInInventory, amountInserted);
-                        return false; 
+                        ItemPlacedInTheStack?.Invoke(itemInInventory, itemInInventory.CurrentItemsInAStack - leftoverItem.CurrentItemsInAStack);
+                        return null; //TODO: раньше здесь было return false. Обязательно проверить, что сломалось, когда поменял. (26.01.23)
                     }
                     else
                     {
                         //Означает, что поместился весь стак целиком
-                        ItemPlacedInTheStack?.Invoke(itemInInventory, amountInserted);
-                        return true;
+                        ItemPlacedInTheStack?.Invoke(itemInInventory, item.CurrentItemsInAStack);
+                        return result;
                     }
                 }
-                return false;
+                return null;
             }
-            return false;
+            return null;
         }
         //IsOverlapping == false, следовательно в этих клеточках нет предметов, можно спокойно ставить
         //Осталось лишь проверить, если он вообще в границах сетки
         if (!IsInCorrectPosition(positionX, positionY, item.Width, item.Height))
         {
-            return false;
+            return null;
         }
         PlaceItem(item, positionX, positionY);
         ItemPlacedInTheGrid?.Invoke(item);
-        return true;
+        return item;
     }
 
     private void PlaceItem(InventoryItem item, int positionX, int positionY)
@@ -351,7 +352,7 @@ public class ItemGrid : MonoBehaviour
 
         rectTransform.localPosition = position;
     }
-    public bool TryPlaceItemInAStack(InventoryItem itemToPlace, InventoryItem itemToReceive, out int amountInserted)
+    public InventoryItem TryPlaceItemInAStack(InventoryItem itemToPlace, InventoryItem itemToReceive, out InventoryItem leftoverItem)
     {
         //Если прибавить количество айтемов в помещаемом к количеству айтемов в имеющемся, то получится больше, чем макс.стак?
         if (itemToReceive.CurrentItemsInAStack + itemToPlace.CurrentItemsInAStack > itemToReceive.ItemData.MaxItemsInAStack)
@@ -363,16 +364,17 @@ public class ItemGrid : MonoBehaviour
 
             //Я понимаю, что это математика для 4 класса,
             //но подробные объяснения лучше помогут в том числе и мне разобраться в том, что здесь будет, если в будущем нужна будет отладка.
-            amountInserted = itemToReceive.ItemData.MaxItemsInAStack - itemToReceive.CurrentItemsInAStack;
+            int amountInserted = itemToReceive.ItemData.MaxItemsInAStack - itemToReceive.CurrentItemsInAStack;
             itemToPlace.CurrentItemsInAStack -= amountInserted;
             itemToReceive.CurrentItemsInAStack = itemToReceive.ItemData.MaxItemsInAStack;
-            return false;
+            leftoverItem = itemToPlace;
+            return itemToReceive;
         }
         //...Нет, т.е. поместится полностью, помещаемый предмет можно уничтожать.
         itemToReceive.CurrentItemsInAStack += itemToPlace.CurrentItemsInAStack;
-        amountInserted = itemToPlace.CurrentItemsInAStack;
         Destroy(itemToPlace.gameObject);
-        return true;
+        leftoverItem = null;
+        return itemToReceive;
     }
     public void RemoveItemsFromAStack(InventoryItem itemToTruncate, int amount)
     {

@@ -111,7 +111,8 @@ public class ItemInfo : MonoBehaviour
     {
         if (_currentItemSelected.ItemData.CellSizeHeight != _currentItemSelected.ItemData.CellSizeWidth)
         {
-            if (InventoryController.Instance.TryPickUpRotateInsert(_currentItemSelected, _lastItemGridSelected))
+            InventoryItem item = InventoryController.Instance.TryPickUpRotateInsert(_currentItemSelected, _lastItemGridSelected);
+            if (item != null)
             {
                 Destroy(gameObject);
             }
@@ -136,7 +137,8 @@ public class ItemInfo : MonoBehaviour
     public void Split(int amountToSplit) //ћб переместить его в InventoryController?
     {
         _lastItemGridSelected.RemoveItemsFromAStack(_currentItemSelected, amountToSplit); //вроде бы предусмотрено на случай всех невозможных ситуаций через другие скрипты и свойства кнопок
-        if(InventoryController.Instance.TryCreateAndInsertItem(_lastItemGridSelected, _currentItemSelected.ItemData, amountToSplit, _currentItemSelected.BoughtDaysAgo, isFillingStackFirst: false))
+        InventoryItem item = InventoryController.Instance.TryCreateAndInsertItem(_lastItemGridSelected, _currentItemSelected.ItemData, amountToSplit, _currentItemSelected.BoughtDaysAgo, isFillingStackFirst: false);
+        if (item != null)
         {
             Destroy(gameObject);
         }

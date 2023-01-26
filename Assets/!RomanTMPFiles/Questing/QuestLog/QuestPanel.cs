@@ -80,16 +80,17 @@ public class QuestPanel : MonoBehaviour
     }
     public void OnRewardButtonClick()
     {
-        if (InventoryController.Instance.IsThereASpaceForMultipleItemsInsertion(Player.Singleton.Inventory.GetComponent<ItemGrid>(), Quest.ItemRewards))
+        
+        if (Quest.ItemRewards.Count != 0 && !InventoryController.Instance.IsThereAvailableSpaceForInsertingMultipleItems(Player.Singleton.Inventory.GetComponent<ItemGrid>(), Quest.ItemRewards))
+        {
+            Debug.Log("Игрок пошел нахуй");
+        }
+        else
         {
             Quest.GiveReward();
             QuestHandler.RemoveQuest(Quest.GetType());
             _questNameText.color = _completedAndRewardAcquiredQuestNameColor;
             _rewardButton.gameObject.SetActive(false);
-        }
-        else
-        {
-            //Предупреждение, что игрок пошел нахуй
         }
     }
 }

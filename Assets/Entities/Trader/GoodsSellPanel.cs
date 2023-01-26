@@ -18,6 +18,8 @@ public class GoodsSellPanel : MonoBehaviour
     private InventoryItem _item;
     private Trader _trader;
 
+    public InventoryItem Item { get => _item; }
+
     public void Init(Trader trader, InventoryItem itemToSell, ItemGrid playerInventoryItemGrid)
     {
         _playerInventoryItemGrid = playerInventoryItemGrid;
@@ -49,6 +51,7 @@ public class GoodsSellPanel : MonoBehaviour
         {
             _sellButton.interactable = false;
         }
+        _currentCount = _item.CurrentItemsInAStack;
         _countText.text = _currentCount.ToString();
     }
 
