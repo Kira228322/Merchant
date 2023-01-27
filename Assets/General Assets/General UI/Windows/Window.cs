@@ -14,7 +14,7 @@ public abstract class Window : MonoBehaviour
         StartCoroutine(AppearenceAnimation(0.74f, 0.02f, 50));
     }
 
-    private IEnumerator AppearenceAnimation(float duration, float animationFrequency, float appearDistance)
+    protected IEnumerator AppearenceAnimation(float duration, float animationFrequency, float appearDistance)
     { // duration must divide by frequency
         CanvasGroup canvasGroup = GetComponent<CanvasGroup>();
         float alpha = canvasGroup.alpha;
