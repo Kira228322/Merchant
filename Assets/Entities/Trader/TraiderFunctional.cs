@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-[RequireComponent(typeof(Trader))]
+
 public class TraiderFunctional : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private GameObject _functionalWindow;
-    private Trader _trader;
+    private NPC _NPC;
     private Canvas _canvas;
     private Player _player;
 
@@ -16,7 +16,8 @@ public class TraiderFunctional : MonoBehaviour, IPointerClickHandler
     {
         _player = FindObjectOfType<Player>();
         _canvas = FindObjectOfType<Canvas>();
-        _trader = GetComponent<Trader>();
+        _NPC = GetComponent<NPC>();
+        // TODO проверить, будет ли работать, если навешен скрипт Трейдер а не нпс
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -27,6 +28,6 @@ public class TraiderFunctional : MonoBehaviour, IPointerClickHandler
         GameObject window = Instantiate(_functionalWindow, _canvas.transform);
         window.transform.position = Camera.main.WorldToScreenPoint(new Vector3((transform.position.x + _player.transform.position.x) / 2,
              transform.position.y + 3.5f));
-        window.GetComponent<FunctionalWindow>().Init(_trader);
+        window.GetComponent<FunctionalWindow>().Init(_NPC);
     }
 }

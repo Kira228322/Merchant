@@ -9,6 +9,8 @@ public class NPC : MonoBehaviour
     public string Name => _name;
 
     public string ID;
+
+    public TextAsset InkJSON;
       
     public int Affinity
     { 
@@ -26,4 +28,6 @@ public class NPC : MonoBehaviour
         }
     }
     private int _affinity;
+    
+    
 }

@@ -6,27 +6,31 @@ using UnityEngine.PlayerLoop;
 
 public class FunctionalWindow : MonoBehaviour
 {
-    [SerializeField] private TMP_Text _merchantName;
-
-    private Trader _trader;
+    [SerializeField] private TMP_Text _NPCName;
+    [SerializeField] private GameObject _tradeButton;
+    private NPC _NPC;
 
     
     
-    public void Init(Trader trader)
+    public void Init(NPC npc)
     {
-        _trader = trader;
+        _tradeButton.SetActive(false);
+        _NPC = npc;
         
-        _merchantName.text = _trader.Name; 
+        _NPCName.text = _NPC.Name; 
+        if (_NPC is Trader)
+            _tradeButton.SetActive(true);
     }
     
     public void OnTalkButtonClick()
     {
+        DialogueManager.Instance.EnterDialogueMode(_NPC.InkJSON);
         Destroy(gameObject);
     }
 
     public void OnTradeButtonClick()
     {
-        TradeManager.Singleton.OpenTradeWindow(_trader);
+        TradeManager.Singleton.OpenTradeWindow((Trader)_NPC);
         Destroy(gameObject);
     }
     
