@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 
-public class TraiderFunctional : MonoBehaviour, IPointerClickHandler
+public class NPCClickFunctional : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private GameObject _functionalWindow;
     private NPC _NPC;
@@ -17,7 +17,6 @@ public class TraiderFunctional : MonoBehaviour, IPointerClickHandler
         _player = FindObjectOfType<Player>();
         _canvas = FindObjectOfType<Canvas>();
         _NPC = GetComponent<NPC>();
-        // TODO проверить, будет ли работать, если навешен скрипт Трейдер а не нпс
     }
 
     public void OnPointerClick(PointerEventData eventData)
