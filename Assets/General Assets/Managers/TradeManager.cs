@@ -73,7 +73,7 @@ public class TradeManager : MonoBehaviour
         for (int i = 0; i < Player.Singleton.Inventory.ItemList.Count; i++)
         {
             GameObject tradersGoods = Instantiate(GoodsSellPanelPrefab.gameObject, SellPanelContent);
-            tradersGoods.GetComponent<GoodsSellPanel>().Init(trader, Player.Singleton.Inventory.ItemList[i], Player.Singleton.Inventory.GetComponent<ItemGrid>());
+            tradersGoods.GetComponent<GoodsSellPanel>().Init(trader, Player.Singleton.Inventory.ItemList[i], Player.Singleton.Inventory.ItemGrid);
         }
     }
     private void OpenInventory()

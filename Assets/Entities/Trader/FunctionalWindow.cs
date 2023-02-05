@@ -33,5 +33,10 @@ public class FunctionalWindow : MonoBehaviour
         TradeManager.Singleton.OpenTradeWindow((Trader)_NPC);
         Destroy(gameObject);
     }
-    
+
+    public void OnInteractButtonClick()
+    {
+        _NPC.Interact();
+    }
+
 }

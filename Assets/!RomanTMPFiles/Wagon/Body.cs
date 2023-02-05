@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Body : MonoBehaviour
+public class Body : WagonPart
 {
-    [SerializeField] private Sprite _sprite;
-    private int _inventoryRows;
-    public Sprite Sprite => _sprite;
+    [SerializeField] [Header("Сколько ВСЕГО должно быть рядов в инвентаре")] private int _inventoryRows;
     public int InventoryRows => _inventoryRows;
-    private void Start()
+    public override void Replace(WagonPart wagonPart)
     {
-        _sprite = GetComponent<SpriteRenderer>().sprite;
+        base.Replace(wagonPart);
+        Body body = wagonPart as Body;
+        _inventoryRows = body.InventoryRows;
     }
 }

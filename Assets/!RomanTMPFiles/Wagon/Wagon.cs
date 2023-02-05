@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Wagon : MonoBehaviour
 {
-    [HideInInspector] public Wheel Wheel;
-    [HideInInspector] public Body Body;
-    [HideInInspector] public Suspension Suspension;
+    public Wheel Wheel;
+    public Body Body;
+    public Suspension Suspension;
 
     [SerializeField] private SpriteRenderer _wheelSprite;
     [SerializeField] private SpriteRenderer _bodySprite;
@@ -17,11 +17,12 @@ public class Wagon : MonoBehaviour
     
     public void RefreshStats()
     {
-        // TODO
-        // Вызывать, когда происходит улучшение телеги 
-        
-        // Изменить размер инвентаря, допустимый вес
         _qualityModifier = Wheel.QualityModifier;
+
+        int rowsToAdd = Body.InventoryRows - Player.Singleton.Inventory.ItemGrid.GridSizeHeight;
+        Player.Singleton.Inventory.ItemGrid.AddRowsToInventory(rowsToAdd);
+
+        //вес будет имплементирован в будущем
 
         _wheelSprite.sprite = Wheel.Sprite;
         _bodySprite.sprite = Body.Sprite;

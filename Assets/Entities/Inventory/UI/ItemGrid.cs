@@ -20,6 +20,8 @@ public class ItemGrid : MonoBehaviour
     private Vector2 _positionOnTheGrid = new();
     private Vector2Int _tileGridPosition = new();
 
+    public int GridSizeHeight => _gridSizeHeight;
+
     public event UnityAction<InventoryItem> ItemPlacedInTheGrid;
     public event UnityAction<InventoryItem, int> ItemPlacedInTheStack;
     public event UnityAction<InventoryItem> ItemRemovedFromTheGrid;
@@ -383,6 +385,7 @@ public class ItemGrid : MonoBehaviour
     }
 
     #endregion
+    #region ћетоды действий с инвентарЄм (добавить €чейки и многое-многое другое)
     public void AddRowsToInventory(int numberOfRowsToAdd) 
     {
         for (int i = 0; i < numberOfRowsToAdd; i++)
@@ -396,6 +399,7 @@ public class ItemGrid : MonoBehaviour
         _rectTransform.sizeDelta = size;
 
     }
+    #endregion
 
 
 }

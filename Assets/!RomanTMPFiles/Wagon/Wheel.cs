@@ -3,15 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Wheel : MonoBehaviour
+public class Wheel : WagonPart
 {
-    private Sprite _sprite; 
-    private float _qualityModifier;
-    public Sprite Sprite => _sprite;
+    [SerializeField] private float _qualityModifier;
     public float QualityModifier => _qualityModifier;
-
-    private void Start()
+    public override void Replace(WagonPart wagonPart)
     {
-        _sprite = GetComponent<SpriteRenderer>().sprite;
+        base.Replace(wagonPart);
+        Wheel wheel = wagonPart as Wheel;
+        _qualityModifier = wheel.QualityModifier;
     }
 }

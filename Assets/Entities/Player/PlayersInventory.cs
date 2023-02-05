@@ -11,7 +11,8 @@ public class PlayersInventory : MonoBehaviour
 
     public GameObject InventoryPanel; //в инспекторе нужно задать ссылку на главную панель, содержащую весь инвентарь
 
-    public List<InventoryItem> ItemList { get => _inventory; }
+    public List<InventoryItem> ItemList => _inventory;
+    public ItemGrid ItemGrid => _inventoryItemGrid;
 
     private void Awake()
     {

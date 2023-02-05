@@ -29,7 +29,7 @@ public class CollectItemsGoal : Goal
         }
         Evaluate();
 
-        ItemGrid playerInventoryItemGrid = Player.Singleton.Inventory.GetComponent<ItemGrid>();
+        ItemGrid playerInventoryItemGrid = Player.Singleton.Inventory.ItemGrid;
         playerInventoryItemGrid.ItemPlacedInTheGrid += ItemCollected;
         playerInventoryItemGrid.ItemPlacedInTheStack += ItemCollected;
         playerInventoryItemGrid.ItemRemovedFromTheGrid += ItemRemoved;
@@ -40,7 +40,7 @@ public class CollectItemsGoal : Goal
     {
         base.Deinitialize();
 
-        ItemGrid playerInventoryItemGrid = Player.Singleton.Inventory.GetComponent<ItemGrid>();
+        ItemGrid playerInventoryItemGrid = Player.Singleton.Inventory.ItemGrid;
         playerInventoryItemGrid.ItemPlacedInTheGrid -= ItemCollected;
         playerInventoryItemGrid.ItemPlacedInTheStack -= ItemCollected;
         playerInventoryItemGrid.ItemRemovedFromTheGrid -= ItemRemoved;

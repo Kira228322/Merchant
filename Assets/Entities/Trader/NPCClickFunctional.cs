@@ -14,7 +14,7 @@ public class NPCClickFunctional : MonoBehaviour, IPointerClickHandler
 
     private void Start()
     {
-        _player = FindObjectOfType<Player>();
+        _player = Player.Singleton;
         _canvas = FindObjectOfType<Canvas>();
         _NPC = GetComponent<NPC>();
     }
