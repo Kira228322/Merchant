@@ -22,11 +22,11 @@ public class GoodsBuyPanel : MonoBehaviour
     }
     private int _currentCount;
     private Item _item;
-    private Trader _trader;
+    private NPCTrader _trader;
     private float _boughtDaysAgo;
     public bool IsOriginatedFromTrader;
     public Item Item => _item;
-    public void Init(Trader trader, Item goods, float boughtDaysAgo, bool isOriginatedFromTrader, int count)
+    public void Init(NPCTrader trader, Item goods, float boughtDaysAgo, bool isOriginatedFromTrader, int count)
     {
         _trader = trader;
         _item = goods;

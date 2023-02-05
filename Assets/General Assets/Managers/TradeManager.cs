@@ -31,7 +31,7 @@ public class TradeManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    public void OpenTradeWindow(Trader trader)
+    public void OpenTradeWindow(NPCTrader trader)
     {
         InventoryController.Instance.enabled = false;
         _playerBlock.alpha = 0;
@@ -49,7 +49,7 @@ public class TradeManager : MonoBehaviour
         Singleton.SellPanel.SetActive(false);
         Player.Singleton.Inventory.InventoryPanel.SetActive(false);
     }
-    private void OpenBuyPanel(Trader trader)
+    private void OpenBuyPanel(NPCTrader trader)
     {
         Singleton.BuyPanel.SetActive(true);
         for (int i = Singleton.BuyPanelContent.childCount - 1; i >= 0; i--)
@@ -63,7 +63,7 @@ public class TradeManager : MonoBehaviour
         }
 
     }
-    private void OpenSellPanel(Trader trader)
+    private void OpenSellPanel(NPCTrader trader)
     {
         Singleton.SellPanel.SetActive(true);
 

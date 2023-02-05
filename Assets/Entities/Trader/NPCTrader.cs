@@ -6,7 +6,7 @@ using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
 
-public class Trader : NPC
+public class NPCTrader : NPC
 {
     [SerializeField] private List<TraderType> _traderTypes;
     
@@ -92,7 +92,7 @@ public class Trader : NPC
 
 
 
-    [CustomEditor(typeof(Trader))]
+    [CustomEditor(typeof(NPCTrader))]
     public class MerchantEditor : Editor 
     {
         public override void OnInspectorGUI()
@@ -100,7 +100,7 @@ public class Trader : NPC
             base.OnInspectorGUI();
             
             
-            Trader trader = (Trader)target;
+            NPCTrader trader = (NPCTrader)target;
             
             
             

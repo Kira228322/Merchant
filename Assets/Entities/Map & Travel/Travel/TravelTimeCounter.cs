@@ -45,7 +45,7 @@ public class TravelTimeCounter : MonoBehaviour
         _minutes += Time.deltaTime * GameTime.GetTimeScale();
         if (_minutes >= 60)
         {
-            MoveIconeOnMap();
+            MoveIconOnMap();
             _minutes -= 60;
             _duration--;
             SetTravelTimeText();
@@ -69,7 +69,7 @@ public class TravelTimeCounter : MonoBehaviour
             _travelTime.text = _duration/24 + " дней " + _duration % 24 + " часов";
     }
 
-    private void MoveIconeOnMap()
+    private void MoveIconOnMap()
     {
         count++;
         float elementRoad = _road.LengthOfRoad / _travelingTime;

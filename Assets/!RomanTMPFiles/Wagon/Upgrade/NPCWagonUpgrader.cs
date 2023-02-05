@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WagonUpgrader : NPC
+public class NPCWagonUpgrader : NPC
 {
     [SerializeField] private List<Wheel> _wheelProgression;
     [SerializeField] private List<Body> _bodyProgression;

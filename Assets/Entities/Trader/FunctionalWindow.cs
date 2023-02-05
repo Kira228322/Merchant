@@ -18,7 +18,7 @@ public class FunctionalWindow : MonoBehaviour
         _NPC = npc;
         
         _NPCName.text = _NPC.Name; 
-        if (_NPC is Trader)
+        if (_NPC is NPCTrader)
             _tradeButton.SetActive(true);
     }
     
@@ -30,7 +30,7 @@ public class FunctionalWindow : MonoBehaviour
 
     public void OnTradeButtonClick()
     {
-        TradeManager.Singleton.OpenTradeWindow((Trader)_NPC);
+        TradeManager.Singleton.OpenTradeWindow((NPCTrader)_NPC);
         Destroy(gameObject);
     }
 

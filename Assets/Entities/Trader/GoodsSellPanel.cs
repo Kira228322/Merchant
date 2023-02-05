@@ -16,11 +16,11 @@ public class GoodsSellPanel : MonoBehaviour
     private int _currentCount;
     private ItemGrid _playerInventoryItemGrid;
     private InventoryItem _item;
-    private Trader _trader;
+    private NPCTrader _trader;
 
     public InventoryItem Item { get => _item; }
 
-    public void Init(Trader trader, InventoryItem itemToSell, ItemGrid playerInventoryItemGrid)
+    public void Init(NPCTrader trader, InventoryItem itemToSell, ItemGrid playerInventoryItemGrid)
     {
         _playerInventoryItemGrid = playerInventoryItemGrid;
         _trader = trader;
