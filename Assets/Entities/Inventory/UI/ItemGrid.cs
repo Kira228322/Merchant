@@ -116,11 +116,11 @@ public class ItemGrid : MonoBehaviour
 
         return true;
     }
-    private bool IsRotDifferenceBetweenTwoItemsLessThanOne(InventoryItem item1, InventoryItem item2)
+    private bool IsRotDifferenceBetweenTwoItemsLessThanOne(InventoryItem firstItem, InventoryItem secondItem)
     {
-        if (item1.ItemData.IsPerishable && item2.ItemData.IsPerishable)
+        if (firstItem.ItemData.IsPerishable && secondItem.ItemData.IsPerishable)
         {
-            if (Math.Abs(item1.BoughtDaysAgo - item2.BoughtDaysAgo) < 1)
+            if (Math.Abs(firstItem.BoughtDaysAgo - secondItem.BoughtDaysAgo) < 1)
             {
                 return true;
             }
@@ -132,7 +132,6 @@ public class ItemGrid : MonoBehaviour
     {
         //Если тип предмета, лежащий в инвентаре такой же, как предмет, который мы пытаемся установить И
         //И стак этого предмета неполный, т.е может вместить в себя ещё столько предметов, сколько в помещаемом стаке, то true.
-        //И должен
         InventoryItem itemInInventory = _storedInventoryItems[positionY][positionX];
         if (itemInInventory != null)
         {
@@ -165,12 +164,14 @@ public class ItemGrid : MonoBehaviour
     {
         return _storedInventoryItems[y][x];
     }
-    public List<InventoryItem> GetAllItemsInTheGrid()
+    
+    [System.Obsolete] public List<InventoryItem> GetAllItemsInTheGrid()
+    {
         //Дорогой метод, на данный момент нигде не используется, но может быть нужен в будущем.
         //По сути, его функционал и так выполняет PlayersInventory, следя за всеми айтемами в любой момент (и эффективнее),
         //но такой метод может быть нужен, если нужно получить все предметы в другой сетке инвентаря (инвентаря не игрока)
         //может какой нибудь сундук или я хуй знает, в общем, если не найдет своё применение, потом уберу.
-    {
+
         List<InventoryItem> result = new();
         for (int i = 0; i < _storedInventoryItems.Count; i++)
         {
@@ -198,13 +199,8 @@ public class ItemGrid : MonoBehaviour
     {
         //Буль определяет порядок заполнения - если true, сначала будет искать незаполненные стаки и заполнять их (как в майнкрафте)
         //Если false, сначала будет создавать новые стаки, а если места не останется, заполнять имеющиеся.
-        //Такая неоднозначность нужна поскольку сейчас, когда я это пишу, я планирую использовать это для создания
-        //кнопки разделения айтемов:
-        //Очевидно, обычным режимом работы должно быть сперва заполнение стаков, но при разделении ведь нужно обязательно создавать
-        //новый стак, потому что если просто делать InsertItem() по нажатию кнопки разделения, то предмет просто вернется в стак,
-        //из которого его разделили 
-        //
-        //Поэтому кнопка разделения айтемов будет использовать этот метод с false, а обычное поведение заполнения с true.
+        //Пример: Кнопка разделения айтемов будет использовать этот метод с false, а помещение предмета в инвентарь с true.
+
         if (isFillingStackFirst)
         {
             Vector2Int? result = FindUnfilledStackOfSameItems(itemToInsert);
@@ -309,7 +305,7 @@ public class ItemGrid : MonoBehaviour
                     {
                         //Означает, что сколько-то поместилось, но не весь стак целиком
                         ItemPlacedInTheStack?.Invoke(itemInInventory, itemInInventory.CurrentItemsInAStack - leftoverItem.CurrentItemsInAStack);
-                        return null; //TODO: раньше здесь было return false. Обязательно проверить, что сломалось, когда поменял. (26.01.23)
+                        return null;
                     }
                     else
                     {
