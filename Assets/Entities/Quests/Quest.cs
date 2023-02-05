@@ -68,7 +68,7 @@ public class Quest: MonoBehaviour
         {
             foreach (var item in ItemRewards)
             {
-                InventoryController.Instance.TryCreateAndInsertItem(Player.Singleton.Inventory.GetComponent<ItemGrid>(), item.item, item.amount, item.daysBoughtAgo, true);
+                InventoryController.Instance.TryCreateAndInsertItem(Player.Singleton.Inventory.ItemGrid, item.item, item.amount, item.daysBoughtAgo, true);
             }
         }
     }

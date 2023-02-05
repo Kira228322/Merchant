@@ -29,5 +29,9 @@ public class NPC : MonoBehaviour
     }
     private int _affinity;
     
+    public virtual void Interact()  //Я сделаю позже по уму всё здесь
+    {
+
+    }
     
 }

@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Suspension : MonoBehaviour
+public class Suspension: WagonPart
 {
-    [SerializeField] private Sprite _sprite;
-    private int _weight;
-    public Sprite Sprite => _sprite;
+    [SerializeField] private int _weight;
     public int Weight => _weight;
-    private void Start()
+    public override void Replace(WagonPart wagonPart)
     {
-        _sprite = GetComponent<SpriteRenderer>().sprite;
+        base.Replace(wagonPart);
+        Suspension suspension = wagonPart as Suspension;
+        _weight = suspension.Weight;
     }
 }
