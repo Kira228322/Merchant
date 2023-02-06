@@ -19,8 +19,8 @@ public class NPCTrader : NPC
     [HideInInspector] public List<int> CountToBuy = new ();
     [HideInInspector] public List<int> CurrentCountToBuy = new ();
 
-    [HideInInspector] public List<int> _newPrice = new ();
-    [HideInInspector] public List<int> _countOfGood = new ();
+    [HideInInspector] public List<int> NewPrice = new ();
+    [HideInInspector] public List<int> CountOfGood = new ();
     public class TraderGood
     {
         public Item Good;
@@ -37,8 +37,8 @@ public class NPCTrader : NPC
         {
             TraderGoods.Add(new TraderGood());
             TraderGoods[i].Good = Instantiate(_goods[i]);
-            TraderGoods[i].Good.Price = _newPrice[i];
-            TraderGoods[i].Count = _countOfGood[i];
+            TraderGoods[i].Good.Price = NewPrice[i];
+            TraderGoods[i].Count = CountOfGood[i];
         }
     }
 
@@ -108,15 +108,15 @@ public class NPCTrader : NPC
             
             NPCTrader trader = (NPCTrader)target;
 
-            while (trader._newPrice.Count < trader._goods.Count)
+            while (trader.NewPrice.Count < trader._goods.Count)
             {
-                trader._newPrice.Add(0);
-                trader._countOfGood.Add(0);
+                trader.NewPrice.Add(0);
+                trader.CountOfGood.Add(0);
             }
-            while (trader._newPrice.Count > trader._goods.Count)
+            while (trader.NewPrice.Count > trader._goods.Count)
             {
-                trader._newPrice.RemoveAt(trader._newPrice.Count-1);
-                trader._countOfGood.RemoveAt(trader._countOfGood.Count-1);
+                trader.NewPrice.RemoveAt(trader.NewPrice.Count-1);
+                trader.CountOfGood.RemoveAt(trader.CountOfGood.Count-1);
             }
             
             for (int i = 0; i < trader._goods.Count; i++)
@@ -131,11 +131,11 @@ public class NPCTrader : NPC
                 
                 EditorGUILayout.Space(2, true);
                 EditorGUILayout.LabelField("Price", GUILayout.MaxWidth(31));
-                trader._newPrice[i] = EditorGUILayout.IntField(trader._newPrice[i]);
+                trader.NewPrice[i] = EditorGUILayout.IntField(trader.NewPrice[i]);
                 
                 EditorGUILayout.Space(2, true);
                 EditorGUILayout.LabelField("Count", GUILayout.MaxWidth(36.5f));
-                trader._countOfGood[i] = EditorGUILayout.IntField(trader._countOfGood[i]);
+                trader.CountOfGood[i] = EditorGUILayout.IntField(trader.CountOfGood[i]);
                 EditorGUILayout.EndHorizontal();
             }
         }
