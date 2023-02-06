@@ -11,9 +11,14 @@ public class CanvasWarningGenerator : MonoBehaviour
 
     private void Start()
     {
-        if (Instance != null) 
-            Debug.Log("Warning generator уже существует");
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void CreateWarning(string label, string message)

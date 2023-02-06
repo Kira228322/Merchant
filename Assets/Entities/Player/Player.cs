@@ -7,13 +7,12 @@ public class Player : MonoBehaviour
 
     private PlayerMover _playerMover;
     private PlayersInventory _inventory;
-    private Wagon _wagon;
+    private PlayerWagonStats _wagonStats;
     private int _money;
 
-
-    public Wagon Wagon => _wagon;
     public PlayerMover PlayerMover => _playerMover;
     public PlayersInventory Inventory => _inventory;
+    public PlayerWagonStats WagonStats => _wagonStats;
 
     public PlayerExperience Experience = new();
     public PlayerStats Statistics = new();
@@ -57,10 +56,10 @@ public class Player : MonoBehaviour
             PlayerSingletonChanged?.Invoke(); //При переходе между сценами 
         }
 
-        _inventory = FindObjectOfType<PlayersInventory>(true);
-        _wagon = FindObjectOfType<Wagon>();
-        _playerMover = GetComponent<PlayerMover>();
-        if (_playerMover == null) Debug.LogError("Ты делаешь GetComponent<PlayerMover>, но ты делаешь его без уважения (но на этой сцене игрок не должен двигаться). Наверное, нужно что-то исправить в коде.");
+
+        _playerMover = GetComponent<PlayerMover>(); //Висит на Player не всегда, есть сцены без движения, поэтому нехорошо
+        _wagonStats = GetComponent<PlayerWagonStats>(); //Хранит только данные, висит всегда
+        _inventory = FindObjectOfType<PlayersInventory>(true); //Допустимо, ведь инвентарь в целом всегда доступен 
         
     }
 
@@ -97,5 +96,7 @@ public class Player : MonoBehaviour
         Needs = player.Needs;
         
         Money = player.Money;
+
+        
     }
 }

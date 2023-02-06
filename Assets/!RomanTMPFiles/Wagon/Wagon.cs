@@ -13,19 +13,33 @@ public class Wagon : MonoBehaviour
     [SerializeField] private SpriteRenderer _suspensionSprite;
     
     private float _qualityModifier; // при вычислении качества дороги после поездки использовать этот параметр 
-    
-    
-    public void RefreshStats()
+
+    private void Start()
     {
+        //«агрузка статоу из Player.WagonStats
+
+        Wheel = Player.Singleton.WagonStats.Wheel;
+        Body = Player.Singleton.WagonStats.Body;
+        Suspension = Player.Singleton.WagonStats.Suspension;
+
         _qualityModifier = Wheel.QualityModifier;
+    }
 
-        int rowsToAdd = Body.InventoryRows - Player.Singleton.Inventory.ItemGrid.GridSizeHeight;
-        Player.Singleton.Inventory.ItemGrid.AddRowsToInventory(rowsToAdd);
+    private void OnEnable()
+    {
+        Player.Singleton.WagonStats.WagonStatsRefreshed += OnWagonStatsRefreshed;
+    }
+    private void OnDisable()
+    {
+        Player.Singleton.WagonStats.WagonStatsRefreshed -= OnWagonStatsRefreshed;
+    }
 
-        //вес будет имплементирован в будущем
-
+    private void OnWagonStatsRefreshed()
+    {
         _wheelSprite.sprite = Wheel.Sprite;
         _bodySprite.sprite = Body.Sprite;
         _suspensionSprite.sprite = Suspension.Sprite;
+
+        _qualityModifier = Wheel.QualityModifier;
     }
 }
