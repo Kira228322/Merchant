@@ -55,11 +55,11 @@ public class TradeManager : MonoBehaviour
         for (int i = Singleton.BuyPanelContent.childCount - 1; i >= 0; i--)
             Destroy(Singleton.BuyPanelContent.GetChild(i).gameObject);
 
-        for (int i = 0; i < trader.Goods.Count; i++)
+        for (int i = 0; i < trader.TraderGoods.Count; i++)
         {
-            if (trader.CountOfGood[i] <= 0) continue;
+            if (trader.TraderGoods[i].Count <= 0) continue;
             GameObject tradersGoods = Instantiate(GoodsBuyPanelPrefab.gameObject, BuyPanelContent);
-            tradersGoods.GetComponent<GoodsBuyPanel>().Init(trader, trader.Goods[i], 0f, true, trader.CountOfGood[i]);
+            tradersGoods.GetComponent<GoodsBuyPanel>().Init(trader, trader.TraderGoods[i].Good, 0f, true, trader.TraderGoods[i].Count);
         }
 
     }

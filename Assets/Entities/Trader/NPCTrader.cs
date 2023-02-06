@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -11,29 +12,34 @@ public class NPCTrader : NPC
     [SerializeField] private List<TraderType> _traderTypes;
     
     
-    public List<Item> Goods;
-    [HideInInspector] public List<Item> MerchantGoods;
+    [SerializeField] private List<Item> _goods;
+    public List<TraderGood> TraderGoods = new();
     
-    [HideInInspector] public List<float> Coefficient = new List<float>();
-    [HideInInspector] public List<int> CountToBuy = new List<int>();
-    [HideInInspector] public List<int> CurrentCountToBuy = new List<int>();
+    [HideInInspector] public List<float> Coefficient = new ();
+    [HideInInspector] public List<int> CountToBuy = new ();
+    [HideInInspector] public List<int> CurrentCountToBuy = new ();
 
-    [HideInInspector] public List<int> NewPrice;
-    [HideInInspector] public List<int> CountOfGood;
-
+    [HideInInspector] public List<int> _newPrice = new ();
+    [HideInInspector] public List<int> _countOfGood = new ();
+    public class TraderGood
+    {
+        public Item Good;
+        public int Count;
+    }
+    
+    
     private void Start()
     {
         SetTradersStats();
-        
-        
-        MerchantGoods = new List<Item>();
-        for (int i = 0; i < Goods.Count; i++)
+
+        TraderGoods = new List<TraderGood>();
+        for (int i = 0; i < _goods.Count; i++)
         {
-            MerchantGoods.Add(Instantiate(Goods[i])); // Важно продублировать объект типа ScriptableObject, тк иначе
-            MerchantGoods[i].Price = NewPrice[i]; // он будет ссылаться на оригинал и изменять его понял. нужен дубликат
+            TraderGoods.Add(new TraderGood());
+            TraderGoods[i].Good = Instantiate(_goods[i]);
+            TraderGoods[i].Good.Price = _newPrice[i];
+            TraderGoods[i].Count = _countOfGood[i];
         }
-
-
     }
 
     private void SetTradersStats()
@@ -80,11 +86,11 @@ public class NPCTrader : NPC
 
     public void SellItem(Item item)
     {
-        for (int i = 0; i < Goods.Count; i++)
+        for (int i = 0; i < TraderGoods.Count; i++)
         {
-            if (item == Goods[i])
+            if (item == TraderGoods[i].Good)
             {
-                CountOfGood[i]--;
+                TraderGoods[i].Count--;
                 break;
             }
         }
@@ -93,7 +99,7 @@ public class NPCTrader : NPC
 
 
     [CustomEditor(typeof(NPCTrader))]
-    public class MerchantEditor : Editor 
+    public class MerchantEditor : Editor
     {
         public override void OnInspectorGUI()
         {
@@ -101,38 +107,35 @@ public class NPCTrader : NPC
             
             
             NPCTrader trader = (NPCTrader)target;
-            
-            
-            
-            
-            while (trader.NewPrice.Count < trader.Goods.Count)
+
+            while (trader._newPrice.Count < trader._goods.Count)
             {
-                trader.NewPrice.Add(0);
-                trader.CountOfGood.Add(0);
+                trader._newPrice.Add(0);
+                trader._countOfGood.Add(0);
             }
-            while (trader.NewPrice.Count > trader.Goods.Count)
+            while (trader._newPrice.Count > trader._goods.Count)
             {
-                trader.NewPrice.RemoveAt(trader.NewPrice.Count-1);
-                trader.CountOfGood.RemoveAt(trader.CountOfGood.Count-1);
+                trader._newPrice.RemoveAt(trader._newPrice.Count-1);
+                trader._countOfGood.RemoveAt(trader._countOfGood.Count-1);
             }
             
-            for (int i = 0; i < trader.Goods.Count; i++)
+            for (int i = 0; i < trader._goods.Count; i++)
             {
-                if (trader.Goods[i] == null)
+                if (trader._goods[i] == null)
                     continue;
                 EditorGUILayout.BeginHorizontal();
                 EditorGUILayout.Space(-18, true);
-                EditorGUILayout.LabelField(trader.Goods[i].Name, GUILayout.MaxWidth(90));
+                EditorGUILayout.LabelField(trader._goods[i].Name, GUILayout.MaxWidth(90));
                 EditorGUILayout.Space(1, true);
-                EditorGUILayout.LabelField(trader.Goods[i].Price + "-AvgPrice", GUILayout.MaxWidth(75));
+                EditorGUILayout.LabelField(trader._goods[i].Price + "-AvgPrice", GUILayout.MaxWidth(75));
                 
                 EditorGUILayout.Space(2, true);
                 EditorGUILayout.LabelField("Price", GUILayout.MaxWidth(31));
-                trader.NewPrice[i] = EditorGUILayout.IntField(trader.NewPrice[i]);
+                trader._newPrice[i] = EditorGUILayout.IntField(trader._newPrice[i]);
                 
                 EditorGUILayout.Space(2, true);
                 EditorGUILayout.LabelField("Count", GUILayout.MaxWidth(36.5f));
-                trader.CountOfGood[i] = EditorGUILayout.IntField(trader.CountOfGood[i]);
+                trader._countOfGood[i] = EditorGUILayout.IntField(trader._countOfGood[i]);
                 EditorGUILayout.EndHorizontal();
             }
         }
