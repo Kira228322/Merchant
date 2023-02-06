@@ -6,19 +6,21 @@ using TMPro;
 
 public class InventoryPanel : MonoBehaviour
 {
-    //Отображение Money и TotalWeight в окне инвентаря
+    //Отображение Money и Weight в окне инвентаря
 
     [SerializeField] private ItemGrid _inventoryItemGrid;
     [SerializeField] private TMP_Text _goldText;
-    [SerializeField] private TMP_Text _totalWeightText;
+    [SerializeField] private TMP_Text _weightText;
 
-    public float TotalWeight;
+    private float _currentTotalWeight;
+    private float _maxTotalWeight;
     private int _money;
 
 
     private void Start()
     {
-        TotalWeight = CalculateWeight();
+        _currentTotalWeight = _inventoryItemGrid.CurrentTotalWeight;
+        _maxTotalWeight = _inventoryItemGrid.MaxTotalWeight;
         _money = Player.Singleton.Money;
         Refresh();
     }
@@ -36,55 +38,18 @@ public class InventoryPanel : MonoBehaviour
     {
         Player.PlayerSingletonChanged += OnPlayerSingletonChanged;
         Player.Singleton.MoneyChanged += OnMoneyChanged;
-        _inventoryItemGrid.ItemPlacedInTheGrid += AddWeight;
-        _inventoryItemGrid.ItemPlacedInTheStack += AddWeight;
-        _inventoryItemGrid.ItemRemovedFromTheGrid += SubstractWeight;
-        _inventoryItemGrid.ItemsRemovedFromTheStack += SubstractWeight;
         
     }
     private void OnDisable()
     {
         Player.PlayerSingletonChanged -= OnPlayerSingletonChanged;
         Player.Singleton.MoneyChanged -= OnMoneyChanged;
-        _inventoryItemGrid.ItemPlacedInTheGrid -= AddWeight;
-        _inventoryItemGrid.ItemPlacedInTheStack -= AddWeight;
-        _inventoryItemGrid.ItemRemovedFromTheGrid -= SubstractWeight;
-        _inventoryItemGrid.ItemsRemovedFromTheStack -= SubstractWeight;
         
-    }
-    private float CalculateWeight()
-    {
-        float totalWeight = 0;
-        foreach (var item in Player.Singleton.Inventory.ItemList)
-        {
-            totalWeight += item.ItemData.Weight * item.CurrentItemsInAStack;
-        }
-        return totalWeight;
     }
     private void Refresh()
     {
         _goldText.text = _money.ToString();
-        _totalWeightText.text = TotalWeight.ToString("F1"); //.ToString("F1") округляет до 1 знаков после запятой
-    }
-    private void AddWeight(InventoryItem item)
-    {
-        TotalWeight += item.ItemData.Weight * item.CurrentItemsInAStack;
-        Refresh();
-    }
-    private void AddWeight(InventoryItem item, int howManyWereInserted)
-    {
-        TotalWeight += item.ItemData.Weight * howManyWereInserted;
-        Refresh();
-    }
-    private void SubstractWeight(InventoryItem item)
-    {
-        TotalWeight -= item.ItemData.Weight * item.CurrentItemsInAStack;
-        Refresh();
-    }
-    private void SubstractWeight(InventoryItem item, int amountRemoved)
-    {
-        TotalWeight -= item.ItemData.Weight * amountRemoved;
-        Refresh();
+        _weightText.text = _currentTotalWeight.ToString("F1") + " / " + _maxTotalWeight.ToString("F1"); //.ToString("F1") округляет до 1 знаков после запятой
     }
     private void OnMoneyChanged(int money)
     {

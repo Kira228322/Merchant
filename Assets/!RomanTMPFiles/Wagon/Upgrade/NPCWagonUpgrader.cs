@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WagonUpgrader : NPC
+public class NPCWagonUpgrader : NPC
 {
     [SerializeField] private List<Wheel> _wheelProgression;
     [SerializeField] private List<Body> _bodyProgression;
     [SerializeField] private List<Suspension> _suspensionProgression;
 
-    private Wagon _wagon;
+    private PlayerWagonStats _wagonStats;
 
     private void Start()
     {
-        _wagon = Player.Singleton.Wagon;
+        _wagonStats = Player.Singleton.WagonStats;
     }
 
     public override void Interact()
@@ -21,9 +21,9 @@ public class WagonUpgrader : NPC
         //Открыть меню с текущими статами каждой запчасти и статами следующей запчасти, с кнопкой купить.
         base.Interact();
         //По поводу интеракта сделаю позже, сейчас тесты:
-        Upgrade(_wagon.Body);
-        Upgrade(_wagon.Suspension);
-        Upgrade(_wagon.Wheel);
+        Upgrade(_wagonStats.Body);
+        Upgrade(_wagonStats.Suspension);
+        Upgrade(_wagonStats.Wheel);
 
     }
 
@@ -33,7 +33,7 @@ public class WagonUpgrader : NPC
         switch (wagonPart)
         {
             case Wheel:
-                Debug.Log("До прокачки колесо: " + $"{_wagon.Wheel.QualityModifier}");
+                Debug.Log("До прокачки колесо: " + $"{_wagonStats.Wheel.QualityModifier}");
                 for (int i = 0; i < _wheelProgression.Count - 1; i++)
                 {
                     if (wagonPart.Level == _wheelProgression[i].Level)
@@ -44,7 +44,7 @@ public class WagonUpgrader : NPC
                 break;
 
             case Body:
-                Debug.Log("До прокачки тело: " + $"{_wagon.Body.InventoryRows}");
+                Debug.Log("До прокачки тело: " + $"{_wagonStats.Body.InventoryRows}");
                 for (int i = 0; i < _bodyProgression.Count - 1; i++)
                 {
                     if (wagonPart.Level == _bodyProgression[i].Level)
@@ -55,7 +55,7 @@ public class WagonUpgrader : NPC
                 break;
 
             case Suspension:
-                Debug.Log("До прокачки суспензия: " + $"{_wagon.Suspension.Weight}");
+                Debug.Log("До прокачки суспензия: " + $"{_wagonStats.Suspension.MaxWeight}");
                 for (int i = 0; i < _suspensionProgression.Count - 1; i++)
                 {
                     if (wagonPart.Level == _suspensionProgression[i].Level)
@@ -65,10 +65,8 @@ public class WagonUpgrader : NPC
                 }
                 break;
         }
-
-        _wagon.RefreshStats();
-
-        Debug.Log("После прокачки: " + $"{_wagon.Wheel.QualityModifier} {_wagon.Body.InventoryRows} {_wagon.Suspension.Weight}");
+        _wagonStats.RecalculateValues();
+        Debug.Log("После прокачки: " + $"{_wagonStats.Wheel.QualityModifier} {_wagonStats.Body.InventoryRows} {_wagonStats.Suspension.MaxWeight}");
     }
 
 
