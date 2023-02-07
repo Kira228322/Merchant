@@ -28,6 +28,36 @@ public class TravelEventHandler : MonoBehaviour
             RollNextEvent();
         }
     }
+
+    public void BreakingItemAfterJourney()
+    {
+        List<InventoryItem> unverifiedItems = new (); // TODO Вместо new () сюда вставь лист всех предметов, инвентаря
+        // надеюсь такой имеется. Таким образом, мы сразу будем иметь ссылку на этот лист и оттуда уже удалять
+        List<InventoryItem> deletedItems = new List<InventoryItem>();
+        
+        float Roadbadness = (100 - MapManager.CurrentRoad.Quality) / 
+                            (Player.Singleton.WagonStats.QualityModifier * (1 + MapManager.CurrentRoad.Quality * 0.1f));
+        // формула вероятности сломать предмет хрупкостью 100%
+        
+        while (unverifiedItems.Count > 0)
+        {
+            InventoryItem randomItem = unverifiedItems[Random.Range(0, unverifiedItems.Count)];
+            
+            for (int i = 0; i < randomItem.CurrentItemsInAStack; i++)
+            {
+                if (EventFire(Roadbadness * randomItem.ItemData.Fragility / 100))
+                {
+                    Roadbadness *= 0.9f;
+                    deletedItems.Add(Instantiate(randomItem));
+                    // TODO удалить предмет из инвентаря. Если  предметов несколько в стаке, то удалить 1 заряд
+                }
+            }
+
+            unverifiedItems.Remove(randomItem); //не уверен, будет ли эксепшн, если remove(удаленный айтем). Проверять надо
+        }
+        // Потом буду вызывать здесь окошко уведомляющее игрока, что из шмоток разнесло к чертям.
+        // Уже есть наработка, сделаю, как скрипт будет дописан, чтобы сразу затестить, как оно в игре будет.
+    }
     
     private void EventStart(EventInTravel eventInTravel)
     {
