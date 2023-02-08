@@ -31,8 +31,7 @@ public class TravelEventHandler : MonoBehaviour
 
     public void BreakingItemAfterJourney()
     {
-        List<InventoryItem> unverifiedItems = new (); // TODO Вместо new () сюда вставь лист всех предметов, инвентаря
-        // надеюсь такой имеется. Таким образом, мы сразу будем иметь ссылку на этот лист и оттуда уже удалять
+        List<InventoryItem> unverifiedItems = Player.Singleton.Inventory.ItemList;
         List<InventoryItem> deletedItems = new List<InventoryItem>();
         
         float Roadbadness = (100 - MapManager.CurrentRoad.Quality) / 
@@ -49,7 +48,7 @@ public class TravelEventHandler : MonoBehaviour
                 {
                     Roadbadness *= 0.9f;
                     deletedItems.Add(Instantiate(randomItem));
-                    // TODO удалить предмет из инвентаря. Если  предметов несколько в стаке, то удалить 1 заряд
+                    Player.Singleton.Inventory.ItemGrid.RemoveItemsFromAStack(randomItem, 1);
                 }
             }
 
