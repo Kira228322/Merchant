@@ -57,9 +57,8 @@ public class InventoryPanel : MonoBehaviour
         }
         else
         {
-            Color brown = new Color(125f, 97f, 65f);
+            Color brown = new Color(125f / 255, 97f / 255, 65f / 255);
             _weightText.color = brown;
-            //Не работает, почему? Становится просто белым
         }
     }
     private void OnMoneyChanged(int money)
