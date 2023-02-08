@@ -13,11 +13,17 @@ public class TravelEventHandler : MonoBehaviour
 
     [SerializeField] private List<EventInTravel> _eventsInTravels = new ();
     [SerializeField] private EventInTravel _eventInTravelBandits;
+    [SerializeField] private BreakingWindow _breakingWindowPrefub;
     private EventInTravel _nextEvent;
+    private Transform _mainCanvas;
     private int _delayToNextEvent;
 
     private bool _banditEvent;
 
+    private void Start()
+    {
+        _mainCanvas = FindObjectOfType<CanvasWarningGenerator>().gameObject.transform;
+    }
 
     public void StartEventIfTimerExpired() 
     {
@@ -35,7 +41,7 @@ public class TravelEventHandler : MonoBehaviour
         List<InventoryItem> deletedItems = new List<InventoryItem>();
         
         float Roadbadness = (100 - MapManager.CurrentRoad.Quality) / 
-                            (Player.Singleton.WagonStats.QualityModifier * (1 + MapManager.CurrentRoad.Quality * 0.1f));
+                            (Player.Singleton.WagonStats.QualityModifier * (1 + MapManager.CurrentRoad.Quality * 0.002f));
         // формула вероятности сломать предмет хрупкостью 100%
         
         while (unverifiedItems.Count > 0)
@@ -52,10 +58,12 @@ public class TravelEventHandler : MonoBehaviour
                 }
             }
 
-            unverifiedItems.Remove(randomItem); //не уверен, будет ли эксепшн, если remove(удаленный айтем). Проверять надо
+            unverifiedItems.Remove(randomItem); 
         }
-        // Потом буду вызывать здесь окошко уведомляющее игрока, что из шмоток разнесло к чертям.
-        // Уже есть наработка, сделаю, как скрипт будет дописан, чтобы сразу затестить, как оно в игре будет.
+
+        GameObject breakingWindow = Instantiate(_breakingWindowPrefub.gameObject, _mainCanvas);
+        breakingWindow.GetComponent<BreakingWindow>().Init(deletedItems);
+        breakingWindow.transform.position = new Vector3(Screen.width/2, Screen.height/2);
     }
     
     private void EventStart(EventInTravel eventInTravel)

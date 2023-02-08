@@ -2348,6 +2348,7 @@ MonoBehaviour:
   - {fileID: -8589152358707773185, guid: 5d652baef232df9439a04e7123a41dd2, type: 3}
   - {fileID: 7068342091038573783, guid: 3e4457c3a389a3944933e332e55e7973, type: 3}
   _eventInTravelBandits: {fileID: 7555400876554805685, guid: e7e5fc12082c1814c8dfa4e584ca9445, type: 3}
+  _breakingWindowPrefub: {fileID: 546455276793989935, guid: d50b309d3ca5fc84dbd055198afc1049, type: 3}
 --- !u!1 &1718948585
 GameObject:
   m_ObjectHideFlags: 0
@@ -2456,6 +2457,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e59141d112fe47c44b1395cb3a61d5ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _startingWheel: {fileID: 0}
+  _startingBody: {fileID: 0}
+  _startingSuspension: {fileID: 0}
   Needs:
     _hungerScale: {fileID: 0}
     _sleepScale: {fileID: 0}
