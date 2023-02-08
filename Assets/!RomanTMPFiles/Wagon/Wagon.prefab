@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4304832710305530674}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -9.987534}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 2, y: 2, z: 1.0597014}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -52,9 +52,6 @@ MonoBehaviour:
   Wheel: {fileID: 3466827646979037754}
   Body: {fileID: 3651258140868526355}
   Suspension: {fileID: 3094573827508101469}
-  _wheelSprite: {fileID: 4304832709738224068}
-  _bodySprite: {fileID: 4304832710124274263}
-  _suspensionSprite: {fileID: 4304832710145921923}
 --- !u!95 &1722474989
 Animator:
   serializedVersion: 4
@@ -191,6 +188,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Suspension
       objectReference: {fileID: 0}
+    - target: {fileID: 7552183984079036817, guid: 35fa1f147b73f9f46af6493046eacca5, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: cd639d6fcf87b5a4e864aca94e7e19d9, type: 3}
     - target: {fileID: 7552183984079036818, guid: 35fa1f147b73f9f46af6493046eacca5, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -235,6 +236,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8755361994850259791, guid: 35fa1f147b73f9f46af6493046eacca5, type: 3}
+      propertyPath: _level
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8755361994850259791, guid: 35fa1f147b73f9f46af6493046eacca5, type: 3}
+      propertyPath: _sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: cd639d6fcf87b5a4e864aca94e7e19d9, type: 3}
+    - target: {fileID: 8755361994850259791, guid: 35fa1f147b73f9f46af6493046eacca5, type: 3}
+      propertyPath: _weight
+      value: 46
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35fa1f147b73f9f46af6493046eacca5, type: 3}
 --- !u!114 &3094573827508101469 stripped
@@ -253,11 +266,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7552183984079036818, guid: 35fa1f147b73f9f46af6493046eacca5, type: 3}
   m_PrefabInstance: {fileID: 6013266307004641810}
   m_PrefabAsset: {fileID: 0}
---- !u!212 &4304832710145921923 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 7552183984079036817, guid: 35fa1f147b73f9f46af6493046eacca5, type: 3}
-  m_PrefabInstance: {fileID: 6013266307004641810}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7381100340191432614
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -265,10 +273,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4304832710305530672}
     m_Modifications:
+    - target: {fileID: 6108341555412127413, guid: 611b58f8f113c464c9604752475c4203, type: 3}
+      propertyPath: _level
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6108341555412127413, guid: 611b58f8f113c464c9604752475c4203, type: 3}
+      propertyPath: _sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 979b2fde5fdeff641b61cde4dd8ab490, type: 3}
+    - target: {fileID: 6108341555412127413, guid: 611b58f8f113c464c9604752475c4203, type: 3}
+      propertyPath: _inventoryRows
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 6760810333948906992, guid: 611b58f8f113c464c9604752475c4203, type: 3}
       propertyPath: m_Name
       value: Body
       objectReference: {fileID: 0}
+    - target: {fileID: 6760810333948906993, guid: 611b58f8f113c464c9604752475c4203, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 979b2fde5fdeff641b61cde4dd8ab490, type: 3}
     - target: {fileID: 6760810333948906994, guid: 611b58f8f113c464c9604752475c4203, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -331,11 +355,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6760810333948906994, guid: 611b58f8f113c464c9604752475c4203, type: 3}
   m_PrefabInstance: {fileID: 7381100340191432614}
   m_PrefabAsset: {fileID: 0}
---- !u!212 &4304832710124274263 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 6760810333948906993, guid: 611b58f8f113c464c9604752475c4203, type: 3}
-  m_PrefabInstance: {fileID: 7381100340191432614}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7655201929558694005
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -387,9 +406,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5873093114898858417, guid: 633bbe4b18cbb724ab869301a50aa67c, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: e5e730b71ba6cb44b8e6779212c136be, type: 3}
     - target: {fileID: 5873093114898858418, guid: 633bbe4b18cbb724ab869301a50aa67c, type: 3}
       propertyPath: m_Name
       value: Wheel
+      objectReference: {fileID: 0}
+    - target: {fileID: 6494218120201978447, guid: 633bbe4b18cbb724ab869301a50aa67c, type: 3}
+      propertyPath: _level
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6494218120201978447, guid: 633bbe4b18cbb724ab869301a50aa67c, type: 3}
+      propertyPath: _sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: e5e730b71ba6cb44b8e6779212c136be, type: 3}
+    - target: {fileID: 6494218120201978447, guid: 633bbe4b18cbb724ab869301a50aa67c, type: 3}
+      propertyPath: _qualityModifier
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 633bbe4b18cbb724ab869301a50aa67c, type: 3}
@@ -404,11 +439,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdc692900f2c415479fe7853ef5af5e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!212 &4304832709738224068 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 5873093114898858417, guid: 633bbe4b18cbb724ab869301a50aa67c, type: 3}
-  m_PrefabInstance: {fileID: 7655201929558694005}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4304832709738224069 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5873093114898858416, guid: 633bbe4b18cbb724ab869301a50aa67c, type: 3}

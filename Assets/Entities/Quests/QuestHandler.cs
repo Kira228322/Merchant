@@ -34,7 +34,7 @@ public class QuestHandler : MonoBehaviour
     }
     public static void RemoveQuest(System.Type questType)
     {
-        Quest quest = (Quest)Singleton._questsGameObject.GetComponent(questType);
+        //Два квеста одного типа и пососал, он не поймет какой убрать
         Destroy(Singleton._questsGameObject.GetComponent(questType));
     }
     public static void MoveToCompleted(Quest quest)

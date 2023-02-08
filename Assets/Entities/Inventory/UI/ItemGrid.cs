@@ -416,7 +416,7 @@ public class ItemGrid : MonoBehaviour
     #region ћетоды действий с инвентарЄм (добавить €чейки и многое-многое другое)
     public void AddRowsToInventory(int numberOfRowsToAdd) 
     {
-        if (numberOfRowsToAdd <= 0) { Debug.LogWarning("ѕытаетс€ добавить в инвентарь неположительное число р€дов"); return; }
+        if (numberOfRowsToAdd <= 0)  return; 
         for (int i = 0; i < numberOfRowsToAdd; i++)
         {
             InventoryItem[] rowArray = new InventoryItem[_gridSizeWidth];

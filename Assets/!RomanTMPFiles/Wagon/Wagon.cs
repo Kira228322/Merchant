@@ -8,27 +8,28 @@ public class Wagon : MonoBehaviour
     public Body Body;
     public Suspension Suspension;
 
-    [SerializeField] private SpriteRenderer _wheelSprite;
-    [SerializeField] private SpriteRenderer _bodySprite;
-    [SerializeField] private SpriteRenderer _suspensionSprite;
-    
-    private float _qualityModifier; // при вычислении качества дороги после поездки использовать этот параметр 
+    private PlayerWagonStats _wagonStats;
+
+    // private float _qualityModifier; // Перемещено в PlayerWagonStats.QualityModifier
 
     private void Start()
     {
+        _wagonStats = Player.Singleton.WagonStats;
+        Player.Singleton.WagonStats.WagonStatsRefreshed += OnWagonStatsRefreshed;
+        //^ из-за порядка выполнения скриптов мы не можем помещать подписку на ивент в OnEnable (см. пост #5 https://forum.unity.com/threads/onenable-before-awake.361429/)
+        //Поэтому подписываемся в старте, после того как Player и его подсосы выполнят Awake.
+        //Единственная проблема может быть тем, что Start срабатывает только один раз при спавне этого скрипта.
+        //Нужно будет проверять, правильно ли подписывается, если будем включать/выключать Вагон
+
         //Загрузка статоу из Player.WagonStats
 
-        Wheel = Player.Singleton.WagonStats.Wheel;
-        Body = Player.Singleton.WagonStats.Body;
-        Suspension = Player.Singleton.WagonStats.Suspension;
+        Wheel = _wagonStats.Wheel;
+        Body = _wagonStats.Body;
+        Suspension = _wagonStats.Suspension;
 
-        _qualityModifier = Wheel.QualityModifier;
+        //_qualityModifier = Wheel.QualityModifier;
     }
 
-    private void OnEnable()
-    {
-        Player.Singleton.WagonStats.WagonStatsRefreshed += OnWagonStatsRefreshed;
-    }
     private void OnDisable()
     {
         Player.Singleton.WagonStats.WagonStatsRefreshed -= OnWagonStatsRefreshed;
@@ -36,10 +37,14 @@ public class Wagon : MonoBehaviour
 
     private void OnWagonStatsRefreshed()
     {
-        _wheelSprite.sprite = Wheel.Sprite;
-        _bodySprite.sprite = Body.Sprite;
-        _suspensionSprite.sprite = Suspension.Sprite;
+        Wheel = _wagonStats.Wheel;
+        Body = _wagonStats.Body;
+        Suspension = _wagonStats.Suspension;
 
-        _qualityModifier = Wheel.QualityModifier;
+        Wheel.gameObject.GetComponent<SpriteRenderer>().sprite = Wheel.Sprite;
+        Body.gameObject.GetComponent<SpriteRenderer>().sprite = Body.Sprite;
+        Suspension.gameObject.GetComponent<SpriteRenderer>().sprite = Suspension.Sprite;
+
+
     }
 }
