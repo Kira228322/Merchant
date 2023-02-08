@@ -5,10 +5,13 @@ public class Player : MonoBehaviour
 {
     public static Player Singleton;
 
+    [Header("Wagon stats")]
+    //Мне совсем не хотелось ставить эти параметры сюда, но иначе никак не получается.
+    //Я пытался сделать PlayerWagonStats [Serializable], но все значения так или иначе сбрасываются в null.
+    //Все значения, в том числе заданные через инспектор. Возможно, я что-то всё ещё не понимаю.
     [SerializeField] private Wheel _startingWheel;
     [SerializeField] private Body _startingBody;
     [SerializeField] private Suspension _startingSuspension;
-
 
     private PlayerMover _playerMover;
     private PlayersInventory _inventory;
@@ -64,9 +67,7 @@ public class Player : MonoBehaviour
         _playerMover = GetComponent<PlayerMover>();
         _inventory = FindObjectOfType<PlayersInventory>(true);
 
-        //Хуйня, которая должна быть не такой
-        WagonStats = new();
-        WagonStats.Initialize(_startingWheel, _startingBody, _startingSuspension);
+        WagonStats = new(_startingWheel, _startingBody, _startingSuspension);
     }
 
     private void Start()

@@ -14,43 +14,25 @@ public class ItemGrid : MonoBehaviour
 
     [SerializeField] private int _gridSizeWidth;
     [SerializeField] private int _gridSizeHeight;
-    [SerializeField] private float _startingMaxTotalWeight;
-
-    private float _currentTotalWeight;
-    private float _maxTotalWeight;
+   
     private List<InventoryItem[]> _storedInventoryItems;
     private RectTransform _rectTransform;
     private Vector2 _positionOnTheGrid = new();
     private Vector2Int _tileGridPosition = new();
 
     public int GridSizeHeight => _gridSizeHeight;
-    public float CurrentTotalWeight
-    {
-        get => _currentTotalWeight;
-        set { if (_currentTotalWeight + value > _maxTotalWeight) Debug.LogError("“екущий вес превысил максимальный!"); }
-    }
-    public float MaxTotalWeight 
-    { 
-        get => _maxTotalWeight; 
-        set => _maxTotalWeight = value; 
-    }
 
     public event UnityAction<InventoryItem> ItemPlacedInTheGrid;
-    public event UnityAction<InventoryItem, int> ItemPlacedInTheStack;
+    public event UnityAction<InventoryItem, int> ItemUpdated; //»зменилось кол-во предметов в стаке
     public event UnityAction<InventoryItem> ItemRemovedFromTheGrid;
-    public event UnityAction<InventoryItem, int> ItemsRemovedFromTheStack;
 
     #endregion
     #region ћетоды инициализации
 
-    private void Start()
+    private void Awake()
     {
-
         _rectTransform = GetComponent<RectTransform>();
         Init(_gridSizeWidth, _gridSizeHeight);
-        CurrentTotalWeight = CalculateWeight();
-        MaxTotalWeight = _startingMaxTotalWeight;
-
     }
 
     private void Init(int width, int height)
@@ -163,10 +145,6 @@ public class ItemGrid : MonoBehaviour
         }
         return false;
     }
-    private bool IsEnoughWeightToPlace(InventoryItem item)
-    {
-        return ((item.ItemData.Weight * item.CurrentItemsInAStack) + CurrentTotalWeight >= MaxTotalWeight) ;
-    }
 
     #endregion
     #region ћетоды получени€ информации об инвентаре
@@ -266,15 +244,6 @@ public class ItemGrid : MonoBehaviour
         }
         return null;
     }
-    private float CalculateWeight()
-    {
-        float totalWeight = 0;
-        foreach (var item in Player.Singleton.Inventory.ItemList)
-        {
-            totalWeight += item.ItemData.Weight * item.CurrentItemsInAStack;
-        }
-        return totalWeight;
-    }
 
     #endregion
     #region ћетоды действий с айтемом (подн€ть, уничтожить и др.)
@@ -285,7 +254,6 @@ public class ItemGrid : MonoBehaviour
         if (itemToReturn == null) { return null; }
 
         CleanGridReference(itemToReturn);
-        CurrentTotalWeight -= itemToReturn.CurrentItemsInAStack * itemToReturn.ItemData.Weight;
         ItemRemovedFromTheGrid?.Invoke(itemToReturn);
         return itemToReturn;
     }
@@ -296,14 +264,12 @@ public class ItemGrid : MonoBehaviour
         if (itemToDestroy == null) { return; }
 
         CleanGridReference(itemToDestroy);
-        CurrentTotalWeight -= itemToDestroy.CurrentItemsInAStack * itemToDestroy.ItemData.Weight;
         ItemRemovedFromTheGrid?.Invoke(itemToDestroy);
         Destroy(itemToDestroy.gameObject);
     }
     public void DestroyItem(InventoryItem itemToDestroy)
     {
         CleanGridReference(itemToDestroy);
-        CurrentTotalWeight -= itemToDestroy.CurrentItemsInAStack * itemToDestroy.ItemData.Weight;
         ItemRemovedFromTheGrid?.Invoke(itemToDestroy);
         Destroy(itemToDestroy.gameObject);
     }
@@ -319,7 +285,6 @@ public class ItemGrid : MonoBehaviour
     }
     public InventoryItem TryPlaceItem(InventoryItem item, int positionX, int positionY)
     {
-        if (!IsEnoughWeightToPlace(item)) return null;
         if (!IsOverlapping(positionX, positionY, item.Width, item.Height))
         {
             //IsOverlapping == false, следовательно в этих клеточках нет предметов, можно спокойно ставить
@@ -329,7 +294,6 @@ public class ItemGrid : MonoBehaviour
                 return null;
             }
             PlaceItem(item, positionX, positionY);
-            CurrentTotalWeight += item.CurrentItemsInAStack * item.ItemData.Weight;
             ItemPlacedInTheGrid?.Invoke(item);
             return item;
         }
@@ -340,20 +304,17 @@ public class ItemGrid : MonoBehaviour
         
         //¬се услови€ состакивани€ выполнены, можно состакивать
 
-        InventoryItem result = TryPlaceItemInAStack(item, itemInInventory, out InventoryItem leftoverItem);
+        InventoryItem result = TryPlaceItemInAStack(item, itemInInventory, out InventoryItem leftoverItem, out int howManyWerePlaced);
         if (leftoverItem != null)
         {
             //ќзначает, что сколько-то поместилось, но не весь стак целиком
-            int howManyWerePlaced = itemInInventory.CurrentItemsInAStack - leftoverItem.CurrentItemsInAStack;
-            CurrentTotalWeight += howManyWerePlaced * item.ItemData.Weight;
-            ItemPlacedInTheStack?.Invoke(itemInInventory, howManyWerePlaced);
+            ItemUpdated?.Invoke(itemInInventory, howManyWerePlaced);
             return null;
         }
         else
         {
             //ќзначает, что поместилс€ весь стак целиком
-            CurrentTotalWeight += item.CurrentItemsInAStack * item.ItemData.Weight;
-            ItemPlacedInTheStack?.Invoke(itemInInventory, item.CurrentItemsInAStack);
+            ItemUpdated?.Invoke(itemInInventory, item.CurrentItemsInAStack);
             return result;
         }
     }
@@ -377,7 +338,7 @@ public class ItemGrid : MonoBehaviour
 
         rectTransform.localPosition = position;
     }
-    public InventoryItem TryPlaceItemInAStack(InventoryItem itemToPlace, InventoryItem itemToReceive, out InventoryItem leftoverItem)
+    public InventoryItem TryPlaceItemInAStack(InventoryItem itemToPlace, InventoryItem itemToReceive, out InventoryItem leftoverItem, out int howManyWerePlaced)
     {
         //≈сли прибавить количество айтемов в помещаемом к количеству айтемов в имеющемс€, то получитс€ больше, чем макс.стак?
         if (itemToReceive.CurrentItemsInAStack + itemToPlace.CurrentItemsInAStack > itemToReceive.ItemData.MaxItemsInAStack)
@@ -393,10 +354,12 @@ public class ItemGrid : MonoBehaviour
             itemToPlace.CurrentItemsInAStack -= amountInserted;
             itemToReceive.CurrentItemsInAStack = itemToReceive.ItemData.MaxItemsInAStack;
             leftoverItem = itemToPlace;
+            howManyWerePlaced = amountInserted;
             return itemToReceive;
         }
         //...Ќет, т.е. поместитс€ полностью, помещаемый предмет можно уничтожать.
         itemToReceive.CurrentItemsInAStack += itemToPlace.CurrentItemsInAStack;
+        howManyWerePlaced = itemToPlace.CurrentItemsInAStack;
         Destroy(itemToPlace.gameObject);
         leftoverItem = null;
         return itemToReceive;
@@ -404,8 +367,7 @@ public class ItemGrid : MonoBehaviour
     public void RemoveItemsFromAStack(InventoryItem itemToTruncate, int amount)
     {
         itemToTruncate.CurrentItemsInAStack -= amount;
-        CurrentTotalWeight -= itemToTruncate.CurrentItemsInAStack * itemToTruncate.ItemData.Weight;
-        ItemsRemovedFromTheStack?.Invoke(itemToTruncate, amount);
+        ItemUpdated?.Invoke(itemToTruncate, -amount);
         if (itemToTruncate.CurrentItemsInAStack <= 0)
         {
             DestroyItem(itemToTruncate);

@@ -8,7 +8,7 @@ public class InventoryPanel : MonoBehaviour
 {
     //Отображение Money и Weight в окне инвентаря
 
-    [SerializeField] private ItemGrid _inventoryItemGrid;
+    [SerializeField] private PlayersInventory _playersInventory;
     [SerializeField] private TMP_Text _goldText;
     [SerializeField] private TMP_Text _weightText;
 
@@ -19,8 +19,8 @@ public class InventoryPanel : MonoBehaviour
 
     private void Start()
     {
-        _currentTotalWeight = _inventoryItemGrid.CurrentTotalWeight;
-        _maxTotalWeight = _inventoryItemGrid.MaxTotalWeight;
+        _currentTotalWeight = _playersInventory.CurrentTotalWeight;
+        _maxTotalWeight = _playersInventory.MaxTotalWeight;
         _money = Player.Singleton.Money;
         Refresh();
     }
@@ -38,22 +38,39 @@ public class InventoryPanel : MonoBehaviour
     {
         Player.PlayerSingletonChanged += OnPlayerSingletonChanged;
         Player.Singleton.MoneyChanged += OnMoneyChanged;
+        _playersInventory.WeightChanged += OnWeightChanged;
         
     }
     private void OnDisable()
     {
         Player.PlayerSingletonChanged -= OnPlayerSingletonChanged;
         Player.Singleton.MoneyChanged -= OnMoneyChanged;
-        
+        _playersInventory.WeightChanged -= OnWeightChanged;
     }
     private void Refresh()
     {
         _goldText.text = _money.ToString();
         _weightText.text = _currentTotalWeight.ToString("F1") + " / " + _maxTotalWeight.ToString("F1"); //.ToString("F1") округляет до 1 знаков после запятой
+        if (_playersInventory.IsOverencumbered)
+        {
+            _weightText.color = Color.red;
+        }
+        else
+        {
+            Color brown = new Color(125f, 97f, 65f);
+            _weightText.color = brown;
+            //Не работает, почему? Становится просто белым
+        }
     }
     private void OnMoneyChanged(int money)
     {
         _money = money;
+        Refresh();
+    }
+    private void OnWeightChanged(float currentWeight, float maxWeight)
+    {
+        _currentTotalWeight = currentWeight;
+        _maxTotalWeight = maxWeight;
         Refresh();
     }
 }

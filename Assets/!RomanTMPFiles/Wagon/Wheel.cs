@@ -3,14 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(fileName = "New Wheel", menuName = "WagonParts/Wheel")]
 public class Wheel : WagonPart
 {
     [SerializeField] private float _qualityModifier;
     public float QualityModifier => _qualityModifier;
-    public override void Replace(WagonPart wagonPart)
-    {
-        base.Replace(wagonPart);
-        Wheel wheel = wagonPart as Wheel;
-        _qualityModifier = wheel.QualityModifier;
-    }
 }

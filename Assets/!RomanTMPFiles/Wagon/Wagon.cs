@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Wagon : MonoBehaviour
 {
+    [SerializeField] private GameObject _wheelGameObject;
+    [SerializeField] private GameObject _bodyGameObject;
+    [SerializeField] private GameObject _suspensionGameObject;
+
     public Wheel Wheel;
     public Body Body;
     public Suspension Suspension;
@@ -41,9 +45,9 @@ public class Wagon : MonoBehaviour
         Body = _wagonStats.Body;
         Suspension = _wagonStats.Suspension;
 
-        Wheel.gameObject.GetComponent<SpriteRenderer>().sprite = Wheel.Sprite;
-        Body.gameObject.GetComponent<SpriteRenderer>().sprite = Body.Sprite;
-        Suspension.gameObject.GetComponent<SpriteRenderer>().sprite = Suspension.Sprite;
+        _wheelGameObject.GetComponent<SpriteRenderer>().sprite = Wheel.Sprite;
+        _bodyGameObject.GetComponent<SpriteRenderer>().sprite = Body.Sprite;
+        _suspensionGameObject.GetComponent<SpriteRenderer>().sprite = Suspension.Sprite;
 
 
     }

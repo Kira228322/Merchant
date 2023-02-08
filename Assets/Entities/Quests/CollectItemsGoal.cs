@@ -31,9 +31,8 @@ public class CollectItemsGoal : Goal
 
         ItemGrid playerInventoryItemGrid = Player.Singleton.Inventory.ItemGrid;
         playerInventoryItemGrid.ItemPlacedInTheGrid += ItemCollected;
-        playerInventoryItemGrid.ItemPlacedInTheStack += ItemCollected;
+        playerInventoryItemGrid.ItemUpdated += ItemUpdated;
         playerInventoryItemGrid.ItemRemovedFromTheGrid += ItemRemoved;
-        playerInventoryItemGrid.ItemsRemovedFromTheStack += ItemRemoved;
     }
 
     public override void Deinitialize()
@@ -42,9 +41,8 @@ public class CollectItemsGoal : Goal
 
         ItemGrid playerInventoryItemGrid = Player.Singleton.Inventory.ItemGrid;
         playerInventoryItemGrid.ItemPlacedInTheGrid -= ItemCollected;
-        playerInventoryItemGrid.ItemPlacedInTheStack -= ItemCollected;
+        playerInventoryItemGrid.ItemUpdated -= ItemUpdated;
         playerInventoryItemGrid.ItemRemovedFromTheGrid -= ItemRemoved;
-        playerInventoryItemGrid.ItemsRemovedFromTheStack -= ItemRemoved;
     }
 
     private void ItemCollected(InventoryItem item)
@@ -52,14 +50,6 @@ public class CollectItemsGoal : Goal
         if (item.ItemData == _requiredItemType)
         {
             CurrentAmount += item.CurrentItemsInAStack;
-            Evaluate();
-        }
-    }
-    private void ItemCollected(InventoryItem item, int howManyWereInserted)
-    {
-        if (item.ItemData == _requiredItemType)
-        {
-            CurrentAmount += howManyWereInserted;
             Evaluate();
         }
     }
@@ -71,11 +61,11 @@ public class CollectItemsGoal : Goal
             Evaluate();
         }
     }
-    private void ItemRemoved(InventoryItem item, int amount)
+    private void ItemUpdated(InventoryItem item, int updatedAmount)
     {
         if (item.ItemData == _requiredItemType)
         {
-            CurrentAmount -= amount;
+            CurrentAmount = updatedAmount;
             Evaluate();
         }
     }

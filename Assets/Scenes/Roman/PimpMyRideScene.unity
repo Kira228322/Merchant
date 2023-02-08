@@ -537,11 +537,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4304832710305530672, guid: d2ee1b0a900a78342818339a9c3e552d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.9839938
+      value: -0.58
       objectReference: {fileID: 0}
     - target: {fileID: 4304832710305530672, guid: d2ee1b0a900a78342818339a9c3e552d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.0128684
+      value: 1.07
       objectReference: {fileID: 0}
     - target: {fileID: 4304832710305530672, guid: d2ee1b0a900a78342818339a9c3e552d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1637,14 +1637,14 @@ MonoBehaviour:
   ID: 2
   InkJSON: {fileID: 0}
   _wheelProgression:
-  - {fileID: 6494218120201978447, guid: 633bbe4b18cbb724ab869301a50aa67c, type: 3}
-  - {fileID: 6494218120201978447, guid: e742cc3f8846b8346a33d8754fd2d7fb, type: 3}
+  - {fileID: 11400000, guid: ae2a7140af63b644c98c69c02158a6a9, type: 2}
+  - {fileID: 11400000, guid: 9cc37a1e6b9023d4fad38f56891f95e0, type: 2}
   _bodyProgression:
-  - {fileID: 6108341555412127413, guid: 611b58f8f113c464c9604752475c4203, type: 3}
-  - {fileID: 6108341555412127413, guid: cac794d7d0a3364408f90e61ea42d07b, type: 3}
+  - {fileID: 11400000, guid: ca657c893b016774886d8fd71ed957c8, type: 2}
+  - {fileID: 11400000, guid: 9cd3bdd8b9dcf4540a0061ba93323d25, type: 2}
   _suspensionProgression:
-  - {fileID: 8755361994850259791, guid: 35fa1f147b73f9f46af6493046eacca5, type: 3}
-  - {fileID: 8755361994850259791, guid: 6fd37af5a36066e4e94143f9964f536e, type: 3}
+  - {fileID: 11400000, guid: e5131dd7eacc94e4cae2107c47fd3a9b, type: 2}
+  - {fileID: 11400000, guid: 64f06f172731ac44790bbab1d077ecb5, type: 2}
 --- !u!1001 &1062232241
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3913,70 +3913,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player 1 (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 6893747379577424940, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
-      propertyPath: MaxSleep
-      value: 244
-      objectReference: {fileID: 0}
-    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
-      propertyPath: MaxHunger
-      value: 222
-      objectReference: {fileID: 0}
-    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
-      propertyPath: _sleepScale
-      value: 
-      objectReference: {fileID: 96427202}
-    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
-      propertyPath: _hungerScale
-      value: 
-      objectReference: {fileID: 1498829814}
-    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
-      propertyPath: _currentSleep
-      value: 111
-      objectReference: {fileID: 0}
-    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
-      propertyPath: _startingBody
-      value: 
-      objectReference: {fileID: 6108341555412127413, guid: 611b58f8f113c464c9604752475c4203, type: 3}
-    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
-      propertyPath: Needs.MaxSleep
-      value: 333
-      objectReference: {fileID: 0}
-    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
-      propertyPath: _currentHunger
-      value: 111
-      objectReference: {fileID: 0}
-    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
-      propertyPath: _startingWheel
-      value: 
-      objectReference: {fileID: 6494218120201978447, guid: 633bbe4b18cbb724ab869301a50aa67c, type: 3}
-    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
-      propertyPath: Needs.MaxHunger
-      value: 222
-      objectReference: {fileID: 0}
-    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
-      propertyPath: WagonStats.Body
-      value: 
-      objectReference: {fileID: 6108341555412127413, guid: 611b58f8f113c464c9604752475c4203, type: 3}
-    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
-      propertyPath: _sleepDecayRate
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
-      propertyPath: _startingWsheel
-      value: 
-      objectReference: {fileID: 6494218120201978447, guid: 633bbe4b18cbb724ab869301a50aa67c, type: 3}
-    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
-      propertyPath: WagonStats.Wheel
-      value: 
-      objectReference: {fileID: 6494218120201978447, guid: 633bbe4b18cbb724ab869301a50aa67c, type: 3}
-    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
-      propertyPath: _hungerDecayRate
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
       propertyPath: Needs._sleepScale
       value: 
@@ -3985,58 +3921,6 @@ PrefabInstance:
       propertyPath: Needs._hungerScale
       value: 
       objectReference: {fileID: 1498829814}
-    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
-      propertyPath: Needs._currentSleep
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
-      propertyPath: _startingSuspension
-      value: 
-      objectReference: {fileID: 8755361994850259791, guid: 35fa1f147b73f9f46af6493046eacca5, type: 3}
-    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
-      propertyPath: Needs._currentHunger
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
-      propertyPath: Needs._sleepDecayRate
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
-      propertyPath: WagonStats.Suspension
-      value: 
-      objectReference: {fileID: 8755361994850259791, guid: 35fa1f147b73f9f46af6493046eacca5, type: 3}
-    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
-      propertyPath: _sleepRestorationRate
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
-      propertyPath: Needs._hungerDecayRate
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
-      propertyPath: WagonStats._startingBody
-      value: 
-      objectReference: {fileID: 6108341555412127413, guid: 611b58f8f113c464c9604752475c4203, type: 3}
-    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
-      propertyPath: WagonStats._startingWheel
-      value: 
-      objectReference: {fileID: 6494218120201978447, guid: 633bbe4b18cbb724ab869301a50aa67c, type: 3}
-    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
-      propertyPath: _hungerDivisorWhenSleeping
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
-      propertyPath: Needs._sleepRestorationRate
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
-      propertyPath: WagonStats._startingSuspension
-      value: 
-      objectReference: {fileID: 8755361994850259791, guid: 35fa1f147b73f9f46af6493046eacca5, type: 3}
-    - target: {fileID: 6893747379577424943, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
-      propertyPath: Needs._hungerDivisorWhenSleeping
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 6893747380413829026, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
       propertyPath: _highlighter
       value: 
@@ -4045,32 +3929,7 @@ PrefabInstance:
       propertyPath: _canvasTransform
       value: 
       objectReference: {fileID: 472036242}
-    - target: {fileID: 6893747380413829029, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
-      propertyPath: items.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 6893747380413829029, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
-      propertyPath: items.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: 934d977f079cae542b316dc9cde310c2, type: 2}
-    - target: {fileID: 6893747380413829029, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
-      propertyPath: items.Array.data[1]
-      value: 
-      objectReference: {fileID: 11400000, guid: ba85741ff60280b49b4d811adb521688, type: 2}
-    - target: {fileID: 6893747380413829029, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
-      propertyPath: items.Array.data[2]
-      value: 
-      objectReference: {fileID: 11400000, guid: 0b0a72f1150bcbe49910978b41326129, type: 2}
-    - target: {fileID: 6893747380413829029, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
-      propertyPath: items.Array.data[3]
-      value: 
-      objectReference: {fileID: 11400000, guid: 3dac9113943bb914bacede2bb0da899b, type: 2}
-    - target: {fileID: 6893747380413829029, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
-      propertyPath: _itemInfoPanelPrefab
-      value: 
-      objectReference: {fileID: 2499144979715839013, guid: 0b4f5615f3791964b8717f640b1caf9d, type: 3}
-    m_RemovedComponents:
-    - {fileID: 7596350938035233986, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c5cb4da4986bdf04db707054094ab12e, type: 3}
 --- !u!1001 &2104948159
 PrefabInstance:
@@ -4145,54 +4004,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4592813376000993587, guid: 6c1bdda03345a1f4693ea102b8edfd98, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7264243009312874356, guid: 6c1bdda03345a1f4693ea102b8edfd98, type: 3}
-      propertyPath: _gridSizeWidth
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7264243009312874356, guid: 6c1bdda03345a1f4693ea102b8edfd98, type: 3}
-      propertyPath: _gridSizeHeight
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 7264243009886708568, guid: 6c1bdda03345a1f4693ea102b8edfd98, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7264243010387854131, guid: 6c1bdda03345a1f4693ea102b8edfd98, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7264243010387854140, guid: 6c1bdda03345a1f4693ea102b8edfd98, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7264243010952827989, guid: 6c1bdda03345a1f4693ea102b8edfd98, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7264243010952827989, guid: 6c1bdda03345a1f4693ea102b8edfd98, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7264243010952827989, guid: 6c1bdda03345a1f4693ea102b8edfd98, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0.69018257
-      objectReference: {fileID: 0}
-    - target: {fileID: 7718642637961146638, guid: 6c1bdda03345a1f4693ea102b8edfd98, type: 3}
-      propertyPath: m_Alpha
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7718642637961146638, guid: 6c1bdda03345a1f4693ea102b8edfd98, type: 3}
-      propertyPath: m_Interactable
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7718642637961146638, guid: 6c1bdda03345a1f4693ea102b8edfd98, type: 3}
-      propertyPath: m_BlocksRaycasts
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8613524238941844429, guid: 6c1bdda03345a1f4693ea102b8edfd98, type: 3}
       propertyPath: m_Pivot.x
       value: 0

@@ -29,7 +29,6 @@ public class NPCWagonUpgrader : NPC
 
     public void Upgrade(WagonPart wagonPart)
     {
-        Debug.Log("start:" + Player.Singleton.WagonStats.Wheel.Level);
         switch (wagonPart)
         {
             case Wheel:
@@ -37,10 +36,7 @@ public class NPCWagonUpgrader : NPC
                 {
                     if (wagonPart.Level == _wheelProgression[i].Level)
                     {
-                        wagonPart = _wheelProgression[i];
-                        //wagonPart.Replace(_wheelProgression[i + 1]);
-                        Debug.Log(Player.Singleton.WagonStats.Wheel.Level);
-                        Debug.Log(Player.Singleton.WagonStats.Wheel.QualityModifier);
+                        Player.Singleton.WagonStats.Wheel = _wheelProgression[i + 1];
                     }
                 }
                 break;
@@ -50,7 +46,7 @@ public class NPCWagonUpgrader : NPC
                 {
                     if (wagonPart.Level == _bodyProgression[i].Level)
                     {
-                        wagonPart.Replace(_bodyProgression[i + 1]);
+                        Player.Singleton.WagonStats.Body = _bodyProgression[i + 1];
                     }
                 }
                 break;
@@ -60,7 +56,7 @@ public class NPCWagonUpgrader : NPC
                 {
                     if (wagonPart.Level == _suspensionProgression[i].Level)
                     {
-                        wagonPart.Replace(_suspensionProgression[i + 1]); 
+                        Player.Singleton.WagonStats.Suspension = _suspensionProgression[i + 1];
                     }
                 }
                 break;

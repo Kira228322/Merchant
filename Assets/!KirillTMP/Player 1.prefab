@@ -101,25 +101,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e59141d112fe47c44b1395cb3a61d5ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _startingWheel: {fileID: 11400000, guid: ae2a7140af63b644c98c69c02158a6a9, type: 2}
+  _startingBody: {fileID: 11400000, guid: ca657c893b016774886d8fd71ed957c8, type: 2}
+  _startingSuspension: {fileID: 11400000, guid: e5131dd7eacc94e4cae2107c47fd3a9b, type: 2}
   Needs:
     _hungerScale: {fileID: 0}
     _sleepScale: {fileID: 0}
-    _hungerDecayRate: 0
-    _hungerDivisorWhenSleeping: 0
-    _sleepDecayRate: 0
-    _sleepRestorationRate: 0
-    _currentHunger: 0
-    _currentSleep: 0
-    MaxHunger: 0
-    MaxSleep: 0
+    _hungerDecayRate: 2
+    _hungerDivisorWhenSleeping: 2
+    _sleepDecayRate: 2
+    _sleepRestorationRate: 5
+    _currentHunger: 100
+    _currentSleep: 100
+    MaxHunger: 222
+    MaxSleep: 333
     IsSleeping: 0
-  WagonStats:
-    _startingWheel: {fileID: 6494218120201978447, guid: 633bbe4b18cbb724ab869301a50aa67c, type: 3}
-    _startingBody: {fileID: 6108341555412127413, guid: 611b58f8f113c464c9604752475c4203, type: 3}
-    _startingSuspension: {fileID: 8755361994850259791, guid: 35fa1f147b73f9f46af6493046eacca5, type: 3}
-    Wheel: {fileID: 0}
-    Body: {fileID: 0}
-    Suspension: {fileID: 0}
 --- !u!50 &6893747379577424931
 Rigidbody2D:
   serializedVersion: 4
@@ -344,10 +340,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _itemPrefab: {fileID: 627543255316917623, guid: dc7e74917cc051440a163a246af98351, type: 3}
-  _itemInfoPanelPrefab: {fileID: 0}
+  _itemInfoPanelPrefab: {fileID: 2499144979715839013, guid: 0b4f5615f3791964b8717f640b1caf9d, type: 3}
   _canvasTransform: {fileID: 0}
   items:
-  - {fileID: 11400000, guid: 67ef3e7eb30b0f04a908c358306003d6, type: 2}
   - {fileID: 11400000, guid: 934d977f079cae542b316dc9cde310c2, type: 2}
   - {fileID: 11400000, guid: ba85741ff60280b49b4d811adb521688, type: 2}
   - {fileID: 11400000, guid: 0b0a72f1150bcbe49910978b41326129, type: 2}
