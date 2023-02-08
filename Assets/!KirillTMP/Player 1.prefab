@@ -107,14 +107,14 @@ MonoBehaviour:
   Needs:
     _hungerScale: {fileID: 0}
     _sleepScale: {fileID: 0}
-    _hungerDecayRate: 2
-    _hungerDivisorWhenSleeping: 2
-    _sleepDecayRate: 2
-    _sleepRestorationRate: 5
-    _currentHunger: 100
-    _currentSleep: 100
-    MaxHunger: 222
-    MaxSleep: 333
+    _hungerDecayRate: 1
+    _hungerDivisorWhenSleeping: 1
+    _sleepDecayRate: 1
+    _sleepRestorationRate: 1
+    _currentHunger: 1
+    _currentSleep: 1
+    MaxHunger: 1
+    MaxSleep: 1
     IsSleeping: 0
 --- !u!50 &6893747379577424931
 Rigidbody2D:
@@ -220,7 +220,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6893747380413829036}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.2, z: -10}
+  m_LocalPosition: {x: 0, y: 1.125, z: -15.49}
   m_LocalScale: {x: 1, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
