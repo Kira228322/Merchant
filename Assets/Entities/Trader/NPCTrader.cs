@@ -6,12 +6,15 @@ using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class NPCTrader : NPC
 {
+    [Header("Trader settings")]
     [SerializeField] private List<TraderType> _traderTypes;
+    [SerializeField] private int _restockCycle;
     
-    
+    [Space] 
     [SerializeField] private List<Item> _goods;
     public List<TraderGood> TraderGoods = new();
     
@@ -21,9 +24,12 @@ public class NPCTrader : NPC
 
     [HideInInspector] public List<int> NewPrice = new ();
     [HideInInspector] public List<int> CountOfGood = new ();
+
+    private int _lastRestock;
     public class TraderGood
     {
         public Item Good;
+        internal int _maxCount;
         public int Count;
     }
     
@@ -39,6 +45,46 @@ public class NPCTrader : NPC
             TraderGoods[i].Good = Instantiate(_goods[i]);
             TraderGoods[i].Good.Price = NewPrice[i];
             TraderGoods[i].Count = CountOfGood[i];
+            TraderGoods[i]._maxCount = CountOfGood[i];
+        }
+    }
+
+    public void Restock()
+    {
+        // _lastRestock = GameTime.Day; TODO
+        
+        foreach (var good in TraderGoods)
+        {
+            if (Random.Range(0,11) == 0)
+                continue;
+            
+            switch (good._maxCount)
+            {
+                case int n when n <= 4: // –едкие предметы, которых у торговца мало, они могут не всегда прибавитьс€ за ресток
+                    if (Random.Range(0, 2) == 0) // 50% шанс, что будет ресток этой шмотки
+                    {
+                        if (good._maxCount == 1)
+                            good.Count++;
+                        else
+                            good.Count += Random.Range(1, good._maxCount);
+                    }
+                    break;
+                
+                case int n when n >= 5 && n <= 19: // предметы средней средности
+                    good.Count += Random.Range(good._maxCount / 3, good._maxCount/2 + 1);
+                    break;
+                
+                case int n when n >= 20: // товары, которые торговец поставл€ет массово
+                    good.Count += Random.Range(good._maxCount * 2 / 3 + 1, good._maxCount * 3 / 4 + 2);
+                    break;
+            }
+
+            if (good.Count > good._maxCount)
+                good.Count = good._maxCount;
+            
+            // TODO
+            // еще хочу сделать так, чтобы с небольшим шансом торговец начал торговать каким-то новым предметом
+            //  оторый подходит его специализации. Ќо дл€ этого надо с базой данных работать
         }
     }
 

@@ -29,7 +29,6 @@ public static class GameTime
         get { return _hours;}
         set
         {
-            //TradeManager.PlayersInventory.CheckSpoilItems(); “еперь сам PlayersInventory занимаетс€ этим по событию HourChanged
             _hours = value;
             if (_hours >= 24) 
             {
