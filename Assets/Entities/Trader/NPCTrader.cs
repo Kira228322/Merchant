@@ -75,7 +75,7 @@ public class NPCTrader : NPC
                     break;
                 
                 case int n when n >= 20: // товары, которые торговец поставляет массово
-                    good.Count += Random.Range(good._maxCount * 2 / 3 + 1, good._maxCount * 3 / 4 + 2);
+                    good.Count += Random.Range(good._maxCount * 3 / 5, good._maxCount * 3 / 4 + 2);
                     break;
             }
 
