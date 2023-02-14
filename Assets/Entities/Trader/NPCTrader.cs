@@ -13,7 +13,6 @@ public class NPCTrader : NPC
     [Header("Trader settings")]
     [SerializeField] private List<TraderType> _traderTypes;
     [SerializeField] private int _restockCycle;
-    
     [Space] 
     [SerializeField] private List<Item> _goods;
     public List<TraderGood> TraderGoods = new();

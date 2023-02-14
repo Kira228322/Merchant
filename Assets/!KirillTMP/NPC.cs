@@ -8,7 +8,7 @@ public class NPC : MonoBehaviour
     [SerializeField] private string _name;
     public string Name => _name;
 
-    public string ID;
+    public int ID;
 
     public TextAsset InkJSON;
       
