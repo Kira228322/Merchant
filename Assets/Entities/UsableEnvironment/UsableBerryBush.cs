@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class UsableBerryBush : UsableEnvironment
 {
-    [SerializeField] private Sprite _bushWithoutBerreis;
-    protected override void Functional()
+    protected override bool IsFunctionalComplete()
     {
         // TODO проверить есть ли место свободное в инвентаре и добавить ягоду какую-нибудь
 
-        GetComponent<SpriteRenderer>().sprite = _bushWithoutBerreis;
+        return true;
     }
 }
