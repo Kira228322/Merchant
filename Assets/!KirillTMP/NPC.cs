@@ -5,12 +5,11 @@ using UnityEngine;
 
 public class NPC : MonoBehaviour
 {
-    [SerializeField] private string _name;
-    public string Name => _name;
+    public string Name { get; private set; }
 
-    public int ID;
+    public int ID { get; private set; }
 
-    public TextAsset InkJSON;
+    public TextAsset InkJSON { get; private set; }
       
     public int Affinity
     { 
@@ -29,6 +28,14 @@ public class NPC : MonoBehaviour
     }
     private int _affinity;
     
+    public virtual void SetNPCFromData(NPCData npcData)
+    {
+        Name = npcData.Name;
+        ID = npcData.ID;
+        Affinity = npcData.Affinity;
+        InkJSON = npcData.InkJSON;
+    }
+
     public virtual void Interact()  //Я сделаю позже по уму всё здесь
     {
 

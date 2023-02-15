@@ -24,6 +24,12 @@ public class NPCTrader : NPC
     [HideInInspector] public List<int> NewPrice = new ();
     [HideInInspector] public List<int> CountOfGood = new ();
 
+    public override void SetNPCFromData(NPCData npcData)
+    {
+        base.SetNPCFromData(npcData);
+
+    }
+
     private int _lastRestock;
     public class TraderGood
     {

@@ -16,6 +16,7 @@ public abstract class ClickableIfPlayerNear : MonoBehaviour, IPointerClickHandle
 
     public  virtual void OnPointerClick(PointerEventData eventData)
     {
+        _player = Player.Singleton;
         if ((transform.position - _player.transform.position).magnitude > 3.3f)
             return;
     }
