@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -12,7 +14,7 @@ public class NPCTrader : NPC
     {
         public Item Good;
         public int MaxCount;
-        public int Count;
+        [HideInInspector] public int Count;
         public int CurrentPrice;
     }
     [Serializable]
@@ -22,6 +24,7 @@ public class NPCTrader : NPC
         public float Coefficient;
         public int CountToBuy;
     }
+    
     public NPCTraderData NPCData; //TODO: npcData лучше забирать из базы данных, чем по ручной ссылке.
     private List<TraderType> _traderTypes = new();
     private int _restockCycle;
@@ -85,7 +88,7 @@ public class NPCTrader : NPC
             }
             if (acceptableTraderGoodTypes.Count != 0) //избежать деления на ноль, такие типы будут иметь Coefficient & CountToBuy == 0
             {
-                traderBuyCoefficient.CountToBuy = (int)Math.Ceiling((double)traderBuyCoefficient.CountToBuy / acceptableTraderGoodTypes.Count);
+                traderBuyCoefficient.CountToBuy = (int)Math.Ceiling((float)traderBuyCoefficient.CountToBuy / acceptableTraderGoodTypes.Count);
                 if (traderBuyCoefficient.Coefficient != 1)
                     traderBuyCoefficient.Coefficient = (float)Math.Round(traderBuyCoefficient.Coefficient / acceptableTraderGoodTypes.Count, 2);
             }
