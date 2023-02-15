@@ -44,7 +44,8 @@ public class GoodsBuyPanel : MonoBehaviour
         {
             if (!IsOriginatedFromTrader) 
             {
-                _trader.CurrentCountToBuy[(int)_item.TypeOfItem]++; 
+                //увеличить BuyCoefficient.CountToBuy с таким же типом как _item.TypeOfItem
+                _trader.BuyCoefficients.FirstOrDefault(x => x.itemType == _item.TypeOfItem).CountToBuy++;
             }
             InventoryItem boughtItem = InventoryController.Instance.TryCreateAndInsertItem(Player.Singleton.Inventory.ItemGrid, _item, 1, _boughtDaysAgo, true);
             if (boughtItem == null) //не было места поместить вещь

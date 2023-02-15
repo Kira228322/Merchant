@@ -47,7 +47,7 @@ public class GoodsSellPanel : MonoBehaviour
     }
     public void Refresh()
     {
-        if (_trader.CurrentCountToBuy[(int)_item.ItemData.TypeOfItem] == 0)
+        if (_trader.BuyCoefficients.FirstOrDefault(x => x.itemType == _item.ItemData.TypeOfItem).CountToBuy <= 0)
         {
             _sellButton.interactable = false;
         }
@@ -61,8 +61,8 @@ public class GoodsSellPanel : MonoBehaviour
 
         _playerInventoryItemGrid.RemoveItemsFromAStack(_item, 1);
         _currentCount--;
-
-        _trader.CurrentCountToBuy[(int)_item.ItemData.TypeOfItem]--;
+        //Уменьшить CountToBuy у коэффициента с этим типом товара
+        _trader.BuyCoefficients.FirstOrDefault(x => x.itemType == _item.ItemData.TypeOfItem).CountToBuy--;
         GoodsBuyPanel panel = TradeManager.Singleton.BuyPanelContent.GetComponentsInChildren<GoodsBuyPanel>().FirstOrDefault(i => i.Item == _item.ItemData && i.IsOriginatedFromTrader == false);
         if (panel != null)
         {
