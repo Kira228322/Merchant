@@ -10,7 +10,6 @@ public class InventoryItem : MonoBehaviour
     [SerializeField] private SlidersController _spoilSlider;
 
     private int _currentItemsInAStack;
-    private bool _isSellPriceShown;
     
     public Item ItemData;
     public float BoughtDaysAgo;

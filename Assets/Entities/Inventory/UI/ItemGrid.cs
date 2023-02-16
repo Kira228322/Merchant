@@ -9,13 +9,26 @@ public class ItemGrid : MonoBehaviour
 
     #region Поля, свойства и события
 
+    [Serializable]
+    private struct InventoryRow
+    {
+        public int rowLength;
+        public InventoryItem[] itemArray;
+
+        public InventoryRow(int rowLength)
+        {
+            this.rowLength = rowLength;
+            itemArray = new InventoryItem[rowLength];
+        }
+    }
+
     public const float TileSizeWidth = 160;
     public const float TileSizeHeight = 160;
 
     [SerializeField] private int _gridSizeWidth;
     [SerializeField] private int _gridSizeHeight;
    
-    private List<InventoryItem[]> _storedInventoryItems;
+    private List<InventoryRow> _storedInventoryItems;
     private RectTransform _rectTransform;
     private Vector2 _positionOnTheGrid = new();
     private Vector2Int _tileGridPosition = new();
@@ -37,12 +50,12 @@ public class ItemGrid : MonoBehaviour
 
     private void Init(int width, int height)
     {
-        _storedInventoryItems = new List<InventoryItem[]>();
+        _storedInventoryItems = new List<InventoryRow>();
 
         for (int i = 0; i < height; i++)
         {
-            InventoryItem[] rowArray = new InventoryItem[width];
-            _storedInventoryItems.Add(rowArray);
+            InventoryRow inventoryRow = new(width);
+            _storedInventoryItems.Add(inventoryRow);
         }
 
         Vector2 size = new(width * TileSizeWidth, height * TileSizeHeight);
@@ -69,7 +82,7 @@ public class ItemGrid : MonoBehaviour
         {
             for (int y = 0; y < height; y++)
             {
-                if(_storedInventoryItems[positionY + y][positionX + x] != null)
+                if(_storedInventoryItems[positionY + y].itemArray[positionX + x] != null)
                 {
                     return true;
                 }
@@ -84,11 +97,11 @@ public class ItemGrid : MonoBehaviour
         {
             for (int y = 0; y < height; y++)
             {
-                if (_storedInventoryItems[positionY + y][positionX + x] != null)
+                if (_storedInventoryItems[positionY + y].itemArray[positionX + x] != null)
                 {
-                    if (_storedInventoryItems[positionY + y][positionX + x].ItemData.name == item.ItemData.name)
+                    if (_storedInventoryItems[positionY + y].itemArray[positionX + x].ItemData.name == item.ItemData.name)
                     {
-                        itemInInventory = _storedInventoryItems[positionY + y][positionX + x];
+                        itemInInventory = _storedInventoryItems[positionY + y].itemArray[positionX + x];
                         return true;
                     }
                 }
@@ -131,7 +144,7 @@ public class ItemGrid : MonoBehaviour
     {
         //Если тип предмета, лежащий в инвентаре такой же, как предмет, который мы пытаемся установить И
         //И стак этого предмета неполный, т.е может вместить в себя ещё столько предметов, сколько в помещаемом стаке, то true.
-        InventoryItem itemInInventory = _storedInventoryItems[positionY][positionX];
+        InventoryItem itemInInventory = _storedInventoryItems[positionY].itemArray[positionX];
         if (itemInInventory != null)
         {
             if (itemInInventory.ItemData.name == targetItem.ItemData.name)
@@ -160,7 +173,7 @@ public class ItemGrid : MonoBehaviour
     }
     public InventoryItem GetItem(int x, int y)
     {
-        return _storedInventoryItems[y][x];
+        return _storedInventoryItems[y].itemArray[x];
     }
     [System.Obsolete] public List<InventoryItem> GetAllItemsInTheGrid()
     {
@@ -172,11 +185,11 @@ public class ItemGrid : MonoBehaviour
         List<InventoryItem> result = new();
         for (int i = 0; i < _storedInventoryItems.Count; i++)
         {
-            for (int j = 0; j < _storedInventoryItems[i].Length; j++)
+            for (int j = 0; j < _storedInventoryItems[i].itemArray.Length; j++)
             {
-                if (_storedInventoryItems[i][j] != null && !result.Contains(_storedInventoryItems[i][j]))
+                if (_storedInventoryItems[i].itemArray[j] != null && !result.Contains(_storedInventoryItems[i].itemArray[j]))
                 {
-                    result.Add(_storedInventoryItems[i][j]);
+                    result.Add(_storedInventoryItems[i].itemArray[j]);
                 }
             }
         }
@@ -249,7 +262,7 @@ public class ItemGrid : MonoBehaviour
     #region Методы действий с айтемом (поднять, уничтожить и др.)
     public InventoryItem PickUpItem(int positionX, int positionY) //Убрать айтем из ячеек и return его, чтобы взять в "руку"
     {
-        InventoryItem itemToReturn = _storedInventoryItems[positionY][positionX];
+        InventoryItem itemToReturn = _storedInventoryItems[positionY].itemArray[positionX];
 
         if (itemToReturn == null) { return null; }
 
@@ -259,7 +272,7 @@ public class ItemGrid : MonoBehaviour
     }
     public void DestroyItem(int positionX, int positionY)
     {
-        InventoryItem itemToDestroy = _storedInventoryItems[positionY][positionX];
+        InventoryItem itemToDestroy = _storedInventoryItems[positionY].itemArray[positionX];
 
         if (itemToDestroy == null) { return; }
 
@@ -279,7 +292,7 @@ public class ItemGrid : MonoBehaviour
         {
             for (int y = 0; y < item.Height; y++)
             {
-                _storedInventoryItems[item.YPositionOnTheGrid + y][item.XPositionOnTheGrid + x] = null;
+                _storedInventoryItems[item.YPositionOnTheGrid + y].itemArray[item.XPositionOnTheGrid + x] = null;
             }
         }
     }
@@ -328,7 +341,7 @@ public class ItemGrid : MonoBehaviour
         {
             for (int y = 0; y < item.Height; y++)
             {
-                _storedInventoryItems[positionY + y][positionX + x] = item;
+                _storedInventoryItems[positionY + y].itemArray[positionX + x] = item;
             }
         }
 
@@ -381,8 +394,8 @@ public class ItemGrid : MonoBehaviour
         if (numberOfRowsToAdd <= 0)  return; 
         for (int i = 0; i < numberOfRowsToAdd; i++)
         {
-            InventoryItem[] rowArray = new InventoryItem[_gridSizeWidth];
-            _storedInventoryItems.Add(rowArray);
+            InventoryRow newInventoryRow = new(_gridSizeWidth);
+            _storedInventoryItems.Add(newInventoryRow);
         }
         _gridSizeHeight += numberOfRowsToAdd;
 

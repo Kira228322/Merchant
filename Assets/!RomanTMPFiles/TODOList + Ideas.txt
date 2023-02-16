@@ -1,6 +1,44 @@
 TODO Локальные задачи:
 
-TalkToNPCGoal - доработать, когда будет готова база данных NPC
+
+Как должно происходить сохранение:
+Всё, что необходимо сохранять/загружать должно иметь методы SaveData LoadData.
+Где-то можно сделать отдельный статический компонент/метод SaveLoadSystem, который будет вызывать у соответствующих элементов эти методы.
+В методах сохранения они должны передавать сериализуемые параметры в SaveLoadSystem, а SaveLoadSystem уже запишет их в файл через бинарный форматтер.
+Наоборот в методах загрузки - бинарный форматтер десериализует, SaveLoadSystem отправит обратно и вызовет методы загрузки
+
+To use field serialization you must ensure that the field:
+
+Is public, or has a SerializeField attribute
+isn’t static
+isn’t const
+isn’t readonly
+Has a field type that can be serialized:
+Primitive data types (int, float, double, bool, string, etc.)
+Enum types (32 bites or smaller)
+Fixed-size buffers
+Unity built-in types, for example, Vector2, Vector3, Rect, Matrix4x4, Color, AnimationCurve
+Custom structs with the Serializable attribute
+References to objects that derive from UnityEngine.Object
+Custom classes with the Serializable attribute.
+An array of a field type mentioned above
+A List<T> of a field type mentioned above
+Note: Unity doesn’t support serialization of multilevel types (multidimensional arrays, jagged arrays, dictionaries, and nested container types). If you want to serialize these, you have two options:
+
+Wrap the nested type in a class or struct
+Use serialization callbacks, by implementing ISerializationCallbackReceiver, to perform custom serialization.
+
+Насчёт сериализации инвентаря: Мы хотим запомнить состояние сетки инвентаря. Для этого два способа:
+1) Запомнить состояние сетки, т.е List<InventoryItem[]> _storedInventoryItems
+
+InventoryItem[] можно завернуть в CustomClass InventoryRow
+
+2) Запомнить только PlayersInventory, он содержит ссылки на все вещи. При загрузке использовать PlaceItem на конкретные координаты
+Проблема - в InventoryItem не отслеживается, куда он был поставлен. Поэтому пока что выбрал первый способ.
+
+
+NPC - сделать ивенты на поговорить. Подумать, можно ли как-то совместить с Ink, например чтобы давал особый диалог если активен квест. 
+Подписывать TalkToNPCGoal на этот ивент.
 
 Сделать правильный ресайз FunctionalWindow и её кнопок
 

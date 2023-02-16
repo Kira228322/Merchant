@@ -8,7 +8,7 @@ public class TalkToNPCGoal : Goal
     public TalkToNPCGoal(Quest quest, int requiredIDofNPC, string description, bool isCompleted, int currentAmount, int requiredAmount)
     {
         Quest = quest;
-     // RequiredNPC = NPCDatabase.GetNPC(RequiredIDofNPC);
+        RequiredNPC = NPCDatabase.GetNPC(requiredIDofNPC);
         Description = description;
         IsCompleted = isCompleted;
         CurrentAmount = currentAmount;

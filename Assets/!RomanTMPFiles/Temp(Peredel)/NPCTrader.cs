@@ -25,12 +25,12 @@ public class NPCTrader : NPC
         public int CountToBuy;
     }
     
-    public NPCTraderData NPCData; //TODO: npcData лучше забирать из базы данных, чем по ручной ссылке.
     private List<TraderType> _traderTypes = new();
     private int _restockCycle;
     private int _lastRestock;
-    public List<TraderGood> Goods = new();
-    public List<TraderBuyCoefficient> BuyCoefficients = new(); //“аких BuyCoefficients будет столько, сколько всего есть Item.ItemType (см.ниже)
+    public NPCTraderData NPCData; //TODO: npcData лучше забирать из базы данных, чем по ручной ссылке.
+    [HideInInspector] public List<TraderGood> Goods = new();
+    [HideInInspector] public List<TraderBuyCoefficient> BuyCoefficients = new(); //“аких BuyCoefficients будет столько, сколько всего есть Item.ItemType (см.ниже)
 
     private void Start()
     {
@@ -92,7 +92,6 @@ public class NPCTrader : NPC
                 if (traderBuyCoefficient.Coefficient != 1)
                     traderBuyCoefficient.Coefficient = (float)Math.Round(traderBuyCoefficient.Coefficient / acceptableTraderGoodTypes.Count, 2);
             }
-            Debug.Log(traderBuyCoefficient.CountToBuy + traderBuyCoefficient.itemType.ToString());
         }
     }
 
