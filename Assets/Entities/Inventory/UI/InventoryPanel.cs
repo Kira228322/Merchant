@@ -21,7 +21,7 @@ public class InventoryPanel : MonoBehaviour
     {
         _currentTotalWeight = _playersInventory.CurrentTotalWeight;
         _maxTotalWeight = _playersInventory.MaxTotalWeight;
-        _money = Player.Singleton.Money;
+        _money = Player.Instance.Money;
         Refresh();
     }
 
@@ -31,20 +31,20 @@ public class InventoryPanel : MonoBehaviour
         // Пост №4. Сказано, что если обладатель ивента уничтожается, то нет нужды отписываться. Надеюсь, правда. Таким образом,
         // просто переподписываюсь на тот же ивент.
 
-        Player.Singleton.MoneyChanged += OnMoneyChanged;
+        Player.Instance.MoneyChanged += OnMoneyChanged;
     }
 
     private void OnEnable()
     {
         Player.PlayerSingletonChanged += OnPlayerSingletonChanged;
-        Player.Singleton.MoneyChanged += OnMoneyChanged;
+        Player.Instance.MoneyChanged += OnMoneyChanged;
         _playersInventory.WeightChanged += OnWeightChanged;
         
     }
     private void OnDisable()
     {
         Player.PlayerSingletonChanged -= OnPlayerSingletonChanged;
-        Player.Singleton.MoneyChanged -= OnMoneyChanged;
+        Player.Instance.MoneyChanged -= OnMoneyChanged;
         _playersInventory.WeightChanged -= OnWeightChanged;
     }
     private void Refresh()

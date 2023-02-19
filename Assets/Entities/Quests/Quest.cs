@@ -61,14 +61,14 @@ public class Quest: MonoBehaviour
 
     public virtual void GiveReward()
     {
-        Player.Singleton.AddExperience(ExperienceReward);
-        Player.Singleton.Money += MoneyReward;
+        Player.Instance.AddExperience(ExperienceReward);
+        Player.Instance.Money += MoneyReward;
 
         if (ItemRewards.Count != 0) 
         {
             foreach (var item in ItemRewards)
             {
-                InventoryController.Instance.TryCreateAndInsertItem(Player.Singleton.Inventory.ItemGrid, item.item, item.amount, item.daysBoughtAgo, true);
+                InventoryController.Instance.TryCreateAndInsertItem(Player.Instance.Inventory.ItemGrid, item.item, item.amount, item.daysBoughtAgo, true);
             }
         }
     }

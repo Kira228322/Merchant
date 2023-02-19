@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
-    public static Player Singleton;
+    public static Player Instance;
 
     [Header("Wagon stats")]
     //Мне совсем не хотелось ставить эти параметры сюда, но иначе никак не получается.
@@ -53,13 +53,13 @@ public class Player : MonoBehaviour
    сделать также подписку на этот ивент, при срабатывании этого ивента обновлять ссылку на текущий синглтон.
 */
 
-        if (Singleton == null) 
+        if (Instance == null) 
         {
-            Singleton = this; 
+            Instance = this; 
         }
         else
         {
-            Singleton = this; //Возлагаю надежды на гарбаж коллектора, что он сам удаляет неиспользуемый старый экземпляр.
+            Instance = this; //Возлагаю надежды на гарбаж коллектора, что он сам удаляет неиспользуемый старый экземпляр.
             PlayerSingletonChanged?.Invoke(); //При переходе между сценами 
         }
 
@@ -95,7 +95,7 @@ public class Player : MonoBehaviour
 
     public void SaveData(SaveData saveData)
     {
-        saveData.Player = Singleton;
+        saveData.Player = Instance;
     }
 
     public void LoadData(Player player)

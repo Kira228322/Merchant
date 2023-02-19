@@ -21,12 +21,12 @@ public class Saver : MonoBehaviour
 
     private void LoadData(Scene scene, LoadSceneMode sceneMode)
     {
-        Player.Singleton.LoadData(_saveData.Player);
+        Player.Instance.LoadData(_saveData.Player);
     }
 
     private void SaveData(Scene scene)
     {
-        Player.Singleton.SaveData(_saveData);
+        Player.Instance.SaveData(_saveData);
     }
     
     

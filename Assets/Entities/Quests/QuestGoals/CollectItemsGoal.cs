@@ -20,7 +20,7 @@ public class CollectItemsGoal : Goal
     {
         base.Initialize();
         //Надо найти, сколько таких вещей уже есть у игрока в инвентаре
-        foreach (InventoryItem item in Player.Singleton.Inventory.ItemList)
+        foreach (InventoryItem item in Player.Instance.Inventory.ItemList)
         {
             if (item.ItemData == RequiredItemType)
             {
@@ -29,7 +29,7 @@ public class CollectItemsGoal : Goal
         }
         Evaluate();
 
-        ItemGrid playerInventoryItemGrid = Player.Singleton.Inventory.ItemGrid;
+        ItemGrid playerInventoryItemGrid = Player.Instance.Inventory.ItemGrid;
         playerInventoryItemGrid.ItemPlacedInTheGrid += ItemCollected;
         playerInventoryItemGrid.ItemUpdated += ItemUpdated;
         playerInventoryItemGrid.ItemRemovedFromTheGrid += ItemRemoved;
@@ -39,7 +39,7 @@ public class CollectItemsGoal : Goal
     {
         base.Deinitialize();
 
-        ItemGrid playerInventoryItemGrid = Player.Singleton.Inventory.ItemGrid;
+        ItemGrid playerInventoryItemGrid = Player.Instance.Inventory.ItemGrid;
         playerInventoryItemGrid.ItemPlacedInTheGrid -= ItemCollected;
         playerInventoryItemGrid.ItemUpdated -= ItemUpdated;
         playerInventoryItemGrid.ItemRemovedFromTheGrid -= ItemRemoved;

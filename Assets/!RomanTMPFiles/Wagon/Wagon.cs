@@ -18,8 +18,8 @@ public class Wagon : MonoBehaviour
 
     private void Start()
     {
-        _wagonStats = Player.Singleton.WagonStats;
-        Player.Singleton.WagonStats.WagonStatsRefreshed += OnWagonStatsRefreshed;
+        _wagonStats = Player.Instance.WagonStats;
+        Player.Instance.WagonStats.WagonStatsRefreshed += OnWagonStatsRefreshed;
         //^ из-за порядка выполнения скриптов мы не можем помещать подписку на ивент в OnEnable (см. пост #5 https://forum.unity.com/threads/onenable-before-awake.361429/)
         //Поэтому подписываемся в старте, после того как Player и его подсосы выполнят Awake.
         //Единственная проблема может быть тем, что Start срабатывает только один раз при спавне этого скрипта.
@@ -36,7 +36,7 @@ public class Wagon : MonoBehaviour
 
     private void OnDisable()
     {
-        Player.Singleton.WagonStats.WagonStatsRefreshed -= OnWagonStatsRefreshed;
+        Player.Instance.WagonStats.WagonStatsRefreshed -= OnWagonStatsRefreshed;
     }
 
     private void OnWagonStatsRefreshed()

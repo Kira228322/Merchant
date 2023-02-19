@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TradeManager : MonoBehaviour
 {
-    public static TradeManager Singleton;
+    public static TradeManager Instance;
     [SerializeField] private CanvasGroup _playerBlock;
     [SerializeField] private GameObject _closeTradeButton;
     [SerializeField] private GameObject _BuyPanel;
@@ -22,11 +22,11 @@ public class TradeManager : MonoBehaviour
 
     private void Start()
     {
-        if (Singleton == null)
+        if (Instance == null)
         {
-            Singleton = this;
+            Instance = this;
         }
-        else if (Singleton != this)
+        else if (Instance != this)
         {
             Destroy(gameObject);
         }
@@ -45,15 +45,15 @@ public class TradeManager : MonoBehaviour
         InventoryController.Instance.enabled = true;
         _playerBlock.alpha = 1;
         _closeTradeButton.SetActive(false);
-        Singleton.BuyPanel.SetActive(false);
-        Singleton.SellPanel.SetActive(false);
-        Player.Singleton.Inventory.InventoryPanel.SetActive(false);
+        Instance.BuyPanel.SetActive(false);
+        Instance.SellPanel.SetActive(false);
+        Player.Instance.Inventory.InventoryPanel.SetActive(false);
     }
     private void OpenBuyPanel(NPCTrader trader)
     {
-        Singleton.BuyPanel.SetActive(true);
-        for (int i = Singleton.BuyPanelContent.childCount - 1; i >= 0; i--)
-            Destroy(Singleton.BuyPanelContent.GetChild(i).gameObject);
+        Instance.BuyPanel.SetActive(true);
+        for (int i = Instance.BuyPanelContent.childCount - 1; i >= 0; i--)
+            Destroy(Instance.BuyPanelContent.GetChild(i).gameObject);
 
         for (int i = 0; i < trader.Goods.Count; i++)
         {
@@ -65,19 +65,19 @@ public class TradeManager : MonoBehaviour
     }
     private void OpenSellPanel(NPCTrader trader)
     {
-        Singleton.SellPanel.SetActive(true);
+        Instance.SellPanel.SetActive(true);
 
-        for (int i = Singleton.SellPanelContent.childCount - 1; i >= 0; i--)
-            Destroy(Singleton.SellPanelContent.GetChild(i).gameObject);
+        for (int i = Instance.SellPanelContent.childCount - 1; i >= 0; i--)
+            Destroy(Instance.SellPanelContent.GetChild(i).gameObject);
 
-        for (int i = 0; i < Player.Singleton.Inventory.ItemList.Count; i++)
+        for (int i = 0; i < Player.Instance.Inventory.ItemList.Count; i++)
         {
             GameObject tradersGoods = Instantiate(GoodsSellPanelPrefab.gameObject, SellPanelContent);
-            tradersGoods.GetComponent<GoodsSellPanel>().Init(trader, Player.Singleton.Inventory.ItemList[i], Player.Singleton.Inventory.ItemGrid);
+            tradersGoods.GetComponent<GoodsSellPanel>().Init(trader, Player.Instance.Inventory.ItemList[i], Player.Instance.Inventory.ItemGrid);
         }
     }
     private void OpenInventory()
     {
-        Player.Singleton.Inventory.InventoryPanel.SetActive(true);
+        Player.Instance.Inventory.InventoryPanel.SetActive(true);
     }
 }

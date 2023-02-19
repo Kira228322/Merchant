@@ -63,14 +63,14 @@ public class GoodsSellPanel : MonoBehaviour
         _currentCount--;
         //Уменьшить CountToBuy у коэффициента с этим типом товара
         _trader.BuyCoefficients.FirstOrDefault(x => x.itemType == _item.ItemData.TypeOfItem).CountToBuy--;
-        GoodsBuyPanel panel = TradeManager.Singleton.BuyPanelContent.GetComponentsInChildren<GoodsBuyPanel>().FirstOrDefault(i => i.Item == _item.ItemData && i.IsOriginatedFromTrader == false);
+        GoodsBuyPanel panel = TradeManager.Instance.BuyPanelContent.GetComponentsInChildren<GoodsBuyPanel>().FirstOrDefault(i => i.Item == _item.ItemData && i.IsOriginatedFromTrader == false);
         if (panel != null)
         {
             panel.CurrentCount++;
         }
         else
         {
-            GameObject tradersGoods = Instantiate(TradeManager.Singleton.GoodsBuyPanelPrefab.gameObject, TradeManager.Singleton.BuyPanelContent);
+            GameObject tradersGoods = Instantiate(TradeManager.Instance.GoodsBuyPanelPrefab.gameObject, TradeManager.Instance.BuyPanelContent);
             tradersGoods.GetComponent<GoodsBuyPanel>().Init(_trader, _item.ItemData, _item.BoughtDaysAgo, false, 1);
         }
         if (_currentCount <= 0)

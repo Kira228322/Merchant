@@ -12,14 +12,13 @@ public class NPCWagonUpgrader : NPC
 
     private void Start()
     {
-        _wagonStats = Player.Singleton.WagonStats;
+        _wagonStats = Player.Instance.WagonStats;
     }
 
-    public override void Interact()
+    public void Interact() // TODO
     {
         //Тачку на прокачку
         //Открыть меню с текущими статами каждой запчасти и статами следующей запчасти, с кнопкой купить.
-        base.Interact();
         //По поводу интеракта сделаю позже, сейчас тесты:
         Upgrade(_wagonStats.Wheel);
         Upgrade(_wagonStats.Body);
@@ -36,7 +35,7 @@ public class NPCWagonUpgrader : NPC
                 {
                     if (wagonPart.Level == _wheelProgression[i].Level)
                     {
-                        Player.Singleton.WagonStats.Wheel = _wheelProgression[i + 1];
+                        Player.Instance.WagonStats.Wheel = _wheelProgression[i + 1];
                     }
                 }
                 break;
@@ -46,7 +45,7 @@ public class NPCWagonUpgrader : NPC
                 {
                     if (wagonPart.Level == _bodyProgression[i].Level)
                     {
-                        Player.Singleton.WagonStats.Body = _bodyProgression[i + 1];
+                        Player.Instance.WagonStats.Body = _bodyProgression[i + 1];
                     }
                 }
                 break;
@@ -56,7 +55,7 @@ public class NPCWagonUpgrader : NPC
                 {
                     if (wagonPart.Level == _suspensionProgression[i].Level)
                     {
-                        Player.Singleton.WagonStats.Suspension = _suspensionProgression[i + 1];
+                        Player.Instance.WagonStats.Suspension = _suspensionProgression[i + 1];
                     }
                 }
                 break;
