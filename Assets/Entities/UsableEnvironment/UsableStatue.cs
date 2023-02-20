@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class UsableStatue : UsableEnvironment
 {
+    [SerializeField] private Status _luckBuff;
     protected override bool IsFunctionalComplete()
     {
-        // TODO Выдать бафф на 24 часа +1 к удаче.
-        
+        StatusManager.Instance.AddStatusForPlayer(_luckBuff);
         return true;
     }
 }

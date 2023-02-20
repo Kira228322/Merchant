@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-[CreateAssetMenu(fileName = "newItem", menuName = "Item")]
+[CreateAssetMenu(fileName = "newItem", menuName = "Status or Item/Item")]
 public class Item : ScriptableObject
 {
     public string Name;
