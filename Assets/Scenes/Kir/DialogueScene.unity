@@ -1679,9 +1679,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df6ab5e347f61a544b92bcb6d4d270df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: "\u0432\u0443\u0434\u0438"
-  ID: 1
-  InkJSON: {fileID: 4900000, guid: 42ec4a2723d8b42478233eaff171235e, type: 3}
+  npcData: {fileID: 11400000, guid: 33c7942279a3b0048ad9eab4c548aee8, type: 2}
 --- !u!4 &261912742 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2061739260488278520, guid: fa27bbcc777104d48a6e7e620a980741, type: 3}
@@ -3859,6 +3857,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6616926714427754711, guid: 6c1bdda03345a1f4693ea102b8edfd98, type: 3}
+      propertyPath: m_RootOrder
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 8613524238941844429, guid: 6c1bdda03345a1f4693ea102b8edfd98, type: 3}
       propertyPath: m_Pivot.x
       value: 0

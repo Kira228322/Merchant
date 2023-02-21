@@ -11,6 +11,8 @@ public class NPC : MonoBehaviour
     public int ID { get; private set; }
 
     public TextAsset InkJSON { get; private set; }
+
+    public NPCData npcData;
     
 
     public int Affinity
@@ -29,7 +31,12 @@ public class NPC : MonoBehaviour
         }
     }
     private int _affinity;
-    
+
+    protected virtual void Start()
+    {
+        SetNPCFromData(npcData);
+    }
+
     public virtual void SetNPCFromData(NPCData npcData)
     {
         Name = npcData.Name;

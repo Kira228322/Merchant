@@ -10,8 +10,9 @@ public class NPCWagonUpgrader : NPC
 
     private PlayerWagonStats _wagonStats;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         _wagonStats = Player.Instance.WagonStats;
     }
 
