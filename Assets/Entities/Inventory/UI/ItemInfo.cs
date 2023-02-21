@@ -34,7 +34,7 @@ public class ItemInfo : MonoBehaviour
     #region Методы инициализации
     private void Start()
     {
-        _player = Player.Singleton;
+        _player = Player.Instance;
     }
 
     public void Initialize(InventoryItem item, ItemGrid itemGrid)

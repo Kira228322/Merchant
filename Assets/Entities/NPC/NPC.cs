@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NPC : MonoBehaviour
 {
@@ -10,7 +11,8 @@ public class NPC : MonoBehaviour
     public int ID { get; private set; }
 
     public TextAsset InkJSON { get; private set; }
-      
+    
+
     public int Affinity
     { 
         get => _affinity;
@@ -35,10 +37,4 @@ public class NPC : MonoBehaviour
         Affinity = npcData.Affinity;
         InkJSON = npcData.InkJSON;
     }
-
-    public virtual void Interact()  //Я сделаю позже по уму всё здесь
-    {
-
-    }
-    
 }

@@ -24,7 +24,7 @@ public class PlayerStatsPanel : MonoBehaviour
     private PlayerExperience _playerExperience;
     private void Awake()
     {
-        _player = Player.Singleton;
+        _player = Player.Instance;
         _playerStats = _player.Statistics;
         _playerExperience = _player.Experience;
 
@@ -72,9 +72,9 @@ public class PlayerStatsPanel : MonoBehaviour
             }
         }
 
-        _diplomacyText.text = "Дипломатия: " + _playerStats.Diplomacy;
-        _luckText.text = "Удача: " + _playerStats.Luck;
-        _toughnessText.text = "Стойкость: " + _playerStats.Toughness;
+        _diplomacyText.text = "Дипломатия: " + _playerStats.TotalDiplomacy;
+        _luckText.text = "Удача: " + _playerStats.TotalLuck;
+        _toughnessText.text = "Стойкость: " + _playerStats.TotalToughness;
 
     }
 

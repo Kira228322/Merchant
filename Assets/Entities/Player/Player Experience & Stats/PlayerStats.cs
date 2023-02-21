@@ -4,34 +4,56 @@ using UnityEngine;
 
 public class PlayerStats
 {
-    private int _diplomacy;
-    private int _toughness;
-    private int _luck;
-    public int Diplomacy => _diplomacy; //Влияет на цены и успешность переговоров
-    public int Toughness => _toughness; //Влияет на скорость убывания сна
-    public int Luck => _luck; // влияет на частоту происшествия благоприятных и негативных событий
+    private int _totalDiplomacy;
+    private int _totalToughness;
+    private int _totalLuck;
+    
+    private int _baseDiplomacy;
+    private int _baseToughness;
+    private int _baseLuck;
+    
+    public int AddititionalDiplomacy;
+    public int AddititionalToughness;
+    public int AddititionalLuck;
+    
+    public int TotalDiplomacy => _totalDiplomacy; //Влияет на цены и успешность переговоров
+    public int TotalToughness => _totalToughness; //Влияет на скорость убывания сна и еды
+    public int TotalLuck => _totalLuck; // влияет на частоту происшествия благоприятных и негативных событий
 
+    public void RefreshStats()
+    {
+        // Как оно работает:
+        // бафы и дебафы меняют добавочные значения статов. 
+        // Если это баф, то в Activate он прибавляет добавочный стат
+        // В Deactivate он отнимает такое же количество статов.
+        // Для дебафов аналогично.
+        _totalDiplomacy = _baseDiplomacy + AddititionalDiplomacy;
+        _totalToughness = _baseToughness + AddititionalToughness;
+        _totalLuck = _baseLuck + AddititionalLuck;
+        Debug.Log(_totalLuck);
+    }
+    
     public void IncreaseDiplomacy()
     {
-        _diplomacy++;
+        _baseDiplomacy++;
     }
     public void IncreaseToughness()
     {
-        _toughness++;
+        _baseToughness++;
     }
     public void IncreaseLuck()
     {
-        _luck++;
+        _baseLuck++;
     }
 
     public float GetCoefForNegativeEvent()
     {
-        return (float)(1 - 0.06f * _luck / (0.06 * _luck + 1.5f));
+        return (float)(1 - 0.06f * _totalLuck / (0.06 * _totalLuck + 1.5f));
     }
 
     public float GetCoefForPositiveEvent()
     {
-        return (float)(1 + 0.06f * _luck / (0.06 * _luck + 1.5f));
+        return (float)(1 + 0.06f * _totalLuck / (0.06 * _totalLuck + 1.5f));
     }
     
 }

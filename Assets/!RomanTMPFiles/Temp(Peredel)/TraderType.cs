@@ -28,8 +28,6 @@ public class TraderType : ScriptableObject
 
         public override void OnInspectorGUI()
         {
-            
-            
             if (GUILayout.Button("Добавить тип предмета"))
                 traderType.TraderGoodTypes.Add(new TraderGoodType());
 

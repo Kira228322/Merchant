@@ -6,7 +6,7 @@ public class UsableWell : UsableEnvironment
 {
     protected override bool IsFunctionalComplete()
     {
-        foreach (var item in Player.Singleton.Inventory.ItemList)
+        foreach (var item in Player.Instance.Inventory.ItemList)
         {
             if (item.ItemData.Name == "Empty bottle")
             {

@@ -1,25 +1,29 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 public class FunctionalWindow : MonoBehaviour
 {
     [SerializeField] private TMP_Text _NPCName;
     [SerializeField] private GameObject _tradeButton;
+    [SerializeField] private GameObject _wagonUpButton;
     private NPC _NPC;
 
     
     
     public void Init(NPC npc)
     {
-        _tradeButton.SetActive(false);
         _NPC = npc;
         
         _NPCName.text = _NPC.Name; 
-        if (_NPC is NPCTrader)
-            _tradeButton.SetActive(true);
+        // Выставление кнопок:
+        if (_NPC is NPCTrader) // Если он трейдер то 2 кнопки (трейд и разговор)
+            Destroy(_wagonUpButton);
+        else if (!(_NPC is NPCWagonUpgrader)) // Если он не трейдер и не апгрейдер, то он обычный нпс (только поговорить)
+        {
+            Destroy(_wagonUpButton);
+            Destroy(_tradeButton);
+        }
+        // если 2 ифа не верны, то он апргейдер, у него все 3 кнопки
     }
     
     public void OnTalkButtonClick()
@@ -30,13 +34,12 @@ public class FunctionalWindow : MonoBehaviour
 
     public void OnTradeButtonClick()
     {
-        TradeManager.Singleton.OpenTradeWindow((NPCTrader)_NPC);
+        TradeManager.Instance.OpenTradeWindow((NPCTrader)_NPC);
         Destroy(gameObject);
     }
 
-    public void OnInteractButtonClick()
+    public void OnWagonUpgradeButtonClick()
     {
-        _NPC.Interact();
+        // TODO
     }
-
 }

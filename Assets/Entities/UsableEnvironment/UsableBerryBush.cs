@@ -8,6 +8,6 @@ public class UsableBerryBush : UsableEnvironment
     {
         // TODO проверить есть ли место свободное в инвентаре и добавить ягоду какую-нибудь
 
-        return true;
+        return false;
     }
 }

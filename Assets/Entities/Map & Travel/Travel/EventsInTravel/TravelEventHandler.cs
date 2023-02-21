@@ -37,11 +37,11 @@ public class TravelEventHandler : MonoBehaviour
 
     public void BreakingItemAfterJourney()
     {
-        List<InventoryItem> unverifiedItems = Player.Singleton.Inventory.ItemList;
+        List<InventoryItem> unverifiedItems = Player.Instance.Inventory.ItemList;
         List<InventoryItem> deletedItems = new List<InventoryItem>();
         
         float Roadbadness = (100 - MapManager.CurrentRoad.Quality) / 
-                            (Player.Singleton.WagonStats.QualityModifier * (1 + MapManager.CurrentRoad.Quality * 0.002f));
+                            (Player.Instance.WagonStats.QualityModifier * (1 + MapManager.CurrentRoad.Quality * 0.002f));
         // формула вероятности сломать предмет хрупкостью 100%
         
         while (unverifiedItems.Count > 0)
@@ -54,7 +54,7 @@ public class TravelEventHandler : MonoBehaviour
                 {
                     Roadbadness *= 0.9f;
                     deletedItems.Add(Instantiate(randomItem));
-                    Player.Singleton.Inventory.ItemGrid.RemoveItemsFromAStack(randomItem, 1);
+                    Player.Instance.Inventory.ItemGrid.RemoveItemsFromAStack(randomItem, 1);
                 }
             }
 
@@ -151,11 +151,11 @@ public class TravelEventHandler : MonoBehaviour
         {
             if (positiveEvent)
             {
-                if (Random.Range(0, 101) <= probability * Player.Singleton.Statistics.GetCoefForPositiveEvent())
+                if (Random.Range(0, 101) <= probability * Player.Instance.Statistics.GetCoefForPositiveEvent())
                     return true;
                 return false;
             }
-            if (Random.Range(0, 101) <= probability * Player.Singleton.Statistics.GetCoefForNegativeEvent())
+            if (Random.Range(0, 101) <= probability * Player.Instance.Statistics.GetCoefForNegativeEvent())
                 return true;
             return false;
         }

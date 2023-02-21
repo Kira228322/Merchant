@@ -26,10 +26,10 @@ public class PlayerWagonStats
     {
         QualityModifier = Wheel.QualityModifier;
 
-        int rowsToAdd = Body.InventoryRows - Player.Singleton.Inventory.ItemGrid.GridSizeHeight;
-        Player.Singleton.Inventory.ItemGrid.AddRowsToInventory(rowsToAdd);
+        int rowsToAdd = Body.InventoryRows - Player.Instance.Inventory.ItemGrid.GridSizeHeight;
+        Player.Instance.Inventory.ItemGrid.AddRowsToInventory(rowsToAdd);
 
-        Player.Singleton.Inventory.MaxTotalWeight = Suspension.MaxWeight;
+        Player.Instance.Inventory.MaxTotalWeight = Suspension.MaxWeight;
         WagonStatsRefreshed?.Invoke();
     }
 }
