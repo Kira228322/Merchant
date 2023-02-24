@@ -62,6 +62,13 @@ public class TradeManager : MonoBehaviour
             tradersGoods.GetComponent<GoodsBuyPanel>().Init(trader, trader.Goods[i].Good, 0f, true, trader.Goods[i].Count);
         }
 
+        for (int i = 0; i < trader.AdditiveGoods.Count; i++)
+        {
+            if (trader.AdditiveGoods[i].Count <= 0) continue;
+            GameObject tradersGoods = Instantiate(GoodsBuyPanelPrefab.gameObject, BuyPanelContent);
+            tradersGoods.GetComponent<GoodsBuyPanel>().Init(trader, trader.AdditiveGoods[i].Good, 0f, true, trader.AdditiveGoods[i].Count);
+        }
+
     }
     private void OpenSellPanel(NPCTrader trader)
     {

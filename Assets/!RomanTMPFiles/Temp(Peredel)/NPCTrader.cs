@@ -23,13 +23,15 @@ public class NPCTrader : NPC
         public Item.ItemType itemType;
         public float Coefficient;
         public int CountToBuy;
+        public int DefaultCountToBuy; // Главное, чтобы set этого значения выполнялся 1 раз в самом начале игры
     }
     
     private List<TraderType> _traderTypes = new();
     private int _restockCycle;
     private int _lastRestock;
-    public NPCTraderData NPCData; //TODO: npcData лучше забирать из базы данных, чем по ручной ссылке.
+    public TraderData NPCData; //TODO: npcData лучше забирать из базы данных, чем по ручной ссылке.
     [HideInInspector] public List<TraderGood> Goods = new();
+    [HideInInspector] public List<TraderGood> AdditiveGoods = new();
     [HideInInspector] public List<TraderBuyCoefficient> BuyCoefficients = new(); //Таких BuyCoefficients будет столько, сколько всего есть Item.ItemType (см.ниже)
 
     protected override void Start()
@@ -41,11 +43,11 @@ public class NPCTrader : NPC
     public override void SetNPCFromData(NPCData npcData)
     {
         base.SetNPCFromData(npcData);
-        NPCTraderData npcTraderData = npcData as NPCTraderData;
-        _traderTypes = npcTraderData.TraderTypes;
-        Goods = npcTraderData.Goods;
-        _restockCycle = npcTraderData.RestockCycle;
-        _lastRestock = npcTraderData.LastRestock;
+        TraderData traderData = npcData as TraderData;
+        _traderTypes = traderData.TraderTypes;
+        Goods = traderData.Goods;
+        _restockCycle = traderData.RestockCycle;
+        _lastRestock = traderData.LastRestock;
     }
     private void SetTraderStats()
     {
@@ -89,6 +91,7 @@ public class NPCTrader : NPC
             if (acceptableTraderGoodTypes.Count != 0) //избежать деления на ноль, такие типы будут иметь Coefficient & CountToBuy == 0
             {
                 traderBuyCoefficient.CountToBuy = (int)Math.Ceiling((float)traderBuyCoefficient.CountToBuy / acceptableTraderGoodTypes.Count);
+                traderBuyCoefficient.DefaultCountToBuy = traderBuyCoefficient.CountToBuy;
                 if (traderBuyCoefficient.Coefficient != 1)
                     traderBuyCoefficient.Coefficient = (float)Math.Round(traderBuyCoefficient.Coefficient / acceptableTraderGoodTypes.Count, 2);
             }
@@ -97,14 +100,82 @@ public class NPCTrader : NPC
 
     public void Restock()
     {
+        RestockMainGoods();        
+        RestockNewItems();
+        RestockCoefficients();
+    }
+
+    private void RestockCoefficients()
+    {
+        foreach (var buyCoefficient in BuyCoefficients)
+        {
+            buyCoefficient.CountToBuy += buyCoefficient.DefaultCountToBuy / 3 + Player.Instance.Statistics.TotalDiplomacy + 1;
+            if (buyCoefficient.CountToBuy > buyCoefficient.DefaultCountToBuy)
+                buyCoefficient.CountToBuy = buyCoefficient.DefaultCountToBuy;
+        }
+    }
+
+    private void RestockNewItems()
+    {
+        if (AdditiveGoods.Count > 5)
+            AdditiveGoods.Clear();
+
+        int add = Random.Range(0, Player.Instance.Statistics.TotalDiplomacy/3 + 1); // за каждые 3 дипломатии шанс на +1
+            // дополнительную шмотку у торговца
+        for (int i = 0; i <= 1 + add; i++)
+        {
+            TraderBuyCoefficient traderBuyCoefficient;
+            bool isMainGood;
+            Item newItem;
+            bool reallyNew = true;
+
+            if (Random.Range(0, 6) == 0)
+                isMainGood = false; // не мейн тип шмотки торговца 
+            else
+                isMainGood = true; // мейн тип шмотки торговца
+
+            while (true)
+            {
+                traderBuyCoefficient = BuyCoefficients[Random.Range(0, BuyCoefficients.Count)];
+                // у мейн шмоток коэф 1
+                if ( (traderBuyCoefficient.Coefficient == 1) == isMainGood) 
+                {
+                    newItem = ItemDatabase.GetRandomItemOfThisType(traderBuyCoefficient.itemType);
+                    if (Goods.Any(t => newItem == Goods[i].Good))
+                        reallyNew = false;
+
+                    if (reallyNew)
+                    {
+                        TraderGood newGood = new TraderGood();
+                        newGood.Good = newItem;
+                        newGood.Count = Random.Range(1, 3);
+                        
+                        // новый предмет будет продаваться либо много дешевле, либо много дороже средней цены
+                        if (Random.Range(0, 2) == 1) 
+                            newGood.CurrentPrice = Random.Range(newItem.Price * 72 / 100, newItem.Price * 8 / 10 + 1);
+                        else
+                            newGood.CurrentPrice =
+                                Random.Range(newItem.Price * 12 / 10, newItem.Price * 128 / 100 + 1);
+                        
+                        AdditiveGoods.Add(newGood);
+                        break;
+                    }
+                }
+            }
+            
+        }
+    }
+    
+    private void RestockMainGoods()
+    {
         foreach (TraderGood traderGood in Goods)
         {
-            if (UnityEngine.Random.Range(0, 11) == 0) continue;
+            if (Random.Range(0, 11) == 0) continue;
 
             switch (traderGood.MaxCount)
             {
                 case int n when n <= 4: // Редкие предметы, которых у торговца мало, они могут не всегда прибавиться за ресток
-                    if (Random.Range(0, 2) == 0) // 50% шанс, что будет ресток этой шмотки
+                    if (Random.Range(0, 101) <= 50 + Player.Instance.Statistics.TotalDiplomacy)//50% шанс, что будет ресток этой шмотки
                     {
                         if (traderGood.MaxCount == 1)
                             traderGood.Count++;
@@ -124,10 +195,6 @@ public class NPCTrader : NPC
 
             if (traderGood.Count > traderGood.MaxCount)
                 traderGood.Count = traderGood.MaxCount;
-
-            // TODO
-            // еще хочу сделать так, чтобы с небольшим шансом торговец начал торговать каким-то новым предметом
-            // Который подходит его специализации. Но для этого надо с базой данных работать
         }
     }
     public void SellItem(Item item)

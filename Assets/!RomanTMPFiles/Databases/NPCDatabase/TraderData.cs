@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "newTraderData", menuName = "NPCs/TraderData")]
-public class NPCTraderData : NPCData
+public class TraderData : NPCData
 {
     public List<TraderType> TraderTypes;
     public int RestockCycle;
@@ -14,13 +14,13 @@ public class NPCTraderData : NPCData
 
 
     
-    [CustomEditor(typeof(NPCTraderData))]
+    [CustomEditor(typeof(TraderData))]
     class EditorTrader : Editor
     {
-        private NPCTraderData npcTraderData;
+        private TraderData _traderData;
         private void OnEnable()
         {
-            npcTraderData = (NPCTraderData)target;
+            _traderData = (TraderData)target;
         }
 
         public override void OnInspectorGUI()
@@ -29,11 +29,11 @@ public class NPCTraderData : NPCData
             
             GUILayout.Space(20);
             if (GUILayout.Button("Добавить товар"))
-                npcTraderData.Goods.Add(new NPCTrader.TraderGood());
+                _traderData.Goods.Add(new NPCTrader.TraderGood());
 
-            if (npcTraderData.Goods.Count > 0)
+            if (_traderData.Goods.Count > 0)
             {
-                foreach (var good in npcTraderData.Goods)
+                foreach (var good in _traderData.Goods)
                 {
                     GUILayout.Space(-1);
                     EditorGUILayout.BeginVertical("box");
@@ -42,7 +42,7 @@ public class NPCTraderData : NPCData
                     EditorGUILayout.BeginHorizontal();
                     if (GUILayout.Button("X", GUILayout.Height(17), GUILayout.Width(18)))
                     {
-                        npcTraderData.Goods.Remove(good);
+                        _traderData.Goods.Remove(good);
                         break;
                     }
                     EditorGUILayout.Space(5);
@@ -72,7 +72,7 @@ public class NPCTraderData : NPCData
             }
             
             if (GUI.changed)
-                EditorUtility.SetDirty(npcTraderData);
+                EditorUtility.SetDirty(_traderData);
         }
     }
 }
