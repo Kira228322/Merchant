@@ -8,7 +8,8 @@ public class StatusUIObject : MonoBehaviour
     [SerializeField] private Image _icon;
     [SerializeField] private Image _shell;
     private Status _status;
-    private int _currentHourDuration;
+    public Status Status => _status;
+    private float _currentHourDuration;
 
     public void Init(Status status)
     {
@@ -24,26 +25,33 @@ public class StatusUIObject : MonoBehaviour
     
     private void Start()
     {
-        GameTime.HourChanged += DurationDecrease;
+        GameTime.MinuteChanged += DurationDecrease;
         Activation();
     }
 
     private void OnDisable()
     {
-        GameTime.HourChanged -= DurationDecrease;
+        GameTime.MinuteChanged -= DurationDecrease;
         Deactivation(); 
     }
     
     private void DurationDecrease()
     {
-        _currentHourDuration--;
-        _shell.fillAmount = (float)_currentHourDuration / _status.HourDuration;
-        if (_currentHourDuration == 0)
+        _currentHourDuration -= 0.01667f; // 1/60
+        _shell.fillAmount = _currentHourDuration / _status.HourDuration;
+        if (_currentHourDuration <= 0)
             Destroy(gameObject);
+    }
+
+    public void RefreshStatus()
+    {
+        _currentHourDuration = _status.HourDuration;
     }
     
     private void Activation()
     {
+        
+        
         foreach (var effect in _status.Effects)
         {
             switch (effect.stat)

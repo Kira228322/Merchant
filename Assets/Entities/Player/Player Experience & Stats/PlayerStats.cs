@@ -30,7 +30,6 @@ public class PlayerStats
         _totalDiplomacy = _baseDiplomacy + AddititionalDiplomacy;
         _totalToughness = _baseToughness + AddititionalToughness;
         _totalLuck = _baseLuck + AddititionalLuck;
-        Debug.Log(_totalLuck);
     }
     
     public void IncreaseDiplomacy()

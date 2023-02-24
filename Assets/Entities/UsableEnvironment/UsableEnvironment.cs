@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public abstract class UsableEnvironment : ClickableIfPlayerNear
+public abstract class UsableEnvironment : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private string _warningLabel;
     [SerializeField] private string _warningMessage;
     [SerializeField] private Sprite _spriteAfterUse; // Sprite на который будет носить юзнутый предмет
     [SerializeField] private ParticleSystem _particleSystem; // партиклы после юза выключаются 
-    public override void OnPointerClick(PointerEventData eventData)
+
+    private float _distanceToUse = 3;
+    public void OnPointerClick(PointerEventData eventData)
     {
-        base.OnPointerClick(eventData);
+        if ((transform.position - Player.Instance.transform.position).magnitude > _distanceToUse)
+            return;
+        
         if(IsFunctionalComplete())
         {
             GetComponent<SpriteRenderer>().sprite = _spriteAfterUse;
@@ -22,4 +26,5 @@ public abstract class UsableEnvironment : ClickableIfPlayerNear
     }
 
     protected abstract bool IsFunctionalComplete(); // возвращает true если все прошло как надо
+
 }
