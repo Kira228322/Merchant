@@ -120,9 +120,9 @@ public class NPCTrader : NPC
         if (AdditiveGoods.Count > 5)
             AdditiveGoods.Clear();
 
-        int add = Random.Range(0, Player.Instance.Statistics.TotalDiplomacy/3 + 1); // за каждые 3 дипломатии шанс на +1
+        int count = Random.Range(0, Player.Instance.Statistics.TotalDiplomacy/3 + 2); // за каждые 3 дипломатии шанс на +1
             // дополнительную шмотку у торговца
-        for (int i = 0; i <= 1 + add; i++)
+        for (int i = 0; i < count; i++)
         {
             TraderBuyCoefficient traderBuyCoefficient;
             bool isMainGood;
