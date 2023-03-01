@@ -12,7 +12,7 @@ public class NPC : MonoBehaviour
 
     public TextAsset InkJSON { get; private set; }
 
-    public NPCData npcData;
+    public NPCData NpcData;
     
 
     public int Affinity
@@ -34,7 +34,7 @@ public class NPC : MonoBehaviour
 
     protected virtual void Start()
     {
-        SetNPCFromData(npcData);
+        SetNPCFromData(NpcData);
     }
 
     public virtual void SetNPCFromData(NPCData npcData)

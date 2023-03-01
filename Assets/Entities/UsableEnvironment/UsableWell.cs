@@ -10,8 +10,12 @@ public class UsableWell : UsableEnvironment
         {
             if (item.ItemData.Name == "Empty bottle")
             {
-                // TODO заменить предмет "Empty bottle" на "Water bottle" через БД 
-                
+                //заменить предмет "Empty bottle" на "Water bottle" через БД 
+                InventoryController.Instance.DestroyItem(Player.Instance.ItemGrid, item);
+                InventoryController.Instance.TryCreateAndInsertItem(
+                    Player.Instance.ItemGrid,
+                    ItemDatabase.GetItem("WaterBottle"),
+                    1, 0, true);
                 return true;
             }
         }

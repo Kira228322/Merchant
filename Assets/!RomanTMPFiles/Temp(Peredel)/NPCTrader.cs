@@ -27,16 +27,16 @@ public class NPCTrader : NPC
     }
     
     private List<TraderType> _traderTypes = new();
-    private int _restockCycle;
-    private int _lastRestock;
-    public TraderData NPCData; //TODO: npcData лучше забирать из базы данных, чем по ручной ссылке.
+
+    public TraderData NpcTraderData;
+
     [HideInInspector] public List<TraderGood> Goods = new();
     [HideInInspector] public List<TraderGood> AdditiveGoods = new();
     [HideInInspector] public List<TraderBuyCoefficient> BuyCoefficients = new(); //Таких BuyCoefficients будет столько, сколько всего есть Item.ItemType (см.ниже)
 
     protected override void Start()
     {
-        SetNPCFromData(NPCData);
+        SetNPCFromData(NpcData);
         SetTraderStats();
 
     }
@@ -46,8 +46,6 @@ public class NPCTrader : NPC
         TraderData traderData = npcData as TraderData;
         _traderTypes = traderData.TraderTypes;
         Goods = traderData.Goods;
-        _restockCycle = traderData.RestockCycle;
-        _lastRestock = traderData.LastRestock;
     }
     private void SetTraderStats()
     {
@@ -73,7 +71,6 @@ public class NPCTrader : NPC
             (traderGoodType => traderGoodType.ItemType == traderBuyCoefficient.itemType)).ToList();
             //Этот Linq возвращает все TraderGoodType, которые
             //имеют такой же ItemType как у нашего рассматриваемого traderBuyCoefficient
-            //https://i.redd.it/dfa2qicl7rc91.png
 
             foreach (TraderType.TraderGoodType traderGoodType in acceptableTraderGoodTypes)
             {
@@ -146,10 +143,12 @@ public class NPCTrader : NPC
 
                     if (reallyNew)
                     {
-                        TraderGood newGood = new TraderGood();
-                        newGood.Good = newItem;
-                        newGood.Count = Random.Range(1, 3);
-                        
+                        TraderGood newGood = new()
+                        {
+                            Good = newItem,
+                            Count = Random.Range(1, 3)
+                        };
+
                         // новый предмет будет продаваться либо много дешевле, либо много дороже средней цены
                         if (Random.Range(0, 2) == 1) 
                             newGood.CurrentPrice = Random.Range(newItem.Price * 72 / 100, newItem.Price * 8 / 10 + 1);

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 
 [CreateAssetMenu(fileName = "newTraderData", menuName = "NPCs/TraderData")]
 public class TraderData : NPCData
@@ -11,7 +12,6 @@ public class TraderData : NPCData
     public int RestockCycle;
     public int LastRestock;
     [HideInInspector] public List<NPCTrader.TraderGood> Goods;
-
 
     
     [CustomEditor(typeof(TraderData))]

@@ -19,8 +19,8 @@ MonoBehaviour:
   TraderTypes:
   - {fileID: 11400000, guid: e6572bc3b8ee63a4b8071ae6ce8579b7, type: 2}
   - {fileID: 11400000, guid: 997f1667faefd604aad534ee42560049, type: 2}
-  RestockCycle: 12
-  LastRestock: 10
+  RestockCycle: 0
+  LastRestock: 0
   Goods:
   - Good: {fileID: 11400000, guid: be69300bcd634f345948760c733bad4a, type: 2}
     MaxCount: 2
@@ -34,3 +34,7 @@ MonoBehaviour:
     MaxCount: 4
     Count: 4
     CurrentPrice: 60
+  - Good: {fileID: 11400000, guid: 934d977f079cae542b316dc9cde310c2, type: 2}
+    MaxCount: 60
+    Count: 60
+    CurrentPrice: 1337

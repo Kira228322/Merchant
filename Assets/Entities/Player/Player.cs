@@ -20,6 +20,8 @@ public class Player : MonoBehaviour
     public PlayerMover PlayerMover => _playerMover;
     public PlayersInventory Inventory => _inventory;
 
+    public ItemGrid ItemGrid => Inventory.ItemGrid;
+
     public PlayerExperience Experience = new();
     public PlayerStats Statistics = new();
     public PlayerNeeds Needs = new();
