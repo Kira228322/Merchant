@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(ItemGrid))]
 public class PlayersInventory : MonoBehaviour
 {
+    [SerializeField] private ItemGrid _inventoryItemGrid;
     [SerializeField] private float _startingMaxTotalWeight;
 
     private List<InventoryItem> _inventory = new();
-
-    private ItemGrid _inventoryItemGrid;
 
     private float _currentTotalWeight;
     private float _maxTotalWeight;
@@ -53,7 +51,7 @@ public class PlayersInventory : MonoBehaviour
 
     private void Awake()
     {
-        _inventoryItemGrid = GetComponent<ItemGrid>();
+        ItemGrid.Init();
     }
 
     private void OnEnable() 
@@ -78,12 +76,12 @@ public class PlayersInventory : MonoBehaviour
     }
     public void AddItemInInventory(InventoryItem item)
     {
-        _inventory.Add(item);
+        ItemList.Add(item);
         CurrentTotalWeight += item.ItemData.Weight * item.CurrentItemsInAStack;
     }
     public void RemoveItemInInventory(InventoryItem item)
     {
-        _inventory.Remove(item);
+        ItemList.Remove(item);
         CurrentTotalWeight -= item.ItemData.Weight * item.CurrentItemsInAStack;
     }
     private void ItemUpdated(InventoryItem item, int howManyWereChanged)
@@ -107,7 +105,7 @@ public class PlayersInventory : MonoBehaviour
 
     private void CheckSpoilItems()
     {
-        foreach (var item in _inventory)
+        foreach (var item in ItemList)
         {
             if (item.ItemData.IsPerishable)
             {

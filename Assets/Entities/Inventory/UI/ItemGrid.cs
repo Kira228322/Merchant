@@ -42,23 +42,18 @@ public class ItemGrid : MonoBehaviour
     #endregion
     #region Методы инициализации
 
-    private void Awake()
+    public void Init()
     {
         _rectTransform = GetComponent<RectTransform>();
-        Init(_gridSizeWidth, _gridSizeHeight);
-    }
-
-    private void Init(int width, int height)
-    {
         _storedInventoryItems = new List<InventoryRow>();
 
-        for (int i = 0; i < height; i++)
+        for (int i = 0; i < _gridSizeHeight; i++)
         {
-            InventoryRow inventoryRow = new(width);
+            InventoryRow inventoryRow = new(_gridSizeWidth);
             _storedInventoryItems.Add(inventoryRow);
         }
 
-        Vector2 size = new(width * TileSizeWidth, height * TileSizeHeight);
+        Vector2 size = new(_gridSizeWidth * TileSizeWidth, _gridSizeHeight * TileSizeHeight);
         _rectTransform.sizeDelta = size;
     }
     #endregion
@@ -307,6 +302,7 @@ public class ItemGrid : MonoBehaviour
                 return null;
             }
             PlaceItem(item, positionX, positionY);
+
             ItemPlacedInTheGrid?.Invoke(item);
             return item;
         }

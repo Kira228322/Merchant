@@ -1417,7 +1417,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80ad4811f427336448cfa9be2189dfa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playersInventory: {fileID: 240687937}
+  _playersInventory: {fileID: 0}
   _goldText: {fileID: 1036379565}
   _weightText: {fileID: 1137599240}
 --- !u!1 &1388978057892610779
@@ -1804,7 +1804,6 @@ GameObject:
   - component: {fileID: 1388978058894368510}
   - component: {fileID: 1388978058894368511}
   - component: {fileID: 1388978058894368384}
-  - component: {fileID: 240687937}
   m_Layer: 5
   m_Name: PlayerInventoryItemGrid
   m_TagString: Untagged
@@ -1896,17 +1895,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gridSizeWidth: 5
   _gridSizeHeight: 4
---- !u!114 &240687937
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1388978058894368387}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74ea4de35d623b94aa2fac2ade2afe7f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _startingMaxTotalWeight: 45
-  InventoryPanel: {fileID: 1388978057821864648}

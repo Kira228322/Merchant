@@ -57,7 +57,7 @@ public class InventoryPanel : MonoBehaviour
         }
         else
         {
-            Color brown = new Color(125f / 255, 97f / 255, 65f / 255);
+            Color brown = new(125f / 255, 97f / 255, 65f / 255);
             _weightText.color = brown;
         }
     }
