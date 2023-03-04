@@ -36,14 +36,12 @@ public class InventoryPanel : MonoBehaviour
 
     private void OnEnable()
     {
-        Player.PlayerSingletonChanged += OnPlayerSingletonChanged;
         Player.Instance.MoneyChanged += OnMoneyChanged;
         _playersInventory.WeightChanged += OnWeightChanged;
         
     }
     private void OnDisable()
     {
-        Player.PlayerSingletonChanged -= OnPlayerSingletonChanged;
         Player.Instance.MoneyChanged -= OnMoneyChanged;
         _playersInventory.WeightChanged -= OnWeightChanged;
     }

@@ -1,5 +1,7 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -13,11 +15,12 @@ public class Player : MonoBehaviour
     [SerializeField] private Body _startingBody;
     [SerializeField] private Suspension _startingSuspension;
 
+    [SerializeField] private SceneTransiter _transiter;
+    
     private PlayerMover _playerMover;
     private PlayersInventory _inventory;
     private int _money;
 
-    public PlayerMover PlayerMover => _playerMover;
     public PlayersInventory Inventory => _inventory;
 
     public ItemGrid ItemGrid => Inventory.ItemGrid;
@@ -40,33 +43,14 @@ public class Player : MonoBehaviour
         }
     }
 
-    public static event UnityAction PlayerSingletonChanged;
-
     public event UnityAction<int> MoneyChanged;
 
 
     private void Awake()
     {
+        
+        Instance = this;
 
-/* Надо тестировать переход между сценами. Прямое обращение к синглтону будет работать в любом случае (e.g. Player.Singleton.AddExperience()),
-   однако ивенты ловятся неправильно. Если какой-нибудь наш DontDestroyOnLoad подписывается на ивент экземпляра Player.Singleton,
-   то при изменении этого PlayerSingleton он не обновит подписку и продолжит получать ивент от уже исчезнувшего экземпляра.
-   Поэтому наверное стоит добавить *статический* ивент PlayerSingletonChanged и для объектов, которые подписываются на ивенты игрока,
-   сделать также подписку на этот ивент, при срабатывании этого ивента обновлять ссылку на текущий синглтон.
-*/
-
-        if (Instance == null) 
-        {
-            Instance = this; 
-        }
-        else
-        {
-            Instance = this; //Возлагаю надежды на гарбаж коллектора, что он сам удаляет неиспользуемый старый экземпляр.
-            PlayerSingletonChanged?.Invoke(); //При переходе между сценами 
-        }
-
-
-        _playerMover = GetComponent<PlayerMover>();
         _inventory = FindObjectOfType<PlayersInventory>(true);
 
         WagonStats = new(_startingWheel, _startingBody, _startingSuspension);
@@ -77,13 +61,46 @@ public class Player : MonoBehaviour
         Needs.Initialize();
     }
 
+    private void OnSceneChange(bool isTravellingScene)
+    {
+        HidePlayer(isTravellingScene);
+        SetSpawnPosition();
+        
+        if (isTravellingScene)
+        {
+            GetComponent<Rigidbody2D>().simulated = false;
+            GetComponent<BoxCollider2D>().enabled = false;
+            GetComponent<PlayerMover>().enabled = false;
+        }
+        else
+        {
+            GetComponent<Rigidbody2D>().simulated = true;
+            GetComponent<BoxCollider2D>().enabled = true;
+            GetComponent<PlayerMover>().enabled = true;
+        }
+    }
+
+    private void HidePlayer(bool state)
+    {
+        Color color = GetComponent<SpriteRenderer>().color;
+        color = new Color(color.r, color.g, color.b, state?  0: 1);
+        GetComponent<SpriteRenderer>().color = color;
+    }
+
+    private void SetSpawnPosition()
+    {
+        Vector3 point = FindObjectOfType<SpawPoint>().gameObject.transform.position;
+        transform.position = new Vector3(point.x, point.y, point.z); 
+    }
     private void OnEnable()
     {
         GameTime.MinuteChanged += OnMinuteChanged;
+        _transiter.SceneChanged += OnSceneChange;
     }
     private void OnDisable() 
     { 
         GameTime.MinuteChanged -= OnMinuteChanged;
+        _transiter.SceneChanged -= OnSceneChange;
     }
     private void OnMinuteChanged()
     {

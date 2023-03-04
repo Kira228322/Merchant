@@ -82,13 +82,14 @@ public class PlayerMovementHandler : MonoBehaviour
 
     public IEnumerator Move(Vector2 startPosition, Vector2 endPosition)
     {
-        float step = (Speed / (startPosition - endPosition).magnitude) * Time.deltaTime;
+        float step = ((startPosition - endPosition).magnitude / Speed) * Time.deltaTime;
         float t = 0;
+        WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
         while (t <= 1.0f)
         {
             t += step;
             transform.position = Vector3.Lerp(startPosition, endPosition, t);
-            yield return new WaitForFixedUpdate();
+            yield return waitForFixedUpdate;
         }
         transform.position = endPosition;
 
