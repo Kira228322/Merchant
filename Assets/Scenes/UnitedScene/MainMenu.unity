@@ -292,7 +292,6 @@ GameObject:
   - component: {fileID: 766324828}
   - component: {fileID: 766324827}
   - component: {fileID: 766324826}
-  - component: {fileID: 766324825}
   m_Layer: 5
   m_Name: SecKirScene
   m_TagString: Untagged
@@ -321,19 +320,6 @@ RectTransform:
   m_AnchoredPosition: {x: -390, y: 155}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &766324825
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 766324823}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3137d62760e079e46be622e6920dc3bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DestinationSceneName: SecKirScene
 --- !u!114 &766324826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -377,7 +363,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 766324827}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2020888795}
+        m_TargetAssemblyTypeName: SceneTransiter, Assembly-CSharp
+        m_MethodName: StartTransit
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: SecKirScene
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &766324827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -967,7 +965,6 @@ GameObject:
   - component: {fileID: 1659671915}
   - component: {fileID: 1659671914}
   - component: {fileID: 1659671913}
-  - component: {fileID: 1659671912}
   m_Layer: 5
   m_Name: RomanScene
   m_TagString: Untagged
@@ -996,19 +993,6 @@ RectTransform:
   m_AnchoredPosition: {x: 362, y: 153}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1659671912
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1659671910}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3137d62760e079e46be622e6920dc3bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DestinationSceneName: RomanScene
 --- !u!114 &1659671913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1052,7 +1036,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1659671914}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2020888795}
+        m_TargetAssemblyTypeName: SceneTransiter, Assembly-CSharp
+        m_MethodName: StartTransit
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: RomanScene
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1659671914
 MonoBehaviour:
   m_ObjectHideFlags: 0
