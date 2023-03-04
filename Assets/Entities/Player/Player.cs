@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, ISaveable
 {
     public static Player Instance;
 
@@ -61,12 +61,12 @@ public class Player : MonoBehaviour
         Needs.Initialize();
     }
 
-    private void OnSceneChange(bool isTravellingScene)
+    private void OnSceneChange(Scene scene, LoadSceneMode mode)
     {
-        HidePlayer(isTravellingScene);
+        HidePlayer(MapManager.IsActiveSceneTravel);
         SetSpawnPosition();
-        
-        if (isTravellingScene)
+
+        if (MapManager.IsActiveSceneTravel)
         {
             GetComponent<Rigidbody2D>().simulated = false;
             GetComponent<BoxCollider2D>().enabled = false;
@@ -89,18 +89,21 @@ public class Player : MonoBehaviour
 
     private void SetSpawnPosition()
     {
-        Vector3 point = GameObject.FindGameObjectWithTag("SpawnPoint").transform.position;
-        transform.position = new Vector3(point.x, point.y, point.z); 
+        GameObject point = GameObject.FindWithTag("SpawnPoint");
+        if (point != null)
+        {
+            transform.position = new Vector3(point.transform.position.x, point.transform.position.y, point.transform.position.z);
+        }
     }
     private void OnEnable()
     {
         GameTime.MinuteChanged += OnMinuteChanged;
-        _transiter.SceneChanged += OnSceneChange;
+        SceneManager.sceneLoaded += OnSceneChange;
     }
     private void OnDisable() 
     { 
         GameTime.MinuteChanged -= OnMinuteChanged;
-        _transiter.SceneChanged -= OnSceneChange;
+        SceneManager.sceneLoaded -= OnSceneChange;
     }
     private void OnMinuteChanged()
     {
@@ -112,17 +115,33 @@ public class Player : MonoBehaviour
         Experience.AddExperience(amount);
     }
 
-    public void SaveData(SaveData saveData)
+    public void SaveData()
     {
-        saveData.Player = Instance;
+        SaveLoadSystem<int>.SaveData(Money, "money");
     }
 
-    public void LoadData(Player player)
+    public void LoadData()
     {
-        Needs = player.Needs;
+        Money = SaveLoadSystem<int>.LoadData("money");
         
-        Money = player.Money;
+    }
 
-        
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Money++;
+            Debug.Log(Money);
+        }
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            SaveData();
+        }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            LoadData();
+        }
     }
 }

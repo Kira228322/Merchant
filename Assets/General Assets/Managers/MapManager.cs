@@ -7,13 +7,14 @@ public static class MapManager
     public static string TargetSceneName;
     public static Canvas Canvas;
     
-    private static int _currenNumberOfPlace = 0;
-    public static int CurrentNumberOfPlace => _currenNumberOfPlace;
+    private static int _currentNumberOfPlace = 0;
+    public static int CurrentNumberOfPlace => _currentNumberOfPlace;
     public static Road CurrentRoad;
+    public static bool IsActiveSceneTravel;
     
     private static string _travelingScene;
     private static SceneTransiter _loadScreen;
-    
+
     private static GameObject _roadWindow;
     public static GameObject RoadWindow => _roadWindow;
     private static GameObject _villageWindow;
@@ -38,7 +39,7 @@ public static class MapManager
 
     public static void TransitionToTravelScene(PlaceOnMap placeOnMap, Road road)
     {
-        _currenNumberOfPlace = placeOnMap.NumberOfPlace;
+        _currentNumberOfPlace = placeOnMap.NumberOfPlace;
         
         _loadScreen.StartTransit(_travelingScene, road);
     }

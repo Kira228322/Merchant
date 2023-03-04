@@ -16,8 +16,6 @@ public class SceneTransiter : MonoBehaviour
     private AsyncOperation _loadingSceneOperation;
     private Road _road;
 
-    public event UnityAction<bool> SceneChanged;
-
 
     private void Awake()
     {
@@ -41,8 +39,7 @@ public class SceneTransiter : MonoBehaviour
         
         _loadingSceneOperation = SceneManager.LoadSceneAsync(scene);
         _loadingSceneOperation.allowSceneActivation = false;
-        
-        SceneChanged?.Invoke(true);
+        MapManager.IsActiveSceneTravel = true;
     }
     
     public void StartTransit(string scene)
@@ -54,8 +51,7 @@ public class SceneTransiter : MonoBehaviour
 
         _loadingSceneOperation = SceneManager.LoadSceneAsync(scene);
         _loadingSceneOperation.allowSceneActivation = false;
-        
-        SceneChanged?.Invoke(true);
+        MapManager.IsActiveSceneTravel = false;
     }
 
     private void Update()
