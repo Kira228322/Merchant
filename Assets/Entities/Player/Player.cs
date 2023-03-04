@@ -89,7 +89,7 @@ public class Player : MonoBehaviour
 
     private void SetSpawnPosition()
     {
-        Vector3 point = FindObjectOfType<SpawPoint>().gameObject.transform.position;
+        Vector3 point = GameObject.FindGameObjectWithTag("SpawnPoint").transform.position;
         transform.position = new Vector3(point.x, point.y, point.z); 
     }
     private void OnEnable()
