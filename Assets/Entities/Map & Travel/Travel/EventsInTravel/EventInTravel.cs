@@ -13,7 +13,7 @@ public abstract class EventInTravel : MonoBehaviour
     protected TravelEventHandler _eventHandler;
     
 
-    private void Start()
+    protected virtual void Start()
     {
         _celestialBodies.rotation = Quaternion.Euler(_celestialBodies.rotation.x, _celestialBodies.rotation.y, 
             -(float)(GameTime.Hours * 60 + GameTime.Minutes)/4); // 4 - это _convertTimeToRotation в DayNightCycle

@@ -236,6 +236,7 @@ GameObject:
   - component: {fileID: 204853899}
   - component: {fileID: 204853898}
   - component: {fileID: 204853897}
+  - component: {fileID: 204853900}
   m_Layer: 0
   m_Name: EventCanvas
   m_TagString: Untagged
@@ -326,6 +327,27 @@ Canvas:
   m_SortingLayerID: -186891489
   m_SortingOrder: 100
   m_TargetDisplay: 0
+--- !u!114 &204853900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 204853895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04554d0b54571914d83a915ab493c71b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _timeCounter: {fileID: 1462582151984252839}
+  _eventWindow: {fileID: 1498094328}
+  _mover: {fileID: 1671313636}
+  _generator: {fileID: 1180428259}
+  _eventsInTravels:
+  - {fileID: -8589152358707773185, guid: 5d652baef232df9439a04e7123a41dd2, type: 3}
+  - {fileID: 7068342091038573783, guid: 3e4457c3a389a3944933e332e55e7973, type: 3}
+  _eventInTravelBandits: {fileID: 7555400876554805685, guid: e7e5fc12082c1814c8dfa4e584ca9445, type: 3}
+  _breakingWindowPrefub: {fileID: 546455276793989935, guid: d50b309d3ca5fc84dbd055198afc1049, type: 3}
 --- !u!1 &470071559
 GameObject:
   m_ObjectHideFlags: 0
@@ -905,7 +927,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 396815020000903552, guid: 843cbaf8c410e9345a31a9ad8556b61f, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 396815020000903553, guid: 843cbaf8c410e9345a31a9ad8556b61f, type: 3}
       propertyPath: m_AnchorMax.x
@@ -969,7 +991,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 396815021687525450, guid: 843cbaf8c410e9345a31a9ad8556b61f, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 396815021687525451, guid: 843cbaf8c410e9345a31a9ad8556b61f, type: 3}
       propertyPath: m_Pivot.x

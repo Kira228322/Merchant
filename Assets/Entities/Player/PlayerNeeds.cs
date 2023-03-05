@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [Serializable]
-public class PlayerNeeds
+public class PlayerNeeds: ISaveable<PlayerNeedsSaveData>
 {
     [SerializeField] private SlidersController _hungerScale;
     [SerializeField] private SlidersController _sleepScale;
@@ -124,4 +124,18 @@ public class PlayerNeeds
         }
     }
 
+    public PlayerNeedsSaveData SaveData()
+    {
+        PlayerNeedsSaveData saveData = new(this);
+        return saveData;
+    }
+
+    public void LoadData(PlayerNeedsSaveData saveData)
+    {
+        CurrentHunger = saveData.currentHunger;
+        CurrentSleep = saveData.currentSleep;
+
+        MaxHunger = saveData.maxHunger;
+        MaxSleep = saveData.maxSleep;
+    }
 }

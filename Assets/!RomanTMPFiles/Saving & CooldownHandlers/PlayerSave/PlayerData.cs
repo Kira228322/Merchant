@@ -6,19 +6,24 @@ using UnityEngine;
 public class PlayerData
 {
     public int Money;
-    public PlayersInventorySaveData Inventory; //needs data
-    public ItemGridSaveData ItemGrid; //needs data
-    public PlayerExperience Experience; //ok
-    public PlayerNeeds Needs; //ok
-    public PlayerWagonStats WagonStats; //почти ok, но надо сериализовать ScriptableObjects
+
+    public PlayersInventorySaveData Inventory;
+
+    public PlayerExperience Experience;
+
+    public PlayerNeedsSaveData Needs;
+
+    public PlayerWagonStatsSaveData WagonStats;
 
     public PlayerData(Player player)
     {
         Money = player.Money;
-
-
         Experience = player.Experience;
-        Needs = player.Needs;
+
+        Inventory = player.Inventory.SaveData();
+        Needs = player.Needs.SaveData();
+        WagonStats = player.WagonStats.SaveData();
 
     }
+
 }

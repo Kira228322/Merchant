@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class PlayersInventory : MonoBehaviour
+public class PlayersInventory : MonoBehaviour, ISaveable<PlayersInventorySaveData>
 {
     [SerializeField] private ItemGrid _inventoryItemGrid;
     [SerializeField] private float _startingMaxTotalWeight;
@@ -112,6 +112,21 @@ public class PlayersInventory : MonoBehaviour
                 item.BoughtDaysAgo += 1f / 24f; // +1 час к испорченности
                 item.RefreshSliderValue();
             }
+        }
+    }
+
+    public PlayersInventorySaveData SaveData()
+    {
+        PlayersInventorySaveData saveData = new(this);
+        return saveData;
+    }
+
+    public void LoadData(PlayersInventorySaveData saveData)
+    {
+        foreach(var item in saveData.items)
+        {
+            InventoryController.Instance.TryCreateAndInsertItem(ItemGrid,
+                ItemDatabase.GetItem(item.itemName), item.currentItemsInAStack, item.boughtDaysAgo, true);
         }
     }
 }

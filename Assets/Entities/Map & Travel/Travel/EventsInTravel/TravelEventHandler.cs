@@ -126,7 +126,7 @@ public class TravelEventHandler : MonoBehaviour
             _delayToNextEvent++;
         }
 
-        if (_delayToNextEvent == _timeCounter.Duration - 1)
+        if (_delayToNextEvent == _timeCounter.Duration - 2)
             _delayToNextEvent += 10; // событие не случится 
     }
 

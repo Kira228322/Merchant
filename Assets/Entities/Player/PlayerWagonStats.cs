@@ -5,23 +5,16 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [Serializable]
-public class PlayerWagonStats
+public class PlayerWagonStats: ISaveable<PlayerWagonStatsSaveData>
 {
     public Wheel Wheel;
     public Body Body;
     public Suspension Suspension;
 
-    public float QualityModifier;
-
-    public PlayerWagonStats(Wheel wheel, Body body, Suspension suspension)
-    {
-        Wheel = wheel;
-        Body = body;
-        Suspension = suspension;
-        QualityModifier = Wheel.QualityModifier;
-    }
+    [HideInInspector] public float QualityModifier;
 
     public event UnityAction WagonStatsRefreshed;
+
 
     public void RecalculateValues()
     {
@@ -32,5 +25,19 @@ public class PlayerWagonStats
 
         Player.Instance.Inventory.MaxTotalWeight = Suspension.MaxWeight;
         WagonStatsRefreshed?.Invoke();
+    }
+
+    public PlayerWagonStatsSaveData SaveData()
+    {
+        PlayerWagonStatsSaveData saveData = new(this);
+        return saveData;
+    }
+    public void LoadData(PlayerWagonStatsSaveData data)
+    {
+        Suspension = (Suspension)WagonPartDatabase.GetWagonPart(data.SuspensionName);
+        Wheel = (Wheel)WagonPartDatabase.GetWagonPart(data.WheelName);
+        Body = (Body)WagonPartDatabase.GetWagonPart(data.BodyName);
+
+        RecalculateValues();
     }
 }

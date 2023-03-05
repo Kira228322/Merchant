@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface ISaveable
+public interface ISaveable<T>
 {
-    void SaveData();
-    void LoadData();
+    T SaveData();
+    void LoadData(T data);
 
 }

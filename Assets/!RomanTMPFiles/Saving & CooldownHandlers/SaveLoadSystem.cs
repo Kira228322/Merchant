@@ -43,4 +43,16 @@ public static class SaveLoadSystem<T>
             return default;
         }
     }
+
+    public static void SavePlayer()
+    {
+        PlayerData saveData = Player.Instance.SaveData();
+        SaveLoadSystem<PlayerData>.SaveData(saveData, "PlayerSave");
+    }
+    public static void LoadPlayer()
+    {
+        PlayerData saveData = SaveLoadSystem<PlayerData>.LoadData("PlayerSave");
+        Player.Instance.LoadData(saveData);
+    }
+
 }

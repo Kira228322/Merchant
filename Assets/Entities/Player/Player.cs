@@ -3,17 +3,9 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-public class Player : MonoBehaviour, ISaveable
+public class Player : MonoBehaviour, ISaveable<PlayerData>
 {
     public static Player Instance;
-
-    [Header("Wagon stats")]
-    //ћне совсем не хотелось ставить эти параметры сюда, но иначе никак не получаетс€.
-    //я пыталс€ сделать PlayerWagonStats [Serializable], но все значени€ так или иначе сбрасываютс€ в null.
-    //¬се значени€, в том числе заданные через инспектор. ¬озможно, € что-то всЄ ещЄ не понимаю.
-    [SerializeField] private Wheel _startingWheel;
-    [SerializeField] private Body _startingBody;
-    [SerializeField] private Suspension _startingSuspension;
 
     [SerializeField] private SceneTransiter _transiter;
     
@@ -28,7 +20,7 @@ public class Player : MonoBehaviour, ISaveable
     public PlayerExperience Experience = new();
     public PlayerStats Statistics = new();
     public PlayerNeeds Needs = new();
-    public PlayerWagonStats WagonStats;
+    public PlayerWagonStats WagonStats = new();
     public int Money 
     { 
         get => _money;
@@ -52,13 +44,12 @@ public class Player : MonoBehaviour, ISaveable
         Instance = this;
 
         _inventory = FindObjectOfType<PlayersInventory>(true);
-
-        WagonStats = new(_startingWheel, _startingBody, _startingSuspension);
     }
 
     private void Start()
     {
         Needs.Initialize();
+        WagonStats.RecalculateValues();
     }
 
     private void OnSceneChange(Scene scene, LoadSceneMode mode)
@@ -115,33 +106,39 @@ public class Player : MonoBehaviour, ISaveable
         Experience.AddExperience(amount);
     }
 
-    public void SaveData()
+    public PlayerData SaveData()
     {
-        SaveLoadSystem<int>.SaveData(Money, "money");
+        PlayerData saveData = new(this);
+        return saveData;
     }
 
-    public void LoadData()
+    public void LoadData(PlayerData saveData)
     {
-        Money = SaveLoadSystem<int>.LoadData("money");
-        
+        Money = saveData.Money;
+        WagonStats.LoadData(saveData.WagonStats);
+        Inventory.LoadData(saveData.Inventory);
+        Experience = saveData.Experience;
+        Needs.LoadData(saveData.Needs);
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Money++;
-            Debug.Log(Money);
+            Experience.AddExperience(100);
+
+            Debug.Log(Experience.CurrentExperience);
         }
 
         if (Input.GetKeyDown(KeyCode.S))
         {
-            SaveData();
+            SaveLoadSystem<PlayerData>.SavePlayer();
         }
 
         if (Input.GetKeyDown(KeyCode.L))
         {
-            LoadData();
+            SaveLoadSystem<PlayerData>.LoadPlayer();
         }
     }
+
 }

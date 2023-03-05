@@ -17,8 +17,9 @@ public class EventTraveler : EventInTravel
         ButtonsLabel.Add("≈хать дальше");
     }
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         _isThief = TravelEventHandler.EventFire(_chanceTravelerIsThief, false, true);
     }
 

@@ -434,6 +434,7 @@ GameObject:
   m_Component:
   - component: {fileID: 842197182}
   - component: {fileID: 842197181}
+  - component: {fileID: 842197183}
   - component: {fileID: 842197180}
   m_Layer: 0
   m_Name: Database
@@ -482,6 +483,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &842197183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 842197179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0abd909414e1f974a8ace30a3fd6ec4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WagonParts: {fileID: 11400000, guid: b480c050c20ddac45adc0ddfe590d7d3, type: 2}
 --- !u!1 &879955006
 GameObject:
   m_ObjectHideFlags: 0
@@ -655,6 +669,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2020888795}
     - target: {fileID: 6601803732669833580, guid: 5c18b8eae29c7194f9de583fed41b1b9, type: 3}
+      propertyPath: WagonStats.Body
+      value: 
+      objectReference: {fileID: 11400000, guid: ca657c893b016774886d8fd71ed957c8, type: 2}
+    - target: {fileID: 6601803732669833580, guid: 5c18b8eae29c7194f9de583fed41b1b9, type: 3}
+      propertyPath: WagonStats.Wheel
+      value: 
+      objectReference: {fileID: 11400000, guid: ae2a7140af63b644c98c69c02158a6a9, type: 2}
+    - target: {fileID: 6601803732669833580, guid: 5c18b8eae29c7194f9de583fed41b1b9, type: 3}
       propertyPath: Needs._sleepScale
       value: 
       objectReference: {fileID: 330581674}
@@ -662,6 +684,10 @@ PrefabInstance:
       propertyPath: Needs._hungerScale
       value: 
       objectReference: {fileID: 1451464670}
+    - target: {fileID: 6601803732669833580, guid: 5c18b8eae29c7194f9de583fed41b1b9, type: 3}
+      propertyPath: WagonStats.Suspension
+      value: 
+      objectReference: {fileID: 11400000, guid: e5131dd7eacc94e4cae2107c47fd3a9b, type: 2}
     - target: {fileID: 6601803732669833583, guid: 5c18b8eae29c7194f9de583fed41b1b9, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1223,6 +1249,10 @@ PrefabInstance:
     - target: {fileID: 3279153272637390946, guid: 9a8cf3d83e1031242901209b531cc08c, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3977917190605829877, guid: 9a8cf3d83e1031242901209b531cc08c, type: 3}
+      propertyPath: _sceneName
+      value: RomanScene
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9a8cf3d83e1031242901209b531cc08c, type: 3}
