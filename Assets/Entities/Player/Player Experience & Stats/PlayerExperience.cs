@@ -1,12 +1,13 @@
 using UnityEngine;
 using UnityEngine.Events;
+[System.Serializable]
 public class PlayerExperience
 {
     #region Поля, свойства и события
 
-    private int _currentExperience;
-    private int _currentLevel;
-    private int _unspentSkillPoints;
+    [SerializeField, HideInInspector] private int _currentExperience;
+    [SerializeField, HideInInspector] private int _currentLevel;
+    [SerializeField, HideInInspector] private int _unspentSkillPoints;
 
     public int CurrentExperience => _currentExperience;
     public int CurrentLevel => _currentLevel;
