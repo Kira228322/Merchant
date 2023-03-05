@@ -797,7 +797,6 @@ GameObject:
   m_Component:
   - component: {fileID: 811678201}
   - component: {fileID: 811678200}
-  - component: {fileID: 811678199}
   - component: {fileID: 811678198}
   m_Layer: 0
   m_Name: Camera
@@ -839,14 +838,6 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!81 &811678199
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 811678197}
-  m_Enabled: 1
 --- !u!20 &811678200
 Camera:
   m_ObjectHideFlags: 0
@@ -2435,43 +2426,11 @@ Transform:
   m_Father: {fileID: 1671313635}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1722474987 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4304832710305530674, guid: d2ee1b0a900a78342818339a9c3e552d, type: 3}
-  m_PrefabInstance: {fileID: 740298835689672112}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1722474988 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4304832710305530672, guid: d2ee1b0a900a78342818339a9c3e552d, type: 3}
   m_PrefabInstance: {fileID: 740298835689672112}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1722474992
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1722474987}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e59141d112fe47c44b1395cb3a61d5ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _startingWheel: {fileID: 11400000, guid: ae2a7140af63b644c98c69c02158a6a9, type: 2}
-  _startingBody: {fileID: 11400000, guid: ca657c893b016774886d8fd71ed957c8, type: 2}
-  _startingSuspension: {fileID: 11400000, guid: e5131dd7eacc94e4cae2107c47fd3a9b, type: 2}
-  Needs:
-    _hungerScale: {fileID: 1661323287480870899}
-    _sleepScale: {fileID: 1661323286208358599}
-    _hungerDecayRate: 2
-    _hungerDivisorWhenSleeping: 2
-    _sleepDecayRate: 2
-    _sleepRestorationRate: 5
-    _currentHunger: 100
-    _currentSleep: 100
-    MaxHunger: 222
-    MaxSleep: 333
-    IsSleeping: 0
 --- !u!1 &1774302886 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5287679346959549967, guid: 257bc3f2d2a11014e9393ef662e5cc1a, type: 3}
@@ -3359,10 +3318,6 @@ PrefabInstance:
     - target: {fileID: 4304832710305530674, guid: d2ee1b0a900a78342818339a9c3e552d, type: 3}
       propertyPath: m_Name
       value: Wagon
-      objectReference: {fileID: 0}
-    - target: {fileID: 4304832711109284987, guid: d2ee1b0a900a78342818339a9c3e552d, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.115
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2ee1b0a900a78342818339a9c3e552d, type: 3}

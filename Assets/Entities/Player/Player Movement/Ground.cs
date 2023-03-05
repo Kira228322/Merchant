@@ -8,13 +8,11 @@ using UnityEngine.EventSystems;
 
 public class Ground : MonoBehaviour, IPointerClickHandler
 {
-    private PlayerMovementHandler _playerMover;
-    private float _speed;  
+    private PlayerMover _playerMover;
     
     private void Start()
     {
-        _playerMover = FindObjectOfType<PlayerMovementHandler>();
-        _speed = _playerMover.Speed;
+        _playerMover = FindObjectOfType<PlayerMover>();
     }
 
     public void OnPointerClick(PointerEventData eventData)

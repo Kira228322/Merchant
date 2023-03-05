@@ -92,7 +92,7 @@ public class Player : MonoBehaviour, ISaveable
         GameObject point = GameObject.FindWithTag("SpawnPoint");
         if (point != null)
         {
-            transform.position = new Vector3(point.transform.position.x, point.transform.position.y, point.transform.position.z);
+            transform.position = new Vector3(point.transform.position.x, point.transform.position.y, 0);
         }
     }
     private void OnEnable()

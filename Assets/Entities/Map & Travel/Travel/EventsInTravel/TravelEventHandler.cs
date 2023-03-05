@@ -134,12 +134,17 @@ public class TravelEventHandler : MonoBehaviour
     {
         List<int> index = new List<int>();
         int max = 0;
-        for (int i = 0; i < _eventsInTravels.Count; i++)
-            if (max < _eventsInTravels[i].Weight)
-                max = _eventsInTravels[i].Weight;
+        List<int> randomWeights = new List<int>();
 
         for (int i = 0; i < _eventsInTravels.Count; i++)
-            if (max == _eventsInTravels[i].Weight)
+            randomWeights.Add(Random.Range(0, _eventsInTravels[i].Weight + 1));
+
+        for (int i = 0; i < _eventsInTravels.Count; i++)
+            if (max < randomWeights[i])
+                max = randomWeights[i];
+
+        for (int i = 0; i < _eventsInTravels.Count; i++)
+            if (max == randomWeights[i])
                 index.Add(i);
 
         return _eventsInTravels[index[Random.Range(0, index.Count)]];
