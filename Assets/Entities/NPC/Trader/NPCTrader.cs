@@ -28,8 +28,6 @@ public class NPCTrader : NPC
     
     private List<TraderType> _traderTypes = new();
 
-    public TraderData NpcTraderData;
-
     [HideInInspector] public List<TraderGood> Goods = new();
     [HideInInspector] public List<TraderGood> AdditiveGoods = new();
     [HideInInspector] public List<TraderBuyCoefficient> BuyCoefficients = new(); //“аких BuyCoefficients будет столько, сколько всего есть Item.ItemType (см.ниже)
@@ -38,7 +36,6 @@ public class NPCTrader : NPC
     {
         SetNPCFromData(NpcData);
         SetTraderStats();
-
     }
     public override void SetNPCFromData(NPCData npcData)
     {

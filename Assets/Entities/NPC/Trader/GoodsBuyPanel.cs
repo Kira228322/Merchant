@@ -37,6 +37,18 @@ public class GoodsBuyPanel : MonoBehaviour
         _icon.sprite = _item.Icon;
         _itemName.text = goods.Name;
     }
+    
+    public void Init(NPCTrader trader, NPCTrader.TraderGood goods, float boughtDaysAgo, bool isOriginatedFromTrader, int count)
+    {
+        _trader = trader;
+        _item = goods.Good;
+        _boughtDaysAgo = boughtDaysAgo;
+        IsOriginatedFromTrader = isOriginatedFromTrader;
+        CurrentCount = count;
+        _cost.text = goods.CurrentPrice.ToString();
+        _icon.sprite = _item.Icon;
+        _itemName.text = goods.Good.Name;
+    }
 
     public void OnBuyButtonClick()
     {
