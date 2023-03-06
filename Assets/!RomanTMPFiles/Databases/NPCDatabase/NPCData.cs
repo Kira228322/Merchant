@@ -9,7 +9,7 @@ public class NPCData : ScriptableObject
 
     public int ID;
 
-    [Range(0, 100)] public int Affinity;
+    [Range(-100, 100)] public int Affinity;
 
     public TextAsset InkJSON;
 }

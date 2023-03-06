@@ -28,7 +28,7 @@ public class FunctionalWindow : MonoBehaviour
     
     public void OnTalkButtonClick()
     {
-        DialogueManager.Instance.EnterDialogueMode(_NPC.InkJSON);
+        DialogueManager.Instance.EnterDialogueMode(_NPC);
         Destroy(gameObject);
     }
 

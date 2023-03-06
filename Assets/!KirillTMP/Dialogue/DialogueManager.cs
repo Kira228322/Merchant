@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Ink.Runtime;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class DialogueManager : MonoBehaviour
     private TMP_Text[] _choicesText;
     private Story _currentStory;
     public static DialogueManager Instance;
+    public event UnityAction<NPC> DialogStartedWithNPC;
     
     
     private void Awake()
@@ -35,11 +37,13 @@ public class DialogueManager : MonoBehaviour
         ExitDialogueMode();
     }
 
-    public void EnterDialogueMode(TextAsset inkJSON)
+    public void EnterDialogueMode(NPC npc)
     {
-        _currentStory = new Story(inkJSON.text);
+        TextAsset npcInkJson = npc.InkJSON;
+        _currentStory = new Story(npcInkJson.text);
+        _currentStory.variablesState["affinity"] = npc.Affinity;
         _dialoguePanel.SetActive(true);
-
+        DialogStartedWithNPC?.Invoke(npc);
         ContinueStory();
     }
 
