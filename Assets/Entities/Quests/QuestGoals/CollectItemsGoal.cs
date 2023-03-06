@@ -65,7 +65,7 @@ public class CollectItemsGoal : Goal
     {
         if (item.ItemData == RequiredItemType)
         {
-            CurrentAmount = updatedAmount;
+            CurrentAmount += updatedAmount;
             Evaluate();
         }
     }

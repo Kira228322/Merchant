@@ -21,9 +21,35 @@ public class QuestPanel : MonoBehaviour
 
     public Quest Quest;
 
+    public string QuestScriptName; //Имя скрипта с квестом, например "TestQuestFindApples"
+    public string QuestName => _questNameText.text; //Имя непосредственно квеста, например "Apple Finding"
+    public string QuestDescription => _descriptionText.text;
+    public List<TMP_Text> GoalTexts => _goalTexts;
+    public List<TMP_Text> RewardTexts => _rewardTexts;
+    public int GoalCount; //маленький костыль, запомнить количество только существующих Goals и Rewards (максимум 5)
+    public int RewardCount;
+
+    public void InitializeAsFinished(QuestsSaveData.SavedQuestPanel savedPanel)
+    {
+        _questNameText.text = savedPanel.questName;
+        _questNameText.color = _completedAndRewardAcquiredQuestNameColor;
+        _descriptionText.text = savedPanel.description;
+        for (int i = 0; i < savedPanel.goals.Count; i++)
+        {
+            _goalTexts[i].text = savedPanel.goals[i];
+            _goalTexts[i].gameObject.SetActive(true);
+        }
+        for (int i = 0; i < savedPanel.rewards.Count; i++)
+        {
+            _rewardTexts[i].text = savedPanel.rewards[i];
+            _rewardTexts[i].gameObject.SetActive(true);
+        }
+        
+    }
     public void Initialize(Quest quest)
     {
         Quest = quest;
+        QuestScriptName = quest.GetType().ToString();
         _questNameText.text = Quest.QuestName;
         if (quest.IsCompleted)
         {
@@ -32,7 +58,8 @@ public class QuestPanel : MonoBehaviour
         }
         _descriptionText.text = "Описание: " + Quest.Description;
 
-        for (int i = 0; i < Quest.Goals.Count; i++)
+        GoalCount = Quest.Goals.Count;
+        for (int i = 0; i < GoalCount; i++)
         {
             _goalTexts[i].gameObject.SetActive(true);
             _goalTexts[i].text = Quest.Goals[i].Description + Quest.Goals[i].CurrentAmount + " / " + Quest.Goals[i].RequiredAmount;
@@ -40,6 +67,7 @@ public class QuestPanel : MonoBehaviour
 
         _rewardTexts[0].text = Quest.ExperienceReward.ToString() + " опыта";
         _rewardTexts[1].text = Quest.MoneyReward.ToString() + " золота";
+        RewardCount = Quest.ItemRewards.Count + 2; // +2 => Деньги и опыт
         if (Quest.ItemRewards.Count != 0)
         {
             int i = 2;

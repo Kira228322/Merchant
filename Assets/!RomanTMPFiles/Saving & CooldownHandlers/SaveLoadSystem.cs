@@ -9,12 +9,10 @@ public static class SaveLoadSystem<T>
 {
     public static void SaveData(T data, string saveName)
     {
-        BinaryFormatter formatter = new BinaryFormatter();
+        BinaryFormatter formatter = new();
         string path = Path.Combine(Application.persistentDataPath, $"{saveName}.data");
-        using (var stream = new FileStream(path, FileMode.Create))
-        {
-            formatter.Serialize(stream, data);
-        }
+        using FileStream stream = new(path, FileMode.Create);
+        formatter.Serialize(stream, data);
     }
 
     public static T LoadData(string saveName)
@@ -22,19 +20,17 @@ public static class SaveLoadSystem<T>
         string path = Path.Combine(Application.persistentDataPath, $"{saveName}.data");
         if (File.Exists(path))
         {
-            BinaryFormatter formatter = new BinaryFormatter();
-            using (FileStream stream = new FileStream(path, FileMode.Open))
+            BinaryFormatter formatter = new();
+            using FileStream stream = new(path, FileMode.Open);
+            try
             {
-                try
-                {
-                    T data = (T)formatter.Deserialize(stream);
-                    return data;
-                }
-                // deserialization failed (probably user tampered with the file?)
-                catch (SerializationException)
-                {
-                    return default;
-                }
+                T data = (T)formatter.Deserialize(stream);
+                return data;
+            }
+            // deserialization failed (probably user tampered with the file?)
+            catch (SerializationException)
+            {
+                return default;
             }
         }
         else
@@ -44,15 +40,19 @@ public static class SaveLoadSystem<T>
         }
     }
 
-    public static void SavePlayer()
+    public static void SaveAll()
     {
-        PlayerData saveData = Player.Instance.SaveData();
-        SaveLoadSystem<PlayerData>.SaveData(saveData, "PlayerSave");
+        PlayerData playerSaveData = Player.Instance.SaveData();
+        SaveLoadSystem<PlayerData>.SaveData(playerSaveData, "PlayerSave");
+        QuestsSaveData questsSaveData = QuestHandler.QuestLog.SaveData();
+        SaveLoadSystem<QuestsSaveData>.SaveData(questsSaveData, "QuestsSave");
     }
-    public static void LoadPlayer()
+    public static void LoadAll()
     {
-        PlayerData saveData = SaveLoadSystem<PlayerData>.LoadData("PlayerSave");
-        Player.Instance.LoadData(saveData);
+        PlayerData playerSaveData = SaveLoadSystem<PlayerData>.LoadData("PlayerSave");
+        Player.Instance.LoadData(playerSaveData);
+        QuestsSaveData questsSaveData = SaveLoadSystem<QuestsSaveData>.LoadData("QuestsSave");
+        QuestHandler.QuestLog.LoadData(questsSaveData);
     }
 
 }

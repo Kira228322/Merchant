@@ -132,12 +132,12 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
 
         if (Input.GetKeyDown(KeyCode.S))
         {
-            SaveLoadSystem<PlayerData>.SavePlayer();
+            SaveLoadSystem<PlayerData>.SaveAll();
         }
 
         if (Input.GetKeyDown(KeyCode.L))
         {
-            SaveLoadSystem<PlayerData>.LoadPlayer();
+            SaveLoadSystem<PlayerData>.LoadAll();
         }
     }
 

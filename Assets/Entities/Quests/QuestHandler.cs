@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class QuestHandler : MonoBehaviour
 {
-    //Этот типчик будет раздавать квесты. Пока думаю сделать ему синглтон. Вероятно, на этом же объекте будут отслеживаться все текущие квесты в виде компонентов 
-    //Вместо синглтона можно было бы сделать ссылку в GameManager, или какой нибудь QuestManager
 
     private static QuestHandler Singleton;
 
     [SerializeField] private GameObject _questsGameObject; //Объект, на котором висят все квесты. Возможно, этот объект.
     [SerializeField] private QuestLog _questLog; //UI-КвестЛог
+
+    public static QuestLog QuestLog => Singleton._questLog;
 
     private void Awake()
     {
@@ -29,8 +29,22 @@ public class QuestHandler : MonoBehaviour
         Quest quest = (Quest)Singleton._questsGameObject.AddComponent(System.Type.GetType(questName));
         quest.QuestUpdatedEvent += Singleton.OnQuestUpdated;
         quest.QuestCompletedEvent += Singleton.OnQuestCompleted;
-        Singleton._questLog.AddToActiveQuests(quest);
+        QuestLog.AddToActiveQuests(quest);
         if (quest.IsCompleted) Singleton.OnQuestCompleted(quest); //Если выполнился моментально, в тот же фрейм как был взят
+    }
+    public static void AddQuestAsCompleted (string questName)
+    {
+        Quest quest = (Quest)Singleton._questsGameObject.AddComponent(System.Type.GetType(questName));
+        quest.IsCompleted = true;
+        foreach (Goal goal in quest.Goals)
+        {
+            goal.CurrentAmount = goal.RequiredAmount;
+            goal.IsCompleted = true;
+        }
+        QuestLog.AddToActiveQuests(quest);
+        quest.questPanel.OnComplete();
+        QuestLog.MoveToCompletedQuests(quest);
+
     }
     public static void RemoveQuest(System.Type questType)
     {
@@ -39,7 +53,7 @@ public class QuestHandler : MonoBehaviour
     }
     public static void MoveToCompleted(Quest quest)
     {
-        Singleton._questLog.MoveToCompletedQuests(quest);
+        QuestLog.MoveToCompletedQuests(quest);
     }
     private void OnQuestUpdated(Quest quest)
     {
@@ -52,7 +66,7 @@ public class QuestHandler : MonoBehaviour
         {
             AddQuest(quest.NextQuestName);
         }
-        Singleton._questLog.MoveToCompletedQuests(quest);
+        QuestLog.MoveToCompletedQuests(quest);
     }
     
 }
