@@ -37,12 +37,17 @@ public class TravelEventHandler : MonoBehaviour
 
     public void BreakingItemAfterJourney()
     {
-        List<InventoryItem> unverifiedItems = Player.Instance.Inventory.ItemList;
+        List<InventoryItem> unverifiedItems = new();
+        
+        foreach (var item in Player.Instance.Inventory.ItemList)
+            unverifiedItems.Add(item);
+
         List<InventoryItem> deletedItems = new List<InventoryItem>();
         
         float Roadbadness = (100 - MapManager.CurrentRoad.Quality) / 
-                            (Player.Instance.WagonStats.QualityModifier * (1 + MapManager.CurrentRoad.Quality * 0.002f));
+                            (Player.Instance.WagonStats.QualityModifier * (1 + MapManager.CurrentRoad.Quality * 0.001f));
         // формула вероятности сломать предмет хрупкостью 100%
+        
         
         while (unverifiedItems.Count > 0)
         {
@@ -55,9 +60,10 @@ public class TravelEventHandler : MonoBehaviour
                     Roadbadness *= 0.9f;
                     deletedItems.Add(Instantiate(randomItem));
                     Player.Instance.Inventory.ItemGrid.RemoveItemsFromAStack(randomItem, 1);
+                    i--;
                 }
             }
-
+            
             unverifiedItems.Remove(randomItem); 
         }
 

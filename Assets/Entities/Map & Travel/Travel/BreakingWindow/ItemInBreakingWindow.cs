@@ -10,10 +10,10 @@ public class ItemInBreakingWindow : MonoBehaviour
     [SerializeField] private TMP_Text _count;
     [SerializeField] private TMP_Text _totalPrice;
 
-    public void Init(Sprite sprite, int count, int price)
+    public void Init(Sprite sprite, int count, int priceOfOneGoods)
     {
         _icon.sprite = sprite;
         _count.text += count;
-        _totalPrice.text += count * price;
+        _totalPrice.text += count * priceOfOneGoods;
     }
 }

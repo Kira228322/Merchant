@@ -15,7 +15,7 @@ public class Road : MonoBehaviour
     
     [SerializeField] private int _travelingTime; // измеряется в игровых часах
     public int TravelingTime => _travelingTime;  
-    [SerializeField] private int _quality;
+    [SerializeField] [Min(25)] private int _quality;
     public int Quality => _quality;
     [SerializeField] private int _danger;
     public int Danger => _danger;

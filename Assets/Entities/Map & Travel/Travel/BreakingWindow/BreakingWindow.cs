@@ -12,7 +12,7 @@ public class BreakingWindow : MonoBehaviour
     {
         int totalPrice = 0;
         int count = 1;
-        
+
         for (int i = 0; i != items.Count;)
         {
             for (int j = 1; j < items.Count; j++)
@@ -21,15 +21,16 @@ public class BreakingWindow : MonoBehaviour
                 {
                     count++;
                     items.RemoveAt(j);
+                    j--;
                 }
             }
             Instantiate(_itemPrefub.gameObject, _container).GetComponent<ItemInBreakingWindow>().
-                Init(items[i].ItemData.Icon, count, items[i].ItemData.Price * count);
+                Init(items[i].ItemData.Icon, count, items[i].ItemData.Price);
             totalPrice += items[i].ItemData.Price * count;
             count = 1;
             items.RemoveAt(i);
         }
 
-        _totalPriceText.text += totalPrice;
+        _totalPriceText.text = $"Общая стоимость потерянных товаров: {totalPrice}";
     }
 }
