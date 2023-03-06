@@ -54,10 +54,8 @@ public class TravelTimeCounter : MonoBehaviour
             
             if (_duration == 0)
             {
+                _eventHandler.FreezeTravelScene();
                 _eventHandler.BreakingItemAfterJourney();
-                GameTime.SetTimeScale(1);
-                MapManager.TransitionToVillageScene();
-                gameObject.SetActive(false);
             }
         }
     }

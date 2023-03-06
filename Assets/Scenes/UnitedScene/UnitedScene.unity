@@ -348,6 +348,8 @@ MonoBehaviour:
   - {fileID: 7068342091038573783, guid: 3e4457c3a389a3944933e332e55e7973, type: 3}
   _eventInTravelBandits: {fileID: 7555400876554805685, guid: e7e5fc12082c1814c8dfa4e584ca9445, type: 3}
   _breakingWindowPrefub: {fileID: 546455276793989935, guid: d50b309d3ca5fc84dbd055198afc1049, type: 3}
+  _wagonAnimator: {fileID: 740298835689672114}
+  _donkeyAnimator: {fileID: 740298835689672113}
 --- !u!1 &470071559
 GameObject:
   m_ObjectHideFlags: 0
@@ -2362,6 +2364,8 @@ MonoBehaviour:
   - {fileID: 7068342091038573783, guid: 3e4457c3a389a3944933e332e55e7973, type: 3}
   _eventInTravelBandits: {fileID: 7555400876554805685, guid: e7e5fc12082c1814c8dfa4e584ca9445, type: 3}
   _breakingWindowPrefub: {fileID: 546455276793989935, guid: d50b309d3ca5fc84dbd055198afc1049, type: 3}
+  _wagonAnimator: {fileID: 0}
+  _donkeyAnimator: {fileID: 0}
 --- !u!1 &1718948585
 GameObject:
   m_ObjectHideFlags: 0
@@ -3223,6 +3227,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2ee1b0a900a78342818339a9c3e552d, type: 3}
+--- !u!95 &740298835689672113 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6190702068157579646, guid: d2ee1b0a900a78342818339a9c3e552d, type: 3}
+  m_PrefabInstance: {fileID: 740298835689672112}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &740298835689672114 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 1722474989, guid: d2ee1b0a900a78342818339a9c3e552d, type: 3}
+  m_PrefabInstance: {fileID: 740298835689672112}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1462582150585380936
 GameObject:
   m_ObjectHideFlags: 0

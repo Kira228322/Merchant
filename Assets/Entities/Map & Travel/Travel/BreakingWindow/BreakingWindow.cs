@@ -33,4 +33,12 @@ public class BreakingWindow : MonoBehaviour
 
         _totalPriceText.text = $"Общая стоимость потерянных товаров: {totalPrice}";
     }
+
+    public void OnButtonClick()
+    {
+        GameTime.SetTimeScale(1);
+        MapManager.TransitionToVillageScene();
+        FindObjectOfType<TravelTimeCounter>().gameObject.SetActive(false);
+        Destroy(gameObject);
+    }
 }

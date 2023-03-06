@@ -14,6 +14,8 @@ public class TravelEventHandler : MonoBehaviour
     [SerializeField] private List<EventInTravel> _eventsInTravels = new ();
     [SerializeField] private EventInTravel _eventInTravelBandits;
     [SerializeField] private BreakingWindow _breakingWindowPrefub;
+    [SerializeField] private Animator _wagonAnimator;
+    [SerializeField] private Animator _donkeyAnimator;
     private EventInTravel _nextEvent;
     private Transform _mainCanvas;
     private int _delayToNextEvent;
@@ -66,13 +68,28 @@ public class TravelEventHandler : MonoBehaviour
             
             unverifiedItems.Remove(randomItem); 
         }
-
-        GameObject breakingWindow = Instantiate(_breakingWindowPrefub.gameObject, _mainCanvas);
-        breakingWindow.GetComponent<BreakingWindow>().Init(deletedItems);
-        breakingWindow.transform.position = new Vector3(Screen.width/2, Screen.height/2);
+        if (deletedItems.Count > 0)
+        {
+            GameObject breakingWindow = Instantiate(_breakingWindowPrefub.gameObject, _mainCanvas);
+            breakingWindow.GetComponent<BreakingWindow>().Init(deletedItems);
+            breakingWindow.transform.position = new Vector3(Screen.width / 2, Screen.height / 2);
+        }
+        else
+        {
+            GameTime.SetTimeScale(1);
+            MapManager.TransitionToVillageScene();
+            FindObjectOfType<TravelTimeCounter>().gameObject.SetActive(false);
+        }
     }
     
     private void EventStart(EventInTravel eventInTravel)
+    {
+        FreezeTravelScene();
+        _eventWindow.gameObject.SetActive(true);
+        _eventWindow.Init(eventInTravel);
+    }
+
+    public void FreezeTravelScene()
     {
         _generator.enabled = false;
         foreach (var cloud in _generator.CloudsOnScene)
@@ -81,12 +98,12 @@ public class TravelEventHandler : MonoBehaviour
                 cloud.enabled = false;
         }
         _mover.enabled = false;
+        _wagonAnimator.SetTrigger("Stop/Unstop");
+        _donkeyAnimator.SetTrigger("Stop/Unstop");
         GameTime.SetTimeScale(0);
-        _eventWindow.gameObject.SetActive(true);
-        _eventWindow.Init(eventInTravel);
     }
 
-    public void EventEnd()
+    public void UnFreezeTravelScene()
     {
         _generator.enabled = true;
         foreach (var cloud in _generator.CloudsOnScene)
@@ -95,8 +112,14 @@ public class TravelEventHandler : MonoBehaviour
                 cloud.enabled = true;
         }
         _mover.enabled = true;
+        _wagonAnimator.SetTrigger("Stop/Unstop");
+        _donkeyAnimator.SetTrigger("Stop/Unstop");
         GameTime.SetTimeScale(GameTime.TimeScaleInTravel);
-        
+    }
+
+    public void EventEnd()
+    {
+        UnFreezeTravelScene();
         StartCoroutine(_eventWindow.EventEnd());
     }
 
