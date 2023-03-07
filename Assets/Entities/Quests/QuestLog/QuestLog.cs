@@ -42,19 +42,14 @@ public class QuestLog : MonoBehaviour, ISaveable<QuestsSaveData>
 
     public bool IsQuestActive(string questName)
     {
-        if (_activeQuests.FirstOrDefault(x => x.QuestScriptName == questName) != null)
+        if (_activeQuests.FirstOrDefault(x => string.Equals(x.QuestScriptName, questName)) != null)
             return true;
         return false;
     }
     public bool IsQuestCompleted(string questName)
     {
-        foreach (QuestPanel panel in _completedQuests)
-        {
-            if (string.Equals(panel.QuestScriptName, questName))
-            {
-                return true;
-            }
-        }
+        if (_activeQuests.FirstOrDefault(x => string.Equals(x.QuestScriptName, questName)) != null)
+            return true;
         return false;
     }
 
