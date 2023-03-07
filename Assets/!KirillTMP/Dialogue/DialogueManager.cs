@@ -11,24 +11,70 @@ public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager Instance;
 
+    #region Поля, свойства и события
     [SerializeField] private GameObject _dialoguePanel;
     [SerializeField] private TMP_Text _dialogueText;
     [SerializeField] private GameObject[] _choices;
     [SerializeField] private Button _continueButton;
     [SerializeField] private GameObject _lineFinishedIndicator;
-    [SerializeField] private float _typingSpeed = 0.04f;
+    [Tooltip("Чем меньше значение, тем быстрее печатается текст. 1/Typing Speed")]
+    [SerializeField]private float _typingSpeed = 0.04f;
+
     private TMP_Text[] _choicesText;
-
-
     private NPC _currentNPC;
     private Story _currentStory;
     private Coroutine _currentDisplayLineCoroutine;
     private bool _isCurrentlyWritingALine;
     private List<string> _currentTags = new();
 
+    //Первый параметр - с кем поговорил. Второй параметр - о чём.
     public event UnityAction<NPC, string> TalkedToNPCAboutSomething;
+    #endregion
 
+    #region External функции Ink и всё что связано с ними
+    private bool IsQuestCompleted(string questName)
+    {
+        return QuestHandler.IsQuestCompleted(questName);
+    }
+    private bool IsQuestActive(string questName)
+    {
+        return QuestHandler.IsQuestActive(questName);
+    }
+    private void SetTextColor(string colorName)
+    {
+        ColorUtility.TryParseHtmlString(colorName, out Color result);
+        //Почему HtmlString? Потому что такой метод уже встроен в библиотеку, и он работает для этого случая
+        _dialogueText.color = result;
+    }
+    private void BindFunctions()
+    {
+        //Эта функция будет срабатывать каждый раз, когда генерируется новая Story.
+        //На самом деле, это глупо, и я сделал глобальный файл со всеми функциями.
+        //Но не нашел пути, как забиндить эти функции отдельно в начале и возможно ли это вообще
+        //Поэтому придётся биндить каждый раз при заходе в диалог
 
+        _currentStory.BindExternalFunction("check_if_quest_active", (string param) =>
+        { return IsQuestActive(param); 
+        });
+
+        _currentStory.BindExternalFunction("check_if_quest_completed", (string param) =>
+        {
+           return IsQuestCompleted(param);
+        });
+    }
+    #endregion
+
+    #region Методы инициализации
+    private void InitializeErrorHandler()
+    {
+        _currentStory.onError += (message, type) =>
+        {
+            if (type == Ink.ErrorType.Warning)
+                Debug.LogWarning(message);
+            else
+                Debug.LogError(message);
+        };
+    }
     private void Awake()
     {
         if (Instance != null)
@@ -44,22 +90,12 @@ public class DialogueManager : MonoBehaviour
             _choicesText[i] = _choices[i].GetComponentInChildren<TMP_Text>();
             _choices[i].SetActive(false);
         }
-        
+
         ExitDialogueMode();
     }
+    #endregion
 
-    public void EnterDialogueMode(NPC npc)
-    {
-        //Выключать другие действия игрока, напр. инвентарь, playerMover, карту
-        _currentNPC = npc;
-        TextAsset npcInkJson = _currentNPC.InkJSON;
-        _currentStory = new Story(npcInkJson.text);
-        _currentStory.variablesState["affinity"] = _currentNPC.Affinity;
-        _dialoguePanel.SetActive(true);
-        ContinueStory();
-
-    }
-
+    #region Внутренние методы работы с диалогом (начать печатать текст, отпарсить теги, показать/спрятать ответы)
     private void ParseTags()
     {
         _currentTags = _currentStory.currentTags;
@@ -82,58 +118,20 @@ public class DialogueManager : MonoBehaviour
                     _currentNPC.Affinity += int.Parse(param);
                     break;
 
-                case "invoke":
+                case "invoke": //Затриггерить специальное событие для TalkToNPCGoal. Goal должен знать string param 
                     TalkedToNPCAboutSomething?.Invoke(_currentNPC, param);
                     break;
-
-                case "check_if_quest_taken":
-                    _currentStory.variablesState["quest_Taken"] = QuestHandler.IsQuestActive(param);
-                    break;
-
             }
         }
-    }
-
-    private void SetTextColor(string colorName)
-    {
-        ColorUtility.TryParseHtmlString(colorName, out Color result);  
-        //Почему HtmlString? Потому что такой метод уже встроен в библиотеку, и он работает для этого случая
-        _dialogueText.color = result;
-    }
-
-    public void OnContinueButtonClick()
-    {
-        if (_isCurrentlyWritingALine)
-        {
-            StopCoroutine(_currentDisplayLineCoroutine);
-            _currentDisplayLineCoroutine = null;
-            _isCurrentlyWritingALine = false;
-
-            _dialogueText.text = _currentStory.currentText;
-
-            if (_currentStory.currentChoices.Count != 0)
-                DisplayChoices();
-
-            _lineFinishedIndicator.SetActive(true);
-        }
-        else ContinueStory();
-    }
-
-    public void ContinueStory()
-    {
-        if (_currentStory.canContinue)
-        {
-            string newLine = _currentStory.Continue();
-            ParseTags();
-            _currentDisplayLineCoroutine = StartCoroutine(DisplayLine(newLine));
-        }
-        else if (_currentStory.currentChoices.Count == 0) 
-            ExitDialogueMode();
     }
     private IEnumerator DisplayLine(string line)
     {
         _isCurrentlyWritingALine = true;
         _lineFinishedIndicator.SetActive(false);
+        _dialogueText.text = line;
+        _dialogueText.enableAutoSizing = true;  //Представляем, что строка уже полностью написана и включаем автоСайз,
+        _dialogueText.ForceMeshUpdate();        //чтобы запомнить размер при полностью написанной строке. 
+        _dialogueText.enableAutoSizing = false; //Затем Выключаем автосайз и опустошаем строку, чтобы снова написать посимвольно.   
         _dialogueText.text = "";
 
         HideChoices();
@@ -150,12 +148,6 @@ public class DialogueManager : MonoBehaviour
         if (_currentStory.currentChoices.Count != 0)
             DisplayChoices();
     }
-    private void ExitDialogueMode()
-    {
-        _dialoguePanel.SetActive(false);
-        _dialogueText.text = "";
-    }
-
     private void HideChoices()
     {
         foreach (GameObject choiceButton in _choices)
@@ -173,7 +165,59 @@ public class DialogueManager : MonoBehaviour
             _choicesText[i].text = currentChoices[i].text;
         }
     }
+    #endregion
 
+    #region Внешние методы работы с диалогом (продвинуть историю, начать и закончить диалог)
+    public void EnterDialogueMode(NPC npc)
+    {
+        //TODO Выключать другие действия игрока, напр. инвентарь, playerMover, карту
+        _currentNPC = npc;
+        TextAsset npcInkJson = _currentNPC.InkJSON;
+        _currentStory = new Story(npcInkJson.text);
+        BindFunctions();
+        InitializeErrorHandler();
+        _currentStory.variablesState["affinity"] = _currentNPC.Affinity;
+        _dialoguePanel.SetActive(true);
+        ContinueStory();
+    }
+
+    private void ContinueStory()
+    {
+        if (_currentStory.canContinue)
+        {
+            string newLine = _currentStory.Continue();
+            ParseTags();
+            _currentDisplayLineCoroutine = StartCoroutine(DisplayLine(newLine));
+        }
+        else if (_currentStory.currentChoices.Count == 0) 
+            ExitDialogueMode();
+    }
+    
+    private void ExitDialogueMode()
+    {
+        _dialoguePanel.SetActive(false);
+        _dialogueText.text = "";
+    }
+    #endregion
+
+    #region Инпут игрока
+    public void OnContinueButtonClick()
+    {
+        if (_isCurrentlyWritingALine)
+        {
+            StopCoroutine(_currentDisplayLineCoroutine);
+            _currentDisplayLineCoroutine = null;
+            _isCurrentlyWritingALine = false;
+
+            _dialogueText.text = _currentStory.currentText;
+
+            if (_currentStory.currentChoices.Count != 0)
+                DisplayChoices();
+
+            _lineFinishedIndicator.SetActive(true);
+        }
+        else ContinueStory();
+    }
     public void MakeChoice(int index)
     {
         _continueButton.interactable = true;
@@ -184,5 +228,6 @@ public class DialogueManager : MonoBehaviour
         }
         ContinueStory();
     }
+    #endregion
 
 }

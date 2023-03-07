@@ -46,6 +46,17 @@ public class QuestLog : MonoBehaviour, ISaveable<QuestsSaveData>
             return true;
         return false;
     }
+    public bool IsQuestCompleted(string questName)
+    {
+        foreach (QuestPanel panel in _completedQuests)
+        {
+            if (string.Equals(panel.QuestScriptName, questName))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public QuestsSaveData SaveData()
     {

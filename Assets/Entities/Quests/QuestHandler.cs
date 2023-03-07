@@ -63,6 +63,10 @@ public class QuestHandler : MonoBehaviour
     {
         return QuestLog.IsQuestActive(questName);
     }
+    public static bool IsQuestCompleted(string questName)
+    {
+        return QuestLog.IsQuestCompleted(questName);
+    }
     private void OnQuestUpdated(Quest quest)
     {
         quest.questPanel.Refresh();

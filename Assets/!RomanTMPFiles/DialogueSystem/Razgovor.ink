@@ -1,7 +1,4 @@
-VAR affinity = 86
-VAR quest_Taken = false
-
-#check_if_quest_taken TestQuestTalkToPetrovichAboutBuhlo
+INCLUDE MainInkLibrary.ink
 
 -> greeting
 
@@ -37,7 +34,7 @@ VAR quest_Taken = false
 + [Хочу узнать кое-что.]
 -> ask_for_information
 
-* {quest_Taken}
++ {check_if_quest_active("TestQuestTalkToPetrovichAboutBuhlo")} 
  [Твой друг попросил меня сказать, что сегодня в 21:00 будет попойка]
      #invoke talked_about_buhlo
     ОООооо!11 я обязательно приду! Спасибо, что сообщил!
