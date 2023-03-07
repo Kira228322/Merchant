@@ -59,6 +59,15 @@ public class Quest: MonoBehaviour
         QuestCompletedEvent?.Invoke(this);
     }
 
+    public void CompleteManually()
+    {
+        foreach (Goal goal in Goals)
+        {
+            goal.CurrentAmount = goal.RequiredAmount;
+        }
+        CheckGoals();
+    }
+
     public virtual void GiveReward()
     {
         Player.Instance.AddExperience(ExperienceReward);

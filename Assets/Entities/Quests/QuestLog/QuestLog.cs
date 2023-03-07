@@ -40,6 +40,13 @@ public class QuestLog : MonoBehaviour, ISaveable<QuestsSaveData>
         questPanel.InitializeAsFinished(savedPanel);
     }
 
+    public bool IsQuestActive(string questName)
+    {
+        if (_activeQuests.FirstOrDefault(x => x.QuestScriptName == questName) != null)
+            return true;
+        return false;
+    }
+
     public QuestsSaveData SaveData()
     {
         QuestsSaveData saveData = new();

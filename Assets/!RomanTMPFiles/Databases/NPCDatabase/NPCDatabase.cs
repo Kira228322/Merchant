@@ -20,18 +20,18 @@ public class NPCDatabase : MonoBehaviour
         }
     }
 
-    public static NPC GetNPC(int ID)
+    public static NPCData GetNPC(int ID)
     {
-        NPC result = Singleton.NPCs.NPCList.FirstOrDefault(npc => npc.ID == ID);
+        NPCData result = Singleton.NPCs.NPCList.FirstOrDefault(npc => npc.ID == ID);
 
         if (result != null) return result;
 
         Debug.LogWarning("НПС с таким айди не существует!");
         return null;
     }
-    public static NPC GetNPC(string name)
+    public static NPCData GetNPCData(string name)
     {
-        NPC result = Singleton.NPCs.NPCList.FirstOrDefault(npc => npc.Name == name);
+        NPCData result = Singleton.NPCs.NPCList.FirstOrDefault(npc => npc.Name == name);
 
         if (result != null) return result;
 

@@ -436,6 +436,7 @@ GameObject:
   - component: {fileID: 842197181}
   - component: {fileID: 842197183}
   - component: {fileID: 842197180}
+  - component: {fileID: 842197184}
   m_Layer: 0
   m_Name: Database
   m_TagString: Untagged
@@ -496,6 +497,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WagonParts: {fileID: 11400000, guid: b480c050c20ddac45adc0ddfe590d7d3, type: 2}
+--- !u!114 &842197184
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 842197179}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ef15f711bcd4c442b6e06050542b71c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NPCs: {fileID: 11400000, guid: e5c06fd29a9785348b0f8ae740dc5bfb, type: 2}
 --- !u!1 &879955006
 GameObject:
   m_ObjectHideFlags: 0

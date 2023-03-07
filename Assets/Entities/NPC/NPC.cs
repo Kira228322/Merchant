@@ -7,9 +7,6 @@ using UnityEngine.UI;
 public class NPC : MonoBehaviour
 {
     public string Name { get; private set; }
-
-    public int ID { get; private set; }
-
     public TextAsset InkJSON { get; private set; }
 
     public NPCData NpcData;
@@ -40,7 +37,6 @@ public class NPC : MonoBehaviour
     public virtual void SetNPCFromData(NPCData npcData)
     {
         Name = npcData.Name;
-        ID = npcData.ID;
         Affinity = npcData.Affinity;
         InkJSON = npcData.InkJSON;
     }

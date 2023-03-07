@@ -46,6 +46,10 @@ public class QuestHandler : MonoBehaviour
         QuestLog.MoveToCompletedQuests(quest);
 
     }
+    public static void CompleteQuest(Quest quest)
+    {
+        quest.CompleteManually();
+    }
     public static void RemoveQuest(System.Type questType)
     {
         //Два квеста одного типа и пососал, он не поймет какой убрать
@@ -54,6 +58,10 @@ public class QuestHandler : MonoBehaviour
     public static void MoveToCompleted(Quest quest)
     {
         QuestLog.MoveToCompletedQuests(quest);
+    }
+    public static bool IsQuestActive(string questName)
+    {
+        return QuestLog.IsQuestActive(questName);
     }
     private void OnQuestUpdated(Quest quest)
     {

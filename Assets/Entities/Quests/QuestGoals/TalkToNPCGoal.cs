@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class TalkToNPCGoal : Goal
 {
-    public NPC RequiredNPC; //Чел, с кем надо поговорить
-    public TalkToNPCGoal(Quest quest, int requiredIDofNPC, string description, bool isCompleted, int currentAmount, int requiredAmount)
+    public NPCData RequiredNPC; //Чел, с кем надо поговорить
+    public string RequiredLine; //То, о чём надо поговорить (в Ink вызывается как #invoke something, так вот something и есть RequiredLine)
+    public TalkToNPCGoal(Quest quest, int requiredIDofNPC, string requiredLine, string description, bool isCompleted, int currentAmount, int requiredAmount)
     {
         Quest = quest;
         RequiredNPC = NPCDatabase.GetNPC(requiredIDofNPC);
+        RequiredLine = requiredLine;
         Description = description;
         IsCompleted = isCompleted;
         CurrentAmount = currentAmount;
@@ -19,7 +21,7 @@ public class TalkToNPCGoal : Goal
     {
         base.Initialize();
 
-        //subscribe to NPC's TalkEvent
+        DialogueManager.Instance.TalkedToNPCAboutSomething += OnTalkWithNPC;
 
         Evaluate();
     }
@@ -28,8 +30,15 @@ public class TalkToNPCGoal : Goal
     {
         base.Deinitialize();
 
-        //unsubscribe from NPC's TalkEvent
+        DialogueManager.Instance.TalkedToNPCAboutSomething -= OnTalkWithNPC;
     }
 
-    //do sth when event invoked
+    private void OnTalkWithNPC(NPC npc, string line)
+    {
+        if (npc.NpcData == RequiredNPC && line == RequiredLine)
+        {
+            CurrentAmount++;
+            Evaluate();
+        }
+    }
 }
