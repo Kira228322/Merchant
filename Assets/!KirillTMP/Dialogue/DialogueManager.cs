@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Ink.Runtime;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Events;
 
 public class DialogueManager : MonoBehaviour
@@ -11,13 +12,17 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject _dialoguePanel;
     [SerializeField] private TMP_Text _dialogueText;
     [SerializeField] private GameObject[] _choices;
-    [SerializeField] private GameObject _continueButton;
+    [SerializeField] private Button _continueButton;
+    [SerializeField] private GameObject _lineFinishedIndicator;
+    [SerializeField] private float _typingSpeed = 0.04f;
     private TMP_Text[] _choicesText;
     private Story _currentStory;
     public static DialogueManager Instance;
     public event UnityAction<NPC> DialogStartedWithNPC;
-    
-    
+
+    private Coroutine _currentDisplayLineCoroutine;
+    private bool _isCurrentlyWritingALine;
+
     private void Awake()
     {
         if (Instance != null)
@@ -39,6 +44,7 @@ public class DialogueManager : MonoBehaviour
 
     public void EnterDialogueMode(NPC npc)
     {
+        //Выключать другие действия игрока, напр. инвентарь, playerMover, карту
         TextAsset npcInkJson = npc.InkJSON;
         _currentStory = new Story(npcInkJson.text);
         _currentStory.variablesState["affinity"] = npc.Affinity;
@@ -49,25 +55,64 @@ public class DialogueManager : MonoBehaviour
 
     public void ContinueStory()
     {
-        if (_currentStory.canContinue)
+        if (_isCurrentlyWritingALine)
         {
-            _dialogueText.text = _currentStory.Continue();
+            StopCoroutine(_currentDisplayLineCoroutine);
+            _currentDisplayLineCoroutine = null;
+            _isCurrentlyWritingALine = false;
             if (_currentStory.currentChoices.Count != 0)
                 DisplayChoices();
-        }
-        else ExitDialogueMode();
-    }
 
+            _dialogueText.text = _currentStory.currentText;
+            _lineFinishedIndicator.SetActive(true);
+            return;
+        }
+        if (_currentStory.canContinue)
+        {
+            if (_currentDisplayLineCoroutine != null)
+                StopCoroutine(_currentDisplayLineCoroutine);
+            _currentDisplayLineCoroutine = StartCoroutine(DisplayLine(_currentStory.Continue()));
+        }
+        else if (_currentStory.currentChoices.Count == 0) 
+            ExitDialogueMode();
+    }
+    private IEnumerator DisplayLine(string line)
+    {
+        _isCurrentlyWritingALine = true;
+        _lineFinishedIndicator.SetActive(false);
+        _dialogueText.text = "";
+
+        HideChoices();
+
+        WaitForSeconds waitForSeconds = new(_typingSpeed);
+        foreach (char letter in line.ToCharArray())
+        {
+            _dialogueText.text += letter;
+            yield return waitForSeconds;
+        }
+
+        _isCurrentlyWritingALine = false;
+        _lineFinishedIndicator.SetActive(true);
+        if (_currentStory.currentChoices.Count != 0)
+            DisplayChoices();
+    }
     private void ExitDialogueMode()
     {
         _dialoguePanel.SetActive(false);
         _dialogueText.text = "";
     }
 
+    private void HideChoices()
+    {
+        foreach (GameObject choiceButton in _choices)
+        {
+            choiceButton.SetActive(false);
+        }
+    }
     private void DisplayChoices()
     {
         List<Choice> currentChoices = _currentStory.currentChoices;
-        _continueButton.SetActive(false);
+        _continueButton.interactable = false;
         for (int i = 0; i < currentChoices.Count; i++)
         {
             _choices[i].SetActive(true);
@@ -77,7 +122,7 @@ public class DialogueManager : MonoBehaviour
 
     public void MakeChoice(int index)
     {
-        _continueButton.SetActive(true);
+        _continueButton.interactable = true;
         _currentStory.ChooseChoiceIndex(index);
         foreach (var choice in _choices)
         {

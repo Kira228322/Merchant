@@ -23,7 +23,7 @@ VAR affinity = -100
 -> ask_for_information
 
 + [Мне пора идти.]
--> END
+Пока! -> END
 
 === ask_about_guy ===
 + [Откуда ты родом?]
