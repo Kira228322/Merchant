@@ -14,7 +14,7 @@ public class FunctionalWindow : MonoBehaviour
     {
         _NPC = npc;
         
-        _NPCName.text = _NPC.Name; 
+        _NPCName.text = _NPC.NpcData.Name; 
         // Выставление кнопок:
         if (_NPC is NPCTrader) // Если он трейдер то 2 кнопки (трейд и разговор)
             Destroy(_wagonUpButton);

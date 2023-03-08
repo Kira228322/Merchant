@@ -1,25 +1,16 @@
 TODO Локальные задачи:
 
+Подумать, как сделать сравнение по конкретным квестам, а не по типу квестов
+Пример: будут два квеста, принести 20 стрел (выполнен) и принести 10 мяса (не выполнен). 
+У них одинаковый тип, значит, если выполнять проверку
+QuestHandler.IsQuestCompleted("PrinestiItem") то он всегда выдаст true, потому что квест принести 20 стрел выполнен.
+Полагаю, что объект Quest никогда не стоит удалять с QuestPanel. С этим как раз связан полу-костыль в QuestLog,
+который я хотел исправить
 
-To use field serialization you must ensure that the field:
+Реворк квестов:
+Сделать возможность провала квестов и удаления квеста из QuestLog, если у него нет награды и за ним следует квест в цепи
+Сделать квесту Enum {Active, RewardUncollected, Completed, Failed}, чтобы сохранять/загружать правильно
 
-Is public, or has a SerializeField attribute
-isn’t static
-isn’t const
-isn’t readonly
-Has a field type that can be serialized:
-Primitive data types (int, float, double, bool, string, etc.)
-Enum types (32 bites or smaller)
-Fixed-size buffers
-Unity built-in types, for example, Vector2, Vector3, Rect, Matrix4x4, Color, AnimationCurve
-Custom structs with the Serializable attribute
-References to objects that derive from UnityEngine.Object
-Custom classes with the Serializable attribute.
-An array of a field type mentioned above
-A List<T> of a field type mentioned above
-
-NPC - сделать ивенты на поговорить. Подумать, можно ли как-то совместить с Ink, например чтобы давал особый диалог если активен квест. 
-Подписывать TalkToNPCGoal на этот ивент.
 
 Сделать правильный ресайз FunctionalWindow и её кнопок
 

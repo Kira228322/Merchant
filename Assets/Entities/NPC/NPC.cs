@@ -6,38 +6,5 @@ using UnityEngine.UI;
 
 public class NPC : MonoBehaviour
 {
-    public string Name { get; private set; }
-    public TextAsset InkJSON { get; private set; }
-
     public NPCData NpcData;
-    
-
-    public int Affinity
-    { 
-        get => _affinity;
-        set
-        {
-            _affinity = value;
-            if (_affinity < -100)
-            {
-                _affinity = -100;
-                return;
-            }
-            if (_affinity > 100)
-                _affinity = 100;
-        }
-    }
-    private int _affinity;
-
-    protected virtual void Start()
-    {
-        SetNPCFromData(NpcData);
-    }
-
-    public virtual void SetNPCFromData(NPCData npcData)
-    {
-        Name = npcData.Name;
-        Affinity = npcData.Affinity;
-        InkJSON = npcData.InkJSON;
-    }
 }

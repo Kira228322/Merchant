@@ -20,7 +20,7 @@ public class NPCDatabase : MonoBehaviour
         }
     }
 
-    public static NPCData GetNPC(int ID)
+    public static NPCData GetNPCData(int ID)
     {
         NPCData result = Singleton.NPCs.NPCList.FirstOrDefault(npc => npc.ID == ID);
 

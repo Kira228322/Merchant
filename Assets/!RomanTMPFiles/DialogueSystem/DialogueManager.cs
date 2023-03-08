@@ -12,7 +12,7 @@ public class DialogueManager : MonoBehaviour
     public static DialogueManager Instance;
 
     #region Поля, свойства и события
-    [SerializeField] private GameObject _dialoguePanel;
+    [SerializeField] private GameObject _dialogueWindow;
     [SerializeField] private TMP_Text _dialogueText;
     [SerializeField] private GameObject[] _choices;
     [SerializeField] private Button _continueButton;
@@ -32,14 +32,6 @@ public class DialogueManager : MonoBehaviour
     #endregion
 
     #region External функции Ink и всё что связано с ними
-    private bool IsQuestCompleted(string questName)
-    {
-        return QuestHandler.IsQuestCompleted(questName);
-    }
-    private bool IsQuestActive(string questName)
-    {
-        return QuestHandler.IsQuestActive(questName);
-    }
     private void SetTextColor(string colorName)
     {
         ColorUtility.TryParseHtmlString(colorName, out Color result);
@@ -54,13 +46,43 @@ public class DialogueManager : MonoBehaviour
         //Поэтому придётся биндить каждый раз при заходе в диалог
 
         _currentStory.BindExternalFunction("check_if_quest_active", (string param) =>
-        { return IsQuestActive(param); 
+        { 
+            return QuestHandler.IsQuestActive(param); 
         });
-
         _currentStory.BindExternalFunction("check_if_quest_completed", (string param) =>
         {
-           return IsQuestCompleted(param);
+           return QuestHandler.IsQuestCompleted(param);
         });
+        _currentStory.BindExternalFunction("set_color", (string param) =>
+        {
+            SetTextColor(param);
+        });
+        _currentStory.BindExternalFunction("add_quest", (string param) =>
+        {
+            QuestHandler.AddQuest(param);
+        });
+        _currentStory.BindExternalFunction("get_affinity_here", () =>
+        {
+            return _currentNPC.NpcData.Affinity;
+        });
+        _currentStory.BindExternalFunction("get_affinity_by_name", (string npcName) =>
+        {
+            return NPCDatabase.GetNPCData(npcName);
+        });
+        _currentStory.BindExternalFunction("add_affinity", (string npcName, string amount) =>
+        {
+            NPCDatabase.GetNPCData(npcName).Affinity += int.Parse(amount);
+        });
+        _currentStory.BindExternalFunction("add_affinity_here", (string amount) =>
+        {
+            //Очень жаль, но Ink не поддерживает перегрузку external функции, так бы просто сделал add_affinity(string amount)
+            _currentNPC.NpcData.Affinity += int.Parse(amount);
+        });
+        _currentStory.BindExternalFunction("invoke_dialogue_event", (string param) =>
+        {
+            TalkedToNPCAboutSomething?.Invoke(_currentNPC, param);
+        });
+
     }
     #endregion
 
@@ -95,35 +117,7 @@ public class DialogueManager : MonoBehaviour
     }
     #endregion
 
-    #region Внутренние методы работы с диалогом (начать печатать текст, отпарсить теги, показать/спрятать ответы)
-    private void ParseTags()
-    {
-        _currentTags = _currentStory.currentTags;
-        foreach (string tag in _currentTags)
-        {
-            string prefix = tag.Split(' ')[0]; //Пример подходящих тегов: #give_quest TestQuestFindApples
-            string param = tag.Split(' ')[1];  //Или #color blue, или #add_affinity -5
-
-            switch (prefix.ToLower())
-            {
-                case "give_quest":
-                    QuestHandler.AddQuest(param);
-                    break;
-
-                case "color":
-                    SetTextColor(param);
-                    break;
-
-                case "add_affinity":
-                    _currentNPC.Affinity += int.Parse(param);
-                    break;
-
-                case "invoke": //Затриггерить специальное событие для TalkToNPCGoal. Goal должен знать string param 
-                    TalkedToNPCAboutSomething?.Invoke(_currentNPC, param);
-                    break;
-            }
-        }
-    }
+    #region Внутренние методы работы с диалогом (начать печатать текст, показать/спрятать ответы)
     private IEnumerator DisplayLine(string line)
     {
         _isCurrentlyWritingALine = true;
@@ -172,12 +166,11 @@ public class DialogueManager : MonoBehaviour
     {
         //TODO Выключать другие действия игрока, напр. инвентарь, playerMover, карту
         _currentNPC = npc;
-        TextAsset npcInkJson = _currentNPC.InkJSON;
+        TextAsset npcInkJson = _currentNPC.NpcData.InkJSON;
         _currentStory = new Story(npcInkJson.text);
-        BindFunctions();
         InitializeErrorHandler();
-        _currentStory.variablesState["affinity"] = _currentNPC.Affinity;
-        _dialoguePanel.SetActive(true);
+        BindFunctions();
+        _dialogueWindow.SetActive(true);
         ContinueStory();
     }
 
@@ -195,7 +188,7 @@ public class DialogueManager : MonoBehaviour
     
     private void ExitDialogueMode()
     {
-        _dialoguePanel.SetActive(false);
+        _dialogueWindow.SetActive(false);
         _dialogueText.text = "";
     }
     #endregion

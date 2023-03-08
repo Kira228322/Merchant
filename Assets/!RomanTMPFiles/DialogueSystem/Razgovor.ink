@@ -1,33 +1,32 @@
-INCLUDE MainInkLibrary.ink
+INCLUDE MainInkLibrary.Ink
 
 -> greeting
 
 
 === greeting ===
-{affinity >= 50: 
-#color blue
-Колотить мой лысый череп, это же мой добрый друг!
-} 
-{affinity < 50 && affinity > -50: 
-Ну здарова. Чего хотел?
-}
 
-{affinity <= -50: 
-#color red
+{
+- get_affinity_here() >=50:
+~set_color("blue")
+Колотить мой лысый череп, это же мой добрый друг!
+- get_affinity_here() <50 && get_affinity_here() >-50:
+Ну здарова. Чего хотел?
+- get_affinity_here() <= -50:
+~set_color("red")
 Чё пришел, макака подзаборная?
-} 
+}
 -> main
 
 
 === main ===
-#color white
+~set_color("white")
 + [Хочу поговорить с тобой за жизнь.]
     {affinity > -50:
     -> ask_about_guy
   - else:
-    #color red
+    ~set_color("red")
     Да пошел ты, мудила!
-    #color white
+    ~set_color("white")
     -> END
     }
 
@@ -36,7 +35,7 @@ INCLUDE MainInkLibrary.ink
 
 + {check_if_quest_active("TestQuestTalkToPetrovichAboutBuhlo")} 
  [Твой друг попросил меня сказать, что сегодня в 21:00 будет попойка]
-     #invoke talked_about_buhlo
+    ~invoke_dialogue_event("talked_about_buhlo")
     ОООооо!11 я обязательно приду! Спасибо, что сообщил!
     -> main
 
@@ -55,11 +54,11 @@ INCLUDE MainInkLibrary.ink
 
     Я торгую разными вещами. У меня ты можешь найти такие ценные вещи, как Bazugus или Perishable Mazugus.
     Всё это я добыл своим трудом, торгуя с другими людьми или при помощи собирательства.
-    {affinity > 75: 
-    #color blue
+    {get_affinity_here() > 75: 
+    ~set_color("blue")
     О, кстати, специально для тебя я могу предложить крайне редкий артефакт... Это Sugoma! Загляни в мои товары, и мы договоримся о цене.
     } 
-    #color white
+    ~set_color("white")
 
   -> ask_about_guy
 
@@ -68,13 +67,13 @@ INCLUDE MainInkLibrary.ink
 
 === ask_for_information ===
 + [Ты ведь хорошо ориентируешься в округе? Можешь подсказать мне, что где находится?]
-{affinity > -50: 
+{get_affinity_here() > -50: 
     Конечно, нет проблем.
 -> ask_for_directions
 -else:
-    #color red
+    ~set_color("red")
     Я не хочу иметь с тобой никаких дел. Убирайся, паскуда!
-    #color white
+    ~set_color("white")
 -> END
 }
 + [Как обстоят дела в королевстве?]
@@ -91,7 +90,7 @@ INCLUDE MainInkLibrary.ink
 = currentLocationQuestions
 + [Что на севере?]
 На север простирается Озёрная Лиурния. Берегись гигантских крабов, что там обитают! 
--> currentLocationQuestions
+-> DONE
 + [Что на западе?]
 На западе находится огромный океан. Там особо нет ничего интересного. 
 -> currentLocationQuestions
