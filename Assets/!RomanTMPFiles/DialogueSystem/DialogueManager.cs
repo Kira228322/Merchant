@@ -25,7 +25,6 @@ public class DialogueManager : MonoBehaviour
     private Story _currentStory;
     private Coroutine _currentDisplayLineCoroutine;
     private bool _isCurrentlyWritingALine;
-    private List<string> _currentTags = new();
 
     //Первый параметр - с кем поговорил. Второй параметр - о чём.
     public event UnityAction<NPC, string> TalkedToNPCAboutSomething;
@@ -179,7 +178,6 @@ public class DialogueManager : MonoBehaviour
         if (_currentStory.canContinue)
         {
             string newLine = _currentStory.Continue();
-            ParseTags();
             _currentDisplayLineCoroutine = StartCoroutine(DisplayLine(newLine));
         }
         else if (_currentStory.currentChoices.Count == 0) 
