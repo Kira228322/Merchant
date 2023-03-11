@@ -58,7 +58,7 @@ public class DialogueManager : MonoBehaviour
         });
         _currentStory.BindExternalFunction("add_quest", (string param) =>
         {
-            QuestHandler.AddQuest(param);
+            //TODO
         });
         _currentStory.BindExternalFunction("get_affinity_here", () =>
         {

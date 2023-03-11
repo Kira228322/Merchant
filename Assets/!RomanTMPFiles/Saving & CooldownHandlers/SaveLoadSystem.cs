@@ -44,15 +44,11 @@ public static class SaveLoadSystem<T>
     {
         PlayerData playerSaveData = Player.Instance.SaveData();
         SaveLoadSystem<PlayerData>.SaveData(playerSaveData, "PlayerSave");
-        QuestsSaveData questsSaveData = QuestHandler.QuestLog.SaveData();
-        SaveLoadSystem<QuestsSaveData>.SaveData(questsSaveData, "QuestsSave");
     }
     public static void LoadAll()
     {
         PlayerData playerSaveData = SaveLoadSystem<PlayerData>.LoadData("PlayerSave");
         Player.Instance.LoadData(playerSaveData);
-        QuestsSaveData questsSaveData = SaveLoadSystem<QuestsSaveData>.LoadData("QuestsSave");
-        QuestHandler.QuestLog.LoadData(questsSaveData);
     }
 
 }

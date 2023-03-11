@@ -1,147 +1,169 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Roman.Rework
+public class Quest
 {
-    public class Quest
+    public enum State { Active, RewardUncollected, Completed, Failed }
+
+    private State _currentState;
+
+    public State CurrentState
     {
-        public enum State { Active, RewardUncollected, Completed, Failed }
-
-        private State _currentState;
-
-        public State CurrentState
+        get => _currentState;
+        set
         {
-            get => _currentState;
-            set
-            {
-                QuestChangedState?.Invoke(this);
-                _currentState = value;
-            }
+            _currentState = value;
+            QuestChangedState?.Invoke(this);
         }
+    }
 
-        public string QuestName;
-        public string QuestSummary;
-        public string Description;
+    public string QuestName;
+    public string QuestSummary;
+    public string Description;
 
-        public int ExperienceReward;
-        public int MoneyReward;
-        public List<ItemReward> ItemRewards;
+    public int ExperienceReward;
+    public int MoneyReward;
+    public List<ItemReward> ItemRewards;
 
-        public QuestParams NextQuestParams;
+    public QuestParams NextQuestParams;
 
-        public List<Goal> Goals;
+    public List<Goal> Goals;
 
-        public QuestPanel questPanel = null; //она сама себя назначит
+    public QuestPanel questPanel = null; //она сама себя назначит
 
-        public event UnityAction<Quest> QuestUpdated;
-        public event UnityAction<Quest> QuestChangedState;
+    public event UnityAction<Quest> QuestUpdated;
+    public event UnityAction<Quest> QuestChangedState;
 
-        [Serializable]
-        public struct ItemReward
+    [Serializable]
+    public struct ItemReward
+    {
+        public string itemName;
+        public int amount;
+        public float daysBoughtAgo;
+        public ItemReward(string itemName, int amount, float daysBoughtAgo)
         {
-            public string itemName;
-            public int amount;
-            public float daysBoughtAgo;
-            public ItemReward(Item item, int amount, float daysBoughtAgo)
-            {
-                itemName = item.Name;
-                this.amount = amount;
-                this.daysBoughtAgo = daysBoughtAgo;
-            }
+            this.itemName = itemName;
+            this.amount = amount;
+            this.daysBoughtAgo = daysBoughtAgo;
         }
-        [Serializable]
-        public class QuestParams
-        {
-            public State currentState;
+    }
+    [Serializable]
+    public class QuestParams
+    {
+        public State currentState;
 
-            public string questName;
-            public string questSummary;
-            public string description;
+        public string questName;
+        public string questSummary;
+        public string description;
 
-            public int experienceReward;
-            public int moneyReward;
-            public List<ItemReward> itemRewards;
+        public int experienceReward;
+        public int moneyReward;
+        public List<ItemReward> itemRewards;
 
-            public List<Goal.GoalParams> goals;
-        }
-        public Quest(QuestParams questParams)
-        {
-            CurrentState = questParams.currentState;
+        public List<Goal> goals;
 
-            QuestName = questParams.questName;
-            QuestSummary = questParams.questSummary;
-            Description = questParams.description;
-
-            ExperienceReward = questParams.experienceReward;
-            MoneyReward = questParams.moneyReward;
-            ItemRewards = questParams.itemRewards;
-
-            foreach (Goal.GoalParams goalParams in questParams.goals)
-            {
-                Goal newGoal = new(goalParams);
-                Goals.Add(newGoal);
-            }
-        }
-
-        public void CheckGoals()
-        {
-            foreach (Goal goal in Goals)
-            {
-                if (goal.CurrentState != Goal.State.Completed)
-                {
-                    if (goal.CurrentState == Goal.State.Failed)
-                    {
-                        Fail();
-                    }
-                    return;
-                }
-            }
-            QuestUpdated?.Invoke(this);
-            Complete();
-        }
-       
-
-        private void Complete()
-        {
-            foreach (Goal goal in Goals)
-            {
-                goal.Deinitialize();
-            }
-
-            CurrentState = State.RewardUncollected;
-        }
-        private void Fail()
-        {
-            CurrentState = State.Failed;
-        }
-
-        public void CompleteManually()
-        {
-            foreach (Goal goal in Goals)
-            {
-                goal.CurrentAmount = goal.RequiredAmount;
-            }
-            CheckGoals();
-        }
-
-        public void GiveReward()
-        {
-            Player.Instance.AddExperience(ExperienceReward);
-            Player.Instance.Money += MoneyReward;
-
-            if (ItemRewards.Count != 0)
-            {
-                foreach (var item in ItemRewards)
-                {
-                    InventoryController.Instance.TryCreateAndInsertItem(Player.Instance.Inventory.ItemGrid, ItemDatabase.GetItem(item.itemName), item.amount, item.daysBoughtAgo, true);
-                }
-            }
-
-            CurrentState = State.Completed;
-        }
+        public QuestParams nextQuestParams;
 
     }
+    public Quest(QuestParams questParams)
+    {
+        CurrentState = questParams.currentState;
+
+        QuestName = questParams.questName;
+        QuestSummary = questParams.questSummary;
+        Description = questParams.description;
+
+        ExperienceReward = questParams.experienceReward;
+        MoneyReward = questParams.moneyReward;
+        ItemRewards = questParams.itemRewards;
+
+        NextQuestParams = questParams.nextQuestParams;
+
+        Goals = questParams.goals;
+
+        foreach (Goal goal in Goals)
+        {
+            goal.Initialize();
+            goal.GoalUpdated += OnGoalUpdated;
+        }
+        CheckGoals();
+    }
+
+    public void CheckGoals()
+    {
+        QuestUpdated?.Invoke(this);
+
+        bool allComplete = Goals.All(goal => goal.CurrentState == Goal.State.Completed);
+
+        if (allComplete)
+        {
+            Complete();
+        }
+        else if (Goals.Any(goal => goal.CurrentState == Goal.State.Failed))
+        {
+            Fail();
+        }
+    }
+
+    public bool HasRewards()
+    {
+        return ExperienceReward != 0 || MoneyReward != 0 || ItemRewards.Count != 0;
+    }
+
+    private void Complete()
+    {
+        foreach (Goal goal in Goals)
+        {
+            goal.Deinitialize();
+        }
+        if (HasRewards()) //Если есть хоть какие-то награды
+        CurrentState = State.RewardUncollected;
+        else
+        {
+            CurrentState = State.Completed;
+        }
+    }
+    private void Fail()
+    {
+        foreach (Goal goal in Goals)
+        {
+            goal.Deinitialize();
+        }
+
+        CurrentState = State.Failed;
+    }
+
+    public void CompleteManually()
+    {
+        foreach (Goal goal in Goals)
+        {
+            goal.CurrentAmount = goal.RequiredAmount;
+        }
+        CheckGoals();
+    }
+
+    public void GiveReward()
+    {
+        Player.Instance.AddExperience(ExperienceReward);
+        Player.Instance.Money += MoneyReward;
+
+        if (ItemRewards.Count != 0)
+        {
+            foreach (var item in ItemRewards)
+            {
+                InventoryController.Instance.TryCreateAndInsertItem(Player.Instance.Inventory.ItemGrid, ItemDatabase.GetItem(item.itemName), item.amount, item.daysBoughtAgo, true);
+            }
+        }
+
+        CurrentState = State.Completed;
+    }
+    private void OnGoalUpdated(Goal goal)
+    {
+        CheckGoals();
+    }
+
 }

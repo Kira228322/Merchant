@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -133,6 +134,51 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
         if (Input.GetKeyDown(KeyCode.S))
         {
             SaveLoadSystem<PlayerData>.SaveAll();
+        }
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            Quest.QuestParams questParams = new();
+            questParams.currentState = Quest.State.Active;
+            questParams.questName = "TestName";
+            questParams.questSummary = "TestQuestSummary";
+            questParams.description = "TestDescription";
+            questParams.experienceReward = 69;
+            questParams.moneyReward = 96;
+
+            List<Quest.ItemReward> itemRewards = new();
+            itemRewards.Add(new Quest.ItemReward("Sugus", 2, 0));
+            questParams.itemRewards = itemRewards;
+
+            List<Goal> goals = new();
+
+
+            WaitingGoal goal = new(Goal.State.Active, "Подождать за 60 секунд (3 часа)", 0, 3);
+
+            goals.Add(goal);
+
+            questParams.nextQuestParams = new();
+
+            questParams.nextQuestParams.currentState = Quest.State.Active;
+            questParams.nextQuestParams.questName = "TestName2";
+            questParams.nextQuestParams.questSummary = "TestQuestSummary2";
+            questParams.nextQuestParams.description = "TestDescription2";
+            questParams.nextQuestParams.experienceReward = 669;
+            questParams.nextQuestParams.moneyReward = 696;
+
+            List<Quest.ItemReward> nextItemRewards = new();
+            nextItemRewards.Add(new Quest.ItemReward("Jam", 2, 0));
+            questParams.nextQuestParams.itemRewards = nextItemRewards;
+
+            List<Goal> nextGoals = new();
+
+
+            WaitingGoal nextGoal = new(Goal.State.Active, "Подождать за 60 секунд (3 часа)", 0, 3);
+
+            nextGoals.Add(nextGoal);
+            questParams.goals = goals;
+            questParams.nextQuestParams.goals = nextGoals;
+
+            QuestHandler.AddQuest(questParams);
         }
 
         if (Input.GetKeyDown(KeyCode.L))

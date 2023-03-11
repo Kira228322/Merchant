@@ -83,7 +83,7 @@ public class InventoryController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(2)) //Ради тестирования
         {
-            QuestHandler.AddQuest("TestQuestFindApples");
+
         }
 
         if (Input.GetMouseButtonUp(0))
@@ -223,12 +223,18 @@ public class InventoryController : MonoBehaviour
 
     #endregion
     #region Методы, связанные с взаимодействием с айтемом
-    public bool IsThereAvailableSpaceForInsertingMultipleItems(ItemGrid itemGrid, List<Roman.Rework.Quest.ItemReward> rewardItems)
+    private class CompactedItem
     {
-        List<Quest.ItemReward> items = new();
+        public Item item;
+        public int amount;
+        public float daysBoughtAgo;
+    }
+    public bool IsThereAvailableSpaceForInsertingMultipleItems(ItemGrid itemGrid, List<Quest.ItemReward> rewardItems)
+    {
+        List<CompactedItem> items = new();
         foreach (var item in rewardItems)
         {
-            Quest.ItemReward newItemReward = new();
+            CompactedItem newItemReward = new();
             newItemReward.item = ItemDatabase.GetItem(item.itemName);
             newItemReward.amount = item.amount;
             newItemReward.daysBoughtAgo = item.daysBoughtAgo;
@@ -252,7 +258,7 @@ public class InventoryController : MonoBehaviour
         //Это нужно, чтобы если не получится поместить все, знать сколько чего и куда было помещено и убрать столько, сколько нужно.
         //(Если некоторые были помещены в стак, то нужно убрать не весь стак, а столько, сколько в него положили, так ведь?)
 
-        foreach(Quest.ItemReward itemReward in items)
+        foreach(CompactedItem itemReward in items)
         {
             InventoryItem placedItem = TryCreateAndInsertItem(itemGrid, itemReward.item, itemReward.amount, itemReward.daysBoughtAgo, true);
             if (placedItem != null)
