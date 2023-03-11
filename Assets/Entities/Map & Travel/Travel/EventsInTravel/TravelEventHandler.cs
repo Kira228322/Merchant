@@ -22,6 +22,8 @@ public class TravelEventHandler : MonoBehaviour
 
     private bool _banditEvent;
 
+    public enum EventMultiplierType {Luck, Diplomacy, Null}
+
     private void Start()
     {
         _mainCanvas = FindObjectOfType<CanvasWarningGenerator>().gameObject.transform;
@@ -125,7 +127,7 @@ public class TravelEventHandler : MonoBehaviour
 
     public void OnTravelSceneEnter()
     {
-        if (EventFire(MapManager.CurrentRoad.Danger, false, true))
+        if (EventFire(MapManager.CurrentRoad.Danger, false, EventMultiplierType.Luck))
             _banditEvent = true;
         else _banditEvent = false;
         
@@ -179,22 +181,43 @@ public class TravelEventHandler : MonoBehaviour
         return _eventsInTravels[index[Random.Range(0, index.Count)]];
     }
 
-    public static bool EventFire(float probability, bool positiveEvent = true, bool luckMultiplier = false)  
+    
+    public static bool EventFire(float probability, bool positiveEvent = true, EventMultiplierType luckMultiplier = EventMultiplierType.Luck)
     {
-        if (luckMultiplier)
+        if (probability < 1)
+            probability *= 100; // Если вероятность по ошибке была написана не в %, а в долях
+        switch (luckMultiplier)
         {
-            if (positiveEvent)
-            {
-                if (Random.Range(0, 101) <= probability * Player.Instance.Statistics.GetCoefForPositiveEvent())
+            case EventMultiplierType.Luck:
+                if (positiveEvent)
+                {
+                    if (Random.Range(0, 101) <= probability * Player.Instance.Statistics.GetCoefForPositiveEvent())
+                        return true;
+                }
+                else
+                {
+                    if (Random.Range(0, 101) <= probability * Player.Instance.Statistics.GetCoefForNegativeEvent())
+                        return true;
+                }
+                break;
+            case EventMultiplierType.Diplomacy:
+                if (positiveEvent)
+                {
+                    if (Random.Range(0, 101) <= probability * Player.Instance.Statistics.GetCoefForDiplomacyPositiveEvent())
+                        return true;
+                }
+                else
+                {
+                    if (Random.Range(0, 101) <= probability * Player.Instance.Statistics.GetCoefForDiplomacyNegativeEvent())
+                        return true;
+                }
+                break;
+            case EventMultiplierType.Null:
+                if (Random.Range(0, 101) <= probability)
                     return true;
-                return false;
-            }
-            if (Random.Range(0, 101) <= probability * Player.Instance.Statistics.GetCoefForNegativeEvent())
-                return true;
-            return false;
+                break;
         }
-        if (Random.Range(0, 101) <= probability)
-            return true;
+        
         return false;
     }
 }

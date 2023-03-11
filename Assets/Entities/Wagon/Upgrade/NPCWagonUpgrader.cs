@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class NPCWagonUpgrader : NPC
@@ -10,9 +11,13 @@ public class NPCWagonUpgrader : NPC
 
     private PlayerWagonStats _wagonStats;
 
+    public List<WagonPart> WagonUpgrades = new List<WagonPart>();
+
     protected void Start()
     {
         _wagonStats = Player.Instance.WagonStats;
+        
+        WagonUpgraderRestock();
     }
 
     public void Interact() // TODO
@@ -23,7 +28,32 @@ public class NPCWagonUpgrader : NPC
         Upgrade(_wagonStats.Wheel);
         Upgrade(_wagonStats.Body);
         Upgrade(_wagonStats.Suspension);
+    }
+    
+    
 
+    private void WagonUpgraderRestock()
+    {
+        WagonUpgrades.Clear();
+        
+        if (TravelEventHandler.EventFire(80, true, TravelEventHandler.EventMultiplierType.Diplomacy))
+            WagonUpgrades.Add(WagonPartDatabase.GetWagonPartByLvl<Body>(Player.Instance.WagonStats.Body.Level + 1));
+        
+        if (TravelEventHandler.EventFire(80, true, TravelEventHandler.EventMultiplierType.Diplomacy))
+            WagonUpgrades.Add(WagonPartDatabase.GetWagonPartByLvl<Suspension>(Player.Instance.WagonStats.Suspension.Level + 1));
+        
+        if (TravelEventHandler.EventFire(80, true, TravelEventHandler.EventMultiplierType.Diplomacy))
+            WagonUpgrades.Add(WagonPartDatabase.GetWagonPartByLvl<Wheel>(Player.Instance.WagonStats.Wheel.Level + 1));
+        
+        if (TravelEventHandler.EventFire(15, true, TravelEventHandler.EventMultiplierType.Diplomacy))
+            WagonUpgrades.Add(WagonPartDatabase.GetWagonPartByLvl<Wheel>(Player.Instance.WagonStats.Wheel.Level + 2));
+        
+        if (TravelEventHandler.EventFire(15, true, TravelEventHandler.EventMultiplierType.Diplomacy))
+            WagonUpgrades.Add(WagonPartDatabase.GetWagonPartByLvl<Wheel>(Player.Instance.WagonStats.Wheel.Level + 2));
+        
+        if (TravelEventHandler.EventFire(15, true, TravelEventHandler.EventMultiplierType.Diplomacy))
+            WagonUpgrades.Add(WagonPartDatabase.GetWagonPartByLvl<Wheel>(Player.Instance.WagonStats.Wheel.Level + 2));
+        
     }
 
     public void Upgrade(WagonPart wagonPart)

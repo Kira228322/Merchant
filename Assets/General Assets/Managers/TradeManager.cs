@@ -8,6 +8,7 @@ public class TradeManager : MonoBehaviour
     [SerializeField] private CanvasGroup _playerBlock;
     [SerializeField] private GameObject _closeTradeButton;
     [SerializeField] private GameObject _BuyPanel;
+    public CanvasGroup PlayerBlock => _playerBlock;
     public GameObject BuyPanel => _BuyPanel;
     [SerializeField] private GameObject _sellPanel;
     public GameObject SellPanel => _sellPanel;

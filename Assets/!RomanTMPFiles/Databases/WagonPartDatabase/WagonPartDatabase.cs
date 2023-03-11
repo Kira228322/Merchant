@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,6 +25,19 @@ public class WagonPartDatabase : MonoBehaviour
     {
         WagonPart result = Instance.WagonParts.WagonPartsList.FirstOrDefault(wagonPart => wagonPart.Name == name);
  
+        if (result != null)
+        {
+            return result;
+        }
+
+        Debug.LogWarning("Такого WagonPart не существует!");
+        return null;
+    }
+
+    public static WagonPart GetWagonPartByLvl<T>(int lvl)
+    {
+        WagonPart result = Instance.WagonParts.WagonPartsList.FirstOrDefault(wagonPart => wagonPart is T && wagonPart.Level == lvl);
+        
         if (result != null)
         {
             return result;
