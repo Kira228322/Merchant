@@ -223,8 +223,16 @@ public class InventoryController : MonoBehaviour
 
     #endregion
     #region ћетоды, св€занные с взаимодействием с айтемом
-    public bool IsThereAvailableSpaceForInsertingMultipleItems(ItemGrid itemGrid, List<Quest.ItemReward> items)
+    public bool IsThereAvailableSpaceForInsertingMultipleItems(ItemGrid itemGrid, List<Roman.Rework.Quest.ItemReward> rewardItems)
     {
+        List<Quest.ItemReward> items = new();
+        foreach (var item in rewardItems)
+        {
+            Quest.ItemReward newItemReward = new();
+            newItemReward.item = ItemDatabase.GetItem(item.itemName);
+            newItemReward.amount = item.amount;
+            newItemReward.daysBoughtAgo = item.daysBoughtAgo;
+        }
         /*
          ћетод провер€ет, есть ли место дл€ размещени€ нескольких предметов. —ам не размещает (почему - комментарий внизу)
         */
@@ -232,6 +240,7 @@ public class InventoryController : MonoBehaviour
         {
             return true;
         }
+
         //Ќачнем с того, что отсортируем лист помещаемых предметов от самого крупного к самому маленькому
         //≈сли поместить сначала мелкие, дл€ крупных может не остатьс€ места.
 

@@ -23,6 +23,7 @@ namespace Roman.Rework
         }
 
         public string QuestName;
+        public string QuestSummary;
         public string Description;
 
         public int ExperienceReward;
@@ -32,6 +33,8 @@ namespace Roman.Rework
         public QuestParams NextQuestParams;
 
         public List<Goal> Goals;
+
+        public QuestPanel questPanel = null; //она сама себя назначит
 
         public event UnityAction<Quest> QuestUpdated;
         public event UnityAction<Quest> QuestChangedState;
@@ -52,27 +55,35 @@ namespace Roman.Rework
         [Serializable]
         public class QuestParams
         {
+            public State currentState;
+
             public string questName;
+            public string questSummary;
             public string description;
 
             public int experienceReward;
             public int moneyReward;
             public List<ItemReward> itemRewards;
 
-            public List<Goal> goals;
+            public List<Goal.GoalParams> goals;
         }
         public Quest(QuestParams questParams)
         {
-            CurrentState = State.Active;
+            CurrentState = questParams.currentState;
 
             QuestName = questParams.questName;
+            QuestSummary = questParams.questSummary;
             Description = questParams.description;
 
             ExperienceReward = questParams.experienceReward;
             MoneyReward = questParams.moneyReward;
             ItemRewards = questParams.itemRewards;
 
-            Goals = questParams.goals;
+            foreach (Goal.GoalParams goalParams in questParams.goals)
+            {
+                Goal newGoal = new(goalParams);
+                Goals.Add(newGoal);
+            }
         }
 
         public void CheckGoals()
@@ -91,7 +102,8 @@ namespace Roman.Rework
             QuestUpdated?.Invoke(this);
             Complete();
         }
-        
+       
+
         private void Complete()
         {
             foreach (Goal goal in Goals)

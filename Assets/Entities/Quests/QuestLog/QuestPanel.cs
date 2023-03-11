@@ -108,7 +108,8 @@ public class QuestPanel : MonoBehaviour
     }
     public void OnRewardButtonClick()
     {
-        
+        /* Временно закрыто на технические работы. После реворка всё встанет на свои места.
+         
         if (Quest.ItemRewards.Count != 0 && !InventoryController.Instance.IsThereAvailableSpaceForInsertingMultipleItems(Player.Instance.Inventory.ItemGrid, Quest.ItemRewards))
         {
             CanvasWarningGenerator.Instance.CreateWarning("Предупреждение", "В инвентаре недостаточно места!");
@@ -120,5 +121,6 @@ public class QuestPanel : MonoBehaviour
             _questNameText.color = _completedAndRewardAcquiredQuestNameColor;
             _rewardButton.gameObject.SetActive(false);
         }
+        */
     }
 }
