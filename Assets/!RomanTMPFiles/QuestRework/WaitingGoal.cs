@@ -6,6 +6,7 @@ using UnityEngine;
 /// Цель, которая выполняется по прошествии RequiredAmount часов
 ///Не путать с TimedGoal <см. cref ="TimedGoal" />
 /// </summary>
+[System.Serializable]
 public class WaitingGoal : Goal
 {
     private int _timeCounter;

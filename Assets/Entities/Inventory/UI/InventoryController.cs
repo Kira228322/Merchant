@@ -229,7 +229,7 @@ public class InventoryController : MonoBehaviour
         public int amount;
         public float daysBoughtAgo;
     }
-    public bool IsThereAvailableSpaceForInsertingMultipleItems(ItemGrid itemGrid, List<Quest.ItemReward> rewardItems)
+    public bool IsThereAvailableSpaceForInsertingMultipleItems(ItemGrid itemGrid, List<ItemReward> rewardItems)
     {
         List<CompactedItem> items = new();
         foreach (var item in rewardItems)

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,7 +21,7 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
             Instance = this;
     }
 
-    public static void AddQuest(Quest.QuestParams questParams)
+    public static void AddQuest(QuestParams questParams)
     {
         Quest quest = new(questParams);
         Instance.Quests.Add(quest);
@@ -45,30 +46,66 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
         return Instance.Quests.Any(quest => quest.QuestSummary == summary && quest.CurrentState == Quest.State.Failed);
     }
 
+    public static QuestSaveData SaveQuests()
+    {
+        return Instance.SaveData();
+    }
+    public static void LoadQuests(QuestSaveData data)
+    {
+        Instance.LoadData(data);
+    }
+
     public QuestSaveData SaveData()
     {
 
         QuestSaveData saveData = new();
 
-        foreach (Quest quest in Quests) 
+        foreach (Quest quest in Instance.Quests) 
         {
-            Quest.QuestParams questParams = new();
-            questParams.currentState = quest.CurrentState;
+            QuestParams questParams = new();
+            questParams.currentState = (QuestParams.State)quest.CurrentState;
             questParams.questName = quest.QuestName;
             questParams.questSummary = quest.QuestSummary;
             questParams.description = quest.Description;
             questParams.experienceReward = quest.ExperienceReward;
             questParams.moneyReward = quest.MoneyReward;
             questParams.itemRewards = quest.ItemRewards;
-            questParams.goals = quest.Goals;
-        }
 
+            questParams.goals = new();
+            foreach (Goal goal in quest.Goals)
+            {
+                //Я всегда топлю за обобщение и на самом деле не люблю делать подобные switch с перечислением всех возможных типов,
+                //но если делать обобщенно, то начинается полнейшая дичь с использованием словарей и System.Reflection.
+                //Очень волосато и не мой уровень. Я спрашивал у ChatGPT, очень-очень волосатый код.
+                //Главное когда будут новые Goal не забыть их добавить вот сюда, иначе не будет сейвиться игра...
+
+                Goal newGoal = null;
+                switch (goal)
+                {
+                    case CollectItemsGoal oldGoal:
+                        newGoal = new CollectItemsGoal(oldGoal.CurrentState, oldGoal.Description, oldGoal.CurrentAmount, oldGoal.RequiredAmount, oldGoal.RequiredItem);
+                        break;
+                    case TalkToNPCGoal oldGoal:
+                        newGoal = new TalkToNPCGoal(oldGoal.CurrentState, oldGoal.Description, oldGoal.CurrentAmount, oldGoal.RequiredAmount, oldGoal.RequiredNPC.ID, oldGoal.RequiredLine, oldGoal.FailingLine);
+                        break;
+                    case WaitingGoal oldGoal:
+                        newGoal = new WaitingGoal(oldGoal.CurrentState, oldGoal.Description, oldGoal.CurrentAmount, oldGoal.RequiredAmount);
+                        break;
+                    case TimedGoal oldGoal:
+                        newGoal = new TimedGoal(oldGoal.CurrentState, oldGoal.Description, oldGoal.CurrentAmount, oldGoal.RequiredAmount);
+                        break;
+                }
+                questParams.goals.Add(newGoal);
+            }
+
+            saveData.savedQuestParams.Add(questParams);
+        }
         return saveData;
     }
 
     public void LoadData(QuestSaveData data)
     {
-        foreach (Quest.QuestParams questParams in data.savedQuestParams)
+        foreach (QuestParams questParams in data.savedQuestParams)
         {
             AddQuest(questParams);
         }

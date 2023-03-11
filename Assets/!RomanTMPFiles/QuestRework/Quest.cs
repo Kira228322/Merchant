@@ -38,40 +38,9 @@ public class Quest
     public event UnityAction<Quest> QuestUpdated;
     public event UnityAction<Quest> QuestChangedState;
 
-    [Serializable]
-    public struct ItemReward
-    {
-        public string itemName;
-        public int amount;
-        public float daysBoughtAgo;
-        public ItemReward(string itemName, int amount, float daysBoughtAgo)
-        {
-            this.itemName = itemName;
-            this.amount = amount;
-            this.daysBoughtAgo = daysBoughtAgo;
-        }
-    }
-    [Serializable]
-    public class QuestParams
-    {
-        public State currentState;
-
-        public string questName;
-        public string questSummary;
-        public string description;
-
-        public int experienceReward;
-        public int moneyReward;
-        public List<ItemReward> itemRewards;
-
-        public List<Goal> goals;
-
-        public QuestParams nextQuestParams;
-
-    }
     public Quest(QuestParams questParams)
     {
-        CurrentState = questParams.currentState;
+        CurrentState = (State)questParams.currentState;
 
         QuestName = questParams.questName;
         QuestSummary = questParams.questSummary;

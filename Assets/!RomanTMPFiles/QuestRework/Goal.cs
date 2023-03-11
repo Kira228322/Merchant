@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -42,6 +43,10 @@ public class Goal
         GoalUpdated?.Invoke(this);
     }
 
+    public static Goal CloneGoal(Goal goal)
+    {
+        return (Goal)goal.MemberwiseClone();
+    }
     protected virtual void Evaluate()
     {
         if (CurrentState == State.Active)

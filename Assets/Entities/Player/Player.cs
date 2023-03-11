@@ -137,16 +137,16 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
         }
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            Quest.QuestParams questParams = new();
-            questParams.currentState = Quest.State.Active;
+            QuestParams questParams = new();
+            questParams.currentState = (QuestParams.State)Quest.State.Active;
             questParams.questName = "TestName";
             questParams.questSummary = "TestQuestSummary";
             questParams.description = "TestDescription";
             questParams.experienceReward = 69;
             questParams.moneyReward = 96;
 
-            List<Quest.ItemReward> itemRewards = new();
-            itemRewards.Add(new Quest.ItemReward("Sugus", 2, 0));
+            List<ItemReward> itemRewards = new();
+            itemRewards.Add(new ItemReward("Sugus", 2, 0));
             questParams.itemRewards = itemRewards;
 
             List<Goal> goals = new();
@@ -158,15 +158,15 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
 
             questParams.nextQuestParams = new();
 
-            questParams.nextQuestParams.currentState = Quest.State.Active;
+            questParams.nextQuestParams.currentState = (QuestParams.State)Quest.State.Active;
             questParams.nextQuestParams.questName = "TestName2";
             questParams.nextQuestParams.questSummary = "TestQuestSummary2";
             questParams.nextQuestParams.description = "TestDescription2";
             questParams.nextQuestParams.experienceReward = 669;
             questParams.nextQuestParams.moneyReward = 696;
 
-            List<Quest.ItemReward> nextItemRewards = new();
-            nextItemRewards.Add(new Quest.ItemReward("Jam", 2, 0));
+            List<ItemReward> nextItemRewards = new();
+            nextItemRewards.Add(new ItemReward("Jam", 2, 0));
             questParams.nextQuestParams.itemRewards = nextItemRewards;
 
             List<Goal> nextGoals = new();
