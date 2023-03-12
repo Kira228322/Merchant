@@ -48,8 +48,7 @@ public class TravelEventHandler : MonoBehaviour
 
         List<InventoryItem> deletedItems = new List<InventoryItem>();
         
-        float Roadbadness = (100 - MapManager.CurrentRoad.Quality) / 
-                            (Player.Instance.WagonStats.QualityModifier * (1 + MapManager.CurrentRoad.Quality * 0.001f));
+        float Roadbadness = (100 - MapManager.CurrentRoad.Quality) / Player.Instance.WagonStats.QualityModifier;
         // формула вероятности сломать предмет хрупкостью 100%
         
         
@@ -61,7 +60,7 @@ public class TravelEventHandler : MonoBehaviour
             {
                 if (EventFire(Roadbadness * randomItem.ItemData.Fragility / 100))
                 {
-                    Roadbadness *= 0.9f;
+                    Roadbadness *= 0.9f - (Player.Instance.WagonStats.QualityModifier - 1) * 0.1f;
                     deletedItems.Add(Instantiate(randomItem));
                     Player.Instance.Inventory.ItemGrid.RemoveItemsFromAStack(randomItem, 1);
                     i--;
