@@ -52,8 +52,8 @@ public class PregenQuestSO : ScriptableObject
         questParams.questName = QuestName;
         questParams.questSummary = QuestSummary;
         questParams.description = Description;
-        questParams.experienceReward = _experienceReward;
-        questParams.moneyReward = _moneyReward;
+        questParams.experienceReward = ExperienceReward;
+        questParams.moneyReward = MoneyReward;
         questParams.itemRewards = ItemRewards;
 
         if (NextQuest != null)
