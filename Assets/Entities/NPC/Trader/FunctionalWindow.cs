@@ -6,12 +6,15 @@ public class FunctionalWindow : MonoBehaviour
     [SerializeField] private TMP_Text _NPCName;
     [SerializeField] private GameObject _tradeButton;
     [SerializeField] private GameObject _wagonUpButton;
+    [SerializeField] private WagonUpgradeWindow _wagonUpgradeWindow;
     private NPC _NPC;
+    private Transform _canvas;
 
     
     
     public void Init(NPC npc)
     {
+        _canvas = FindObjectOfType<CanvasWarningGenerator>().transform;
         _NPC = npc;
         
         _NPCName.text = _NPC.NpcData.Name; 
@@ -40,6 +43,8 @@ public class FunctionalWindow : MonoBehaviour
 
     public void OnWagonUpgradeButtonClick()
     {
-        // TODO
+        Instantiate(_wagonUpgradeWindow.gameObject, _canvas).GetComponent<WagonUpgradeWindow>().Init((NPCWagonUpgrader)_NPC);
+        TradeManager.Instance.PlayerBlock.alpha = 0;
+        Destroy(gameObject);
     }
 }

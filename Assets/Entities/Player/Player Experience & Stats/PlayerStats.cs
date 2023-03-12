@@ -54,5 +54,14 @@ public class PlayerStats
     {
         return (float)(1 + 0.06f * _totalLuck / (0.06 * _totalLuck + 1.5f));
     }
+
+    public float GetCoefForDiplomacyPositiveEvent()
+    {
+        return (float)(1 + 0.06f * _totalDiplomacy / (0.06 * _totalDiplomacy + 1.5f));
+    }
     
+    public float GetCoefForDiplomacyNegativeEvent()
+    {
+        return (float)(1 - 0.06f * _totalDiplomacy / (0.06 * _totalDiplomacy + 1.5f));
+    }
 }
