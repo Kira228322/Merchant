@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public struct ItemReward
+public class ItemReward
 {
     public string itemName;
     public int amount;

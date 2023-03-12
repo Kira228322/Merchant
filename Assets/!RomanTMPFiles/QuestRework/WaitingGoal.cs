@@ -12,21 +12,17 @@ public class WaitingGoal : Goal
     private int _timeCounter;
     public WaitingGoal(State currentState, string description, int currentAmount, int requiredAmount) : base(currentState, description, currentAmount, requiredAmount)
     {
-
+        //аналогичен базовому конструктору
     }
 
     public override void Initialize()
     {
-        base.Initialize();
-
         Evaluate();
 
         GameTime.MinuteChanged += OnMinuteChanged;
     }
     public override void Deinitialize()
     {
-        base.Deinitialize();
-
         GameTime.MinuteChanged -= OnMinuteChanged;
     }
 
@@ -55,5 +51,4 @@ public class WaitingGoal : Goal
 
         UpdateGoal();
     }
-
 }

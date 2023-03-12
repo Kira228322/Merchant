@@ -8,7 +8,6 @@ using TMPro;
 public class QuestPanel : MonoBehaviour
 {
     [SerializeField] private TMP_Text _questNameText;
-    [SerializeField] private TMP_Text _shortSummaryText;
     [SerializeField] private TMP_Text _descriptionText;
     [SerializeField] private List<TMP_Text> _goalTexts = new();
     [SerializeField] private List<TMP_Text> _rewardTexts = new();
@@ -32,7 +31,6 @@ public class QuestPanel : MonoBehaviour
         quest.questPanel = this;
 
         _questNameText.text = _quest.QuestName;
-        _shortSummaryText.text = _quest.QuestSummary;
         _descriptionText.text = _quest.Description;
 
         for (int i = 0; i < _quest.Goals.Count; i++)

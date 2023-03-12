@@ -83,7 +83,7 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
                 switch (goal)
                 {
                     case CollectItemsGoal oldGoal:
-                        newGoal = new CollectItemsGoal(oldGoal.CurrentState, oldGoal.Description, oldGoal.CurrentAmount, oldGoal.RequiredAmount, oldGoal.RequiredItem);
+                        newGoal = new CollectItemsGoal(oldGoal.CurrentState, oldGoal.Description, oldGoal.CurrentAmount, oldGoal.RequiredAmount, oldGoal.RequiredItemName);
                         break;
                     case TalkToNPCGoal oldGoal:
                         newGoal = new TalkToNPCGoal(oldGoal.CurrentState, oldGoal.Description, oldGoal.CurrentAmount, oldGoal.RequiredAmount, oldGoal.RequiredNPC.ID, oldGoal.RequiredLine, oldGoal.FailingLine);

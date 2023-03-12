@@ -137,48 +137,7 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
         }
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            QuestParams questParams = new();
-            questParams.currentState = (QuestParams.State)Quest.State.Active;
-            questParams.questName = "TestName";
-            questParams.questSummary = "TestQuestSummary";
-            questParams.description = "TestDescription";
-            questParams.experienceReward = 69;
-            questParams.moneyReward = 96;
-
-            List<ItemReward> itemRewards = new();
-            itemRewards.Add(new ItemReward("Sugus", 2, 0));
-            questParams.itemRewards = itemRewards;
-
-            List<Goal> goals = new();
-
-
-            WaitingGoal goal = new(Goal.State.Active, "Подождать за 60 секунд (3 часа)", 0, 3);
-
-            goals.Add(goal);
-
-            questParams.nextQuestParams = new();
-
-            questParams.nextQuestParams.currentState = (QuestParams.State)Quest.State.Active;
-            questParams.nextQuestParams.questName = "TestName2";
-            questParams.nextQuestParams.questSummary = "TestQuestSummary2";
-            questParams.nextQuestParams.description = "TestDescription2";
-            questParams.nextQuestParams.experienceReward = 669;
-            questParams.nextQuestParams.moneyReward = 696;
-
-            List<ItemReward> nextItemRewards = new();
-            nextItemRewards.Add(new ItemReward("Jam", 2, 0));
-            questParams.nextQuestParams.itemRewards = nextItemRewards;
-
-            List<Goal> nextGoals = new();
-
-
-            WaitingGoal nextGoal = new(Goal.State.Active, "Подождать за 60 секунд (3 часа)", 0, 3);
-
-            nextGoals.Add(nextGoal);
-            questParams.goals = goals;
-            questParams.nextQuestParams.goals = nextGoals;
-
-            QuestHandler.AddQuest(questParams);
+            QuestHandler.AddQuest(PregenQuestDatabase.GetQuestParams("collect3apples_wait3hours"));
         }
 
         if (Input.GetKeyDown(KeyCode.L))

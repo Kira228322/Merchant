@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -11,7 +11,7 @@ public class Goal
 
     public enum State { Active, Completed, Failed }
 
-    private State _currentState;
+    [SerializeField] private State _currentState;
 
     public State CurrentState
     {
@@ -38,15 +38,16 @@ public class Goal
         RequiredAmount = requiredAmount;
     }
 
+    public Goal()
+    {
+
+    }
+
     protected void UpdateGoal()
     {
         GoalUpdated?.Invoke(this);
     }
 
-    public static Goal CloneGoal(Goal goal)
-    {
-        return (Goal)goal.MemberwiseClone();
-    }
     protected virtual void Evaluate()
     {
         if (CurrentState == State.Active)
@@ -72,13 +73,12 @@ public class Goal
         CurrentState = State.Failed;
     }
 
-    public virtual void Initialize()
-    {
+    public virtual void Initialize() { }
+    public virtual void Deinitialize() { }
 
-    }
-    public virtual void Deinitialize()
+    public static T CreateInstance<T>() where T : Goal // метод-фабрика для создания наследуемых Goal
     {
-
+        return Activator.CreateInstance(typeof(T)) as T;
     }
 
 }

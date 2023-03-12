@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 [System.Serializable]
@@ -8,16 +9,16 @@ public class CollectItemsGoal : Goal
 
     //Нельзя зафейлить, просто сбор предметов
 
+    public string RequiredItemName;
     public Item RequiredItem;
-    public CollectItemsGoal(State currentState, string description, int currentAmount, int requiredAmount, Item requiredItem) : base(currentState, description, currentAmount, requiredAmount)
+    public CollectItemsGoal(State currentState, string description, int currentAmount, int requiredAmount, string requiredItemName) : base(currentState, description, currentAmount, requiredAmount)
     {
-        RequiredItem = requiredItem;
+        RequiredItemName = requiredItemName;
+        RequiredItem = ItemDatabase.GetItem(requiredItemName);
     }
 
     public override void Initialize()
     {
-        base.Initialize();
-
         //Надо найти, сколько таких вещей уже есть у игрока в инвентаре
         foreach (InventoryItem item in Player.Instance.Inventory.ItemList)
         {
@@ -36,8 +37,6 @@ public class CollectItemsGoal : Goal
 
     public override void Deinitialize()
     {
-        base.Deinitialize();
-
         ItemGrid playerInventoryItemGrid = Player.Instance.Inventory.ItemGrid;
         playerInventoryItemGrid.ItemPlacedInTheGrid -= ItemCollected;
         playerInventoryItemGrid.ItemUpdated -= ItemUpdated;

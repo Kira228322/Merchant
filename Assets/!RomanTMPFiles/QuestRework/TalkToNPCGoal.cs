@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 [System.Serializable]
@@ -17,8 +18,6 @@ public class TalkToNPCGoal : Goal
 
     public override void Initialize()
     {
-        base.Initialize();
-
         DialogueManager.Instance.TalkedToNPCAboutSomething += OnTalkWithNPC;
 
         Evaluate();
@@ -26,8 +25,6 @@ public class TalkToNPCGoal : Goal
 
     public override void Deinitialize()
     {
-        base.Deinitialize();
-
         DialogueManager.Instance.TalkedToNPCAboutSomething -= OnTalkWithNPC;
     }
 

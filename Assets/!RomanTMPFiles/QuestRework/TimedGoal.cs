@@ -12,21 +12,16 @@ public class TimedGoal : Goal
     private int _timeCounter;
     public TimedGoal(State currentState, string description, int currentAmount, int requiredAmount) : base(currentState, description, currentAmount, requiredAmount)
     {
-
+        //аналогичен базовому конструктору
     }
-
     public override void Initialize()
     {
-        base.Initialize();
-
         Evaluate();
 
         GameTime.MinuteChanged += OnMinuteChanged;
     }
     public override void Deinitialize()
     {
-        base.Deinitialize();
-
         GameTime.MinuteChanged -= OnMinuteChanged;
     }
 
@@ -54,5 +49,4 @@ public class TimedGoal : Goal
         }
         UpdateGoal();
     }
-
 }
