@@ -73,25 +73,25 @@ public class PregenQuestSO : ScriptableObject
             {
                 case CompactedGoal.GoalType.CollectItemsGoal:
                     newGoal = new CollectItemsGoal(pregenGoal.goalState, pregenGoal.description, 
-                        pregenGoal.currentAmount, pregenGoal.requiredAmount, 
+                        pregenGoal.currentAmount, Random.Range(pregenGoal.minRequiredAmount, pregenGoal.maxRequiredAmount), 
                         pregenGoal.RequiredItemName);
                     
                     break;
 
                 case CompactedGoal.GoalType.TalkToNPCGoal:
                     newGoal = new TalkToNPCGoal(pregenGoal.goalState, pregenGoal.description,
-                        pregenGoal.currentAmount, pregenGoal.requiredAmount,
+                        pregenGoal.currentAmount, Random.Range(pregenGoal.minRequiredAmount, pregenGoal.maxRequiredAmount),
                         pregenGoal.RequiredIDofNPC, pregenGoal.RequiredLine, pregenGoal.FailingLine);
                     break;
 
                 case CompactedGoal.GoalType.TimedGoal:
                     newGoal = new TimedGoal(pregenGoal.goalState, pregenGoal.description,
-                        pregenGoal.currentAmount, pregenGoal.requiredAmount);
+                        pregenGoal.currentAmount, Random.Range(pregenGoal.minRequiredAmount, pregenGoal.maxRequiredAmount));
                     break;
 
                 case CompactedGoal.GoalType.WaitingGoal:
                     newGoal = new WaitingGoal(pregenGoal.goalState, pregenGoal.description,
-                        pregenGoal.currentAmount, pregenGoal.requiredAmount);
+                        pregenGoal.currentAmount, Random.Range(pregenGoal.minRequiredAmount, pregenGoal.maxRequiredAmount));
                     break;
             }
             questParams.goals.Add(newGoal);
@@ -108,7 +108,6 @@ public class PregenQuestSO : ScriptableObject
         public Goal.State goalState;
         public string description;
         public int currentAmount;
-        public int requiredAmount; // TODO это поле замени на Random.Range(minRequiredAmount, maxRequiredAmount +1)
         
         public bool randomAmount; // Боюсь это необходимо
         public int minRequiredAmount;
