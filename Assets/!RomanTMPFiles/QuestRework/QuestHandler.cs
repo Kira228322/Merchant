@@ -32,18 +32,9 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
         return Instance.Quests.FirstOrDefault(quest => quest.QuestSummary == summary);
     }
 
-    public static bool IsQuestActive(string summary)
+    public static bool HasQuestBeenTaken(string summary)
     {
-        return Instance.Quests.Any(quest => quest.QuestSummary == summary && quest.CurrentState == Quest.State.Active);
-    }
-    public static bool IsQuestCompleted(string summary)
-    {
-        return Instance.Quests.Any(quest => quest.QuestSummary == summary &&
-        (quest.CurrentState == Quest.State.Completed || quest.CurrentState == Quest.State.RewardUncollected));
-    }
-    public static bool IsQuestFailed(string summary)
-    {
-        return Instance.Quests.Any(quest => quest.QuestSummary == summary && quest.CurrentState == Quest.State.Failed);
+        return Instance.Quests.Any(quest => quest.QuestSummary == summary);
     }
 
     public static QuestSaveData SaveQuests()
@@ -86,7 +77,7 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
                         newGoal = new CollectItemsGoal(oldGoal.CurrentState, oldGoal.Description, oldGoal.CurrentAmount, oldGoal.RequiredAmount, oldGoal.RequiredItemName);
                         break;
                     case TalkToNPCGoal oldGoal:
-                        newGoal = new TalkToNPCGoal(oldGoal.CurrentState, oldGoal.Description, oldGoal.CurrentAmount, oldGoal.RequiredAmount, oldGoal.RequiredNPC.ID, oldGoal.RequiredLine, oldGoal.FailingLine);
+                        newGoal = new TalkToNPCGoal(oldGoal.CurrentState, oldGoal.Description, oldGoal.CurrentAmount, oldGoal.RequiredAmount, oldGoal.RequiredIDOfNPC, oldGoal.RequiredLine, oldGoal.FailingLine);
                         break;
                     case WaitingGoal oldGoal:
                         newGoal = new WaitingGoal(oldGoal.CurrentState, oldGoal.Description, oldGoal.CurrentAmount, oldGoal.RequiredAmount);

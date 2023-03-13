@@ -52,12 +52,11 @@ public class QuestLog : MonoBehaviour
                 break;
 
             case Quest.State.Completed:
-                if (quest.HasRewards())
+                if (quest.NextQuestParams == null || quest.HasRewards())
                 {
                     AddToFinishedQuests(quest);
                 }
-                else if (quest.NextQuestParams != null)
-                        QuestHandler.AddQuest(quest.NextQuestParams);
+                else QuestHandler.AddQuest(quest.NextQuestParams);
                 break;
 
             case Quest.State.Failed:

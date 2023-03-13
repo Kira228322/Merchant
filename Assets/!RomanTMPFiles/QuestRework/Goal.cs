@@ -19,7 +19,7 @@ public class Goal
         set
         {
             _currentState = value;
-            GoalChangedState?.Invoke(this);
+            GoalUpdated?.Invoke(this);
         }
     }
     public string Description;
@@ -28,7 +28,6 @@ public class Goal
 
 
     public event UnityAction<Goal> GoalUpdated;
-    public event UnityAction<Goal> GoalChangedState;
 
     public Goal(State currentState, string description, int currentAmount, int requiredAmount)
     {
@@ -65,7 +64,6 @@ public class Goal
                 CurrentState = State.Active;
             }
         }
-        UpdateGoal();
     }
 
     public void Fail()
@@ -75,10 +73,5 @@ public class Goal
 
     public virtual void Initialize() { }
     public virtual void Deinitialize() { }
-
-    public static T CreateInstance<T>() where T : Goal // метод-фабрика для создания наследуемых Goal
-    {
-        return Activator.CreateInstance(typeof(T)) as T;
-    }
 
 }

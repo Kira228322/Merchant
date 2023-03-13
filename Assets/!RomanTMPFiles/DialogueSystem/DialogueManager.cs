@@ -44,21 +44,26 @@ public class DialogueManager : MonoBehaviour
         //Но не нашел пути, как забиндить эти функции отдельно в начале и возможно ли это вообще
         //Поэтому придётся биндить каждый раз при заходе в диалог
 
-        _currentStory.BindExternalFunction("check_if_quest_active", (string param) =>
-        { 
-            return QuestHandler.IsQuestActive(param); 
-        });
-        _currentStory.BindExternalFunction("check_if_quest_completed", (string param) =>
+        _currentStory.BindExternalFunction("get_quest_state", (string questSummary) =>
         {
-           return QuestHandler.IsQuestCompleted(param);
+           Quest quest = QuestHandler.GetQuestBySummary(questSummary);
+            if (quest == null)
+            {
+                return "null"; 
+            }
+            return quest.CurrentState.ToString();
         });
-        _currentStory.BindExternalFunction("set_color", (string param) =>
+        _currentStory.BindExternalFunction("check_if_quest_has_been_taken", (string questSummary) =>
         {
-            SetTextColor(param);
+            return QuestHandler.HasQuestBeenTaken(questSummary);
         });
-        _currentStory.BindExternalFunction("add_quest", (string param) =>
+        _currentStory.BindExternalFunction("set_color", (string colorName) =>
         {
-            //TODO
+            SetTextColor(colorName);
+        });
+        _currentStory.BindExternalFunction("add_quest", (string questSummary) =>
+        {
+            QuestHandler.AddQuest(PregenQuestDatabase.GetQuestParams(questSummary));
         });
         _currentStory.BindExternalFunction("get_affinity_here", () =>
         {
@@ -66,7 +71,7 @@ public class DialogueManager : MonoBehaviour
         });
         _currentStory.BindExternalFunction("get_affinity_by_name", (string npcName) =>
         {
-            return NPCDatabase.GetNPCData(npcName);
+            return NPCDatabase.GetNPCData(npcName).Affinity;
         });
         _currentStory.BindExternalFunction("add_affinity", (string npcName, string amount) =>
         {
@@ -80,6 +85,10 @@ public class DialogueManager : MonoBehaviour
         _currentStory.BindExternalFunction("invoke_dialogue_event", (string param) =>
         {
             TalkedToNPCAboutSomething?.Invoke(_currentNPC, param);
+        });
+        _currentStory.BindExternalFunction("debug_log", (string param) =>
+        {
+            Debug.Log(param);
         });
 
     }

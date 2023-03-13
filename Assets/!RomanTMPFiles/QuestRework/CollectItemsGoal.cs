@@ -1,24 +1,26 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-[System.Serializable]
+[Serializable]
 public class CollectItemsGoal : Goal
 {
 
     //Нельзя зафейлить, просто сбор предметов
-
+    [NonSerialized] public Item RequiredItem;
     public string RequiredItemName;
-    public Item RequiredItem;
+
     public CollectItemsGoal(State currentState, string description, int currentAmount, int requiredAmount, string requiredItemName) : base(currentState, description, currentAmount, requiredAmount)
     {
         RequiredItemName = requiredItemName;
-        RequiredItem = ItemDatabase.GetItem(requiredItemName);
     }
 
     public override void Initialize()
     {
+        RequiredItem = ItemDatabase.GetItem(RequiredItemName);
+
         //Надо найти, сколько таких вещей уже есть у игрока в инвентаре
         foreach (InventoryItem item in Player.Instance.Inventory.ItemList)
         {
