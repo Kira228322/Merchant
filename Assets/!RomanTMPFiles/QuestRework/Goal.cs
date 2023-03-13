@@ -73,5 +73,5 @@ public class Goal
 
     public virtual void Initialize() { }
     public virtual void Deinitialize() { }
-
+    
 }

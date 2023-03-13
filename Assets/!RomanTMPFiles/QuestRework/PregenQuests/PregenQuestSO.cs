@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -14,8 +15,8 @@ public class PregenQuestSO : ScriptableObject
     [TextArea(2,5)] public string Description;
     [HideInInspector] public int MinExperienceReward; 
     [HideInInspector] public int MaxExperienceReward; 
-    [HideInInspector]public int MinMoneyReward;
-    [HideInInspector]public int MaxMoneyReward;
+    [HideInInspector] public int MinMoneyReward;
+    [HideInInspector] public int MaxMoneyReward;
 
    /* 
     private int _experienceReward;
@@ -23,9 +24,9 @@ public class PregenQuestSO : ScriptableObject
    */
 
    public PregenQuestSO NextQuest;
-    public List<CompactedGoal> goals;
+   [HideInInspector] public List<CompactedGoal> goals;
     
-   [HideInInspector]public List<ItemReward> ItemRewards = new();
+   [HideInInspector] public List<ItemReward> ItemRewards = new();
 
    
     /*private int AssignRandomValue(string line)
@@ -107,8 +108,11 @@ public class PregenQuestSO : ScriptableObject
         public Goal.State goalState;
         public string description;
         public int currentAmount;
-        public int requiredAmount;
-
+        public int requiredAmount; // TODO это поле замени на Random.Range(minRequiredAmount, maxRequiredAmount +1)
+        
+        public bool randomAmount; // Боюсь это необходимо
+        public int minRequiredAmount;
+        public int maxRequiredAmount;
         //Опциональные поля
 
         public int RequiredIDofNPC;
@@ -117,6 +121,7 @@ public class PregenQuestSO : ScriptableObject
 
         public string RequiredItemName;
     }
+
 
     [CustomEditor(typeof(PregenQuestSO))]
     class EditorPregenQuest : Editor
@@ -132,8 +137,99 @@ public class PregenQuestSO : ScriptableObject
         public override void OnInspectorGUI()
         {
             DrawDefaultInspector();
+            
+            GUILayout.Space(10);
+            
+            if (GUILayout.Button("Add goal"))
+                _quest.goals.Add(new CompactedGoal());
+
+
+            if (_quest.goals.Count > 0)
+            {
+                foreach (var goal in _quest.goals)
+                {
+                    GUILayout.Space(-1);
+                    EditorGUILayout.BeginVertical("box");
+
+                    EditorGUILayout.BeginHorizontal();
+                    
+                    if (GUILayout.Button("X", GUILayout.Height(17), GUILayout.Width(18)))
+                    {
+                        _quest.goals.Remove(goal);
+                        break;
+                    }
+                    GUILayout.Space(10);
+                    goal.goalType = (CompactedGoal.GoalType)EditorGUILayout.EnumPopup("Goal type", goal.goalType);
+                    EditorGUILayout.EndHorizontal();
+                    
+                    GUILayout.Space(5);
+                    
+                    EditorGUILayout.BeginHorizontal();
+                    goal.goalState = (Goal.State)EditorGUILayout.EnumPopup("Goal state", goal.goalState);
+                    EditorGUILayout.EndHorizontal();
+                    
+                    EditorGUILayout.BeginHorizontal();
+                    GUIStyle style = new GUIStyle(EditorStyles.textField);
+                    style.wordWrap = true;
+                    goal.description = EditorGUILayout.TextField("Description", goal.description, style, 
+                        GUILayout.ExpandHeight(true), GUILayout.MaxHeight(25));
+                    EditorGUILayout.EndHorizontal();
+                    
+                    EditorGUILayout.BeginHorizontal();
+                    goal.currentAmount = EditorGUILayout.IntField("currentAmount", goal.currentAmount);
+                    EditorGUILayout.EndHorizontal();
+                    
+                    EditorGUILayout.BeginHorizontal();
+                    GUILayout.Label("Required Amount: ");
+                    GUILayout.Label("Random", GUILayout.MaxWidth(50));
+                    goal.randomAmount = EditorGUILayout.Toggle(goal.randomAmount, GUILayout.MaxWidth(20));
+                    if (goal.randomAmount)
+                    {
+                        GUILayout.Label("min", GUILayout.MaxWidth(25));
+                        goal.minRequiredAmount =
+                            EditorGUILayout.IntField( goal.minRequiredAmount);
+                        GUILayout.Label("max", GUILayout.MaxWidth(29));
+                        goal.maxRequiredAmount =
+                            EditorGUILayout.IntField( goal.maxRequiredAmount);
+                    }
+                    else
+                    {
+                        GUILayout.Label("Amount", GUILayout.MaxWidth(50));
+                        goal.minRequiredAmount = EditorGUILayout.IntField( goal.minRequiredAmount);
+                        goal.maxRequiredAmount = goal.minRequiredAmount;
+                    }
+                    EditorGUILayout.EndHorizontal();
+
+                    switch (goal.goalType)
+                    {
+                        case CompactedGoal.GoalType.CollectItemsGoal:
+                            GUILayout.Space(10);
+                            EditorGUILayout.BeginHorizontal();
+                            goal.RequiredItemName = EditorGUILayout.TextField("Required item name", goal.RequiredItemName);
+                            EditorGUILayout.EndHorizontal();
+                            break;
+                        case CompactedGoal.GoalType.TalkToNPCGoal:
+                            GUILayout.Space(10);
+                            EditorGUILayout.BeginHorizontal();
+                            goal.RequiredIDofNPC = EditorGUILayout.IntField("Required ID of NPC", goal.RequiredIDofNPC);
+                            EditorGUILayout.EndHorizontal();
+                            
+                            EditorGUILayout.BeginHorizontal();
+                            goal.RequiredLine = EditorGUILayout.TextField("Required line", goal.RequiredLine);
+                            EditorGUILayout.EndHorizontal();
+                            
+                            EditorGUILayout.BeginHorizontal();
+                            goal.FailingLine = EditorGUILayout.TextField("Failing line", goal.FailingLine);
+                            EditorGUILayout.EndHorizontal();
+                            break;
+                    }
+                    
+                    EditorGUILayout.EndVertical();
+                }
+            }
+            
             GUILayout.Space(5);
-            EditorGUILayout.LabelField("Вознаграждение");
+            EditorGUILayout.LabelField("Reward", EditorStyles.boldLabel);
             GUILayout.Space(5);
             randomExp = GUILayout.Toggle(randomExp, "Random experience");
             
@@ -169,7 +265,7 @@ public class PregenQuestSO : ScriptableObject
             
             
                 
-            GUILayout.Space(20);
+            GUILayout.Space(10);
             
             if (GUILayout.Button("Add item reward"))
                 _quest.ItemRewards.Add(new ItemReward("", 0, 0));
