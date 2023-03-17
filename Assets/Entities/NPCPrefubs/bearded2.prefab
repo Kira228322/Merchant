@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 6989498611158667244}
   - component: {fileID: 7140446826998139333}
   - component: {fileID: 6755210988152443057}
-  m_Layer: 0
+  - component: {fileID: -6260726009480721979}
+  m_Layer: 8
   m_Name: bearded2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -154,3 +155,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.88461536, y: 1.5769231}
   m_EdgeRadius: 0
+--- !u!114 &-6260726009480721979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6989498611158667245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47d262c5b13e0e04dbc7e3189c240553, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _groundAndNodeMask:
+    serializedVersion: 2
+    m_Bits: 640

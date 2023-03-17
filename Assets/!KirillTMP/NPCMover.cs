@@ -17,7 +17,6 @@ public class NPCMover : MonoBehaviour
     private float _moveDistanceAndDirection;
     private Vector3 _startPosition;
     private Coroutine _currentCoroutine;
-    private GameObject _targetNode;
     
     private Rigidbody2D _rigidbody;
     private Collider2D _collider;
@@ -30,26 +29,19 @@ public class NPCMover : MonoBehaviour
     private void Update()
     {
         if (_currentCoroutine == null)
+        {
             _currentCoroutine = StartCoroutine(Move());
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.layer == 9 && col.gameObject != _targetNode) // Node
+        if (col.gameObject.layer == 9 ) // Node
         {
             if (_currentCoroutine != null)
                 StopCoroutine(_currentCoroutine);
-            _targetNode = col.gameObject.GetComponent<Node>().AnotherNode.gameObject;
-            StartCoroutine(RefreshTargetNode());
             _currentCoroutine = StartCoroutine(MoveByNode(col.gameObject.GetComponent<Node>().AnotherNode.position));
         }
-    }
-
-    private IEnumerator RefreshTargetNode()
-    {
-        WaitForSeconds cd = new WaitForSeconds(20);
-        yield return cd;
-        _targetNode = null;
     }
 
     private void ChooseMoveRangeAndDirection()
@@ -89,14 +81,30 @@ public class NPCMover : MonoBehaviour
     {
         _collider.enabled = false;
         _startPosition = transform.position;
+        _moveDistanceAndDirection = Random.Range(0.8f, 1.2f) * Math.Sign(targetPosition.x - _startPosition.x); 
+        // Random.Range(0.8f, 1.2f) - кастыль, надежда, что после ступенек не будет никакого барьера (По логике
+        // если мы ставим ступеньки, то они куда-то обязательно должны вести, и сразу же тупика быть не должно)
+        // Если сильно надо будет -- переделаю, так экономнее выходит для производительности
         WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
         
-        float countOfFrames = (targetPosition-_startPosition).magnitude / (_speed * Time.fixedDeltaTime);
+        float countOfFrames = (targetPosition-_startPosition).magnitude / (_speed/1.33f * Time.fixedDeltaTime);
         
         for (float i = 0; i < countOfFrames; i++)
         {
             transform.position = Vector3.Lerp(_startPosition, targetPosition, i/countOfFrames);
-            yield return  waitForFixedUpdate;
+            yield return  waitForFixedUpdate; // по ступенькам поднимаемся
+        }
+        
+        transform.position = targetPosition;
+        
+        _startPosition = transform.position;
+        targetPosition = new Vector3(_startPosition.x + _moveDistanceAndDirection, _startPosition.y);
+
+        countOfFrames = Math.Abs(_moveDistanceAndDirection / (_speed * Time.fixedDeltaTime));
+        for (float i = 0; i < countOfFrames; i++)
+        {
+            transform.position = Vector3.Lerp(_startPosition, targetPosition, i/countOfFrames);
+            yield return  waitForFixedUpdate; // а потом идем дальше
         }
 
         transform.position = targetPosition;
