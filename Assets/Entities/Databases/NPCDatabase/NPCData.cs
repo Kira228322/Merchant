@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "newNPC", menuName = "NPCs/NPC")]
-public class NPCData : ScriptableObject
+public class NPCData : ScriptableObject, IResetOnExitPlaymode, ISaveable<NpcSaveData>
 {
     public string Name;
 
     public int ID;
 
-    [Range(-100, 100)] [SerializeField] private int _affinity;
+    [Range(-100, 100)] [SerializeField] private int _baseAffinity;
+
+    private int _affinity;
 
     public int Affinity
     {
@@ -28,4 +30,24 @@ public class NPCData : ScriptableObject
     }
 
     public TextAsset InkJSON;
+
+    private void OnEnable()
+    {
+        Affinity = _baseAffinity;
+    }
+    public void ResetOnExitPlaymode()
+    {
+        Affinity = _baseAffinity;
+    }
+
+    public NpcSaveData SaveData()
+    {
+        NpcSaveData saveData = new(Affinity);
+        return saveData;
+    }
+
+    public void LoadData(NpcSaveData data)
+    {
+        Affinity = data.Affinity;
+    }
 }

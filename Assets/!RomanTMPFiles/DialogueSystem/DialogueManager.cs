@@ -81,6 +81,7 @@ public class DialogueManager : MonoBehaviour
         {
             //Очень жаль, но Ink не поддерживает перегрузку external функции, так бы просто сделал add_affinity(string amount)
             _currentNPC.NpcData.Affinity += int.Parse(amount);
+            Debug.Log(_currentNPC.NpcData.Affinity);
         });
         _currentStory.BindExternalFunction("invoke_dialogue_event", (string param) =>
         {
