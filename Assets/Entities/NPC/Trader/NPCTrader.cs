@@ -28,18 +28,19 @@ public class NPCTrader : NPC
     
     private List<TraderType> _traderTypes = new();
 
+    [SerializeField] private NpcTraderData _npcTraderData;
     [HideInInspector] public List<TraderGood> Goods = new();
     [HideInInspector] public List<TraderGood> AdditiveGoods = new();
     [HideInInspector] public List<TraderBuyCoefficient> BuyCoefficients = new(); //“аких BuyCoefficients будет столько, сколько всего есть Item.ItemType (см.ниже)
 
     protected void Start()
     {
-        SetNPCFromData(NpcData);
+        SetNPCFromData(_npcTraderData);
         SetTraderStats();
     }
-    public void SetNPCFromData(NPCData npcData)
+    public void SetNPCFromData(NpcTraderData npcTraderData)
     {
-        TraderData traderData = npcData as TraderData;
+        NpcTraderData traderData = npcTraderData;
         _traderTypes = traderData.TraderTypes;
         Goods = traderData.Goods;
     }
@@ -202,5 +203,18 @@ public class NPCTrader : NPC
                 break;
             }
         }
+    }
+}
+
+[CustomEditor(typeof(NPCTrader))]
+public class DerivedClassEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        serializedObject.FindProperty("NpcData").isExpanded = false;
+
+        DrawPropertiesExcluding(serializedObject, "NpcData");
+
+        serializedObject.ApplyModifiedProperties();
     }
 }

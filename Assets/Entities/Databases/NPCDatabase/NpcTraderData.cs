@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [CreateAssetMenu(fileName = "newTraderData", menuName = "NPCs/TraderData")]
-public class TraderData : NPCData
+public class NpcTraderData : NPCData
 {
     public List<TraderType> TraderTypes;
     public int RestockCycle;
@@ -14,13 +14,13 @@ public class TraderData : NPCData
     [HideInInspector] public List<NPCTrader.TraderGood> Goods;
 
     
-    [CustomEditor(typeof(TraderData))]
+    [CustomEditor(typeof(NpcTraderData))]
     class EditorTrader : Editor
     {
-        private TraderData _traderData;
+        private NpcTraderData _traderData;
         private void OnEnable()
         {
-            _traderData = (TraderData)target;
+            _traderData = (NpcTraderData)target;
         }
 
         public override void OnInspectorGUI()

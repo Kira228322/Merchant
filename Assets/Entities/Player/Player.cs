@@ -109,8 +109,7 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
 
     public PlayerData SaveData()
     {
-        PlayerData saveData = new(this);
-        return saveData;
+        return new PlayerData(this);
     }
 
     public void LoadData(PlayerData saveData)
