@@ -22,27 +22,37 @@ public class NPCTrader : NPC
     {
         public Item.ItemType itemType;
         public float Coefficient;
-        public int CountToBuy;
+        private int _countToBuy;
+        public int CountToBuy
+        {
+            get => _countToBuy;
+            set
+            {
+                _countToBuy = value;
+                
+            }
+        }
         public int DefaultCountToBuy; // Главное, чтобы set этого значения выполнялся 1 раз в самом начале игры
     }
     
     private List<TraderType> _traderTypes = new();
+    
 
-    [SerializeField] private NpcTraderData _npcTraderData;
-    [HideInInspector] public List<TraderGood> Goods = new();
-    [HideInInspector] public List<TraderGood> AdditiveGoods = new();
-    [HideInInspector] public List<TraderBuyCoefficient> BuyCoefficients = new(); //Таких BuyCoefficients будет столько, сколько всего есть Item.ItemType (см.ниже)
+    [SerializeField] public NpcTraderData _npcTraderData;
+    public List<TraderGood> Goods => _npcTraderData.Goods;
+    public List<TraderGood> AdditiveGoods => _npcTraderData.AdditiveGoods;
+    public List<TraderBuyCoefficient> BuyCoefficients => _npcTraderData.BuyCoefficients; //Таких BuyCoefficients будет столько, сколько всего есть Item.ItemType (см.ниже)
 
     protected void Start()
     {
-        SetNPCFromData(_npcTraderData);
-        SetTraderStats();
+        SetNPCFromData(_npcTraderData); 
+        if (_npcTraderData.BuyCoefficients.Count == 0)
+            SetTraderStats();
     }
     public void SetNPCFromData(NpcTraderData npcTraderData)
     {
         NpcTraderData traderData = npcTraderData;
         _traderTypes = traderData.TraderTypes;
-        Goods = traderData.Goods;
     }
     private void SetTraderStats()
     {
@@ -92,7 +102,24 @@ public class NPCTrader : NPC
         }
     }
 
-    public void Restock()
+    public void OpenTradeWindow()
+    {
+        if (_npcTraderData.LastRestock + _npcTraderData.RestockCycle >= GameTime.CurrentDay)
+        {
+            int count = (GameTime.CurrentDay - _npcTraderData.LastRestock) / _npcTraderData.RestockCycle;
+            
+            if (count > 4)
+                count = 4;
+            
+            for (int i = 0; i < count; i++)
+                Restock();
+            
+            _npcTraderData.LastRestock = GameTime.CurrentDay; 
+        }
+        TradeManager.Instance.OpenTradeWindow(this);
+    }
+    
+    private void Restock()
     {
         RestockMainGoods();        
         RestockNewItems();
@@ -107,6 +134,10 @@ public class NPCTrader : NPC
             if (buyCoefficient.CountToBuy > buyCoefficient.DefaultCountToBuy)
                 buyCoefficient.CountToBuy = buyCoefficient.DefaultCountToBuy;
         }
+        
+        _npcTraderData.BuyCoefficients.Clear();
+        foreach (var buyCoefficient in BuyCoefficients)
+            _npcTraderData.BuyCoefficients.Add(buyCoefficient);
     }
 
     private void RestockNewItems()
@@ -207,7 +238,7 @@ public class NPCTrader : NPC
 }
 
 [CustomEditor(typeof(NPCTrader))]
-public class DerivedClassEditor : Editor
+public class NpcTraderDataEditor : Editor
 {
     public override void OnInspectorGUI()
     {

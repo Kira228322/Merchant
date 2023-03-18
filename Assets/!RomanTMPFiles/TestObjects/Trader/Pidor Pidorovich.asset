@@ -14,31 +14,54 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Pidor Pidorovich
   ID: 69
-  Affinity: 20
+  _baseAffinity: 0
   InkJSON: {fileID: 4900000, guid: 42ec4a2723d8b42478233eaff171235e, type: 3}
   TraderTypes:
   - {fileID: 11400000, guid: e6572bc3b8ee63a4b8071ae6ce8579b7, type: 2}
   - {fileID: 11400000, guid: 997f1667faefd604aad534ee42560049, type: 2}
-  RestockCycle: 0
+  RestockCycle: 12
   LastRestock: 0
   Goods:
   - Good: {fileID: 11400000, guid: be69300bcd634f345948760c733bad4a, type: 2}
     MaxCount: 2
-    Count: 0
+    Count: 2
     CurrentPrice: 64
   - Good: {fileID: 11400000, guid: 47b264f5ad831994ca7460ce0d509778, type: 2}
     MaxCount: 99
-    Count: 95
+    Count: 84
     CurrentPrice: 51
   - Good: {fileID: 11400000, guid: f9e205c939de2d74e9eb31fe1f3df27a, type: 2}
     MaxCount: 4
-    Count: 3
+    Count: 4
     CurrentPrice: 60
   - Good: {fileID: 11400000, guid: 934d977f079cae542b316dc9cde310c2, type: 2}
     MaxCount: 60
-    Count: 38
+    Count: 60
     CurrentPrice: 1337
   - Good: {fileID: 11400000, guid: 67ef3e7eb30b0f04a908c358306003d6, type: 2}
     MaxCount: 11
     Count: 11
     CurrentPrice: 5
+  AdditiveGoods: []
+  BuyCoefficients:
+  - itemType: 0
+    Coefficient: 1
+    DefaultCountToBuy: 21
+  - itemType: 1
+    Coefficient: 0
+    DefaultCountToBuy: 0
+  - itemType: 2
+    Coefficient: 0.8
+    DefaultCountToBuy: 2
+  - itemType: 3
+    Coefficient: 1
+    DefaultCountToBuy: 11
+  - itemType: 4
+    Coefficient: 1
+    DefaultCountToBuy: 11
+  - itemType: 5
+    Coefficient: 0
+    DefaultCountToBuy: 0
+  - itemType: 6
+    Coefficient: 0.55
+    DefaultCountToBuy: 3

@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "newNPC", menuName = "NPCs/NPC")]
-public class NPCData : ScriptableObject, IResetOnExitPlaymode, ISaveable<NpcSaveData>
+public class NPCData : ScriptableObject, IResetOnExitPlaymode
 {
     public string Name;
 
@@ -40,13 +38,13 @@ public class NPCData : ScriptableObject, IResetOnExitPlaymode, ISaveable<NpcSave
         Affinity = _baseAffinity;
     }
 
-    public NpcSaveData SaveData()
+    public NpcSaveData SaveNpcData()
     {
-        NpcSaveData saveData = new(Affinity);
+        NpcSaveData saveData = new(Affinity, ID);
         return saveData;
     }
 
-    public void LoadData(NpcSaveData data)
+    public void LoadNpcData(NpcSaveData data)
     {
         Affinity = data.Affinity;
     }

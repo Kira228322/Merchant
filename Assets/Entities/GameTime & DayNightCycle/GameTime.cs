@@ -7,7 +7,7 @@ public static class GameTime
     private static Timeflow _timeflow;
     private static float _timeScaleInTravel = 15; 
     public static float TimeScaleInTravel => _timeScaleInTravel; 
-    private static int _days = 1;
+    private static int _currentDay = 1;
     private static int _hours = 0;
     private static int _minutes = 0;
 
@@ -15,12 +15,12 @@ public static class GameTime
     public static event UnityAction MinuteChanged;
     public static event UnityAction DayChanged;
 
-    public static int Days
+    public static int CurrentDay
     {
-        get => _days;
+        get => _currentDay;
         set
         {
-            _days = value;
+            _currentDay = value;
             DayChanged?.Invoke();
         }
     }
@@ -33,7 +33,7 @@ public static class GameTime
             if (_hours >= 24) 
             {
                 _hours = 0;
-                Days++;
+                CurrentDay++;
             }
             HourChanged?.Invoke();
         }
@@ -55,7 +55,7 @@ public static class GameTime
 
     public static void TimeSet(int days, int hours, int minutes)
     {
-        Days = days;
+        CurrentDay = days;
         Hours = hours;
         Minutes = minutes;
     }

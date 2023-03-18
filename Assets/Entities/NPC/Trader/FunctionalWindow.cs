@@ -37,7 +37,9 @@ public class FunctionalWindow : MonoBehaviour
 
     public void OnTradeButtonClick()
     {
-        TradeManager.Instance.OpenTradeWindow((NPCTrader)_NPC);
+        NPCTrader trader = (NPCTrader)_NPC;
+        trader.OpenTradeWindow();
+        
         Destroy(gameObject);
     }
 

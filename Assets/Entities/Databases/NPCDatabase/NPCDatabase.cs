@@ -54,7 +54,11 @@ public class NPCDatabase : MonoBehaviour, ISaveable<NpcDatabaseSaveData>
     {
         NpcDatabaseSaveData saveData = new();
 
-        //TODO 18.03
+        foreach (NPCData npcData in NpcDatabaseSO.NPCList)
+        {
+            NpcSaveData npcSaveData = npcData.SaveNpcData();
+            saveData.savedNpcDatas.Add(npcSaveData);
+        }
 
         return saveData;
 
@@ -62,6 +66,15 @@ public class NPCDatabase : MonoBehaviour, ISaveable<NpcDatabaseSaveData>
 
     public void LoadData(NpcDatabaseSaveData data)
     {
-        //TODO 18.03
+        foreach (NPCData npcData in NpcDatabaseSO.NPCList)
+        {
+            foreach (NpcSaveData savedData in data.savedNpcDatas)
+            {
+                if (npcData.ID == savedData.ID)
+                {
+                    npcData.LoadNpcData(savedData);
+                }
+            }
+        }
     }
 }

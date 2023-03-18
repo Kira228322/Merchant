@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
@@ -12,8 +13,23 @@ public class NpcTraderData : NPCData
     public int RestockCycle;
     public int LastRestock;
     [HideInInspector] public List<NPCTrader.TraderGood> Goods;
+    [HideInInspector] public List<NPCTrader.TraderGood> AdditiveGoods = new ();
+    [HideInInspector] public List<NPCTrader.TraderBuyCoefficient> BuyCoefficients = new ();
 
-    
+    public NpcSaveDataTrader SaveTraderData()
+    {
+        return new(Affinity, ID, LastRestock, Goods, AdditiveGoods, BuyCoefficients);
+    }
+
+    public void LoadTraderData(NpcSaveDataTrader data)
+    {
+        Affinity = data.Affinity;
+        LastRestock = data.LastRestock;
+        Goods = data.Goods;
+        AdditiveGoods = data.AdditiveGoods;
+        BuyCoefficients = data.BuyCoefficients;
+    }
+
     [CustomEditor(typeof(NpcTraderData))]
     class EditorTrader : Editor
     {
