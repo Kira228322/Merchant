@@ -11,7 +11,7 @@ public class WeatherController : MonoBehaviour
     private StrengthOfRain _strengthOfRain;
     
     private int _minDelayToNextRainfall = 3;
-    private int _maxDelayToNextRainfall = 10;
+    private int _maxDelayToNextRainfall = 9;
     
     private int _durationOfRainfallInHours;
 
@@ -45,15 +45,15 @@ public class WeatherController : MonoBehaviour
         switch (_strengthOfRain)
         {
             case StrengthOfRain.MushroomRain:
-                SetRainParams(50, 5.8f, 0.12f);
+                SetRainParams(35, 5.8f, 0.11f);
                 _durationOfRainfallInHours = Random.Range(3, 12);
                 break;
             case StrengthOfRain.OrdinaryRain:
-                SetRainParams(115, 6.4f, 0.14f);
+                SetRainParams(80, 6.4f, 0.14f);
                 _durationOfRainfallInHours = Random.Range(4, 15);
                 break;
             case StrengthOfRain.Downpour:
-                SetRainParams(210, 7.3f, 0.15f);
+                SetRainParams(145, 7.3f, 0.16f);
                 _durationOfRainfallInHours = Random.Range(3, 8);
                 break;
         }
