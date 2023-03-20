@@ -89,8 +89,8 @@ public class NPCTrader : NPC
         {
             int count = (GameTime.CurrentDay - _npcTraderData.LastRestock) / _npcTraderData.RestockCycle;
             
-            if (count > 4)
-                count = 4;
+            if (count > 3)
+                count = 3;
             
             for (int i = 0; i < count; i++)
                 Restock();
@@ -131,7 +131,7 @@ public class NPCTrader : NPC
             Item newItem;
             bool reallyNew = true;
 
-            if (Random.Range(0, 6) == 0)
+            if (Random.Range(0, 5) == 0)
                 isMainGood = false; // не мейн тип шмотки торговца 
             else
                 isMainGood = true; // мейн тип шмотки торговца
