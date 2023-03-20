@@ -14,11 +14,35 @@ public class NPCTrader : NPC
     {
         public Item Good;
         public int MaxCount;
-        [HideInInspector] public int Count;
+        public int CurrentCount;
         public int CurrentPrice;
+        public TraderGood(string itemName, int maxCount, int count, int currentPrice)
+        {
+            Good = ItemDatabase.GetItem(itemName);
+            MaxCount = maxCount;
+            CurrentCount = count;
+            CurrentPrice = currentPrice;
+        }
+        public TraderGood(NpcTraderSaveData.SavedTraderGood savedTraderGood)
+        {
+            Good = ItemDatabase.GetItem(savedTraderGood.nameOfGood);
+            CurrentCount = savedTraderGood.currentCount;
+            CurrentPrice = savedTraderGood.currentPrice;
+        }
+        public TraderGood(TraderGood original)
+        {
+            Good = original.Good;
+            MaxCount = original.MaxCount;
+            CurrentCount = original.CurrentCount;
+            CurrentPrice = original.CurrentPrice;
+        }
+        public TraderGood()
+        {
+
+        }
     }
     [Serializable]
-    public class TraderBuyCoefficient
+    public class BuyCoefficient
     {
         public Item.ItemType itemType;
         public float Coefficient;
@@ -33,75 +57,32 @@ public class NPCTrader : NPC
             }
         }
         public int DefaultCountToBuy; // Главное, чтобы set этого значения выполнялся 1 раз в самом начале игры
+
+        public BuyCoefficient(BuyCoefficient original)
+        {
+            itemType = original.itemType;
+            Coefficient = original.Coefficient;
+            CountToBuy = original.CountToBuy;
+            DefaultCountToBuy = original.DefaultCountToBuy;
+        }
+        public BuyCoefficient(TraderType.TraderGoodType traderGoodType)
+        {
+            itemType = traderGoodType.ItemType;
+            Coefficient = traderGoodType.Coefficient;
+            CountToBuy = traderGoodType.CountToBuy;
+            DefaultCountToBuy = traderGoodType.CountToBuy;
+        }
+        public BuyCoefficient()
+        {
+
+        }
     }
     
-    private List<TraderType> _traderTypes = new();
+    [SerializeField] private NpcTraderData _npcTraderData;
     
-
-    [SerializeField] public NpcTraderData _npcTraderData;
     public List<TraderGood> Goods => _npcTraderData.Goods;
     public List<TraderGood> AdditiveGoods => _npcTraderData.AdditiveGoods;
-    public List<TraderBuyCoefficient> BuyCoefficients => _npcTraderData.BuyCoefficients; //Таких BuyCoefficients будет столько, сколько всего есть Item.ItemType (см.ниже)
-
-    protected void Start()
-    {
-        SetNPCFromData(_npcTraderData); 
-        if (_npcTraderData.BuyCoefficients.Count == 0)
-            SetTraderStats();
-    }
-    public void SetNPCFromData(NpcTraderData npcTraderData)
-    {
-        NpcTraderData traderData = npcTraderData;
-        _traderTypes = traderData.TraderTypes;
-    }
-    private void SetTraderStats()
-    {
-        foreach (Item.ItemType itemType in Enum.GetValues(typeof(Item.ItemType)))
-        //Enum.GetValues(typeof(Item.ItemType)) возвращает все возможные значения Item.ItemType
-        //(если потом добавим новые ItemType, сюда не придется возвращаться)
-        {
-            TraderBuyCoefficient traderBuyCoefficient = new();
-            traderBuyCoefficient.itemType = itemType;
-            traderBuyCoefficient.Coefficient = 0;
-            traderBuyCoefficient.CountToBuy = 0;
-            //Если мы не переприсвоим (т.е не найдем таких же типов айтемов среди назначенных типов торговцев, то они останутся 0, как и надо.)
-            BuyCoefficients.Add(traderBuyCoefficient);
-        }
-        //Таким образом мы создали столько BuyCoefficient, сколько у нас всего существует Item.ItemType.
-        //Теперь будем искать средние значения либо значения специализации
-        foreach (TraderBuyCoefficient traderBuyCoefficient in BuyCoefficients)
-        {
-
-            //найти все traderGoodType, у которых наличествует такой же itemType:
-            List<TraderType.TraderGoodType> acceptableTraderGoodTypes =
-            _traderTypes.SelectMany(traderType => traderType.TraderGoodTypes.Where
-            (traderGoodType => traderGoodType.ItemType == traderBuyCoefficient.itemType)).ToList();
-            //Этот Linq возвращает все TraderGoodType, которые
-            //имеют такой же ItemType как у нашего рассматриваемого traderBuyCoefficient
-
-            foreach (TraderType.TraderGoodType traderGoodType in acceptableTraderGoodTypes)
-            {
-                traderBuyCoefficient.CountToBuy += traderGoodType.CountToBuy;
-            }
-            foreach (TraderType.TraderGoodType traderGoodType in acceptableTraderGoodTypes)
-            {
-                if (traderGoodType.Coefficient == 1)
-                {
-                    traderBuyCoefficient.Coefficient = 1;
-                    break;
-                }
-                traderBuyCoefficient.Coefficient += traderGoodType.Coefficient;
-            }
-            if (acceptableTraderGoodTypes.Count != 0) //избежать деления на ноль, такие типы будут иметь Coefficient & CountToBuy == 0
-            {
-                traderBuyCoefficient.CountToBuy = (int)Math.Ceiling((float)traderBuyCoefficient.CountToBuy / acceptableTraderGoodTypes.Count);
-                traderBuyCoefficient.DefaultCountToBuy = traderBuyCoefficient.CountToBuy;
-                if (traderBuyCoefficient.Coefficient != 1)
-                    traderBuyCoefficient.Coefficient = (float)Math.Round(traderBuyCoefficient.Coefficient / acceptableTraderGoodTypes.Count, 2);
-            }
-        }
-    }
-
+    public List<BuyCoefficient> BuyCoefficients => _npcTraderData.BuyCoefficients; //Таких BuyCoefficients будет столько, сколько всего есть Item.ItemType (см.ниже)
     public void OpenTradeWindow()
     {
         if (_npcTraderData.LastRestock + _npcTraderData.RestockCycle >= GameTime.CurrentDay)
@@ -134,10 +115,6 @@ public class NPCTrader : NPC
             if (buyCoefficient.CountToBuy > buyCoefficient.DefaultCountToBuy)
                 buyCoefficient.CountToBuy = buyCoefficient.DefaultCountToBuy;
         }
-        
-        _npcTraderData.BuyCoefficients.Clear();
-        foreach (var buyCoefficient in BuyCoefficients)
-            _npcTraderData.BuyCoefficients.Add(buyCoefficient);
     }
 
     private void RestockNewItems()
@@ -149,7 +126,7 @@ public class NPCTrader : NPC
             // дополнительную шмотку у торговца
         for (int i = 0; i < count; i++)
         {
-            TraderBuyCoefficient traderBuyCoefficient;
+            BuyCoefficient traderBuyCoefficient;
             bool isMainGood;
             Item newItem;
             bool reallyNew = true;
@@ -174,7 +151,7 @@ public class NPCTrader : NPC
                         TraderGood newGood = new()
                         {
                             Good = newItem,
-                            Count = Random.Range(1, 3)
+                            CurrentCount = Random.Range(1, 3)
                         };
 
                         // новый предмет будет продаваться либо много дешевле, либо много дороже средней цены
@@ -205,23 +182,23 @@ public class NPCTrader : NPC
                     if (Random.Range(0, 101) <= 50 + Player.Instance.Statistics.TotalDiplomacy)//50% шанс, что будет ресток этой шмотки
                     {
                         if (traderGood.MaxCount == 1)
-                            traderGood.Count++;
+                            traderGood.CurrentCount++;
                         else
-                            traderGood.Count += Random.Range(1, traderGood.MaxCount);
+                            traderGood.CurrentCount += Random.Range(1, traderGood.MaxCount);
                     }
                     break;
 
                 case int n when n >= 5 && n <= 19: // предметы средней средности
-                    traderGood.Count += Random.Range(traderGood.MaxCount / 3, traderGood.MaxCount / 2 + 1);
+                    traderGood.CurrentCount += Random.Range(traderGood.MaxCount / 3, traderGood.MaxCount / 2 + 1);
                     break;
 
                 case int n when n >= 20: // товары, которые торговец поставляет массово
-                    traderGood.Count += Random.Range(traderGood.MaxCount * 3 / 5, traderGood.MaxCount * 3 / 4 + 2);
+                    traderGood.CurrentCount += Random.Range(traderGood.MaxCount * 3 / 5, traderGood.MaxCount * 3 / 4 + 2);
                     break;
             }
 
-            if (traderGood.Count > traderGood.MaxCount)
-                traderGood.Count = traderGood.MaxCount;
+            if (traderGood.CurrentCount > traderGood.MaxCount)
+                traderGood.CurrentCount = traderGood.MaxCount;
         }
     }
     public void SellItem(Item item)
@@ -230,7 +207,7 @@ public class NPCTrader : NPC
         {
             if (item == traderGood.Good)
             {
-                traderGood.Count--;
+                traderGood.CurrentCount--;
                 break;
             }
         }

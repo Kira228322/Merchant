@@ -1,13 +1,13 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "newNPC", menuName = "NPCs/NPC")]
-public class NPCData : ScriptableObject, IResetOnExitPlaymode
+public class NPCData : ScriptableObject, IResetOnExitPlaymode, ISaveable<NpcSaveData>
 {
     public string Name;
 
     public int ID;
 
-    [Range(-100, 100)] [SerializeField] private int _baseAffinity;
+    [Range(-100, 100)] [SerializeField] protected int _baseAffinity;
 
     private int _affinity;
 
@@ -38,13 +38,13 @@ public class NPCData : ScriptableObject, IResetOnExitPlaymode
         Affinity = _baseAffinity;
     }
 
-    public NpcSaveData SaveNpcData()
+    public NpcSaveData SaveData()
     {
         NpcSaveData saveData = new(Affinity, ID);
         return saveData;
     }
 
-    public void LoadNpcData(NpcSaveData data)
+    public void LoadData(NpcSaveData data)
     {
         Affinity = data.Affinity;
     }

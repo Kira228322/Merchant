@@ -15,6 +15,17 @@ public class TraderType : ScriptableObject
         public Item.ItemType ItemType;
         public float Coefficient;
         public int CountToBuy;
+
+        public TraderGoodType(TraderGoodType original)
+        {
+            ItemType = original.ItemType;
+            Coefficient = original.Coefficient;
+            CountToBuy = original.CountToBuy;
+        }
+        public TraderGoodType()
+        {
+
+        }
     }
 
     [CustomEditor(typeof(TraderType))]

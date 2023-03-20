@@ -36,7 +36,7 @@ public class NPCDatabase : MonoBehaviour, ISaveable<NpcDatabaseSaveData>
 
         if (result != null) return result;
 
-        Debug.LogWarning("НПС с таким айди не существует!");
+        Debug.LogWarning("НПС с таким именем не существует!");
         return null;
     }
 
@@ -56,7 +56,15 @@ public class NPCDatabase : MonoBehaviour, ISaveable<NpcDatabaseSaveData>
 
         foreach (NPCData npcData in NpcDatabaseSO.NPCList)
         {
-            NpcSaveData npcSaveData = npcData.SaveNpcData();
+            NpcSaveData npcSaveData;
+            if (npcData is NpcTraderData traderData) //TODO switch для каждого типа сохраняемого NPC или Dictionary 
+            {
+                npcSaveData = ((ISaveable<NpcTraderSaveData>)traderData).SaveData();
+            }
+            else
+            {
+                npcSaveData = npcData.SaveData();
+            }
             saveData.savedNpcDatas.Add(npcSaveData);
         }
 
@@ -66,14 +74,24 @@ public class NPCDatabase : MonoBehaviour, ISaveable<NpcDatabaseSaveData>
 
     public void LoadData(NpcDatabaseSaveData data)
     {
-        foreach (NPCData npcData in NpcDatabaseSO.NPCList)
+        var npcDataAndSaveData = NpcDatabaseSO.NPCList.Join(data.savedNpcDatas,
+        npcData => npcData.ID, savedNpcData => savedNpcData.ID,
+        (npcData, savedNpcData) => new { npcData, savedNpcData });
+        //^^ This code first creates a variable called npcDataAndSaveData using the Join method to
+        // match the NPCData objects with their corresponding NpcSaveData objects based on the ID property.
+        // The result is an enumerable of anonymous types containing both the NPCData object and the
+        // matching NpcSaveData object.
+
+        foreach (var npcAndSaveData in npcDataAndSaveData)
         {
-            foreach (NpcSaveData savedData in data.savedNpcDatas)
+            Debug.Log(npcAndSaveData.savedNpcData.ID);
+            if (npcAndSaveData.npcData is NpcTraderData)
             {
-                if (npcData.ID == savedData.ID)
-                {
-                    npcData.LoadNpcData(savedData);
-                }
+                ((ISaveable<NpcTraderSaveData>)npcAndSaveData.npcData).LoadData((NpcTraderSaveData)npcAndSaveData.savedNpcData);
+            }
+            else
+            {
+                npcAndSaveData.npcData.LoadData(npcAndSaveData.savedNpcData);
             }
         }
     }

@@ -22,7 +22,7 @@ static class SOPlayModeReset
 
     static void ResetScriptableObjects(PlayModeStateChange change)
     {
-        if (change == PlayModeStateChange.ExitingEditMode)
+        if (change == PlayModeStateChange.ExitingPlayMode)
         {
             var assets = FindAssets<ScriptableObject>();
             foreach (ScriptableObject asset in assets)

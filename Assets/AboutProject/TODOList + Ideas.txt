@@ -1,11 +1,10 @@
 TODO Локальные задачи:
 
-Конкретно что надо:
-Правильно построить NpcSaveDataTrader и переписать NpcTrader так, чтобы значения, которые нужно сохранять, были в SO.
-То же самое для NpcWagonUpgrader, если там вообще-что то нужно сохранять (RestockCycle я полагаю)
-Например, NpcSaveDataTrader должна наследоваться от NpcSaveData. На основе этого нужно сделать NpcDatabaseSaveData
-И затем в NPCDatabase сделать методы SaveData(), LoadData()
+Попытаться *осторожно* разобраться с NPCTrader.BuyCoefficient.DefaultCountToBuy. 
+Как я понимаю, это нужно для рестока, значит надо убедиться, чтобы везде правильно заполнялось при конвертации из TraderGoodType
+Как сейчас обстоят дела - в TraderType.TraderGoodType вовсе нет поля DefaultCountToBuy.
 
+Проверить актуальность листа _baseAdditiveGoods там же
 
 Сделать правильный ресайз FunctionalWindow и её кнопок
 
