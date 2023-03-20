@@ -48,6 +48,8 @@ public class NPCTrader : NPC
         SetNPCFromData(_npcTraderData); 
         if (_npcTraderData.BuyCoefficients.Count == 0)
             SetTraderStats();
+        
+        Debug.Log(_npcTraderData.LastRestock + " " + _npcTraderData.RestockCycle);
     }
     public void SetNPCFromData(NpcTraderData npcTraderData)
     {
@@ -104,12 +106,14 @@ public class NPCTrader : NPC
 
     public void OpenTradeWindow()
     {
-        if (_npcTraderData.LastRestock + _npcTraderData.RestockCycle >= GameTime.CurrentDay)
+        if (_npcTraderData.LastRestock + _npcTraderData.RestockCycle <= GameTime.CurrentDay)
         {
             int count = (GameTime.CurrentDay - _npcTraderData.LastRestock) / _npcTraderData.RestockCycle;
             
-            if (count > 4)
-                count = 4;
+            Debug.Log(count + " " + GameTime.CurrentDay);
+            
+            if (count > 3)
+                count = 3;
             
             for (int i = 0; i < count; i++)
                 Restock();
@@ -154,7 +158,7 @@ public class NPCTrader : NPC
             Item newItem;
             bool reallyNew = true;
 
-            if (Random.Range(0, 6) == 0)
+            if (Random.Range(0, 5) == 0)
                 isMainGood = false; // не мейн тип шмотки торговца 
             else
                 isMainGood = true; // мейн тип шмотки торговца

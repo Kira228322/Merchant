@@ -45,18 +45,20 @@ public class WeatherController : MonoBehaviour
         switch (_strengthOfRain)
         {
             case StrengthOfRain.MushroomRain:
-                SetRainParams(35, 5.8f, 0.11f);
+                SetRainParams(35, 6.5f, 0.11f);
                 _durationOfRainfallInHours = Random.Range(3, 12);
                 break;
             case StrengthOfRain.OrdinaryRain:
-                SetRainParams(80, 6.4f, 0.14f);
+                SetRainParams(80, 7f, 0.14f);
                 _durationOfRainfallInHours = Random.Range(4, 15);
                 break;
             case StrengthOfRain.Downpour:
-                SetRainParams(145, 7.3f, 0.16f);
+                SetRainParams(145, 7.7f, 0.16f);
                 _durationOfRainfallInHours = Random.Range(3, 8);
                 break;
         }
+        
+        _rain.transform.rotation = Quaternion.Euler(0,0, -Random.Range(10, 16));
     }
 
     private void StopRain()
@@ -64,6 +66,7 @@ public class WeatherController : MonoBehaviour
         _rain.Stop();
         PredictNextRainfall();
         GameTime.DayChanged += CheckDayDelayToRainfall;
+        GameTime.HourChanged -= DecreaseDuration;
     }
 
     private void DecreaseDuration()

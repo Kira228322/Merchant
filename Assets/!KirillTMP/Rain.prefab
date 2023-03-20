@@ -106,7 +106,7 @@ ParticleSystem:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  moveWithTransform: 0
+  moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
   randomSeed: 0
@@ -223,7 +223,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.22726944, g: 0.5012978, b: 0.7924528, a: 0.64705884}
+      maxColor: {r: 0.17621928, g: 0.4345037, b: 0.7075472, a: 0.64705884}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -667,9 +667,9 @@ ParticleSystem:
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
     donutRadius: 0.2
-    m_Position: {x: 0, y: 10.54, z: 0}
+    m_Position: {x: -0.55, y: 10.99, z: 0}
     m_Rotation: {x: 90, y: 90, z: 0}
-    m_Scale: {x: 1, y: 28, z: 1}
+    m_Scale: {x: 1, y: 22, z: 1}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -2241,7 +2241,7 @@ ParticleSystem:
     y:
       serializedVersion: 2
       minMaxState: 0
-      scalar: -8
+      scalar: -9.81
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -4789,7 +4789,7 @@ ParticleSystemRenderer:
   m_MaxParticleSize: 0.5
   m_CameraVelocityScale: 0
   m_VelocityScale: 0
-  m_LengthScale: 7
+  m_LengthScale: 4.5
   m_SortingFudge: 0
   m_NormalDirection: 1
   m_ShadowBias: 0
