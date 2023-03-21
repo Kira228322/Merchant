@@ -4940,6 +4940,7 @@ GameObject:
   - component: {fileID: 4863355952554908546}
   - component: {fileID: 199215001}
   - component: {fileID: 363954616}
+  - component: {fileID: 3443198788194558967}
   m_Layer: 0
   m_Name: UsableWell
   m_TagString: Untagged
@@ -5032,6 +5033,8 @@ MonoBehaviour:
   _warningMessage: "\u0427\u0442\u043E\u0431\u044B \u0437\u0430\u0447\u0435\u0440\u043F\u043D\u0443\u0442\u044C
     \u0432\u043E\u0434\u0443 \u0438\u0437 \u043A\u043E\u043B\u043E\u0434\u0446\u0430
     \u043D\u0443\u0436\u043D\u0430 \u043F\u0443\u0441\u0442\u0430\u044F \u0431\u0443\u0442\u044B\u043B\u043A\u0430"
+  _cooldownHours: 6
+  _defaultSprite: {fileID: 21300000, guid: 83ed8af25e5f15448a8b291f6f0560c6, type: 3}
   _spriteAfterUse: {fileID: 21300066, guid: 7810966f0f690954c87305933cabf2b0, type: 3}
   _particleSystem: {fileID: 186989320}
 --- !u!61 &363954616
@@ -5060,3 +5063,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.71875, y: 2.84375}
   m_EdgeRadius: 0
+--- !u!114 &3443198788194558967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4863355952554908545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1db52ac90bd91ca4f9c82cb1de53e457, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _id: 6426eef1-c406-4621-b785-f7657904d479

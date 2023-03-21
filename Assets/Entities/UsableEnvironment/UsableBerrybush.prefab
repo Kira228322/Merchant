@@ -5201,6 +5201,7 @@ GameObject:
   - component: {fileID: 1853803237}
   - component: {fileID: 402735774095545262}
   - component: {fileID: 284821269}
+  - component: {fileID: 4917943209739240973}
   m_Layer: 0
   m_Name: UsableBerrybush
   m_TagString: ActiveArea
@@ -5374,5 +5375,20 @@ MonoBehaviour:
     \u0438\u043B\u0438 \u0440\u0430\u0441\u0448\u0438\u0440\u044C\u0442\u0435 \u0435\u0433\u043E,
     \u0447\u0442\u043E\u0431\u044B \u043F\u043E\u043B\u0443\u0447\u0438\u0442\u044C
     \u043F\u0440\u0435\u0434\u043C\u0435\u0442"
+  _cooldownHours: 12
+  _defaultSprite: {fileID: -1844762625905599298, guid: 893704cf2aa8f5448b15e9dfb66c1db6, type: 3}
   _spriteAfterUse: {fileID: 21300114, guid: 7810966f0f690954c87305933cabf2b0, type: 3}
   _particleSystem: {fileID: 2484108779786057789}
+--- !u!114 &4917943209739240973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7927436160133048648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1db52ac90bd91ca4f9c82cb1de53e457, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _id: c3d7eee1-82cd-4ab5-a6ec-d05b367612df

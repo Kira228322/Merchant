@@ -32,7 +32,6 @@ public class GoodsSellPanel : MonoBehaviour
         _itemName.text = _item.ItemData.Name;
 
 
-
         if (itemToSell.ItemData.IsPerishable)
         {
             _spoilSlider.gameObject.SetActive(true);
@@ -47,7 +46,8 @@ public class GoodsSellPanel : MonoBehaviour
     }
     public void Refresh()
     {
-        if (_trader.BuyCoefficients.FirstOrDefault(x => x.itemType == _item.ItemData.TypeOfItem).CountToBuy <= 0)
+        NpcTrader.BuyCoefficient buyCoefficient = _trader.BuyCoefficients.FirstOrDefault(x => x.itemType == _item.ItemData.TypeOfItem);
+        if (buyCoefficient == null || buyCoefficient.CountToBuy <= 0)
         {
             _sellButton.interactable = false;
         }

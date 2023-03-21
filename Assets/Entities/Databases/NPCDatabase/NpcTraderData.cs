@@ -80,7 +80,8 @@ public class NpcTraderData : NpcData, IResetOnExitPlaymode, ISaveable<NpcTraderS
                 : new(traderGoodType);
         }
 
-        List<NpcTrader.BuyCoefficient> resultingBuyCoefficients = mergedTraderGoods.Values.Select(type => new NpcTrader.BuyCoefficient(type)).ToList();
+        List<NpcTrader.BuyCoefficient> resultingBuyCoefficients = mergedTraderGoods.Values.Select
+            (type => new NpcTrader.BuyCoefficient(type)).ToList();
         _baseBuyCoefficients.AddRange(resultingBuyCoefficients);
 
     }

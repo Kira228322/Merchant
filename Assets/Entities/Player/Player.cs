@@ -132,6 +132,7 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
 
         if (Input.GetKeyDown(KeyCode.S))
         {
+            SaveLoadSystem<CooldownHandlerSaveData>.SaveData(FindObjectOfType<CooldownHandler>().SaveData(), "CooldownSave");
             SaveLoadSystem<PlayerData>.SaveAll();
         }
         if (Input.GetKeyDown(KeyCode.Q))
@@ -141,6 +142,9 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
 
         if (Input.GetKeyDown(KeyCode.L))
         {
+            CooldownHandlerSaveData cooldownHandlerSaveData = SaveLoadSystem<CooldownHandlerSaveData>.LoadData("CooldownSave");
+            FindObjectOfType<CooldownHandler>().LoadData(cooldownHandlerSaveData);
+
             SaveLoadSystem<PlayerData>.LoadAll();
         }
     }
