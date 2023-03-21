@@ -7,7 +7,7 @@ using UnityEngine;
 [Serializable]
 public class TalkToNPCGoal : Goal
 {
-    [NonSerialized]public NPCData RequiredNPC;
+    [NonSerialized]public NpcData RequiredNPC;
     public int RequiredIDOfNPC;
     public string RequiredLine; //То, о чём надо поговорить. В Ink вызывается как invoke(RequiredLine) пример в Ink: invoke(talked_about_trading)
     public string FailingLine; //Если поговорил об этом, то квест зафейлится.
@@ -20,7 +20,7 @@ public class TalkToNPCGoal : Goal
 
     public override void Initialize()
     {
-        RequiredNPC = NPCDatabase.GetNPCData(RequiredIDOfNPC);
+        RequiredNPC = NpcDatabase.GetNPCData(RequiredIDOfNPC);
 
         DialogueManager.Instance.TalkedToNPCAboutSomething += OnTalkWithNPC;
 
@@ -32,7 +32,7 @@ public class TalkToNPCGoal : Goal
         DialogueManager.Instance.TalkedToNPCAboutSomething -= OnTalkWithNPC;
     }
 
-    private void OnTalkWithNPC(NPC npc, string line)
+    private void OnTalkWithNPC(Npc npc, string line)
     {
         if (npc.NpcData == RequiredNPC)
         {

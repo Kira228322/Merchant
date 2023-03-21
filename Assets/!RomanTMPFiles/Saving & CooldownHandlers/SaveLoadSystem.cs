@@ -48,7 +48,7 @@ public static class SaveLoadSystem<T>
         QuestSaveData questSaveData = QuestHandler.SaveQuests();
         SaveLoadSystem<QuestSaveData>.SaveData(questSaveData, "QuestsSave");
 
-        NpcDatabaseSaveData npcDatabaseSaveData = NPCDatabase.SaveNPCs();
+        NpcDatabaseSaveData npcDatabaseSaveData = NpcDatabase.SaveNPCs();
         SaveLoadSystem<NpcDatabaseSaveData>.SaveData(npcDatabaseSaveData, "NpcDatabaseSave");
     }
     public static void LoadAll()
@@ -60,7 +60,7 @@ public static class SaveLoadSystem<T>
         QuestHandler.LoadQuests(questSaveData);
 
         NpcDatabaseSaveData npcDatabaseSaveData = SaveLoadSystem<NpcDatabaseSaveData>.LoadData("NpcDatabaseSave");
-        NPCDatabase.LoadNPCs(npcDatabaseSaveData);
+        NpcDatabase.LoadNPCs(npcDatabaseSaveData);
     }
 
 }

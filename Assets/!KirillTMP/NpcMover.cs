@@ -6,7 +6,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class NPCMover : MonoBehaviour
+public class NpcMover : MonoBehaviour
 {
     [SerializeField] private LayerMask _groundAndNodeMask;
     private float _speed = 2.8f;

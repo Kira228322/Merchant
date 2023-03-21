@@ -63,7 +63,7 @@ public class TraderType : ScriptableObject
                     
                     EditorGUILayout.BeginHorizontal();
                     GUILayout.Label("Coefficient", GUILayout.MaxWidth(80));
-                    goodType.Coefficient = EditorGUILayout.Slider(goodType.Coefficient, 0.5f, 1);
+                    goodType.Coefficient = EditorGUILayout.Slider(goodType.Coefficient, 0.1f, 1);
                     GUILayout.FlexibleSpace();
                     GUILayout.Label("Count to buy", GUILayout.MaxWidth(80));
                     goodType.CountToBuy = EditorGUILayout.IntField(goodType.CountToBuy);

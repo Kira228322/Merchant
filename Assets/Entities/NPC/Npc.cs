@@ -4,7 +4,7 @@ using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class NPC : MonoBehaviour
+public class Npc : MonoBehaviour
 {
-    public NPCData NpcData;
+    public NpcData NpcData;
 }

@@ -5,17 +5,17 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 
-public class NPCClickFunctional : MonoBehaviour, IPointerClickHandler
+public class NpcClickFunctional : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private GameObject _functionalWindow;
-    private NPC _NPC;
+    private Npc _NPC;
     private Canvas _canvas;
     
     private float _distanceToUse = 3.5f;
     private void Start()
     {
         _canvas = FindObjectOfType<Canvas>();    
-        _NPC = GetComponent<NPC>();
+        _NPC = GetComponent<Npc>();
     }
 
     public void OnPointerClick(PointerEventData eventData)

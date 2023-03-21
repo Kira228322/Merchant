@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class NPCDatabase : MonoBehaviour, ISaveable<NpcDatabaseSaveData>
+public class NpcDatabase : MonoBehaviour, ISaveable<NpcDatabaseSaveData>
 {
-    public NPCDatabaseSO NpcDatabaseSO;
+    public NpcDatabaseSO NpcDatabaseSO;
 
-    private static NPCDatabase Instance;
+    private static NpcDatabase Instance;
 
     private void Awake()
     {
@@ -21,18 +21,18 @@ public class NPCDatabase : MonoBehaviour, ISaveable<NpcDatabaseSaveData>
         }
     }
 
-    public static NPCData GetNPCData(int ID)
+    public static NpcData GetNPCData(int ID)
     {
-        NPCData result = Instance.NpcDatabaseSO.NPCList.FirstOrDefault(npc => npc.ID == ID);
+        NpcData result = Instance.NpcDatabaseSO.NpcList.FirstOrDefault(npc => npc.ID == ID);
 
         if (result != null) return result;
 
         Debug.LogWarning("НПС с таким айди не существует!");
         return null;
     }
-    public static NPCData GetNPCData(string name)
+    public static NpcData GetNPCData(string name)
     {
-        NPCData result = Instance.NpcDatabaseSO.NPCList.FirstOrDefault(npc => npc.Name == name);
+        NpcData result = Instance.NpcDatabaseSO.NpcList.FirstOrDefault(npc => npc.Name == name);
 
         if (result != null) return result;
 
@@ -54,7 +54,7 @@ public class NPCDatabase : MonoBehaviour, ISaveable<NpcDatabaseSaveData>
     {
         NpcDatabaseSaveData saveData = new();
 
-        foreach (NPCData npcData in NpcDatabaseSO.NPCList)
+        foreach (NpcData npcData in NpcDatabaseSO.NpcList)
         {
             NpcSaveData npcSaveData;
             if (npcData is NpcTraderData traderData) //TODO switch для каждого типа сохраняемого NPC или Dictionary 
@@ -74,7 +74,7 @@ public class NPCDatabase : MonoBehaviour, ISaveable<NpcDatabaseSaveData>
 
     public void LoadData(NpcDatabaseSaveData data)
     {
-        var npcDataAndSaveData = NpcDatabaseSO.NPCList.Join(data.savedNpcDatas,
+        var npcDataAndSaveData = NpcDatabaseSO.NpcList.Join(data.savedNpcDatas,
         npcData => npcData.ID, savedNpcData => savedNpcData.ID,
         (npcData, savedNpcData) => new { npcData, savedNpcData });
         //^^ This code first creates a variable called npcDataAndSaveData using the Join method to
@@ -84,7 +84,6 @@ public class NPCDatabase : MonoBehaviour, ISaveable<NpcDatabaseSaveData>
 
         foreach (var npcAndSaveData in npcDataAndSaveData)
         {
-            Debug.Log(npcAndSaveData.savedNpcData.ID);
             if (npcAndSaveData.npcData is NpcTraderData)
             {
                 ((ISaveable<NpcTraderSaveData>)npcAndSaveData.npcData).LoadData((NpcTraderSaveData)npcAndSaveData.savedNpcData);

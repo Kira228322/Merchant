@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class NPCWagonUpgrader : NPC
+public class NPCWagonUpgrader : Npc
 {
     public List<WagonPart> WagonUpgrades = new List<WagonPart>();
 

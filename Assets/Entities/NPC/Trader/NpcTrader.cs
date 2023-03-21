@@ -7,7 +7,7 @@ using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class NPCTrader : NPC
+public class NpcTrader : Npc
 {
     [Serializable]
     public class TraderGood
@@ -214,7 +214,7 @@ public class NPCTrader : NPC
     }
 }
 
-[CustomEditor(typeof(NPCTrader))]
+[CustomEditor(typeof(NpcTrader))]
 public class NpcTraderDataEditor : Editor
 {
     public override void OnInspectorGUI()

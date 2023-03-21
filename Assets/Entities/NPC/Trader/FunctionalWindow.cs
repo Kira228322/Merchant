@@ -7,19 +7,19 @@ public class FunctionalWindow : MonoBehaviour
     [SerializeField] private GameObject _tradeButton;
     [SerializeField] private GameObject _wagonUpButton;
     [SerializeField] private WagonUpgradeWindow _wagonUpgradeWindow;
-    private NPC _NPC;
+    private Npc _NPC;
     private Transform _canvas;
 
     
     
-    public void Init(NPC npc)
+    public void Init(Npc npc)
     {
         _canvas = FindObjectOfType<CanvasWarningGenerator>().transform;
         _NPC = npc;
         
         _NPCName.text = _NPC.NpcData.Name; 
         // Выставление кнопок:
-        if (_NPC is NPCTrader) // Если он трейдер то 2 кнопки (трейд и разговор)
+        if (_NPC is NpcTrader) // Если он трейдер то 2 кнопки (трейд и разговор)
             Destroy(_wagonUpButton);
         else if (!(_NPC is NPCWagonUpgrader)) // Если он не трейдер и не апгрейдер, то он обычный нпс (только поговорить)
         {
@@ -37,7 +37,7 @@ public class FunctionalWindow : MonoBehaviour
 
     public void OnTradeButtonClick()
     {
-        NPCTrader trader = (NPCTrader)_NPC;
+        NpcTrader trader = (NpcTrader)_NPC;
         trader.OpenTradeWindow();
         
         Destroy(gameObject);

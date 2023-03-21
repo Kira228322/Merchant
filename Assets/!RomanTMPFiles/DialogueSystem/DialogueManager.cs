@@ -21,13 +21,13 @@ public class DialogueManager : MonoBehaviour
     [SerializeField]private float _typingSpeed = 0.04f;
 
     private TMP_Text[] _choicesText;
-    private NPC _currentNPC;
+    private Npc _currentNPC;
     private Story _currentStory;
     private Coroutine _currentDisplayLineCoroutine;
     private bool _isCurrentlyWritingALine;
 
     //Первый параметр - с кем поговорил. Второй параметр - о чём.
-    public event UnityAction<NPC, string> TalkedToNPCAboutSomething;
+    public event UnityAction<Npc, string> TalkedToNPCAboutSomething;
     #endregion
 
     #region External функции Ink и всё что связано с ними
@@ -71,17 +71,16 @@ public class DialogueManager : MonoBehaviour
         });
         _currentStory.BindExternalFunction("get_affinity_by_name", (string npcName) =>
         {
-            return NPCDatabase.GetNPCData(npcName).Affinity;
+            return NpcDatabase.GetNPCData(npcName).Affinity;
         });
         _currentStory.BindExternalFunction("add_affinity", (string npcName, string amount) =>
         {
-            NPCDatabase.GetNPCData(npcName).Affinity += int.Parse(amount);
+            NpcDatabase.GetNPCData(npcName).Affinity += int.Parse(amount);
         });
         _currentStory.BindExternalFunction("add_affinity_here", (string amount) =>
         {
             //Очень жаль, но Ink не поддерживает перегрузку external функции, так бы просто сделал add_affinity(string amount)
             _currentNPC.NpcData.Affinity += int.Parse(amount);
-            Debug.Log(_currentNPC.NpcData.Affinity);
         });
         _currentStory.BindExternalFunction("invoke_dialogue_event", (string param) =>
         {
@@ -171,7 +170,7 @@ public class DialogueManager : MonoBehaviour
     #endregion
 
     #region Внешние методы работы с диалогом (продвинуть историю, начать и закончить диалог)
-    public void EnterDialogueMode(NPC npc)
+    public void EnterDialogueMode(Npc npc)
     {
         //TODO Выключать другие действия игрока, напр. инвентарь, playerMover, карту
         _currentNPC = npc;

@@ -29,7 +29,7 @@ public class NpcTraderSaveData: NpcSaveData
         public int currentCount;
         public int currentPrice;
 
-        public SavedTraderGood(NPCTrader.TraderGood traderGood)
+        public SavedTraderGood(NpcTrader.TraderGood traderGood)
         {
             nameOfGood = traderGood.Good.Name;
             maxCount = traderGood.MaxCount;
@@ -41,15 +41,15 @@ public class NpcTraderSaveData: NpcSaveData
     public int LastRestock;
     public List<SavedTraderGood> Goods = new();
     public List<SavedTraderGood> AdditiveGoods = new();
-    public List<NPCTrader.BuyCoefficient> BuyCoefficients;
-    public NpcTraderSaveData(int affinity, int id, int lastRestock, List<NPCTrader.TraderGood> goods, List<NPCTrader.TraderGood> additiveGoods, List<NPCTrader.BuyCoefficient> buyCoefficients) : base(affinity, id)
+    public List<NpcTrader.BuyCoefficient> BuyCoefficients;
+    public NpcTraderSaveData(int affinity, int id, int lastRestock, List<NpcTrader.TraderGood> goods, List<NpcTrader.TraderGood> additiveGoods, List<NpcTrader.BuyCoefficient> buyCoefficients) : base(affinity, id)
     {
         LastRestock = lastRestock;
-        foreach (NPCTrader.TraderGood traderGood in goods)
+        foreach (NpcTrader.TraderGood traderGood in goods)
         {
             Goods.Add(new(traderGood));
         }
-        foreach (NPCTrader.TraderGood traderGood in additiveGoods)
+        foreach (NpcTrader.TraderGood traderGood in additiveGoods)
         {
             AdditiveGoods.Add(new(traderGood));
         }

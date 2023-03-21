@@ -8,20 +8,20 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [CreateAssetMenu(fileName = "newTraderData", menuName = "NPCs/TraderData")]
-public class NpcTraderData : NPCData, IResetOnExitPlaymode, ISaveable<NpcTraderSaveData>
+public class NpcTraderData : NpcData, IResetOnExitPlaymode, ISaveable<NpcTraderSaveData>
 {
     public List<TraderType> TraderTypes;
     public int RestockCycle;
 
-    [HideInInspector, SerializeField] private List<NPCTrader.TraderGood> _baseGoods = new ();
-    [HideInInspector, SerializeField] private List<NPCTrader.TraderGood> _baseAdditiveGoods = new ();
-    [HideInInspector, SerializeField] private List<NPCTrader.BuyCoefficient> _baseBuyCoefficients = new ();
+    [HideInInspector, SerializeField] private List<NpcTrader.TraderGood> _baseGoods = new ();
+    [HideInInspector, SerializeField] private List<NpcTrader.BuyCoefficient> _baseBuyCoefficients = new ();
+    //AdditiveGoods рассчитываются только в рантайме или при загрузке, с инспектором никак не связаны
 
     public int LastRestock;
 
-    [HideInInspector] public List<NPCTrader.TraderGood> Goods;
-    [HideInInspector] public List<NPCTrader.TraderGood> AdditiveGoods;
-    [HideInInspector] public List<NPCTrader.BuyCoefficient> BuyCoefficients;
+    [HideInInspector] public List<NpcTrader.TraderGood> Goods;
+    [HideInInspector] public List<NpcTrader.TraderGood> AdditiveGoods;
+    [HideInInspector] public List<NpcTrader.BuyCoefficient> BuyCoefficients;
 
     NpcTraderSaveData ISaveable<NpcTraderSaveData>.SaveData()
     {
@@ -33,42 +33,27 @@ public class NpcTraderData : NPCData, IResetOnExitPlaymode, ISaveable<NpcTraderS
         Affinity = data.Affinity;
         LastRestock = data.LastRestock;
 
-        List<NPCTrader.TraderGood> newGoods = new();
-        foreach (var savedTraderGood in data.Goods)
-        {
-            newGoods.Add(new(savedTraderGood));
-        }
-        Goods = newGoods.Select(good => new NPCTrader.TraderGood(good)).ToList();
+        Goods = data.Goods.Select(good => new NpcTrader.TraderGood(good)).ToList();
 
-        List<NPCTrader.TraderGood> newAdditiveGoods = new();
-        foreach (var savedTraderGood in data.AdditiveGoods)
-        {
-            newAdditiveGoods.Add(new(savedTraderGood));
-        }
-        AdditiveGoods = newAdditiveGoods.Select(good => new NPCTrader.TraderGood(good)).ToList();
+        AdditiveGoods = data.AdditiveGoods.Select(good => new NpcTrader.TraderGood(good)).ToList();
 
-        List<NPCTrader.BuyCoefficient> newBuyCoefficients = new();
-        foreach (var buyCoefficitent in data.BuyCoefficients)
-        {
-            newBuyCoefficients.Add(buyCoefficitent);
-        }
-        BuyCoefficients = newBuyCoefficients.Select(buyCoefficient => new NPCTrader.BuyCoefficient(buyCoefficient)).ToList();
+        BuyCoefficients = data.BuyCoefficients.Select(buyCoefficient => new NpcTrader.BuyCoefficient(buyCoefficient)).ToList();
     }
 
     private void OnEnable()
     {
         Affinity = _baseAffinity;
-        Goods = _baseGoods.Select(good => new NPCTrader.TraderGood(good)).ToList();
-        AdditiveGoods = _baseAdditiveGoods.Select(good => new NPCTrader.TraderGood(good)).ToList();
+        Goods = _baseGoods.Select(good => new NpcTrader.TraderGood(good)).ToList();
+        //AdditiveGoods рассчитываются только в рантайме или при загрузке сохранения, с инспектором никак не связаны
         SetBuyCoefficients();
-        BuyCoefficients = _baseBuyCoefficients.Select(buyCoefficient => new NPCTrader.BuyCoefficient(buyCoefficient)).ToList();
+        BuyCoefficients = _baseBuyCoefficients.Select(buyCoefficient => new NpcTrader.BuyCoefficient(buyCoefficient)).ToList();
     }
     void IResetOnExitPlaymode.ResetOnExitPlaymode()
     {
         Affinity = _baseAffinity;
-        Goods = _baseGoods;
-        AdditiveGoods = _baseAdditiveGoods;
-        BuyCoefficients = _baseBuyCoefficients;
+        Goods.Clear();
+        AdditiveGoods.Clear();
+        BuyCoefficients.Clear();
     }
 
     private void SetBuyCoefficients()
@@ -76,96 +61,28 @@ public class NpcTraderData : NPCData, IResetOnExitPlaymode, ISaveable<NpcTraderS
         _baseBuyCoefficients.Clear();
         Dictionary<Item.ItemType, TraderType.TraderGoodType> mergedTraderGoods = new();
 
-        foreach(TraderType traderType in TraderTypes)
+        foreach (var traderGoodType in TraderTypes.SelectMany(tt => tt.TraderGoodTypes))
         {
-            foreach(TraderType.TraderGoodType traderGoodType in traderType.TraderGoodTypes)
-            {
-                if (!mergedTraderGoods.ContainsKey(traderGoodType.ItemType))
+            // Если в словаре уже есть такой ItemType, то обновляет его значения
+            // (считает средние между старым и новым или приравнивает к единице)
+            // Если ещё нету, то добавляет новый TraderGoodType с этим ItemType
+            mergedTraderGoods[traderGoodType.ItemType] = mergedTraderGoods.TryGetValue(traderGoodType.ItemType, out var existingTraderGoodType)
+                ? new TraderType.TraderGoodType
                 {
-                    // If the ItemType is not in the dictionary, add a new key-value pair with a copy of the current TraderGoodType
-                    mergedTraderGoods.Add(traderGoodType.ItemType, new TraderType.TraderGoodType(traderGoodType));
+                    ItemType = traderGoodType.ItemType,
+                    Coefficient = traderGoodType.Coefficient != 1 && existingTraderGoodType.Coefficient != 1
+                    ? (existingTraderGoodType.Coefficient + traderGoodType.Coefficient) / 2
+                    : 1,
+                    CountToBuy = traderGoodType.Coefficient != 1 && existingTraderGoodType.Coefficient != 1
+                    ? (existingTraderGoodType.CountToBuy + traderGoodType.CountToBuy) / 2
+                    : Math.Max(existingTraderGoodType.CountToBuy, traderGoodType.CountToBuy)
                 }
-                else
-                {
-                    // If the ItemType is already in the dictionary, update the values of the corresponding TraderGoodType
-                    TraderType.TraderGoodType mergedTraderGoodType = mergedTraderGoods[traderGoodType.ItemType];
-
-                    if (traderGoodType.Coefficient != 1 && mergedTraderGoodType.Coefficient != 1)
-                    {
-                        mergedTraderGoodType.Coefficient += traderGoodType.Coefficient;
-                        mergedTraderGoodType.Coefficient /= 2;
-
-                        mergedTraderGoodType.CountToBuy += traderGoodType.CountToBuy;
-                        mergedTraderGoodType.CountToBuy /= 2;
-                        //Здесь делал с предположением, что у торговца одновременно не будет более двух типов TraderType =>
-                        //отсюда деление на 2, если надо получить среднее значение (20.03.23)
-                    }
-                    else //TODO: этот else работает не совсем верно: Если у первого TraderType в листе был коэффициент 1 и CountToBuy 50,
-                         //а у второго коэффициент 0.8 и CountToBuy 30 то итоговый будет Coefficient 1 & CountToBuy 30 (ожидалось 50)
-                         //в общем зависит от порядка заполнения в листе TraderType. В будущем нужно будет обратить внимание (20.03.23)
-                    {
-                        mergedTraderGoodType.Coefficient = 1;
-                        mergedTraderGoodType.CountToBuy = traderGoodType.CountToBuy;
-                    }
-                }
-            }
+                : new(traderGoodType);
         }
 
-        foreach (var traderGoodType in mergedTraderGoods)
-        {
-            _baseBuyCoefficients.Add(new(traderGoodType.Value));
-        }
+        List<NpcTrader.BuyCoefficient> resultingBuyCoefficients = mergedTraderGoods.Values.Select(type => new NpcTrader.BuyCoefficient(type)).ToList();
+        _baseBuyCoefficients.AddRange(resultingBuyCoefficients);
 
-        /*
-        foreach (Item.ItemType itemType in Enum.GetValues(typeof(Item.ItemType)))
-        //Enum.GetValues(typeof(Item.ItemType)) возвращает все возможные значения Item.ItemType
-        //(если потом добавим новые ItemType, сюда не придется возвращаться)
-        {
-            NPCTrader.BuyCoefficient traderBuyCoefficient = new();
-            traderBuyCoefficient.itemType = itemType;
-            traderBuyCoefficient.Coefficient = 0;
-            traderBuyCoefficient.CountToBuy = 0;
-            //Если мы не переприсвоим (т.е не найдем таких же типов айтемов среди назначенных типов торговцев, то они останутся 0, как и надо.)
-            _baseBuyCoefficients.Add(traderBuyCoefficient);
-        }
-        //Таким образом мы создали столько BuyCoefficient, сколько у нас всего существует Item.ItemType.
-        //Теперь будем искать средние значения либо значения специализации
-        foreach (NPCTrader.BuyCoefficient traderBuyCoefficient in _baseBuyCoefficients)
-        {
-
-            //найти все traderGoodType, у которых наличествует такой же itemType:
-            List<TraderType.TraderGoodType> acceptableTraderGoodTypes =
-            TraderTypes.SelectMany(traderType => traderType.TraderGoodTypes.Where
-            (traderGoodType => traderGoodType.ItemType == traderBuyCoefficient.itemType)).ToList();
-            //Этот Linq возвращает все TraderGoodType, которые
-            //имеют такой же ItemType как у нашего рассматриваемого traderBuyCoefficient
-            
-            foreach (TraderType.TraderGoodType traderGoodType in acceptableTraderGoodTypes)
-            {
-                traderBuyCoefficient.CountToBuy += traderGoodType.CountToBuy;
-            }
-            foreach (TraderType.TraderGoodType traderGoodType in acceptableTraderGoodTypes)
-            {
-                if (traderGoodType.Coefficient == 1)
-                {
-                    traderBuyCoefficient.Coefficient = 1;
-                    continue;
-                }
-                traderBuyCoefficient.Coefficient += traderGoodType.Coefficient;
-            }
-            if (acceptableTraderGoodTypes.Count != 0) //избежать деления на ноль, такие типы будут иметь Coefficient & CountToBuy == 0
-            {
-                traderBuyCoefficient.CountToBuy = (int)Math.Ceiling((float)traderBuyCoefficient.CountToBuy / acceptableTraderGoodTypes.Count);
-                traderBuyCoefficient.DefaultCountToBuy = traderBuyCoefficient.CountToBuy;
-                if (traderBuyCoefficient.Coefficient != 1)
-                    traderBuyCoefficient.Coefficient = (float)Math.Round(traderBuyCoefficient.Coefficient / acceptableTraderGoodTypes.Count, 2);
-            }
-        }
-        foreach (NPCTrader.BuyCoefficient buyCoefficient in _baseBuyCoefficients)
-        {
-            Debug.Log(buyCoefficient.itemType.ToString() + buyCoefficient.CountToBuy);
-        }
-        */
     }
 
     [CustomEditor(typeof(NpcTraderData))]
@@ -183,7 +100,7 @@ public class NpcTraderData : NPCData, IResetOnExitPlaymode, ISaveable<NpcTraderS
             
             GUILayout.Space(20);
             if (GUILayout.Button("Добавить товар"))
-                _traderData._baseGoods.Add(new NPCTrader.TraderGood());
+                _traderData._baseGoods.Add(new NpcTrader.TraderGood());
 
             if (_traderData._baseGoods.Count > 0)
             {

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "newNPC", menuName = "NPCs/NPC")]
-public class NPCData : ScriptableObject, IResetOnExitPlaymode, ISaveable<NpcSaveData>
+public class NpcData : ScriptableObject, IResetOnExitPlaymode, ISaveable<NpcSaveData>
 {
     public string Name;
 
