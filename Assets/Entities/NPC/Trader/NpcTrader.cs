@@ -85,7 +85,7 @@ public class NpcTrader : Npc
     public List<BuyCoefficient> BuyCoefficients => _npcTraderData.BuyCoefficients; //Таких BuyCoefficients будет столько, сколько всего есть Item.ItemType (см.ниже)
     public void OpenTradeWindow()
     {
-        if (_npcTraderData.LastRestock + _npcTraderData.RestockCycle >= GameTime.CurrentDay)
+        if (_npcTraderData.LastRestock + _npcTraderData.RestockCycle <= GameTime.CurrentDay)
         {
             int count = (GameTime.CurrentDay - _npcTraderData.LastRestock) / _npcTraderData.RestockCycle;
             
@@ -105,6 +105,12 @@ public class NpcTrader : Npc
         RestockMainGoods();        
         RestockNewItems();
         RestockCoefficients();
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.N))
+            Restock();
     }
 
     private void RestockCoefficients()
@@ -129,7 +135,7 @@ public class NpcTrader : Npc
             BuyCoefficient traderBuyCoefficient;
             bool isMainGood;
             Item newItem;
-            bool reallyNew = true;
+            bool reallyNew;
 
             if (Random.Range(0, 5) == 0)
                 isMainGood = false; // не мейн тип шмотки торговца 
@@ -138,32 +144,41 @@ public class NpcTrader : Npc
 
             while (true)
             {
+                reallyNew = true;
                 traderBuyCoefficient = BuyCoefficients[Random.Range(0, BuyCoefficients.Count)];
                 // у мейн шмоток коэф 1
                 if ( (traderBuyCoefficient.Coefficient == 1) == isMainGood) 
                 {
                     newItem = ItemDatabase.GetRandomItemOfThisType(traderBuyCoefficient.itemType);
-                    if (Goods.Any(t => newItem == Goods[i].Good))
-                        reallyNew = false;
-
-                    if (reallyNew)
+                    
+                    foreach (var goods in Goods)
                     {
-                        TraderGood newGood = new()
+                        if (goods.Good.Name == newItem.Name)
                         {
-                            Good = newItem,
-                            CurrentCount = Random.Range(1, 3)
-                        };
-
-                        // новый предмет будет продаваться либо много дешевле, либо много дороже средней цены
-                        if (Random.Range(0, 2) == 1) 
-                            newGood.CurrentPrice = Random.Range(newItem.Price * 72 / 100, newItem.Price * 8 / 10 + 1);
-                        else
-                            newGood.CurrentPrice =
-                                Random.Range(newItem.Price * 12 / 10, newItem.Price * 128 / 100 + 1);
-                        
-                        AdditiveGoods.Add(newGood);
-                        break;
+                            reallyNew = false;
+                            break;
+                        }
                     }
+                    if (!reallyNew)
+                        continue;
+
+                    
+                    TraderGood newGood = new()
+                    {
+                        Good = newItem,
+                        CurrentCount = Random.Range(1, 3)
+                    };
+
+                    // новый предмет будет продаваться либо много дешевле, либо много дороже средней цены
+                    if (Random.Range(0, 2) == 1) 
+                        newGood.CurrentPrice = Random.Range(newItem.Price * 72 / 100, newItem.Price * 8 / 10 + 1);
+                    else
+                        newGood.CurrentPrice =
+                            Random.Range(newItem.Price * 12 / 10, newItem.Price * 128 / 100 + 1);
+                        
+                    AdditiveGoods.Add(newGood);
+                    break;
+                    
                 }
             }
             
@@ -179,7 +194,7 @@ public class NpcTrader : Npc
             switch (traderGood.MaxCount)
             {
                 case int n when n <= 4: // Редкие предметы, которых у торговца мало, они могут не всегда прибавиться за ресток
-                    if (Random.Range(0, 101) <= 50 + Player.Instance.Statistics.TotalDiplomacy)//50% шанс, что будет ресток этой шмотки
+                    if (Random.Range(0, 101) <= 50 + Player.Instance.Statistics.GetCoefForDiplomacyPositiveEvent())//50% шанс, что будет ресток этой шмотки
                     {
                         if (traderGood.MaxCount == 1)
                             traderGood.CurrentCount++;

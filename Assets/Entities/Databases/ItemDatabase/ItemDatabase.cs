@@ -37,7 +37,6 @@ public class ItemDatabase : MonoBehaviour
     public static Item GetRandomItemOfThisType(Item.ItemType itemType)
     {
         List<Item> itemsOfThisType = Instance.Items.ItemList.Where(item => item.TypeOfItem == itemType).ToList();
-        Debug.Log(itemType + " -- " +itemsOfThisType.Count);
         return itemsOfThisType[Random.Range(0, itemsOfThisType.Count)]; 
     }
 }

@@ -132,12 +132,10 @@ public class NpcTraderData : NpcData, IResetOnExitPlaymode, ISaveable<NpcTraderS
                     GUILayout.Label("Max count", GUILayout.MaxWidth(136));
                     good.MaxCount = EditorGUILayout.IntField(good.MaxCount,  GUILayout.MaxWidth(50));
                     GUILayout.FlexibleSpace();
-                    GUILayout.Label("Current count", GUILayout.MaxWidth(136));
-                    good.CurrentCount = EditorGUILayout.IntField(good.CurrentCount, GUILayout.MaxWidth(50));
-                    GUILayout.FlexibleSpace();
+                    good.CurrentCount = good.MaxCount;
                     GUILayout.Label("Price", GUILayout.MaxWidth(40));
-                    good.CurrentPrice = EditorGUILayout.IntField(good.CurrentPrice,  GUILayout.MaxWidth(50));
-                    GUILayout.Space(27);
+                    good.CurrentPrice = EditorGUILayout.IntField(good.CurrentPrice,  GUILayout.MaxWidth(70));
+                    GUILayout.Space(17);
                     EditorGUILayout.EndHorizontal();
                     
                     GUILayout.Space(-5);

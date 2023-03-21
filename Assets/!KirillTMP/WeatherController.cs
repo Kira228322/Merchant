@@ -18,8 +18,6 @@ public class WeatherController : MonoBehaviour
     private int _dateOfRainfall;
     private int _hourOfRainfall;
     
-    
-
     void Start()
     {
         PredictNextRainfall();
