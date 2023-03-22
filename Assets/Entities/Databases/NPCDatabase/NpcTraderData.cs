@@ -43,14 +43,16 @@ public class NpcTraderData : NpcData, IResetOnExitPlaymode, ISaveable<NpcTraderS
     private void OnEnable()
     {
         Affinity = _baseAffinity;
+        LastRestock = 0; //LastRestock рассчитывается только в рантайме или при загрузке сохранения, с инспектором никак не связан
         Goods = _baseGoods.Select(good => new NpcTrader.TraderGood(good)).ToList();
-        //AdditiveGoods рассчитываются только в рантайме или при загрузке сохранения, с инспектором никак не связаны
+        AdditiveGoods.Clear(); //AdditiveGoods рассчитываются только в рантайме или при загрузке сохранения, с инспектором никак не связаны
         SetBuyCoefficients();
         BuyCoefficients = _baseBuyCoefficients.Select(buyCoefficient => new NpcTrader.BuyCoefficient(buyCoefficient)).ToList();
     }
     void IResetOnExitPlaymode.ResetOnExitPlaymode()
     {
         Affinity = _baseAffinity;
+        LastRestock = 0;
         Goods.Clear();
         AdditiveGoods.Clear();
         BuyCoefficients.Clear();
