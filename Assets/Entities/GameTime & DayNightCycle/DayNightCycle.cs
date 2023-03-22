@@ -35,6 +35,10 @@ public class DayNightCycle : MonoBehaviour
         _weatherController.RainStarted -= OnRainStarted;
         _weatherController.RainFinished -= OnRainFinished;
     }
+    private void Start()
+    {
+        AdjustToCurrentTime();
+    }
     private void OnSceneChanged(Scene scene, LoadSceneMode loadSceneMode)
     {
         _lights.Clear();

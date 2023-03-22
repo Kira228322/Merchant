@@ -18,37 +18,13 @@ public class PregenQuestSO : ScriptableObject
     [HideInInspector] public int MinMoneyReward;
     [HideInInspector] public int MaxMoneyReward;
 
-   /* 
-    private int _experienceReward;
-    private int _moneyReward;
-   */
-
    public PregenQuestSO NextQuest;
    [HideInInspector] public List<CompactedGoal> goals;
     
    [HideInInspector] public List<ItemReward> ItemRewards = new();
 
-   
-    /*private int AssignRandomValue(string line)
-    {
-        string[] strArr = line.Substring(line.IndexOf("(") + 1, line.IndexOf(")") - line.IndexOf("(") - 1).Split(',');
-        int[] intArr = Array.ConvertAll(strArr, int.Parse);
-
-        int result = UnityEngine.Random.Range(intArr[0], intArr[1]);
-        return result;
-    }*/
     public QuestParams GenerateQuestParams()
     {
-       /*
-        if (ExperienceReward.ToLower().Contains("random"))
-        {
-            _experienceReward = AssignRandomValue(ExperienceReward);
-        }
-        if (MoneyReward.ToLower().Contains("random"))
-        {
-            _moneyReward = AssignRandomValue(MoneyReward);
-        }
-       */
 
         QuestParams questParams = new();
 
@@ -109,7 +85,7 @@ public class PregenQuestSO : ScriptableObject
         public string description;
         public int currentAmount;
         
-        public bool randomAmount; // Боюсь это необходимо
+        public bool randomAmount;
         public int minRequiredAmount;
         public int maxRequiredAmount;
         //Опциональные поля
