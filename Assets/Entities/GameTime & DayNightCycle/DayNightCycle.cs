@@ -2,72 +2,55 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+using System.Linq;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Volume))]
 public class DayNightCycle : MonoBehaviour
 {
-    [SerializeField] private GameObject _celestialBodies; //Сюда нужно вставить Солнце, Луну и Звёзды в виде одного геймобъекта (префаб создам)
-    [SerializeField] private List<Light2D> _lights;
-
     private Volume _volume;
-    private Transform moonAndSun;
-    private Transform stars;
-    private const float _convertTimeToRotation = 4f; // В сутках 24*60 = 1440 минут. 1440/360 = 4
-                                                     //(каждые 4 минуты нужно поворачивать объекты на 1 градус)
-    // private Quaternion _currentTimeRotation = Quaternion.identity;
-    private float _currentTimeDegrees = 0f; // Значение в промежутке (0;360), где 0 == 00:00, 359 == 23:56) 
+    private List<Light2D> _lights = new();
     private bool _activateLights;
-    private float _seconds;
-    private int _cheakMinute;
-    private void Start()
-    {
-        _volume = GetComponent<Volume>();
-        moonAndSun = _celestialBodies.transform.Find("Moon and Sun");
-        stars = _celestialBodies.transform.Find("Stars");
-        AdjustToCurrentTime();
-    }
+    private WeatherController _weatherController;
+    private float _rainWeightOffset; //Дождь плавно слегка затемняет экран
 
-    private void Update()
+    private void Awake()
     {
-        _seconds += Time.deltaTime * GameTime.GetTimeScale() * 100;
-        if (_cheakMinute != GameTime.Minutes)
-        {
-            _cheakMinute = GameTime.Minutes;
-            _seconds = 0;
-        }
+        _weatherController = FindObjectOfType<WeatherController>();
+        _volume = GetComponent<Volume>();
+    }
+    private void OnEnable()
+    {
+        GameTime.MinuteChanged += OnMinuteChanged;
+        SceneManager.sceneLoaded += OnSceneChanged;
+        _weatherController.RainStarted += OnRainStarted;
+        _weatherController.RainFinished += OnRainFinished;
+    }
+    private void OnDisable()
+    {
+        GameTime.MinuteChanged -= OnMinuteChanged;
+        SceneManager.sceneLoaded -= OnSceneChanged;
+        _weatherController.RainStarted -= OnRainStarted;
+        _weatherController.RainFinished -= OnRainFinished;
+    }
+    private void OnSceneChanged(Scene scene, LoadSceneMode loadSceneMode)
+    {
+        _lights.Clear();
+        _lights = FindObjectsOfType<Light2D>(true).ToList(); //Получить список выключаемых светильников на новой сцене
+        _lights.Remove(GetComponent<Light2D>()); //кроме себя
+    }
+    private void OnMinuteChanged()
+    {
         AdjustToCurrentTime();
     }
     private void AdjustToCurrentTime()
     {
-        _currentTimeDegrees = Convert.ToSingle(GameTime.Hours * 60 + GameTime.Minutes + _seconds/60) / _convertTimeToRotation;
-        // _currentTimeRotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, -_currentTimeDegrees);
-        // moonAndSun.rotation = _currentTimeRotation;
-        moonAndSun.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, -_currentTimeDegrees);
-        switch (_currentTimeDegrees)
-        {
-            case float n when (n > 315f && n <= 360f) || (n >= 0f && n <= 75f): //полностью темно, 21:00 - 05:00
-                _volume.weight = 1;
-                StarsSetAlpha(stars, 1f);
-                break;
-
-            case float n when n > 75f && n <= 135f:   //рассвет, 05:00 - 09:00
-                _volume.weight = 1f - ((n - 75f) / 60f);
-                StarsSetAlpha(stars, 1f - (n - 75f) / 60f);
-                break;
-
-            case float n when n > 135f && n <= 255f:  //полностью светло, 09:00 - 17:00
-                _volume.weight = 0;
-                StarsSetAlpha(stars, 0f);
-                break;
-
-            case float n when n > 255f && n <= 315f:  //закат, 17:00 - 21:00 
-                _volume.weight = (n - 255f) / 60f;
-                StarsSetAlpha(stars, (n - 255f) / 60f);
-                break;
-        }
+        float cosineValue = (GameTime.Hours * 60 + GameTime.Minutes) / 1500f; //в дне максимум 1499 минут
+        float volumeWeight = Mathf.Cos(cosineValue * 2.0f * Mathf.PI) * 0.5f + 0.5f; //см.график функции f(x) = cos(2pi*x)/2 + 0.5
+        _volume.weight = volumeWeight + _rainWeightOffset;
+        if (_volume.weight >= 1) _volume.weight = 1;
         if (!_activateLights)
         {
             if (_volume.weight >= 0.75f)
@@ -91,12 +74,30 @@ public class DayNightCycle : MonoBehaviour
             }
         }
     }
-    private void StarsSetAlpha(Transform stars, float alpha) 
+    private void OnRainStarted()
     {
-        foreach (SpriteRenderer star in stars.GetComponentsInChildren<SpriteRenderer>())
+        GameTime.MinuteChanged += IncreaseRainWeightOffset;
+    }
+    private void OnRainFinished()
+    {
+        GameTime.MinuteChanged += DecreaseRainWeightOffset;
+    }
+    private void IncreaseRainWeightOffset()
+    {
+        _rainWeightOffset += 0.03f;
+        if (_rainWeightOffset >= 0.3f)
         {
-            star.color = new Color(star.color.r, star.color.g, star.color.b, alpha);
+            _rainWeightOffset = 0.3f;
+            GameTime.MinuteChanged -= IncreaseRainWeightOffset;
         }
     }
-
+    private void DecreaseRainWeightOffset()
+    {
+        _rainWeightOffset -= 0.03f;
+        if (_rainWeightOffset <= 0)
+        {
+            _rainWeightOffset = 0;
+            GameTime.MinuteChanged -= DecreaseRainWeightOffset;
+        }
+    }
 }

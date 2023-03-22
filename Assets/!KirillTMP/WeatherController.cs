@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 public class WeatherController : MonoBehaviour
@@ -17,15 +18,28 @@ public class WeatherController : MonoBehaviour
 
     private int _dateOfRainfall;
     private int _hourOfRainfall;
+
+    public event UnityAction RainStarted;
+    public event UnityAction RainFinished;
     
     void Start()
     {
         PredictNextRainfall();
         
-        // Если хочешь протестировать как выглядит погода раскомменти строку снизу
-        // StartRain();
     }
-
+    /* Если хочешь протестировать как выглядит погода раскомменти этот блок
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            StartRain();
+        }
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            StopRain();
+        }
+    }
+    */
     private void OnEnable()
     {
         GameTime.DayChanged += CheckDayDelayToRainfall;
@@ -57,6 +71,7 @@ public class WeatherController : MonoBehaviour
         }
         
         _rain.transform.rotation = Quaternion.Euler(0,0, -Random.Range(10, 16));
+        RainStarted?.Invoke();
     }
 
     private void StopRain()
@@ -65,6 +80,7 @@ public class WeatherController : MonoBehaviour
         PredictNextRainfall();
         GameTime.DayChanged += CheckDayDelayToRainfall;
         GameTime.HourChanged -= DecreaseDuration;
+        RainFinished?.Invoke();
     }
 
     private void DecreaseDuration()
