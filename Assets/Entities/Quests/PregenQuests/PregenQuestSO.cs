@@ -107,6 +107,14 @@ public class PregenQuestSO : ScriptableObject
         private void OnEnable()
         {
             _quest = (PregenQuestSO)target;
+            randomExp = EditorPrefs.GetBool("randomExp", false);
+            randomReward = EditorPrefs.GetBool("randomReward", false);
+        }
+
+        private void OnDisable()
+        {
+            EditorPrefs.SetBool("randomExp", randomExp);
+            EditorPrefs.SetBool("randomReward", randomReward);
         }
 
         public override void OnInspectorGUI()

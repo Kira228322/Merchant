@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -18,9 +19,11 @@ public class TravelEventHandler : MonoBehaviour
     [SerializeField] private Animator _donkeyAnimator;
     private EventInTravel _nextEvent;
     private Transform _mainCanvas;
+    [SerializeField] private Transform _cameraTransform;
     private int _delayToNextEvent;
 
     private bool _banditEvent;
+    private Transform _previousPlayerParent;
 
     public enum EventMultiplierType {Luck, Diplomacy, Null}
 
@@ -28,6 +31,8 @@ public class TravelEventHandler : MonoBehaviour
     {
         _mainCanvas = FindObjectOfType<CanvasWarningGenerator>().gameObject.transform;
     }
+
+    
 
     public void StartEventIfTimerExpired() 
     {
@@ -41,6 +46,8 @@ public class TravelEventHandler : MonoBehaviour
 
     public void BreakingItemAfterJourney()
     {
+        OnTravelSceneExit();
+        
         List<InventoryItem> unverifiedItems = new();
         
         foreach (var item in Player.Instance.Inventory.ItemList)
@@ -126,11 +133,20 @@ public class TravelEventHandler : MonoBehaviour
 
     public void OnTravelSceneEnter()
     {
+        _previousPlayerParent = Player.Instance.transform.parent;
+        Player.Instance.transform.parent = _cameraTransform;
+        Player.Instance.transform.position = Vector3.zero;
+        
         if (EventFire(MapManager.CurrentRoad.Danger, false, EventMultiplierType.Luck))
             _banditEvent = true;
         else _banditEvent = false;
         
         RollNextEvent();
+    }
+
+    public void OnTravelSceneExit()
+    {
+        Player.Instance.transform.parent = _previousPlayerParent;
     }
 
     private void RollNextEvent()

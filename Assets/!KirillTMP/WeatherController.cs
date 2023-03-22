@@ -27,7 +27,7 @@ public class WeatherController : MonoBehaviour
         PredictNextRainfall();
         
     }
-    /* Если хочешь протестировать как выглядит погода раскомменти этот блок
+     // Если хочешь протестировать как выглядит погода раскомменти этот блок
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.R))
@@ -39,7 +39,6 @@ public class WeatherController : MonoBehaviour
             StopRain();
         }
     }
-    */
     private void OnEnable()
     {
         GameTime.DayChanged += CheckDayDelayToRainfall;
