@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 public static class GameTime
 {
+
     private static Timeflow _timeflow;
     private static float _timeScaleInTravel = 15; 
     public static float TimeScaleInTravel => _timeScaleInTravel; 
@@ -73,5 +74,14 @@ public static class GameTime
     public static float GetTimeScale()
     {
         return _timeflow.TimeScale;
+    }
+
+    public static TimeFlowSaveData SaveData()
+    {
+        return _timeflow.SaveData();
+    }
+    public static void LoadData(TimeFlowSaveData data)
+    {
+        _timeflow.LoadData(data);
     }
 }

@@ -50,6 +50,9 @@ public static class SaveLoadSystem<T>
 
         NpcDatabaseSaveData npcDatabaseSaveData = NpcDatabase.SaveNPCs();
         SaveLoadSystem<NpcDatabaseSaveData>.SaveData(npcDatabaseSaveData, "NpcDatabaseSave");
+
+        TimeFlowSaveData timeSaveData = GameTime.SaveData();
+        SaveLoadSystem<TimeFlowSaveData>.SaveData(timeSaveData, "TimeflowSave");
     }
     public static void LoadAll()
     {
@@ -61,6 +64,9 @@ public static class SaveLoadSystem<T>
 
         NpcDatabaseSaveData npcDatabaseSaveData = SaveLoadSystem<NpcDatabaseSaveData>.LoadData("NpcDatabaseSave");
         NpcDatabase.LoadNPCs(npcDatabaseSaveData);
+
+        TimeFlowSaveData timeSaveData = SaveLoadSystem<TimeFlowSaveData>.LoadData("TimeflowSave");
+        GameTime.LoadData(timeSaveData);
     }
 
 }

@@ -41,6 +41,7 @@ public class DayNightCycle : MonoBehaviour
     }
     private void OnSceneChanged(Scene scene, LoadSceneMode loadSceneMode)
     {
+        _activateLights = false;
         _lights.Clear();
         _lights = FindObjectsOfType<Light2D>(true).ToList(); //Получить список выключаемых светильников на новой сцене
         _lights.Remove(GetComponent<Light2D>()); //кроме себя
