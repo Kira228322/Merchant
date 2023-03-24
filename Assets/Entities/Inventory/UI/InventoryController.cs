@@ -189,6 +189,12 @@ public class InventoryController : MonoBehaviour
         {
             LeftMouseButtonPress();
         }
+        if (Input.touchCount > 0)
+            //Для пальца OnPointerExit срабатывает в том числе если палец отпускает нажатие. Для мышки не так. 
+            //Поэтому в GridInteract.OnPointerExit я запретил пальцу обнулять ItemGrid, если нажатие было отпущено
+            //Здесь, наоборот, нужно обнулить. Таким образом мы добиваемся, что OnPointerExit будет срабатывать только если палец
+            //действительно вышел за пределы ItemGrid. (24.03.23)
+            SelectedItemGrid = null;
     }
     private void LeftMouseButtonPress()
     {

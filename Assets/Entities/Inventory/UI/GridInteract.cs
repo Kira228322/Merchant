@@ -22,6 +22,14 @@ public class GridInteract : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        if (Input.touchCount > 0)
+        {
+            if (Input.GetTouch(0).phase == TouchPhase.Ended)
+            {
+                _inventoryController.SelectedItemGrid = _itemGrid;
+                return;
+            }
+        }
         _inventoryController.SelectedItemGrid = null;
     }
 
