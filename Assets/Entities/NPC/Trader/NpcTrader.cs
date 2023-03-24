@@ -228,16 +228,3 @@ public class NpcTrader : Npc
         }
     }
 }
-
-[CustomEditor(typeof(NpcTrader))]
-public class NpcTraderDataEditor : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        serializedObject.FindProperty("NpcData").isExpanded = false;
-
-        DrawPropertiesExcluding(serializedObject, "NpcData");
-
-        serializedObject.ApplyModifiedProperties();
-    }
-}
