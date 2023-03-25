@@ -206,7 +206,7 @@ public class TravelEventHandler : MonoBehaviour
             case EventMultiplierType.Luck:
                 if (positiveEvent)
                 {
-                    if (Random.Range(0, 101) <= probability * Player.Instance.Statistics.GetCoefForPositiveEvent())
+                    if (Random.Range(0, 101) <= 100 - (100 - probability) / Player.Instance.Statistics.GetCoefForPositiveEvent())
                         return true;
                 }
                 else
@@ -218,7 +218,7 @@ public class TravelEventHandler : MonoBehaviour
             case EventMultiplierType.Diplomacy:
                 if (positiveEvent)
                 {
-                    if (Random.Range(0, 101) <= probability * Player.Instance.Statistics.GetCoefForDiplomacyPositiveEvent())
+                    if (Random.Range(0, 101) <= 100 - (100 - probability) / Player.Instance.Statistics.GetCoefForDiplomacyPositiveEvent())
                         return true;
                 }
                 else
