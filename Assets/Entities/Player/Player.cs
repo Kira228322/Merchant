@@ -22,6 +22,7 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
     public PlayerStats Statistics = new();
     public PlayerNeeds Needs = new();
     public PlayerWagonStats WagonStats = new();
+    public List<CraftRecipe> Recipes = new();
     public int Money 
     { 
         get => _money;

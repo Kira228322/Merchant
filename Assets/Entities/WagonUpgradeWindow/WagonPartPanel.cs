@@ -12,4 +12,5 @@ public abstract class WagonPartPanel : MonoBehaviour
     [SerializeField] protected TMP_Text _cost;
 
     public abstract void Init(WagonPart wagonPart);
+    // TODO public abstract void OnButtonClick();
 }
