@@ -7,6 +7,9 @@ using UnityEngine;
 public class UsableItem : Item
 {
     public enum UsableType {Edible, Potion, Bottle, Teleport}
+    
+    [Space]
+    [Header("Special settings")]
     public UsableType UsableItemType;
     public int UsableValue;
     public Status Effect;

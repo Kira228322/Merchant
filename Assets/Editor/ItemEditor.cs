@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,28 +7,18 @@ using UnityEditor;
 [CustomEditor(typeof(Item))]
 public class ItemEditor : Editor
 {
+    private Item item;
+    private void OnEnable()
+    {
+        item = (Item)target;
+    }
+
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
-
-        Item item = (Item)target;
-
-        EditorGUILayout.Space(10);
-        EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField("Edible", GUILayout.MaxWidth(80));
-        // item.IsEdible = EditorGUILayout.Toggle(item.IsEdible);
-        EditorGUILayout.EndHorizontal();
-
-        // if (item.IsEdible)
-        // {
-        //     EditorGUILayout.Space(-4);
-        //     EditorGUILayout.BeginHorizontal();
-        //     EditorGUILayout.Space(20, true);
-        //     EditorGUILayout.LabelField("Food value", GUILayout.MaxWidth(110));
-        //     item.UsableValue = EditorGUILayout.IntField(item.UsableValue);
-        //     EditorGUILayout.EndHorizontal();
-        // }
-
+        
+        EditorGUILayout.Space(5);
+        
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("Perishable", GUILayout.MaxWidth(80));
         item.IsPerishable = EditorGUILayout.Toggle(item.IsPerishable);
