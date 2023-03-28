@@ -23,7 +23,7 @@ public class ItemDatabase : MonoBehaviour
 
     public static Item GetItem(string name)
     {
-        Item result = Instance.Items.ItemList.FirstOrDefault(item => item.Name == name);
+        Item result = Instance.Items.ItemList.FirstOrDefault(item => item.Name.ToLower() == name.ToLower());
         //Выражение Linq, аналогичное foreach (var item in itemlist) { if (item.Name == name) return item; else return null; } 
         if (result != null)
         {

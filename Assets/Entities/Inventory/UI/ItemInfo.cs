@@ -8,6 +8,7 @@ using TMPro;
 public class ItemInfo : MonoBehaviour
 {
     #region Поля
+    
     [SerializeField] private Image _itemIcon;
     [SerializeField] private Button _splitButton;
     [SerializeField] private Button _rotateButton;
@@ -27,6 +28,9 @@ public class ItemInfo : MonoBehaviour
     [SerializeField] private TMP_Text _boughtDaysAgoText;
     [SerializeField] private TMP_Text _foodValueText;
 
+    private Dictionary<UsableItem.UsableType, Action> _usableActions;
+
+    private UsableItem _currentUsableItem;
     private Player _player;
     private InventoryItem _currentItemSelected;
     private ItemGrid _lastItemGridSelected;
@@ -35,6 +39,13 @@ public class ItemInfo : MonoBehaviour
     private void Start()
     {
         _player = Player.Instance;
+        _usableActions = new()
+        {
+            { UsableItem.UsableType.Edible, Eat },
+            { UsableItem.UsableType.Bottle , UseBottle},
+            { UsableItem.UsableType.Potion, UsePotion},
+            { UsableItem.UsableType.Teleport , UseTeleport}
+        };
     }
 
     public void Initialize(InventoryItem item, ItemGrid itemGrid)
@@ -81,10 +92,11 @@ public class ItemInfo : MonoBehaviour
             _daysToSpoilText.alpha = 0;
             _boughtDaysAgoText.alpha = 0;
         }
-        if (item.ItemData.IsEdible)
+        if (item.ItemData is UsableItem)
         {
+            _currentUsableItem = _currentItemSelected.ItemData as UsableItem;
             _foodValueText.alpha = 1;
-            _foodValueText.text = $"+{item.ItemData.FoodValue} сытости";
+            _foodValueText.text = $"+{_currentUsableItem.UsableValue} сытости";
             _eatButton.gameObject.SetActive(true);
         }
         else
@@ -96,9 +108,9 @@ public class ItemInfo : MonoBehaviour
     }
     #endregion
     #region Методы работы с кнопками
-    public void OnEatButtonPressed()
+    public void OnUseButtonPressed()
     {
-        _player.Needs.RestoreHunger(_currentItemSelected.ItemData.FoodValue);
+        _usableActions[_currentUsableItem.UsableItemType]();
         _currentItemSelected.CurrentItemsInAStack--;
         _quantityText.text = "Количество: " +_currentItemSelected.CurrentItemsInAStack.ToString();
         if (_currentItemSelected.CurrentItemsInAStack == 0)
@@ -133,6 +145,32 @@ public class ItemInfo : MonoBehaviour
         _lastItemGridSelected.DestroyItem(_currentItemSelected);
         Destroy(gameObject);
     }
+    #endregion
+
+    #region Методы используемых предметов
+
+    private void Eat()
+    {
+        _player.Needs.RestoreHunger(_currentUsableItem.UsableValue);
+    }
+
+    private void UseBottle()
+    {
+        InventoryController.Instance.TryCreateAndInsertItem
+            (_player.ItemGrid, ItemDatabase.GetItem("Empty bottle"), 1, 0, true);
+        _player.Needs.RestoreHunger(_currentUsableItem.UsableValue);
+    }
+
+    private void UsePotion()
+    {
+        StatusManager.Instance.AddStatusForPlayer(_currentUsableItem.Effect);
+    }
+
+    private void UseTeleport()
+    {
+        
+    }
+
     #endregion
     public void Split(int amountToSplit) //Мб переместить его в InventoryController?
     {

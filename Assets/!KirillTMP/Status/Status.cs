@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-[CreateAssetMenu(fileName = "NewStatus", menuName = "Status or Item/Status")]
+[CreateAssetMenu(fileName = "NewStatus", menuName = "Status/Status")]
 public class Status : ScriptableObject
 {
     [Header("Status description")]

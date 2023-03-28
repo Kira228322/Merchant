@@ -15,18 +15,18 @@ public class ItemEditor : Editor
         EditorGUILayout.Space(10);
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("Edible", GUILayout.MaxWidth(80));
-        item.IsEdible = EditorGUILayout.Toggle(item.IsEdible);
+        // item.IsEdible = EditorGUILayout.Toggle(item.IsEdible);
         EditorGUILayout.EndHorizontal();
 
-        if (item.IsEdible)
-        {
-            EditorGUILayout.Space(-4);
-            EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.Space(20, true);
-            EditorGUILayout.LabelField("Food value", GUILayout.MaxWidth(110));
-            item.FoodValue = EditorGUILayout.IntField(item.FoodValue);
-            EditorGUILayout.EndHorizontal();
-        }
+        // if (item.IsEdible)
+        // {
+        //     EditorGUILayout.Space(-4);
+        //     EditorGUILayout.BeginHorizontal();
+        //     EditorGUILayout.Space(20, true);
+        //     EditorGUILayout.LabelField("Food value", GUILayout.MaxWidth(110));
+        //     item.UsableValue = EditorGUILayout.IntField(item.UsableValue);
+        //     EditorGUILayout.EndHorizontal();
+        // }
 
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("Perishable", GUILayout.MaxWidth(80));
