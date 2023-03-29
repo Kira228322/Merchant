@@ -15,6 +15,7 @@ public class PlayerData
 
     public PlayerWagonStatsSaveData WagonStats;
 
+    public PlayerRecipesSaveData Recipes;
     public PlayerData(Player player)
     {
         Money = player.Money;
@@ -23,7 +24,7 @@ public class PlayerData
         Inventory = player.Inventory.SaveData();
         Needs = player.Needs.SaveData();
         WagonStats = player.WagonStats.SaveData();
-
+        Recipes = new(player.Recipes);
     }
 
 }

@@ -74,6 +74,43 @@ public class PlayersInventory : MonoBehaviour, ISaveable<PlayersInventorySaveDat
         MaxTotalWeight = _startingMaxTotalWeight;
         CurrentTotalWeight = CalculateWeight();
     }
+    public int GetCount(Item item)
+    {
+        int result = 0;
+        foreach (InventoryItem inventoryItem in ItemList)
+        {
+            if (inventoryItem.ItemData.Name == item.Name)
+            {
+                result += inventoryItem.CurrentItemsInAStack;
+            }
+        }
+        return result;
+    }
+    public void RemoveItemsOfThisItemData(Item itemType, int amount)
+    {
+        if (GetCount(itemType) < amount)
+        {
+            Debug.LogError("Попытался убрать из инвентаря больше чем есть");
+            return;
+        }
+        int leftToRemove = amount;
+
+        for (int i = 0; i < ItemList.Count; i++)
+        {
+            if (ItemList[i].ItemData.Name == itemType.Name)
+            {
+                if (ItemList[i].CurrentItemsInAStack <= leftToRemove)
+                {
+                    leftToRemove -= ItemList[i].CurrentItemsInAStack;
+                    ItemGrid.RemoveItemsFromAStack(ItemList[i], ItemList[i].CurrentItemsInAStack);
+                }
+                else
+                {
+                    ItemGrid.RemoveItemsFromAStack(ItemList[i], leftToRemove); 
+                }
+            }
+        }
+    }
     public void AddItemInInventory(InventoryItem item)
     {
         ItemList.Add(item);

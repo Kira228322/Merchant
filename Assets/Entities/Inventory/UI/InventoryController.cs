@@ -351,7 +351,6 @@ public class InventoryController : MonoBehaviour
         SelectedItemGrid = initialItemGridState;
         return null;
     }
-
     public void DestroyItem(ItemGrid itemGrid, InventoryItem item)
     {
         ItemGrid initialItemGridState = SelectedItemGrid;

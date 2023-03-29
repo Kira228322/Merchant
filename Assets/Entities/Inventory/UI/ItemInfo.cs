@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
 
 public class ItemInfo : MonoBehaviour
 {
@@ -44,7 +45,8 @@ public class ItemInfo : MonoBehaviour
             { UsableItem.UsableType.Edible, Eat },
             { UsableItem.UsableType.Bottle , UseBottle},
             { UsableItem.UsableType.Potion, UsePotion},
-            { UsableItem.UsableType.Teleport , UseTeleport}
+            { UsableItem.UsableType.Teleport , UseTeleport},
+            { UsableItem.UsableType.Recipe, UseRecipe}
         };
     }
 
@@ -169,6 +171,13 @@ public class ItemInfo : MonoBehaviour
     private void UseTeleport()
     {
         
+    }
+
+    private void UseRecipe()
+    {
+        if (Player.Instance.Recipes.Any(recipe => recipe.ResultingItem.Name == _currentUsableItem.Recipe.ResultingItem.Name))
+            return;
+        Player.Instance.Recipes.Add(_currentUsableItem.Recipe);
     }
 
     #endregion

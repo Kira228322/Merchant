@@ -22,7 +22,7 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
     public PlayerStats Statistics = new();
     public PlayerNeeds Needs = new();
     public PlayerWagonStats WagonStats = new();
-    public List<CraftRecipe> Recipes = new();
+    public List<CraftingRecipe> Recipes = new();
     public int Money 
     { 
         get => _money;
@@ -120,6 +120,10 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
         Inventory.LoadData(saveData.Inventory);
         Experience = saveData.Experience;
         Needs.LoadData(saveData.Needs);
+        foreach (string recipeName in saveData.Recipes.recipeNames)
+        {
+            Recipes.Add(CraftingRecipeDatabase.GetRecipe(recipeName));
+        }
     }
 
     private void Update()
