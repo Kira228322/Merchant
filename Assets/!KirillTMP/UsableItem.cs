@@ -11,7 +11,8 @@ public class UsableItem : Item
     [Space]
     [Header("Special settings")]
     public UsableType UsableItemType;
-    public int UsableValue;
-    public Status Effect;
-    public CraftingRecipe Recipe;
+    
+    [HideInInspector]public int UsableValue;
+    [HideInInspector]public Status Effect;
+    [HideInInspector]public CraftingRecipe Recipe;
 }
