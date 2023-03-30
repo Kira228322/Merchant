@@ -51,8 +51,6 @@ public static class MapManager
 
     public static void TravelInit(Road road)
     {
-        CurrentRoad = road;  
-        
-        _playerIcon.transform.position = road.WayPoints[0].position;
+        CurrentRoad = road;
     }
 }

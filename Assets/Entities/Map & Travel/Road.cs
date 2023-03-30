@@ -36,9 +36,7 @@ public class Road : MonoBehaviour
         _lengthsOfWays = new float[WayPoints.Count];
         for (int i = 0; i < WayPoints.Count - 1; i++)
         {
-            _lengthsOfWays[i] = Convert.ToSingle(Math.Sqrt
-                (Math.Pow(WayPoints[i+1].position.y - WayPoints[i].position.y, 2) +
-                 Math.Pow(WayPoints[i+1].position.x - WayPoints[i].position.x, 2)));
+            _lengthsOfWays[i] = (WayPoints[i + 1].position - WayPoints[i].position).magnitude;
             _lengthOfRoad += _lengthsOfWays[i];
         }
     }
