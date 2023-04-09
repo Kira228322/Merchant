@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class CraftingHandler : MonoBehaviour
 {
@@ -10,8 +11,9 @@ public class CraftingHandler : MonoBehaviour
     [SerializeField] private VerticalLayoutGroup _recipesLayoutGroup;
     [SerializeField] private GameObject _recipeInformationWindow;
     [SerializeField] private Image _resultingItemIcon;
-    [SerializeField] private TMPro.TMP_Text _resultingItemDescription;
-    [SerializeField] private TMPro.TMP_Text _requiredCraftingLevelText;
+    [SerializeField] private TMP_Text _resultingItemDescription;
+    [SerializeField] private TMP_Text _requiredCraftingLevelText;
+    [SerializeField] private TMP_Text _currentCraftingLevelText;
     [SerializeField] private Button _craftButton;
     [SerializeField] private Image[] _plusSigns = new Image[2];
     [SerializeField] private UICraftingItemContainer[] _requiredItemContainers = new UICraftingItemContainer[3];
@@ -50,8 +52,10 @@ public class CraftingHandler : MonoBehaviour
         _resultingItemIcon.sprite = SelectedRecipe.ResultingItem.Icon;
         _resultingItemDescription.text = SelectedRecipe.ResultingItem.Description;
         _requiredCraftingLevelText.text = "“ребуемый уровень навыка: " + SelectedRecipe.RequiredCraftingLevel.ToString();
-
+        _currentCraftingLevelText.text = "“екущий уровень навыка: " + (Player.Instance.Statistics.TotalCrafting < SelectedRecipe.RequiredCraftingLevel ? $"<color=red>" : "") + Player.Instance.Statistics.TotalCrafting;
         bool isCraftButtonEnabled = true;
+        if (Player.Instance.Statistics.TotalCrafting < SelectedRecipe.RequiredCraftingLevel) 
+            isCraftButtonEnabled = false;
 
         for (int i = 0; i < SelectedRecipe.RequiredItems.Count; i++)
         //ожидаетс€, что i никогда не больше 2, ибо у нас всего 3 клеточки под предметы

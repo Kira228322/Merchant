@@ -113,13 +113,8 @@ public class ItemInfo : MonoBehaviour
     public void OnUseButtonPressed()
     {
         _usableActions[_currentUsableItem.UsableItemType]();
-        _currentItemSelected.CurrentItemsInAStack--;
-        _quantityText.text = "Количество: " +_currentItemSelected.CurrentItemsInAStack.ToString();
-        if (_currentItemSelected.CurrentItemsInAStack == 0)
-        {
-            _lastItemGridSelected.DestroyItem(_currentItemSelected);
-            Destroy(gameObject);
-        }
+        //Удаление одного предмета после использования вынесено в метод RemoveOneItemAfterUse()
+        //и теперь вызывается в методах словаря. 09.04.23
     }
     public void OnRotateButtonPressed()
     {
@@ -154,6 +149,7 @@ public class ItemInfo : MonoBehaviour
     private void Eat()
     {
         _player.Needs.RestoreHunger(_currentUsableItem.UsableValue);
+        RemoveOneItemAfterUse();
     }
 
     private void UseBottle()
@@ -161,23 +157,41 @@ public class ItemInfo : MonoBehaviour
         InventoryController.Instance.TryCreateAndInsertItem
             (_player.ItemGrid, ItemDatabase.GetItem("Empty bottle"), 1, 0, true);
         _player.Needs.RestoreHunger(_currentUsableItem.UsableValue);
+        RemoveOneItemAfterUse();
     }
 
     private void UsePotion()
     {
         StatusManager.Instance.AddStatusForPlayer(_currentUsableItem.Effect);
+        RemoveOneItemAfterUse();
     }
 
     private void UseTeleport()
     {
-        
+        //логика телепорта здесь
+        RemoveOneItemAfterUse();
     }
 
     private void UseRecipe()
     {
         if (Player.Instance.Recipes.Any(recipe => recipe.ResultingItem.Name == _currentUsableItem.Recipe.ResultingItem.Name))
+        {
+            FindObjectOfType<CanvasWarningGenerator>().CreateWarning("Рецепт уже известен", "Вы уже изучили этот рецепт");
             return;
+        }
         Player.Instance.Recipes.Add(_currentUsableItem.Recipe);
+        RemoveOneItemAfterUse();
+    }
+
+    private void RemoveOneItemAfterUse()
+    {
+        _currentItemSelected.CurrentItemsInAStack--;
+        _quantityText.text = "Количество: " + _currentItemSelected.CurrentItemsInAStack.ToString();
+        if (_currentItemSelected.CurrentItemsInAStack == 0)
+        {
+            _lastItemGridSelected.DestroyItem(_currentItemSelected);
+            Destroy(gameObject);
+        }
     }
 
     #endregion

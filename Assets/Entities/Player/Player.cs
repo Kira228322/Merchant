@@ -131,8 +131,6 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Experience.AddExperience(100);
-
-            Debug.Log(Experience.CurrentExperience);
         }
 
         if (Input.GetKeyDown(KeyCode.S))

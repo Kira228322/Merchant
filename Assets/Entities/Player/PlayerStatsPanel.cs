@@ -16,40 +16,35 @@ public class PlayerStatsPanel : MonoBehaviour
     [SerializeField] private TMP_Text _diplomacyText;
     [SerializeField] private TMP_Text _luckText;
     [SerializeField] private TMP_Text _toughnessText;
+    [SerializeField] private TMP_Text _craftingText;
 
     private List<TMP_Text> _statsList = new();
 
     private Player _player;
     private PlayerStats _playerStats;
     private PlayerExperience _playerExperience;
-    private void Awake()
+    private void Start()
     {
         _player = Player.Instance;
         _playerStats = _player.Statistics;
         _playerExperience = _player.Experience;
+        _playerExperience.ExperienceChanged += Refresh;
 
         _statsList.Add(_diplomacyText);
         _statsList.Add(_luckText);
         _statsList.Add(_toughnessText);
-    }
-    private void OnEnable()
-    {
-        _playerExperience.ExperienceChanged += Refresh;
+        _statsList.Add(_craftingText);
+        Refresh();
     }
     private void OnDisable()
     {
         _playerExperience.ExperienceChanged -= Refresh;
     }
-    private void Start()
-    {
-        Refresh();
-    }
+
     private void Refresh()
     {
         _currentLevelText.text = "Текущий уровень: " + _playerExperience.CurrentLevel;
 
-        //_experienceBarExperienceText.text = $"{_playerExperience.CurrentExperience} / {_playerExperience.ExperienceNeededForNextLevel()}";
-        // какой вариант лучше, сверху или снизу? Решили, что лучше снизу
          _experienceBarExperienceText.text = $"{_playerExperience.CurrentExperience - _playerExperience.ExperienceNeededForAllLevelsBefore(_playerExperience.CurrentLevel - 1)} / {_playerExperience.ExperienceNeededForLevel(_playerExperience.CurrentLevel)}";
 
         _experienceBarSlider.value = (float)(_playerExperience.CurrentExperience - //приведение не избыточно, иди нахуй
@@ -75,6 +70,7 @@ public class PlayerStatsPanel : MonoBehaviour
         _diplomacyText.text = "Дипломатия: " + _playerStats.TotalDiplomacy;
         _luckText.text = "Удача: " + _playerStats.TotalLuck;
         _toughnessText.text = "Стойкость: " + _playerStats.TotalToughness;
+        _craftingText.text = "Крафтинг: " + _playerStats.TotalCrafting;
 
     }
 
@@ -91,6 +87,11 @@ public class PlayerStatsPanel : MonoBehaviour
     public void LevelUpToughness()
     {
         _playerStats.IncreaseToughness();
+        OnStatLvlUpButtonPressed();
+    }
+    public void LevelUpCrafting()
+    {
+        _playerStats.IncreaseCrafting();
         OnStatLvlUpButtonPressed();
     }
     private void OnStatLvlUpButtonPressed()
