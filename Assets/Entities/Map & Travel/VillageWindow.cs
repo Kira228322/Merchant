@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class VillageWindow : Window
 {
-    [SerializeField] private Image _icone;
+    [SerializeField] private Image _icon;
     [SerializeField] private TMP_Text _villageName;
     [SerializeField] private TMP_Text _description;
     [SerializeField] private Button _button;
@@ -15,7 +15,7 @@ public class VillageWindow : Window
     public void Init(PlaceOnMap place)
     {
         _place = place;
-        _icone.sprite = place.Icone;
+        _icon.sprite = place.Icon;
         _villageName.text = place.VillageName;
         _description.text = place.Description;
         if (place.NumberOfPlace == MapManager.CurrentNumberOfPlace)

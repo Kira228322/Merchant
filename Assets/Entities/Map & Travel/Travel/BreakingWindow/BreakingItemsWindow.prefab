@@ -537,10 +537,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _container: {fileID: 6230641746219525308}
   _totalPriceText: {fileID: 639143293406630065}
-  _itemPrefub: {fileID: 5314209441946008386, guid: c103c95f5217ed341b4124591e054eca, type: 3}
+  _itemPrefab: {fileID: 5314209441946008386, guid: c103c95f5217ed341b4124591e054eca, type: 3}
 --- !u!95 &6022563742861523068
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -557,7 +557,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!225 &6233008215772665395
 CanvasGroup:
   m_ObjectHideFlags: 0

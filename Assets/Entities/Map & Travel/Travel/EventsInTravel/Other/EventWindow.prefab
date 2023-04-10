@@ -410,7 +410,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 84.45
+  m_fontSize: 44.15
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -509,10 +509,10 @@ MonoBehaviour:
   _description: {fileID: 396815020374653719}
   _contentButtons: {fileID: 396815020472914824}
   _sceneContainer: {fileID: 396815020205188994}
-  _buttonPrefub: {fileID: 3036794402954785761, guid: debd890d7afcc1b4986c20c7076a7479, type: 3}
+  _buttonPrefab: {fileID: 3036794402954785761, guid: debd890d7afcc1b4986c20c7076a7479, type: 3}
 --- !u!95 &8699311205533064059
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -529,7 +529,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!225 &829889934418547215
 CanvasGroup:
   m_ObjectHideFlags: 0

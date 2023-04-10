@@ -14,7 +14,7 @@ public class TravelEventHandler : MonoBehaviour
 
     [SerializeField] private List<EventInTravel> _eventsInTravels = new ();
     [SerializeField] private EventInTravel _eventInTravelBandits;
-    [SerializeField] private BreakingWindow _breakingWindowPrefub;
+    [SerializeField] private BreakingWindow _breakingWindowPrefab;
     [SerializeField] private Animator _wagonAnimator;
     [SerializeField] private Animator _donkeyAnimator;
     private EventInTravel _nextEvent;
@@ -78,7 +78,7 @@ public class TravelEventHandler : MonoBehaviour
         }
         if (deletedItems.Count > 0)
         {
-            GameObject breakingWindow = Instantiate(_breakingWindowPrefub.gameObject, _mainCanvas);
+            GameObject breakingWindow = Instantiate(_breakingWindowPrefab.gameObject, _mainCanvas);
             breakingWindow.GetComponent<BreakingWindow>().Init(deletedItems);
             breakingWindow.transform.position = new Vector3(Screen.width / 2, Screen.height / 2);
         }

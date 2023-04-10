@@ -7,7 +7,7 @@ public class StatusManager : MonoBehaviour
 {
     [HideInInspector] public static StatusManager Instance;
     
-    [SerializeField] private GameObject _statusPrefub;
+    [SerializeField] private GameObject _statusPrefab;
     [SerializeField] private Transform _container;
     
     public void AddStatusForPlayer(Status status)
@@ -21,7 +21,7 @@ public class StatusManager : MonoBehaviour
             }
         }
         
-        Instantiate(_statusPrefub, _container).GetComponent<StatusUIObject>().Init(status);
+        Instantiate(_statusPrefab, _container).GetComponent<StatusUIObject>().Init(status);
     }
 
     private void Start()

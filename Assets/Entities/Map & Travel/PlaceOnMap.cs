@@ -5,8 +5,8 @@ using UnityEngine;
 public class PlaceOnMap : MonoBehaviour
 {
     [Header("Village information")]
-    [SerializeField]private Sprite _icone;
-    public Sprite Icone => _icone;
+    [SerializeField]private Sprite _icon;
+    public Sprite Icon => _icon;
     [SerializeField] private string _villageName;
     public string VillageName => _villageName;
     [SerializeField] [TextArea(2,4)] private string _description;

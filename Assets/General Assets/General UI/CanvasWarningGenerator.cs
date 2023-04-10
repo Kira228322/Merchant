@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CanvasWarningGenerator : MonoBehaviour
 {
-    [SerializeField] private WarningWindow _warningWindowPrefub;
+    [SerializeField] private WarningWindow _warningWindowPrefab;
 
     public static CanvasWarningGenerator Instance;
 
@@ -23,6 +23,6 @@ public class CanvasWarningGenerator : MonoBehaviour
 
     public void CreateWarning(string label, string message)
     {
-        Instantiate(_warningWindowPrefub.gameObject, transform).GetComponent<WarningWindow>().Init(label, message);
+        Instantiate(_warningWindowPrefab.gameObject, transform).GetComponent<WarningWindow>().Init(label, message);
     }
 }

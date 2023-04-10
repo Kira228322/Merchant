@@ -260,7 +260,7 @@ RectTransform:
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &4230627605939230218
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -277,7 +277,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &1371552511877769265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -291,9 +292,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _container: {fileID: 4230627607074063178}
-  _bodyPanelPrefub: {fileID: 387443115205250791, guid: 0b4ea5a9dae37e14a90a872467c379d3, type: 3}
-  _wheelPanelPrefub: {fileID: 4707884776154721104, guid: c35fdd3fc6c04c242853ae08179af59b, type: 3}
-  _suspensionPanelPrefub: {fileID: 8008277518682663162, guid: afdf37999e0b17d43b168cdec580187c, type: 3}
+  _bodyPanelPrefab: {fileID: 387443115205250791, guid: 0b4ea5a9dae37e14a90a872467c379d3, type: 3}
+  _wheelPanelPrefab: {fileID: 4707884776154721104, guid: c35fdd3fc6c04c242853ae08179af59b, type: 3}
+  _suspensionPanelPrefab: {fileID: 8008277518682663162, guid: afdf37999e0b17d43b168cdec580187c, type: 3}
   _body: {fileID: 4230627607017445152}
   _suspension: {fileID: 4230627606316166190}
   _wheel: {fileID: 4230627606350949406}
@@ -1053,7 +1054,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 49.6
+  m_fontSize: 18
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1

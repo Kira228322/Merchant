@@ -13,7 +13,7 @@ public class EventWindow : MonoBehaviour
     [SerializeField] private TMP_Text _description;
     [SerializeField] private Transform _contentButtons; // родительский объект для кнопок
     [SerializeField] private Transform _sceneContainer;
-    [SerializeField] private GameObject _buttonPrefub;
+    [SerializeField] private GameObject _buttonPrefab;
     private Animator _animator;
 
     private void Start()
@@ -36,7 +36,7 @@ public class EventWindow : MonoBehaviour
 
         for (int i = 0; i < travelEvent.ButtonsLabel.Count; i++)
         {
-            EventInTravelButton button = Instantiate(_buttonPrefub, _contentButtons).GetComponent<EventInTravelButton>();
+            EventInTravelButton button = Instantiate(_buttonPrefab, _contentButtons).GetComponent<EventInTravelButton>();
             button.number = i;
             button.ButtonComponent.onClick.AddListener(() => travelEvent.OnButtonClick(button.number));
             button.ButtonText.text = travelEvent.ButtonsLabel[i];

@@ -7,7 +7,7 @@ public class BreakingWindow : MonoBehaviour
 {
     [SerializeField] private Transform _container;
     [SerializeField] private TMP_Text _totalPriceText;
-    [SerializeField] private ItemInBreakingWindow _itemPrefub;
+    [SerializeField] private ItemInBreakingWindow _itemPrefab;
     public void Init(List<InventoryItem> items)
     {
         int totalPrice = 0;
@@ -24,7 +24,7 @@ public class BreakingWindow : MonoBehaviour
                     j--;
                 }
             }
-            Instantiate(_itemPrefub.gameObject, _container).GetComponent<ItemInBreakingWindow>().
+            Instantiate(_itemPrefab.gameObject, _container).GetComponent<ItemInBreakingWindow>().
                 Init(items[i].ItemData.Icon, count, items[i].ItemData.Price);
             totalPrice += items[i].ItemData.Price * count;
             count = 1;

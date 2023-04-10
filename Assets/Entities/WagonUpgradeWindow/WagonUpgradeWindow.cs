@@ -9,9 +9,9 @@ using UnityEngine.UI;
 public class WagonUpgradeWindow : MonoBehaviour
 {
     [SerializeField] private Transform _container;
-    [SerializeField] private BodyPanel _bodyPanelPrefub;
-    [SerializeField] private WheelPanel _wheelPanelPrefub;
-    [SerializeField] private SuspensionPanel _suspensionPanelPrefub;
+    [SerializeField] private BodyPanel _bodyPanelPrefab;
+    [SerializeField] private WheelPanel _wheelPanelPrefab;
+    [SerializeField] private SuspensionPanel _suspensionPanelPrefab;
     [SerializeField] private Image _body;
     [SerializeField] private Image _suspension;
     [SerializeField] private Image _wheel;
@@ -23,9 +23,9 @@ public class WagonUpgradeWindow : MonoBehaviour
         _body.sprite = Player.Instance.WagonStats.Body.Sprite;
         _suspension.sprite = Player.Instance.WagonStats.Suspension.Sprite;
         _wheel.sprite = Player.Instance.WagonStats.Wheel.Sprite;
-        _slotsText.text = $"Колличество слотов: {Player.Instance.WagonStats.Body.InventoryRows*5}";
+        _slotsText.text = $"Количество слотов: {Player.Instance.WagonStats.Body.InventoryRows*5}";
         _weightText.text = $"Макс. масса груза: {Player.Instance.WagonStats.Suspension.MaxWeight}кг";
-        _modifierText.text = $"Модефикатор дороги: {Math.Round(Player.Instance.WagonStats.Wheel.QualityModifier - 1, 2) * 100}";
+        _modifierText.text = $"Модификатор дороги: {Math.Round(Player.Instance.WagonStats.Wheel.QualityModifier - 1, 2) * 100}";
         
         foreach (var upgrades in wagonUpgrader.WagonUpgrades)
         {
@@ -34,15 +34,15 @@ public class WagonUpgradeWindow : MonoBehaviour
 
             if (upgrades is Wheel)
             {
-                Instantiate(_wheelPanelPrefub.gameObject, _container).GetComponent<WheelPanel>().Init(upgrades);
+                Instantiate(_wheelPanelPrefab.gameObject, _container).GetComponent<WheelPanel>().Init(upgrades);
             }
             else if (upgrades is Suspension)
             {
-                Instantiate(_suspensionPanelPrefub.gameObject, _container).GetComponent<SuspensionPanel>().Init(upgrades);
+                Instantiate(_suspensionPanelPrefab.gameObject, _container).GetComponent<SuspensionPanel>().Init(upgrades);
             }
             else if (upgrades is Body)
             {
-                Instantiate(_bodyPanelPrefub.gameObject, _container).GetComponent<BodyPanel>().Init(upgrades);
+                Instantiate(_bodyPanelPrefab.gameObject, _container).GetComponent<BodyPanel>().Init(upgrades);
             } 
         }
     }
