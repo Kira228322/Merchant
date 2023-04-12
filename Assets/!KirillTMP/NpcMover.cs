@@ -48,7 +48,7 @@ public class NpcMover : MonoBehaviour
         if (Random.Range(0, 2) == 0)
             _moveDistanceAndDirection = -_moveDistanceAndDirection;
 
-        List<RaycastHit2D> raycastHits2D = new List<RaycastHit2D>();
+        List<RaycastHit2D> raycastHits2D = new();
         _rigidbody.Cast(new Vector2(_moveDistanceAndDirection, 0.1f), raycastHits2D, _groundAndNodeMask);
 
         if (raycastHits2D.Count > 0)
@@ -61,8 +61,8 @@ public class NpcMover : MonoBehaviour
     {
         ChooseMoveRangeAndDirection();
         _startPosition = transform.position;
-        Vector3 targetPosition = new Vector3(_startPosition.x + _moveDistanceAndDirection, _startPosition.y);
-        WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
+        Vector3 targetPosition = new(_startPosition.x + _moveDistanceAndDirection, _startPosition.y);
+        WaitForFixedUpdate waitForFixedUpdate = new();
 
         float countOfFrames = Math.Abs(_moveDistanceAndDirection / (_speed * Time.fixedDeltaTime));
         for (float i = 0; i < countOfFrames; i++)
@@ -83,7 +83,7 @@ public class NpcMover : MonoBehaviour
         // Random.Range(0.8f, 1.2f) - кастыль, надежда, что после ступенек не будет никакого барьера (По логике
         // если мы ставим ступеньки, то они куда-то обязательно должны вести, и сразу же тупика быть не должно)
         // Если сильно надо будет -- переделаю, так экономнее выходит для производительности
-        WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
+        WaitForFixedUpdate waitForFixedUpdate = new();
         
         float countOfFrames = (targetPosition-_startPosition).magnitude / (_speed/1.33f * Time.fixedDeltaTime);
         
@@ -112,7 +112,7 @@ public class NpcMover : MonoBehaviour
 
     private IEnumerator IDLE()
     {
-        WaitForSeconds waitForSeconds = new WaitForSeconds(Random.Range(_minIDLEDuration, _maxIDLEDuration));
+        WaitForSeconds waitForSeconds = new(Random.Range(_minIDLEDuration, _maxIDLEDuration));
         yield return waitForSeconds;
         _currentCoroutine = null;
     }

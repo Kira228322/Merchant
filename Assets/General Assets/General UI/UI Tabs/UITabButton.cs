@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 public class UITabButton : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private TabGroup _tabGroup;
-    public Image Background;
+    [HideInInspector] public Image Background;
 
     public void OnPointerClick(PointerEventData eventData)
     {

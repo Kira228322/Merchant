@@ -9,24 +9,24 @@ using Random = UnityEngine.Random;
 public class RandomBGGenerator : MonoBehaviour
 {
     [SerializeField] private Transform _spawnPoint;
-    [SerializeField] private List<GameObject> _trees = new List<GameObject>();
+    [SerializeField] private List<GameObject> _trees = new();
     [SerializeField] private float _minTimeTreeSpawn;
-    [SerializeField] private List<GameObject> _bush = new List<GameObject>();
+    [SerializeField] private List<GameObject> _bush = new();
     [SerializeField] private float _minTimeBushSpawn;
-    [SerializeField] private List<GameObject> _stones = new List<GameObject>();
+    [SerializeField] private List<GameObject> _stones = new();
     [SerializeField] private float _minTimeStoneSpawn;
-    [SerializeField] private List<GameObject> _grass = new List<GameObject>();
+    [SerializeField] private List<GameObject> _grass = new();
     [SerializeField] private float _minTimeGrassSpawn;
-    [SerializeField] private List<GameObject> _other = new List<GameObject>();
+    [SerializeField] private List<GameObject> _other = new();
     [SerializeField] private float _minTimeOtherObjSpawn;
 
 
     [SerializeField] private Transform _cloudPointSpawn;
-    [SerializeField] private List<GameObject> _cloud = new List<GameObject>();
+    [SerializeField] private List<GameObject> _cloud = new();
     [SerializeField] private float _minTimeCloudSpawn;
     private float _lastTimeCloudSpawn;
 
-    private List<BackGroundObject> _backGroundObjects = new List<BackGroundObject>();
+    private List<BackGroundObject> _backGroundObjects = new();
     public List<Cloud> CloudsOnScene = new();
     private void Start()
     {
@@ -120,9 +120,9 @@ public class RandomBGGenerator : MonoBehaviour
             if (renderer.gameObject.transform.childCount != 0)
                 for (int i = 0; i < renderer.gameObject.transform.childCount; i++)
                 {
-                    if (renderer.gameObject.transform.GetChild(i).TryGetComponent(out SpriteRenderer childRenderer))
+                    if (renderer.gameObject.transform.GetChild(i).TryGetComponent(out SpriteRenderer _))
                     {
-                        childRenderer = renderer.gameObject.transform.GetChild(i).GetComponent<SpriteRenderer>();
+                        SpriteRenderer childRenderer = renderer.gameObject.transform.GetChild(i).GetComponent<SpriteRenderer>();
                         childRenderer.sortingOrder = 9;
                     }
                 }

@@ -53,7 +53,7 @@ public class TravelEventHandler : MonoBehaviour
         foreach (var item in Player.Instance.Inventory.ItemList)
             unverifiedItems.Add(item);
 
-        List<InventoryItem> deletedItems = new List<InventoryItem>();
+        List<InventoryItem> deletedItems = new();
         
         float Roadbadness = (100 - MapManager.CurrentRoad.Quality) / Player.Instance.WagonStats.QualityModifier;
         // формула вероятности сломать предмет хрупкостью 100%
@@ -178,9 +178,9 @@ public class TravelEventHandler : MonoBehaviour
 
     private EventInTravel ChooseEvent()
     {
-        List<int> index = new List<int>();
+        List<int> index = new();
         int max = 0;
-        List<int> randomWeights = new List<int>();
+        List<int> randomWeights = new();
 
         for (int i = 0; i < _eventsInTravels.Count; i++)
             randomWeights.Add(Random.Range(0, _eventsInTravels[i].Weight + 1));

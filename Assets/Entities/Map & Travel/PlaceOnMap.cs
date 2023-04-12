@@ -22,7 +22,7 @@ public class PlaceOnMap : MonoBehaviour
     [SerializeField] private List<PlaceOnMap> _relatedPlaces;
     // места в которые можно попасть из данного места (как ребра в графе) 
     public List<PlaceOnMap> RelatedPlaces => _relatedPlaces;
-    [HideInInspector] public List<Road> _roads = new List<Road>();
+    [HideInInspector] public List<Road> _roads = new();
     
     
     private void Start()
