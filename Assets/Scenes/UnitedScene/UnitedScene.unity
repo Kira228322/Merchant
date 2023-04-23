@@ -350,7 +350,7 @@ MonoBehaviour:
   _breakingWindowPrefab: {fileID: 546455276793989935, guid: d50b309d3ca5fc84dbd055198afc1049, type: 3}
   _wagonAnimator: {fileID: 740298835689672114}
   _donkeyAnimator: {fileID: 740298835689672113}
-  _cameraTransform: {fileID: 0}
+  _cameraTransform: {fileID: 811678201}
 --- !u!1 &470071559
 GameObject:
   m_ObjectHideFlags: 0
@@ -2118,7 +2118,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1671313635}
   - component: {fileID: 1671313636}
-  - component: {fileID: 1671313637}
   m_Layer: 0
   m_Name: mover
   m_TagString: Untagged
@@ -2168,30 +2167,6 @@ MonoBehaviour:
   _speed: 1.9
   ground1: {fileID: 1480416221}
   ground2: {fileID: 1783224592}
---- !u!114 &1671313637
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1671313634}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 04554d0b54571914d83a915ab493c71b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _timeCounter: {fileID: 1462582151984252839}
-  _eventWindow: {fileID: 1498094328}
-  _mover: {fileID: 1671313636}
-  _generator: {fileID: 1180428259}
-  _eventsInTravels:
-  - {fileID: -8589152358707773185, guid: 5d652baef232df9439a04e7123a41dd2, type: 3}
-  - {fileID: 7068342091038573783, guid: 3e4457c3a389a3944933e332e55e7973, type: 3}
-  _eventInTravelBandits: {fileID: 7555400876554805685, guid: e7e5fc12082c1814c8dfa4e584ca9445, type: 3}
-  _breakingWindowPrefab: {fileID: 546455276793989935, guid: d50b309d3ca5fc84dbd055198afc1049, type: 3}
-  _wagonAnimator: {fileID: 740298835689672114}
-  _donkeyAnimator: {fileID: 740298835689672113}
-  _cameraTransform: {fileID: 811678201}
 --- !u!1 &1718948585
 GameObject:
   m_ObjectHideFlags: 0
@@ -3360,7 +3335,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _travelTime: {fileID: 1462582150585380938}
-  _eventHandler: {fileID: 1671313637}
+  _eventHandler: {fileID: 204853900}
 --- !u!1001 &5287679346267402409
 PrefabInstance:
   m_ObjectHideFlags: 0
