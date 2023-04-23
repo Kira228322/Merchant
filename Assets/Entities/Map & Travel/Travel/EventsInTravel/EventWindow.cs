@@ -47,7 +47,7 @@ public class EventWindow : MonoBehaviour
     {
         _animator.SetTrigger("EventEnd");
 
-        WaitForSeconds waitForSeconds = new WaitForSeconds(1);
+        WaitForSeconds waitForSeconds = new(1);
         yield return waitForSeconds;
         
         for (int i = 0; i < _contentButtons.childCount; i++)

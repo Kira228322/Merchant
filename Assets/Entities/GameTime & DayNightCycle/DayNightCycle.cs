@@ -25,15 +25,15 @@ public class DayNightCycle : MonoBehaviour
     {
         GameTime.MinuteChanged += OnMinuteChanged;
         SceneManager.sceneLoaded += OnSceneChanged;
-        _weatherController.RainStarted += OnRainStarted;
-        _weatherController.RainFinished += OnRainFinished;
+        _weatherController.WeatherStarted += OnWeatherStarted;
+        _weatherController.WeatherFinished += OnWeatherFinished;
     }
     private void OnDisable()
     {
         GameTime.MinuteChanged -= OnMinuteChanged;
         SceneManager.sceneLoaded -= OnSceneChanged;
-        _weatherController.RainStarted -= OnRainStarted;
-        _weatherController.RainFinished -= OnRainFinished;
+        _weatherController.WeatherStarted -= OnWeatherStarted;
+        _weatherController.WeatherFinished -= OnWeatherFinished;
     }
     private void Start()
     {
@@ -79,30 +79,30 @@ public class DayNightCycle : MonoBehaviour
             }
         }
     }
-    private void OnRainStarted()
+    private void OnWeatherStarted()
     {
-        GameTime.MinuteChanged += IncreaseRainWeightOffset;
+        GameTime.MinuteChanged += IncreaseWeatherWeightOffset;
     }
-    private void OnRainFinished()
+    private void OnWeatherFinished()
     {
-        GameTime.MinuteChanged += DecreaseRainWeightOffset;
+        GameTime.MinuteChanged += DecreaseWeatherWeightOffset;
     }
-    private void IncreaseRainWeightOffset()
+    private void IncreaseWeatherWeightOffset()
     {
         _rainWeightOffset += 0.03f;
         if (_rainWeightOffset >= 0.3f)
         {
             _rainWeightOffset = 0.3f;
-            GameTime.MinuteChanged -= IncreaseRainWeightOffset;
+            GameTime.MinuteChanged -= IncreaseWeatherWeightOffset;
         }
     }
-    private void DecreaseRainWeightOffset()
+    private void DecreaseWeatherWeightOffset()
     {
         _rainWeightOffset -= 0.03f;
         if (_rainWeightOffset <= 0)
         {
             _rainWeightOffset = 0;
-            GameTime.MinuteChanged -= DecreaseRainWeightOffset;
+            GameTime.MinuteChanged -= DecreaseWeatherWeightOffset;
         }
     }
 }

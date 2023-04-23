@@ -7,116 +7,120 @@ using Random = UnityEngine.Random;
 
 public class WeatherController : MonoBehaviour
 {
+
+    //(21.04.23) Был проведен реворк данного скрипта с целью привязать его к системе ивентов
+    //Изменился принцип действия, теперь будет так: this считает, когда пора начинать дождь, как и прежде. Когда это время наступает,
+    //он сигнализирует в GlobalEventHandler, что надо создать GlobalEvent_Weather, передаёт туда информацию
+    //(информация - сила погоды и её длительность). После создания ивента, он (ивент) запускает StartWeather() в this.
+    //После этого время считать будет уже GlobalEventHandler. Когда пройдет нужное время,
+    //то GlobalEventHandler остановит свой ивент, а ивент остановит партиклы у this, параллельно запуская PredictNextWeather.
+    //Вот такая немного запутанная структура, тем не менее объединяющая системы погоды и ивентов.
+    //
+    //  P.S. Сразу отвечу на вопрос "нахуя, а главное зачем?" - так можно будет легко получать информацию о том,
+    //идёт ли сейчас дождь и знать его силу. Может использоваться, например, в диалогах или в каких-то других условиях
+    //  P.P.S. Ещё переименовал почти все упоминания Rain -> Weather. Ну, я полагаю, как минимум снег тоже будет.
+    //Там просто другую партиклсистему добавим и сделаем енум в будущем.
+
     [SerializeField] private ParticleSystem _rain;
-    private enum StrengthOfRain {MushroomRain, OrdinaryRain, Downpour}
-    private StrengthOfRain _strengthOfRain;
+    private enum StrengthOfWeather {Light, Medium, Heavy}
+    private StrengthOfWeather _strengthOfWeather;
     
-    private int _minDelayToNextRainfall = 3;
-    private int _maxDelayToNextRainfall = 9;
+    private int _minDelayToNextPrecipitation = 3;
+    private int _maxDelayToNextPrecipitation = 9;
     
-    private int _durationOfRainfallInHours;
+    private int _durationOfWeatherInHours;
 
-    private int _dateOfRainfall;
-    private int _hourOfRainfall;
+    private int _dateOfPrecipitation;
+    private int _hourOfPrecipitation;
 
-    public event UnityAction RainStarted;
-    public event UnityAction RainFinished;
-    
+    public event UnityAction WeatherStarted;
+    public event UnityAction WeatherFinished;
+
     void Start()
     {
-        PredictNextRainfall();
-        
-    }
-     // Если хочешь протестировать как выглядит погода раскомменти этот блок
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            StartRain();
-        }
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            StopRain();
-        }
+        PredictNextPrecipitation();
     }
     private void OnEnable()
     {
-        GameTime.DayChanged += CheckDayDelayToRainfall;
+        GameTime.DayChanged += CheckDayDelayToPrecipitation;
     }
 
     private void OnDisable()
     {
-        GameTime.DayChanged -= CheckDayDelayToRainfall;
+        GameTime.DayChanged -= CheckDayDelayToPrecipitation;
     }
 
-    private void StartRain()
+    public void StartWeather()
     {
         _rain.Play();
         // TODO потом можно еще менять глобальное освещение
-        switch (_strengthOfRain)
+        switch (_strengthOfWeather)
         {
-            case StrengthOfRain.MushroomRain:
+            case StrengthOfWeather.Light:
                 SetRainParams(35, 6.5f, 0.11f);
-                _durationOfRainfallInHours = Random.Range(3, 12);
+                _durationOfWeatherInHours = Random.Range(3, 12);
                 break;
-            case StrengthOfRain.OrdinaryRain:
+            case StrengthOfWeather.Medium:
                 SetRainParams(80, 7f, 0.14f);
-                _durationOfRainfallInHours = Random.Range(4, 15);
+                _durationOfWeatherInHours = Random.Range(4, 15);
                 break;
-            case StrengthOfRain.Downpour:
+            case StrengthOfWeather.Heavy:
                 SetRainParams(145, 7.7f, 0.16f);
-                _durationOfRainfallInHours = Random.Range(3, 8);
+                _durationOfWeatherInHours = Random.Range(3, 8);
                 break;
         }
-        
+        WeatherStarted?.Invoke();
         _rain.transform.rotation = Quaternion.Euler(0,0, -Random.Range(10, 16));
-        RainStarted?.Invoke();
     }
 
-    private void StopRain()
+    public void StopWeather()
     {
         _rain.Stop();
-        PredictNextRainfall();
-        GameTime.DayChanged += CheckDayDelayToRainfall;
-        GameTime.HourChanged -= DecreaseDuration;
-        RainFinished?.Invoke();
+        PredictNextPrecipitation();
+        GameTime.DayChanged += CheckDayDelayToPrecipitation;
+        WeatherFinished?.Invoke();
     }
 
-    private void DecreaseDuration()
+    private void CheckDayDelayToPrecipitation()
     {
-        _durationOfRainfallInHours--;
-        if (_durationOfRainfallInHours <= 0)
-            StopRain();
-    }
-
-    private void CheckDayDelayToRainfall()
-    {
-        if (_dateOfRainfall == GameTime.CurrentDay)
+        if (_dateOfPrecipitation == GameTime.CurrentDay)
         {
-            GameTime.HourChanged += CheckHourDelayToRainfall;
-            GameTime.DayChanged -= CheckDayDelayToRainfall;
+            GameTime.HourChanged += CheckHourDelayToPrecipitation;
+            GameTime.DayChanged -= CheckDayDelayToPrecipitation;
         }
     }
 
-    private void CheckHourDelayToRainfall()
+    private void CheckHourDelayToPrecipitation()
     {
-        if (_hourOfRainfall == GameTime.Hours)
+        if (_hourOfPrecipitation == GameTime.Hours)
         {
-            GameTime.HourChanged -= CheckHourDelayToRainfall;
-            StartRain();
-            GameTime.HourChanged += DecreaseDuration;
+            GameTime.HourChanged -= CheckHourDelayToPrecipitation;
+
+            GlobalEvent_Weather eventToAdd = (GlobalEvent_Weather)GlobalEventHandler.Instance.AddGlobalEvent
+                (typeof(GlobalEvent_Weather), _durationOfWeatherInHours);
+            eventToAdd.StrengthOfWeather = (int)_strengthOfWeather;
         }
     }
-    
-    
 
-    private void PredictNextRainfall()
+    private void PredictNextPrecipitation()
     {
-        _dateOfRainfall = GameTime.CurrentDay + Random.Range(_minDelayToNextRainfall, _maxDelayToNextRainfall + 1);
-        _hourOfRainfall = Random.Range(1, 24); // на всякий случай от 1 до 24, а не от 0 до 24, тк как хз
+        _dateOfPrecipitation = GameTime.CurrentDay + Random.Range(_minDelayToNextPrecipitation, _maxDelayToNextPrecipitation + 1);
+        _hourOfPrecipitation = Random.Range(1, 24); // на всякий случай от 1 до 24, а не от 0 до 24, тк как хз
         // как там просиходит событие, когда меняется день. Тонкая штука. См метод CheckDayDelayToRainfall
         
-        _strengthOfRain = (StrengthOfRain)Random.Range(0, Enum.GetNames(typeof(StrengthOfRain)).Length);
+        _strengthOfWeather = (StrengthOfWeather)Random.Range(0, Enum.GetNames(typeof(StrengthOfWeather)).Length);
+        switch (_strengthOfWeather)
+        {
+            case StrengthOfWeather.Light:
+                _durationOfWeatherInHours = Random.Range(3, 12);
+                break;
+            case StrengthOfWeather.Medium:
+                _durationOfWeatherInHours = Random.Range(4, 15);
+                break;
+            case StrengthOfWeather.Heavy:
+                _durationOfWeatherInHours = Random.Range(3, 8);
+                break;
+        }
     }
 
     private void SetRainParams(int rateOverTime, float speed, float maxSizeOfDrop)
