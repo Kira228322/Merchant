@@ -53,6 +53,12 @@ public static class SaveLoadSystem<T>
 
         TimeFlowSaveData timeSaveData = GameTime.SaveData();
         SaveLoadSystem<TimeFlowSaveData>.SaveData(timeSaveData, "TimeflowSave");
+
+        CooldownHandlerSaveData cooldownHandlerSaveData = Object.FindObjectOfType<CooldownHandler>().SaveData();
+        SaveLoadSystem<CooldownHandlerSaveData>.SaveData(cooldownHandlerSaveData, "CooldownSave");
+
+        GlobalEventHandlerSaveData globalEventSaveData = GlobalEventHandler.Instance.SaveData();
+        SaveLoadSystem<GlobalEventHandlerSaveData>.SaveData(globalEventSaveData, "GlobalEventSave");
     }
     public static void LoadAll()
     {
@@ -67,6 +73,12 @@ public static class SaveLoadSystem<T>
 
         TimeFlowSaveData timeSaveData = SaveLoadSystem<TimeFlowSaveData>.LoadData("TimeflowSave");
         GameTime.LoadData(timeSaveData);
+
+        CooldownHandlerSaveData cooldownHandlerSaveData = SaveLoadSystem<CooldownHandlerSaveData>.LoadData("CooldownSave");
+        Object.FindObjectOfType<CooldownHandler>().LoadData(cooldownHandlerSaveData);
+
+        GlobalEventHandlerSaveData globalEventSaveData = SaveLoadSystem<GlobalEventHandlerSaveData>.LoadData("GlobalEventSave");
+        GlobalEventHandler.Instance.LoadData(globalEventSaveData);
     }
 
 }

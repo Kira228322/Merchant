@@ -36,7 +36,7 @@ public class GlobalEventHandler : MonoBehaviour
         GameTime.DayChanged -= OnDayChanged;
     }
 
-    public Type RollRandomEventType()
+    private Type RollRandomEventType()
     {
         List<Type> uncheckedTypes = new(_globalEventTypes);
         while (uncheckedTypes.Count > 0)
@@ -63,6 +63,7 @@ public class GlobalEventHandler : MonoBehaviour
         ActiveGlobalEvents.Add(globalEvent);
         return globalEvent;
     }
+    
 
     private void OnHourChanged() //уменьшить счётчик у каждого элемента и остановить истёкшие
     {
@@ -79,7 +80,25 @@ public class GlobalEventHandler : MonoBehaviour
     }
     private void OnDayChanged()
     {
+        AddRandomEvent();
+    }
+    public void AddRandomEvent()
+    {
         AddGlobalEvent(RollRandomEventType(), Random.Range(0, 12));
+    }
+
+    public GlobalEventHandlerSaveData SaveData()
+    {
+        GlobalEventHandlerSaveData saveData = new(ActiveGlobalEvents);
+        return saveData;
+    }
+    public void LoadData(GlobalEventHandlerSaveData saveData)
+    {
+        foreach (IGlobalEvent globalEvent in saveData.SavedGlobalEvents)
+        {
+            ActiveGlobalEvents.Add(globalEvent);
+            globalEvent.Execute();
+        }
     }
 
 }
