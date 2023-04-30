@@ -9,8 +9,8 @@ public class UIClock : MonoBehaviour
     [SerializeField] private Image _nextTimeImage;
     [SerializeField] private GameObject _detailedTimeObject;
     [SerializeField] private TMPro.TMP_Text _detailedTime;
-    [SerializeField] private List<Sprite> _timeSprites = new List<Sprite>();
-    [SerializeField] private List<Sprite> _weatherSprites = new List<Sprite>();
+    [SerializeField] private List<Sprite> _timeSprites = new();
+    [SerializeField] private List<Sprite> _weatherSprites = new();
     private WeatherController _weatherController;
     private Coroutine _currentCoroutine;
     
@@ -33,61 +33,62 @@ public class UIClock : MonoBehaviour
 
     private void OnHourChanged()
     {
+        bool isWeatherActive = GlobalEventHandler.Instance.IsEventActive<GlobalEvent_Weather>();
         switch (GameTime.Hours)
         {
             case int n when n >= 5 && n <= 9:
-                if (0 == 1) // TODO если идет дождь
+                if (isWeatherActive)
                     if ((int)_weatherController.WeatherStrength == 2) // сильный дождь
                         _nextTimeImage.sprite = _weatherSprites[3];
                     else
                         _nextTimeImage.sprite = _weatherSprites[0];
-                
-                _nextTimeImage.sprite = _timeSprites[0];
+
+                else _nextTimeImage.sprite = _timeSprites[0];
                 break;
             case int n when n >= 10 && n <= 14:
-                if (0 == 1) // TODO если идет дождь
+                if (isWeatherActive)
                     if ((int)_weatherController.WeatherStrength == 2) // сильный дождь
                         _nextTimeImage.sprite = _weatherSprites[3];
                     else
                         _nextTimeImage.sprite = _weatherSprites[0];
-                
-                _nextTimeImage.sprite = _timeSprites[1];
-                 break;
+
+                else _nextTimeImage.sprite = _timeSprites[1];
+                break;
             case int n when n >= 15 && n <= 18:
-                if (0 == 1) // TODO если идет дождь
+                if (isWeatherActive)
                     if ((int)_weatherController.WeatherStrength == 2) // сильный дождь
                         _nextTimeImage.sprite = _weatherSprites[4];
                     else
                         _nextTimeImage.sprite = _weatherSprites[1];
-                
-                _nextTimeImage.sprite = _timeSprites[2];
+
+                else _nextTimeImage.sprite = _timeSprites[2];
                 break;
             case int n when n >= 19 && n <= 21:
-                if (0 == 1) // TODO если идет дождь
+                if (isWeatherActive)
                     if ((int)_weatherController.WeatherStrength == 2) // сильный дождь
                         _nextTimeImage.sprite = _weatherSprites[4];
                     else
                         _nextTimeImage.sprite = _weatherSprites[1];
-                
-                _nextTimeImage.sprite = _timeSprites[3];
+
+                else _nextTimeImage.sprite = _timeSprites[3];
                 break;
             case int n when n >= 22 || n <= 1:
-                if (0 == 1) // TODO если идет дождь
+                if (isWeatherActive)
                     if ((int)_weatherController.WeatherStrength == 2) // сильный дождь
                         _nextTimeImage.sprite = _weatherSprites[5];
                     else
                         _nextTimeImage.sprite = _weatherSprites[2];
-                
-                _nextTimeImage.sprite = _timeSprites[4];
+
+                else _nextTimeImage.sprite = _timeSprites[4];
                 break;
             case int n when n >= 2 && n <= 4:
-                if (0 == 1) // TODO если идет дождь
+                if (isWeatherActive)
                     if ((int)_weatherController.WeatherStrength == 2) // сильный дождь
                         _nextTimeImage.sprite = _weatherSprites[5];
                     else
                         _nextTimeImage.sprite = _weatherSprites[2];
-                
-                _nextTimeImage.sprite = _timeSprites[5];
+
+                else _nextTimeImage.sprite = _timeSprites[5];
                 break;
         }
         
@@ -99,7 +100,7 @@ public class UIClock : MonoBehaviour
 
     private IEnumerator ChangeImageAnimation()
     {
-        WaitForSeconds waitForSeconds = new WaitForSeconds(0.02f);
+        WaitForSeconds waitForSeconds = new(0.02f);
         Color currentColor = _currentTimeImage.color;
         Color nextColor = _nextTimeImage.color;
         while (_currentTimeImage.color.a > 0)
@@ -128,10 +129,10 @@ public class UIClock : MonoBehaviour
     private IEnumerator ShowDetailedTime()
     {
         WaitForSeconds waitForSeconds = new(2.5f);
-        _detailedTimeObject.gameObject.SetActive(true);
+        _detailedTimeObject.SetActive(true);
         _detailedTime.text = $"День {GameTime.CurrentDay}\n{GameTime.Hours:D2}:{GameTime.Minutes:D2}";
         yield return waitForSeconds;
-        _detailedTimeObject.gameObject.SetActive(false);
+        _detailedTimeObject.SetActive(false);
     }
 
 }

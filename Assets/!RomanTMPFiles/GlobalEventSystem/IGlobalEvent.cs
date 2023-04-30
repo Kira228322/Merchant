@@ -12,6 +12,8 @@ public interface IGlobalEvent
 
 public interface IRandomGlobalEvent : IGlobalEvent
 {
+    static int MinDurationHours { get; }
+    static int MaxDurationHours { get; }
     static float BaseChance { get; }        //Ѕазовый шанс выпадени€ этого ивента. ”величиваетс€, если ивент долго не выпадал
     static int CooldownDays { get; }        //»вент не может выпасть чаще чем раз в CooldownDays дней
     static bool IsConcurrent { get; }       //ћожет ли одновременно быть два и более ивента такого типа?

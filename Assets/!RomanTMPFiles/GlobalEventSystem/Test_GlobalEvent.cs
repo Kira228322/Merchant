@@ -5,6 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class Test_GlobalEvent : IRandomGlobalEvent
 {
+    public static int MinDurationHours { get; } = 12;
+    public static int MaxDurationHours { get; } = 23;
     public static int CooldownDays { get; } = 2;
     public static float BaseChance { get; } = 0.3f;
     public static bool IsConcurrent { get; } = true;

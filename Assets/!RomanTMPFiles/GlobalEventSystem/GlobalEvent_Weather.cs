@@ -11,7 +11,6 @@ public class GlobalEvent_Weather : IGlobalEvent
     public int DurationHours { get; set; }
 
     public int StrengthOfWeather;
-
     public void Execute()
     {
         _weatherController = UnityEngine.Object.FindObjectOfType<WeatherController>();

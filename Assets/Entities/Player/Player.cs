@@ -139,7 +139,7 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
         }
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            GlobalEventHandler.Instance.AddRandomEvents();
+            GlobalEventHandler.Instance.AddGlobalEvent(typeof(GlobalEvent_Weather), 12);
         }
 
         if (Input.GetKeyDown(KeyCode.L))

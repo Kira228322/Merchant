@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using UnityEngine;
@@ -10,6 +11,7 @@ using Random = UnityEngine.Random;
 
 public class GlobalEventHandler : MonoBehaviour
 {
+    #region Вспомогательные классы, поля и свойства
     [Serializable]
     public class EventTypeInformation
     {
@@ -33,6 +35,8 @@ public class GlobalEventHandler : MonoBehaviour
 
     public List<IGlobalEvent> ActiveGlobalEvents = new();
 
+    #endregion
+    #region Методы реакции на события
     private void Awake()
     {
         if (Instance == null)
@@ -56,6 +60,25 @@ public class GlobalEventHandler : MonoBehaviour
         GameTime.DayChanged -= OnDayChanged;
     }
 
+    private void OnDayChanged()
+    {
+        AddRandomEvents();
+    }
+    private void OnHourChanged() //уменьшить счётчик у каждого элемента и остановить истёкшие
+    {
+        ActiveGlobalEvents.ForEach(globalEvent =>
+        {
+            globalEvent.DurationHours--;
+
+            if (globalEvent.DurationHours <= 0)
+            {
+                globalEvent.Terminate();
+            }
+        });
+        ActiveGlobalEvents.RemoveAll(globalEvent => globalEvent.DurationHours <= 0);
+    }
+    #endregion
+    #region Методы рандомных глобальныхИвентов
     private List<Type> RollRandomEventTypes()
     {
         List<Type> result = new();
@@ -71,7 +94,7 @@ public class GlobalEventHandler : MonoBehaviour
                 //Попробовать рольнуть его шанс. Если не получится, добавить timesNotRolled.
                 //Если получится, обнулить timesNotRolled.
                 float baseChance = (float)selectedTypeInfo.Type.GetProperty("BaseChance").GetValue(null);
-
+                
                 float additionalChance = 0;
                 //Новый additionalChance = baseChance + старый additionalChance + 10% от недостающего
                 //Если ивент имеет 50% шанс то если он 1 раз не выпал 55% станет, второй раз 59,5% и тд
@@ -96,42 +119,41 @@ public class GlobalEventHandler : MonoBehaviour
         }
         return result;
     }
+    public void AddRandomEvents() //public пока тестирую
+    {
+        foreach (Type type in RollRandomEventTypes())
+        {
+            int minDurationHours = (int)type.GetProperty("MinDurationHours").GetValue(null);
+            int maxDurationHours = (int)type.GetProperty("MaxDurationHours").GetValue(null);
+            AddGlobalEvent(type, Random.Range(minDurationHours, maxDurationHours + 1));
+        }
+    }
+    #endregion
+    #region Методы работы с ивентами (добавить или получить информацию об активном ивенте)
     public IGlobalEvent AddGlobalEvent(Type globalEventType, int durationHours)
     {
-        if (globalEventType == null) return null;
+        if (globalEventType == null) 
+            return null;
         IGlobalEvent globalEvent = (IGlobalEvent)Activator.CreateInstance(globalEventType);
         globalEvent.DurationHours = durationHours;
         globalEvent.Execute();
         ActiveGlobalEvents.Add(globalEvent);
         return globalEvent;
     }
-    
-
-    private void OnHourChanged() //уменьшить счётчик у каждого элемента и остановить истёкшие
+    public bool IsEventActive<T>() where T: IGlobalEvent
     {
-        ActiveGlobalEvents.ForEach(globalEvent =>
-        {
-            globalEvent.DurationHours--;
-
-            if (globalEvent.DurationHours <= 0)
-            {
-                globalEvent.Terminate();
-            }
-        });
-        ActiveGlobalEvents.RemoveAll(globalEvent => globalEvent.DurationHours <= 0);
+        return ActiveGlobalEvents.Any(globalEvent => globalEvent.GetType() == typeof(T));
     }
-    private void OnDayChanged()
+    public T GetActiveEventByType<T>() where T: IGlobalEvent
     {
-        AddRandomEvents();
+        return (T)ActiveGlobalEvents.FirstOrDefault(globalEvent => globalEvent.GetType() == typeof(T));
     }
-    public void AddRandomEvents()
+    public T[] GetActiveEventsByType<T>() where T: IGlobalEvent
     {
-        foreach (Type type in RollRandomEventTypes())
-        {
-            AddGlobalEvent(type, durationHours: Random.Range(0, 13));
-        }
+        return ActiveGlobalEvents.OfType<T>().ToArray();
     }
-
+    #endregion
+    #region Save-load
     public GlobalEventHandlerSaveData SaveData()
     {
         GlobalEventHandlerSaveData saveData = new(ActiveGlobalEvents, _randomEventTypeInformations);
@@ -146,5 +168,5 @@ public class GlobalEventHandler : MonoBehaviour
         }
         _randomEventTypeInformations = new(saveData.CooldownInformations);
     }
-
+    #endregion
 }

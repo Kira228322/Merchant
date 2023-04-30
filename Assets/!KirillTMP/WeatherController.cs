@@ -43,7 +43,7 @@ public class WeatherController : MonoBehaviour
     }
 
     // РАСКОММЕНТИ КОД НИЖЕ ЧТОБЫ ПРОТЕСТИТЬ
-    
+
     // private void Update()
     // {
     //     if (Input.GetKeyDown(KeyCode.Q))
@@ -129,20 +129,7 @@ public class WeatherController : MonoBehaviour
         _dateOfPrecipitation = GameTime.CurrentDay + Random.Range(_minDelayToNextPrecipitation, _maxDelayToNextPrecipitation + 1);
         _hourOfPrecipitation = Random.Range(1, 24); // на всякий случай от 1 до 24, а не от 0 до 24, тк как хз
         // как там просиходит событие, когда меняется день. Тонкая штука. См метод CheckDayDelayToRainfall
-        
         _strengthOfWeather = (StrengthOfWeather)Random.Range(0, Enum.GetNames(typeof(StrengthOfWeather)).Length);
-        switch (_strengthOfWeather)
-        {
-            case StrengthOfWeather.Light:
-                _durationOfWeatherInHours = Random.Range(3, 12);
-                break;
-            case StrengthOfWeather.Medium:
-                _durationOfWeatherInHours = Random.Range(4, 15);
-                break;
-            case StrengthOfWeather.Heavy:
-                _durationOfWeatherInHours = Random.Range(3, 8);
-                break;
-        }
     }
 
     private void SetRainParams(int rateOverTime, float speed, float maxSizeOfDrop)
