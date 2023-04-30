@@ -11,16 +11,16 @@ using Random = UnityEngine.Random;
 public class GlobalEventHandler : MonoBehaviour
 {
     [Serializable]
-    class EventTypeInformation
+    public class EventTypeInformation
     {
-        public EventTypeInformation(Type type) //TODO System.Type не является сериализуемым...
-                                               //...но можно конвертировать в строку и обратно
+        public EventTypeInformation(string typeName)
         {
-            Type = type;
+            TypeName = typeName;
             LastHappenedDay = -(int)Type.GetProperty("CooldownDays").GetValue(null); //Первый раз не может быть кд
             TimesNotRolled = 0;
         }
-        public Type Type;
+        public Type Type { get => Type.GetType(TypeName); }
+        public string TypeName;
         public int LastHappenedDay;
         public int TimesNotRolled;
     }
@@ -45,7 +45,7 @@ public class GlobalEventHandler : MonoBehaviour
     {
         foreach(string typeName in _randomEventTypeNames)
         {
-            _randomEventTypeInformations.Add(new(Type.GetType(typeName)));
+            _randomEventTypeInformations.Add(new(typeName));
         }
         GameTime.HourChanged += OnHourChanged;
         GameTime.DayChanged += OnDayChanged;
@@ -71,7 +71,17 @@ public class GlobalEventHandler : MonoBehaviour
                 //Попробовать рольнуть его шанс. Если не получится, добавить timesNotRolled.
                 //Если получится, обнулить timesNotRolled.
                 float baseChance = (float)selectedTypeInfo.Type.GetProperty("BaseChance").GetValue(null);
-                bool isRolled = Random.Range(0f, 1f) < baseChance * (selectedTypeInfo.TimesNotRolled + 1);
+
+                float additionalChance = 0;
+                //Новый additionalChance = baseChance + старый additionalChance + 10% от недостающего
+                //Если ивент имеет 50% шанс то если он 1 раз не выпал 55% станет, второй раз 59,5% и тд
+                for (int i = 0; i < selectedTypeInfo.TimesNotRolled; i++)
+                {
+                    additionalChance += (1 - (baseChance + additionalChance)) / 10;
+                }
+
+                bool isRolled = Random.Range(0f, 1f) < (baseChance + additionalChance);
+
                 if (isRolled)
                 {
                     selectedTypeInfo.LastHappenedDay = GameTime.CurrentDay;
@@ -91,6 +101,7 @@ public class GlobalEventHandler : MonoBehaviour
         if (globalEventType == null) return null;
         IGlobalEvent globalEvent = (IGlobalEvent)Activator.CreateInstance(globalEventType);
         globalEvent.DurationHours = durationHours;
+        globalEvent.Execute();
         ActiveGlobalEvents.Add(globalEvent);
         return globalEvent;
     }
@@ -123,7 +134,7 @@ public class GlobalEventHandler : MonoBehaviour
 
     public GlobalEventHandlerSaveData SaveData()
     {
-        GlobalEventHandlerSaveData saveData = new(ActiveGlobalEvents);
+        GlobalEventHandlerSaveData saveData = new(ActiveGlobalEvents, _randomEventTypeInformations);
         return saveData;
     }
     public void LoadData(GlobalEventHandlerSaveData saveData)
@@ -133,6 +144,7 @@ public class GlobalEventHandler : MonoBehaviour
             ActiveGlobalEvents.Add(globalEvent);
             globalEvent.Execute();
         }
+        _randomEventTypeInformations = new(saveData.CooldownInformations);
     }
 
 }

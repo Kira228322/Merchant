@@ -6,9 +6,11 @@ using UnityEngine;
 public class GlobalEventHandlerSaveData
 {
     public List<IGlobalEvent> SavedGlobalEvents;
-
-    public GlobalEventHandlerSaveData(List<IGlobalEvent> activeGlobalEvents)
+    public List<GlobalEventHandler.EventTypeInformation> CooldownInformations;
+    public GlobalEventHandlerSaveData(List<IGlobalEvent> activeGlobalEvents, 
+        List<GlobalEventHandler.EventTypeInformation> cooldownInformations)
     {
         SavedGlobalEvents = new(activeGlobalEvents);
+        CooldownInformations = new(cooldownInformations);
     }
 }

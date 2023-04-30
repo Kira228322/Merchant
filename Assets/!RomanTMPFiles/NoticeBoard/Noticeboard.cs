@@ -19,7 +19,8 @@ public class Noticeboard : MonoBehaviour
         {
             if ((string)globalEvent.GetType().GetProperty("Description").GetValue(null) != null) //Если у этого типа написано Description
             {
-                //Создать объявление рандомного префаба, добавить ему текст.
+                //Создать Notice рандомного префаба, добавить ему текст.
+                Notice notice = Instantiate(_noticePrefabs[Random.Range(0, _noticePrefabs.Count)], _noticeSpawnPoints[0]).GetComponent<Notice>();
             }
         }
     }
