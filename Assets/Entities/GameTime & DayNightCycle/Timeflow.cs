@@ -15,9 +15,7 @@ public class Timeflow : MonoBehaviour, ISaveable<TimeFlowSaveData>
     }
     public void LoadData(TimeFlowSaveData data)
     {
-        GameTime.CurrentDay = data.CurrentDay;
-        GameTime.Hours = data.CurrentHour;
-        GameTime.Minutes = data.CurrentMinute;
+        GameTime.TimeSet(data.CurrentDay, data.CurrentHour, data.CurrentMinute);
         TimeScale = data.TimeScale;
     }
 

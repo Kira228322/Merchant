@@ -139,7 +139,7 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
         }
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            GlobalEventHandler.Instance.AddRandomEvent();
+            GlobalEventHandler.Instance.AddRandomEvents();
         }
 
         if (Input.GetKeyDown(KeyCode.L))

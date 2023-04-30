@@ -2,14 +2,34 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+
+
 public class GlobalEventHandler : MonoBehaviour
 {
+    [Serializable]
+    class EventTypeInformation
+    {
+        public EventTypeInformation(Type type) //TODO System.Type не является сериализуемым...
+                                               //...но можно конвертировать в строку и обратно
+        {
+            Type = type;
+            LastHappenedDay = -(int)Type.GetProperty("CooldownDays").GetValue(null); //Первый раз не может быть кд
+            TimesNotRolled = 0;
+        }
+        public Type Type;
+        public int LastHappenedDay;
+        public int TimesNotRolled;
+    }
+
     public static GlobalEventHandler Instance;
-    [SerializeField] private List<string> _globalEventTypeNames;
-    private List<Type> _globalEventTypes = new();
+
+    [SerializeField] private List<string> _randomEventTypeNames;
+
+    private List<EventTypeInformation> _randomEventTypeInformations = new();
 
     public List<IGlobalEvent> ActiveGlobalEvents = new();
 
@@ -23,9 +43,9 @@ public class GlobalEventHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        foreach(string typeName in _globalEventTypeNames)
+        foreach(string typeName in _randomEventTypeNames)
         {
-            _globalEventTypes.Add(Type.GetType(typeName));
+            _randomEventTypeInformations.Add(new(Type.GetType(typeName)));
         }
         GameTime.HourChanged += OnHourChanged;
         GameTime.DayChanged += OnDayChanged;
@@ -36,30 +56,41 @@ public class GlobalEventHandler : MonoBehaviour
         GameTime.DayChanged -= OnDayChanged;
     }
 
-    private Type RollRandomEventType()
+    private List<Type> RollRandomEventTypes()
     {
-        List<Type> uncheckedTypes = new(_globalEventTypes);
-        while (uncheckedTypes.Count > 0)
-        {
-            int randomIndex = Random.Range(0, uncheckedTypes.Count);
-            Type selectedType = uncheckedTypes[randomIndex];
+        List<Type> result = new();
 
-            bool isConcurrent = (bool)selectedType.GetProperty("IsConcurrent").GetValue(null); //Если таких ивентов может быть несколько
-            bool isActive = ActiveGlobalEvents.Exists(type => type.GetType() == selectedType); //Если ивента того же типа ещё нет в активных
-            if (!isActive || isConcurrent)
+        foreach (EventTypeInformation selectedTypeInfo in _randomEventTypeInformations)
+        {
+            bool isOnCooldown = (selectedTypeInfo.LastHappenedDay + (int)selectedTypeInfo.Type
+                .GetProperty("CooldownDays").GetValue(null)) > GameTime.CurrentDay;
+            bool isConcurrent = (bool)selectedTypeInfo.Type.GetProperty("IsConcurrent").GetValue(null); //Если таких ивентов может быть несколько
+            bool isActive = ActiveGlobalEvents.Exists(type => type.GetType() == selectedTypeInfo.Type); //Если ивента того же типа ещё нет в активных
+            if (!isOnCooldown && (!isActive || isConcurrent))
             {
-                return selectedType;
+                //Попробовать рольнуть его шанс. Если не получится, добавить timesNotRolled.
+                //Если получится, обнулить timesNotRolled.
+                float baseChance = (float)selectedTypeInfo.Type.GetProperty("BaseChance").GetValue(null);
+                bool isRolled = Random.Range(0f, 1f) < baseChance * (selectedTypeInfo.TimesNotRolled + 1);
+                if (isRolled)
+                {
+                    selectedTypeInfo.LastHappenedDay = GameTime.CurrentDay;
+                    selectedTypeInfo.TimesNotRolled = 0;
+                    result.Add(selectedTypeInfo.Type);
+                }
+                else
+                {
+                    selectedTypeInfo.TimesNotRolled++;
+                }
             }
-            uncheckedTypes.RemoveAt(randomIndex); //не подходящий, ищем другие
         }
-        return null; //не найдено подходящих глобалИвентов
+        return result;
     }
     public IGlobalEvent AddGlobalEvent(Type globalEventType, int durationHours)
     {
         if (globalEventType == null) return null;
         IGlobalEvent globalEvent = (IGlobalEvent)Activator.CreateInstance(globalEventType);
         globalEvent.DurationHours = durationHours;
-        globalEvent.Execute();
         ActiveGlobalEvents.Add(globalEvent);
         return globalEvent;
     }
@@ -80,11 +111,14 @@ public class GlobalEventHandler : MonoBehaviour
     }
     private void OnDayChanged()
     {
-        AddRandomEvent();
+        AddRandomEvents();
     }
-    public void AddRandomEvent()
+    public void AddRandomEvents()
     {
-        AddGlobalEvent(RollRandomEventType(), Random.Range(0, 12));
+        foreach (Type type in RollRandomEventTypes())
+        {
+            AddGlobalEvent(type, durationHours: Random.Range(0, 13));
+        }
     }
 
     public GlobalEventHandlerSaveData SaveData()
