@@ -7,6 +7,8 @@ using TMPro;
 
 public class CraftingHandler : MonoBehaviour
 {
+    [SerializeField] private Image _fireSource;
+    [SerializeField] private TMP_Text _requireFireSourceText;
     [SerializeField] private UICraftingRecipe _recipeUIPrefab;
     [SerializeField] private VerticalLayoutGroup _recipesLayoutGroup;
     [SerializeField] private GameObject _recipeInformationWindow;
@@ -35,7 +37,7 @@ public class CraftingHandler : MonoBehaviour
         //Очистка завершена, можно заполнять заново
 
         foreach (CraftingRecipe recipe in Player.Instance.Recipes)
-        //Наспавнить рецепты на панель слева
+            //Наспавнить рецепты на панель слева
         {
             GameObject recipeUI = Instantiate(_recipeUIPrefab.gameObject, _recipesLayoutGroup.transform);
             recipeUI.GetComponent<UICraftingRecipe>().Init(this, recipe);
@@ -53,12 +55,10 @@ public class CraftingHandler : MonoBehaviour
         _resultingItemDescription.text = SelectedRecipe.ResultingItem.Description;
         _requiredCraftingLevelText.text = "Требуемый уровень навыка: " + SelectedRecipe.RequiredCraftingLevel.ToString();
         _currentCraftingLevelText.text = "Текущий уровень навыка: " + (Player.Instance.Statistics.TotalCrafting < SelectedRecipe.RequiredCraftingLevel ? $"<color=red>" : "") + Player.Instance.Statistics.TotalCrafting;
-        bool isCraftButtonEnabled = true;
-        if (Player.Instance.Statistics.TotalCrafting < SelectedRecipe.RequiredCraftingLevel) 
-            isCraftButtonEnabled = false;
+        bool isCraftButtonEnabled = !(Player.Instance.Statistics.TotalCrafting < SelectedRecipe.RequiredCraftingLevel);
 
         for (int i = 0; i < SelectedRecipe.RequiredItems.Count; i++)
-        //ожидается, что i никогда не больше 2, ибо у нас всего 3 клеточки под предметы
+            //ожидается, что i никогда не больше 2, ибо у нас всего 3 клеточки под предметы
         {
             if (i > 0) _plusSigns[i - 1].gameObject.SetActive(true);
             int currentCount = Player.Instance.Inventory.GetCount(SelectedRecipe.RequiredItems[i].item);
