@@ -4,8 +4,15 @@ using UnityEngine;
 
 public interface IGlobalEvent
 {
-    static bool IsConcurrent { get; } //Может ли одновременно быть два и более ивента такого типа?
-    int DurationHours { get; set; }
+    static string Description { get; }      //Описание в доске объявлений. null, если ивент не имеет объявления
+    int DurationHours { get; set; }         //Сколько часов длится ивент
     void Execute();
     void Terminate();
+}
+
+public interface IRandomGlobalEvent : IGlobalEvent
+{
+    static float BaseChance { get; }        //Базовый шанс выпадения этого ивента. Увеличивается, если ивент долго не выпадал
+    static int CooldownDays { get; }        //Ивент не может выпасть чаще чем раз в CooldownDays дней
+    static bool IsConcurrent { get; }       //Может ли одновременно быть два и более ивента такого типа?
 }

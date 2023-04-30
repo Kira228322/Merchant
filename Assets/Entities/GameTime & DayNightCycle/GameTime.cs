@@ -22,7 +22,6 @@ public static class GameTime
         set
         {
             _currentDay = value;
-            DayChanged?.Invoke();
         }
     }
     public static int Hours
@@ -35,8 +34,8 @@ public static class GameTime
             {
                 _hours = 0;
                 CurrentDay++;
+                DayChanged?.Invoke();
             }
-            HourChanged?.Invoke();
         }
     }
     public static int Minutes
@@ -49,6 +48,7 @@ public static class GameTime
             {
                 _minutes = 0;
                 Hours++;
+                HourChanged?.Invoke();
             }
             MinuteChanged?.Invoke();
         }

@@ -48,8 +48,7 @@ public class DayNightCycle : MonoBehaviour
     {
         _activateLights = false;
         _lights.Clear();
-        _lights = FindObjectsOfType<Light2D>(true).ToList(); //Получить список выключаемых светильников на новой сцене
-        _lights.Remove(GetComponent<Light2D>()); //кроме себя
+        _lights = FindObjectsOfType<Light2D>(true).Where(light => light.CompareTag("Toggleable Light")).ToList();
     }
     private void OnMinuteChanged()
     {

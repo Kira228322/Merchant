@@ -6,7 +6,6 @@ using UnityEngine;
 [Serializable]
 public class GlobalEvent_Weather : IGlobalEvent
 {
-    public static bool IsConcurrent { get; } = false;
 
     [NonSerialized] private WeatherController _weatherController;
     public int DurationHours { get; set; }
