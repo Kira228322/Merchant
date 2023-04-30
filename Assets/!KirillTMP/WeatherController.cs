@@ -76,7 +76,6 @@ public class WeatherController : MonoBehaviour
     public void StartWeather()
     {
         _rain.Play();
-        // TODO потом можно еще менять глобальное освещение
         switch (_strengthOfWeather)
         {
             case StrengthOfWeather.Light:
