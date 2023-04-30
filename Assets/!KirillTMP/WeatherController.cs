@@ -22,8 +22,9 @@ public class WeatherController : MonoBehaviour
     //Там просто другую партиклсистему добавим и сделаем енум в будущем.
 
     [SerializeField] private ParticleSystem _rain;
-    private enum StrengthOfWeather {Light, Medium, Heavy}
+    public enum StrengthOfWeather {Light, Medium, Heavy}
     private StrengthOfWeather _strengthOfWeather;
+    public StrengthOfWeather WeatherStrength => _strengthOfWeather;
     
     private int _minDelayToNextPrecipitation = 3;
     private int _maxDelayToNextPrecipitation = 9;
@@ -40,6 +41,28 @@ public class WeatherController : MonoBehaviour
     {
         PredictNextPrecipitation();
     }
+
+    // РАСКОММЕНТИ КОД НИЖЕ ЧТОБЫ ПРОТЕСТИТЬ
+    
+    // private void Update()
+    // {
+    //     if (Input.GetKeyDown(KeyCode.Q))
+    //     {
+    //         _strengthOfWeather = StrengthOfWeather.Light;
+    //         StartWeather();
+    //     }
+    //     if (Input.GetKeyDown(KeyCode.W))
+    //     {
+    //         _strengthOfWeather = StrengthOfWeather.Medium;
+    //         StartWeather();
+    //     }
+    //     if (Input.GetKeyDown(KeyCode.E))
+    //     {
+    //         _strengthOfWeather = StrengthOfWeather.Heavy;
+    //         StartWeather();
+    //     }
+    // }
+
     private void OnEnable()
     {
         GameTime.DayChanged += CheckDayDelayToPrecipitation;
