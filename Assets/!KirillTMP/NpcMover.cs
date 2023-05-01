@@ -6,12 +6,12 @@ using Random = UnityEngine.Random;
 
 public class NpcMover : MonoBehaviour
 {
-    [SerializeField] private LayerMask _groundAndNodeMask;
-    private float _speed = 2.8f;
-    private float _minMoveDistance = 2f;
-    private float _maxMoveDistance = 6f;
-    private float _minIDLEDuration = 2f; // TODO значения для теста. Потом сбалансить
-    private float _maxIDLEDuration = 3f;
+    [SerializeField] private ContactFilter2D _groundAndNodeMask;
+    [SerializeField] private float _speed = 2.8f;
+    private float _minMoveDistance = 2f; // 3
+    private float _maxMoveDistance = 6f; // 12
+    private float _minIDLEDuration = 2f; // 6 // TODO значения для теста. Потом сбалансить
+    private float _maxIDLEDuration = 3f; // 20
     private float _moveDistanceAndDirection;
     private Vector3 _startPosition;
     private Coroutine _currentCoroutine;
@@ -49,8 +49,8 @@ public class NpcMover : MonoBehaviour
             _moveDistanceAndDirection = -_moveDistanceAndDirection;
 
         List<RaycastHit2D> raycastHits2D = new();
-        _rigidbody.Cast(new Vector2(_moveDistanceAndDirection, 0.1f), raycastHits2D, _groundAndNodeMask);
-
+        _rigidbody.Cast(new Vector2(_moveDistanceAndDirection, 0.1f), _groundAndNodeMask, raycastHits2D, Math.Abs(_moveDistanceAndDirection));
+        
         if (raycastHits2D.Count > 0)
         {
             _moveDistanceAndDirection = (raycastHits2D[0].distance + 0.01f) * Math.Sign(_moveDistanceAndDirection);
@@ -63,14 +63,14 @@ public class NpcMover : MonoBehaviour
         _startPosition = transform.position;
         Vector3 targetPosition = new(_startPosition.x + _moveDistanceAndDirection, _startPosition.y);
         WaitForFixedUpdate waitForFixedUpdate = new();
-
+        
         float countOfFrames = Math.Abs(_moveDistanceAndDirection / (_speed * Time.fixedDeltaTime));
         for (float i = 0; i < countOfFrames; i++)
         {
             transform.position = Vector3.Lerp(_startPosition, targetPosition, i/countOfFrames);
             yield return  waitForFixedUpdate;
         }
-
+        
         transform.position = targetPosition;
         _currentCoroutine = StartCoroutine(IDLE());
     }
@@ -85,7 +85,7 @@ public class NpcMover : MonoBehaviour
         // Если сильно надо будет -- переделаю, так экономнее выходит для производительности
         WaitForFixedUpdate waitForFixedUpdate = new();
         
-        float countOfFrames = (targetPosition-_startPosition).magnitude / (_speed/1.33f * Time.fixedDeltaTime);
+        float countOfFrames = (targetPosition-_startPosition).magnitude / (_speed * 0.75f * Time.fixedDeltaTime);
         
         for (float i = 0; i < countOfFrames; i++)
         {
