@@ -15,7 +15,8 @@ public class CraftingRecipe: ScriptableObject
 
     public int RequiredCraftingLevel;
     public List<CraftingItem> RequiredItems = new();
-
+    public CraftingStationType RequiredCraftingStation;
+    
     public Item ResultingItem;
     public int ResultAmount;
 

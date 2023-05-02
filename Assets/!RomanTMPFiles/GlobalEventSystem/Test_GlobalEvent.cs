@@ -3,20 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class Test_GlobalEvent : IRandomGlobalEvent
+public class Test_GlobalEvent : GlobalEvent_Base
 {
-    public static int MinDurationHours { get; } = 12;
-    public static int MaxDurationHours { get; } = 23;
-    public static int CooldownDays { get; } = 2;
-    public static float BaseChance { get; } = 0.3f;
-    public static bool IsConcurrent { get; } = true;
-    public int DurationHours { get; set; }
-    public void Execute()
+    public override string GlobalEventName => "Bazugus";
+    public override string Description => "Amogus";
+
+
+    public override void Execute()
     {
         Debug.Log("Executed TestGlobalEvent");
     }
 
-    public void Terminate()
+    public override void Terminate()
     {
         Debug.Log("Terminated TestGlobalEvent");
     }

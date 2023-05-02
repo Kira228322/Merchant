@@ -125,7 +125,6 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
             Recipes.Add(CraftingRecipeDatabase.GetRecipe(recipeName));
         }
     }
-
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
@@ -139,7 +138,7 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
         }
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            GlobalEventHandler.Instance.AddGlobalEvent(typeof(GlobalEvent_Weather), 12);
+            GlobalEventHandler.Instance.AddGlobalEvent<Test_GlobalEvent>(12);
         }
 
         if (Input.GetKeyDown(KeyCode.L))
