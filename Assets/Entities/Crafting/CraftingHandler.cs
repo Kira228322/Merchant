@@ -7,8 +7,8 @@ using TMPro;
 
 public class CraftingHandler : MonoBehaviour
 {
-    [SerializeField] private Image _fireSource;
-    [SerializeField] private TMP_Text _requireFireSourceText;
+    [SerializeField] private Image _craftingStationIcon;
+    [SerializeField] private TMP_Text _requiredCraftingStationText;
     [SerializeField] private UICraftingRecipe _recipeUIPrefab;
     [SerializeField] private VerticalLayoutGroup _recipesLayoutGroup;
     [SerializeField] private GameObject _recipeInformationWindow;
@@ -20,10 +20,20 @@ public class CraftingHandler : MonoBehaviour
     [SerializeField] private Image[] _plusSigns = new Image[2];
     [SerializeField] private UICraftingItemContainer[] _requiredItemContainers = new UICraftingItemContainer[3];
     [HideInInspector] public CraftingRecipe SelectedRecipe;
+    private CraftingStationType _currentCraftingStation;
     public void ToggleActive()
     {
         gameObject.SetActive(!gameObject.activeSelf);
         Refresh();
+        _currentCraftingStation = CraftingStationType.Null;
+    }
+
+    public void SetCraftingStation(Sprite icon, string text, CraftingStationType type)
+    {
+        gameObject.SetActive(true);
+        _craftingStationIcon.sprite = icon;
+        _requiredCraftingStationText.text = text;
+        _currentCraftingStation = type;
     }
     public void Refresh()
     {
@@ -51,6 +61,19 @@ public class CraftingHandler : MonoBehaviour
 
         ShowCraftingElements(true);
 
+        if (_currentCraftingStation == CraftingStationType.Null)
+        {
+            _craftingStationIcon.gameObject.SetActive(false);
+            _requiredCraftingStationText.gameObject.SetActive(false);
+            if (SelectedRecipe.RequiredCraftingStation != CraftingStationType.Null)
+                _requiredCraftingStationText.gameObject.SetActive(true);
+            
+        }
+        else
+        {
+            _craftingStationIcon.gameObject.SetActive(true);
+            _requiredCraftingStationText.gameObject.SetActive(false);
+        }
         _resultingItemIcon.sprite = SelectedRecipe.ResultingItem.Icon;
         _resultingItemDescription.text = SelectedRecipe.ResultingItem.Description;
         _requiredCraftingLevelText.text = "Требуемый уровень навыка: " + SelectedRecipe.RequiredCraftingLevel.ToString();

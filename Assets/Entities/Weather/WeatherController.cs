@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
@@ -21,6 +19,7 @@ public class WeatherController : MonoBehaviour
     //  P.P.S. Ещё переименовал почти все упоминания Rain -> Weather. Ну, я полагаю, как минимум снег тоже будет.
     //Там просто другую партиклсистему добавим и сделаем енум в будущем.
 
+    public int LastEventDay;
     [SerializeField] private ParticleSystem _rain;
     public enum StrengthOfWeather {Light, Medium, Heavy}
     private StrengthOfWeather _strengthOfWeather;
@@ -105,7 +104,7 @@ public class WeatherController : MonoBehaviour
 
     private void CheckDayDelayToPrecipitation()
     {
-        if (_dateOfPrecipitation == GameTime.CurrentDay)
+        if (GameTime.CurrentDay >= _dateOfPrecipitation)
         {
             GameTime.HourChanged += CheckHourDelayToPrecipitation;
             GameTime.DayChanged -= CheckDayDelayToPrecipitation;
@@ -114,19 +113,20 @@ public class WeatherController : MonoBehaviour
 
     private void CheckHourDelayToPrecipitation()
     {
-        if (_hourOfPrecipitation == GameTime.Hours)
+        if (GameTime.Hours >= _hourOfPrecipitation)
         {
             GameTime.HourChanged -= CheckHourDelayToPrecipitation;
 
             GlobalEvent_Weather eventToAdd = (GlobalEvent_Weather)GlobalEventHandler.Instance.AddGlobalEvent
-                (typeof(GlobalEvent_Weather), _durationOfWeatherInHours);
+                (typeof(GlobalEvent_Weather), _durationOfWeatherInHours); // TODO
             eventToAdd.StrengthOfWeather = (int)_strengthOfWeather;
+            LastEventDay = GameTime.CurrentDay;
         }
     }
 
     private void PredictNextPrecipitation()
     {
-        _dateOfPrecipitation = GameTime.CurrentDay + Random.Range(_minDelayToNextPrecipitation, _maxDelayToNextPrecipitation + 1);
+        _dateOfPrecipitation = LastEventDay + Random.Range(_minDelayToNextPrecipitation, _maxDelayToNextPrecipitation + 1);
         _hourOfPrecipitation = Random.Range(1, 24); // на всякий случай от 1 до 24, а не от 0 до 24, тк как хз
         // как там просиходит событие, когда меняется день. Тонкая штука. См метод CheckDayDelayToRainfall
         _strengthOfWeather = (StrengthOfWeather)Random.Range(0, Enum.GetNames(typeof(StrengthOfWeather)).Length);
