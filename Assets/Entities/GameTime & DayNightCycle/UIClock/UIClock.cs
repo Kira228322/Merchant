@@ -20,10 +20,12 @@ public class UIClock : MonoBehaviour
     {
         _weatherController = FindObjectOfType<WeatherController>();
         GameTime.HourChanged += OnHourChanged;
+        _weatherController.WeatherStarted += OnWeatherIsActive;
     }
     private void OnDisable()
     {
         GameTime.HourChanged -= OnHourChanged;
+        _weatherController.WeatherStarted -= OnWeatherIsActive;
     }
 
     private void Start()
@@ -31,67 +33,63 @@ public class UIClock : MonoBehaviour
         _currentTimeImage.sprite = _timeSprites[0];
     }
 
+    private void OnWeatherIsActive()
+    {
+        switch (GameTime.Hours)
+        {
+            case int n when n >= 5 && n <= 14:
+                if ((int)_weatherController.WeatherStrength == 2) // сильный дождь
+                    _nextTimeImage.sprite = _weatherSprites[3];
+                else _nextTimeImage.sprite = _weatherSprites[0];
+                break;
+            case int n when n >= 15 && n <= 21:
+                if ((int)_weatherController.WeatherStrength == 2) // сильный дождь
+                    _nextTimeImage.sprite = _weatherSprites[4];
+                else _nextTimeImage.sprite = _weatherSprites[1];
+                break;
+            case int n when n >= 22 || n <= 4:
+                if ((int)_weatherController.WeatherStrength == 2) // сильный дождь
+                    _nextTimeImage.sprite = _weatherSprites[5];
+                else _nextTimeImage.sprite = _weatherSprites[2];
+                break;
+        }
+        ChangeImage();
+    }
     private void OnHourChanged()
     {
         bool isWeatherActive = GlobalEventHandler.Instance.IsEventActive<GlobalEvent_Weather>();
+        if (isWeatherActive)
+        {
+            OnWeatherIsActive();
+            return;
+        }
         switch (GameTime.Hours)
         {
             case int n when n >= 5 && n <= 9:
-                if (isWeatherActive)
-                    if ((int)_weatherController.WeatherStrength == 2) // сильный дождь
-                        _nextTimeImage.sprite = _weatherSprites[3];
-                    else
-                        _nextTimeImage.sprite = _weatherSprites[0];
-
-                else _nextTimeImage.sprite = _timeSprites[0];
+                _nextTimeImage.sprite = _timeSprites[0];
                 break;
             case int n when n >= 10 && n <= 14:
-                if (isWeatherActive)
-                    if ((int)_weatherController.WeatherStrength == 2) // сильный дождь
-                        _nextTimeImage.sprite = _weatherSprites[3];
-                    else
-                        _nextTimeImage.sprite = _weatherSprites[0];
-
-                else _nextTimeImage.sprite = _timeSprites[1];
+                _nextTimeImage.sprite = _timeSprites[1];
                 break;
             case int n when n >= 15 && n <= 18:
-                if (isWeatherActive)
-                    if ((int)_weatherController.WeatherStrength == 2) // сильный дождь
-                        _nextTimeImage.sprite = _weatherSprites[4];
-                    else
-                        _nextTimeImage.sprite = _weatherSprites[1];
-
-                else _nextTimeImage.sprite = _timeSprites[2];
+                _nextTimeImage.sprite = _timeSprites[2];
                 break;
             case int n when n >= 19 && n <= 21:
-                if (isWeatherActive)
-                    if ((int)_weatherController.WeatherStrength == 2) // сильный дождь
-                        _nextTimeImage.sprite = _weatherSprites[4];
-                    else
-                        _nextTimeImage.sprite = _weatherSprites[1];
-
-                else _nextTimeImage.sprite = _timeSprites[3];
+                _nextTimeImage.sprite = _timeSprites[3];
                 break;
             case int n when n >= 22 || n <= 1:
-                if (isWeatherActive)
-                    if ((int)_weatherController.WeatherStrength == 2) // сильный дождь
-                        _nextTimeImage.sprite = _weatherSprites[5];
-                    else
-                        _nextTimeImage.sprite = _weatherSprites[2];
-
-                else _nextTimeImage.sprite = _timeSprites[4];
+                _nextTimeImage.sprite = _timeSprites[4];
                 break;
             case int n when n >= 2 && n <= 4:
-                if (isWeatherActive)
-                    if ((int)_weatherController.WeatherStrength == 2) // сильный дождь
-                        _nextTimeImage.sprite = _weatherSprites[5];
-                    else
-                        _nextTimeImage.sprite = _weatherSprites[2];
-
-                else _nextTimeImage.sprite = _timeSprites[5];
+                _nextTimeImage.sprite = _timeSprites[5];
                 break;
         }
         
+        ChangeImage();
+    }
+
+    private void ChangeImage()
+    {
         if (_nextTimeImage.sprite == _currentTimeImage.sprite)
             return;
 
