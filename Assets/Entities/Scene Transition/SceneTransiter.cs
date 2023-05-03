@@ -60,7 +60,6 @@ public class SceneTransiter : MonoBehaviour
         _loadingBar.fillAmount = _loadingSceneOperation.progress;
         if (_loadingSceneOperation.isDone)
         {
-            _animator.SetTrigger("EndTransition");
             enabled = false;
         }
     }
@@ -72,5 +71,6 @@ public class SceneTransiter : MonoBehaviour
         {
             GameTime.SetTimeScale(GameTime.TimeScaleInTravel);
         }
+        _animator.SetTrigger("EndTransition");
     }
 }

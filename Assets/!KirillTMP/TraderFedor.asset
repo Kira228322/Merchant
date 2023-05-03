@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a46bd3596c904af40a170307cb676e23, type: 3}
+  m_Name: TraderFedor
+  m_EditorClassIdentifier: 
+  Name: Fedor
+  StartWalkingTime: 6
+  FinishWalkingTime: 14
+  ID: 0
+  _baseAffinity: 0
+  InkJSON: {fileID: 0}
+  TraderTypes:
+  - {fileID: 11400000, guid: e6572bc3b8ee63a4b8071ae6ce8579b7, type: 2}
+  RestockCycle: 4
+  _baseGoods:
+  - Good: {fileID: 11400000, guid: f9e205c939de2d74e9eb31fe1f3df27a, type: 2}
+    MaxCount: 2
+    CurrentCount: 2
+    CurrentPrice: 56
+  _baseBuyCoefficients:
+  - itemType: 0
+    Coefficient: 1
+    DefaultCountToBuy: 150
+  - itemType: 3
+    Coefficient: 0.4
+    DefaultCountToBuy: 30
+  - itemType: 4
+    Coefficient: 0.2
+    DefaultCountToBuy: 6
+  - itemType: 6
+    Coefficient: 0.3
+    DefaultCountToBuy: 12
+  - itemType: 1
+    Coefficient: 0.7
+    DefaultCountToBuy: 30
+  LastRestock: 0
+  Goods:
+  - Good: {fileID: 11400000, guid: f9e205c939de2d74e9eb31fe1f3df27a, type: 2}
+    MaxCount: 2
+    CurrentCount: 2
+    CurrentPrice: 56
+  AdditiveGoods: []
+  BuyCoefficients:
+  - itemType: 0
+    Coefficient: 1
+    DefaultCountToBuy: 150
+  - itemType: 3
+    Coefficient: 0.4
+    DefaultCountToBuy: 30
+  - itemType: 4
+    Coefficient: 0.2
+    DefaultCountToBuy: 6
+  - itemType: 6
+    Coefficient: 0.3
+    DefaultCountToBuy: 12
+  - itemType: 1
+    Coefficient: 0.7
+    DefaultCountToBuy: 30

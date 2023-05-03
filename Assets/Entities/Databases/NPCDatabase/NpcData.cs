@@ -4,6 +4,8 @@ using UnityEngine;
 public class NpcData : ScriptableObject, IResetOnExitPlaymode, ISaveable<NpcSaveData>
 {
     public string Name;
+    public int StartWalkingTime;
+    public int FinishWalkingTime;
 
     public int ID;
 

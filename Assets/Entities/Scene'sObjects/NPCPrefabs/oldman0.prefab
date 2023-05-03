@@ -117,7 +117,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7515974800867568102}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -147,7 +147,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
-    oldSize: {x: 1.0454545, y: 1.6818181}
+    oldSize: {x: 1, y: 1.6086956}
     newSize: {x: 0.88461536, y: 1.4230769}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -168,7 +168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47d262c5b13e0e04dbc7e3189c240553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _groundAndNodeMask:
+  _groundMask:
     useTriggers: 0
     useLayerMask: 1
     useDepth: 0
@@ -177,8 +177,11 @@ MonoBehaviour:
     useOutsideNormalAngle: 0
     layerMask:
       serializedVersion: 2
-      m_Bits: 640
+      m_Bits: 128
     minDepth: 0
     maxDepth: 0
     minNormalAngle: 0
     maxNormalAngle: 0
+  _speed: 2.8
+  MoveDistanceAndDirection: 0
+  StartPosition: {x: 0, y: 0, z: 0}
