@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 
 abstract public class NPCMovement : MonoBehaviour
 {
+    public bool DefaultViewDirectionIsRight = true;
     [SerializeField] protected ContactFilter2D _groundMask;
     [SerializeField] protected float _speed = 2.8f;
     public float Speed => _speed;
@@ -25,9 +26,11 @@ abstract public class NPCMovement : MonoBehaviour
     private Vector3 _home;
     private Npc _npc;
     private SpriteRenderer _spriteRenderer;
+    [HideInInspector] public Animator Animator;
 
     protected virtual void Awake()
     {
+        Animator = GetComponent<Animator>();
         _npc = GetComponent<Npc>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _rigidbody = GetComponent<Rigidbody2D>();
@@ -55,6 +58,7 @@ abstract public class NPCMovement : MonoBehaviour
     }
     private IEnumerator IDLE(bool quick)
     {
+        Animator.SetTrigger("IDLE");
         WaitForSeconds waitForSeconds;
         if (quick)
             waitForSeconds = new(Random.Range(1, 1.5f));
@@ -62,6 +66,7 @@ abstract public class NPCMovement : MonoBehaviour
             waitForSeconds = new(Random.Range(_minIDLEDuration, _maxIDLEDuration));
         yield return waitForSeconds;
         _currentCoroutine = StartCoroutine(Move());
+        Animator.SetTrigger("Move");
     }
 
     protected abstract IEnumerator Move();
@@ -101,8 +106,7 @@ abstract public class NPCMovement : MonoBehaviour
             {
                 GameTime.MinuteChanged -= OnMinuteChange;
                 GameTime.HourChanged += OnHourChangeWhenAtHome;
-                _spriteRenderer.enabled = false;
-                enabled = false;
+                EnableNPC(false);
             }
     }
     
@@ -119,10 +123,16 @@ abstract public class NPCMovement : MonoBehaviour
         {
             GameTime.HourChanged -= OnHourChangeWhenAtHome;
             GameTime.HourChanged += OnHourChangeWhenNotAtHome;
-            _spriteRenderer.enabled = true;
-            enabled = true;
+            EnableNPC(true);
             StartIDLE(true);
         }
+    }
+
+    private void EnableNPC(bool enable)
+    {
+        _spriteRenderer.enabled = enable;
+        enabled = enable;
+        _collider.enabled = enable;
     }
     
     private IEnumerator MoveDirectlyAtHome(float targetPosX)
@@ -144,5 +154,19 @@ abstract public class NPCMovement : MonoBehaviour
         _isGoingToHome = false;
     }
 
+    public void RevertViewDirection(bool moveDirectionIsRight)
+    {
+        if (moveDirectionIsRight)
+        {
+            if (DefaultViewDirectionIsRight)
+                _spriteRenderer.flipX = false;
+            else _spriteRenderer.flipX = true;
+        }
+        else if (DefaultViewDirectionIsRight)
+            _spriteRenderer.flipX = true;
+        else _spriteRenderer.flipX = false;
+            
+            
+    }
 
 }

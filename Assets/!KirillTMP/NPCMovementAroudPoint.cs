@@ -27,6 +27,7 @@ public class NPCMovementAroudPoint : NPCMovement
         if (_currentCoroutine == null)
         {
             _currentCoroutine = StartCoroutine(Move());
+            Animator.SetTrigger("Move");
         }
     }
     
@@ -48,8 +49,9 @@ public class NPCMovementAroudPoint : NPCMovement
         else if (targetPosition.x < _pointPosition.x - _radius)
             targetPosition.x = _pointPosition.x - _radius;
         
-        WaitForFixedUpdate waitForFixedUpdate = new();
+        RevertViewDirection(targetPosition.x - StartPosition.x > 0);
         
+        WaitForFixedUpdate waitForFixedUpdate = new();
         float countOfFrames = Math.Abs((targetPosition.x - StartPosition.x) / (_speed * Time.fixedDeltaTime));
         for (float i = 0; i < countOfFrames; i++)
         {

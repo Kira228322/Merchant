@@ -15,6 +15,7 @@ public class NPCMovementByScene : NPCMovement
         if (_currentCoroutine == null)
         {
             _currentCoroutine = StartCoroutine(Move());
+            Animator.SetTrigger("Move");
         }
     }
 
@@ -33,6 +34,7 @@ public class NPCMovementByScene : NPCMovement
         {
             MoveDistanceAndDirection = (raycastHits2D[0].distance - 0.01f) * Math.Sign(MoveDistanceAndDirection);
         }
+        RevertViewDirection(MoveDistanceAndDirection > 0);
     }
     
     protected override IEnumerator Move()
