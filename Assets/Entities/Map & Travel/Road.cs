@@ -24,7 +24,7 @@ public class Road : MonoBehaviour
     [SerializeField] private Sprite _image;
     public Sprite Image => _image;
 
-    public PlaceOnMap[] Points = new PlaceOnMap[2];
+    public Location[] Points = new Location[2];
     public List<Transform> WayPoints = new(); // путь для иконки игрока на карте
     private float[] _lengthsOfWays;
     public float[] LengthOfWays => _lengthsOfWays;

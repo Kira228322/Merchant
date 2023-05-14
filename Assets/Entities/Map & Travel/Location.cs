@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class PlaceOnMap : MonoBehaviour
+public class Location : MonoBehaviour
 {
     [Header("Village information")]
     [SerializeField]private Sprite _icon;
@@ -19,9 +19,9 @@ public class PlaceOnMap : MonoBehaviour
 
     [SerializeField]private string _sceneName;
     public string SceneName => _sceneName;
-    [SerializeField] private List<PlaceOnMap> _relatedPlaces;
+    [SerializeField] private List<Location> _relatedPlaces;
     // места в которые можно попасть из данного места (как ребра в графе) 
-    public List<PlaceOnMap> RelatedPlaces => _relatedPlaces;
+    public List<Location> RelatedPlaces => _relatedPlaces;
     [HideInInspector] public List<Road> _roads = new();
     
     

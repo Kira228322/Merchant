@@ -10,9 +10,9 @@ public class VillageWindow : Window
     [SerializeField] private TMP_Text _villageName;
     [SerializeField] private TMP_Text _description;
     [SerializeField] private Button _button;
-    private PlaceOnMap _place;
+    private Location _place;
 
-    public void Init(PlaceOnMap place)
+    public void Init(Location place)
     {
         _place = place;
         _icon.sprite = place.Icon;

@@ -37,9 +37,9 @@ public static class MapManager
         _playerIcon = playerIcon;
     }
 
-    public static void TransitionToTravelScene(PlaceOnMap placeOnMap, Road road)
+    public static void TransitionToTravelScene(Location location, Road road)
     {
-        _currentNumberOfPlace = placeOnMap.NumberOfPlace;
+        _currentNumberOfPlace = location.NumberOfPlace;
         
         _loadScreen.StartTransit(_travelingScene, road);
     }
