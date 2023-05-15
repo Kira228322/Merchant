@@ -30,6 +30,7 @@ public class NoticeInformationPanel : MonoBehaviour
     }
     private void DestroyNotice()
     {
+        _currentNotice.OnNoticeTake();
         _takeButton.onClick.RemoveListener(DestroyNotice);
         Destroy(_currentNotice.gameObject);
         _currentNotice = null;

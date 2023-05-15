@@ -3,15 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class QuestsStatsNewsController : MonoBehaviour
+public class JournalController : MonoBehaviour
 {
     [HideInInspector]public GameObject CurrentActivePanel;
-    [HideInInspector]public QuestsStatsNewsButton CurrentActiveButton;
+    [HideInInspector]public JournalButton CurrentActiveButton;
 
     [SerializeField] private GameObject _firstPanel;
-    [SerializeField] private QuestsStatsNewsButton _firstButton;
+    [SerializeField] private JournalButton _firstButton;
 
-    public void OnQSNbuttonClick()
+    public void OnJournalButtonClick()
     {
         gameObject.SetActive(true);
         

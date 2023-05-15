@@ -136,9 +136,13 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
         {
             SaveLoadSystem<PlayerData>.SaveAll();
         }
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             GlobalEventHandler.Instance.AddGlobalEvent<Test_GlobalEvent>(12);
+        }
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            QuestHandler.AddQuest(PregenQuestDatabase.GetQuestParams("collect3apples_wait3hours"));
         }
 
         if (Input.GetKeyDown(KeyCode.L))

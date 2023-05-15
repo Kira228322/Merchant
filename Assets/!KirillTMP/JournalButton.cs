@@ -5,10 +5,10 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 
-public class QuestsStatsNewsButton : MonoBehaviour
+public class JournalButton : MonoBehaviour
 {
     [SerializeField] private GameObject _panel;
-    [SerializeField] private QuestsStatsNewsController _controller;
+    [SerializeField] private JournalController _controller;
 
     [SerializeField] private RectTransform _rectTransform;
     [SerializeField] private Button _button;

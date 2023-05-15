@@ -57,13 +57,12 @@ public class StatusUIObject : MonoBehaviour
             switch (effect.stat)
             {
                 case Status.Effect.Stat.Luck:
-                    Player.Instance.Statistics.AddititionalLuck += effect.value;
+                    Player.Instance.Statistics.AdditionalLuck += effect.value;
                     break;
                 // TODO
             }
         }
-        
-        Player.Instance.Statistics.RefreshStats();
+
     }
     
     private void Deactivation()
@@ -73,12 +72,10 @@ public class StatusUIObject : MonoBehaviour
             switch (effect.stat)
             {
                 case Status.Effect.Stat.Luck:
-                    Player.Instance.Statistics.AddititionalLuck -= effect.value;
+                    Player.Instance.Statistics.AdditionalLuck -= effect.value;
                     break;
                 // TODO
             }
         }
-        
-        Player.Instance.Statistics.RefreshStats();
     }
 }

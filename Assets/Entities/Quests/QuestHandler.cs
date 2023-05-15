@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Unity.Collections;
 
 public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
 {
@@ -53,16 +54,18 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
 
         foreach (Quest quest in Instance.Quests) 
         {
-            QuestParams questParams = new();
-            questParams.currentState = (QuestParams.State)quest.CurrentState;
-            questParams.questName = quest.QuestName;
-            questParams.questSummary = quest.QuestSummary;
-            questParams.description = quest.Description;
-            questParams.experienceReward = quest.ExperienceReward;
-            questParams.moneyReward = quest.MoneyReward;
-            questParams.itemRewards = quest.ItemRewards;
+            QuestParams questParams = new()
+            {
+                currentState = (QuestParams.State)quest.CurrentState,
+                questName = quest.QuestName,
+                questSummary = quest.QuestSummary,
+                description = quest.Description,
+                experienceReward = quest.ExperienceReward,
+                moneyReward = quest.MoneyReward,
+                itemRewards = quest.ItemRewards,
 
-            questParams.goals = new();
+                goals = new()
+            };
             foreach (Goal goal in quest.Goals)
             {
                 //Я всегда топлю за обобщение и на самом деле не люблю делать подобные switch с перечислением всех возможных типов,
@@ -84,6 +87,9 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
                         break;
                     case TimedGoal oldGoal:
                         newGoal = new TimedGoal(oldGoal.CurrentState, oldGoal.Description, oldGoal.CurrentAmount, oldGoal.RequiredAmount);
+                        break;
+                    default:
+                        Debug.LogError("Нет такого типа Goal");
                         break;
                 }
                 questParams.goals.Add(newGoal);

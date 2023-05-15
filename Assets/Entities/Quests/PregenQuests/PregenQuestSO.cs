@@ -69,6 +69,9 @@ public class PregenQuestSO : ScriptableObject
                     newGoal = new WaitingGoal(pregenGoal.goalState, pregenGoal.description,
                         pregenGoal.currentAmount, Random.Range(pregenGoal.minRequiredAmount, pregenGoal.maxRequiredAmount));
                     break;
+                default:
+                    Debug.LogError("Нет такого типа Goal");
+                    break;
             }
             questParams.goals.Add(newGoal);
 

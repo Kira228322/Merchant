@@ -23,12 +23,15 @@ public class PlayerStatsPanel : MonoBehaviour
     private Player _player;
     private PlayerStats _playerStats;
     private PlayerExperience _playerExperience;
+
+    private bool isFirstEnable = true;
     private void Start()
     {
+        isFirstEnable = false;
         _player = Player.Instance;
         _playerStats = _player.Statistics;
         _playerExperience = _player.Experience;
-        _playerExperience.ExperienceChanged += Refresh;
+
 
         _statsList.Add(_diplomacyText);
         _statsList.Add(_luckText);
@@ -36,11 +39,11 @@ public class PlayerStatsPanel : MonoBehaviour
         _statsList.Add(_craftingText);
         Refresh();
     }
-    private void OnDisable()
+    private void OnEnable()
     {
-        _playerExperience.ExperienceChanged -= Refresh;
+        if (!isFirstEnable)
+        Refresh();
     }
-
     private void Refresh()
     {
         _currentLevelText.text = "Текущий уровень: " + _playerExperience.CurrentLevel;
@@ -52,25 +55,31 @@ public class PlayerStatsPanel : MonoBehaviour
             / (float)_playerExperience.ExperienceNeededForLevel(_playerExperience.CurrentLevel);
         
         _unspentSkillPointsText.text = "Нераспределённых очков: " + _playerExperience.UnspentSkillPoints;
-        if (_playerExperience.UnspentSkillPoints > 0) //Отобразите кнопки "+" возле каждого стата, чтобы показать, что их можно прокачать
+        if (_playerExperience.UnspentSkillPoints > 0) 
+            //Отобразить кнопки "+" возле каждого стата, чтобы показать, что их можно прокачать
         {
             foreach (TMP_Text statText in _statsList)
             {
-                statText.GetComponentInChildren<Button>().interactable = true; //подразумевается, что поле со статой это текст, и у него есть дитё кнопка.
+                statText.transform.GetChild(0).gameObject.SetActive(true);
+                //подразумевается, что поле со статой это текст, и у него есть дитё кнопка.
             }
         }
         else
         {
             foreach (TMP_Text statText in _statsList)
             {
-                statText.GetComponentInChildren<Button>().interactable = false;
+                statText.transform.GetChild(0).gameObject.SetActive(false);
             }
         }
 
-        _diplomacyText.text = "Дипломатия: " + _playerStats.TotalDiplomacy;
-        _luckText.text = "Удача: " + _playerStats.TotalLuck;
-        _toughnessText.text = "Стойкость: " + _playerStats.TotalToughness;
-        _craftingText.text = "Крафтинг: " + _playerStats.TotalCrafting;
+        _diplomacyText.text = "Дипломатия: " + _playerStats.BaseDiplomacy + 
+            (_playerStats.AdditionalDiplomacy > 0 ? $" + <color=green>{_playerStats.AdditionalDiplomacy}</color>" : "" );
+        _luckText.text = "Удача: " + _playerStats.BaseLuck +
+            (_playerStats.AdditionalLuck > 0 ? $" + <color=green>{_playerStats.AdditionalLuck}</color>" : "");
+        _toughnessText.text = "Стойкость: " + _playerStats.BaseToughness +
+            (_playerStats.AdditionalToughness > 0 ? $" + <color=green>{_playerStats.AdditionalToughness}</color>" : "");
+        _craftingText.text = "Крафтинг: " + _playerStats.BaseCrafting +
+            (_playerStats.AdditionalCrafting > 0 ? $" + <color=green>{_playerStats.AdditionalLuck}</color>" : "");
 
     }
 

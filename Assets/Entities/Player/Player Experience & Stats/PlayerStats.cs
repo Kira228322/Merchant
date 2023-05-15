@@ -4,77 +4,54 @@ using UnityEngine;
 
 public class PlayerStats
 {
-    private int _totalDiplomacy;
-    private int _totalToughness;
-    private int _totalLuck;
-    private int _totalCrafting;
-    
-    private int _baseDiplomacy;
-    private int _baseToughness;
-    private int _baseLuck;
-    private int _baseCrafting;
-    
-    public int AddititionalDiplomacy;
-    public int AddititionalToughness;
-    public int AddititionalLuck;
+    public int AdditionalDiplomacy;
+    public int AdditionalToughness;
+    public int AdditionalLuck;
     public int AdditionalCrafting;
-    
-    public int TotalDiplomacy => _totalDiplomacy; //Влияет на цены и успешность переговоров
-    public int TotalToughness => _totalToughness; //Влияет на скорость убывания сна и еды
-    public int TotalLuck => _totalLuck; //Влияет на частоту происшествия благоприятных и негативных событий
-    public int TotalCrafting => _totalCrafting; //Влияет на доступность некоторых рецептов крафта
+    public int BaseDiplomacy { get; private set; }
+    public int BaseToughness { get; private set; }
+    public int BaseLuck { get; private set; }
+    public int BaseCrafting { get; private set; }
 
-    public void RefreshStats()
-    {
-        // Как оно работает:
-        // бафы и дебафы меняют добавочные значения статов. 
-        // Если это баф, то в Activate он прибавляет добавочный стат
-        // В Deactivate он отнимает такое же количество статов.
-        // Для дебафов аналогично.
-        _totalDiplomacy = _baseDiplomacy + AddititionalDiplomacy;
-        _totalToughness = _baseToughness + AddititionalToughness;
-        _totalLuck = _baseLuck + AddititionalLuck;
-        _totalCrafting = _baseCrafting + AdditionalCrafting;
-    }
+    public int TotalDiplomacy => BaseDiplomacy + AdditionalDiplomacy; //Влияет на цены и успешность переговоров
+    public int TotalToughness => BaseToughness + AdditionalToughness; //Влияет на скорость убывания сна и еды
+    public int TotalLuck => BaseLuck + AdditionalLuck; //Влияет на частоту происшествия благоприятных и негативных событий
+    public int TotalCrafting => BaseCrafting + AdditionalCrafting; //Влияет на доступность некоторых рецептов крафта
     
     public void IncreaseDiplomacy()
     {
-        _baseDiplomacy++;
-        RefreshStats();
+        BaseDiplomacy++;
     }
     public void IncreaseToughness()
     {
-        _baseToughness++;
-        RefreshStats();
+        BaseToughness++;
     }
     public void IncreaseLuck()
     {
-        _baseLuck++;
-        RefreshStats();
+        BaseLuck++;
     }
     public void IncreaseCrafting()
     {
-        _baseCrafting++;
-        RefreshStats();
+        BaseCrafting++;
     }
 
     public float GetCoefForNegativeEvent()
     {
-        return (float)(1 - 0.07f * _totalLuck / (0.07 * _totalLuck + 1));
+        return (float)(1 - 0.07f * TotalLuck / (0.07 * TotalLuck + 1));
     }
 
     public float GetCoefForPositiveEvent()
     {
-        return (float)(1 + 0.07f * _totalLuck / (0.07 * _totalLuck + 1));
+        return (float)(1 + 0.07f * TotalLuck / (0.07 * TotalLuck + 1));
     }
 
     public float GetCoefForDiplomacyPositiveEvent()
     {
-        return (float)(1 + 0.07f * _totalDiplomacy / (0.07 * _totalDiplomacy + 1));
+        return (float)(1 + 0.07f * TotalDiplomacy / (0.07 * TotalDiplomacy + 1));
     }
     
     public float GetCoefForDiplomacyNegativeEvent()
     {
-        return (float)(1 - 0.07f * _totalDiplomacy / (0.07 * _totalDiplomacy + 1));
+        return (float)(1 - 0.07f * TotalDiplomacy / (0.07 * TotalDiplomacy + 1));
     }
 }
