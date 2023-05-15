@@ -12,6 +12,11 @@ public class Location : MonoBehaviour
     [SerializeField] [TextArea(2,4)] private string _description;
     public string Description => _description;
     
+    [Space(12)]
+    [Header("Economy")]
+    // public Dictionary<string (ItemName), List<int (Q;A;C)>> // TODO основан на таком же dictionary своего региона
+    // private int _populationOfVillage // TODO будет корректировать dictionary сверху, зававая параметры Q и C 
+    
     
     [Space(12)]
     [Header("Initialization")]

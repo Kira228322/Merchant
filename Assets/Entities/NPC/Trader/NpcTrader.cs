@@ -81,6 +81,12 @@ public class NpcTrader : Npc
     public List<BuyCoefficient> BuyCoefficients => _npcTraderData.BuyCoefficients; //Таких BuyCoefficients будет столько, сколько всего есть Item.ItemType (см.ниже)
     public void OpenTradeWindow()
     {
+        // TODO
+        // Сейчас ресток производится, когда открывается торг с нпс. Что неверно, ведь спрос и предложение работает некорректно
+        // Надо производить ресток в определенный момент в сутках. Например когда никто не торгует. Сделать такой промежуток для всех торговцев на локации
+        // и вообще в игре. Например с 00:00 до 01:00, если произвести ресток в 00:30 то должно быть все гладко. И можно производить ресток, когда 
+        // происходит преход на сцену
+        
         if (_npcTraderData.LastRestock + _npcTraderData.RestockCycle <= GameTime.CurrentDay)
         {
             int count = (GameTime.CurrentDay - _npcTraderData.LastRestock) / _npcTraderData.RestockCycle;
@@ -103,12 +109,6 @@ public class NpcTrader : Npc
         RestockCoefficients();
     }
 
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.N))
-            Restock();
-    }
-
     private void RestockCoefficients()
     {
         foreach (var buyCoefficient in BuyCoefficients)
@@ -121,96 +121,16 @@ public class NpcTrader : Npc
 
     private void RestockNewItems()
     {
-        if (AdditiveGoods.Count > 5)
-            AdditiveGoods.Clear();
-
-        int count = Random.Range(0, Player.Instance.Statistics.TotalDiplomacy/3 + 2); // за каждые 3 дипломатии шанс на +1
-            // дополнительную шмотку у торговца
-        for (int i = 0; i < count; i++)
-        {
-            BuyCoefficient traderBuyCoefficient;
-            bool isMainGood;
-            Item newItem;
-            bool reallyNew;
-
-            if (Random.Range(0, 5) == 0)
-                isMainGood = false; // не мейн тип шмотки торговца 
-            else
-                isMainGood = true; // мейн тип шмотки торговца
-
-            while (true)
-            {
-                reallyNew = true;
-                traderBuyCoefficient = BuyCoefficients[Random.Range(0, BuyCoefficients.Count)];
-                // у мейн шмоток коэф 1
-                if ( (traderBuyCoefficient.Coefficient == 1) == isMainGood) 
-                {
-                    newItem = ItemDatabase.GetRandomItemOfThisType(traderBuyCoefficient.itemType);
-                    
-                    foreach (var goods in Goods)
-                    {
-                        if (goods.Good.Name == newItem.Name)
-                        {
-                            reallyNew = false;
-                            break;
-                        }
-                    }
-                    if (!reallyNew)
-                        continue;
-
-                    
-                    TraderGood newGood = new()
-                    {
-                        Good = newItem,
-                        CurrentCount = Random.Range(1, 3)
-                    };
-
-                    // новый предмет будет продаваться либо много дешевле, либо много дороже средней цены
-                    if (Random.Range(0, 2) == 1) 
-                        newGood.CurrentPrice = Random.Range(newItem.Price * 72 / 100, newItem.Price * 8 / 10 + 1);
-                    else
-                        newGood.CurrentPrice =
-                            Random.Range(newItem.Price * 12 / 10, newItem.Price * 128 / 100 + 1);
-                        
-                    AdditiveGoods.Add(newGood);
-                    break;
-                    
-                }
-            }
-            
-        }
+        // Случайно будет добавляться в список предметов новый предмет, которого на локации нет.
+        // Над подробностями пока думаю
     }
     
     private void RestockMainGoods()
     {
-        foreach (TraderGood traderGood in Goods)
-        {
-            if (Random.Range(0, 11) == 0) continue;
-
-            switch (traderGood.MaxCount)
-            {
-                case int n when n <= 4: // Редкие предметы, которых у торговца мало, они могут не всегда прибавиться за ресток
-                    if (Random.Range(0, 101) <= 50 + Player.Instance.Statistics.GetCoefForDiplomacyPositiveEvent())//50% шанс, что будет ресток этой шмотки
-                    {
-                        if (traderGood.MaxCount == 1)
-                            traderGood.CurrentCount++;
-                        else
-                            traderGood.CurrentCount += Random.Range(1, traderGood.MaxCount);
-                    }
-                    break;
-
-                case int n when n >= 5 && n <= 19: // предметы средней средности
-                    traderGood.CurrentCount += Random.Range(traderGood.MaxCount / 3, traderGood.MaxCount / 2 + 1);
-                    break;
-
-                case int n when n >= 20: // товары, которые торговец поставляет массово
-                    traderGood.CurrentCount += Random.Range(traderGood.MaxCount * 3 / 5, traderGood.MaxCount * 3 / 4 + 2);
-                    break;
-            }
-
-            if (traderGood.CurrentCount > traderGood.MaxCount)
-                traderGood.CurrentCount = traderGood.MaxCount;
-        }
+        //TODO
+        // Основываясь на спросе и предложении локации будут рестокаться предметы в нужном размере. РАЗДЕЛЯЯСЬ НА ВСЕХ МЕРЧАНТОВ ЛОКАЦИИ
+        // К примеру должно прибавиться в деревне 5 хлеба. 3 мерчанта торгуют хлебом. 2 мерчанта получат по 2 хлеба, 1 мерчант- один.
+        
     }
     public void SellItem(Item item)
     {
