@@ -902,10 +902,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _region: {fileID: 815367770}
   _icon: {fileID: 0}
   _villageName: 
   _description: 
-  NumberOfPlace: -1000
+  _populationOfVillage: 100
   _sceneName: 
   _relatedPlaces: []
   _roads: []
@@ -1235,10 +1236,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _region: {fileID: 815367770}
   _icon: {fileID: 0}
   _villageName: 
   _description: 
-  NumberOfPlace: -1000
+  _populationOfVillage: 100
   _sceneName: 
   _relatedPlaces: []
   _roads: []
@@ -2295,10 +2297,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _region: {fileID: 815367770}
   _icon: {fileID: 0}
   _villageName: 
   _description: 
-  NumberOfPlace: -1000
+  _populationOfVillage: 100
   _sceneName: 
   _relatedPlaces: []
   _roads: []
@@ -2791,10 +2794,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _region: {fileID: 0}
   _icon: {fileID: 0}
   _villageName: 
   _description: 
-  NumberOfPlace: -1000
+  _populationOfVillage: 0
   _sceneName: 
   _relatedPlaces: []
   _roads: []
@@ -2965,10 +2969,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _region: {fileID: 0}
   _icon: {fileID: 0}
   _villageName: 
   _description: 
-  NumberOfPlace: -1000
+  _populationOfVillage: 0
   _sceneName: 
   _relatedPlaces: []
   _roads: []
@@ -3214,6 +3219,65 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 792666043}
   m_CullTransparentMesh: 1
+--- !u!1 &815367768
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 815367769}
+  - component: {fileID: 815367770}
+  m_Layer: 5
+  m_Name: southRegion
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &815367769
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 815367768}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1045987800}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &815367770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 815367768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee352021ef0171d458b8c5ed1b825c24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _locations:
+  - {fileID: 9056293358578365361}
+  - {fileID: 674283884}
+  - {fileID: 228818839}
+  - {fileID: 1015483341}
+  - {fileID: 2124475275}
+  - {fileID: 1230765450}
+  - {fileID: 402871010}
+  cvsEconomyParams: {fileID: 4900000, guid: cae71460b5cc0f84cae6a0a8ee857cfc, type: 3}
+  AveragePopulation: 700
 --- !u!1 &864845279
 GameObject:
   m_ObjectHideFlags: 0
@@ -3469,10 +3533,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _region: {fileID: 0}
   _icon: {fileID: 0}
   _villageName: 
   _description: 
-  NumberOfPlace: -1000
+  _populationOfVillage: 0
   _sceneName: 
   _relatedPlaces: []
   _roads: []
@@ -4129,10 +4194,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _region: {fileID: 815367770}
   _icon: {fileID: 0}
   _villageName: 
   _description: 
-  NumberOfPlace: -1000
+  _populationOfVillage: 140
   _sceneName: 
   _relatedPlaces: []
   _roads: []
@@ -4333,10 +4399,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _region: {fileID: 0}
   _icon: {fileID: 0}
   _villageName: 
   _description: 
-  NumberOfPlace: -1000
+  _populationOfVillage: 0
   _sceneName: 
   _relatedPlaces: []
   _roads: []
@@ -4450,10 +4517,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _region: {fileID: 0}
   _icon: {fileID: 0}
   _villageName: 
   _description: 
-  NumberOfPlace: -1000
+  _populationOfVillage: 0
   _sceneName: 
   _relatedPlaces: []
   _roads: []
@@ -4563,6 +4631,43 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1042207465}
   m_CullTransparentMesh: 1
+--- !u!1 &1045987799
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1045987800}
+  m_Layer: 5
+  m_Name: Regions
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1045987800
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1045987799}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 815367769}
+  m_Father: {fileID: 4503157603631652564}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &1052105216
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4760,10 +4865,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _region: {fileID: 0}
   _icon: {fileID: 0}
   _villageName: 
   _description: 
-  NumberOfPlace: -1000
+  _populationOfVillage: 0
   _sceneName: 
   _relatedPlaces: []
   _roads: []
@@ -4858,10 +4964,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _region: {fileID: 0}
   _icon: {fileID: 0}
   _villageName: 
   _description: 
-  NumberOfPlace: -1000
+  _populationOfVillage: 0
   _sceneName: 
   _relatedPlaces: []
   _roads: []
@@ -5228,10 +5335,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _region: {fileID: 0}
   _icon: {fileID: 0}
   _villageName: 
   _description: 
-  NumberOfPlace: -1000
+  _populationOfVillage: 0
   _sceneName: 
   _relatedPlaces: []
   _roads: []
@@ -5394,10 +5502,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _region: {fileID: 0}
   _icon: {fileID: 0}
   _villageName: 
   _description: 
-  NumberOfPlace: -1000
+  _populationOfVillage: 0
   _sceneName: 
   _relatedPlaces: []
   _roads: []
@@ -5598,10 +5707,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _region: {fileID: 0}
   _icon: {fileID: 0}
   _villageName: 
   _description: 
-  NumberOfPlace: -1000
+  _populationOfVillage: 0
   _sceneName: 
   _relatedPlaces: []
   _roads: []
@@ -5691,10 +5801,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _region: {fileID: 815367770}
   _icon: {fileID: 0}
   _villageName: 
   _description: 
-  NumberOfPlace: -1000
+  _populationOfVillage: 70
   _sceneName: 
   _relatedPlaces: []
   _roads: []
@@ -6191,10 +6302,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _region: {fileID: 0}
   _icon: {fileID: 0}
   _villageName: 
   _description: 
-  NumberOfPlace: -1000
+  _populationOfVillage: 0
   _sceneName: 
   _relatedPlaces: []
   _roads: []
@@ -6856,10 +6968,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _region: {fileID: 0}
   _icon: {fileID: 0}
   _villageName: 
   _description: 
-  NumberOfPlace: -1000
+  _populationOfVillage: 0
   _sceneName: 
   _relatedPlaces: []
   _roads: []
@@ -7103,10 +7216,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _region: {fileID: 0}
   _icon: {fileID: 0}
   _villageName: 
   _description: 
-  NumberOfPlace: -1000
+  _populationOfVillage: 0
   _sceneName: 
   _relatedPlaces: []
   _roads: []
@@ -7327,10 +7441,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _region: {fileID: 0}
   _icon: {fileID: 0}
   _villageName: 
   _description: 
-  NumberOfPlace: -1000
+  _populationOfVillage: 0
   _sceneName: 
   _relatedPlaces: []
   _roads: []
@@ -8513,10 +8628,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _region: {fileID: 0}
   _icon: {fileID: 0}
   _villageName: 
   _description: 
-  NumberOfPlace: -1000
+  _populationOfVillage: 0
   _sceneName: 
   _relatedPlaces: []
   _roads: []
@@ -8679,10 +8795,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _region: {fileID: 0}
   _icon: {fileID: 0}
   _villageName: 
   _description: 
-  NumberOfPlace: -1000
+  _populationOfVillage: 0
   _sceneName: 
   _relatedPlaces: []
   _roads: []
@@ -8926,10 +9043,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _region: {fileID: 0}
   _icon: {fileID: 0}
   _villageName: 
   _description: 
-  NumberOfPlace: -1000
+  _populationOfVillage: 0
   _sceneName: 
   _relatedPlaces: []
   _roads: []
@@ -9139,10 +9257,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _region: {fileID: 815367770}
   _icon: {fileID: 0}
   _villageName: 
   _description: 
-  NumberOfPlace: -1000
+  _populationOfVillage: 90
   _sceneName: 
   _relatedPlaces: []
   _roads: []
@@ -9352,10 +9471,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _region: {fileID: 0}
   _icon: {fileID: 0}
   _villageName: 
   _description: 
-  NumberOfPlace: -1000
+  _populationOfVillage: 0
   _sceneName: 
   _relatedPlaces: []
   _roads: []
@@ -9471,10 +9591,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _region: {fileID: 0}
   _icon: {fileID: 0}
   _villageName: 
   _description: 
-  NumberOfPlace: -1000
+  _populationOfVillage: 0
   _sceneName: 
   _relatedPlaces: []
   _roads: []
@@ -13862,10 +13983,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _region: {fileID: 0}
   _icon: {fileID: 21300000, guid: da7129ed6a246f048a49d8d97de2d2d4, type: 3}
   _villageName: South Village
   _description: Village with apples. A lot of apples.
-  NumberOfPlace: 1
+  _populationOfVillage: 0
   _sceneName: SecKirScene
   _relatedPlaces:
   - {fileID: 9056293358578365361}
@@ -14107,6 +14229,7 @@ RectTransform:
   - {fileID: 7199292215046667522}
   - {fileID: 7602701845263479846}
   - {fileID: 7115044882961339729}
+  - {fileID: 1045987800}
   m_Father: {fileID: 1302622534089874351}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -15844,7 +15967,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!222 &7466371012112126503
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -16792,10 +16915,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _region: {fileID: 815367770}
   _icon: {fileID: 21300000, guid: ce993d5f7ca6ea8459974fd88e71861d, type: 3}
   _villageName: Small Village
   _description: It is good village if you want to escape from goverment
-  NumberOfPlace: 0
+  _populationOfVillage: 100
   _sceneName: SecKirScene
   _relatedPlaces:
   - {fileID: 3977917189124624316}
