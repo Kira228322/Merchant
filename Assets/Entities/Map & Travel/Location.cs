@@ -5,7 +5,8 @@ using UnityEngine;
 public class Location : MonoBehaviour
 {
     [Header("Village information")]
-    [SerializeField]private Sprite _icon;
+    [SerializeField] private Region _region;
+    [SerializeField] private Sprite _icon;
     public Sprite Icon => _icon;
     [SerializeField] private string _villageName;
     public string VillageName => _villageName;
@@ -14,13 +15,12 @@ public class Location : MonoBehaviour
     
     [Space(12)]
     [Header("Economy")]
-    // public Dictionary<string (ItemName), List<int (Q;A;C)>> // TODO основан на таком же dictionary своего региона
-    // private int _populationOfVillage // TODO будет корректировать dictionary сверху, зававая параметры Q и C 
+    public Dictionary<string , List<int>> ItemEconomyParams; // TODO основан на таком же dictionary своего региона Dictionary<string (ItemName), List<int (Q;A;C)>>
+    [SerializeField] private int _populationOfVillage; // TODO будет корректировать dictionary сверху, зававая параметры Q и C 
     
     
     [Space(12)]
     [Header("Initialization")]
-    public int NumberOfPlace;
 
     [SerializeField]private string _sceneName;
     public string SceneName => _sceneName;

@@ -10,8 +10,27 @@ public class Region : MonoBehaviour
     public Dictionary<Item.ItemType, float> _coefsForItemTypes; // TODO в кастомном инспекторе заполнить сразу все возможные ItemType.
     
     // TODO
-    // public Dictionary<string (ItemName), List<int (Q;A;C)>> 
-    // public int AveragePopulation // параметр нужный для заполенения подобного dictionary в каждой Location данного региона
+    public Dictionary<string, int[]> ItemEconomyParams = new ();
+    [SerializeField] private TextAsset cvsEconomyParams;
+    public int AveragePopulation; // параметр нужный для заполенения подобного dictionary в каждой Location данного региона
+
+    public void FillDictionary()
+    {
+        char lineEnding = '\n';
+        string[] rows = cvsEconomyParams.text.Split(lineEnding);
+        for (int i = 1; i < rows.Length - 1; i++)
+        {
+            string[] cells = rows[i].Split(';');
+            ItemEconomyParams.Add(cells[0], new [] 
+            {Convert.ToInt32(cells[1]), Convert.ToInt32(cells[2]),Convert.ToInt32(cells[3])});
+        }
+    }
+
+    private void Start()
+    {
+        FillDictionary();
+    }
+
     public float CalculatePriceCoef(int currentQuantity, int P, int Q, int A, int C)
     {
         if (C > 0)

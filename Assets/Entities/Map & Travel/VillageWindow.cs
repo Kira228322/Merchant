@@ -18,7 +18,7 @@ public class VillageWindow : Window
         _icon.sprite = place.Icon;
         _villageName.text = place.VillageName;
         _description.text = place.Description;
-        if (place.NumberOfPlace == MapManager.CurrentNumberOfPlace)
+        if (place == MapManager.CurrentLocation)
         {
             _button.interactable = false;
             return;
@@ -27,7 +27,7 @@ public class VillageWindow : Window
         bool related = false;
         for (int i = 0; i < place.RelatedPlaces.Count; i++)
         {
-            if (MapManager.CurrentNumberOfPlace == place.RelatedPlaces[i].NumberOfPlace) // Если есть связь между городами
+            if (MapManager.CurrentLocation == place.RelatedPlaces[i]) // Если есть связь между городами
             {
                 related = true;
                 break;

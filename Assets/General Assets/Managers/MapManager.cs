@@ -6,9 +6,8 @@ public static class MapManager
 {
     public static string TargetSceneName;
     public static Canvas Canvas;
-    
-    private static int _currentNumberOfPlace = 0;
-    public static int CurrentNumberOfPlace => _currentNumberOfPlace;
+
+    public static Location CurrentLocation;
     public static Road CurrentRoad;
     public static bool IsActiveSceneTravel;
     
@@ -39,7 +38,7 @@ public static class MapManager
 
     public static void TransitionToTravelScene(Location location, Road road)
     {
-        _currentNumberOfPlace = location.NumberOfPlace;
+        CurrentLocation = location;
         
         _loadScreen.StartTransit(_travelingScene, road);
     }
