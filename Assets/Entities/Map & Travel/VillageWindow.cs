@@ -10,15 +10,15 @@ public class VillageWindow : Window
     [SerializeField] private TMP_Text _villageName;
     [SerializeField] private TMP_Text _description;
     [SerializeField] private Button _button;
-    private PlaceOnMap _place;
+    private Location _place;
 
-    public void Init(PlaceOnMap place)
+    public void Init(Location place)
     {
         _place = place;
         _icon.sprite = place.Icon;
         _villageName.text = place.VillageName;
         _description.text = place.Description;
-        if (place.NumberOfPlace == MapManager.CurrentNumberOfPlace)
+        if (place == MapManager.CurrentLocation)
         {
             _button.interactable = false;
             return;
@@ -27,7 +27,7 @@ public class VillageWindow : Window
         bool related = false;
         for (int i = 0; i < place.RelatedPlaces.Count; i++)
         {
-            if (MapManager.CurrentNumberOfPlace == place.RelatedPlaces[i].NumberOfPlace) // Если есть связь между городами
+            if (MapManager.CurrentLocation == place.RelatedPlaces[i]) // Если есть связь между городами
             {
                 related = true;
                 break;

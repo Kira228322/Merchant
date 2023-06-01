@@ -16,10 +16,10 @@ public class RoadWindow : Window
     [SerializeField] private TMP_Text _cost;
     private int _numberOfRoad;
     private Road[] _roads;
-    private PlaceOnMap _place;
-    public void Init(List<Road> road, PlaceOnMap placeOnMap)
+    private Location _place;
+    public void Init(List<Road> road, Location location)
     {
-        _place = placeOnMap;
+        _place = location;
         _roads = new Road[road.Count];
         for (int i = 0; i < _roads.Length; i++)
             _roads[i] = road[i];
