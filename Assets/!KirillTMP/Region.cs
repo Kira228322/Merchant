@@ -7,9 +7,9 @@ public class Region : MonoBehaviour
 {
     [SerializeField] private List<Location> _locations;
 
-    public Dictionary<Item.ItemType, float> _coefsForItemTypes; // TODO в кастомном инспекторе заполнить сразу все возможные ItemType.
+    [HideInInspector] public Dictionary<Item.ItemType, float> _coefsForItemTypes; // TODO в кастомном инспекторе заполнить сразу все возможные ItemType.
     
-    // TODO
+    [HideInInspector]public List<float> tmp; // пока без этого не обойтись. нужен для кастом эдитора
     public Dictionary<string, int[]> ItemEconomyParams = new ();
     [SerializeField] private TextAsset cvsEconomyParams;
     public int AveragePopulation; // параметр нужный для заполенения подобного dictionary в каждой Location данного региона
@@ -26,7 +26,7 @@ public class Region : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void Awake()
     {
         FillDictionary();
     }

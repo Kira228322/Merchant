@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -15,7 +16,7 @@ public class Location : MonoBehaviour
     
     [Space(12)]
     [Header("Economy")]
-    public Dictionary<string , List<int>> ItemEconomyParams; // TODO основан на таком же dictionary своего региона Dictionary<string (ItemName), List<int (Q;A;C)>>
+    [HideInInspector] public Dictionary<string , int[]> ItemEconomyParams = new (); // TODO основан на таком же dictionary своего региона Dictionary<string (ItemName), List<int (Q;A;C)>>
     [SerializeField] private int _populationOfVillage; // TODO будет корректировать dictionary сверху, зававая параметры Q и C 
     
     
@@ -42,6 +43,20 @@ public class Location : MonoBehaviour
             }
             if (road.Points[1] = this)
                 _roads.Add(road);
+        }
+        
+        // TODO когда все будет готово - убрать проверку
+        if (_region == null)
+            return;
+        
+        float coef = 1.1f * _populationOfVillage / _region.AveragePopulation;
+        
+        foreach (var EconomyParam in _region.ItemEconomyParams)
+        {
+            ItemEconomyParams.Add(EconomyParam.Key, new []
+                    {Convert.ToInt32(Math.Round(EconomyParam.Value[0] * coef)), 
+                    EconomyParam.Value[1], 
+                    Convert.ToInt32(Math.Round(EconomyParam.Value[2] * coef))});
         }
     }
 
