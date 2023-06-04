@@ -7,6 +7,8 @@ public class Location : MonoBehaviour
 {
     [Header("Village information")]
     [SerializeField] private Region _region;
+
+    public Region Region => _region;
     [SerializeField] private Sprite _icon;
     public Sprite Icon => _icon;
     [SerializeField] private string _villageName;
@@ -16,8 +18,8 @@ public class Location : MonoBehaviour
     
     [Space(12)]
     [Header("Economy")]
-    [HideInInspector] public Dictionary<string , int[]> ItemEconomyParams = new (); // TODO основан на таком же dictionary своего региона Dictionary<string (ItemName), List<int (Q;A;C)>>
-    [SerializeField] private int _populationOfVillage; // TODO будет корректировать dictionary сверху, зававая параметры Q и C 
+    [HideInInspector] public Dictionary<string , int[]> ItemEconomyParams = new (); // основан на таком же dictionary своего региона Dictionary<string (ItemName), List<int (Q;A;C)>>
+    [SerializeField] private int _populationOfVillage; // будет корректировать dictionary сверху, зававая параметры Q и C 
     
     
     [Space(12)]

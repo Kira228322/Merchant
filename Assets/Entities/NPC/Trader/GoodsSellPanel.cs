@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,12 +59,18 @@ public class GoodsSellPanel : MonoBehaviour
     public void OnSellButtonClick()
     {
         //TODO начислять денежек за айтем, списывать деньги у торговца
-
+        // TODO доделать
+        // if (_trader.money < CalculatePrice(_item.ItemData))
+        // {
+        //     Player.Instance.Money += CalculatePrice(_item.ItemData);
+        //     _trader.money -= CalculatePrice(_item.ItemData);
+        // }
+        
         _playerInventoryItemGrid.RemoveItemsFromAStack(_item, 1);
         _currentCount--;
         //Уменьшить CountToBuy у коэффициента с этим типом товара
         _trader.BuyCoefficients.FirstOrDefault(x => x.itemType == _item.ItemData.TypeOfItem).CountToBuy--;
-        GoodsBuyPanel panel = TradeManager.Instance.BuyPanelContent.GetComponentsInChildren<GoodsBuyPanel>().FirstOrDefault(i => i.Item == _item.ItemData && i.IsOriginatedFromTrader == false);
+        GoodsBuyPanel panel = TradeManager.Instance.BuyPanelContent.GetComponentsInChildren<GoodsBuyPanel>().FirstOrDefault(i => i.Item.Good == _item.ItemData && i.IsOriginatedFromTrader == false);
         if (panel != null)
         {
             panel.CurrentCount++;
@@ -84,5 +91,32 @@ public class GoodsSellPanel : MonoBehaviour
         {
             sellPanel.Refresh();
         }
+    }
+
+    private int CalculatePrice(Item item)
+    {
+        int currentQuantity = 0; // TODO считать сколько на локации продукта текущего
+        float locationCoef = MapManager.CurrentLocation.Region.CalculatePriceCoef(currentQuantity, item.Price, 
+            MapManager.CurrentLocation.ItemEconomyParams[item.Name][0],
+            MapManager.CurrentLocation.ItemEconomyParams[item.Name][1],
+            MapManager.CurrentLocation.ItemEconomyParams[item.Name][2]);
+        
+        float regionCoef = MapManager.CurrentLocation.Region.CalculatePriceCoef(currentQuantity, item.Price, 
+            MapManager.CurrentLocation.Region.ItemEconomyParams[item.Name][0],
+            MapManager.CurrentLocation.Region.ItemEconomyParams[item.Name][1],
+            MapManager.CurrentLocation.Region.ItemEconomyParams[item.Name][2]);
+        float itemTypeCoef = MapManager.CurrentLocation.Region._coefsForItemTypes[item.TypeOfItem];
+
+        float traderTypeCoef = 0;
+        for (int i = 0; i < _trader.BuyCoefficients.Count; i++)
+        {
+            if (_trader.BuyCoefficients[i].itemType == item.TypeOfItem)
+            {
+                traderTypeCoef = _trader.BuyCoefficients[i].Coefficient;
+                break;
+            }
+        }
+
+        return Convert.ToInt32(Math.Round(item.Price * locationCoef * regionCoef * itemTypeCoef * traderTypeCoef));
     }
 }
