@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Noticeboard : MonoBehaviour
 {
@@ -12,17 +14,24 @@ public class Noticeboard : MonoBehaviour
     private void Start()
     {
         int spawnPointIndex = 0;
+        //TODO: Вместо while cделать так, чтобы спавнилось 0-2 квеста в зависимости от чего нибудь.
+        //if (???)
+        while (spawnPointIndex < _noticeSpawnPoints.Count)
+        {
+            GenerateQuestNotice(spawnPointIndex);
+            spawnPointIndex++;
+        }
         _uncheckedActiveGlobalEvents = new(GlobalEventHandler.Instance.ActiveGlobalEvents);
-        bool isEventNotice = Random.Range(0, 1) > 0.3; //Выбор, какое объявление создать: ивентовое(70%) или квестовое (30%).
 
-        //Нужно определить, сколько у игрока рандомных квестов активно на данный момент.
-        //Зачем? Ну чтобы чел не ходил туда-сюда и не набирал 500 рандомных квестов с досок объявлений.
-        //Это наверняка что-то ломает
-        //Уже есть функционал, чтобы определить сколько всего квестов, но нет функционала чтобы
-        //определить, какие рандомные а какие скриптовые.
-        //Поэтому пока думаю а потом TODO: продолжаю работу
-
-
+        //Сначала заспавнились квесты (их будет от 0 до 2 примерно) 
+        //Теперь нужно наспавнить просто новостей по текущим событиям в мире, то есть информация которая ничего не делает
+        while (spawnPointIndex < _noticeSpawnPoints.Count && _uncheckedActiveGlobalEvents.Count != 0)
+        {
+            GlobalEvent_Base randomGlobalEvent = _uncheckedActiveGlobalEvents[Random.Range(0, _uncheckedActiveGlobalEvents.Count)];
+            if (AddEventNotice(randomGlobalEvent, spawnPointIndex) != null) 
+                spawnPointIndex++;
+            _uncheckedActiveGlobalEvents.Remove(randomGlobalEvent);
+        }
     }
     private EventNotice AddEventNotice(GlobalEvent_Base randomGlobalEvent, int spawnPointIndex)
     {

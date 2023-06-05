@@ -12,6 +12,6 @@ public class EventNotice : Notice
 
     public override void OnNoticeTake()
     {
-        //Записать в журнал как {Day} {Time}: {Name} {Description}
+        //Записать в журнал как День {Day}, {Time}: {Name} {Description}
     }
 }

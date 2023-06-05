@@ -22,6 +22,9 @@ public class NoticeInformationPanel : MonoBehaviour
     }
     public void DisplayNotice(Notice notice)
     {
+
+        if (_currentNotice != null)
+            _takeButton.onClick.RemoveListener(DestroyNotice);
         _currentNotice = notice;
         RefreshPanel();
         _noticeName.text = _currentNotice.NoticeName;
