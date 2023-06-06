@@ -30,7 +30,7 @@ public class CooldownHandler: MonoBehaviour, ISaveable<CooldownHandlerSaveData>
         }
     }
 
-    public List<ObjectOnCooldown> ObjectsOnCooldown = new();
+    [HideInInspector] public List<ObjectOnCooldown> ObjectsOnCooldown = new();
     public event UnityAction<string> ReadyToReset;
     private void OnEnable()
     {
