@@ -20,8 +20,8 @@ public class Location : MonoBehaviour
     [Header("Economy")]
     [HideInInspector] public Dictionary<string , int[]> ItemEconomyParams = new (); // основан на таком же dictionary своего региона Dictionary<string (ItemName), List<int (Q;A;C)>>
     [SerializeField] private int _populationOfVillage; // будет корректировать dictionary сверху, зававая параметры Q и C 
-    
-    
+    [HideInInspector] public Dictionary<string, int> CountOfEachItem;
+
     [Space(12)]
     [Header("Initialization")]
 
@@ -60,6 +60,36 @@ public class Location : MonoBehaviour
                     EconomyParam.Value[1], 
                     Convert.ToInt32(Math.Round(EconomyParam.Value[2] * coef))});
         }
+        
+        // TODO 
+        // if (есть сохранение)
+        // {
+        //     return;
+        // }
+        CountOfEachItem = new();
+        foreach (var item in ItemEconomyParams)
+        { // инициализация словаря всеми предметами в игре 
+            CountOfEachItem.Add(item.Key, item.Value[0]); // item.Value[0] равновесное число
+        }
+        
+    }
+
+    public void CountAllItemsOnScene()
+    {
+        // TODO сначала провести n-ое кол-во рестоков 
+        
+        
+        NpcTrader[] traders = FindObjectsOfType<NpcTrader>(); // берем всех трейдеров на локе 
+        
+        foreach (var item in ItemEconomyParams)
+            CountOfEachItem[item.Key] = 0; // занулили
+
+        for (int i = 0; i < traders.Length; i++) // посчитали сколько чего
+        for (int j = 0; j < traders[i].Goods.Count; j++)
+        {
+            CountOfEachItem[traders[i].Goods[j].Good.Name] += traders[i].Goods[j].CurrentCount;
+        }
+            
     }
 
     public void OnPlaceClick()

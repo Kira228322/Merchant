@@ -22,6 +22,18 @@ public class SceneTransiter : MonoBehaviour
         _animator = GetComponent<Animator>();
     }
 
+    private void OnEnable()
+    {
+        
+        SceneManager.sceneLoaded += OnSceneChanged;
+    }
+
+    private void OnDisable()
+    {
+        
+        SceneManager.sceneLoaded -= OnSceneChanged;
+    }
+
     private void Start()
     {
         enabled = false;
@@ -72,5 +84,11 @@ public class SceneTransiter : MonoBehaviour
             GameTime.SetTimeScale(GameTime.TimeScaleInTravel);
         }
         _animator.SetTrigger("EndTransition");
+    }
+
+    public void OnSceneChanged(Scene scene, LoadSceneMode mode)
+    {
+        if (_road == null)
+            MapManager.OnLocationChange();
     }
 }

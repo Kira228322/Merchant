@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public static class MapManager
 {
@@ -25,7 +26,7 @@ public static class MapManager
     [HideInInspector] public static List<Window> Windows = new List<Window>();
 
     public static void Init(string travelingScene, SceneTransiter loadScreen, GameObject roadWin, 
-            GameObject villageWin, Canvas canvas, GameObject playerIcon) 
+            GameObject villageWin, Canvas canvas, GameObject playerIcon, Location startLocation) 
         // ¬ начале игры надо будет инициализировать
     {
         _travelingScene = travelingScene;
@@ -34,6 +35,7 @@ public static class MapManager
         _villageWindow = villageWin;
         Canvas = canvas;
         _playerIcon = playerIcon;
+        CurrentLocation = startLocation;
     }
 
     public static void TransitionToTravelScene(Location location, Road road)
@@ -51,5 +53,11 @@ public static class MapManager
     public static void TravelInit(Road road)
     {
         CurrentRoad = road;
+    }
+
+    public static void OnLocationChange()
+    {
+        CurrentLocation.CountAllItemsOnScene();
+        CurrentLocation.Region.CountAllItemsInRegion();
     }
 }

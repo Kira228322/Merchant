@@ -95,13 +95,15 @@ public class GoodsSellPanel : MonoBehaviour
 
     private int CalculatePrice(Item item)
     {
-        int currentQuantity = 0; // TODO считать сколько на локации продукта текущего
-        float locationCoef = MapManager.CurrentLocation.Region.CalculatePriceCoef(currentQuantity, item.Price, 
+        int currentQuantityLoca = MapManager.CurrentLocation.CountOfEachItem[item.Name];
+        int currentQuantityReg = MapManager.CurrentLocation.Region.CountOfEachItem[item.Name];
+        
+        float locationCoef = MapManager.CurrentLocation.Region.CalculatePriceCoef(currentQuantityLoca, item.Price, 
             MapManager.CurrentLocation.ItemEconomyParams[item.Name][0],
             MapManager.CurrentLocation.ItemEconomyParams[item.Name][1],
             MapManager.CurrentLocation.ItemEconomyParams[item.Name][2]);
         
-        float regionCoef = MapManager.CurrentLocation.Region.CalculatePriceCoef(currentQuantity, item.Price, 
+        float regionCoef = MapManager.CurrentLocation.Region.CalculatePriceCoef(currentQuantityReg, item.Price, 
             MapManager.CurrentLocation.Region.ItemEconomyParams[item.Name][0],
             MapManager.CurrentLocation.Region.ItemEconomyParams[item.Name][1],
             MapManager.CurrentLocation.Region.ItemEconomyParams[item.Name][2]);

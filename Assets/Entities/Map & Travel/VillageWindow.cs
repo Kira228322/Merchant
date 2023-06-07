@@ -34,7 +34,9 @@ public class VillageWindow : Window
             }
         }
         if (!related)
+        {
             _button.interactable = false;
+        }
     }
 
     public void OnChooseRoadButtonClick()

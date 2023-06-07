@@ -13,7 +13,8 @@ public class Region : MonoBehaviour
     public Dictionary<string, int[]> ItemEconomyParams = new ();
     [SerializeField] private TextAsset cvsEconomyParams;
     public int AveragePopulation; // параметр нужный для заполенения подобного dictionary в каждой Location данного региона
-
+    [HideInInspector] public Dictionary<string, int> CountOfEachItem;
+    
     public void FillDictionary()
     {
         char lineEnding = '\n';
@@ -29,7 +30,26 @@ public class Region : MonoBehaviour
     private void Awake()
     {
         FillDictionary();
+        
+        // TODO 
+        // if (есть сохранение)
+        // {
+        //     return;
+        // }
+        CountOfEachItem = new();
+        foreach (var item in ItemEconomyParams)
+        { // инициализация словаря всеми предметами в игре 
+            CountOfEachItem.Add(item.Key, item.Value[0]); // item.Value[0] равновесное число
+        }
     }
+    
+    public void CountAllItemsInRegion()
+    {
+        for (int i = 0; i < _locations.Count; i++)
+            foreach (var countOfItem in _locations[i].CountOfEachItem)
+                CountOfEachItem[countOfItem.Key] += countOfItem.Value;
+    }
+    
 
     public float CalculatePriceCoef(int currentQuantity, int P, int Q, int A, int C)
     {
