@@ -36,4 +36,6 @@ public class NPCWagonUpgrader : Npc
             WagonUpgrades.Add(WagonPartDatabase.GetWagonPartByLvl<Wheel>(Player.Instance.WagonStats.Wheel.Level + 2));
         
     }
+    
+    
 }

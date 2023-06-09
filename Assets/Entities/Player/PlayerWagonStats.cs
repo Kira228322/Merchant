@@ -15,6 +15,16 @@ public class PlayerWagonStats: ISaveable<PlayerWagonStatsSaveData>
 
     public event UnityAction WagonStatsRefreshed;
 
+    public void UpgradeWagonPart(WagonPart wagonPart)
+    {
+        if (wagonPart is Wheel)
+            Wheel = (Wheel)wagonPart;
+        if (wagonPart is Body)
+            Body = (Body)wagonPart;
+        if (wagonPart is Suspension)
+            Suspension = (Suspension)wagonPart;
+        RecalculateValues();
+    }
 
     public void RecalculateValues()
     {

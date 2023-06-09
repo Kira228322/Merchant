@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,6 +26,14 @@ public class PlayerStatsPanel : MonoBehaviour
     private PlayerExperience _playerExperience;
 
     private bool isFirstEnable = true;
+    
+    [Header("Wagon")]
+    [SerializeField] private Image _body;
+    [SerializeField] private Image _suspension;
+    [SerializeField] private Image _wheel;
+    [SerializeField] private TMP_Text _slotsText;
+    [SerializeField] private TMP_Text _weightText;
+    [SerializeField] private TMP_Text _modifierText;
     private void Start()
     {
         isFirstEnable = false;
@@ -42,7 +51,15 @@ public class PlayerStatsPanel : MonoBehaviour
     private void OnEnable()
     {
         if (!isFirstEnable)
-        Refresh();
+            Refresh();
+        
+        
+        _body.sprite = Player.Instance.WagonStats.Body.Sprite;
+        _suspension.sprite = Player.Instance.WagonStats.Suspension.Sprite;
+        _wheel.sprite = Player.Instance.WagonStats.Wheel.Sprite;
+        _slotsText.text = $"Количество слотов: {Player.Instance.WagonStats.Body.InventoryRows * 5}";
+        _weightText.text = $"Макс. масса груза: {Player.Instance.WagonStats.Suspension.MaxWeight}кг";
+        _modifierText.text = $"Модификатор дороги: {Math.Round(Player.Instance.WagonStats.Wheel.QualityModifier - 1, 2) * 100}";
     }
     private void Refresh()
     {
@@ -50,7 +67,7 @@ public class PlayerStatsPanel : MonoBehaviour
 
          _experienceBarExperienceText.text = $"{_playerExperience.CurrentExperience - _playerExperience.ExperienceNeededForAllLevelsBefore(_playerExperience.CurrentLevel - 1)} / {_playerExperience.ExperienceNeededForLevel(_playerExperience.CurrentLevel)}";
 
-        _experienceBarSlider.value = (float)(_playerExperience.CurrentExperience - //приведение не избыточно, иди нахуй
+        _experienceBarSlider.value = (_playerExperience.CurrentExperience - 
             _playerExperience.ExperienceNeededForAllLevelsBefore(_playerExperience.CurrentLevel - 1))
             / (float)_playerExperience.ExperienceNeededForLevel(_playerExperience.CurrentLevel);
         

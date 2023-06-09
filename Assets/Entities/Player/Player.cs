@@ -42,7 +42,7 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
 
     private void Awake()
     {
-        
+        Money = 9999; // TODO  тест 
         Instance = this;
 
         _inventory = FindObjectOfType<PlayersInventory>(true);
