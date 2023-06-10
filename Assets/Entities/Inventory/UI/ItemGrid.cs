@@ -22,8 +22,8 @@ public class ItemGrid : MonoBehaviour
         }
     }
 
-    public const float TileSizeWidth = 160;
-    public const float TileSizeHeight = 160;
+    public const float TileSizeWidth = 147;
+    public const float TileSizeHeight = 147;
 
     [SerializeField] private int _gridSizeWidth;
     [SerializeField] private int _gridSizeHeight;

@@ -61,8 +61,8 @@ public class InventoryItem : MonoBehaviour
         image.sprite = ItemData.Icon;
 
         Vector2 size = new();
-        size.x = ItemData.CellSizeWidth * ItemGrid.TileSizeWidth;
-        size.y = ItemData.CellSizeHeight * ItemGrid.TileSizeHeight;
+        size.x = ItemData.CellSizeWidth * ItemGrid.TileSizeWidth * 0.9f;
+        size.y = ItemData.CellSizeHeight * ItemGrid.TileSizeHeight * 0.9f;
         rectTransform.sizeDelta = size;
         if (ItemData.IsPerishable)
         {

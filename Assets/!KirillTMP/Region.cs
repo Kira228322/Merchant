@@ -7,7 +7,7 @@ public class Region : MonoBehaviour
 {
     [SerializeField] private List<Location> _locations;
 
-    [HideInInspector] public Dictionary<Item.ItemType, float> _coefsForItemTypes; // TODO в кастомном инспекторе заполнить сразу все возможные ItemType.
+    [HideInInspector, SerializeField] public Dictionary<Item.ItemType, float> _coefsForItemTypes = new (); 
     
     [HideInInspector]public List<float> tmp; // пока без этого не обойтись. нужен для кастом эдитора
     public Dictionary<string, int[]> ItemEconomyParams = new ();
