@@ -9,6 +9,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
 {
+    public static GameManager Instance;
     [SerializeField] private Canvas _canvas;
     [Header("MapManager")] 
     [SerializeField] private string _travelingScene;
@@ -30,6 +31,9 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
 
     private void Start()
     {
+        if (Instance == null)
+            Instance = this;
+        
         MapManager.Init(_travelingScene, _sceneTransiter, _roadWindow, _villageWindow, _canvas, _playerIcone, _startLocation);
         GameTime.Init(_timeflow);
 

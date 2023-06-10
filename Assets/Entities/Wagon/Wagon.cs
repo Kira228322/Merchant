@@ -1,9 +1,12 @@
-using System.Collections;
+    using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+    using UnityEngine.EventSystems;
 
-public class Wagon : MonoBehaviour
+    public class Wagon : MonoBehaviour
 {
+    
+    
     [SerializeField] private GameObject _wheelGameObject;
     [SerializeField] private GameObject _bodyGameObject;
     [SerializeField] private GameObject _suspensionGameObject;
@@ -51,4 +54,6 @@ public class Wagon : MonoBehaviour
 
 
     }
+
+    
 }
