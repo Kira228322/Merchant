@@ -5,7 +5,13 @@ using UnityEngine;
 [System.Serializable]
 public class GlobalSaveData 
 {
-    //GlobalSaveData должна быть сделана, когда будут готовы все остальные сейвдаты.
-    //Она должна включать в себя поля всех сохраняемых объектов и быть сохранена через SaveLoadSystem
-    //По идее, здесь должны вызываться все SaveData и LoadData у ISaveable объектов
+    //Сборник всех компонентов, которые нужно сейвить. Чтобы сохранение было единым файлом, а не кучей разных.
+    public PlayerData PlayerData;
+    public QuestSaveData QuestSaveData;
+    public NpcDatabaseSaveData NpcDatabaseSaveData;
+    public TimeFlowSaveData TimeFlowSaveData;
+    public CooldownHandlerSaveData CooldownHandlerSaveData;
+    public GlobalEventHandlerSaveData GlobalEventHandlerSaveData;
+    public RegionSaveData RegionSaveData;
+    public SceneSaveData SceneSaveData;
 }

@@ -47,31 +47,31 @@ public class Location : MonoBehaviour
                 _roads.Add(road);
         }
         
-        // TODO когда все будет готово - убрать проверку
-        if (_region == null)
-            return;
-        
+    }
+
+    public void FillDictionary()
+    {
+        //Здесь полагается, что в регионе уже подсосан словарь из файла.
+        //Поэтому этот метод вызывается самим регионом, а не в Start
         float coef = 1.1f * _populationOfVillage / _region.AveragePopulation;
-        
         foreach (var EconomyParam in _region.ItemEconomyParams)
         {
-            ItemEconomyParams.Add(EconomyParam.Key, new []
-                    {Convert.ToInt32(Math.Round(EconomyParam.Value[0] * coef)), 
-                    EconomyParam.Value[1], 
+            ItemEconomyParams.Add(EconomyParam.Key, new[]
+                    {Convert.ToInt32(Math.Round(EconomyParam.Value[0] * coef)),
+                    EconomyParam.Value[1],
                     Convert.ToInt32(Math.Round(EconomyParam.Value[2] * coef))});
         }
-        
-        // TODO 
-        // if (есть сохранение)
-        // {
-        //     return;
-        // }
+    }
+
+    public void Initialize() //Вызывается только при начале новой игры, создает словарь
+    {
+        //Подразумевается, что FillDictionary уже был вызван ранее   
         CountOfEachItem = new();
         foreach (var item in ItemEconomyParams)
         { // инициализация словаря всеми предметами в игре 
             CountOfEachItem.Add(item.Key, item.Value[0]); // item.Value[0] равновесное число
         }
-        
+
     }
 
     public void CountAllItemsOnScene()

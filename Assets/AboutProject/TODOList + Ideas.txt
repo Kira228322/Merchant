@@ -1,6 +1,7 @@
 TODO Локальные задачи:
 
-
+Обсуждение: Куда пихать сохранение и загрузку игры. Хорошее место - GameManager, потому что он MonoBehaviour и поэтому имеет доступ
+к OnApplicationFocus (bool focusStatus) и OnЗапускПриложения. Только он не DontDestroyOnLoad и используется для инициализаций пока что.
 
 Обсуждать, есть ли смысл в Affinity
 
@@ -15,8 +16,6 @@ TODO Локальные задачи:
 Текущие баги:
 
 Все ещё проблемы с размером интерфейса у CraftingPanel
-
-Проблема с неотображением Spot светильников на Android (Вроде бы в рендерере нужно настроить Quality)
 
 Слайдер гниения у повернутых предметов находится немного ниже, чем у неповернутых. Перфекционистов будет раздражать.
 Тут вопрос лишь в том, будут ли в игре предметы, которые гниют и при том не квадратные (ну хлеб например наверное сюда подходит)
@@ -70,3 +69,4 @@ TODO Общие задачи:
 Полезности:
 https://github.com/inkle/ink/blob/master/Documentation/WritingWithInk.md
 https://github.com/inkle/ink/blob/master/Documentation/RunningYourInk.md
+https://docs.unity3d.com/Manual/script-Serialization.html - хелпа по сериализации типов (что можно и нельзя сохранить)

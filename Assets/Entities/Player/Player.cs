@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -9,7 +8,7 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
     public static Player Instance;
 
     [SerializeField] private SceneTransiter _transiter;
-    
+
     private PlayerMover _playerMover;
     private PlayersInventory _inventory;
     private int _money;
@@ -23,8 +22,8 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
     public PlayerNeeds Needs = new();
     public PlayerWagonStats WagonStats = new();
     public List<CraftingRecipe> Recipes = new();
-    public int Money 
-    { 
+    public int Money
+    {
         get => _money;
         set
         {
@@ -76,7 +75,7 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
     private void HidePlayer(bool state)
     {
         Color color = GetComponent<SpriteRenderer>().color;
-        color = new Color(color.r, color.g, color.b, state?  0: 1);
+        color = new Color(color.r, color.g, color.b, state ? 0 : 1);
         GetComponent<SpriteRenderer>().color = color;
     }
 
@@ -93,8 +92,8 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
         GameTime.MinuteChanged += OnMinuteChanged;
         SceneManager.sceneLoaded += OnSceneChange;
     }
-    private void OnDisable() 
-    { 
+    private void OnDisable()
+    {
         GameTime.MinuteChanged -= OnMinuteChanged;
         SceneManager.sceneLoaded -= OnSceneChange;
     }
@@ -134,7 +133,8 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
 
         if (Input.GetKeyDown(KeyCode.S))
         {
-            SaveLoadSystem<PlayerData>.SaveAll();
+            Debug.Log("Test Save");
+            FindObjectOfType<GameManager>().SaveGame();
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -144,10 +144,26 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
         {
             QuestHandler.AddQuest(PregenQuestDatabase.GetQuestParams("collect3apples_wait3hours"));
         }
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            RegionHandler regionHandler = FindObjectOfType<RegionHandler>(true);
+            foreach(Region region in regionHandler.Regions)
+            {
+                foreach (Location location in region.Locations)
+                {
+                    Debug.Log(location.VillageName +": ");
+                    foreach (var item in location.CountOfEachItem)
+                    {
+                        Debug.Log(item.Key + " " + item.Value);
+                    }
+                }
+            }
+        }
 
         if (Input.GetKeyDown(KeyCode.L))
         {
-            SaveLoadSystem<PlayerData>.LoadAll();
+            Debug.Log("Test Load");
+            FindObjectOfType<GameManager>().LoadGame();
         }
     }
 

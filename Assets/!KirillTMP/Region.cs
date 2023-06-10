@@ -14,7 +14,9 @@ public class Region : MonoBehaviour
     [SerializeField] private TextAsset cvsEconomyParams;
     public int AveragePopulation; // параметр нужный для заполенения подобного dictionary в каждой Location данного региона
     [HideInInspector] public Dictionary<string, int> CountOfEachItem;
-    
+
+    public List<Location> Locations => _locations;
+
     public void FillDictionary()
     {
         char lineEnding = '\n';
@@ -25,21 +27,31 @@ public class Region : MonoBehaviour
             ItemEconomyParams.Add(cells[0], new [] 
             {Convert.ToInt32(cells[1]), Convert.ToInt32(cells[2]),Convert.ToInt32(cells[3])});
         }
+        FillDictionariesOfLocations();
     }
 
-    private void Awake()
+    public void Initialize() //Инициализация при первом запуске игры
     {
-        FillDictionary();
-        
-        // TODO 
-        // if (есть сохранение)
-        // {
-        //     return;
-        // }
+        //Подразумевается что FillDictionary уже произошёл
         CountOfEachItem = new();
         foreach (var item in ItemEconomyParams)
         { // инициализация словаря всеми предметами в игре 
             CountOfEachItem.Add(item.Key, item.Value[0]); // item.Value[0] равновесное число
+        }
+        InitializeLocations();
+    }
+    private void InitializeLocations()
+    {
+        for (int i = 0; i < _locations.Count; i++)
+        {
+            _locations[i].Initialize();
+        }
+    }
+    private void FillDictionariesOfLocations()
+    {
+        for (int i = 0; i < _locations.Count; i++)
+        {
+            _locations[i].FillDictionary();
         }
     }
     

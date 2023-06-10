@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class SceneTransiter : MonoBehaviour
+public class SceneTransiter : MonoBehaviour, ISaveable<SceneSaveData>
 {
     [SerializeField] private GameObject _map;
     [SerializeField] private Image _loadingBar;
@@ -90,5 +90,16 @@ public class SceneTransiter : MonoBehaviour
     {
         if (_road == null)
             MapManager.OnLocationChange();
+    }
+
+    public SceneSaveData SaveData()
+    {
+        SceneSaveData saveData = new(SceneManager.GetActiveScene().name);
+        return saveData;
+    }
+
+    public void LoadData(SceneSaveData data)
+    {
+        StartTransit(data.sceneName);
     }
 }

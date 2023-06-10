@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
+[Serializable]
 public class GlobalEventHandlerSaveData
 {
     public List<GlobalEvent_Base> SavedGlobalEvents;

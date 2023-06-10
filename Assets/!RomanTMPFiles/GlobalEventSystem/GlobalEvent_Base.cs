@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
 public abstract class GlobalEvent_Base
 {
     public abstract string GlobalEventName { get; } //Заголовок в доске объявлений. null, если ивент не имеет заголовка
