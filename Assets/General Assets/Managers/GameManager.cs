@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
 
     public void StartNewGame() //По нажатию кнопки Новая игра в MainMenu
     {
-        _sceneTransiter.StartTransit(_startLocation.SceneName);
+        _sceneTransiter.StartTransit(_startLocation);
         _newGameButton.onClick.RemoveListener(StartNewGame);
     }
     public void LoadGame() //По нажатию кнопки Продолжить в MainMenu
@@ -62,13 +62,15 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
         Debug.Log("Сохранено в файл GlobalSave");
     }
 
+    //TODO Сохранение в телеге вместо этого метода
+    /*
     private void OnApplicationFocus(bool focus)
     {
         //Когда игрок сворачивает, переключается или иначе теряет фокус приложения, происходит сейв
         //Но в главном меню сохранение не происходит
         if (focus == false && SceneManager.GetActiveScene().name != "MainMenu") 
             SaveGame();
-    }
+    }*/
 
     public GlobalSaveData SaveData()
     {
@@ -81,7 +83,7 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
             CooldownHandlerSaveData = FindObjectOfType<CooldownHandler>().SaveData(),
             GlobalEventHandlerSaveData = GlobalEventHandler.Instance.SaveData(),
             RegionSaveData = _regionHandler.SaveData(),
-            SceneSaveData = _sceneTransiter.SaveData()
+            SceneSaveData = _sceneTransiter.SaveData(),
         };
         return saveData;
     }

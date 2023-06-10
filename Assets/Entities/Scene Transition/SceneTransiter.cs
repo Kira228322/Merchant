@@ -54,16 +54,17 @@ public class SceneTransiter : MonoBehaviour, ISaveable<SceneSaveData>
         MapManager.IsActiveSceneTravel = true;
     }
     
-    public void StartTransit(string scene)
+    public void StartTransit(Location location)
     {
         _map.SetActive(false);
         _road = null;
         enabled = true;
         _animator.SetTrigger("StartTransition");
 
-        _loadingSceneOperation = SceneManager.LoadSceneAsync(scene);
+        _loadingSceneOperation = SceneManager.LoadSceneAsync(location.SceneName);
         _loadingSceneOperation.allowSceneActivation = false;
         MapManager.IsActiveSceneTravel = false;
+        MapManager.CurrentLocation = location;
     }
 
     private void Update()
@@ -100,6 +101,7 @@ public class SceneTransiter : MonoBehaviour, ISaveable<SceneSaveData>
 
     public void LoadData(SceneSaveData data)
     {
-        StartTransit(data.sceneName);
+        Location currentLocation = MapManager.GetLocationBySceneName(data.sceneName);
+        StartTransit(currentLocation);
     }
 }

@@ -1,11 +1,12 @@
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public static class MapManager
 {
-    public static string TargetSceneName;
+    public static Location TargetLocation;
     public static Canvas Canvas;
 
     public static Location CurrentLocation;
@@ -38,16 +39,13 @@ public static class MapManager
         CurrentLocation = startLocation;
     }
 
-    public static void TransitionToTravelScene(Location location, Road road)
+    public static void TransitionToTravelScene(Road road)
     {
-        CurrentLocation = location;
-        
         _loadScreen.StartTransit(_travelingScene, road);
     }
-    
     public static void TransitionToVillageScene()
     {
-        _loadScreen.StartTransit(TargetSceneName);
+        _loadScreen.StartTransit(TargetLocation);
     }
 
     public static void TravelInit(Road road)
@@ -59,5 +57,24 @@ public static class MapManager
     {
         CurrentLocation.CountAllItemsOnScene();
         CurrentLocation.Region.CountAllItemsInRegion();
+    }
+
+    public static Location GetLocationBySceneName(string sceneName)
+    {
+        RegionHandler regionHandler = Object.FindObjectOfType<RegionHandler>();
+
+        var location = regionHandler.Regions
+            .SelectMany(region => region.Locations)
+            .FirstOrDefault(location => location.SceneName == sceneName);
+
+        if (location != null)
+        {
+            return location;
+        }
+        else
+        {
+            Debug.LogError("Location with this sceneName not found");
+            return null;
+        }
     }
 }

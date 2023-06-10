@@ -14,8 +14,6 @@ public class InventoryController : MonoBehaviour
     [SerializeField] private GameObject _itemInfoPanelPrefab;
     [SerializeField] private Transform _canvasTransform;
 
-    [SerializeField] private List<Item> items; //Для тестирования, список предметов, которые могут вылезти рандомно по нажатию ПКМ
-
     private Vector2 _mousePositionOnPress;
 
     private InventoryItem _selectedItem;
@@ -72,20 +70,10 @@ public class InventoryController : MonoBehaviour
         {
             _currentTileGridPosition = GetTileGridPosition();
         }
-        if (Input.GetMouseButtonDown(1)) //Ради тестирования
-        {
-            InsertRandomItem();
-        }
         if (Input.GetMouseButtonDown(0))
         {
             OnLeftMouseButtonPress();
         }
-
-        if (Input.GetMouseButtonDown(2)) //Ради тестирования
-        {
-
-        }
-
         if (Input.GetMouseButtonUp(0))
         {
             OnLeftMouseButtonRelease();
@@ -434,34 +422,6 @@ public class InventoryController : MonoBehaviour
 
         CurrentSelectedItem.transform.localScale = Vector2.one;
 
-    }
-    private void CreateRandomItem() //Для тестирования
-    {
-        InventoryItem item = Instantiate(_itemPrefab, _canvasTransform).GetComponent<InventoryItem>();
-        CurrentSelectedItem = item;
-
-        item.CurrentItemsInAStack = 1;
-
-        _rectTransform = item.GetComponent<RectTransform>();
-        _rectTransform.SetAsLastSibling();
-
-        CurrentSelectedItem.transform.localScale = Vector2.one;
-
-        int selectedItemID = Random.Range(0, items.Count);
-        item.SetItemFromData(items[selectedItemID]); 
-    }
-    private InventoryItem InsertRandomItem() //Для тестирования
-    {
-        if (SelectedItemGrid == null) { return null; }
-        CreateRandomItem();
-        InventoryItem itemToInsert = CurrentSelectedItem;
-        CurrentSelectedItem = null;
-        InventoryItem result = TryInsertItem(itemToInsert, true);
-        if (result == null)
-        {
-            Destroy(itemToInsert.gameObject);
-        }
-        return result;
     }
     public InventoryItem TryPickUpRotateInsert(InventoryItem itemInInventory, ItemGrid itemGrid)
     {

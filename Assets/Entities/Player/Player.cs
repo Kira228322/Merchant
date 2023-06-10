@@ -126,6 +126,7 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
     }
     private void Update()
     {
+        //TODO Тестовые команды
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Experience.AddExperience(100);
@@ -135,6 +136,11 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
         {
             Debug.Log("Test Save");
             FindObjectOfType<GameManager>().SaveGame();
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            Debug.Log("Test Load");
+            FindObjectOfType<GameManager>().LoadGame();
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -160,11 +166,6 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            Debug.Log("Test Load");
-            FindObjectOfType<GameManager>().LoadGame();
-        }
     }
 
 }
