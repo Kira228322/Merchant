@@ -58,23 +58,11 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
     {
         LoadData(SaveLoadSystem<GlobalSaveData>.LoadData("GlobalSave"));
         _loadGameButton.onClick.RemoveListener(LoadGame);
-        Debug.Log("Загружено из файла GlobalSave");
     }
     public void SaveGame()
     {
         SaveLoadSystem<GlobalSaveData>.SaveData(SaveData(), "GlobalSave");
-        Debug.Log("Сохранено в файл GlobalSave");
     }
-
-    //TODO Сохранение в телеге вместо этого метода
-    /*
-    private void OnApplicationFocus(bool focus)
-    {
-        //Когда игрок сворачивает, переключается или иначе теряет фокус приложения, происходит сейв
-        //Но в главном меню сохранение не происходит
-        if (focus == false && SceneManager.GetActiveScene().name != "MainMenu") 
-            SaveGame();
-    }*/
 
     public GlobalSaveData SaveData()
     {

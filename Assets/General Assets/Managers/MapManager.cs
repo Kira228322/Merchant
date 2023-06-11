@@ -61,9 +61,9 @@ public static class MapManager
 
     public static Location GetLocationBySceneName(string sceneName)
     {
-        RegionHandler regionHandler = Object.FindObjectOfType<RegionHandler>();
+        RegionHandler regionHandler = Object.FindObjectOfType<RegionHandler>(true);
 
-        var location = regionHandler.Regions
+        Location location = regionHandler.Regions
             .SelectMany(region => region.Locations)
             .FirstOrDefault(location => location.SceneName == sceneName);
 

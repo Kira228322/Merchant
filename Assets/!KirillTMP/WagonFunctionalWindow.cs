@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class WagonFunctionalWindow : MonoBehaviour
 {
-    [SerializeField] private GameObject _sleepPanelPrefub;
+    [SerializeField] private GameObject _sleepPanelPrefab;
  
     public void OnSleepButtonClick()
     {
-        Instantiate(_sleepPanelPrefub, MapManager.Canvas.transform);
+        Instantiate(_sleepPanelPrefab, MapManager.Canvas.transform);
         Destroy(gameObject);
     }
 

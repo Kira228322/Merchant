@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,10 +8,10 @@ public class SleepDurationPanel : MonoBehaviour
 {
     [SerializeField] private Slider _slider;
     [SerializeField] private Button _doneButton;
-    [SerializeField] private Timeflow _timeflow;
     [SerializeField] private int _timeScaleWhenSleeping;
 
     private Player _player;
+    private Timeflow _timeflow;
 
     private void OnEnable()
     {
@@ -23,9 +24,10 @@ public class SleepDurationPanel : MonoBehaviour
         _player.Needs.SleptOneHourEvent -= OnSleptOneHour;
     }
 
-    private void Awake() //OnEnable גûחûגאועסÿ המ Start(), םמ ןמסכו Awake().
+    private void Awake()
     {
         _player = Player.Instance;
+        _timeflow = FindObjectOfType<Timeflow>();
     }
 
     private void OnSleptOneHour()
