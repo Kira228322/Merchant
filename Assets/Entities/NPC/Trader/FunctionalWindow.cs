@@ -49,4 +49,9 @@ public class FunctionalWindow : MonoBehaviour
         TradeManager.Instance.PlayerBlock.alpha = 0;
         Destroy(gameObject);
     }
+
+    public void OnCloseButtonClick()
+    {
+        Destroy(gameObject);
+    }
 }
