@@ -28,6 +28,7 @@ public class SleepDurationPanel : MonoBehaviour
     private void Awake()
     {
         _player = Player.Instance;
+        _player.GetComponent<Rigidbody2D>().simulated = false;
         _timeflow = FindObjectOfType<Timeflow>();
     }
 
@@ -42,6 +43,7 @@ public class SleepDurationPanel : MonoBehaviour
         _closeButton.interactable = true;
         _slider.interactable = true;
         GameManager.Instance.ButtonsBlock.SetActive(true);
+        _player.HidePlayer(false);
         StartCoroutine(FadeOutBlackScreen());
     }
 
@@ -51,6 +53,7 @@ public class SleepDurationPanel : MonoBehaviour
         _timeflow.TimeScale = _timeScaleWhenSleeping;
         _slider.interactable = false;
         GameManager.Instance.ButtonsBlock.SetActive(false);
+        _player.HidePlayer(true);
         StartCoroutine(FadeInBlackScreen());
     }
 
@@ -80,6 +83,7 @@ public class SleepDurationPanel : MonoBehaviour
 
     public void OnExitButtonClick()
     {
+        _player.GetComponent<Rigidbody2D>().simulated = true;
         Destroy(gameObject);
     }
 
