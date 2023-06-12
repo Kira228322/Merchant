@@ -9,11 +9,13 @@ public class NpcSaveData
 {
     public int ID;
     public int Affinity;
+    public int Money;
 
-    public NpcSaveData(int affinity, int id)
+    public NpcSaveData(int affinity, int id, int money)
     {
         Affinity = affinity;
         ID = id;
+        Money = money;
     }
 }
 
@@ -42,7 +44,7 @@ public class NpcTraderSaveData: NpcSaveData
     public List<SavedTraderGood> Goods = new();
     public List<SavedTraderGood> AdditiveGoods = new();
     public List<NpcTrader.BuyCoefficient> BuyCoefficients;
-    public NpcTraderSaveData(int affinity, int id, int lastRestock, List<NpcTrader.TraderGood> goods, List<NpcTrader.TraderGood> additiveGoods, List<NpcTrader.BuyCoefficient> buyCoefficients) : base(affinity, id)
+    public NpcTraderSaveData(int affinity, int id, int money, int lastRestock, List<NpcTrader.TraderGood> goods, List<NpcTrader.TraderGood> additiveGoods, List<NpcTrader.BuyCoefficient> buyCoefficients) : base(affinity, id, money)
     {
         LastRestock = lastRestock;
         foreach (NpcTrader.TraderGood traderGood in goods)

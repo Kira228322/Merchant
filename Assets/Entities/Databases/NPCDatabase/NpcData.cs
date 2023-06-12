@@ -43,12 +43,13 @@ public class NpcData : ScriptableObject, IResetOnExitPlaymode, ISaveable<NpcSave
 
     public NpcSaveData SaveData()
     {
-        NpcSaveData saveData = new(Affinity, ID);
+        NpcSaveData saveData = new(Affinity, ID, Money);
         return saveData;
     }
 
     public void LoadData(NpcSaveData data)
     {
         Affinity = data.Affinity;
+        Money = data.Money;
     }
 }
