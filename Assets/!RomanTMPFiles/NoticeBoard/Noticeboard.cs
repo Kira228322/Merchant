@@ -8,7 +8,7 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
     //Почему не наследуется от UsableEnvironment:
     //Потому что UsableEnvironment предполагает, что у предмета есть кулдаун,
     //партиклы и изменение спрайта при использовании. Ничего из этого здесь не нужно
-
+    //TODO: Чтобы спавнящийся префаб не спавнился два раза
     private List<GlobalEvent_Base> _uncheckedActiveGlobalEvents;
 
     [SerializeField] private NoticeboardUI _noticeBoardWindowPrefab;
@@ -44,6 +44,10 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
         }
     }
 
+    public void RemoveNotice(int index)
+    {
+        _compactedNoticeArray[index] = null;
+    }
 
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -51,7 +55,7 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
             return;
 
         NoticeboardUI noticeboardUI = Instantiate(_noticeBoardWindowPrefab, _canvas);
-        noticeboardUI.Initialize(_compactedNoticeArray);
+        noticeboardUI.Initialize(this, _compactedNoticeArray);
         
     }
 

@@ -8,8 +8,11 @@ public abstract class Notice : MonoBehaviour
     //Возможно, сделать абстрактный класс и иметь EventNotice, QuestNotice etc.
     [HideInInspector] public string NoticeName;
     [HideInInspector] public string NoticeDescription;
+    protected Noticeboard Noticeboard; //Нужно иметь ссылку на доску объявлений
+    protected int SpawnPointIndex; //Нужно знать, какое по счёту это объявление на доске
+                                                  //для того, чтобы их правильно убирать
     public Button DisplayButton;
-    public abstract void Initialize(string name, string text);
+    public abstract void Initialize(Noticeboard noticeboard, string name, string text, int number);
     public abstract void OnNoticeTake();
 
 }
