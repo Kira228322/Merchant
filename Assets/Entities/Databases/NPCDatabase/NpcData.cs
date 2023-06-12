@@ -6,6 +6,7 @@ public class NpcData : ScriptableObject, IResetOnExitPlaymode, ISaveable<NpcSave
     public string Name;
     public int StartWalkingTime;
     public int FinishWalkingTime;
+    public int Money;
 
     public int ID;
 

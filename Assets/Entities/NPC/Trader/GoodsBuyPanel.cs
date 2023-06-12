@@ -5,10 +5,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using UnityEngine.Serialization;
 
 public class GoodsBuyPanel : MonoBehaviour
 {
-    [SerializeField] private TMP_Text _cost;
+    [FormerlySerializedAs("_cost")] [SerializeField] private TMP_Text _costText;
+    private int _cost;
     [SerializeField] private TMP_Text _countText;
     [SerializeField] private Image _icon;
     [SerializeField] private TMP_Text _itemName;
@@ -34,7 +36,8 @@ public class GoodsBuyPanel : MonoBehaviour
         _boughtDaysAgo = boughtDaysAgo;
         IsOriginatedFromTrader = isOriginatedFromTrader;
         CurrentCount = count;
-        _cost.text = goods.Price.ToString();
+        _cost = CalculatePrice(_item);
+        _costText.text = _cost.ToString();
         _icon.sprite = _item.Good.Icon;
         _itemName.text = goods.Name;
     }
@@ -46,7 +49,7 @@ public class GoodsBuyPanel : MonoBehaviour
         _boughtDaysAgo = boughtDaysAgo;
         IsOriginatedFromTrader = isOriginatedFromTrader;
         CurrentCount = count;
-        _cost.text = goods.CurrentPrice.ToString();
+        _costText.text = goods.CurrentPrice.ToString();
         _icon.sprite = _item.Good.Icon;
         _itemName.text = goods.Good.Name;
     }
@@ -66,13 +69,13 @@ public class GoodsBuyPanel : MonoBehaviour
                 return;
             }
 
-            if (Player.Instance.Money < CalculatePrice(_item))
+            if (Player.Instance.Money < _cost)
             {
                 return;
             }
 
-            Player.Instance.Money -= CalculatePrice(_item);
-            // TODO Дать деньги трейдеру
+            Player.Instance.Money -= _cost;
+            _trader.NpcData.Money += _cost;
             CurrentCount--;
             _trader.SellItem(_item.Good);
 

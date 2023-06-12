@@ -65,8 +65,8 @@ public class WagonUpgradeWindow : MonoBehaviour
         
         for (int i = 0; i < _container.childCount; i++)
             Destroy(_container.GetChild(i).gameObject);
-        
-        //TODO прибавить деньги npc за продажу части повозки 
+
+        _wagonUpgrader.NpcData.Money += wagonPart.UpgradePrice; 
         
         Init(_wagonUpgrader);
     }
