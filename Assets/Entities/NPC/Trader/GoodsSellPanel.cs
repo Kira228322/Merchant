@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class GoodsSellPanel : MonoBehaviour
 {
-    [SerializeField] private TMP_Text _cost;
+    [FormerlySerializedAs("_cost")] [SerializeField] private TMP_Text _costText;
+    private int _cost;
     [SerializeField] private TMP_Text _countText;
     [SerializeField] private Image _icon;
     [SerializeField] private TMP_Text _itemName;
@@ -27,7 +29,9 @@ public class GoodsSellPanel : MonoBehaviour
         _trader = trader;
         _item = itemToSell;
         _currentCount = itemToSell.CurrentItemsInAStack;
-        _cost.text = _item.ItemData.Price.ToString(); //“ут бы высчитывать цену дл€ этого конкретного торговца
+        // TODO ѕосмотреть, не оказываетс€ ли, что трейдер продает такой же предмет и у него цена продажи меньше, чем игрок ему продает
+        _cost = CalculatePrice(_item.ItemData);
+        _costText.text = _cost.ToString(); 
         _countText.text = _currentCount.ToString();
         _icon.sprite = _item.ItemData.Icon;
         _itemName.text = _item.ItemData.Name;
@@ -48,7 +52,7 @@ public class GoodsSellPanel : MonoBehaviour
     public void Refresh()
     {
         NpcTrader.BuyCoefficient buyCoefficient = _trader.BuyCoefficients.FirstOrDefault(x => x.itemType == _item.ItemData.TypeOfItem);
-        if (buyCoefficient == null || buyCoefficient.CountToBuy <= 0)
+        if (buyCoefficient == null || buyCoefficient.CountToBuy <= 0 || _trader.NpcData.Money < _cost)
         {
             _sellButton.interactable = false;
         }
@@ -58,13 +62,9 @@ public class GoodsSellPanel : MonoBehaviour
 
     public void OnSellButtonClick()
     {
-        //TODO начисл€ть денежек за айтем, списывать деньги у торговца
-        // TODO доделать
-        // if (_trader.money < CalculatePrice(_item.ItemData))
-        // {
-        //     Player.Instance.Money += CalculatePrice(_item.ItemData);
-        //     _trader.money -= CalculatePrice(_item.ItemData);
-        // }
+        Player.Instance.Money += _cost;
+        _trader.NpcData.Money -= _cost;
+        
         
         _playerInventoryItemGrid.RemoveItemsFromAStack(_item, 1);
         _currentCount--;

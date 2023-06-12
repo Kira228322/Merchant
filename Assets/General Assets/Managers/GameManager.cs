@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
 {
     public static GameManager Instance;
     [SerializeField] private Canvas _canvas;
+    public GameObject ButtonsBlock; 
     [Header("MapManager")] 
     [SerializeField] private string _travelingScene;
     [SerializeField] private SceneTransiter _sceneTransiter;

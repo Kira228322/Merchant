@@ -72,7 +72,7 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
         }
     }
 
-    private void HidePlayer(bool state)
+    public void HidePlayer(bool state)
     {
         Color color = GetComponent<SpriteRenderer>().color;
         color = new Color(color.r, color.g, color.b, state ? 0 : 1);
