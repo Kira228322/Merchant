@@ -7,9 +7,11 @@ public class Region : MonoBehaviour
 {
     [SerializeField] private List<Location> _locations;
 
-    [HideInInspector, SerializeField] public Dictionary<Item.ItemType, float> _coefsForItemTypes = new (); 
     
-    [HideInInspector]public List<float> tmp; // пока без этого не обойтись. нужен для кастом эдитора
+    [HideInInspector, SerializeField] private Dictionary<Item.ItemType, float> _coefsForItemTypes = new (); 
+    public Dictionary<Item.ItemType, float> CoefsForItemTypes => _coefsForItemTypes;
+    
+    [HideInInspector]public List<float> tmpFloat; // пока без этого не обойтись. нужен для кастом эдитора
     public Dictionary<string, int[]> ItemEconomyParams = new ();
     [SerializeField] private TextAsset cvsEconomyParams;
     public int AveragePopulation; // параметр нужный для заполенения подобного dictionary в каждой Location данного региона
@@ -17,7 +19,8 @@ public class Region : MonoBehaviour
 
     public List<Location> Locations => _locations;
 
-    public void FillDictionary()
+
+    public void FillEconomyParamsDictionary()
     {
         char lineEnding = '\n';
         string[] rows = cvsEconomyParams.text.Split(lineEnding);
@@ -30,6 +33,17 @@ public class Region : MonoBehaviour
         FillDictionariesOfLocations();
     }
 
+    public void FillCoefsForItemTypesDictionary()
+    {
+        int i = 0;
+        foreach (var objItemType in Enum.GetValues(typeof(Item.ItemType)))
+        {
+            Item.ItemType itemType = (Item.ItemType)objItemType;
+            CoefsForItemTypes[itemType] = tmpFloat[i];
+            i++;
+        }
+    }
+
     public void Initialize() //Инициализация при первом запуске игры
     {
         //Подразумевается что FillDictionary уже произошёл
@@ -39,6 +53,7 @@ public class Region : MonoBehaviour
             CountOfEachItem.Add(item.Key, item.Value[0]); // item.Value[0] равновесное число
         }
         InitializeLocations();
+        
     }
     private void InitializeLocations()
     {

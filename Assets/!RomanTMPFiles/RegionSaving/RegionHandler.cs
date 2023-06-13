@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,7 +11,8 @@ public class RegionHandler : MonoBehaviour, ISaveable<RegionSaveData>
     {
         foreach (Region region in Regions)
         {
-            region.FillDictionary();
+            region.FillCoefsForItemTypesDictionary();
+            region.FillEconomyParamsDictionary();
             region.Initialize();
         }
     }

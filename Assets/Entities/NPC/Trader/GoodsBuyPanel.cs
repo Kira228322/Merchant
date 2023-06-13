@@ -49,7 +49,8 @@ public class GoodsBuyPanel : MonoBehaviour
         _boughtDaysAgo = boughtDaysAgo;
         IsOriginatedFromTrader = isOriginatedFromTrader;
         CurrentCount = count;
-        _costText.text = goods.CurrentPrice.ToString();
+        _cost = CalculatePrice(_item);
+        _costText.text = _cost.ToString();
         _icon.sprite = _item.Good.Icon;
         _itemName.text = goods.Good.Name;
     }
@@ -58,6 +59,12 @@ public class GoodsBuyPanel : MonoBehaviour
     {
         if (CurrentCount > 0)
         {
+            
+            if (Player.Instance.Money < _cost)
+            {
+                return;
+            }
+            
             if (!IsOriginatedFromTrader) 
             {
                 //увеличить BuyCoefficient.CountToBuy с таким же типом как _item.TypeOfItem
@@ -65,11 +72,6 @@ public class GoodsBuyPanel : MonoBehaviour
             }
             InventoryItem boughtItem = InventoryController.Instance.TryCreateAndInsertItem(Player.Instance.Inventory.ItemGrid, _item.Good, 1, _boughtDaysAgo, true);
             if (boughtItem == null) //не было места поместить вещь
-            {
-                return;
-            }
-
-            if (Player.Instance.Money < _cost)
             {
                 return;
             }
@@ -115,7 +117,7 @@ public class GoodsBuyPanel : MonoBehaviour
             MapManager.CurrentLocation.Region.ItemEconomyParams[item.Good.Name][1],
             MapManager.CurrentLocation.Region.ItemEconomyParams[item.Good.Name][2]);
 
-        float itemTypeCoef = MapManager.CurrentLocation.Region._coefsForItemTypes[item.Good.TypeOfItem];
+        float itemTypeCoef = MapManager.CurrentLocation.Region.CoefsForItemTypes[item.Good.TypeOfItem];
         return Convert.ToInt32(Math.Round(item.CurrentPrice * locationCoef * regionCoef * itemTypeCoef));
     }
 }

@@ -107,7 +107,7 @@ public class GoodsSellPanel : MonoBehaviour
             MapManager.CurrentLocation.Region.ItemEconomyParams[item.Name][0],
             MapManager.CurrentLocation.Region.ItemEconomyParams[item.Name][1],
             MapManager.CurrentLocation.Region.ItemEconomyParams[item.Name][2]);
-        float itemTypeCoef = MapManager.CurrentLocation.Region._coefsForItemTypes[item.TypeOfItem];
+        float itemTypeCoef = MapManager.CurrentLocation.Region.CoefsForItemTypes[item.TypeOfItem];
 
         float traderTypeCoef = 0;
         for (int i = 0; i < _trader.BuyCoefficients.Count; i++)
