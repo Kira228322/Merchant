@@ -101,9 +101,9 @@ public class Region : MonoBehaviour
         float B = (float)A / (C + Q) - P;
         
         if (currentQuantity < -C)
-            currentQuantity = -C;
+            currentQuantity = -C + 1;
         else if (currentQuantity > A - C1)
-            currentQuantity = A - C1;
+            currentQuantity = A - C1 - 1;
         
         int boughtCount = (int)Math.Round(budget / ((float)A / (currentQuantity + C) - B));
         int produceCount = (int)Math.Round(budget / ((float)A / (-currentQuantity + A - C1) - B));

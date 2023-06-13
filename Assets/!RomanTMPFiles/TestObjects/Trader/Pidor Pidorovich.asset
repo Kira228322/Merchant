@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: Pidor Pidorovich
   m_EditorClassIdentifier: 
   Name: Pidor Pidorovich
+  StartWalkingTime: 0
+  FinishWalkingTime: 0
+  Money: 1851
   ID: 69
   _baseAffinity: -32
   InkJSON: {fileID: 4900000, guid: 42ec4a2723d8b42478233eaff171235e, type: 3}
@@ -21,26 +24,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 997f1667faefd604aad534ee42560049, type: 2}
   RestockCycle: 2
   _baseGoods:
-  - Good: {fileID: 11400000, guid: 51082a1ce98542a499133c143dc37119, type: 2}
-    MaxCount: 2
-    CurrentCount: 2
-    CurrentPrice: 61
-  - Good: {fileID: 11400000, guid: 47b264f5ad831994ca7460ce0d509778, type: 2}
-    MaxCount: 25
-    CurrentCount: 25
-    CurrentPrice: 51
-  - Good: {fileID: 11400000, guid: f9e205c939de2d74e9eb31fe1f3df27a, type: 2}
-    MaxCount: 4
-    CurrentCount: 4
-    CurrentPrice: 60
-  - Good: {fileID: 11400000, guid: 934d977f079cae542b316dc9cde310c2, type: 2}
-    MaxCount: 10
-    CurrentCount: 10
-    CurrentPrice: 1337
-  - Good: {fileID: 11400000, guid: 67ef3e7eb30b0f04a908c358306003d6, type: 2}
-    MaxCount: 11
-    CurrentCount: 11
-    CurrentPrice: 5
   - Good: {fileID: 11400000, guid: c51137506052a204090b07cad53242db, type: 2}
     MaxCount: 55
     CurrentCount: 55
@@ -61,7 +44,32 @@ MonoBehaviour:
   - itemType: 1
     Coefficient: 0.7
     DefaultCountToBuy: 30
+  - itemType: 5
+    Coefficient: 1
+    DefaultCountToBuy: 14
   LastRestock: 0
-  Goods: []
+  Goods:
+  - Good: {fileID: 11400000, guid: c51137506052a204090b07cad53242db, type: 2}
+    MaxCount: 55
+    CurrentCount: 55
+    CurrentPrice: 23
   AdditiveGoods: []
-  BuyCoefficients: []
+  BuyCoefficients:
+  - itemType: 0
+    Coefficient: 1
+    DefaultCountToBuy: 150
+  - itemType: 3
+    Coefficient: 0.55
+    DefaultCountToBuy: 20
+  - itemType: 4
+    Coefficient: 1
+    DefaultCountToBuy: 50
+  - itemType: 6
+    Coefficient: 0.315
+    DefaultCountToBuy: 31
+  - itemType: 1
+    Coefficient: 0.7
+    DefaultCountToBuy: 30
+  - itemType: 5
+    Coefficient: 1
+    DefaultCountToBuy: 14

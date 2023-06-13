@@ -12,6 +12,11 @@ public class NpcTrader : Npc
         public int MaxCount;
         public int CurrentCount;
         public int CurrentPrice;
+
+        public bool CurrentCountIsLessMaxCount()
+        {
+            return CurrentCount < MaxCount;
+        }
         public TraderGood(string itemName, int maxCount, int count, int currentPrice)
         {
             Good = ItemDatabase.GetItem(itemName);
@@ -77,39 +82,16 @@ public class NpcTrader : Npc
     [SerializeField] private NpcTraderData _npcTraderData;
     
     public List<TraderGood> Goods => _npcTraderData.Goods;
-    public List<TraderGood> AdditiveGoods => _npcTraderData.AdditiveGoods;
+    public List<TraderGood> AdditiveGoods => _npcTraderData.AdditiveGoods; // TODO Еще не знаю как это работает,
+                                                                           // но если вдруг осталось 0 предметов, то удаляется ли 
+                                                                           // из листа элемент? надо проверять.
     public List<BuyCoefficient> BuyCoefficients => _npcTraderData.BuyCoefficients; //Таких BuyCoefficients будет столько, сколько всего есть Item.ItemType (см.ниже)
     public void OpenTradeWindow()
     {
-        // TODO
-        // Сейчас ресток производится, когда открывается торг с нпс. Что неверно, ведь спрос и предложение работает некорректно
-        // Надо производить ресток в определенный момент в сутках. Например когда никто не торгует. Сделать такой промежуток для всех торговцев на локации
-        // и вообще в игре. Например с 00:00 до 01:00, если произвести ресток в 00:30 то должно быть все гладко. И можно производить ресток, когда 
-        // происходит преход на сцену
-        
-        if (_npcTraderData.LastRestock + _npcTraderData.RestockCycle <= GameTime.CurrentDay)
-        {
-            int count = (GameTime.CurrentDay - _npcTraderData.LastRestock) / _npcTraderData.RestockCycle;
-            
-            if (count > 3)
-                count = 3;
-            
-            for (int i = 0; i < count; i++)
-                Restock();
-            
-            _npcTraderData.LastRestock = GameTime.CurrentDay; 
-        }
         TradeManager.Instance.OpenTradeWindow(this);
     }
     
-    private void Restock()
-    {
-        RestockMainGoods();        
-        RestockNewItems();
-        RestockCoefficients();
-    }
-
-    private void RestockCoefficients()
+    public void RestockCoefficients()
     {
         foreach (var buyCoefficient in BuyCoefficients)
         {
@@ -119,19 +101,6 @@ public class NpcTrader : Npc
         }
     }
 
-    private void RestockNewItems()
-    {
-        // Случайно будет добавляться в список предметов новый предмет, которого на локации нет.
-        // Над подробностями пока думаю
-    }
-    
-    private void RestockMainGoods()
-    {
-        //TODO
-        // Основываясь на спросе и предложении локации будут рестокаться предметы в нужном размере. РАЗДЕЛЯЯСЬ НА ВСЕХ МЕРЧАНТОВ ЛОКАЦИИ
-        // К примеру должно прибавиться в деревне 5 хлеба. 3 мерчанта торгуют хлебом. 2 мерчанта получат по 2 хлеба, 1 мерчант- один.
-        
-    }
     public void SellItem(Item item)
     {
         foreach (TraderGood traderGood in Goods)

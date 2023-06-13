@@ -117,7 +117,6 @@ public class GoodsBuyPanel : MonoBehaviour
             MapManager.CurrentLocation.Region.ItemEconomyParams[item.Good.Name][1],
             MapManager.CurrentLocation.Region.ItemEconomyParams[item.Good.Name][2]);
 
-        float itemTypeCoef = MapManager.CurrentLocation.Region.CoefsForItemTypes[item.Good.TypeOfItem];
-        return Convert.ToInt32(Math.Round(item.CurrentPrice * locationCoef * regionCoef * itemTypeCoef));
+        return Convert.ToInt32(Math.Round(item.CurrentPrice * locationCoef * regionCoef));
     }
 }
