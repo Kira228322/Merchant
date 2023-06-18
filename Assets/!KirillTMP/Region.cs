@@ -85,10 +85,10 @@ public class Region : MonoBehaviour
         
         float B = (float)A / (C + Q) - P;
         float result = (float)Math.Round((float)A / (currentQuantity + C) - B) / P;
-        if (result > 1.5f)
-            result = 1.5f;
-        else if (result < 0.667f) // 1/1.5f
-            result = 0.667f;
+        if (result > 1.4f)
+            result = 1.4f;
+        else if (result < 0.71f) // 1/1.4f
+            result = 0.71f;
         return result;
     }
 

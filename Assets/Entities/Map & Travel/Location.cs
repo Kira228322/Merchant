@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 public class Location : MonoBehaviour
@@ -23,7 +24,8 @@ public class Location : MonoBehaviour
     [HideInInspector] public Dictionary<string , int[]> ItemEconomyParams = new (); // основан на таком же dictionary своего региона Dictionary<string (ItemName), List<int (Q;A;C)>>
     [SerializeField] private int _populationOfVillage; // будет корректировать dictionary сверху, зававая параметры Q и C 
     [HideInInspector] public Dictionary<string, int> CountOfEachItem;
-
+    private int _lastRestockDay;
+    
     [Space(12)]
     [Header("Initialization")]
 
@@ -105,13 +107,36 @@ public class Location : MonoBehaviour
         win.GetComponent<VillageWindow>().Init(this);
     }
 
-    private void Restock()
+    public void Restock()
     {
+        if (GameTime.CurrentDay < _lastRestockDay)
+            return;
+        
         NpcTrader[] traders = FindObjectsOfType<NpcTrader>();
         RestockBuyCoefficients(traders);
         RestockMainGoods(traders);
         AddAdditiveGoods(traders);
         CountAllItemsOnScene();
+        _lastRestockDay = GameTime.CurrentDay;
+    }
+
+    public void OnEnterOnLocation()
+    {
+        GameTime.HourChanged += CheckRestock;
+    }
+
+    public void OnLeaveLocation()
+    {
+        GameTime.HourChanged -= CheckRestock;
+    }
+
+    private void CheckRestock()
+    {
+        if (GameTime.Hours == 1)
+            if (_lastRestockDay < GameTime.CurrentDay)
+            {
+                Restock();
+            }
     }
     private void RestockBuyCoefficients(NpcTrader[] traders)
     {

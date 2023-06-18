@@ -41,6 +41,7 @@ public static class MapManager
 
     public static void TransitionToTravelScene(Road road)
     {
+        CurrentLocation.OnLeaveLocation();
         _loadScreen.StartTransit(_travelingScene, road);
     }
     public static void TransitionToVillageScene()
@@ -57,6 +58,9 @@ public static class MapManager
     {
         CurrentLocation.CountAllItemsOnScene();
         CurrentLocation.Region.CountAllItemsInRegion();
+        CurrentLocation.Restock();
+        
+        CurrentLocation.OnEnterOnLocation();
     }
 
     public static Location GetLocationBySceneName(string sceneName)
@@ -77,4 +81,6 @@ public static class MapManager
             return null;
         }
     }
+
+    
 }
