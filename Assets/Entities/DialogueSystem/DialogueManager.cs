@@ -65,23 +65,6 @@ public class DialogueManager : MonoBehaviour
         {
             QuestHandler.AddQuest(PregenQuestDatabase.GetQuestParams(questSummary));
         });
-        _currentStory.BindExternalFunction("get_affinity_here", () =>
-        {
-            return _currentNPC.NpcData.Affinity;
-        });
-        _currentStory.BindExternalFunction("get_affinity_by_name", (string npcName) =>
-        {
-            return NpcDatabase.GetNPCData(npcName).Affinity;
-        });
-        _currentStory.BindExternalFunction("add_affinity", (string npcName, string amount) =>
-        {
-            NpcDatabase.GetNPCData(npcName).Affinity += int.Parse(amount);
-        });
-        _currentStory.BindExternalFunction("add_affinity_here", (string amount) =>
-        {
-            //Очень жаль, но Ink не поддерживает перегрузку external функции, так бы просто сделал add_affinity(string amount)
-            _currentNPC.NpcData.Affinity += int.Parse(amount);
-        });
         _currentStory.BindExternalFunction("invoke_dialogue_event", (string param) =>
         {
             TalkedToNPCAboutSomething?.Invoke(_currentNPC, param);

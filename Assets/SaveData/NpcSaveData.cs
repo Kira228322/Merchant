@@ -8,12 +8,10 @@ using UnityEngine;
 public class NpcSaveData
 {
     public int ID;
-    public int Affinity;
     public int Money;
 
-    public NpcSaveData(int affinity, int id, int money)
+    public NpcSaveData(int id, int money)
     {
-        Affinity = affinity;
         ID = id;
         Money = money;
     }
@@ -44,7 +42,7 @@ public class NpcTraderSaveData: NpcSaveData
     public List<SavedTraderGood> Goods = new();
     public List<SavedTraderGood> AdditiveGoods = new();
     public List<NpcTrader.BuyCoefficient> BuyCoefficients;
-    public NpcTraderSaveData(int affinity, int id, int money, int lastRestock, List<NpcTrader.TraderGood> goods, List<NpcTrader.TraderGood> additiveGoods, List<NpcTrader.BuyCoefficient> buyCoefficients) : base(affinity, id, money)
+    public NpcTraderSaveData(int id, int money, int lastRestock, List<NpcTrader.TraderGood> goods, List<NpcTrader.TraderGood> additiveGoods, List<NpcTrader.BuyCoefficient> buyCoefficients) : base(id, money)
     {
         LastRestock = lastRestock;
         foreach (NpcTrader.TraderGood traderGood in goods)

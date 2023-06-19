@@ -19,7 +19,7 @@ public class PregenQuestSO : ScriptableObject
     [HideInInspector] public int MaxMoneyReward;
 
    public PregenQuestSO NextQuest;
-   [HideInInspector] public List<CompactedGoal> goals;
+   [HideInInspector] public List<CompactedGoal> goals = new();
     
    [HideInInspector] public List<ItemReward> ItemRewards = new();
 

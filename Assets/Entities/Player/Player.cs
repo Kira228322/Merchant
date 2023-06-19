@@ -152,7 +152,8 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
         }
         if (Input.GetKeyDown(KeyCode.I))
         {
-            RegionHandler regionHandler = FindObjectOfType<RegionHandler>(true);
+            Debug.Log("Current Location: " + MapManager.CurrentLocation.SceneName);
+            /*RegionHandler regionHandler = FindObjectOfType<RegionHandler>(true);
             foreach(Region region in regionHandler.Regions)
             {
                 foreach (Location location in region.Locations)
@@ -163,7 +164,7 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
                         Debug.Log(item.Key + " " + item.Value);
                     }
                 }
-            }
+            }*/
         }
 
     }

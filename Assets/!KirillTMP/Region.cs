@@ -1,12 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Region : MonoBehaviour
 {
     [SerializeField] private List<Location> _locations;
 
+    [SerializeField] private List<NpcQuestGiverData> _questGivers = new();
     
     [HideInInspector, SerializeField] private Dictionary<Item.ItemType, float> _coefsForItemTypes = new (); 
     public Dictionary<Item.ItemType, float> CoefsForItemTypes => _coefsForItemTypes;
@@ -19,6 +21,13 @@ public class Region : MonoBehaviour
 
     public List<Location> Locations => _locations;
 
+    public NpcQuestGiverData GetRandomFreeQuestGiver()
+    {
+        List<NpcQuestGiverData> availableQuestGivers = _questGivers
+            .Where(questGiver => questGiver.IsReadyToGiveQuest()).ToList();
+        if (availableQuestGivers.Count == 0) return null;
+        else return availableQuestGivers[UnityEngine.Random.Range(0, availableQuestGivers.Count)];
+    }
 
     public void FillEconomyParamsDictionary()
     {
