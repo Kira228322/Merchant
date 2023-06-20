@@ -109,7 +109,7 @@ public class Location : MonoBehaviour
 
     public void Restock()
     {
-        if (GameTime.CurrentDay < _lastRestockDay)
+        if (GameTime.CurrentDay < _lastRestockDay + 2)
             return;
         
         NpcTrader[] traders = FindObjectsOfType<NpcTrader>();
@@ -133,7 +133,7 @@ public class Location : MonoBehaviour
     private void CheckRestock()
     {
         if (GameTime.Hours == 1)
-            if (_lastRestockDay < GameTime.CurrentDay)
+            if (_lastRestockDay + 2 < GameTime.CurrentDay)
             {
                 Restock();
             }
@@ -148,7 +148,11 @@ public class Location : MonoBehaviour
     {
         foreach (var trader in traders)
         {
-            if (trader.AdditiveGoods.Count > 5)
+            if (trader.AdditiveGoods.Count > 9)
+                trader.AdditiveGoods.RemoveAt(Random.Range(0, trader.AdditiveGoods.Count));
+            if (trader.AdditiveGoods.Count > 7)
+                trader.AdditiveGoods.RemoveAt(Random.Range(0, trader.AdditiveGoods.Count));
+            if (trader.AdditiveGoods.Count > 4)
                 trader.AdditiveGoods.RemoveAt(Random.Range(0, trader.AdditiveGoods.Count));
 
             if (Random.Range(0,3) == 0)
@@ -196,7 +200,7 @@ public class Location : MonoBehaviour
                             randomCount++;
                         
                         NpcTrader.TraderGood newGood = new NpcTrader.TraderGood(newItem.Name, randomCount, 
-                            randomCount, newItem.Price + Random.Range(1, newItem.Price/10 + 2));
+                            randomCount, newItem.Price + Random.Range(1, newItem.Price/12 + 2));
 
                         trader.AdditiveGoods.Add(newGood);
                         break;
@@ -243,8 +247,8 @@ public class Location : MonoBehaviour
                 if (activeTraders.Count == 0)
                 {
                     // Если на локации вообще нет торговцев, которые торгует этим 
-                    // то предмет рестокнется с 33% шансом и только на половину от необходимого числа.
-                    if (Random.Range(0, 3) == 0)
+                    // то предмет рестокнется с 25% шансом и только на половину от необходимого числа.
+                    if (Random.Range(0, 4) == 0)
                     {
                         gainCount /= 2;
                         if (gainCount > 0)

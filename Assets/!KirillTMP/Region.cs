@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Region : MonoBehaviour
 {
@@ -115,6 +116,9 @@ public class Region : MonoBehaviour
             currentQuantity = -C + 1;
         else if (currentQuantity > A - C1)
             currentQuantity = A - C1 - 1;
+
+        budget += P / 2;
+        budget += Random.Range(-budget/10, budget/10 +1);
         
         int boughtCount = (int)Math.Round(budget / ((float)A / (currentQuantity + C) - B));
         int produceCount = (int)Math.Round(budget / ((float)A / (-currentQuantity + A - C1) - B));

@@ -1,6 +1,9 @@
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class TradeManager : MonoBehaviour
 {
@@ -43,18 +46,46 @@ public class TradeManager : MonoBehaviour
     }
     public void CloseTradeWindow()
     {
+        List<GoodsBuyPanel> goodsBuyPanels = BuyPanelContent.GetComponentsInChildren<GoodsBuyPanel>().
+            Where(panel => panel.IsOriginatedFromTrader == false).ToList();
+        
+        foreach (var panel in goodsBuyPanels)
+        {
+            NpcTrader.TraderGood traderGood =
+                panel.Trader.Goods.FirstOrDefault(item => item.Good.Name == panel.Item.Good.Name);
+            if ( traderGood != null)
+            {
+                traderGood.CurrentCount += panel.CurrentCount;
+                continue;
+            }
+
+            traderGood = panel.Trader.AdditiveGoods.FirstOrDefault(item => item.Good.Name == panel.Item.Good.Name);
+            if ( traderGood != null)
+            {
+                traderGood.CurrentCount += panel.CurrentCount;
+                continue;
+            }
+
+            int newPrice = panel.Item.CurrentPrice;
+            if (newPrice < panel.Item.Good.Price)
+                newPrice = panel.Item.Good.Price + Random.Range(1, panel.Item.Good.Price / 12 + 2);
+            
+            panel.Trader.AdditiveGoods.Add(new NpcTrader.TraderGood
+                (panel.Item.Good.Name, panel.CurrentCount, panel.Item.CurrentCount, newPrice));
+        }
+            
         InventoryController.Instance.enabled = true;
         _playerBlock.alpha = 1;
         _closeTradeButton.SetActive(false);
-        Instance.BuyPanel.SetActive(false);
-        Instance.SellPanel.SetActive(false);
+        BuyPanel.SetActive(false);
+        SellPanel.SetActive(false);
         Player.Instance.Inventory.InventoryPanel.SetActive(false);
     }
     private void OpenBuyPanel(NpcTrader trader)
     {
-        Instance.BuyPanel.SetActive(true);
-        for (int i = Instance.BuyPanelContent.childCount - 1; i >= 0; i--)
-            Destroy(Instance.BuyPanelContent.GetChild(i).gameObject);
+        BuyPanel.SetActive(true);
+        for (int i = BuyPanelContent.childCount - 1; i >= 0; i--)
+            Destroy(BuyPanelContent.GetChild(i).gameObject);
 
         for (int i = 0; i < trader.Goods.Count; i++)
         {
@@ -73,10 +104,10 @@ public class TradeManager : MonoBehaviour
     }
     private void OpenSellPanel(NpcTrader trader)
     {
-        Instance.SellPanel.SetActive(true);
+        SellPanel.SetActive(true);
 
-        for (int i = Instance.SellPanelContent.childCount - 1; i >= 0; i--)
-            Destroy(Instance.SellPanelContent.GetChild(i).gameObject);
+        for (int i = SellPanelContent.childCount - 1; i >= 0; i--)
+            Destroy(SellPanelContent.GetChild(i).gameObject);
 
         for (int i = 0; i < Player.Instance.Inventory.ItemList.Count; i++)
         {

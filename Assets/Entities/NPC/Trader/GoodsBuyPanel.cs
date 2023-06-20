@@ -26,6 +26,7 @@ public class GoodsBuyPanel : MonoBehaviour
     private int _currentCount;
     private NpcTrader.TraderGood _item;
     private NpcTrader _trader;
+    public NpcTrader Trader => _trader;
     private float _boughtDaysAgo;
     public bool IsOriginatedFromTrader;
     public NpcTrader.TraderGood Item => _item;
@@ -79,7 +80,9 @@ public class GoodsBuyPanel : MonoBehaviour
             Player.Instance.Money -= _cost;
             _trader.NpcData.Money += _cost;
             CurrentCount--;
-            _trader.SellItem(_item.Good);
+            
+            if (IsOriginatedFromTrader)
+                _trader.SellItem(_item.Good);
 
             if (CurrentCount <= 0)
             {
