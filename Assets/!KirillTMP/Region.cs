@@ -23,12 +23,14 @@ public class Region : MonoBehaviour
 
     public NpcQuestGiverData GetRandomFreeQuestGiver()
     {
-        List<NpcQuestGiverData> availableQuestGivers = _questGivers
-            .Where(questGiver => questGiver.IsReadyToGiveQuest()).ToList();
-        if (availableQuestGivers.Count == 0) return null;
-        else return availableQuestGivers[UnityEngine.Random.Range(0, availableQuestGivers.Count)];
+        List<NpcQuestGiverData> availableQuestGivers = 
+            _questGivers.Where(questGiver => questGiver.IsReadyToGiveQuest()).ToList();
+        
+        if (availableQuestGivers.Count == 0) 
+            return null;
+        
+        return availableQuestGivers[UnityEngine.Random.Range(0, availableQuestGivers.Count)];
     }
-
     public void FillEconomyParamsDictionary()
     {
         char lineEnding = '\n';

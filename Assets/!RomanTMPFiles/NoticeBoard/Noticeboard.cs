@@ -27,23 +27,17 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
     private void Start() 
     {
         int spawnPointIndex = 0;
-
-        int questsToSpawn = Random.Range(1, 3);
-        Debug.Log("Quests to spawn: " + questsToSpawn);
+        int questsToSpawn = Random.Range(0, 3);
 
         for (int i = 0; i < questsToSpawn; i++)
         {
             NpcQuestGiverData questGiver = MapManager.CurrentLocation.Region.GetRandomFreeQuestGiver();
+           
             if (questGiver == null)
-            {
-                Debug.Log("pravda break");
                 break;
-            }
-            else
-            {
-                _compactedNoticeArray[spawnPointIndex] = new CompactedQuestNotice(questGiver.GiveRandomQuest());
-                spawnPointIndex++;
-            }
+            
+            _compactedNoticeArray[spawnPointIndex] = new CompactedQuestNotice(questGiver.GiveRandomQuest());
+            spawnPointIndex++;
         }
 
         _uncheckedActiveGlobalEvents = new(GlobalEventHandler.Instance.ActiveGlobalEvents);
