@@ -52,7 +52,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: c314e128df9d76443acb425d25212993, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -136,7 +136,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: c314e128df9d76443acb425d25212993, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -220,7 +220,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: c314e128df9d76443acb425d25212993, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -262,7 +262,6 @@ GameObject:
   m_Component:
   - component: {fileID: 796464614721710446}
   - component: {fileID: 796464614721710447}
-  - component: {fileID: 5117041783559617268}
   - component: {fileID: 7931960508526294676}
   - component: {fileID: 5829166629720868302}
   - component: {fileID: 6834880125564507800}
@@ -308,7 +307,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: c314e128df9d76443acb425d25212993, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -340,18 +339,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &5117041783559617268
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 796464614721710445}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62f13fc5f387cd24f9b520c8160d7afd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!61 &7931960508526294676
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -434,7 +421,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 796464614996848183}
-  - component: {fileID: 536071244870314531}
   m_Layer: 0
   m_Name: PF Village Props - Elevator
   m_TagString: Untagged
@@ -462,25 +448,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &536071244870314531
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 796464614996848182}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: decb355dc5cd8c549ac690cc13f9386e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lengthRange: {x: 2, y: 5}
-  waitTime: 1
-  moveSpeed: 3
-  startState: 0
-  platform: {fileID: 5829166629720868302}
-  chainL: {fileID: 796464615045801947}
-  chainR: {fileID: 796464613234584107}
 --- !u!1 &796464615045801945
 GameObject:
   m_ObjectHideFlags: 0
@@ -533,7 +500,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: c314e128df9d76443acb425d25212993, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -18,7 +18,6 @@ public class UIClock : MonoBehaviour
 
     private void OnEnable()
     {
-        OnHourChanged();
         _weatherController = FindObjectOfType<WeatherController>();
         GameTime.HourChanged += OnHourChanged;
         _weatherController.WeatherStarted += OnWeatherIsActive;
@@ -32,6 +31,7 @@ public class UIClock : MonoBehaviour
     private void Start()
     {
         _currentTimeImage.sprite = _timeSprites[0];
+        OnHourChanged();
     }
 
     private void OnWeatherIsActive()

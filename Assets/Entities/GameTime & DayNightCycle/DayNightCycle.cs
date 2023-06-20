@@ -76,7 +76,7 @@ public class DayNightCycle : MonoBehaviour
                 break;
         }
         _volume.weight = volumeWeight + _rainWeightOffset;
-        _sun.intensity = Mathf.Lerp(0.2f, 0.96f, 1-volumeWeight); // 0.2 и 0.96 это min и max значения которыми может быть освещение
+        _sun.intensity = Mathf.Lerp(0.13f, 0.96f, 1-volumeWeight); // 0.13 и 0.96 это min и max значения которыми может быть освещение
         if (_volume.weight >= 1) _volume.weight = 1;
         if (!_activateLights)
         {
