@@ -7,7 +7,7 @@ using UnityEngine;
 public class PlayerMover : MonoBehaviour
 {
     [SerializeField] private ContactFilter2D _contactFilter2D;
-    private float _speed = 3;
+    private float _speed = 4;
     public float Speed => _speed;
     private Rigidbody2D _rigidbody;
     private Collider2D _collider;
@@ -121,18 +121,18 @@ public class PlayerMover : MonoBehaviour
 
             if (!moveIsDone)
             {
-                waitForSeconds = new WaitForSeconds(0.07f); // задержка перед подпрыгиванием 
+                waitForSeconds = new WaitForSeconds(0.04f); // задержка перед подпрыгиванием 
                 yield return waitForSeconds;
                 castDirection = new Vector2(raycastHit2D[0].point.x - transform.position.x, 0).normalized;
-                castDirection += new Vector2(0, 2f); // max высота ступеньки, на которую может
-                // прыгнуть игрок * (1/MinConstDist) ; пусть высота = 0.4, тогда y = 2
+                castDirection += new Vector2(0, 2.25f); // max высота ступеньки, на которую может
+                // прыгнуть игрок * (1/MinConstDist) ; пусть высота = 0.4, тогда y = 2 // Не помню зачем это так. Сделал 2.25
                 if (_rigidbody.Cast(castDirection, _contactFilter2D, raycastHit2D, _minDistToLet) == 0) 
                 {
                     if (raycastHit2D[0].point.x > transform.position.x)
-                        jumpDirection = new Vector2(0.34f, 0.94f); // 70 градусов
-                    else jumpDirection = new Vector2(-0.34f, 0.94f);
+                        jumpDirection = new Vector2(0.259f, 0.965f); // 75 градусов
+                    else jumpDirection = new Vector2(-0.259f, 0.965f);
 
-                    _rigidbody.AddForce(jumpDirection * 200);
+                    _rigidbody.AddForce(jumpDirection * 180);
                 }
 
                 
