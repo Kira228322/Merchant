@@ -29,6 +29,8 @@ public class NpcTraderData : NpcData, IResetOnExitPlaymode, ISaveable<NpcTraderS
 
     void ISaveable<NpcTraderSaveData>.LoadData(NpcTraderSaveData data)
     {
+        LoadData(data);
+
         LastRestock = data.LastRestock;
 
         Goods = data.Goods.Select(good => new NpcTrader.TraderGood(good)).ToList();
@@ -48,6 +50,7 @@ public class NpcTraderData : NpcData, IResetOnExitPlaymode, ISaveable<NpcTraderS
     }
     void IResetOnExitPlaymode.ResetOnExitPlaymode()
     {
+        ResetOnExitPlaymode();
         LastRestock = 0;
         Goods.Clear();
         AdditiveGoods.Clear();

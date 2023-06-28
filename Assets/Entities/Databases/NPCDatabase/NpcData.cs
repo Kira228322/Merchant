@@ -8,7 +8,7 @@ public class NpcData : ScriptableObject, IResetOnExitPlaymode, ISaveable<NpcSave
     public int FinishWalkingTime;
 
     public int GameStartMoney;
-    [HideInInspector] public int CurrentMoney;
+    public int CurrentMoney;
 
     public int ID;
 

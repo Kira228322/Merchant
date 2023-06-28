@@ -57,13 +57,18 @@ public class NpcDatabase : MonoBehaviour, ISaveable<NpcDatabaseSaveData>
         foreach (NpcData npcData in NpcDatabaseSO.NpcList)
         {
             NpcSaveData npcSaveData;
-            if (npcData is NpcTraderData traderData) //TODO switch для каждого типа сохраняемого NPC или Dictionary 
+            //TODO обновлять switch с появлением новых типов NPC
+            switch (npcData)
             {
-                npcSaveData = ((ISaveable<NpcTraderSaveData>)traderData).SaveData();
-            }
-            else
-            {
-                npcSaveData = npcData.SaveData();
+                case NpcTraderData traderData:
+                    npcSaveData = ((ISaveable<NpcTraderSaveData>)traderData).SaveData();
+                    break;
+                case NpcQuestGiverData questGiverData:
+                    npcSaveData = ((ISaveable<NpcQuestGiverSaveData>)questGiverData).SaveData();
+                    break;
+                default:
+                    npcSaveData = npcData.SaveData();
+                    break;
             }
             saveData.savedNpcDatas.Add(npcSaveData);
         }
@@ -84,13 +89,18 @@ public class NpcDatabase : MonoBehaviour, ISaveable<NpcDatabaseSaveData>
 
         foreach (var npcAndSaveData in npcDataAndSaveData)
         {
-            if (npcAndSaveData.npcData is NpcTraderData)
+            //TODO обновлять switch с появлением новых типов NPC
+            switch (npcAndSaveData.npcData)
             {
-                ((ISaveable<NpcTraderSaveData>)npcAndSaveData.npcData).LoadData((NpcTraderSaveData)npcAndSaveData.savedNpcData);
-            }
-            else
-            {
-                npcAndSaveData.npcData.LoadData(npcAndSaveData.savedNpcData);
+                case NpcTraderData npcTraderData:
+                    ((ISaveable<NpcTraderSaveData>)npcTraderData).LoadData((NpcTraderSaveData)npcAndSaveData.savedNpcData);
+                    break;
+                case NpcQuestGiverData npcQuestGiverData:
+                    ((ISaveable<NpcQuestGiverSaveData>)npcQuestGiverData).LoadData((NpcQuestGiverSaveData)npcAndSaveData.savedNpcData);
+                    break;
+                default:
+                    npcAndSaveData.npcData.LoadData(npcAndSaveData.savedNpcData);
+                    break;
             }
         }
     }

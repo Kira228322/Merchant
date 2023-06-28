@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "newQuestGiverNpc", menuName = "NPCs/QuestGiverData")]
-public class NpcQuestGiverData : NpcData, IResetOnExitPlaymode //TODO ISaveable<>
+public class NpcQuestGiverData : NpcData, IResetOnExitPlaymode, ISaveable<NpcQuestGiverSaveData>
 {
     [SerializeField] private List<PregenQuestSO> pregenQuests = new();
 
@@ -30,4 +30,15 @@ public class NpcQuestGiverData : NpcData, IResetOnExitPlaymode //TODO ISaveable<
         _lastGiveDay = -8;
     }
 
+    NpcQuestGiverSaveData ISaveable<NpcQuestGiverSaveData>.SaveData()
+    {
+        return new(ID, CurrentMoney, _lastGiveDay);
+    }
+
+    void ISaveable<NpcQuestGiverSaveData>.LoadData(NpcQuestGiverSaveData data)
+    {
+        LoadData(data);
+
+        _lastGiveDay = data.LastGiveQuestDay;
+    }
 }

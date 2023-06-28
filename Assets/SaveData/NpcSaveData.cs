@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -54,6 +55,16 @@ public class NpcTraderSaveData: NpcSaveData
             AdditiveGoods.Add(new(traderGood));
         }
         BuyCoefficients = buyCoefficients;
+    }
+}
+[Serializable]
+public class NpcQuestGiverSaveData : NpcSaveData
+{
+
+    public int LastGiveQuestDay;
+    public NpcQuestGiverSaveData(int id, int money, int day) : base(id,money)
+    {
+        LastGiveQuestDay = day;
     }
 }
 
