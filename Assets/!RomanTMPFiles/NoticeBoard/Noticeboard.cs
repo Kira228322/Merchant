@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -9,13 +10,18 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
     //Почему не наследуется от UsableEnvironment:
     //Потому что UsableEnvironment предполагает, что у предмета есть кулдаун,
     //партиклы и изменение спрайта при использовании. Ничего из этого здесь не нужно
+    //UPD 28.06.23: ну кулдаун всё-таки нужен, но он был реализован отдельно от UsableEnvironment
+
     //TODO: Чтобы спавнящийся префаб не спавнился два раза
+    private UniqueID _uniqueID;
+
     private List<GlobalEvent_Base> _uncheckedActiveGlobalEvents;
 
     [SerializeField] private NoticeboardUI _noticeBoardWindowPrefab;
     private float _distanceToUse = 3f;
+    private int _cooldownHours = 48; //Квесты могут появиться только раз в столько часов
     private Transform _canvas;
-    private UniqueID _uniqueID;
+    private CooldownHandler _cooldownHandler;
 
     private CompactedNotice[] _compactedNoticeArray; //Информация об объявлениях, которая будет передаваться в UI
     //Размер массива - столько, сколько возможных точек спавна в префабе NoticeboardUI.
@@ -24,24 +30,36 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
     {
         _canvas = FindObjectOfType<CanvasWarningGenerator>().transform;
         _uniqueID = GetComponent<UniqueID>();
+        _cooldownHandler = FindObjectOfType<CooldownHandler>();
+
         _compactedNoticeArray = new CompactedNotice[_noticeBoardWindowPrefab.SpawnPointsCount];
     }
 
     private void Start() 
     {
-        int spawnPointIndex = 0;
-        int questsToSpawn = Random.Range(0, 3);
 
-        for (int i = 0; i < questsToSpawn; i++)
+        int spawnPointIndex = 0;
+
+        //Спавн квестов
+
+        if (IsReadyToGiveQuest()) // если доска не на кд
         {
-            NpcQuestGiverData questGiver = MapManager.CurrentLocation.Region.GetRandomFreeQuestGiver();
-           
-            if (questGiver == null)
-                break;
-            
-            _compactedNoticeArray[spawnPointIndex] = new CompactedQuestNotice(questGiver.GiveRandomQuest());
-            spawnPointIndex++;
+            int questsToSpawn = Random.Range(1, 3);
+
+            for (int i = 0; i < questsToSpawn; i++)
+            {
+                NpcQuestGiverData questGiver = MapManager.CurrentLocation.Region.GetRandomFreeQuestGiver();
+
+                if (questGiver == null)
+                {
+                    break;
+                }
+                _compactedNoticeArray[spawnPointIndex] = new CompactedQuestNotice(questGiver.GiveRandomQuest());
+                spawnPointIndex++;
+            }
         }
+
+        //Спавн держи-в-курсе информации по ивентам
 
         _uncheckedActiveGlobalEvents = new(GlobalEventHandler.Instance.ActiveGlobalEvents);
 
@@ -55,6 +73,17 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
             }
             _uncheckedActiveGlobalEvents.Remove(randomGlobalEvent);
         }
+    }
+
+    private bool IsReadyToGiveQuest()
+    {
+        var thisObjectInCooldownHandler = _cooldownHandler.ObjectsOnCooldown.FirstOrDefault(item => item.UniqueID == _uniqueID.ID);
+        if (thisObjectInCooldownHandler == null || thisObjectInCooldownHandler.HoursLeft <= 0)
+        {
+            _cooldownHandler.Unregister(_uniqueID.ID);
+            return true;
+        }
+        return false;
     }
 
     public void RemoveNotice(int index)
@@ -71,6 +100,12 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
         noticeboardUI.Initialize(this, _compactedNoticeArray);
         
     }
+    public void StartCooldown()
+    {
+        _cooldownHandler.Register(_uniqueID.ID, _cooldownHours);
+    }
+
+
 
     public abstract class CompactedNotice
     {

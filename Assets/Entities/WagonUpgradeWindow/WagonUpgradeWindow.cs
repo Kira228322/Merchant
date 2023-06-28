@@ -66,7 +66,7 @@ public class WagonUpgradeWindow : MonoBehaviour
         for (int i = 0; i < _container.childCount; i++)
             Destroy(_container.GetChild(i).gameObject);
 
-        _wagonUpgrader.NpcData.Money += wagonPart.UpgradePrice; 
+        _wagonUpgrader.NpcData.CurrentMoney += wagonPart.UpgradePrice; 
         
         Init(_wagonUpgrader);
     }

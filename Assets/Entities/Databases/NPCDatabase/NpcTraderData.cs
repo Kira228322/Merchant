@@ -24,7 +24,7 @@ public class NpcTraderData : NpcData, IResetOnExitPlaymode, ISaveable<NpcTraderS
 
     NpcTraderSaveData ISaveable<NpcTraderSaveData>.SaveData()
     {
-        return new(ID, Money, LastRestock, Goods, AdditiveGoods, BuyCoefficients);
+        return new(ID, CurrentMoney, LastRestock, Goods, AdditiveGoods, BuyCoefficients);
     }
 
     void ISaveable<NpcTraderSaveData>.LoadData(NpcTraderSaveData data)

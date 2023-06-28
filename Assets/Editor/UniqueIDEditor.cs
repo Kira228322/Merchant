@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEditor;
 using UnityEditor.Rendering;
 using UnityEditor.TerrainTools;
@@ -22,7 +23,9 @@ public class UniqueIDEditor : Editor
         {
             uniqueID.GenerateNewID();
         }
-            
+
+        if (GUI.changed)
+            EditorUtility.SetDirty(uniqueID);
     }
     
 }

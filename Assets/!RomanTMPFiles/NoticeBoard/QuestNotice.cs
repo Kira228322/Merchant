@@ -15,6 +15,7 @@ public class QuestNotice : Notice
     public override void OnNoticeTake()
     {
         QuestHandler.AddQuest(RandomQuest);
+        Noticeboard.StartCooldown();
         Noticeboard.RemoveNotice(SpawnPointIndex);
     }
 }

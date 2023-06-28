@@ -78,7 +78,7 @@ public class GoodsBuyPanel : MonoBehaviour
             }
 
             Player.Instance.Money -= _cost;
-            _trader.NpcData.Money += _cost;
+            _trader.NpcData.CurrentMoney += _cost;
             CurrentCount--;
             
             if (IsOriginatedFromTrader)

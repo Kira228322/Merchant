@@ -6,7 +6,9 @@ public class NpcData : ScriptableObject, IResetOnExitPlaymode, ISaveable<NpcSave
     public string Name;
     public int StartWalkingTime;
     public int FinishWalkingTime;
-    public int Money;
+
+    public int GameStartMoney;
+    [HideInInspector] public int CurrentMoney;
 
     public int ID;
 
@@ -15,17 +17,17 @@ public class NpcData : ScriptableObject, IResetOnExitPlaymode, ISaveable<NpcSave
 
     public NpcSaveData SaveData()
     {
-        NpcSaveData saveData = new(ID, Money);
+        NpcSaveData saveData = new(ID, CurrentMoney);
         return saveData;
     }
 
     public void LoadData(NpcSaveData data)
     {
-        Money = data.Money;
+        CurrentMoney = data.Money;
     }
 
     public void ResetOnExitPlaymode()
     {
-
+        CurrentMoney = GameStartMoney;
     }
 }

@@ -321,7 +321,7 @@ public class Location : MonoBehaviour
                         {
                             traderGood.CurrentCount--;
                             gainCount++;
-                            trader.NpcData.Money += traderGood.CurrentPrice;
+                            trader.NpcData.CurrentMoney += traderGood.CurrentPrice;
                         }
                         if (gainCount == 0)
                             break;

@@ -11,7 +11,6 @@ public class NpcQuestGiverData : NpcData, IResetOnExitPlaymode //TODO ISaveable<
 
     public bool IsReadyToGiveQuest()
     {
-        _lastGiveDay = -8;
         if (GameTime.CurrentDay > _lastGiveDay + 7)
         {
             return true;
@@ -23,6 +22,12 @@ public class NpcQuestGiverData : NpcData, IResetOnExitPlaymode //TODO ISaveable<
     {
         _lastGiveDay = GameTime.CurrentDay;
         return pregenQuests[Random.Range(0, pregenQuests.Count)].GenerateQuestParams();
+    }
+
+    void IResetOnExitPlaymode.ResetOnExitPlaymode()
+    {
+        ResetOnExitPlaymode();
+        _lastGiveDay = -8;
     }
 
 }
