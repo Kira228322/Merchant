@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -14,6 +15,7 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
     [SerializeField] private NoticeboardUI _noticeBoardWindowPrefab;
     private float _distanceToUse = 3f;
     private Transform _canvas;
+    private UniqueID _uniqueID;
 
     private CompactedNotice[] _compactedNoticeArray; //Информация об объявлениях, которая будет передаваться в UI
     //Размер массива - столько, сколько возможных точек спавна в префабе NoticeboardUI.
@@ -21,6 +23,7 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
     private void Awake()
     {
         _canvas = FindObjectOfType<CanvasWarningGenerator>().transform;
+        _uniqueID = GetComponent<UniqueID>();
         _compactedNoticeArray = new CompactedNotice[_noticeBoardWindowPrefab.SpawnPointsCount];
     }
 
