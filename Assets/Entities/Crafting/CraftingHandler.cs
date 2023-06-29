@@ -24,8 +24,8 @@ public class CraftingHandler : MonoBehaviour
     public void ToggleActive()
     {
         gameObject.SetActive(!gameObject.activeSelf);
-        Refresh();
         _currentCraftingStation = CraftingStationType.Null;
+        Refresh();
     }
 
     public void SetCraftingStation(Sprite icon, string text, CraftingStationType type)
@@ -34,6 +34,7 @@ public class CraftingHandler : MonoBehaviour
         _craftingStationIcon.sprite = icon;
         _requiredCraftingStationText.text = text;
         _currentCraftingStation = type;
+        Refresh();
     }
     public void Refresh()
     {
@@ -44,6 +45,12 @@ public class CraftingHandler : MonoBehaviour
             container.gameObject.SetActive(false);
         foreach (var plusSign in _plusSigns)
             plusSign.gameObject.SetActive(false);
+
+        _craftingStationIcon.transform.parent.gameObject.SetActive(false);
+        //Её parent это просто окошко-окантовка
+
+        _requiredCraftingStationText.gameObject.SetActive(false);
+
         //Очистка завершена, можно заполнять заново
 
         foreach (CraftingRecipe recipe in Player.Instance.Recipes)
@@ -51,6 +58,12 @@ public class CraftingHandler : MonoBehaviour
         {
             GameObject recipeUI = Instantiate(_recipeUIPrefab.gameObject, _recipesLayoutGroup.transform);
             recipeUI.GetComponent<UICraftingRecipe>().Init(this, recipe);
+        }
+
+        if (_currentCraftingStation != CraftingStationType.Null)
+        {
+            _craftingStationIcon.transform.parent.gameObject.SetActive(true);
+            
         }
 
         if (SelectedRecipe == null)
@@ -61,24 +74,15 @@ public class CraftingHandler : MonoBehaviour
 
         ShowCraftingElements(true);
 
-        if (_currentCraftingStation == CraftingStationType.Null)
-        {
-            _craftingStationIcon.gameObject.SetActive(false);
-            _requiredCraftingStationText.gameObject.SetActive(false);
-            if (SelectedRecipe.RequiredCraftingStation != CraftingStationType.Null)
-                _requiredCraftingStationText.gameObject.SetActive(true);
-            
-        }
-        else
-        {
-            _craftingStationIcon.gameObject.SetActive(true);
-            _requiredCraftingStationText.gameObject.SetActive(false);
-        }
+        if (SelectedRecipe.RequiredCraftingStation != CraftingStationType.Null &&
+            SelectedRecipe.RequiredCraftingStation != _currentCraftingStation)
+            _requiredCraftingStationText.gameObject.SetActive(true);
+
         _resultingItemIcon.sprite = SelectedRecipe.ResultingItem.Icon;
         _resultingItemDescription.text = SelectedRecipe.ResultingItem.Description;
         _requiredCraftingLevelText.text = "Требуемый уровень навыка: " + SelectedRecipe.RequiredCraftingLevel.ToString();
         _currentCraftingLevelText.text = "Текущий уровень навыка: " + (Player.Instance.Statistics.TotalCrafting < SelectedRecipe.RequiredCraftingLevel ? $"<color=red>" : "") + Player.Instance.Statistics.TotalCrafting;
-        bool isCraftButtonEnabled = !(Player.Instance.Statistics.TotalCrafting < SelectedRecipe.RequiredCraftingLevel);
+        bool isCraftButtonEnabled = IsCraftButtonEnabled(); //соответствует ли уровень навыка и текущая крафтингстанция
 
         for (int i = 0; i < SelectedRecipe.RequiredItems.Count; i++)
             //ожидается, что i никогда не больше 2, ибо у нас всего 3 клеточки под предметы
@@ -98,15 +102,22 @@ public class CraftingHandler : MonoBehaviour
                 _requiredItemContainers[i].SetCompletedColor(true);
             else _requiredItemContainers[i].SetCompletedColor(false);
         }
+
         _craftButton.interactable = isCraftButtonEnabled;
             
     }
+
+    private bool IsCraftButtonEnabled()
+    {
+        if (Player.Instance.Statistics.TotalCrafting < SelectedRecipe.RequiredCraftingLevel)
+            return false;
+        if (SelectedRecipe.RequiredCraftingStation != CraftingStationType.Null && 
+            SelectedRecipe.RequiredCraftingStation != _currentCraftingStation)
+            return false;
+        return true;
+    }
     public void OnCraftButtonClick()
     {
-        if (SelectedRecipe.RequiredCraftingStation != CraftingStationType.Null)
-            if (SelectedRecipe.RequiredCraftingStation != _currentCraftingStation)
-                return;
-
         foreach (CraftingRecipe.CraftingItem requiredItem in SelectedRecipe.RequiredItems)
         {
             Player.Instance.Inventory.RemoveItemsOfThisItemData(requiredItem.item, requiredItem.amount);

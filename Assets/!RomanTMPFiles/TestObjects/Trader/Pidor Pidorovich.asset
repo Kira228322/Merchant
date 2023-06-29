@@ -16,7 +16,7 @@ MonoBehaviour:
   StartWalkingTime: 0
   FinishWalkingTime: 0
   GameStartMoney: 150
-  CurrentMoney: 0
+  CurrentMoney: 150
   ID: 69
   InkJSON: {fileID: 4900000, guid: 42ec4a2723d8b42478233eaff171235e, type: 3}
   TraderTypes:
@@ -28,6 +28,14 @@ MonoBehaviour:
     MaxCount: 55
     CurrentCount: 55
     CurrentPrice: 23
+  - Good: {fileID: 11400000, guid: 51082a1ce98542a499133c143dc37119, type: 2}
+    MaxCount: 1
+    CurrentCount: 1
+    CurrentPrice: 111
+  - Good: {fileID: 11400000, guid: 47b264f5ad831994ca7460ce0d509778, type: 2}
+    MaxCount: 55
+    CurrentCount: 55
+    CurrentPrice: 42
   _baseBuyCoefficients:
   - itemType: 0
     Coefficient: 1
@@ -48,6 +56,32 @@ MonoBehaviour:
     Coefficient: 1
     DefaultCountToBuy: 14
   LastRestock: 0
-  Goods: []
+  Goods:
+  - Good: {fileID: 11400000, guid: c51137506052a204090b07cad53242db, type: 2}
+    MaxCount: 55
+    CurrentCount: 55
+    CurrentPrice: 23
+  - Good: {fileID: 11400000, guid: 51082a1ce98542a499133c143dc37119, type: 2}
+    MaxCount: 1
+    CurrentCount: 1
+    CurrentPrice: 111
   AdditiveGoods: []
-  BuyCoefficients: []
+  BuyCoefficients:
+  - itemType: 0
+    Coefficient: 1
+    DefaultCountToBuy: 150
+  - itemType: 3
+    Coefficient: 0.55
+    DefaultCountToBuy: 20
+  - itemType: 4
+    Coefficient: 1
+    DefaultCountToBuy: 50
+  - itemType: 6
+    Coefficient: 0.315
+    DefaultCountToBuy: 31
+  - itemType: 1
+    Coefficient: 0.7
+    DefaultCountToBuy: 30
+  - itemType: 5
+    Coefficient: 1
+    DefaultCountToBuy: 14

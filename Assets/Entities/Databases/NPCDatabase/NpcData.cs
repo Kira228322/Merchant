@@ -10,6 +10,11 @@ public class NpcData : ScriptableObject, IResetOnExitPlaymode, ISaveable<NpcSave
     public int GameStartMoney;
     public int CurrentMoney;
 
+    //29.06.23: «ачем всЄ-таки было нужно сохран€ть айди: дл€ того чтобы датабаза
+    //правильно назначала сейвдату при загрузке, основыва€сь на этом айди
+    //¬ теории оно должно было бы работать и так, ведь там идет проход по NpcList,
+    //но дл€ уверенности сделали тогда так
+    //(см. комментарий в NpsDatabase.LoadData())
     public int ID;
 
 

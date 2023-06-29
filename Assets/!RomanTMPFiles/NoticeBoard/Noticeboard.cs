@@ -59,7 +59,7 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
             }
         }
 
-        //Спавн держи-в-курсе информации по ивентам
+        //Спавн держи-в-курсе информации по текущим ивентам в мире
 
         _uncheckedActiveGlobalEvents = new(GlobalEventHandler.Instance.ActiveGlobalEvents);
 
@@ -78,7 +78,11 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
     private bool IsReadyToGiveQuest()
     {
         var thisObjectInCooldownHandler = _cooldownHandler.ObjectsOnCooldown.FirstOrDefault(item => item.UniqueID == _uniqueID.ID);
-        if (thisObjectInCooldownHandler == null || thisObjectInCooldownHandler.HoursLeft <= 0)
+        if (thisObjectInCooldownHandler == null)
+        {
+            return true;
+        }
+        if (thisObjectInCooldownHandler.HoursLeft <= 0)
         {
             _cooldownHandler.Unregister(_uniqueID.ID);
             return true;

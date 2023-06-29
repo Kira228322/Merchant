@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
-using static Noticeboard;
 using Random = UnityEngine.Random;
 
 public class NoticeboardUI : MonoBehaviour
@@ -23,13 +22,13 @@ public class NoticeboardUI : MonoBehaviour
             if (compactedNotices[i] == null)
                 continue;
 
-            CompactedNotice notice = compactedNotices[i];
+            Noticeboard.CompactedNotice notice = compactedNotices[i];
             switch (notice)
             {
-                case CompactedQuestNotice questNotice:
+                case Noticeboard.CompactedQuestNotice questNotice:
                     AddQuestNotice(i, questNotice.name, questNotice.description, questNotice.questParams);
                     break;
-                case CompactedEventNotice eventNotice:
+                case Noticeboard.CompactedEventNotice eventNotice:
                     AddEventNotice(i, eventNotice.name, eventNotice.description, eventNotice.globalEvent);
                     break;
                 default:
