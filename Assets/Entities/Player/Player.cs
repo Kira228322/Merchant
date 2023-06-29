@@ -152,19 +152,7 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
         }
         if (Input.GetKeyDown(KeyCode.I))
         {
-            Debug.Log("Current Location: " + MapManager.CurrentLocation.SceneName);
-            /*RegionHandler regionHandler = FindObjectOfType<RegionHandler>(true);
-            foreach(Region region in regionHandler.Regions)
-            {
-                foreach (Location location in region.Locations)
-                {
-                    Debug.Log(location.VillageName +": ");
-                    foreach (var item in location.CountOfEachItem)
-                    {
-                        Debug.Log(item.Key + " " + item.Value);
-                    }
-                }
-            }*/
+            Diary.Instance.AddEntry("Amogus");
         }
 
     }

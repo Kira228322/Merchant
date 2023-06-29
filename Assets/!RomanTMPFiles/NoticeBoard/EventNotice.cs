@@ -14,7 +14,8 @@ public class EventNotice : Notice
 
     public override void OnNoticeTake()
     {
-        //TODO Записать в журнал как День {Day}, {Time}: {Name} {Description}
+        string diaryEntry = NoticeName + ": " + NoticeDescription;
+        Diary.Instance.AddEntry(diaryEntry);
         Noticeboard.RemoveNotice(SpawnPointIndex);
     }
 }
