@@ -7,13 +7,10 @@ using UnityEngine;
 public class NpcTraderData : NpcData, IResetOnExitPlaymode, ISaveable<NpcTraderSaveData>
 {
     public List<TraderType> TraderTypes;
-    public int RestockCycle;
 
     [HideInInspector, SerializeField] private List<NpcTrader.TraderGood> _baseGoods = new ();
     [HideInInspector, SerializeField] private List<NpcTrader.BuyCoefficient> _baseBuyCoefficients = new ();
     //AdditiveGoods рассчитываются только в рантайме или при загрузке, с инспектором никак не связаны
-
-    public int LastRestock;
 
     [HideInInspector] public List<NpcTrader.TraderGood> BaseGoods => _baseGoods;
     [HideInInspector] public List<NpcTrader.BuyCoefficient> BaseBuyCoefficients => _baseBuyCoefficients;
@@ -24,14 +21,12 @@ public class NpcTraderData : NpcData, IResetOnExitPlaymode, ISaveable<NpcTraderS
 
     NpcTraderSaveData ISaveable<NpcTraderSaveData>.SaveData()
     {
-        return new(ID, CurrentMoney, LastRestock, Goods, AdditiveGoods, BuyCoefficients);
+        return new(ID, CurrentMoney, Goods, AdditiveGoods, BuyCoefficients);
     }
 
     void ISaveable<NpcTraderSaveData>.LoadData(NpcTraderSaveData data)
     {
         LoadData(data);
-
-        LastRestock = data.LastRestock;
 
         Goods = data.Goods.Select(good => new NpcTrader.TraderGood(good)).ToList();
 
@@ -42,7 +37,6 @@ public class NpcTraderData : NpcData, IResetOnExitPlaymode, ISaveable<NpcTraderS
 
     private void OnEnable()
     {
-        LastRestock = 0; //LastRestock рассчитывается только в рантайме или при загрузке сохранения, с инспектором никак не связан
         Goods = _baseGoods.Select(good => new NpcTrader.TraderGood(good)).ToList();
         AdditiveGoods.Clear(); //AdditiveGoods рассчитываются только в рантайме или при загрузке сохранения, с инспектором никак не связаны
         SetBuyCoefficients();
@@ -51,7 +45,6 @@ public class NpcTraderData : NpcData, IResetOnExitPlaymode, ISaveable<NpcTraderS
     void IResetOnExitPlaymode.ResetOnExitPlaymode()
     {
         ResetOnExitPlaymode();
-        LastRestock = 0;
         Goods.Clear();
         AdditiveGoods.Clear();
         BuyCoefficients.Clear();
@@ -86,5 +79,5 @@ public class NpcTraderData : NpcData, IResetOnExitPlaymode, ISaveable<NpcTraderS
         _baseBuyCoefficients.AddRange(resultingBuyCoefficients);
 
     }
-
+    
 }

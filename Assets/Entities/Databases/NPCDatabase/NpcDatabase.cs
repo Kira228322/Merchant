@@ -20,7 +20,7 @@ public class NpcDatabase : MonoBehaviour, ISaveable<NpcDatabaseSaveData>
             Destroy(gameObject);
         }
     }
-
+    
     public static NpcData GetNPCData(int ID)
     {
         NpcData result = Instance.NpcDatabaseSO.NpcList.FirstOrDefault(npc => npc.ID == ID);
@@ -30,6 +30,7 @@ public class NpcDatabase : MonoBehaviour, ISaveable<NpcDatabaseSaveData>
         Debug.LogWarning("НПС с таким айди не существует!");
         return null;
     }
+    
     public static NpcData GetNPCData(string name)
     {
         NpcData result = Instance.NpcDatabaseSO.NpcList.FirstOrDefault(npc => npc.Name == name);
