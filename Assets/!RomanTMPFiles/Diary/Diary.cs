@@ -30,7 +30,13 @@ public class Diary : MonoBehaviour, ISaveable<DiarySaveData>
         TMP_Text newEntry = Instantiate(_diaryEntryPrefab, _scrollViewContent.transform);
         newEntry.text = dateTime + text;
         _entries.Add(newEntry);
+        newEntry.gameObject.GetComponentInChildren<Button>().onClick.AddListener(() => RemoveEntry(newEntry));
 
+    }
+    public void RemoveEntry(TMP_Text entry)
+    {
+        _entries.Remove(entry);
+        Destroy(entry.gameObject);
     }
     private void CreateSavedEntry(string text)
     {
