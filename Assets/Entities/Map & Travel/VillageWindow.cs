@@ -42,7 +42,13 @@ public class VillageWindow : Window
     public void OnChooseRoadButtonClick()
     {
         GameObject win = Instantiate(MapManager.RoadWindow, MapManager.Canvas.transform);
-        win.GetComponent<RoadWindow>().Init(_place._roads, _place);
+        List<Road> roads = new List<Road>();
+        foreach (var road in _place._roads)
+        {
+            if (road.Points[0] == MapManager.CurrentLocation || road.Points[1] == MapManager.CurrentLocation)
+                roads.Add(road);
+        }
+        win.GetComponent<RoadWindow>().Init(roads, _place);
         Destroy(gameObject);
     }
 }

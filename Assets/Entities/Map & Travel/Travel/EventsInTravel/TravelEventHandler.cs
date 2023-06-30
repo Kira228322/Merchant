@@ -152,7 +152,7 @@ public class TravelEventHandler : MonoBehaviour
     private void RollNextEvent()
     {
         _delayToNextEvent = 2; // события максимум каждые 2 часа или реже  
-        while (_delayToNextEvent < _timeCounter.Duration-2) // За 2 часа до конца поездки ивента быть не может
+        while (_delayToNextEvent < _timeCounter.Duration-1) // За 2 часа до конца поездки ивента быть не может
         {
             if (_banditEvent) // ролим событие разбiйники, если оно должно случиться
                 if (Random.Range(0, _timeCounter.Duration-2 - _delayToNextEvent) == 0)
@@ -172,7 +172,7 @@ public class TravelEventHandler : MonoBehaviour
             _delayToNextEvent++;
         }
 
-        if (_delayToNextEvent == _timeCounter.Duration - 2)
+        if (_delayToNextEvent == _timeCounter.Duration - 1)
             _delayToNextEvent += 10; // событие не случится 
     }
 

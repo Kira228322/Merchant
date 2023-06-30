@@ -42,12 +42,12 @@ public class Location : MonoBehaviour
         Road[] roads = FindObjectsOfType<Road>();
         foreach (var road in roads)
         {
-            if (road.Points[0] = this)
+            if (road.Points[0] == this)
             {
                 _roads.Add(road);
                 continue;
             }
-            if (road.Points[1] = this)
+            if (road.Points[1] == this)
                 _roads.Add(road);
         }
         
