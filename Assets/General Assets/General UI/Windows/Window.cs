@@ -18,11 +18,11 @@ public abstract class Window : MonoBehaviour
     { // duration must divide by frequency
         CanvasGroup canvasGroup = GetComponent<CanvasGroup>();
         float alpha = canvasGroup.alpha;
-        alpha = 0.27f;
+        alpha = 0.31f;
         
         Image image = GetComponent<Image>();
         Color color = image.color;
-        color.a = 0.75f;
+        color.a = 0.74f;
         
         WaitForSeconds frequency = new WaitForSeconds(animationFrequency);
         
@@ -33,9 +33,9 @@ public abstract class Window : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             transform.position += delta;
-            alpha += 0.6f / count; // конечная альфа канвас группы = 0.87 (окна будут немного прозрачные) 
+            alpha += 0.6f / count; // конечная альфа канвас группы = 0.91 (окна будут немного прозрачные) 
             canvasGroup.alpha = alpha;
-            color.a += 0.2f / count; // конечная альфа самого окна, на котором расположены элементы = 0.95
+            color.a += 0.2f / count; // конечная альфа самого окна, на котором расположены элементы = 0.94
             image.color = color;
             yield return frequency;
         }
@@ -67,36 +67,36 @@ public abstract class Window : MonoBehaviour
         // Нижний код оказался не нужен, потому что придумал верхний. Этот код пригодится,
         // если будет какое-то широкое или высокое окно, пока закомментим для повышения производительности
         
-        // Vector3 delta = new Vector3();
-        // if (rectTransform.position.y + rectTransform.rect.height / 2 > Screen.height)
-        // { // чтобы окно не заспавнилось вне экрана сверху
-        //     delta.y = rectTransform.position.y + rectTransform.rect.height / 2 - Screen.height;
-        //     delta.y *= 1.01f;
-        //     delta.x = 0;
-        //     transform.position -= delta;
-        // }
-        // else if (rectTransform.position.y - rectTransform.rect.height / 2 < 0)
-        // {// чтобы окно не заспавнилось вне экрана снизу
-        //     delta.y = rectTransform.position.y - rectTransform.rect.height / 2;
-        //     delta.y *= 1.01f;
-        //     delta.x = 0;
-        //     transform.position -= delta;
-        // }
-        //
-        // if (rectTransform.position.x + rectTransform.rect.width / 2 > Screen.width)
-        // {// чтобы окно не заспавнилось вне экрана справа
-        //     delta.x = rectTransform.position.x + rectTransform.rect.width / 2  - Screen.width;
-        //     delta.x *= 1.01f;
-        //     delta.y = 0;
-        //     transform.position -= delta;
-        // }
-        // else if (rectTransform.position.x - rectTransform.rect.width / 2 < 0)
-        // {// чтобы окно не заспавнилось вне экрана слева
-        //     delta.x = rectTransform.position.x - rectTransform.rect.width / 2;
-        //     delta.x *= 1.01f;
-        //     delta.y = 0;
-        //     transform.position -= delta;
-        // }
+        Vector3 delta = new Vector3();
+        if (rectTransform.position.y + rectTransform.rect.height / 2 > Screen.height)
+        { // чтобы окно не заспавнилось вне экрана сверху
+            delta.y = rectTransform.position.y + rectTransform.rect.height / 2 - Screen.height;
+            delta.y *= 1.01f;
+            delta.x = 0;
+            transform.position -= delta;
+        }
+        else if (rectTransform.position.y - rectTransform.rect.height / 2 < 0)
+        {// чтобы окно не заспавнилось вне экрана снизу
+            delta.y = rectTransform.position.y - rectTransform.rect.height / 2;
+            delta.y *= 1.01f;
+            delta.x = 0;
+            transform.position -= delta;
+        }
+        
+        if (rectTransform.position.x + rectTransform.rect.width / 2 > Screen.width)
+        {// чтобы окно не заспавнилось вне экрана справа
+            delta.x = rectTransform.position.x + rectTransform.rect.width / 2  - Screen.width;
+            delta.x *= 1.01f;
+            delta.y = 0;
+            transform.position -= delta;
+        }
+        else if (rectTransform.position.x - rectTransform.rect.width / 2 < 0)
+        {// чтобы окно не заспавнилось вне экрана слева
+            delta.x = rectTransform.position.x - rectTransform.rect.width / 2;
+            delta.x *= 1.01f;
+            delta.y = 0;
+            transform.position -= delta;
+        }
     }
 
     private void OnDestroy()
