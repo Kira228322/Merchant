@@ -1015,6 +1015,7 @@ MonoBehaviour:
   _sceneName: 
   _relatedPlaces: []
   _roads: []
+  NpcTraders: []
 --- !u!222 &228818856
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1100,6 +1101,7 @@ GameObject:
   - component: {fileID: 295020382}
   - component: {fileID: 295020381}
   - component: {fileID: 295020383}
+  - component: {fileID: 295020384}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1156,6 +1158,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c5eb6e811fede60458dc1bfcddc40daa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &295020384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 295020380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 900a3ea4b728e744099f102a14ed6d45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &297650404
@@ -1403,6 +1417,7 @@ MonoBehaviour:
   _sceneName: 
   _relatedPlaces: []
   _roads: []
+  NpcTraders: []
 --- !u!114 &402871011
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2574,6 +2589,7 @@ MonoBehaviour:
   - {fileID: 9056293358578365361}
   - {fileID: 3977917189124624316}
   _roads: []
+  NpcTraders: []
 --- !u!114 &674283885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3071,6 +3087,7 @@ MonoBehaviour:
   _sceneName: 
   _relatedPlaces: []
   _roads: []
+  NpcTraders: []
 --- !u!222 &718434870
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3282,6 +3299,7 @@ MonoBehaviour:
   _sceneName: 
   _relatedPlaces: []
   _roads: []
+  NpcTraders: []
 --- !u!114 &791283435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3904,6 +3922,7 @@ MonoBehaviour:
   _sceneName: 
   _relatedPlaces: []
   _roads: []
+  NpcTraders: []
 --- !u!222 &886491334
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4565,6 +4584,7 @@ MonoBehaviour:
   _sceneName: 
   _relatedPlaces: []
   _roads: []
+  NpcTraders: []
 --- !u!222 &1015483342
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4770,6 +4790,7 @@ MonoBehaviour:
   _sceneName: 
   _relatedPlaces: []
   _roads: []
+  NpcTraders: []
 --- !u!1 &1029521899
 GameObject:
   m_ObjectHideFlags: 0
@@ -4942,6 +4963,7 @@ MonoBehaviour:
   _sceneName: 
   _relatedPlaces: []
   _roads: []
+  NpcTraders: []
 --- !u!114 &1042207467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5305,6 +5327,7 @@ MonoBehaviour:
   _sceneName: 
   _relatedPlaces: []
   _roads: []
+  NpcTraders: []
 --- !u!222 &1067087366
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5404,6 +5427,7 @@ MonoBehaviour:
   _sceneName: 
   _relatedPlaces: []
   _roads: []
+  NpcTraders: []
 --- !u!114 &1074804467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5775,6 +5799,7 @@ MonoBehaviour:
   _sceneName: RomanScene
   _relatedPlaces: []
   _roads: []
+  NpcTraders: []
 --- !u!222 &1168945894
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5942,6 +5967,7 @@ MonoBehaviour:
   _sceneName: 
   _relatedPlaces: []
   _roads: []
+  NpcTraders: []
 --- !u!222 &1178900870
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6147,6 +6173,7 @@ MonoBehaviour:
   _sceneName: 
   _relatedPlaces: []
   _roads: []
+  NpcTraders: []
 --- !u!1 &1192137445
 GameObject:
   m_ObjectHideFlags: 0
@@ -6353,6 +6380,7 @@ MonoBehaviour:
   _sceneName: 
   _relatedPlaces: []
   _roads: []
+  NpcTraders: []
 --- !u!114 &1230765451
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6989,6 +7017,7 @@ MonoBehaviour:
   _sceneName: 
   _relatedPlaces: []
   _roads: []
+  NpcTraders: []
 --- !u!114 &1305402265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7542,7 +7571,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89f4efed4cf56c641ab2cc6b3ed23773, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BannedItems: []
 --- !u!1 &1579975356
 GameObject:
   m_ObjectHideFlags: 0
@@ -7748,6 +7776,7 @@ MonoBehaviour:
   _sceneName: 
   _relatedPlaces: []
   _roads: []
+  NpcTraders: []
 --- !u!222 &1592259710
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8118,6 +8147,7 @@ MonoBehaviour:
   _sceneName: 
   _relatedPlaces: []
   _roads: []
+  NpcTraders: []
 --- !u!222 &1719830962
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8343,6 +8373,7 @@ MonoBehaviour:
   _sceneName: 
   _relatedPlaces: []
   _roads: []
+  NpcTraders: []
 --- !u!222 &1761176326
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10015,6 +10046,7 @@ MonoBehaviour:
   _sceneName: 
   _relatedPlaces: []
   _roads: []
+  NpcTraders: []
 --- !u!114 &1973853573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10182,6 +10214,7 @@ MonoBehaviour:
   _sceneName: 
   _relatedPlaces: []
   _roads: []
+  NpcTraders: []
 --- !u!114 &2003071511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10736,6 +10769,7 @@ MonoBehaviour:
   _sceneName: 
   _relatedPlaces: []
   _roads: []
+  NpcTraders: []
 --- !u!114 &2101206579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10950,6 +10984,7 @@ MonoBehaviour:
   _sceneName: 
   _relatedPlaces: []
   _roads: []
+  NpcTraders: []
 --- !u!222 &2124475276
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -11164,6 +11199,7 @@ MonoBehaviour:
   _sceneName: 
   _relatedPlaces: []
   _roads: []
+  NpcTraders: []
 --- !u!114 &2131873471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11284,6 +11320,7 @@ MonoBehaviour:
   _sceneName: 
   _relatedPlaces: []
   _roads: []
+  NpcTraders: []
 --- !u!222 &2131877508
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -15928,6 +15965,7 @@ MonoBehaviour:
   - {fileID: 9056293358578365361}
   - {fileID: 674283884}
   _roads: []
+  NpcTraders: []
 --- !u!224 &4009832271467827650
 RectTransform:
   m_ObjectHideFlags: 0
@@ -19238,6 +19276,7 @@ MonoBehaviour:
   - {fileID: 3977917189124624316}
   - {fileID: 674283884}
   _roads: []
+  NpcTraders: []
 --- !u!1 &9066488760400233121
 GameObject:
   m_ObjectHideFlags: 0
