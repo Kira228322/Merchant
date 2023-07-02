@@ -17511,6 +17511,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DiaryPanel
       objectReference: {fileID: 0}
+    - target: {fileID: 6267071790546350574, guid: fee2a6c5550573f459d8d9cbc994192b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fee2a6c5550573f459d8d9cbc994192b, type: 3}
 --- !u!114 &6448303306619627118
@@ -17704,6 +17708,7 @@ MonoBehaviour:
     _currentExperience: 0
     _currentLevel: 0
     _unspentSkillPoints: 0
+    ExpGain: 0
   Needs:
     _hungerScale: {fileID: 3279153272848613811}
     _sleepScale: {fileID: 3279153274134630023}
@@ -18109,15 +18114,15 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 727d242b5377fc04e9741b98d2275adb, type: 2}
     - target: {fileID: 5184002110509243918, guid: 29a0a67af46c7744e9f6dcadc60379a9, type: 3}
       propertyPath: m_fontColor.b
-      value: 0
+      value: 0.16747947
       objectReference: {fileID: 0}
     - target: {fileID: 5184002110509243918, guid: 29a0a67af46c7744e9f6dcadc60379a9, type: 3}
       propertyPath: m_fontColor.g
-      value: 0.88318527
+      value: 0.82757086
       objectReference: {fileID: 0}
     - target: {fileID: 5184002110509243918, guid: 29a0a67af46c7744e9f6dcadc60379a9, type: 3}
       propertyPath: m_fontColor.r
-      value: 0.8962264
+      value: 0.9150943
       objectReference: {fileID: 0}
     - target: {fileID: 5184002110509243918, guid: 29a0a67af46c7744e9f6dcadc60379a9, type: 3}
       propertyPath: m_sharedMaterial
@@ -18129,7 +18134,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5184002110509243918, guid: 29a0a67af46c7744e9f6dcadc60379a9, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4278247909
+      value: 4281062377
       objectReference: {fileID: 0}
     - target: {fileID: 5184002110691100174, guid: 29a0a67af46c7744e9f6dcadc60379a9, type: 3}
       propertyPath: m_SizeDelta.y
