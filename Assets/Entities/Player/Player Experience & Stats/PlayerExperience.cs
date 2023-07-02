@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 [System.Serializable]
@@ -8,6 +9,7 @@ public class PlayerExperience
     [SerializeField, HideInInspector] private int _currentExperience;
     [SerializeField, HideInInspector] private int _currentLevel;
     [SerializeField, HideInInspector] private int _unspentSkillPoints;
+    [SerializeField, HideInInspector] public float ExpGain;
 
     public int CurrentExperience => _currentExperience;
     public int CurrentLevel => _currentLevel;
@@ -64,7 +66,7 @@ public class PlayerExperience
 
     public void AddExperience (int amount) 
     {
-        _currentExperience += amount;
+        _currentExperience += Convert.ToInt32(amount * ExpGain);
         if (CurrentExperience >= ExperienceNeededForNextLevel())
         {
             IncreaseLevel();

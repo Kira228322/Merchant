@@ -59,6 +59,15 @@ public class StatusUIObject : MonoBehaviour
                 case Status.Effect.Stat.Luck:
                     Player.Instance.Statistics.AdditionalLuck += effect.value;
                     break;
+                case Status.Effect.Stat.ExpGain:
+                    Player.Instance.Experience.ExpGain += effect.value/100f;
+                    break;
+                case Status.Effect.Stat.Diplomacy:
+                    Player.Instance.Statistics.AdditionalDiplomacy += effect.value;
+                    break;
+                case Status.Effect.Stat.Toughness:
+                    Player.Instance.Statistics.AdditionalToughness += effect.value;
+                    break;
                 // TODO
             }
         }
@@ -73,6 +82,15 @@ public class StatusUIObject : MonoBehaviour
             {
                 case Status.Effect.Stat.Luck:
                     Player.Instance.Statistics.AdditionalLuck -= effect.value;
+                    break;
+                case Status.Effect.Stat.ExpGain:
+                    Player.Instance.Experience.ExpGain -= effect.value/100f;
+                    break;
+                case Status.Effect.Stat.Diplomacy:
+                    Player.Instance.Statistics.AdditionalDiplomacy -= effect.value;
+                    break;
+                case Status.Effect.Stat.Toughness:
+                    Player.Instance.Statistics.AdditionalToughness -= effect.value;
                     break;
                 // TODO
             }
