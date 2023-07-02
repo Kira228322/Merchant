@@ -60,6 +60,12 @@ public class PlayerStatsPanel : MonoBehaviour
         _slotsText.text = $"Количество слотов: {Player.Instance.WagonStats.Body.InventoryRows * 5}";
         _weightText.text = $"Макс. масса груза: {Player.Instance.WagonStats.Suspension.MaxWeight}кг";
         _modifierText.text = $"Модификатор дороги: {Math.Round(Player.Instance.WagonStats.Wheel.QualityModifier - 1, 2) * 100}";
+
+        Player.Instance.Experience.ExperienceChanged += Refresh;
+    }
+    private void OnDisable()
+    {
+        Player.Instance.Experience.ExperienceChanged -= Refresh;
     }
     private void Refresh()
     {
@@ -73,8 +79,9 @@ public class PlayerStatsPanel : MonoBehaviour
         
         _unspentSkillPointsText.text = "Нераспределённых очков: " + _playerExperience.UnspentSkillPoints;
         if (_playerExperience.UnspentSkillPoints > 0) 
-            //Отобразить кнопки "+" возле каждого стата, чтобы показать, что их можно прокачать
         {
+            _unspentSkillPointsText.gameObject.SetActive(true);
+            //Отобразить кнопки "+" возле каждого стата, чтобы показать, что их можно прокачать
             foreach (TMP_Text statText in _statsList)
             {
                 statText.transform.GetChild(0).gameObject.SetActive(true);
@@ -83,6 +90,7 @@ public class PlayerStatsPanel : MonoBehaviour
         }
         else
         {
+            _unspentSkillPointsText.gameObject.SetActive(false);
             foreach (TMP_Text statText in _statsList)
             {
                 statText.transform.GetChild(0).gameObject.SetActive(false);
