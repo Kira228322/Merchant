@@ -9,6 +9,8 @@ public class StatusManager : MonoBehaviour
     
     [SerializeField] private GameObject _statusPrefab;
     [SerializeField] private Transform _container;
+    [SerializeField] private Status _lowNeedsDebuff;
+    
     
     public void AddStatusForPlayer(Status status)
     {
@@ -23,7 +25,21 @@ public class StatusManager : MonoBehaviour
         
         Instantiate(_statusPrefab, _container).GetComponent<StatusUIObject>().Init(status);
     }
-
+    
+    public void AddLowNeedsDebuff()
+    {
+        for (int i = 0; i < _container.childCount; i++)
+        {
+            if (_container.GetChild(i).GetComponent<StatusUIObject>().Status == _lowNeedsDebuff)
+            {
+                _container.GetChild(i).GetComponent<StatusUIObject>().RefreshStatus();
+                return;
+            }
+        }
+        
+        Instantiate(_statusPrefab, _container).GetComponent<StatusUIObject>().Init(_lowNeedsDebuff, true);
+    }
+    
     private void Start()
     {
         if (Instance == null)

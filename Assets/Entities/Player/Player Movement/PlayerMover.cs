@@ -7,8 +7,9 @@ using UnityEngine;
 public class PlayerMover : MonoBehaviour
 {
     [SerializeField] private ContactFilter2D _contactFilter2D;
-    private float _speed = 4;
+    private float _speed = 3.5f;
     public float Speed => _speed;
+    public float SpeedModifier;
     private Rigidbody2D _rigidbody;
     private Collider2D _collider;
     private float _minDistToLet;
@@ -72,7 +73,7 @@ public class PlayerMover : MonoBehaviour
                 Math.Abs(targetPos.x - startPos.x) ) == 0)
         { // Если препятствий нет
             
-            count = Convert.ToInt32(Math.Abs(targetPos.x - startPos.x) / (_speed * deltaTime));
+            count = Convert.ToInt32(Math.Abs(targetPos.x - startPos.x) / (_speed * (1 + SpeedModifier) * deltaTime));
             for (float i = 1; i <= count; i++) 
             {
                 transform.position = new Vector3(math.lerp(startPos.x, targetPos.x, i/count), transform.position.y);
@@ -95,7 +96,7 @@ public class PlayerMover : MonoBehaviour
             Vector2 jumpDirection;
             float distToLet = raycastHit2D[0].distance - MinConstDist; 
 
-            count = Convert.ToInt32(Math.Abs(distToLet) / (_speed * deltaTime));
+            count = Convert.ToInt32(Math.Abs(distToLet) / (_speed * (1 + SpeedModifier) * deltaTime));
             
             float targetPosX = raycastHit2D[0].point.x;
             if (targetPosX > startPos.x)

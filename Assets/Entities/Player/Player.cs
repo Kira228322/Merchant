@@ -9,7 +9,7 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
 
     [SerializeField] private SceneTransiter _transiter;
 
-    private PlayerMover _playerMover;
+    [HideInInspector] public PlayerMover PlayerMover;
     private PlayersInventory _inventory;
     private int _money;
 
@@ -43,6 +43,7 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
     {
         Money = 9999; // TODO  тест 
         Instance = this;
+        PlayerMover = GetComponent<PlayerMover>();
 
         _inventory = FindObjectOfType<PlayersInventory>(true);
     }
@@ -153,6 +154,13 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
         if (Input.GetKeyDown(KeyCode.I))
         {
             Diary.Instance.AddEntry("Amogus");
+        }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Debug.Log(Statistics.TotalDiplomacy);
+            Debug.Log(Statistics.TotalLuck);
+            Debug.Log(Statistics.TotalToughness);
+            Debug.Log(PlayerMover.SpeedModifier);
         }
 
     }

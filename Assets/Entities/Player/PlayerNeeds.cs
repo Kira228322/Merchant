@@ -33,6 +33,7 @@ public class PlayerNeeds: ISaveable<PlayerNeedsSaveData>
             if (_currentHunger < 0)
             {
                 _currentHunger = 0;
+                StatusManager.Instance.AddLowNeedsDebuff();
             }
             if (_currentHunger > MaxHunger)
             {
@@ -50,6 +51,7 @@ public class PlayerNeeds: ISaveable<PlayerNeedsSaveData>
             if (_currentSleep < 0)
             {
                 _currentSleep = 0;
+                StatusManager.Instance.AddLowNeedsDebuff();
             }
             if (_currentSleep > MaxSleep)
             {
