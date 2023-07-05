@@ -11,6 +11,8 @@ public class PlayerData
 
     public PlayerExperience Experience;
 
+    public PlayerStatsSaveData PlayerStats;
+
     public PlayerNeedsSaveData Needs;
 
     public PlayerWagonStatsSaveData WagonStats;
@@ -20,7 +22,7 @@ public class PlayerData
     {
         Money = player.Money;
         Experience = player.Experience;
-
+        PlayerStats = player.Statistics.SaveData();
         Inventory = player.Inventory.SaveData();
         Needs = player.Needs.SaveData();
         WagonStats = player.WagonStats.SaveData();

@@ -118,6 +118,7 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
         Money = saveData.Money;
         WagonStats.LoadData(saveData.WagonStats);
         Inventory.LoadData(saveData.Inventory);
+        Statistics.LoadData(saveData.PlayerStats);
         Experience = saveData.Experience;
         Needs.LoadData(saveData.Needs);
         foreach (string recipeName in saveData.Recipes.recipeNames)

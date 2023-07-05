@@ -1,48 +1,71 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-public class StatusManager : MonoBehaviour
+public class StatusManager : MonoBehaviour, ISaveable<StatusManagerSaveData>
 {
     [HideInInspector] public static StatusManager Instance;
-    
+
     [SerializeField] private GameObject _statusPrefab;
     [SerializeField] private Transform _container;
     [SerializeField] private Status _lowNeedsDebuff;
-    
-    
-    public void AddStatusForPlayer(Status status)
+
+    [HideInInspector] public List<ActiveStatus> ActiveStatuses = new();
+
+    public ActiveStatus AddStatusForPlayer(Status status)
     {
-        for (int i = 0; i < _container.childCount; i++)
+        ActiveStatus alreadyActive = ActiveStatuses.FirstOrDefault(s => s.StatusData == status);
+        if (alreadyActive != null)
         {
-            if (_container.GetChild(i).GetComponent<StatusUIObject>().Status == status)
+            alreadyActive.RefreshStatus();
+            return alreadyActive;
+        }
+        ActiveStatus newStatus = new();
+        newStatus.Init(status);
+        Instantiate(_statusPrefab, _container).GetComponent<StatusUIObject>().Init(newStatus);
+        ActiveStatuses.Add(newStatus);
+        return newStatus;
+    }
+    private void DecreaseDuration()
+    {
+        for (int i = ActiveStatuses.Count - 1; i >= 0; i--)
+        {
+            ActiveStatus status = ActiveStatuses[i];
+            status.DecreaseDuration();
+            if (!status.IsActive)
             {
-                _container.GetChild(i).GetComponent<StatusUIObject>().RefreshStatus();
-                return;
+                ActiveStatuses.RemoveAt(i);
             }
         }
-        
-        Instantiate(_statusPrefab, _container).GetComponent<StatusUIObject>().Init(status);
     }
-    
+
     public void AddLowNeedsDebuff()
     {
-        for (int i = 0; i < _container.childCount; i++)
-        {
-            if (_container.GetChild(i).GetComponent<StatusUIObject>().Status == _lowNeedsDebuff)
-            {
-                _container.GetChild(i).GetComponent<StatusUIObject>().RefreshStatus();
-                return;
-            }
-        }
-        
-        Instantiate(_statusPrefab, _container).GetComponent<StatusUIObject>().Init(_lowNeedsDebuff, true);
+        AddStatusForPlayer(_lowNeedsDebuff);
     }
-    
+
     private void Start()
     {
         if (Instance == null)
             Instance = this;
+
+        GameTime.MinuteChanged += DecreaseDuration;
+    }
+
+    public StatusManagerSaveData SaveData()
+    {
+        StatusManagerSaveData saveData = new(ActiveStatuses);
+        return saveData;
+    }
+
+    public void LoadData(StatusManagerSaveData data)
+    {
+        foreach (var savedStatus in data.savedActiveStatuses)
+        {
+            ActiveStatus loadedStatus = AddStatusForPlayer(StatusDatabase.GetStatus(savedStatus.statusDataName));
+            loadedStatus.SetDuration(savedStatus.currentDurationHours);
+        }
     }
 }

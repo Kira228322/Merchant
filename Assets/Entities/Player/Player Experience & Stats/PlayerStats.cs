@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStats
+public class PlayerStats : ISaveable<PlayerStatsSaveData>
 {
     public int AdditionalDiplomacy;
     public int AdditionalToughness;
@@ -17,7 +18,7 @@ public class PlayerStats
     public int TotalToughness => BaseToughness + AdditionalToughness; //Влияет на скорость убывания сна и еды
     public int TotalLuck => BaseLuck + AdditionalLuck; //Влияет на частоту происшествия благоприятных и негативных событий
     public int TotalCrafting => BaseCrafting + AdditionalCrafting; //Влияет на доступность некоторых рецептов крафта
-    
+
     public void IncreaseDiplomacy()
     {
         BaseDiplomacy++;
@@ -49,9 +50,24 @@ public class PlayerStats
     {
         return (float)(1 + 0.07f * TotalDiplomacy / (0.07 * TotalDiplomacy + 1));
     }
-    
+
     public float GetCoefForDiplomacyNegativeEvent()
     {
         return (float)(1 - 0.07f * TotalDiplomacy / (0.07 * TotalDiplomacy + 1));
+    }
+
+    //Сохраняются только базовые статы, потому что аддитивные статы будут добавляться через эффекты
+    public PlayerStatsSaveData SaveData()
+    {
+        PlayerStatsSaveData saveData = new(BaseDiplomacy, BaseToughness, BaseLuck, BaseCrafting);
+        return saveData;
+    }
+
+    public void LoadData(PlayerStatsSaveData data)
+    {
+        BaseDiplomacy = data.BaseDiplomacy;
+        BaseToughness = data.BaseToughness;
+        BaseLuck = data.BaseLuck;
+        BaseCrafting = data.BaseCrafting;
     }
 }

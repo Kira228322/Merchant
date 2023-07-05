@@ -7,6 +7,7 @@ public class GlobalSaveData
 {
     //Сборник всех компонентов, которые нужно сейвить. Чтобы сохранение было единым файлом, а не кучей разных.
     public PlayerData PlayerData;
+    public StatusManagerSaveData StatusManagerSaveData;
     public JournalSaveData JournalSaveData;
     public BannedItemsSaveData BannedItemsSaveData;
     public NpcDatabaseSaveData NpcDatabaseSaveData;

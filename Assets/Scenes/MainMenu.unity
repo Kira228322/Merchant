@@ -371,12 +371,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 36407499}
+  - component: {fileID: 36407496}
   - component: {fileID: 36407498}
   - component: {fileID: 36407497}
-  - component: {fileID: 36407496}
   - component: {fileID: 36407495}
   - component: {fileID: 36407500}
   - component: {fileID: 36407501}
+  - component: {fileID: 36407502}
   m_Layer: 0
   m_Name: Database
   m_TagString: Untagged
@@ -476,6 +477,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Recipes: {fileID: 11400000, guid: 01e0da91af362f5418dbea64873d1c03, type: 2}
+--- !u!114 &36407502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 36407494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deaa1ae7aee63ba40b4c6f06a5014f46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Statuses: {fileID: 11400000, guid: 9429979ed6a91e74983307220cc87dc5, type: 2}
 --- !u!1 &75358066
 GameObject:
   m_ObjectHideFlags: 0

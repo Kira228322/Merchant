@@ -70,6 +70,7 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
         GlobalSaveData saveData = new()
         {
             PlayerData = Player.Instance.SaveData(),
+            StatusManagerSaveData = StatusManager.Instance.SaveData(),
             JournalSaveData = new(),
             BannedItemsSaveData = FindObjectOfType<BannedItemsHandler>().SaveData(),
             NpcDatabaseSaveData = NpcDatabase.SaveNPCs(),
@@ -85,6 +86,7 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
     public void LoadData(GlobalSaveData data)
     {
         Player.Instance.LoadData(data.PlayerData);
+        StatusManager.Instance.LoadData(data.StatusManagerSaveData);
         QuestHandler.LoadQuests(data.JournalSaveData.QuestsSaveData);
         Diary.Instance.LoadData(data.JournalSaveData.DiarySaveData);
         NpcDatabase.LoadNPCs(data.NpcDatabaseSaveData);

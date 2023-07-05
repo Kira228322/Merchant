@@ -26,7 +26,7 @@ public class PlayerStatsPanel : MonoBehaviour
     private PlayerExperience _playerExperience;
 
     private bool isFirstEnable = true;
-    
+
     [Header("Wagon")]
     [SerializeField] private Image _body;
     [SerializeField] private Image _suspension;
@@ -52,8 +52,8 @@ public class PlayerStatsPanel : MonoBehaviour
     {
         if (!isFirstEnable)
             Refresh();
-        
-        
+
+
         _body.sprite = Player.Instance.WagonStats.Body.Sprite;
         _suspension.sprite = Player.Instance.WagonStats.Suspension.Sprite;
         _wheel.sprite = Player.Instance.WagonStats.Wheel.Sprite;
@@ -71,14 +71,14 @@ public class PlayerStatsPanel : MonoBehaviour
     {
         _currentLevelText.text = "Текущий уровень: " + _playerExperience.CurrentLevel;
 
-         _experienceBarExperienceText.text = $"{_playerExperience.CurrentExperience - _playerExperience.ExperienceNeededForAllLevelsBefore(_playerExperience.CurrentLevel - 1)} / {_playerExperience.ExperienceNeededForLevel(_playerExperience.CurrentLevel)}";
+        _experienceBarExperienceText.text = $"{_playerExperience.CurrentExperience - _playerExperience.ExperienceNeededForAllLevelsBefore(_playerExperience.CurrentLevel - 1)} / {_playerExperience.ExperienceNeededForLevel(_playerExperience.CurrentLevel)}";
 
-        _experienceBarSlider.value = (_playerExperience.CurrentExperience - 
+        _experienceBarSlider.value = (_playerExperience.CurrentExperience -
             _playerExperience.ExperienceNeededForAllLevelsBefore(_playerExperience.CurrentLevel - 1))
             / (float)_playerExperience.ExperienceNeededForLevel(_playerExperience.CurrentLevel);
-        
+
         _unspentSkillPointsText.text = "Нераспределённых очков: " + _playerExperience.UnspentSkillPoints;
-        if (_playerExperience.UnspentSkillPoints > 0) 
+        if (_playerExperience.UnspentSkillPoints > 0)
         {
             _unspentSkillPointsText.gameObject.SetActive(true);
             //Отобразить кнопки "+" возле каждого стата, чтобы показать, что их можно прокачать
@@ -97,15 +97,10 @@ public class PlayerStatsPanel : MonoBehaviour
             }
         }
 
-        _diplomacyText.text = "Дипломатия: " + _playerStats.BaseDiplomacy + 
-            (_playerStats.AdditionalDiplomacy > 0 ? $" + <color=green>{_playerStats.AdditionalDiplomacy}</color>" : "" );
-        _luckText.text = "Удача: " + _playerStats.BaseLuck +
-            (_playerStats.AdditionalLuck > 0 ? $" + <color=green>{_playerStats.AdditionalLuck}</color>" : "");
-        _toughnessText.text = "Стойкость: " + _playerStats.BaseToughness +
-            (_playerStats.AdditionalToughness > 0 ? $" + <color=green>{_playerStats.AdditionalToughness}</color>" : "");
-        _craftingText.text = "Крафтинг: " + _playerStats.BaseCrafting +
-            (_playerStats.AdditionalCrafting > 0 ? $" + <color=green>{_playerStats.AdditionalLuck}</color>" : "");
-
+        _diplomacyText.text = "Дипломатия: " + DisplayStat(_playerStats.BaseDiplomacy, _playerStats.AdditionalDiplomacy);
+        _luckText.text = "Удача: " + DisplayStat(_playerStats.BaseLuck, _playerStats.AdditionalLuck);
+        _toughnessText.text = "Стойкость: " + DisplayStat(_playerStats.BaseToughness, _playerStats.AdditionalToughness);
+        _craftingText.text = "Крафтинг: " + DisplayStat(_playerStats.BaseCrafting, _playerStats.AdditionalCrafting);
     }
 
     public void LevelUpDiplomacy()
@@ -133,5 +128,17 @@ public class PlayerStatsPanel : MonoBehaviour
         _playerExperience.UnspentSkillPoints--;
         Refresh();
     }
-
+    private string DisplayStat(int baseStat, int additionalStat)
+    {
+        string result = $"{baseStat}";
+        if (additionalStat > 0)
+        {
+            result += $"<color=green> +{additionalStat}</color>";
+        }
+        else if (additionalStat < 0)
+        {
+            result += $"<color=red> {additionalStat}</color>";
+        }
+        return result;
+    }
 }

@@ -6,8 +6,7 @@ using System.Linq;
 public class ItemDatabase : MonoBehaviour
 {
     public ItemDatabaseSO Items;
-    public static ItemDatabase Instance; //Синглтон приватный, потому что обращение с базой только через методы GetItem (статические, это важно),
-                                           //другим челам не нужен доступ именно к синглтону // upd: сделал публичным
+    public static ItemDatabase Instance;
 
     private void Awake()
     {
