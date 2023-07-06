@@ -13,6 +13,7 @@ public class StatusManager : MonoBehaviour, ISaveable<StatusManagerSaveData>
     [SerializeField] private Status _lowNeedsDebuff;
 
     [HideInInspector] public List<ActiveStatus> ActiveStatuses = new();
+    public GameObject CurrentStatusInfoWindow;
 
     public ActiveStatus AddStatusForPlayer(Status status)
     {

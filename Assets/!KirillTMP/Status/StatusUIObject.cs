@@ -27,16 +27,13 @@ public class StatusUIObject : MonoBehaviour
     {
         if (!_activeStatus.IsActive)
             Destroy(gameObject);
-        if (_activeStatus.StatusData.HourDuration - _activeStatus.CurrentDurationHours < 0.1)
-        //Типа костыль, но скорее даже хитрость, нацеленная на дебафф голода:
-        //поскольку я сделал ему длительность не 6 часов, а 2 минуты, то эта shell бы постоянно дергалась, а так остается заполненной.
-        //Если оставляем, нужна такая же хитрость в StatusInfoWindow для синего слайдера
-            _shell.fillAmount = 1; 
-        else
-            _shell.fillAmount = _activeStatus.CurrentDurationHours / _activeStatus.StatusData.HourDuration;
+        
+        _shell.fillAmount = _activeStatus.CurrentDurationHours / _activeStatus.StatusData.HourDuration;
     }
     public void OnClick()
     {
+        if (StatusManager.Instance.CurrentStatusInfoWindow != null)
+            Destroy(StatusManager.Instance.CurrentStatusInfoWindow);
         GameObject window = Instantiate(_infoWindow, gameObject.transform);
         window.GetComponent<StatusInfoWindow>().Init
             (_activeStatus.StatusData.StatusName,

@@ -15,6 +15,7 @@ public class StatusInfoWindow : MonoBehaviour
 
     public void Init(string name, string description, float currentDuration, float duration)
     {
+        StatusManager.Instance.CurrentStatusInfoWindow = gameObject;
         _name.text = name;
         _description.text = description;
         _duration.text = $"Длительность эффекта: {Math.Round(currentDuration,1)}/{(int)duration} ч";
@@ -38,6 +39,7 @@ public class StatusInfoWindow : MonoBehaviour
             _canvasGroup.alpha -= 0.02f;
             yield return waitForSeconds;
         }
+        StatusManager.Instance.CurrentStatusInfoWindow = null;
         Destroy(gameObject);
     }
 }
