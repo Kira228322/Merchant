@@ -14,5 +14,5 @@ public class UsableItem : Item
     
     [HideInInspector]public int UsableValue;
     [HideInInspector]public Status Effect;
-    [HideInInspector]public CraftingRecipe Recipe;
+    [HideInInspector]public List<CraftingRecipe> Recipes;
 }

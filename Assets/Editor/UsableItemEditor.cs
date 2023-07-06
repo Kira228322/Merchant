@@ -38,10 +38,28 @@ class UsableItemEditor : Editor
                 EditorGUILayout.EndHorizontal();
                 break;
             case UsableItem.UsableType.Recipe:
-                EditorGUILayout.BeginHorizontal();
-                GUILayout.Label("Recipe", GUILayout.MaxWidth(60));
-                item.Recipe = (CraftingRecipe)EditorGUILayout.ObjectField(item.Recipe, typeof(CraftingRecipe), false);
-                EditorGUILayout.EndHorizontal();
+                
+                if (GUILayout.Button("Добавить рецепт крафта в список"))
+                    item.Recipes.Add(new CraftingRecipe());
+                
+                
+                if (item.Recipes.Count > 0)
+                {
+                    for (int i = 0; i < item.Recipes.Count; i++)
+                    {
+                        EditorGUILayout.BeginHorizontal();
+                        if (GUILayout.Button("X", GUILayout.Height(17), GUILayout.Width(18)))
+                        {
+                            item.Recipes.RemoveAt(i);
+                            break;
+                        }
+                        GUILayout.Label("Recipe", GUILayout.MaxWidth(60));
+                        item.Recipes[i] = (CraftingRecipe)EditorGUILayout.ObjectField(item.Recipes[i], typeof(CraftingRecipe), false);
+                        EditorGUILayout.EndHorizontal();
+                    }
+                }
+                
+                
                 break;
         }
     }

@@ -174,12 +174,17 @@ public class ItemInfo : MonoBehaviour
 
     private void UseRecipe()
     {
-        if (Player.Instance.Recipes.Any(recipe => recipe.ResultingItem.Name == _currentUsableItem.Recipe.ResultingItem.Name))
+        foreach (var craftRecipe in _currentUsableItem.Recipes)
         {
-            FindObjectOfType<CanvasWarningGenerator>().CreateWarning("Рецепт уже известен", "Вы уже изучили этот рецепт");
-            return;
+            if (Player.Instance.Recipes.Any(recipe => recipe.ResultingItem.Name == craftRecipe.ResultingItem.Name))
+            {
+                FindObjectOfType<CanvasWarningGenerator>().CreateWarning("Рецепт уже известен", 
+                    $"Вы уже изучили рецепт {craftRecipe.ResultingItem.Name}");
+                return;
+            }
+            Player.Instance.Recipes.Add(craftRecipe);
         }
-        Player.Instance.Recipes.Add(_currentUsableItem.Recipe);
+        
         RemoveOneItemAfterUse();
     }
 
