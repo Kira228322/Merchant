@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -27,11 +28,26 @@ public class RoadWindow : Window
         _image.sprite = road[0].Image;
         _name.text = road[0].RoadName;
         _description.text = road[0].Description;
-        if (_roads[_numberOfRoad].TravelingTime / 24 == 0)
-            _duration.text = _roads[_numberOfRoad].TravelingTime + " часов";
+        
+        int travelingTime;
+
+        if (Player.Instance.Inventory.IsOverencumbered)
+        {
+            _duration.color = new Color(133/255f, 17/255f, 7/255f);
+            _duration.fontStyle |= FontStyles.Underline;
+            travelingTime = Convert.ToInt32(Math.Ceiling(_roads[_numberOfRoad].TravelingTime * 1.5f));
+        }
         else
-            _duration.text = _roads[_numberOfRoad].TravelingTime / 24 + " дней  " +
-                             _roads[_numberOfRoad].TravelingTime % 24 + " часов";
+        {
+            _duration.color = new Color(0, 34/255f, 82/255f);
+            _duration.fontStyle &= ~FontStyles.Underline;
+            travelingTime = _roads[_numberOfRoad].TravelingTime;
+        }
+                
+        if (travelingTime / 24 == 0)
+            _duration.text = travelingTime + " часов";
+        else
+            _duration.text = travelingTime / 24 + " дней  " + travelingTime % 24 + " часов";
         
         _quality.text = "Качество: " + road[0].Quality;
         _danger.text = "Опасность: " + road[0].Danger;
@@ -48,11 +64,26 @@ public class RoadWindow : Window
         _image.sprite = _roads[_numberOfRoad].Image;
         _name.text = _roads[_numberOfRoad].RoadName;
         _description.text = _roads[_numberOfRoad].Description;
-        if (_roads[_numberOfRoad].TravelingTime / 24 == 0)
-            _duration.text = _roads[_numberOfRoad].TravelingTime + " часов";
+        
+        int travelingTime;
+
+        if (Player.Instance.Inventory.IsOverencumbered)
+        {
+            _duration.color = new Color(133/255f, 17/255f, 7/255f);
+            _duration.fontStyle |= FontStyles.Underline;
+            travelingTime = Convert.ToInt32(Math.Ceiling(_roads[_numberOfRoad].TravelingTime * 1.5f));
+        }
         else
-            _duration.text = _roads[_numberOfRoad].TravelingTime / 24 + " дней  " +
-                             _roads[_numberOfRoad].TravelingTime % 24 + " часов";
+        {
+            _duration.color = new Color(0, 34/255f, 82/255f);
+            _duration.fontStyle &= ~FontStyles.Underline;
+            travelingTime = _roads[_numberOfRoad].TravelingTime;
+        }
+                
+        if (travelingTime / 24 == 0)
+            _duration.text = travelingTime + " часов";
+        else
+            _duration.text = travelingTime / 24 + " дней  " + travelingTime % 24 + " часов";
 
         _quality.text = "Качество: " + _roads[_numberOfRoad].Quality;
         _danger.text = "Опасность: " + _roads[_numberOfRoad].Danger;

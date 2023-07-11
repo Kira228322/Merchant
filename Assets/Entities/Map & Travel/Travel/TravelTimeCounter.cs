@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -26,7 +27,10 @@ public class TravelTimeCounter : MonoBehaviour
     public void Init(Road road, GameObject playerIcon)
     {
         _travelingTime = road.TravelingTime;
-        _duration = road.TravelingTime;
+        if (Player.Instance.Inventory.IsOverencumbered)
+            _duration = Convert.ToInt32(Math.Ceiling(road.TravelingTime * 1.5f));
+        else 
+            _duration = road.TravelingTime;
         _minutes = 0;
         enabled = true;
         _road = road;

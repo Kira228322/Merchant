@@ -19,6 +19,15 @@ public class PlayerStats : ISaveable<PlayerStatsSaveData>
     public int TotalLuck => BaseLuck + AdditionalLuck; //Влияет на частоту происшествия благоприятных и негативных событий
     public int TotalCrafting => BaseCrafting + AdditionalCrafting; //Влияет на доступность некоторых рецептов крафта
 
+    public void WhenToughnessChange()
+    {
+        // TODO делать, когда изменяется стойкость
+
+        Player.Instance.Needs.HungerDecayRate = 12 + TotalToughness;
+        Player.Instance.Needs.SleepDecayRate = 16 + TotalToughness;
+        Player.Instance.Needs.MaxHunger = 90 + TotalToughness * 3;
+    }
+
     public void IncreaseDiplomacy()
     {
         BaseDiplomacy++;

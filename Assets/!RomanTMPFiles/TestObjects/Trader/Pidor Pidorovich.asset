@@ -22,20 +22,11 @@ MonoBehaviour:
   TraderTypes:
   - {fileID: 11400000, guid: e6572bc3b8ee63a4b8071ae6ce8579b7, type: 2}
   - {fileID: 11400000, guid: 997f1667faefd604aad534ee42560049, type: 2}
-  RestockCycle: 2
   _baseGoods:
   - Good: {fileID: 11400000, guid: c51137506052a204090b07cad53242db, type: 2}
     MaxCount: 55
     CurrentCount: 55
     CurrentPrice: 23
-  - Good: {fileID: 11400000, guid: 51082a1ce98542a499133c143dc37119, type: 2}
-    MaxCount: 1
-    CurrentCount: 1
-    CurrentPrice: 111
-  - Good: {fileID: 11400000, guid: 47b264f5ad831994ca7460ce0d509778, type: 2}
-    MaxCount: 55
-    CurrentCount: 55
-    CurrentPrice: 42
   _baseBuyCoefficients:
   - itemType: 0
     Coefficient: 1
@@ -55,33 +46,6 @@ MonoBehaviour:
   - itemType: 5
     Coefficient: 1
     DefaultCountToBuy: 14
-  LastRestock: 0
-  Goods:
-  - Good: {fileID: 11400000, guid: c51137506052a204090b07cad53242db, type: 2}
-    MaxCount: 55
-    CurrentCount: 55
-    CurrentPrice: 23
-  - Good: {fileID: 11400000, guid: 51082a1ce98542a499133c143dc37119, type: 2}
-    MaxCount: 1
-    CurrentCount: 1
-    CurrentPrice: 111
+  Goods: []
   AdditiveGoods: []
-  BuyCoefficients:
-  - itemType: 0
-    Coefficient: 1
-    DefaultCountToBuy: 150
-  - itemType: 3
-    Coefficient: 0.55
-    DefaultCountToBuy: 20
-  - itemType: 4
-    Coefficient: 1
-    DefaultCountToBuy: 50
-  - itemType: 6
-    Coefficient: 0.315
-    DefaultCountToBuy: 31
-  - itemType: 1
-    Coefficient: 0.7
-    DefaultCountToBuy: 30
-  - itemType: 5
-    Coefficient: 1
-    DefaultCountToBuy: 14
+  BuyCoefficients: []

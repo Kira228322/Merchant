@@ -17077,7 +17077,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _roadName: road 2
   _description: la lal lalalal lalalalal
-  _travelingTime: 13
+  _travelingTime: 18
   _quality: 25
   _danger: 1
   _cost: 0
@@ -17651,14 +17651,14 @@ MonoBehaviour:
   Needs:
     _hungerScale: {fileID: 3279153272848613811}
     _sleepScale: {fileID: 3279153274134630023}
-    _hungerDecayRate: 2
-    _hungerDivisorWhenSleeping: 2
-    _sleepDecayRate: 2
-    _sleepRestorationRate: 5
-    _currentHunger: 200
-    _currentSleep: 20
-    MaxHunger: 222
-    MaxSleep: 333
+    HungerDecayRate: 0
+    HungerDivisorWhenSleeping: 2
+    SleepDecayRate: 0
+    SleepRestorationRate: 5
+    _currentHunger: 100
+    _currentSleep: 100
+    MaxHunger: 100
+    MaxSleep: 100
     IsSleeping: 0
   WagonStats:
     Wheel: {fileID: 11400000, guid: ae2a7140af63b644c98c69c02158a6a9, type: 2}

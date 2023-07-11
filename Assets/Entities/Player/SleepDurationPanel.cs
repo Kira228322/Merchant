@@ -9,8 +9,8 @@ public class SleepDurationPanel : MonoBehaviour
     [SerializeField] private Slider _slider;
     [SerializeField] private Button _doneButton;
     [SerializeField] private Button _closeButton;
-    [SerializeField] private int _timeScaleWhenSleeping;
     [SerializeField] private Image _blackScreen;
+    private int _timeScaleWhenSleeping = 30;
     private Player _player;
     private Timeflow _timeflow;
 

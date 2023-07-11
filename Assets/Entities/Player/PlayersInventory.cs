@@ -18,7 +18,7 @@ public class PlayersInventory : MonoBehaviour, ISaveable<PlayersInventorySaveDat
     public List<InventoryItem> ItemList => _inventory;
     public ItemGrid ItemGrid => _inventoryItemGrid;
 
-    public bool IsOverencumbered; //тяжело ли ослику тащить повозку в данный момент?
+    public bool IsOverencumbered; //тяжело ли ослику тащить повозку в данный момент? //upd. Какая прелесть
 
     public event UnityAction<float, float> WeightChanged;
 
@@ -31,10 +31,10 @@ public class PlayersInventory : MonoBehaviour, ISaveable<PlayersInventorySaveDat
         set
         {
             if (value > _maxTotalWeight)
-            {
                 IsOverencumbered = true;
-            }
-            else IsOverencumbered = false;
+            else 
+                IsOverencumbered = false;
+            
             _currentTotalWeight = value;
             WeightChanged?.Invoke(CurrentTotalWeight, MaxTotalWeight);
         }

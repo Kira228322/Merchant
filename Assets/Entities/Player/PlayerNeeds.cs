@@ -10,20 +10,20 @@ public class PlayerNeeds: ISaveable<PlayerNeedsSaveData>
     [SerializeField] private SlidersController _hungerScale;
     [SerializeField] private SlidersController _sleepScale;
 
-    [Tooltip("—колько нужно минут, чтобы голод уменьшилс€ на 1")] [SerializeField] int _hungerDecayRate;
-    [Tooltip("¬о сколько раз замедл€етс€ падение голода во врем€ сна")] [SerializeField] int _hungerDivisorWhenSleeping;
-    [Tooltip("—колько нужно минут, чтобы сон уменьшилс€ на 1")] [SerializeField] int _sleepDecayRate;
-    [Tooltip("—колько нужно минут во врем€ сна, чтобы сон восстановилс€ на 1")] [SerializeField] int _sleepRestorationRate;
+    [SerializeField][HideInInspector] public int HungerDecayRate; //"—колько нужно минут, чтобы голод уменьшилс€ на 1"
+    [SerializeField][HideInInspector] public int HungerDivisorWhenSleeping = 2; // "¬о сколько раз замедл€етс€ падение голода во врем€ сна"
+    [SerializeField][HideInInspector] public int SleepDecayRate; //"—колько нужно минут, чтобы сон уменьшилс€ на 1"
+    [SerializeField][HideInInspector] public int SleepRestorationRate = 5; // "—колько нужно минут во врем€ сна, чтобы сон восстановилс€ на 1"
 
-    [SerializeField] private int _currentHunger;
-    [SerializeField] private int _currentSleep;
+    [SerializeField][HideInInspector] private int _currentHunger;
+    [SerializeField][HideInInspector] private int _currentSleep;
 
     private int _generalTimeCounter = 0;
     private int _timeCounterWhenSleeping = 0;
     private int _hoursLeftToSleep = 0;
 
-    public int MaxHunger;
-    public int MaxSleep;
+    [HideInInspector] public int MaxHunger;
+    [HideInInspector] public int MaxSleep = 90;
     public int CurrentHunger
     {
         get => _currentHunger;
@@ -33,7 +33,6 @@ public class PlayerNeeds: ISaveable<PlayerNeedsSaveData>
             if (_currentHunger < 0)
             {
                 _currentHunger = 0;
-                StatusManager.Instance.AddLowNeedsDebuff();
             }
             if (_currentHunger > MaxHunger)
             {
@@ -51,7 +50,6 @@ public class PlayerNeeds: ISaveable<PlayerNeedsSaveData>
             if (_currentSleep < 0)
             {
                 _currentSleep = 0;
-                StatusManager.Instance.AddLowNeedsDebuff();
             }
             if (_currentSleep > MaxSleep)
             {
@@ -73,13 +71,13 @@ public class PlayerNeeds: ISaveable<PlayerNeedsSaveData>
 
     public void StartSleeping(int hours)
     {
-        _hungerDecayRate *= _hungerDivisorWhenSleeping; //голод замедл€етс€ в _hungerMultiplierWhenSleeping раз
+        HungerDecayRate *= HungerDivisorWhenSleeping; //голод замедл€етс€ в _hungerMultiplierWhenSleeping раз
         _hoursLeftToSleep = hours;
         IsSleeping = true;
     }
     public void StopSleeping()
     {
-        _hungerDecayRate /= _hungerDivisorWhenSleeping; //голод возвращаетс€ в предыдущую скорость падени€
+        HungerDecayRate /= HungerDivisorWhenSleeping; //голод возвращаетс€ в предыдущую скорость падени€
         IsSleeping = false;
         FinishedSleeping?.Invoke();
     }
@@ -100,14 +98,17 @@ public class PlayerNeeds: ISaveable<PlayerNeedsSaveData>
     public void UpdateNeeds()
     {
         _generalTimeCounter++;
-        if (_generalTimeCounter % _hungerDecayRate == 0)
+        if (_currentHunger <= 0 || _currentSleep <= 0)
+            StatusManager.Instance.AddLowNeedsDebuff();
+        
+        if (_generalTimeCounter % HungerDecayRate == 0)
         {
             CurrentHunger--;
         }
         if (IsSleeping)
         {
             _timeCounterWhenSleeping++;
-            if (_timeCounterWhenSleeping % _sleepRestorationRate == 0)
+            if (_timeCounterWhenSleeping % SleepRestorationRate == 0)
             {
                 CurrentSleep++;
             }
@@ -119,7 +120,7 @@ public class PlayerNeeds: ISaveable<PlayerNeedsSaveData>
         }
         else
         {
-            if (_generalTimeCounter % _sleepDecayRate == 0)
+            if (_generalTimeCounter % SleepDecayRate == 0)
             {
                 CurrentSleep--;
             }

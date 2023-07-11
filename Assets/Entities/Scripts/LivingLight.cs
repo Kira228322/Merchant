@@ -52,9 +52,17 @@ public class LivingLight : MonoBehaviour
                 _maxIntensity = Mathf.Lerp(_maxBobbingIntensity, _maxBobbingIntensity/1.8f -0.2f, (float)(GameTime.Hours-2)/8);
                 _minIntensity = Mathf.Lerp(_minBobbingIntensity, _minBobbingIntensity/1.8f -0.2f, (float)(GameTime.Hours-2)/8);
                 break;
+            case int n when n >= 11 && n <= 14:
+                _maxIntensity = _maxBobbingIntensity / 1.8f - 0.2f;
+                _minIntensity = _minBobbingIntensity / 1.8f - 0.2f;
+                break;
             case int n when n >= 15 && n <= 22:
                 _maxIntensity = Mathf.Lerp(_maxBobbingIntensity/1.8f -0.2f, _maxBobbingIntensity, (float)(GameTime.Hours-14)/8);
                 _minIntensity = Mathf.Lerp(_minBobbingIntensity/1.8f -0.2f, _minBobbingIntensity, (float)(GameTime.Hours-14)/8);
+                break;
+            case int n when n >= 23 || n <= 2:
+                _maxIntensity = _maxBobbingIntensity;
+                _minIntensity = _minBobbingIntensity;
                 break;
         }
     }
