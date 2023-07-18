@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -32,13 +33,22 @@ public class Region : MonoBehaviour
         
         return availableQuestGivers[UnityEngine.Random.Range(0, availableQuestGivers.Count)];
     }
+    
+    
     public void FillEconomyParamsDictionary()
     {
         char lineEnding = '\n';
-        string[] rows = cvsEconomyParams.text.Split(lineEnding);
+        
+        Encoding encoding = Encoding.UTF8;
+        byte[] fileBytes = cvsEconomyParams.bytes;
+        string fileContent = encoding.GetString(fileBytes);
+
+        string[] rows = fileContent.Split(new[] { lineEnding });
         for (int i = 1; i < rows.Length - 1; i++)
         {
             string[] cells = rows[i].Split(';');
+            // Debug.Log(i + " " + cells[0]);
+            // TODO посмотреть, нужно ли -1 в цикле или нет 
             ItemEconomyParams.Add(cells[0], new [] 
             {Convert.ToInt32(cells[1]), Convert.ToInt32(cells[2]),Convert.ToInt32(cells[3])});
         }

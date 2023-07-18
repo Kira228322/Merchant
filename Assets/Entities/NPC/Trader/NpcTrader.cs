@@ -91,15 +91,7 @@ public class NpcTrader : Npc
         TradeManager.Instance.OpenTradeWindow(this);
     }
     
-    public void RestockCoefficients()
-    {
-        foreach (var buyCoefficient in BuyCoefficients)
-        {
-            buyCoefficient.CountToBuy += buyCoefficient.DefaultCountToBuy / 3 + Player.Instance.Statistics.TotalDiplomacy + 1;
-            if (buyCoefficient.CountToBuy > buyCoefficient.DefaultCountToBuy)
-                buyCoefficient.CountToBuy = buyCoefficient.DefaultCountToBuy;
-        }
-    }
+    
 
     public void SellItem(Item item)
     {

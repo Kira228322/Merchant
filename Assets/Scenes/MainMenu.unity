@@ -1021,7 +1021,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _region: {fileID: 815367770}
+  _region: {fileID: 0}
   _icon: {fileID: 0}
   _villageName: 
   _description: 
@@ -1423,7 +1423,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _region: {fileID: 815367770}
+  _region: {fileID: 0}
   _icon: {fileID: 0}
   _villageName: 
   _description: 
@@ -3618,6 +3618,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _locations:
   - {fileID: 9056293358578365361}
+  - {fileID: 3977917189124624316}
   - {fileID: 674283884}
   - {fileID: 228818839}
   - {fileID: 1015483341}
@@ -3628,15 +3629,17 @@ MonoBehaviour:
   _questGivers:
   - {fileID: 11400000, guid: a38e14d3ff59a5d47898ceb4939ac969, type: 2}
   tmpFloat:
-  - 2
-  - 3
+  - 1
+  - 1
+  - 1
+  - 1
   - 1
   - 1
   - 1
   - 1
   - 1
   cvsEconomyParams: {fileID: 4900000, guid: cae71460b5cc0f84cae6a0a8ee857cfc, type: 3}
-  AveragePopulation: 1400
+  AveragePopulation: 1000
 --- !u!1 &839628441
 GameObject:
   m_ObjectHideFlags: 0
@@ -4590,7 +4593,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _region: {fileID: 815367770}
+  _region: {fileID: 0}
   _icon: {fileID: 0}
   _villageName: 
   _description: 
@@ -5805,7 +5808,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _region: {fileID: 815367770}
+  _region: {fileID: 0}
   _icon: {fileID: 0}
   _villageName: 
   _description: 
@@ -6386,7 +6389,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _region: {fileID: 815367770}
+  _region: {fileID: 0}
   _icon: {fileID: 0}
   _villageName: 
   _description: 
@@ -10831,7 +10834,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _region: {fileID: 815367770}
+  _region: {fileID: 0}
   _icon: {fileID: 0}
   _villageName: 
   _description: 
@@ -15881,7 +15884,8 @@ MonoBehaviour:
   - {fileID: 9056293358578365361}
   - {fileID: 674283884}
   _roads: []
-  NpcTraders: []
+  NpcTraders:
+  - {fileID: 11400000, guid: 8be527381f0379444abf678a8923756d, type: 2}
 --- !u!224 &4009832271467827650
 RectTransform:
   m_ObjectHideFlags: 0
@@ -19233,7 +19237,8 @@ MonoBehaviour:
   - {fileID: 3977917189124624316}
   - {fileID: 674283884}
   _roads: []
-  NpcTraders: []
+  NpcTraders:
+  - {fileID: 11400000, guid: 8be527381f0379444abf678a8923756d, type: 2}
 --- !u!1 &9066488760400233121
 GameObject:
   m_ObjectHideFlags: 0
