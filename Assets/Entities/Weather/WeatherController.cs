@@ -72,7 +72,11 @@ public class WeatherController : MonoBehaviour, IEventController<GlobalEvent_Wea
         mainModuleStartSize.constantMax = maxSizeOfDrop;
         mainModule.startSizeMultiplier = maxSizeOfDrop;
     }
-
+    public void PrepareEvent()
+    {
+        AddEvent();
+        PredictNextEvent();
+    }
     public GlobalEvent_Weather AddEvent()
     {
         GlobalEvent_Weather eventToAdd = GlobalEventHandler.Instance
@@ -85,7 +89,6 @@ public class WeatherController : MonoBehaviour, IEventController<GlobalEvent_Wea
     public void RemoveEvent()
     {
         _rain.Stop();
-        PredictNextEvent();
         WeatherFinished?.Invoke();
     }
 

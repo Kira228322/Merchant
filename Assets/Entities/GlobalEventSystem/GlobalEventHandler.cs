@@ -8,9 +8,9 @@ using UnityEngine;
 public class GlobalEventHandler : MonoBehaviour
 {
     public static GlobalEventHandler Instance;
-    [SerializeField] private List<GameObject> EventControllerGameObjects;
+    [SerializeField] private List<MonoBehaviour> EventControllerGameObjects;
     [HideInInspector] public List<GlobalEvent_Base> ActiveGlobalEvents = new();
-    private List<IEventController<GlobalEvent_Base>> _eventControllers = new();
+    private List<IEventController> _eventControllers = new();
     private void Awake()
     {
         if (Instance == null)
@@ -20,13 +20,10 @@ public class GlobalEventHandler : MonoBehaviour
     }
     private void Start()
     {
-        foreach (GameObject eventControllerObject in EventControllerGameObjects)
+        foreach (MonoBehaviour eventControllerObject in EventControllerGameObjects)
         {
-            /* Type componentType = typeof(IEventController<>).MakeGenericType(typeof(GlobalEvent_Base));
-             //Снова ужасный Reflection, 90% моих затупов в этом проекте были из-за таких вещей
-             var eventController = (IEventController<GlobalEvent_Base>)eventControllerObject.GetComponent(componentType);
-             _eventControllers.Add(eventController);
-            */
+            IEventController controller = (IEventController)eventControllerObject;
+            _eventControllers.Add(controller);
         }
     }
     private void OnEnable()
@@ -80,30 +77,17 @@ public class GlobalEventHandler : MonoBehaviour
         DecreaseDurations();
     }
 
-    private IEventController<T> GetControllerByType<T>() where T: GlobalEvent_Base
-        //хз пока не нужно, может потом пригодится
-    {
-        Type eventType = typeof(T);
-        var controllerType = typeof(IEventController<>).MakeGenericType(eventType);
-        return (IEventController<T>)_eventControllers.FirstOrDefault(controller => controller.GetType() == controllerType);
-    }
-    private IEventController<GlobalEvent_Base> GetControllerFromEvent(GlobalEvent_Base globalEvent)
-    {
-        Type eventType = globalEvent.GetType();
-        Type controllerType = typeof(IEventController<>).MakeGenericType(eventType);
-        //^ Мой старый друг Reflection, постоянно мерзко на душе когда использую что-то такое
-        return _eventControllers.FirstOrDefault(controller => controller.GetType() == controllerType);
-    }
-
     private void CheckControllersDelay()
     {
         int currentDay = GameTime.CurrentDay;
         int currentHour = GameTime.Hours;
         foreach (var controller in _eventControllers)
         {
-            if (controller.DateOfNextEvent >= currentDay)
-                if (controller.HourOfNextEvent >= currentHour)
-                    controller.AddEvent();
+            if (currentDay >= controller.DateOfNextEvent)
+                if (currentHour >= controller.HourOfNextEvent)
+                {
+                    controller.PrepareEvent();
+                }
         }
     }
     private void DecreaseDurations() //уменьшить счётчик у каждого элемента и остановить истёкшие
@@ -116,8 +100,6 @@ public class GlobalEventHandler : MonoBehaviour
             {
                 globalEvent.Terminate();
 
-                IEventController<GlobalEvent_Base> eventController = GetControllerFromEvent(globalEvent);
-                eventController?.RemoveEvent();
             }
         });
         ActiveGlobalEvents.RemoveAll(globalEvent => globalEvent.DurationHours <= 0);

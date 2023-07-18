@@ -1,4 +1,3 @@
-using Ink.Parsed;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,5 +15,8 @@ public class GlobalEvent_Weather : GlobalEvent_Base
         //Ничего делать не нужно, иначе всё-таки странно выходит.
     }
 
-    public override void Terminate() {}
+    public override void Terminate() 
+    {
+        UnityEngine.Object.FindObjectOfType<WeatherController>().RemoveEvent();
+    }
 }
