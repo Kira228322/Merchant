@@ -28,7 +28,13 @@ public class ItemDatabase : MonoBehaviour
         {
             return result;
         }
-        
+        //≈сли не получилось достать из обычного листа, значит это или квестовый или несуществующий предмет.
+        //»з листа квестовых предметов они будут доставатьс€ например при загрузке игры -- если у игрока в инвентаре лежал квестовый предмет
+        result = Instance.Items.QuestItemList.FirstOrDefault(item => item.Name.ToLower() == name.ToLower());
+        if (result != null)
+        {
+            return result;
+        }
         Debug.LogWarning("“акого айтема не существует!");
         return null;
     }
@@ -37,5 +43,9 @@ public class ItemDatabase : MonoBehaviour
     {
         List<Item> itemsOfThisType = Instance.Items.ItemList.Where(item => item.TypeOfItem == itemType).ToList();
         return itemsOfThisType[Random.Range(0, itemsOfThisType.Count)]; 
+    }
+    public static Item GetRandomItem()
+    {
+        return Instance.Items.ItemList[Random.Range(0, Instance.Items.ItemList.Count)];
     }
 }

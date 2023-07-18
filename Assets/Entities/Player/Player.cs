@@ -147,7 +147,7 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
         }
         if (Input.GetKeyDown(KeyCode.E))
         {
-            GlobalEventHandler.Instance.AddGlobalEvent<Test_GlobalEvent>(12);
+            FindObjectOfType<BannedItemEventController>().AddEvent();
         }
         if (Input.GetKeyDown(KeyCode.Q))
         {
@@ -155,7 +155,23 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
         }
         if (Input.GetKeyDown(KeyCode.I))
         {
-            Diary.Instance.AddEntry("Amogus");
+            Debug.Log("Current Active Global Events:");
+            foreach (var globalEvent in GlobalEventHandler.Instance.ActiveGlobalEvents)
+            {
+                Debug.Log(globalEvent.GlobalEventName + " " + globalEvent.DurationHours);
+            }
+
+            Debug.Log("BannedItemController Prediction:");
+            {
+                BannedItemEventController bannedItemEventController = FindObjectOfType<BannedItemEventController>();
+                Debug.Log($"{bannedItemEventController.ItemToBan}, on day {bannedItemEventController.DateOfNextEvent}, hour {bannedItemEventController.HourOfNextEvent}, for {bannedItemEventController.DurationOfEvent} days");
+            }
+
+            if (GlobalEventHandler.Instance.IsEventActive<GlobalEvent_BannedItem>())
+            {
+                GlobalEvent_BannedItem bannedEvent = GlobalEventHandler.Instance.GetActiveEventByType<GlobalEvent_BannedItem>();
+                Debug.Log($"Banned Item: {bannedEvent.BannedItem.Name}, {bannedEvent.DurationHours} часа осталось");
+            }
         }
         if (Input.GetKeyDown(KeyCode.P))
         {

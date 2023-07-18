@@ -6,4 +6,5 @@ using UnityEngine;
 public class ItemDatabaseSO : ScriptableObject
 {
     public List<Item> ItemList;
+    public List<Item> QuestItemList; //предметы, которые нельзя достать рандомно
 }

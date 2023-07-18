@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class BannedItemsHandler : MonoBehaviour, ISaveable<BannedItemsSaveData>
 {
+    public static BannedItemsHandler Instance;
     public List<Item> BannedItems { get; private set; }
 
     private void Awake()
     {
+        if (Instance == null)
+            Instance = this;
+        else if (Instance != this)
+            Destroy(gameObject);
+
         BannedItems = new();
     }
     public void BanItem(Item item)
