@@ -18,6 +18,16 @@ public class NpcTraderData : NpcData, IResetOnExitPlaymode, ISaveable<NpcTraderS
     [HideInInspector] public List<NpcTrader.TraderGood> Goods;
     [HideInInspector] public List<NpcTrader.TraderGood> AdditiveGoods;
     [HideInInspector] public List<NpcTrader.BuyCoefficient> BuyCoefficients;
+    
+    public void RestockCoefficients()
+    {
+        foreach (var buyCoefficient in BuyCoefficients)
+        {
+            buyCoefficient.CountToBuy += buyCoefficient.DefaultCountToBuy / 3 + Player.Instance.Statistics.TotalDiplomacy + 1;
+            if (buyCoefficient.CountToBuy > buyCoefficient.DefaultCountToBuy)
+                buyCoefficient.CountToBuy = buyCoefficient.DefaultCountToBuy;
+        }
+    }
 
     NpcTraderSaveData ISaveable<NpcTraderSaveData>.SaveData()
     {

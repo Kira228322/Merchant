@@ -8,8 +8,13 @@ using UnityEngine.UI;
 public class Item : ScriptableObject
 {
     public string Name;
+
     public enum ItemType
-    {Food, Drink ,Metal, Gem, MeleeWeapon, RangeWeapon, MagicThing} // Список нужно будет дополнять 
+    {
+        RichClothes, WarmClothes, LightClothers, CeramicProduct, EverydayItem, CostumeJewelry, SouthPlant, NorthPlant, 
+        Cactus
+    }
+    
     public ItemType TypeOfItem;
     
     

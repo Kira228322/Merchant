@@ -34,28 +34,27 @@ public class RestockHandler : MonoBehaviour
             }
     }
     
-    private void RestockBuyCoefficients(List<NpcTrader> traders)
+    private void RestockBuyCoefficients(List<NpcTraderData> traders)
     {
         foreach (var trader in traders)
             trader.RestockCoefficients();
     }
 
-    private void AddAdditiveGoods(List<NpcTrader> traders)
+    private void AddAdditiveGoods(List<NpcTraderData> traders)
     {
         foreach (var trader in traders)
         {
             if (trader.AdditiveGoods.Count > 9)
-                trader.AdditiveGoods.RemoveAt(Random.Range(0, trader.AdditiveGoods.Count));
+                trader.AdditiveGoods.RemoveAt(Random.Range(8, trader.AdditiveGoods.Count));
             if (trader.AdditiveGoods.Count > 7)
-                trader.AdditiveGoods.RemoveAt(Random.Range(0, trader.AdditiveGoods.Count));
+                trader.AdditiveGoods.RemoveAt(Random.Range(6, trader.AdditiveGoods.Count));
             if (trader.AdditiveGoods.Count > 4)
                 trader.AdditiveGoods.RemoveAt(Random.Range(0, trader.AdditiveGoods.Count));
 
             if (Random.Range(0,3) == 0)
                 return;
             
-            int count = Random.Range(1, Player.Instance.Statistics.TotalDiplomacy / 3 + 2); // за каждые 3 дипломатии шанс на +1
-            // дополнительную шмотку у торговца
+            int count = Random.Range(1, 3); 
             for (int i = 0; i < count; i++)
             {
                 NpcTrader.BuyCoefficient traderBuyCoefficient;
@@ -63,7 +62,7 @@ public class RestockHandler : MonoBehaviour
                 Item newItem;
                 bool reallyNew;
 
-                if (Random.Range(0, 3) == 0)
+                if (Random.Range(0, 4) == 0)
                     isMainGood = false; // не мейн тип шмотки торговца 
                 else
                     isMainGood = true; // мейн тип шмотки торговца
@@ -106,9 +105,9 @@ public class RestockHandler : MonoBehaviour
         }
     }
 
-    private void RestockMainGoods(List<NpcTrader> traders, Location location)
+    private void RestockMainGoods(List<NpcTraderData> traders, Location location)
     {
-        List<NpcTrader> activeTraders = new List<NpcTrader>(); // трейдеры которые будут учавствовать в очередной итерации foreach
+        List<NpcTraderData> activeTraders = new List<NpcTraderData>(); // трейдеры которые будут учавствовать в очередной итерации foreach
         int gainCount; 
         
         foreach (var item in ItemDatabase.Instance.Items.ItemList)
@@ -218,7 +217,7 @@ public class RestockHandler : MonoBehaviour
                         {
                             traderGood.CurrentCount--;
                             gainCount++;
-                            trader.NpcData.CurrentMoney += traderGood.CurrentPrice;
+                            trader.CurrentMoney += traderGood.CurrentPrice;
                         }
                         if (gainCount == 0)
                             break;
