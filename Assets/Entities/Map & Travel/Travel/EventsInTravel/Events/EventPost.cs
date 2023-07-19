@@ -16,7 +16,7 @@ public class EventPost : EventInTravel
 
         foreach (Item bannedItem in BannedItemsHandler.Instance.BannedItems)
         {
-            contrabandItems.Concat(Player.Instance.Inventory.GetInventoryItemsOfThisData(bannedItem));
+            contrabandItems.AddRange(Player.Instance.Inventory.GetInventoryItemsOfThisData(bannedItem));
         }
         if (contrabandItems.Count > 0) 
             contrabandSpotted = true;
@@ -47,16 +47,16 @@ public class EventPost : EventInTravel
             {
                 case 0:
                     //Отдать всю контрабанду
-                    foreach (InventoryItem item in contrabandItems)
-                        Player.Instance.Inventory.RemoveItemInInventory(item);
+                    foreach (Item bannedItem in BannedItemsHandler.Instance.BannedItems)
+                        Player.Instance.Inventory.RemoveAllItemsOfThisItemData(bannedItem);
                     break;
                 case 1:
                     //Предложить немного золота, 50% шанс
                     Player.Instance.Money -= avgPriceOfContraband;
                     if (!TravelEventHandler.EventFire(50f, true, TravelEventHandler.EventMultiplierType.Diplomacy))
                     {
-                        foreach (InventoryItem item in contrabandItems)
-                            Player.Instance.Inventory.RemoveItemInInventory(item);
+                        foreach (Item bannedItem in BannedItemsHandler.Instance.BannedItems)
+                            Player.Instance.Inventory.RemoveAllItemsOfThisItemData(bannedItem);
                         canvasWarningGenerator.CreateWarning("Неудача", "Стражник взял взятку, но всё равно забрал контрабанду");
                     }
                     break;
@@ -65,8 +65,8 @@ public class EventPost : EventInTravel
                     Player.Instance.Money -= (int)(avgPriceOfContraband * 1.5);
                     if (!TravelEventHandler.EventFire(80f, true, TravelEventHandler.EventMultiplierType.Diplomacy))
                     {
-                        foreach (InventoryItem item in contrabandItems)
-                            Player.Instance.Inventory.RemoveItemInInventory(item);
+                        foreach (Item bannedItem in BannedItemsHandler.Instance.BannedItems)
+                            Player.Instance.Inventory.RemoveAllItemsOfThisItemData(bannedItem);
                         canvasWarningGenerator.CreateWarning("Неудача", "Стражник взял взятку, но всё равно забрал контрабанду");
                     }
                     break;

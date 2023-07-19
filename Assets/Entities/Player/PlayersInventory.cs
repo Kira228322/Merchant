@@ -89,7 +89,16 @@ public class PlayersInventory : MonoBehaviour, ISaveable<PlayersInventorySaveDat
     }
     public List<InventoryItem> GetInventoryItemsOfThisData(Item itemData)
     {
-        return ItemList.Where(item => item.ItemData == itemData).ToList();
+        List<InventoryItem> result = new();
+        foreach (InventoryItem inventoryItem in ItemList)
+        {
+            if (inventoryItem.ItemData == itemData)
+            {
+                result.Add(inventoryItem);
+            }
+        }
+        return result;
+        //return ItemList.Where(item => item.ItemData == itemData).ToList();
     }
     public void RemoveItemsOfThisItemData(Item itemType, int amount)
     {
@@ -118,7 +127,7 @@ public class PlayersInventory : MonoBehaviour, ISaveable<PlayersInventorySaveDat
     }
     public void RemoveAllItemsOfThisItemData(Item itemType)
     {
-        for (int i = 0; i < ItemList.Count; i++)
+        for (int i = ItemList.Count - 1; i >= 0; i--)
         {
             if (ItemList[i].ItemData.Name == itemType.Name)
             {
