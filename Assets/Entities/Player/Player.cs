@@ -170,7 +170,7 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
             if (GlobalEventHandler.Instance.IsEventActive<GlobalEvent_BannedItem>())
             {
                 GlobalEvent_BannedItem bannedEvent = GlobalEventHandler.Instance.GetActiveEventByType<GlobalEvent_BannedItem>();
-                Debug.Log($"Banned Item: {bannedEvent.BannedItem.Name}, {bannedEvent.DurationHours} часа осталось");
+                Debug.Log($"Banned Item: {bannedEvent.BannedItemName}, {bannedEvent.DurationHours} часа осталось");
             }
         }
         if (Input.GetKeyDown(KeyCode.P))

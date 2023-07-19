@@ -32,7 +32,7 @@ public class BannedItemEventController : MonoBehaviour, IEventController<GlobalE
         GlobalEvent_BannedItem newEvent = new()
         {
             DurationHours = DurationOfEvent * 24,
-            BannedItem = ItemToBan
+            BannedItemName = ItemToBan.Name
         };
         var eventToAdd = GlobalEventHandler.Instance.AddGlobalEvent(newEvent);
         LastEventDay = GameTime.CurrentDay;
