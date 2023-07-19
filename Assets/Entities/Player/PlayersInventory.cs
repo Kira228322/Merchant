@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -86,6 +87,10 @@ public class PlayersInventory : MonoBehaviour, ISaveable<PlayersInventorySaveDat
         }
         return result;
     }
+    public List<InventoryItem> GetInventoryItemsOfThisData(Item itemData)
+    {
+        return ItemList.Where(item => item.ItemData == itemData).ToList();
+    }
     public void RemoveItemsOfThisItemData(Item itemType, int amount)
     {
         if (GetCount(itemType) < amount)
@@ -108,6 +113,16 @@ public class PlayersInventory : MonoBehaviour, ISaveable<PlayersInventorySaveDat
                 {
                     ItemGrid.RemoveItemsFromAStack(ItemList[i], leftToRemove); 
                 }
+            }
+        }
+    }
+    public void RemoveAllItemsOfThisItemData(Item itemType)
+    {
+        for (int i = 0; i < ItemList.Count; i++)
+        {
+            if (ItemList[i].ItemData.Name == itemType.Name)
+            {
+                ItemGrid.RemoveItemsFromAStack(ItemList[i], ItemList[i].CurrentItemsInAStack);
             }
         }
     }
