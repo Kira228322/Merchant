@@ -175,10 +175,7 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
         }
         if (Input.GetKeyDown(KeyCode.P))
         {
-            Debug.Log(Statistics.TotalDiplomacy);
-            Debug.Log(Statistics.TotalLuck);
-            Debug.Log(Statistics.TotalToughness);
-            Debug.Log(PlayerMover.SpeedModifier);
+            QuestHandler.AddQuest(PregenQuestDatabase.GetQuestParams("collect3apples_wait3hours"));
         }
 
     }

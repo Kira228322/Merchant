@@ -14,15 +14,15 @@ public class InventoryPanel : MonoBehaviour
 
     private float _currentTotalWeight;
     private float _maxTotalWeight;
-    private int _money;
+    
 
 
     private void Start()
     {
         _currentTotalWeight = _playersInventory.CurrentTotalWeight;
         _maxTotalWeight = _playersInventory.MaxTotalWeight;
-        _money = Player.Instance.Money;
-        Refresh();
+        
+        
     }
 
     private void OnPlayerSingletonChanged()
@@ -38,7 +38,8 @@ public class InventoryPanel : MonoBehaviour
     {
         Player.Instance.MoneyChanged += OnMoneyChanged;
         _playersInventory.WeightChanged += OnWeightChanged;
-        
+        Refresh();
+
     }
     private void OnDisable()
     {
@@ -47,7 +48,7 @@ public class InventoryPanel : MonoBehaviour
     }
     private void Refresh()
     {
-        _goldText.text = _money.ToString();
+        _goldText.text = Player.Instance.Money.ToString();
         _weightText.text = _currentTotalWeight.ToString("F1") + " / " + _maxTotalWeight.ToString("F1"); //.ToString("F1") округляет до 1 знаков после запятой
         if (_playersInventory.IsOverencumbered)
         {
@@ -61,7 +62,6 @@ public class InventoryPanel : MonoBehaviour
     }
     private void OnMoneyChanged(int money)
     {
-        _money = money;
         Refresh();
     }
     private void OnWeightChanged(float currentWeight, float maxWeight)

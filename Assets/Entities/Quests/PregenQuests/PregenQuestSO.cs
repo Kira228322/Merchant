@@ -17,6 +17,7 @@ public class PregenQuestSO : ScriptableObject
     [HideInInspector] public int MaxExperienceReward; 
     [HideInInspector] public int MinMoneyReward;
     [HideInInspector] public int MaxMoneyReward;
+    
 
    public PregenQuestSO NextQuest;
    [HideInInspector] public List<CompactedGoal> goals = new();
@@ -34,6 +35,7 @@ public class PregenQuestSO : ScriptableObject
         questParams.description = Description;
         questParams.experienceReward = Random.Range(MinExperienceReward, MaxExperienceReward + 1);
         questParams.moneyReward = Random.Range(MinMoneyReward, MaxMoneyReward + 1);
+        
         questParams.itemRewards = ItemRewards;
 
         if (NextQuest != null)
@@ -48,9 +50,13 @@ public class PregenQuestSO : ScriptableObject
             switch (pregenGoal.goalType)
             {
                 case CompactedGoal.GoalType.CollectItemsGoal:
+                    int count = Random.Range(pregenGoal.minRequiredAmount, pregenGoal.maxRequiredAmount);
+                    
                     newGoal = new CollectItemsGoal(pregenGoal.goalState, pregenGoal.description, 
-                        pregenGoal.currentAmount, Random.Range(pregenGoal.minRequiredAmount, pregenGoal.maxRequiredAmount), 
-                        pregenGoal.RequiredItemName);
+                        pregenGoal.currentAmount, count, pregenGoal.RequiredItemName);
+                    
+                    if (pregenGoal.AdditiveMoneyReward)
+                        questParams.moneyReward += ItemDatabase.GetItem(pregenGoal.RequiredItemName).Price * count;
                     
                     break;
 
@@ -92,7 +98,7 @@ public class PregenQuestSO : ScriptableObject
         public int minRequiredAmount;
         public int maxRequiredAmount;
         //Опциональные поля
-
+        public bool AdditiveMoneyReward;
         public int RequiredIDofNPC;
         public string RequiredLine;
         public string FailingLine;

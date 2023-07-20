@@ -95,6 +95,9 @@ class EditorPregenQuest : Editor
                         EditorGUILayout.BeginHorizontal();
                         goal.RequiredItemName = EditorGUILayout.TextField("Required item name", goal.RequiredItemName);
                         EditorGUILayout.EndHorizontal();
+                        EditorGUILayout.BeginHorizontal();
+                        goal.AdditiveMoneyReward = GUILayout.Toggle(goal.AdditiveMoneyReward, "Additive money reward");
+                        EditorGUILayout.EndHorizontal();
                         break;
                     case PregenQuestSO.CompactedGoal.GoalType.TalkToNPCGoal:
                         GUILayout.Space(10);

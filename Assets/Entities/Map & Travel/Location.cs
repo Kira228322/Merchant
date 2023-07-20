@@ -105,7 +105,31 @@ public class Location : MonoBehaviour
             }
             
         }
-            
+    }
+
+    public void DeleteItemsFromTraders(Item itemToDelete)
+    {
+        foreach (var trader in NpcTraders)
+        {
+            trader.Goods.RemoveAll(item => item.Good.Name == itemToDelete.Name);
+            trader.AdditiveGoods.RemoveAll(item => item.Good.Name == itemToDelete.Name);
+        }
+        CountAllItemsOnScene();
+        _region.CountAllItemsInRegion();
+    }
+
+    public void MultiplyItemsInTraders(Item itemToMultiply, float coef)
+    {
+        var targetGoods = NpcTraders
+            .SelectMany(trader => trader.Goods.Where(item => item.Good.Name == itemToMultiply.Name)).ToList();
+
+        foreach (var traderGood in targetGoods)
+        {
+            traderGood.CurrentCount = (int)(traderGood.CurrentCount * coef);
+        }
+        
+        CountAllItemsOnScene();
+        _region.CountAllItemsInRegion();
     }
 
     public void OnPlaceClick()
