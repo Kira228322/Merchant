@@ -11,6 +11,7 @@ public class GlobalEventHandler : MonoBehaviour
     [SerializeField] private List<MonoBehaviour> EventControllerGameObjects;
     [HideInInspector] public List<GlobalEvent_Base> ActiveGlobalEvents = new();
     private List<IEventController> _eventControllers = new();
+    public List<IEventController> EventControllers => _eventControllers;
     private void Awake()
     {
         if (Instance == null)

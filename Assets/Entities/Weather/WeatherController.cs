@@ -31,6 +31,18 @@ public class WeatherController : MonoBehaviour, IEventController<GlobalEvent_Wea
     public void StartWeather()
     {
         _rain.Play();
+        WeatherStarted?.Invoke();
+        _rain.transform.rotation = Quaternion.Euler(0,0, -Random.Range(10, 16));
+    }
+
+
+
+    public void PredictNextEvent()
+    {
+        DateOfNextEvent = LastEventDay + Random.Range(MinDelayToNextEvent, MaxDelayToNextEvent + 1);
+        HourOfNextEvent = Random.Range(1, 24); // на всякий случай от 1 до 24, а не от 0 до 24, тк как хз
+        // как там просиходит событие, когда меняется день. Тонкая штука. См метод CheckDayDelayToRainfall
+        _strengthOfWeather = (StrengthOfWeather)Random.Range(0, Enum.GetNames(typeof(StrengthOfWeather)).Length);
         switch (_strengthOfWeather)
         {
             case StrengthOfWeather.Light:
@@ -46,18 +58,6 @@ public class WeatherController : MonoBehaviour, IEventController<GlobalEvent_Wea
                 DurationOfEvent = Random.Range(3, 8);
                 break;
         }
-        WeatherStarted?.Invoke();
-        _rain.transform.rotation = Quaternion.Euler(0,0, -Random.Range(10, 16));
-    }
-
-
-
-    public void PredictNextEvent()
-    {
-        DateOfNextEvent = LastEventDay + Random.Range(MinDelayToNextEvent, MaxDelayToNextEvent + 1);
-        HourOfNextEvent = Random.Range(1, 24); // на всякий случай от 1 до 24, а не от 0 до 24, тк как хз
-        // как там просиходит событие, когда меняется день. Тонкая штука. См метод CheckDayDelayToRainfall
-        _strengthOfWeather = (StrengthOfWeather)Random.Range(0, Enum.GetNames(typeof(StrengthOfWeather)).Length);
     }
 
     private void SetRainParams(int rateOverTime, float speed, float maxSizeOfDrop)
