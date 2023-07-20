@@ -14,6 +14,7 @@ public class ItemInfo : MonoBehaviour
     [SerializeField] private Button _splitButton;
     [SerializeField] private Button _rotateButton;
     [SerializeField] private Button _eatButton;
+    [SerializeField] private Button _destroyButton;
     [SerializeField] private ItemInfoSplitSlider _splitSliderPanel;
 
     [SerializeField] private TMP_Text _itemName;
@@ -71,6 +72,12 @@ public class ItemInfo : MonoBehaviour
             _rotateButton.interactable = false;
         }
         else _rotateButton.interactable = true;
+
+        if (item.ItemData.IsQuestItem)
+        {
+            _destroyButton.interactable = false;
+        }
+        else _destroyButton.interactable = true;
 
         _quantityText.text = $"Количество: {item.CurrentItemsInAStack}";
         _weightText.text = $"Вес: {item.ItemData.Weight}";

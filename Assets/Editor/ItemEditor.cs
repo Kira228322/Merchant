@@ -18,7 +18,12 @@ public class ItemEditor : Editor
         base.OnInspectorGUI();
         
         EditorGUILayout.Space(5);
-        
+
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.LabelField("Quest Item", GUILayout.MaxWidth(80));
+        item.IsQuestItem = EditorGUILayout.Toggle(item.IsQuestItem);
+        EditorGUILayout.EndHorizontal();
+
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("Perishable", GUILayout.MaxWidth(80));
         item.IsPerishable = EditorGUILayout.Toggle(item.IsPerishable);

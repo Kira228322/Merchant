@@ -31,6 +31,7 @@ public class Item : ScriptableObject
     public int CellSizeHeight;
 
     [HideInInspector] public bool IsPerishable;
+    [HideInInspector] public bool IsQuestItem;
     
     [HideInInspector] public float DaysToHalfSpoil;
     [HideInInspector] public float DaysToSpoil; 
