@@ -29,8 +29,10 @@ public class EventWindow : MonoBehaviour
         EventInTravel travelEvent = Instantiate(eventInTravel.gameObject, _sceneContainer).GetComponent<EventInTravel>();
         
         
-        travelEvent.gameObject.transform.localScale = 
-            new Vector3(travelEvent.gameObject.transform.localScale.x,travelEvent.gameObject.transform.localScale.y/(1080f/Screen.height),1);
+        // travelEvent.gameObject.transform.localScale = 
+        //     new Vector3(travelEvent.gameObject.transform.localScale.x, travelEvent.gameObject.transform.localScale.y,1);
+        
+        // Debug.Log(Screen.currentResolution.width + " " + Screen.currentResolution.height);
         
         travelEvent.SetButtons();
 

@@ -14,6 +14,7 @@ public class TravelEventHandler : MonoBehaviour
 
     [SerializeField] private List<EventInTravel> _eventsInTravels = new ();
     [SerializeField] private EventInTravel _eventInTravelBandits;
+    [SerializeField] private EventInTravel _eventAdvertisement;
     [SerializeField] private BreakingWindow _breakingWindowPrefab;
     [SerializeField] private Animator _wagonAnimator;
     [SerializeField] private Animator _donkeyAnimator;
@@ -136,6 +137,11 @@ public class TravelEventHandler : MonoBehaviour
         _previousPlayerParent = Player.Instance.transform.parent;
         Player.Instance.transform.parent = _cameraTransform;
         Player.Instance.transform.position = Vector3.zero;
+
+        if (MapManager.Advertisement == null)
+            MapManager.Advertisement = true;
+        else if (MapManager.Advertisement == false)
+            MapManager.Advertisement = null;
         
         if (EventFire(MapManager.CurrentRoad.Danger, false, EventMultiplierType.Luck))
             _banditEvent = true;
@@ -178,6 +184,12 @@ public class TravelEventHandler : MonoBehaviour
 
     private EventInTravel ChooseEvent()
     {
+        if (MapManager.Advertisement == true)
+        {
+            MapManager.Advertisement = false;
+            return _eventAdvertisement;
+        }
+
         List<int> index = new();
         int max = 0;
         List<int> randomWeights = new();

@@ -29,9 +29,9 @@ public class EventPost : EventInTravel
             }
             ButtonsLabel.Add("Отдать всю контрабанду");
             if (Player.Instance.Money >= avgPriceOfContraband)
-                ButtonsLabel.Add($"Предложить {avgPriceOfContraband} золота в качестве взятки");
+                ButtonsLabel.Add($"Предложить {avgPriceOfContraband} золота в качестве взятки (50% шанс успеха)");
             if (Player.Instance.Money >= avgPriceOfContraband * 1.5)
-                ButtonsLabel.Add($"Предложить {avgPriceOfContraband * 1.5} золота в качестве взятки");
+                ButtonsLabel.Add($"Предложить {avgPriceOfContraband * 1.5} золота в качестве взятки (80% шанс успеха)");
         }
         else
         {

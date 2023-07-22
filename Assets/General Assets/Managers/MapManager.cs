@@ -12,6 +12,7 @@ public static class MapManager
     public static Location CurrentLocation;
     public static Road CurrentRoad;
     public static bool IsActiveSceneTravel;
+    public static bool? Advertisement = true; // троичная логика на месте
     
     private static string _travelingScene;
     private static SceneTransiter _loadScreen;
