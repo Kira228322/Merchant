@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
         
         MapManager.Init(_travelingScene, _sceneTransiter, _roadWindow, _villageWindow, _canvas, _playerIcone, _startLocation);
         GameTime.Init(_timeflow);
+        GlobalEventHandler.Instance.Initialize();
 
         _regionHandler.InitializeAll(); //Регионы подсосут из текстовика и создадут словари
 

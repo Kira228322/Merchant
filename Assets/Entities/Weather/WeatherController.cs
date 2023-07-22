@@ -23,11 +23,6 @@ public class WeatherController : MonoBehaviour, IEventController<GlobalEvent_Wea
     public event UnityAction WeatherStarted;
     public event UnityAction WeatherFinished;
 
-    void Start()
-    {
-        PredictNextEvent();
-    }
-
     public void StartWeather()
     {
         _rain.Play();

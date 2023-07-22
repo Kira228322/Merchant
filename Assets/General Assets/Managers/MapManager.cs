@@ -10,6 +10,7 @@ public static class MapManager
     public static Canvas Canvas;
 
     public static Location CurrentLocation;
+    public static Region CurrentRegion => CurrentLocation.Region;
     public static Road CurrentRoad;
     public static bool IsActiveSceneTravel;
     
@@ -76,6 +77,10 @@ public static class MapManager
             Debug.LogError("Location with this sceneName not found");
             return null;
         }
+    }
+    public static Location GetRandomLocation(Region region)
+    {
+        return region.Locations[Random.Range(0, region.Locations.Count)];
     }
 
     
