@@ -118,10 +118,10 @@ public class Location : MonoBehaviour
         _region.CountAllItemsInRegion();
     }
 
-    public void MultiplyItemsInTraders(Item itemToMultiply, float coef)
+    public void MultiplyItemsInTraders(string itemToMultiplyName, float coef)
     {
         var targetGoods = NpcTraders
-            .SelectMany(trader => trader.Goods.Where(item => item.Good.Name == itemToMultiply.Name)).ToList();
+            .SelectMany(trader => trader.Goods.Where(item => item.Good.Name == itemToMultiplyName)).ToList();
 
         foreach (var traderGood in targetGoods)
         {

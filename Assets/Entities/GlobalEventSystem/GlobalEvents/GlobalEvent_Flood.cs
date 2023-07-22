@@ -10,7 +10,7 @@ public class GlobalEvent_Flood : GlobalEvent_Base
 
     public override string Description => $"В {Location.VillageName} произошло наводнение. Ожидается ухудшение урожая пшеницы.";
 
-    public Location Location;
+    [NonSerialized] public Location Location;
     public string ItemToDeleteName => "Крутецкий кактус"; //TODO: пока пшеницы нет, удаляю Крутецкий кактус.
     public override void Execute()
     {
