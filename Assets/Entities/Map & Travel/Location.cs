@@ -107,21 +107,21 @@ public class Location : MonoBehaviour
         }
     }
 
-    public void DeleteItemsFromTraders(Item itemToDelete)
+    public void DeleteItemsFromTraders(string itemToDeleteName)
     {
         foreach (var trader in NpcTraders)
         {
-            trader.Goods.RemoveAll(item => item.Good.Name == itemToDelete.Name);
-            trader.AdditiveGoods.RemoveAll(item => item.Good.Name == itemToDelete.Name);
+            trader.Goods.RemoveAll(item => item.Good.Name == itemToDeleteName);
+            trader.AdditiveGoods.RemoveAll(item => item.Good.Name == itemToDeleteName);
         }
         CountAllItemsOnScene();
         _region.CountAllItemsInRegion();
     }
 
-    public void MultiplyItemsInTraders(Item itemToMultiply, float coef)
+    public void MultiplyItemsInTraders(string itemToMultiplyName, float coef)
     {
         var targetGoods = NpcTraders
-            .SelectMany(trader => trader.Goods.Where(item => item.Good.Name == itemToMultiply.Name)).ToList();
+            .SelectMany(trader => trader.Goods.Where(item => item.Good.Name == itemToMultiplyName)).ToList();
 
         foreach (var traderGood in targetGoods)
         {

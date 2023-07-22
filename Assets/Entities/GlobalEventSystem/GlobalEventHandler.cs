@@ -19,11 +19,12 @@ public class GlobalEventHandler : MonoBehaviour
         else if (Instance != this)
             Destroy(gameObject);
     }
-    private void Start()
+    public void Initialize()
     {
         foreach (MonoBehaviour eventControllerObject in EventControllerGameObjects)
         {
             IEventController controller = (IEventController)eventControllerObject;
+            controller.PredictNextEvent();
             _eventControllers.Add(controller);
         }
     }

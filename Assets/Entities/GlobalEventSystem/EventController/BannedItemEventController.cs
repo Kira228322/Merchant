@@ -17,11 +17,6 @@ public class BannedItemEventController : MonoBehaviour, IEventController<GlobalE
     public int DateOfNextEvent { get; set; }
     public int HourOfNextEvent { get; set; }
 
-    private void Start()
-    {
-        PredictNextEvent();
-    }
-
     public void PrepareEvent()
     {
         AddEvent();
