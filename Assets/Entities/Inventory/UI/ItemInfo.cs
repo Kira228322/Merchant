@@ -47,7 +47,8 @@ public class ItemInfo : MonoBehaviour
             { UsableItem.UsableType.Bottle , UseBottle},
             { UsableItem.UsableType.Potion, UsePotion},
             { UsableItem.UsableType.Teleport , UseTeleport},
-            { UsableItem.UsableType.Recipe, UseRecipe}
+            { UsableItem.UsableType.Recipe, UseRecipe},
+            { UsableItem.UsableType.Note, UseNote }
         };
     }
 
@@ -175,7 +176,7 @@ public class ItemInfo : MonoBehaviour
 
     private void UseTeleport()
     {
-        //логика телепорта здесь
+        //TODO логика телепорта здесь
         RemoveOneItemAfterUse();
     }
 
@@ -192,6 +193,12 @@ public class ItemInfo : MonoBehaviour
             Player.Instance.Recipes.Add(craftRecipe);
         }
         
+        RemoveOneItemAfterUse();
+    }
+
+    private void UseNote()
+    {
+        Diary.Instance.AddEntry(_currentUsableItem.NoteText);
         RemoveOneItemAfterUse();
     }
 

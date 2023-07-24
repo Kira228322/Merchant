@@ -40,7 +40,7 @@ class UsableItemEditor : Editor
             case UsableItem.UsableType.Recipe:
                 
                 if (GUILayout.Button("Добавить рецепт крафта в список"))
-                    item.Recipes.Add(new CraftingRecipe());
+                    item.Recipes.Add(CreateInstance<CraftingRecipe>());
                 
                 
                 if (item.Recipes.Count > 0)
@@ -60,6 +60,14 @@ class UsableItemEditor : Editor
                 }
                 
                 
+                break;
+            case UsableItem.UsableType.Note:
+                EditorGUILayout.BeginHorizontal();
+
+                GUILayout.Label("Text to add", GUILayout.MaxWidth(80));
+                EditorStyles.textField.wordWrap = true;
+                item.NoteText = EditorGUILayout.TextArea(item.NoteText, GUILayout.Height(80));
+                EditorGUILayout.EndHorizontal();
                 break;
         }
     }
