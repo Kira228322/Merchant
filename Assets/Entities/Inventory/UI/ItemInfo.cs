@@ -198,17 +198,17 @@ public class ItemInfo : MonoBehaviour
 
     private void UseNote()
     {
-        Diary.Instance.AddEntry(_currentUsableItem.NoteText);
+        Diary.Instance.AddEntry(_currentUsableItem.NoteText, false);
         RemoveOneItemAfterUse();
     }
 
     private void RemoveOneItemAfterUse()
     {
-        _currentItemSelected.CurrentItemsInAStack--;
+        _lastItemGridSelected.RemoveItemsFromAStack(_currentItemSelected, 1);
         _quantityText.text = "Количество: " + _currentItemSelected.CurrentItemsInAStack.ToString();
+        
         if (_currentItemSelected.CurrentItemsInAStack == 0)
         {
-            _lastItemGridSelected.DestroyItem(_currentItemSelected);
             Destroy(gameObject);
         }
     }

@@ -6,10 +6,12 @@ using UnityEngine;
 [Serializable]
 public class DiarySaveData
 {
-    public List<string> Entries;
+    public List<string> EntriesNews;
+    public List<string> EntriesHints;
 
-    public DiarySaveData(List<string> entries)
+    public DiarySaveData(List<string> news, List<string> hints)
     {
-        Entries = new(entries);
+        EntriesNews = new(news);
+        EntriesHints = new(hints);
     }
 }

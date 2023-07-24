@@ -25,6 +25,7 @@ public class GoodsSellPanel : MonoBehaviour
 
     public void Init(NpcTrader trader, InventoryItem itemToSell, ItemGrid playerInventoryItemGrid)
     {
+        
         _playerInventoryItemGrid = playerInventoryItemGrid;
         _trader = trader;
         _item = itemToSell;
@@ -56,6 +57,11 @@ public class GoodsSellPanel : MonoBehaviour
         {
             _sellButton.interactable = false;
         }
+
+        NpcTraderData traderData = (NpcTraderData)_trader.NpcData;
+        if (!traderData.IsBlackMarket && BannedItemsHandler.Instance.IsItemBanned(_item.ItemData))
+            _sellButton.interactable = false;
+        
         _currentCount = _item.CurrentItemsInAStack;
         _countText.text = _currentCount.ToString();
     }
@@ -119,6 +125,9 @@ public class GoodsSellPanel : MonoBehaviour
             }
         }
 
-        return Convert.ToInt32(Math.Round(item.Price * locationCoef * regionCoef * itemTypeCoef * traderTypeCoef));
+        int bannedItem = 1;
+        if (BannedItemsHandler.Instance.IsItemBanned(item))
+            bannedItem = 2;
+        return Convert.ToInt32(Math.Round(item.Price * locationCoef * regionCoef * itemTypeCoef * traderTypeCoef * bannedItem));
     }
 }

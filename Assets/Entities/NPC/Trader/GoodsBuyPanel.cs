@@ -120,6 +120,9 @@ public class GoodsBuyPanel : MonoBehaviour
             MapManager.CurrentLocation.Region.ItemEconomyParams[item.Good.Name][1],
             MapManager.CurrentLocation.Region.ItemEconomyParams[item.Good.Name][2]);
 
-        return Convert.ToInt32(Math.Round(item.CurrentPrice * locationCoef * regionCoef));
+        int bannedItem = 1;
+        if (BannedItemsHandler.Instance.IsItemBanned(item.Good))
+            bannedItem = 2;
+        return Convert.ToInt32(Math.Round(item.CurrentPrice * locationCoef * regionCoef * bannedItem));
     }
 }

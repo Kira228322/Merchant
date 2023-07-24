@@ -7,6 +7,8 @@ using Random = UnityEngine.Random;
 
 public class RestockHandler : MonoBehaviour
 {
+    // TODO запрещенные предметы правильный ресток.
+    
     private int _lastRestockDay;
     private Location[] _locations;
     
@@ -112,6 +114,7 @@ public class RestockHandler : MonoBehaviour
         
         foreach (var item in ItemDatabase.Instance.Items.ItemList)
         {
+            
             // считаем сколько должно прирасти таких предметов на локации
             // budget (последний параметр метода) основывается на населении локации и на интересе в этом типе предмета локацией (CoefsForItemTypes)
             // чем интерес в этом предмете больше значит тем он редкостнее и его прирастает меньше.

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BannedItemsHandler : MonoBehaviour, ISaveable<BannedItemsSaveData>
@@ -15,6 +16,11 @@ public class BannedItemsHandler : MonoBehaviour, ISaveable<BannedItemsSaveData>
             Destroy(gameObject);
 
         BannedItems = new();
+    }
+
+    public bool IsItemBanned(Item item)
+    {
+        return BannedItems.Contains(item);
     }
     public void BanItem(Item item)
     {

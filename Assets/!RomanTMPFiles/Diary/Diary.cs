@@ -11,10 +11,12 @@ public class Diary : MonoBehaviour, ISaveable<DiarySaveData>
 
     public static Diary Instance;
 
-    [SerializeField] private VerticalLayoutGroup _scrollViewContent;
+    [SerializeField] private VerticalLayoutGroup _scrollViewContentHints;
+    [SerializeField] private VerticalLayoutGroup _scrollViewContentNews;
     [SerializeField] private TMP_Text _diaryEntryPrefab;
 
-    private List<TMP_Text> _entries = new();
+    private List<TMP_Text> _entriesNews = new();
+    private List<TMP_Text> _entriesHints = new();
 
     private void Awake()
     {
@@ -23,42 +25,65 @@ public class Diary : MonoBehaviour, ISaveable<DiarySaveData>
     }
 
 
-    public void AddEntry(string text)
+    public void AddEntry(string text, bool news)
     {
         string dateTime = $"<i>Δενό {GameTime.CurrentDay}, {(GameTime.Hours < 10? "0": "")}{GameTime.Hours}:{(GameTime.Minutes < 10 ? "0" : "")}{GameTime.Minutes}: </i>";
 
-        TMP_Text newEntry = Instantiate(_diaryEntryPrefab, _scrollViewContent.transform);
-        newEntry.text = dateTime + text;
-        _entries.Add(newEntry);
-        newEntry.gameObject.GetComponentInChildren<Button>().onClick.AddListener(() => RemoveEntry(newEntry));
-
+        TMP_Text newEntry;
+        if (news)
+        {
+            newEntry = Instantiate(_diaryEntryPrefab, _scrollViewContentNews.transform);
+            newEntry.text = dateTime + text;
+            _entriesNews.Add(newEntry);
+            newEntry.gameObject.GetComponentInChildren<Button>().onClick.AddListener(() => RemoveEntry(_entriesNews, newEntry));
+        }
+        else
+        {
+            newEntry = Instantiate(_diaryEntryPrefab, _scrollViewContentHints.transform);
+            newEntry.text = dateTime + text;
+            _entriesHints.Add(newEntry);
+            newEntry.gameObject.GetComponentInChildren<Button>().onClick.AddListener(() => RemoveEntry(_entriesHints, newEntry));
+        }
     }
-    public void RemoveEntry(TMP_Text entry)
+    public void RemoveEntry(List<TMP_Text> list, TMP_Text entry)
     {
-        _entries.Remove(entry);
+        list.Remove(entry);
         Destroy(entry.gameObject);
     }
-    private void CreateSavedEntry(string text)
+    private void CreateSavedEntry(string text, bool news)
     {
-        TMP_Text newEntry = Instantiate(_diaryEntryPrefab, _scrollViewContent.transform);
+        TMP_Text newEntry;
+        if (news)
+            newEntry = Instantiate(_diaryEntryPrefab, _scrollViewContentNews.transform);
+        else 
+            newEntry = Instantiate(_diaryEntryPrefab, _scrollViewContentHints.transform);
         newEntry.text = text;
     }
 
     public DiarySaveData SaveData()
     {
-        List<string> savedEntries = new();
-        foreach (var entry in _entries)
+        List<string> news = new();
+        List<string> hints = new();
+        foreach (var entry in _entriesNews)
         {
-            savedEntries.Add(entry.text);
+            news.Add(entry.text);
         }
-        return new(savedEntries);
+        foreach (var entry in _entriesHints)
+        {
+            hints.Add(entry.text);
+        }
+        return new(news, hints);
     }
 
     public void LoadData(DiarySaveData data)
     {
-        foreach (string entry in data.Entries)
+        foreach (string entry in data.EntriesNews)
         {
-            CreateSavedEntry(entry);
+            CreateSavedEntry(entry, true);
+        }
+        foreach (string entry in data.EntriesHints)
+        {
+            CreateSavedEntry(entry, false);
         }
     }
 }

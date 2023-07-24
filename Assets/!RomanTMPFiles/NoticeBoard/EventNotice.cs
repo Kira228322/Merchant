@@ -15,7 +15,7 @@ public class EventNotice : Notice
     public override void OnNoticeTake()
     {
         string diaryEntry = NoticeName + ": " + NoticeDescription;
-        Diary.Instance.AddEntry(diaryEntry);
+        Diary.Instance.AddEntry(diaryEntry, true);
         Noticeboard.RemoveNotice(SpawnPointIndex);
     }
 }
