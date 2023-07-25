@@ -7,8 +7,6 @@ using Random = UnityEngine.Random;
 
 public class RestockHandler : MonoBehaviour
 {
-    // TODO запрещенные предметы правильный ресток.
-    
     private int _lastRestockDay;
     private Location[] _locations;
     
@@ -46,8 +44,6 @@ public class RestockHandler : MonoBehaviour
     {
         foreach (var trader in traders)
         {
-            if (trader.AdditiveGoods.Count > 9)
-                trader.AdditiveGoods.RemoveAt(Random.Range(8, trader.AdditiveGoods.Count));
             if (trader.AdditiveGoods.Count > 7)
                 trader.AdditiveGoods.RemoveAt(Random.Range(6, trader.AdditiveGoods.Count));
             if (trader.AdditiveGoods.Count > 4)
@@ -64,7 +60,7 @@ public class RestockHandler : MonoBehaviour
                 Item newItem;
                 bool reallyNew;
 
-                if (Random.Range(0, 4) == 0)
+                if (Random.Range(0, 3) == 0)
                     isMainGood = false; // не мейн тип шмотки торговца 
                 else
                     isMainGood = true; // мейн тип шмотки торговца
@@ -77,7 +73,10 @@ public class RestockHandler : MonoBehaviour
                     if ((traderBuyCoefficient.Coefficient == 1) == isMainGood)
                     {
                         newItem = ItemDatabase.GetRandomItemOfThisType(traderBuyCoefficient.itemType);
-
+                        
+                        if (BannedItemsHandler.Instance.IsItemBanned(newItem))
+                            continue;
+                        
                         foreach (var goods in trader.Goods)
                         {
                             if (goods.Good.Name == newItem.Name)
@@ -127,6 +126,35 @@ public class RestockHandler : MonoBehaviour
                 continue;
 
             activeTraders.Clear();
+            
+            // забаненные предметы будут прибавляться мало и только у одного торговца разом (типо поставка)(и экономия ресурсов)
+            // убавляться не будут, так как тяжело придумать ситуацию, когда запрещенный предмет будет в избытке
+            // (ведь он пропадает у всех торговцев, когда появляется ивент) 
+            if (BannedItemsHandler.Instance.IsItemBanned(item))
+            {
+                foreach (var trader in traders)
+                    if (trader.IsBlackMarket)
+                        activeTraders.Add(trader);
+                
+                if (activeTraders.Count == 0)
+                    continue;
+
+                if (gainCount > 0)
+                {
+                    gainCount = (gainCount + 1) / 2;
+                    NpcTraderData targetTrader = activeTraders[Random.Range(0, activeTraders.Count)];
+                    NpcTrader.TraderGood traderGood =
+                        targetTrader.Goods.FirstOrDefault(good => good.Good.Name == item.Name);
+                    if (traderGood != null)
+                        traderGood.CurrentCount += gainCount;
+                    else
+                        targetTrader.AdditiveGoods.Add(new NpcTrader.TraderGood(item.Name, 
+                            gainCount, gainCount, item.Price + Random.Range(1, item.Price/10 + 2)));
+                    continue;
+                } 
+            }
+
+            
             foreach (var trader in traders) // из всех трейдеров выбирамем тех, кто торгует таким товаром
             foreach (var traderGood in trader.Goods)
                 if (item.Name == traderGood.Good.Name)
