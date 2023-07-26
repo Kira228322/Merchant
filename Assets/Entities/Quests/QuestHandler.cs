@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using Unity.Collections;
+using UnityEngine.Events;
 
 public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
 {
@@ -13,9 +14,17 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
 
     public static QuestLog QuestLog => Instance._questLog;
 
+    
     public List<Quest> Quests = new(); // Содержит все квесты, в том числе проваленные или выполненные
+    public List<Quest> ActiveQuests => Quests.Where(quest => quest.CurrentState == Quest.State.Active).ToList();
 
-
+    public static event UnityAction QuestChangedState; 
+    public static bool IsQuestActiveForThisNPC(int ID)
+    {
+        // Можно оптимизировать.
+        return Instance.ActiveQuests.Any(quest => quest.Goals.Any(goal => goal is TalkToNPCGoal talkToNpcGoal && talkToNpcGoal.RequiredIDOfNPC == ID));
+    }
+    
     private void Awake()
     {
         if (Instance == null)
@@ -27,7 +36,17 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
         Quest quest = new(questParams);
         Instance.Quests.Add(quest);
         QuestLog.AddQuest(quest);
+        quest.QuestChangedState += Instance.OnQuestChangedState;
+        QuestChangedState?.Invoke();
     }
+
+    private void OnQuestChangedState(Quest quest)
+    {
+        QuestChangedState?.Invoke();
+        if (quest.CurrentState == Quest.State.Completed || quest.CurrentState == Quest.State.Failed)
+            quest.QuestChangedState -= Instance.OnQuestChangedState;
+    }
+    
     public static Quest GetQuestBySummary(string summary)
     {
         return Instance.Quests.FirstOrDefault(quest => quest.QuestSummary == summary);
