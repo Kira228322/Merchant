@@ -27,16 +27,17 @@ public class PregenQuestSO : ScriptableObject
     public QuestParams GenerateQuestParams()
     {
 
-        QuestParams questParams = new();
+        QuestParams questParams = new()
+        {
+            currentState = StartingState,
+            questName = QuestName,
+            questSummary = QuestSummary,
+            description = Description,
+            experienceReward = Random.Range(MinExperienceReward, MaxExperienceReward + 1),
+            moneyReward = Random.Range(MinMoneyReward, MaxMoneyReward + 1),
 
-        questParams.currentState = StartingState;
-        questParams.questName = QuestName;
-        questParams.questSummary = QuestSummary;
-        questParams.description = Description;
-        questParams.experienceReward = Random.Range(MinExperienceReward, MaxExperienceReward + 1);
-        questParams.moneyReward = Random.Range(MinMoneyReward, MaxMoneyReward + 1);
-        
-        questParams.itemRewards = ItemRewards;
+            itemRewards = ItemRewards
+        };
 
         if (NextQuest != null)
         {
@@ -47,16 +48,17 @@ public class PregenQuestSO : ScriptableObject
         foreach (CompactedGoal pregenGoal in goals)
         {
             Goal newGoal = new();
+            int additiveRewardItemCount;
             switch (pregenGoal.goalType)
             {
                 case CompactedGoal.GoalType.CollectItemsGoal:
-                    int count = Random.Range(pregenGoal.minRequiredAmount, pregenGoal.maxRequiredAmount);
+                    additiveRewardItemCount = Random.Range(pregenGoal.minRequiredAmount, pregenGoal.maxRequiredAmount);
                     
                     newGoal = new CollectItemsGoal(pregenGoal.goalState, pregenGoal.description, 
-                        pregenGoal.currentAmount, count, pregenGoal.RequiredItemName);
+                        pregenGoal.currentAmount, additiveRewardItemCount, pregenGoal.RequiredItemName);
                     
                     if (pregenGoal.AdditiveMoneyReward)
-                        questParams.moneyReward += ItemDatabase.GetItem(pregenGoal.RequiredItemName).Price * count;
+                        questParams.moneyReward += ItemDatabase.GetItem(pregenGoal.RequiredItemName).Price * additiveRewardItemCount;
                     
                     break;
 
@@ -75,6 +77,19 @@ public class PregenQuestSO : ScriptableObject
                     newGoal = new WaitingGoal(pregenGoal.goalState, pregenGoal.description,
                         pregenGoal.currentAmount, Random.Range(pregenGoal.minRequiredAmount, pregenGoal.maxRequiredAmount));
                     break;
+
+                case CompactedGoal.GoalType.GiveItemsGoal:
+
+                    additiveRewardItemCount = Random.Range(pregenGoal.minRequiredAmount, pregenGoal.maxRequiredAmount);
+
+                    newGoal = new GiveItemsGoal(pregenGoal.goalState, pregenGoal.description,
+                        pregenGoal.currentAmount, additiveRewardItemCount,
+                        pregenGoal.RequiredItemName, pregenGoal.RequiredIDofNPC, pregenGoal.RequiredLine);
+
+                    if (pregenGoal.AdditiveMoneyReward)
+                        questParams.moneyReward += ItemDatabase.GetItem(pregenGoal.RequiredItemName).Price * additiveRewardItemCount;
+
+                    break;
                 default:
                     Debug.LogError("Нет такого типа Goal");
                     break;
@@ -87,7 +102,7 @@ public class PregenQuestSO : ScriptableObject
     [Serializable]
     public class CompactedGoal
     {
-        public enum GoalType { CollectItemsGoal, TalkToNPCGoal, WaitingGoal, TimedGoal}
+        public enum GoalType { CollectItemsGoal, TalkToNPCGoal, WaitingGoal, TimedGoal, GiveItemsGoal}
 
         public GoalType goalType;
         public Goal.State goalState;

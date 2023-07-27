@@ -89,16 +89,13 @@ public class PlayersInventory : MonoBehaviour, ISaveable<PlayersInventorySaveDat
     }
     public List<InventoryItem> GetInventoryItemsOfThisData(Item itemData)
     {
-        List<InventoryItem> result = new();
-        foreach (InventoryItem inventoryItem in ItemList)
-        {
-            if (inventoryItem.ItemData == itemData)
-            {
-                result.Add(inventoryItem);
-            }
-        }
-        return result;
-        //return ItemList.Where(item => item.ItemData == itemData).ToList();
+        return ItemList.Where(item => item.ItemData == itemData).ToList();
+    }
+    public bool HasEnoughItemsOfThisItemData(Item itemData, int amount)
+    {
+        if (GetCount(itemData) >= amount)
+            return true;
+        return false;
     }
     public void RemoveItemsOfThisItemData(Item itemType, int amount)
     {

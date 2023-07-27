@@ -137,7 +137,10 @@ public class ItemInfo : MonoBehaviour
     }
     public void OnSplitButtonPressed()
     {
-        _splitSliderPanel.Show(_currentItemSelected);
+        if (_currentItemSelected.CurrentItemsInAStack == 2)
+            Split(1);
+        else
+            _splitSliderPanel.Show(_currentItemSelected);
     }
 
     public void OnExitButtonPressed()

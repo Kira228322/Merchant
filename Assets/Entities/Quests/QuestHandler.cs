@@ -22,7 +22,9 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
     public static bool IsQuestActiveForThisNPC(int ID)
     {
         // Можно оптимизировать.
-        return Instance.ActiveQuests.Any(quest => quest.Goals.Any(goal => goal is TalkToNPCGoal talkToNpcGoal && talkToNpcGoal.RequiredIDOfNPC == ID));
+        return Instance.ActiveQuests.Any(quest => quest.Goals.Any(goal => 
+        goal is TalkToNPCGoal talkToNpcGoal && talkToNpcGoal.RequiredIDOfNPC == ID 
+        || goal is GiveItemsGoal giveItemsGoal && giveItemsGoal.RequiredIDOfNPC == ID));
     }
     
     private void Awake()

@@ -71,7 +71,29 @@ public class DialogueManager : MonoBehaviour
         });
         _currentStory.BindExternalFunction("debug_log", (string param) =>
         {
-            Debug.Log(param);
+            print(param);
+        });
+        _currentStory.BindExternalFunction("check_if_has_items", (string itemName, string amount) =>
+        {
+            return Player.Instance.Inventory.HasEnoughItemsOfThisItemData
+            (ItemDatabase.GetItem(itemName), int.Parse(amount));
+        });
+        _currentStory.BindExternalFunction("get_required_amount_for_quest", (string questSummary) =>
+        {
+            Quest quest = QuestHandler.GetQuestBySummary(questSummary);
+            if (quest == null)
+                return "null";
+            foreach (Goal goal in quest.Goals)
+            {
+                if (goal is GiveItemsGoal giveItemsGoal)
+                {
+                    if (giveItemsGoal.RequiredIDOfNPC == _currentNPC.NpcData.ID)
+                    {
+                        return giveItemsGoal.RequiredAmount.ToString();
+                    }
+                }
+            }
+            return "null";
         });
 
     }
@@ -100,7 +122,7 @@ public class DialogueManager : MonoBehaviour
         _choicesText = new TMP_Text[_choices.Length];
         for (int i = 0; i < _choices.Length; i++)
         {
-            _choicesText[i] = _choices[i].GetComponentInChildren<TMP_Text>();
+            _choicesText[i] = _choices[i].GetComponentInChildren<TMP_Text>(true);
             _choices[i].SetActive(false);
         }
 

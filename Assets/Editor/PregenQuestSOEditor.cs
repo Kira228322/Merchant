@@ -113,6 +113,26 @@ class EditorPregenQuest : Editor
                         goal.FailingLine = EditorGUILayout.TextField("Failing line", goal.FailingLine);
                         EditorGUILayout.EndHorizontal();
                         break;
+                    case PregenQuestSO.CompactedGoal.GoalType.GiveItemsGoal:
+                        GUILayout.Space(10);
+
+                        EditorGUILayout.BeginHorizontal();
+                        goal.RequiredIDofNPC = EditorGUILayout.IntField("Required ID of NPC", goal.RequiredIDofNPC);
+                        EditorGUILayout.EndHorizontal();
+
+                        EditorGUILayout.BeginHorizontal();
+                        goal.RequiredItemName = EditorGUILayout.TextField("Required item name", goal.RequiredItemName);
+                        EditorGUILayout.EndHorizontal();
+
+                        EditorGUILayout.BeginHorizontal();
+                        goal.RequiredLine = EditorGUILayout.TextField("Required line", goal.RequiredLine);
+                        EditorGUILayout.EndHorizontal();
+
+                        EditorGUILayout.BeginHorizontal();
+                        goal.AdditiveMoneyReward = GUILayout.Toggle(goal.AdditiveMoneyReward, "Additive money reward");
+                        EditorGUILayout.EndHorizontal();
+
+                        break;
                 }
 
                 EditorGUILayout.EndVertical();
