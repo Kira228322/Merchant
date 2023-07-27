@@ -27,9 +27,8 @@ public class Npc : MonoBehaviour
     {
         if (QuestHandler.IsQuestActiveForThisNPC(NpcData.ID))
         {
-            BoxCollider2D collider = gameObject.GetComponent<BoxCollider2D>();
             ExclamationMark = Instantiate(_exclamationMarkPrefab, gameObject.transform);
-            ExclamationMark.transform.position = collider.bounds.center + new Vector3(0,collider.bounds.size.y);
+            ExclamationMark.GetComponent<ExclamationMark>().Init(gameObject.GetComponent<BoxCollider2D>());
         }
         else if (ExclamationMark != null)
         {
