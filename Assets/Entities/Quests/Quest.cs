@@ -25,6 +25,8 @@ public class Quest
     public string QuestSummary;
     public string Description;
 
+    public NpcData QuestGiver;
+
     public int ExperienceReward;
     public int MoneyReward;
     public List<ItemReward> ItemRewards;
@@ -45,6 +47,9 @@ public class Quest
         QuestName = questParams.questName;
         QuestSummary = questParams.questSummary;
         Description = questParams.description;
+
+        if (questParams.questGiverID != 0)
+            QuestGiver = NpcDatabase.GetNPCData(questParams.questGiverID);
 
         ExperienceReward = questParams.experienceReward;
         MoneyReward = questParams.moneyReward;

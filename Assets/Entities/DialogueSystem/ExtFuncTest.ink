@@ -4,10 +4,8 @@ INCLUDE MainInkLibrary.ink
 
 === greeting ===
 Диалог пошел
-~ temp currentAffinity = get_affinity_here()
 ~ temp questState = get_quest_state("external_test")
 ~ temp isTaken = check_if_quest_has_been_taken("external_test")
-~ temp currentAffinityByName = get_affinity_by_name("Dialogue Test")
 ~set_color("yellow")
 {set_color("red")}   //void функции можно вызывать и с '~function' и с '{function}'
 
@@ -34,9 +32,6 @@ INCLUDE MainInkLibrary.ink
         Похоже ты зафейлил квест, гандон
 }
 +[Affinity + 10]
-
-~ add_affinity_here(5)
-~ add_affinity("Dialogue Test", 5)
 -> greeting
 
 

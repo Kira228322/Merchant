@@ -26,7 +26,8 @@ public class NoticeboardUI : MonoBehaviour
             switch (notice)
             {
                 case Noticeboard.CompactedQuestNotice questNotice:
-                    AddQuestNotice(i, questNotice.name, questNotice.description, questNotice.questParams);
+                    QuestNotice newQuestNotice = AddQuestNotice(i, questNotice.name, questNotice.description, questNotice.questParams);
+                    newQuestNotice.QuestGiverID = questNotice.questGiverID; 
                     break;
                 case Noticeboard.CompactedEventNotice eventNotice:
                     AddEventNotice(i, eventNotice.name, eventNotice.description, eventNotice.globalEvent);

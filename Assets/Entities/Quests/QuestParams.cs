@@ -12,6 +12,8 @@ public class QuestParams
     public string questSummary;
     public string description;
 
+    public int questGiverID;
+
     public int experienceReward;
     public int moneyReward;
     public List<ItemReward> itemRewards;

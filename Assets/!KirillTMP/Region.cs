@@ -25,13 +25,25 @@ public class Region : MonoBehaviour
 
     public NpcQuestGiverData GetRandomFreeQuestGiver()
     {
-        List<NpcQuestGiverData> availableQuestGivers = 
-            _questGivers.Where(questGiver => questGiver.IsReadyToGiveQuest()).ToList();
-        
-        if (availableQuestGivers.Count == 0) 
+        List<NpcQuestGiverData> availableQuestGivers =
+        _questGivers.Where(questGiver => questGiver.IsReadyToGiveQuest()).ToList();
+
+        //Нужно убрать таких квестгиверов, которые уже есть на сцене. Их квесты нужно брать через диалог
+
+        //HashSet - оптимизация, предложенная чатом ГПТ. Так быстрее
+        HashSet<NpcQuestGiverData> questGiverDatasOnScene = new
+        (
+            FindObjectsOfType<Npc>()
+                .Where(npc => npc.NpcData is NpcQuestGiverData)
+                .Select(npc => (NpcQuestGiverData)npc.NpcData)
+        );
+
+        availableQuestGivers.RemoveAll(questGiver => questGiverDatasOnScene.Contains(questGiver));
+
+        if (availableQuestGivers.Count == 0)
             return null;
-        
-        return availableQuestGivers[UnityEngine.Random.Range(0, availableQuestGivers.Count)];
+
+        return availableQuestGivers[Random.Range(0, availableQuestGivers.Count)];
     }
     
     

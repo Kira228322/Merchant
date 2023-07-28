@@ -17,13 +17,22 @@ public class NpcQuestGiverData : NpcData, IResetOnExitPlaymode, ISaveable<NpcQue
         }
         return false;
     }
-
-    public QuestParams GiveRandomQuest()
+    public QuestParams GetRandomQuest()
     {
-        _lastGiveDay = GameTime.CurrentDay;
         return pregenQuests[Random.Range(0, pregenQuests.Count)].GenerateQuestParams();
     }
-
+    //GiveRandomQuest устанавливает кулдаун, а Get - просто посмотреть.
+    //Get используетс€ в доске объ€влений (кд устанавливаетс€, когда объ€ва беретс€ с доски.)
+    //Give используетс€ когда квест беретс€ ртом.
+    public QuestParams GiveRandomQuest()
+    {
+        SetCooldown();
+        return pregenQuests[Random.Range(0, pregenQuests.Count)].GenerateQuestParams();
+    }
+    public void SetCooldown()
+    {
+        _lastGiveDay = GameTime.CurrentDay;
+    }
     void IResetOnExitPlaymode.ResetOnExitPlaymode()
     {
         ResetOnExitPlaymode();

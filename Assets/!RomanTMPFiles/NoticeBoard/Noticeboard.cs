@@ -48,13 +48,17 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
 
             for (int i = 0; i < questsToSpawn; i++)
             {
+
+                //Абуз с квестгиверами (взять квест ртом, потом с объявления) был решен в Region.cs, 37.
+                //Те, что уже есть на сцене, не могут выпасть с GetRandomFreeQuestGiver()
+
                 NpcQuestGiverData questGiver = MapManager.CurrentLocation.Region.GetRandomFreeQuestGiver();
 
                 if (questGiver == null)
                 {
                     break;
                 }
-                _compactedNoticeArray[spawnPointIndex] = new CompactedQuestNotice(questGiver.GiveRandomQuest());
+                _compactedNoticeArray[spawnPointIndex] = new CompactedQuestNotice(questGiver.GetRandomQuest(), questGiver.ID);
                 spawnPointIndex++;
             }
         }
@@ -119,9 +123,11 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
     public class CompactedQuestNotice : CompactedNotice
     {
         public QuestParams questParams;
-        public CompactedQuestNotice(QuestParams questParams)
+        public int questGiverID;
+        public CompactedQuestNotice(QuestParams questParams, int questGiverID)
         {
             this.questParams = questParams;
+            this.questGiverID = questGiverID;
             description = questParams.description;
             name = questParams.questName;
         }

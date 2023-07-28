@@ -106,7 +106,7 @@ public class PlayersInventory : MonoBehaviour, ISaveable<PlayersInventorySaveDat
         }
         int leftToRemove = amount;
 
-        for (int i = 0; i < ItemList.Count; i++)
+        for (int i = ItemList.Count - 1; i >= 0; i--)
         {
             if (ItemList[i].ItemData.Name == itemType.Name)
             {

@@ -46,10 +46,10 @@ public class DialogueManager : MonoBehaviour
 
         _currentStory.BindExternalFunction("get_quest_state", (string questSummary) =>
         {
-           Quest quest = QuestHandler.GetQuestBySummary(questSummary);
+            Quest quest = QuestHandler.GetQuestBySummary(questSummary);
             if (quest == null)
             {
-                return "null"; 
+                return "null";
             }
             return quest.CurrentState.ToString();
         });
@@ -63,7 +63,7 @@ public class DialogueManager : MonoBehaviour
         });
         _currentStory.BindExternalFunction("add_quest", (string questSummary) =>
         {
-            QuestHandler.AddQuest(PregenQuestDatabase.GetQuestParams(questSummary));
+            QuestHandler.AddQuest(PregenQuestDatabase.GetQuestParams(questSummary), _currentNPC.NpcData);
         });
         _currentStory.BindExternalFunction("invoke_dialogue_event", (string param) =>
         {
@@ -80,7 +80,7 @@ public class DialogueManager : MonoBehaviour
         });
         _currentStory.BindExternalFunction("get_required_amount_for_quest", (string questSummary) =>
         {
-            Quest quest = QuestHandler.GetQuestBySummary(questSummary);
+            Quest quest = QuestHandler.GetActiveQuestBySummary(questSummary);
             if (quest == null)
                 return "null";
             foreach (Goal goal in quest.Goals)
@@ -93,6 +93,34 @@ public class DialogueManager : MonoBehaviour
                     }
                 }
             }
+            return "null";
+        });
+        _currentStory.BindExternalFunction("is_questgiver_ready_to_give_quest", () =>
+        {
+            if (_currentNPC.NpcData is NpcQuestGiverData npcQuestGiverData)
+            {
+                return npcQuestGiverData.IsReadyToGiveQuest();
+            }
+            Debug.LogError("В Ink предполагается, что этот Npc QuestGiver, а на самом деле не так. Ошибка в написании диалога");
+            return "null";
+        });
+        _currentStory.BindExternalFunction("get_random_questparams_of_questgiver", () =>
+        {
+            if (_currentNPC.NpcData is NpcQuestGiverData npcQuestGiverData)
+            {
+                return npcQuestGiverData.GiveRandomQuest().questSummary;
+            }
+            Debug.LogError("В Ink предполагается, что этот Npc QuestGiver, а на самом деле не так. Ошибка в написании диалога");
+            return "null";
+        });
+        _currentStory.BindExternalFunction("get_active_quest_for_this_npc", () =>
+        {
+            //Возвращает первый квест из активных для этого нпс.
+            //Я не знаю, как передать массив в Ink, поэтому буду работать с таким предположением, что
+            //у questGiver нпс не может быть более одного активного квеста за раз
+            List<Quest> activeQuests = QuestHandler.GetActiveQuestsForThisNPC(_currentNPC.NpcData.ID);
+            if (activeQuests.Count > 0) 
+                return activeQuests[0].QuestSummary;
             return "null";
         });
 

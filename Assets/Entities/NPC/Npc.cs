@@ -25,7 +25,7 @@ public class Npc : MonoBehaviour
 
     private void CheckExclamationMark()
     {
-        if (QuestHandler.IsQuestActiveForThisNPC(NpcData.ID))
+        if (QuestHandler.GetActiveQuestsForThisNPC(NpcData.ID).Count > 0)
         {
             ExclamationMark = Instantiate(_exclamationMarkPrefab, gameObject.transform);
             ExclamationMark.GetComponent<ExclamationMark>().Init(gameObject.GetComponent<BoxCollider2D>());

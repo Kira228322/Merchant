@@ -19,12 +19,10 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
     public List<Quest> ActiveQuests => Quests.Where(quest => quest.CurrentState == Quest.State.Active).ToList();
 
     public static event UnityAction QuestChangedState; 
-    public static bool IsQuestActiveForThisNPC(int ID)
+    public static List<Quest> GetActiveQuestsForThisNPC(int ID)
     {
         // Можно оптимизировать.
-        return Instance.ActiveQuests.Any(quest => quest.Goals.Any(goal => 
-        goal is TalkToNPCGoal talkToNpcGoal && talkToNpcGoal.RequiredIDOfNPC == ID 
-        || goal is GiveItemsGoal giveItemsGoal && giveItemsGoal.RequiredIDOfNPC == ID));
+        return Instance.ActiveQuests.Where(quest => quest.QuestGiver.ID == ID).ToList();
     }
     
     private void Awake()
@@ -41,6 +39,15 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
         quest.QuestChangedState += Instance.OnQuestChangedState;
         QuestChangedState?.Invoke();
     }
+    public static void AddQuest(QuestParams questParams, NpcData questGiver)
+    {
+        Quest quest = new(questParams);
+        quest.QuestGiver = questGiver;
+        Instance.Quests.Add(quest);
+        QuestLog.AddQuest(quest);
+        quest.QuestChangedState += Instance.OnQuestChangedState;
+        QuestChangedState?.Invoke();
+    }
 
     private void OnQuestChangedState(Quest quest)
     {
@@ -52,6 +59,10 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
     public static Quest GetQuestBySummary(string summary)
     {
         return Instance.Quests.FirstOrDefault(quest => quest.QuestSummary == summary);
+    }
+    public static Quest GetActiveQuestBySummary(string summary)
+    {
+        return Instance.ActiveQuests.FirstOrDefault(quest => quest.QuestSummary == summary);
     }
 
     public static bool HasQuestBeenTaken(string summary)
@@ -81,6 +92,7 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
                 questName = quest.QuestName,
                 questSummary = quest.QuestSummary,
                 description = quest.Description,
+                questGiverID = quest.QuestGiver.ID,
                 experienceReward = quest.ExperienceReward,
                 moneyReward = quest.MoneyReward,
                 itemRewards = quest.ItemRewards,
@@ -98,16 +110,25 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
                 switch (goal)
                 {
                     case CollectItemsGoal oldGoal:
-                        newGoal = new CollectItemsGoal(oldGoal.CurrentState, oldGoal.Description, oldGoal.CurrentAmount, oldGoal.RequiredAmount, oldGoal.RequiredItemName);
+                        newGoal = new CollectItemsGoal(oldGoal.CurrentState, oldGoal.Description, 
+                            oldGoal.CurrentAmount, oldGoal.RequiredAmount, oldGoal.RequiredItemName);
                         break;
                     case TalkToNPCGoal oldGoal:
-                        newGoal = new TalkToNPCGoal(oldGoal.CurrentState, oldGoal.Description, oldGoal.CurrentAmount, oldGoal.RequiredAmount, oldGoal.RequiredIDOfNPC, oldGoal.RequiredLine, oldGoal.FailingLine);
+                        newGoal = new TalkToNPCGoal(oldGoal.CurrentState, oldGoal.Description, 
+                            oldGoal.CurrentAmount, oldGoal.RequiredAmount, oldGoal.RequiredIDOfNPC, oldGoal.RequiredLine, oldGoal.FailingLine);
                         break;
                     case WaitingGoal oldGoal:
-                        newGoal = new WaitingGoal(oldGoal.CurrentState, oldGoal.Description, oldGoal.CurrentAmount, oldGoal.RequiredAmount);
+                        newGoal = new WaitingGoal(oldGoal.CurrentState, oldGoal.Description, 
+                            oldGoal.CurrentAmount, oldGoal.RequiredAmount);
                         break;
                     case TimedGoal oldGoal:
-                        newGoal = new TimedGoal(oldGoal.CurrentState, oldGoal.Description, oldGoal.CurrentAmount, oldGoal.RequiredAmount);
+                        newGoal = new TimedGoal(oldGoal.CurrentState, oldGoal.Description, 
+                            oldGoal.CurrentAmount, oldGoal.RequiredAmount);
+                        break;
+                    case GiveItemsGoal oldGoal:
+                        newGoal = new GiveItemsGoal(oldGoal.CurrentState, oldGoal.Description,
+                            oldGoal.CurrentAmount, oldGoal.RequiredAmount, oldGoal.RequiredItemName,
+                            oldGoal.RequiredIDOfNPC, oldGoal.RequiredLine);
                         break;
                     default:
                         Debug.LogError("Нет такого типа Goal");
