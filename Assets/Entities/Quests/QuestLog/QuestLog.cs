@@ -35,11 +35,11 @@ public class QuestLog : MonoBehaviour
         questPanel.Initialize(quest);
         _finishedQuests.Add(questPanel);
     }
-    private void OnQuestChangedState(Quest quest)
+    private void OnQuestChangedState(Quest quest, Quest.State oldState, Quest.State newState)
     {
         Destroy(quest.questPanel.gameObject);
 
-        switch (quest.CurrentState)
+        switch (newState)
         {
             case Quest.State.Active:
                 AddToActiveQuests(quest);

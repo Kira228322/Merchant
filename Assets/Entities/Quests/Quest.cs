@@ -16,8 +16,10 @@ public class Quest
         get => _currentState;
         set
         {
+            State oldState = _currentState;
             _currentState = value;
-            QuestChangedState?.Invoke(this);
+            QuestChangedState?.Invoke(this, oldState, _currentState);
+
         }
     }
 
@@ -38,11 +40,11 @@ public class Quest
     public QuestPanel questPanel = null; //она сама себя назначит
 
     public event UnityAction<Quest> QuestUpdated;
-    public event UnityAction<Quest> QuestChangedState;
+    public event UnityAction<Quest, State, State> QuestChangedState;
 
     public Quest(QuestParams questParams)
     {
-        CurrentState = (State)questParams.currentState;
+        _currentState = (State)questParams.currentState; //в конструкторе не происходит Invoke QuestChangedState
 
         QuestName = questParams.questName;
         QuestSummary = questParams.questSummary;

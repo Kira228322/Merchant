@@ -178,6 +178,11 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
             QuestHandler.AddQuest(PregenQuestDatabase.GetQuestParams("collect3apples_wait3hours"));
         }
 
+
+
+
+
+
     }
 
 }
