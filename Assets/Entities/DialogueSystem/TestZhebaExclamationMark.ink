@@ -45,4 +45,5 @@ INCLUDE MainInkLibrary.ink
         }
 }
 +[Пока]
+    Ну пока.
     -> END
