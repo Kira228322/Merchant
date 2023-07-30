@@ -21,10 +21,10 @@ MonoBehaviour:
     \u0447\u0442\u043E\u0431\u044B \u0441\u0442\u0440\u0435\u043B\u044F\u0442\u044C
     \u043F\u043E \u0441\u044B\u043D\u043E\u0432\u044C\u044F\u043C \u043C\u0435\u0441\u0442\u043D\u043E\u0433\u043E
     \u0446\u0430\u0440\u044F."
-  MinExperienceReward: 0
-  MaxExperienceReward: 0
-  MinMoneyReward: 0
-  MaxMoneyReward: 0
+  MinExperienceReward: 4
+  MaxExperienceReward: 8
+  MinMoneyReward: 3
+  MaxMoneyReward: 5
   NextQuest: {fileID: 0}
   goals:
   - goalType: 4
@@ -34,7 +34,7 @@ MonoBehaviour:
     randomAmount: 1
     minRequiredAmount: 7
     maxRequiredAmount: 19
-    AdditiveMoneyReward: 0
+    AdditiveMoneyReward: 1
     RequiredIDofNPC: 99
     RequiredLine: zheba_give_arrows
     FailingLine: 

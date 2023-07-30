@@ -73,23 +73,21 @@ public class DialogueManager : MonoBehaviour
         {
             print(param);
         });
-        _currentStory.BindExternalFunction("check_if_has_items", (string itemName, string amount) =>
-        {
-            return Player.Instance.Inventory.HasEnoughItemsOfThisItemData
-            (ItemDatabase.GetItem(itemName), int.Parse(amount));
-        });
-        _currentStory.BindExternalFunction("get_required_amount_for_quest", (string questSummary) =>
+        _currentStory.BindExternalFunction("has_enough_items", (string questSummary) =>
         {
             Quest quest = QuestHandler.GetActiveQuestBySummary(questSummary);
-            if (quest == null)
-                return "null";
-            foreach (Goal goal in quest.Goals)
+            if (quest != null)
             {
-                if (goal is GiveItemsGoal giveItemsGoal)
+                foreach (Goal goal in quest.Goals)
                 {
-                    if (giveItemsGoal.RequiredIDOfNPC == _currentNPC.NpcData.ID)
+                    if (goal is GiveItemsGoal giveItemsGoal)
                     {
-                        return giveItemsGoal.RequiredAmount.ToString();
+                        if (giveItemsGoal.RequiredIDOfNPC == _currentNPC.NpcData.ID)
+                        {
+                            return Player.Instance.Inventory.HasEnoughItemsOfThisItemData(
+                                ItemDatabase.GetItem(giveItemsGoal.RequiredItemName), 
+                                giveItemsGoal.RequiredAmount);
+                        }
                     }
                 }
             }

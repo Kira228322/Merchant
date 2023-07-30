@@ -74,4 +74,9 @@ public class PlayerExperience
         }
         ExperienceChanged?.Invoke();
     }
+
+    public bool AnyUnspentSkillPoints()
+    {
+        return UnspentSkillPoints > 0;
+    }
 }

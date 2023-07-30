@@ -30,11 +30,9 @@ INCLUDE MainInkLibrary.ink
                     -> general
         }
     - else:
-        ~ temp requiredAmount = get_required_amount_for_quest(randomQuestSummary)
-        ~ temp hasEnoughItems = check_if_has_items("Стрела", requiredAmount)
         {
-            -hasEnoughItems:
-                +[Я принес тебе твои стрелы, Жэба]
+            -has_enough_items(randomQuestSummary):
+                +[Я принес тебе то, что ты искала, Жэба]
                     ~invoke_dialogue_event("zheba_give_arrows")
                     Спасибо!
                     -> general

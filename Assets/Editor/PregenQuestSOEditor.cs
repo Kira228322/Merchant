@@ -207,5 +207,10 @@ class EditorPregenQuest : Editor
             }
         }
 
+        if (GUI.changed)
+        {
+            EditorUtility.SetDirty(_quest);
+        }
+
     }
 }
