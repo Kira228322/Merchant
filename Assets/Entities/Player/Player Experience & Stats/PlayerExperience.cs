@@ -26,13 +26,14 @@ public class PlayerExperience
             {
                 _unspentSkillPoints = 0;
             }
-            JournalMarksController.CheckUnspentSkillPoints();
+            SkillPointsChanged?.Invoke();
         }
     }
 
 
     public event UnityAction LevelUp;
     public event UnityAction ExperienceChanged;
+    public event UnityAction SkillPointsChanged;
     #endregion
     public int ExperienceNeededForNextLevel()
     {
@@ -61,7 +62,7 @@ public class PlayerExperience
     public void IncreaseLevel()
     {
         _currentLevel++;
-        _unspentSkillPoints++;
+        UnspentSkillPoints++;
         LevelUp?.Invoke();
     }
 

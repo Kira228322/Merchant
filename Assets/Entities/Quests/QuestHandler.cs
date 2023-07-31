@@ -51,7 +51,6 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
     }
     private void OnQuestChangedState(Quest quest, Quest.State oldState, Quest.State newState)
     {
-        QuestChangedState?.Invoke();
 
         ActiveQuests.Remove(quest); //Квест не может изменить своё состояние на активное,
                                     //он только начинает в таком состоянии.
@@ -59,7 +58,7 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
 
         if (newState == Quest.State.Completed || newState == Quest.State.Failed)
             quest.QuestChangedState -= Instance.OnQuestChangedState;
-        JournalMarksController.CheckQuests();
+        QuestChangedState?.Invoke();
     }
     #endregion
     #region Методы получения информации о квестах
