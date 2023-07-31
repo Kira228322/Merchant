@@ -8,6 +8,7 @@ using UnityEngine.Events;
 public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
 {
     #region Поля, свойства и события
+    
     public static QuestLog QuestLog => Instance._questLog;
     public static event UnityAction QuestChangedState; 
     private static QuestHandler Instance;
@@ -58,6 +59,7 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
 
         if (newState == Quest.State.Completed || newState == Quest.State.Failed)
             quest.QuestChangedState -= Instance.OnQuestChangedState;
+        JournalMarksController.CheckQuests();
     }
     #endregion
     #region Методы получения информации о квестах

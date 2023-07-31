@@ -26,6 +26,7 @@ public class PlayerExperience
             {
                 _unspentSkillPoints = 0;
             }
+            JournalMarksController.CheckUnspentSkillPoints();
         }
     }
 
