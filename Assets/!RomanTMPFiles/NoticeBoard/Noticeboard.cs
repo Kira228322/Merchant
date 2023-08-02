@@ -12,7 +12,6 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
     //партиклы и изменение спрайта при использовании. Ничего из этого здесь не нужно
     //UPD 28.06.23: ну кулдаун всё-таки нужен, но он был реализован отдельно от UsableEnvironment
 
-    //TODO: Чтобы спавнящийся префаб не спавнился два раза
     private UniqueID _uniqueID;
 
     private List<GlobalEvent_Base> _uncheckedActiveGlobalEvents;

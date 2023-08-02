@@ -97,6 +97,34 @@ public class PlayersInventory : MonoBehaviour, ISaveable<PlayersInventorySaveDat
             return true;
         return false;
     }
+    public void RemoveItemsByPrice(int price)
+    {
+        //Удалить предметов на такую стоимость
+        //Квестовые предметы игнорируются
+        int priceLeftToRemove = price;
+        List<InventoryItem> sortedItems = ItemList.Where(item => !item.ItemData.IsQuestItem).OrderBy(item => item.TotalPrice).ToList();
+        List<InventoryItem> itemsToRemove = new();
+        InventoryItem partiallyRemovedItem = null;
+        foreach (InventoryItem item in sortedItems)
+        {
+            if (priceLeftToRemove - item.TotalPrice <= 0)
+            {
+                partiallyRemovedItem = item;
+                break;
+            }
+            priceLeftToRemove -= item.TotalPrice;
+            itemsToRemove.Add(item);        
+        }
+        for (int i = itemsToRemove.Count - 1; i >= 0; i--)
+        {
+            ItemGrid.RemoveItemsFromAStack(itemsToRemove[i], itemsToRemove[i].CurrentItemsInAStack);
+        }
+        if (partiallyRemovedItem != null)
+        {
+            int items = (int)Mathf.Ceil((float)priceLeftToRemove / partiallyRemovedItem.ItemData.Price);
+            ItemGrid.RemoveItemsFromAStack(partiallyRemovedItem, items);
+        }
+    }
     public void RemoveItemsOfThisItemData(Item itemType, int amount)
     {
         if (GetCount(itemType) < amount)

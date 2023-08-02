@@ -8,7 +8,8 @@ using UnityEngine.UI;
 public class TestCheatItemGiver : MonoBehaviour
 {
     [SerializeField] private TMP_Dropdown itemSelector;
-    [SerializeField] private TMP_InputField inputField;
+    [SerializeField] private TMP_InputField itemInputField;
+    [SerializeField] private TMP_InputField moneyInputField;
 
     private void Start()
     {
@@ -24,6 +25,10 @@ public class TestCheatItemGiver : MonoBehaviour
     public void AddItem()
     {
         Item itemToGive = ItemDatabase.GetItem(itemSelector.captionText.text);
-        InventoryController.Instance.TryCreateAndInsertItem(Player.Instance.ItemGrid, itemToGive, int.Parse(inputField.text), 0, true);
+        InventoryController.Instance.TryCreateAndInsertItem(Player.Instance.ItemGrid, itemToGive, int.Parse(itemInputField.text), 0, true);
+    }
+    public void SetMoney()
+    {
+        Player.Instance.Money = int.Parse(moneyInputField.text);
     }
 }

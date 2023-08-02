@@ -13,7 +13,7 @@ public class InventoryItem : MonoBehaviour
     
     public Item ItemData;
     public float BoughtDaysAgo;
-
+    public int TotalPrice => ItemData.Price * CurrentItemsInAStack;
 
     public int Width
     {

@@ -41,7 +41,6 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
 
     private void Awake()
     {
-        Money = 9999; // TODO  тест 
         Instance = this;
         PlayerMover = GetComponent<PlayerMover>();
 
