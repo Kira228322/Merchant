@@ -44,7 +44,7 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
         if (IsReadyToGiveQuest()) // если доска не на кд
         {
             int questsToSpawn = Random.Range(0, 3);
-
+            Debug.Log(questsToSpawn);
             for (int i = 0; i < questsToSpawn; i++)
             {
 
