@@ -43,20 +43,20 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
 
         if (IsReadyToGiveQuest()) // если доска не на кд
         {
+            //Абуз с квестгиверами (взять квест ртом, потом с объявления) был решен в Region.cs, 37.
+            //Те, что уже есть на сцене, не могут выпасть с GetRandomFreeQuestGiver()
+
             int questsToSpawn = Random.Range(0, 3);
             Debug.Log(questsToSpawn);
+            List<NpcQuestGiverData> selectedQuestGivers = new();
             for (int i = 0; i < questsToSpawn; i++)
             {
-
-                //Абуз с квестгиверами (взять квест ртом, потом с объявления) был решен в Region.cs, 37.
-                //Те, что уже есть на сцене, не могут выпасть с GetRandomFreeQuestGiver()
-
                 NpcQuestGiverData questGiver = MapManager.CurrentLocation.Region.GetRandomFreeQuestGiver();
-
-                if (questGiver == null)
-                {
-                    break;
-                }
+                if (questGiver != null && !selectedQuestGivers.Contains(questGiver))
+                    selectedQuestGivers.Add(questGiver);
+            }
+            foreach (NpcQuestGiverData questGiver in selectedQuestGivers)
+            {
                 _compactedNoticeArray[spawnPointIndex] = new CompactedQuestNotice(questGiver.GetRandomQuest(), questGiver.ID);
                 spawnPointIndex++;
             }
