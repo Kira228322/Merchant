@@ -216,12 +216,12 @@ public class TravelEventHandler : MonoBehaviour
 
             if (positiveEvent)
             {
-                if (Random.Range(0, 101) <= 100 - (100 - probability) / Player.Instance.Statistics.GetCoefForPositiveEvent(playerStat))
+                if (Random.Range(0, 101) <= 100 - (100 - probability) / playerStat.GetCoefForPositiveEvent())
                     return true;
             }
             else
             {
-                if (Random.Range(0, 101) <= probability * Player.Instance.Statistics.GetCoefForNegativeEvent(playerStat))
+                if (Random.Range(0, 101) <= probability * playerStat.GetCoefForNegativeEvent())
                     return true;
             }
         }

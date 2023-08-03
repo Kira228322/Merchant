@@ -106,6 +106,7 @@ public class DialogueManager : MonoBehaviour
         {
             if (_currentNPC.NpcData is NpcQuestGiverData npcQuestGiverData)
             {
+                //TODO: не должны дублироваться, если уже активен такой квест
                 return npcQuestGiverData.GiveRandomQuest().questSummary;
             }
             Debug.LogError("В Ink предполагается, что этот Npc QuestGiver, а на самом деле не так. Ошибка в написании диалога");
@@ -121,7 +122,24 @@ public class DialogueManager : MonoBehaviour
                 return activeQuests[0].QuestSummary;
             return "null";
         });
-
+        _currentStory.BindExternalFunction("get_active_quests_for_this_npc", () =>
+        {
+            //UPD 03.08.23: Теперь я знаю, как передавать массивы,
+            //а предположение что у нпс не может быть двух квестов достаточно глупо.
+            //Поэтому делаю чтоб было нормально
+            List<Quest> activeQuests = QuestHandler.GetActiveQuestsForThisNPC(_currentNPC.NpcData.ID);
+            var resultList = new InkList();
+            if (activeQuests.Count > 0)
+            {
+                foreach (Quest quest in activeQuests)
+                {
+                    resultList.AddItem(quest.QuestSummary);
+                    Debug.Log("'added' " + quest.QuestSummary);
+                }
+                return resultList;
+            }
+            return "null";
+        });
     }
     #endregion
 

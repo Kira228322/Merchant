@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static PlayerStats;
 
 public class PlayerStats : ISaveable<PlayerStatsSaveData>
 {
@@ -10,6 +11,19 @@ public class PlayerStats : ISaveable<PlayerStatsSaveData>
         public int Base;
         public int Additional;
         public int Total => Base + Additional;
+
+        public float GetCoefForPositiveEvent()
+        {
+            return (float)(1 + 0.07f * Total / (0.07 * Total + 1));
+        }
+        public float GetCoefForNegativeEvent() 
+        {
+            return (float)(1 - 0.07f * Total / (0.07 * Total + 1));
+        }
+        public void IncreaseStat()
+        {
+            Base++;
+        }
     }
 
     public PlayerStat Diplomacy = new(); //¬ли€ет на цены и успешность переговоров
@@ -25,22 +39,6 @@ public class PlayerStats : ISaveable<PlayerStatsSaveData>
         Player.Instance.Needs.SleepDecayRate = 16 + Toughness.Total;
         Player.Instance.Needs.MaxHunger = 90 + Toughness.Total * 3;
     }
-
-    public void IncreaseStat(PlayerStat playerStat)
-    {
-        playerStat.Base++;
-    }
-
-    public float GetCoefForNegativeEvent(PlayerStat playerStat)
-    {
-        return (float)(1 - 0.07f * playerStat.Total / (0.07 * playerStat.Total + 1));
-    }
-
-    public float GetCoefForPositiveEvent(PlayerStat playerStat)
-    {
-        return (float)(1 + 0.07f * playerStat.Total / (0.07 * playerStat.Total + 1));
-    }
-
     //—охран€ютс€ только базовые статы, потому что аддитивные статы будут добавл€тьс€ через эффекты
     public PlayerStatsSaveData SaveData()
     {

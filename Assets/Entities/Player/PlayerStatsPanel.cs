@@ -105,22 +105,22 @@ public class PlayerStatsPanel : MonoBehaviour
 
     public void LevelUpDiplomacy()
     {
-        _playerStats.IncreaseStat(_playerStats.Diplomacy);
+        _playerStats.Diplomacy.IncreaseStat();
         OnStatLvlUpButtonPressed();
     }
     public void LevelUpLuck()
     {
-        _playerStats.IncreaseStat(_playerStats.Luck);
+        _playerStats.Luck.IncreaseStat();
         OnStatLvlUpButtonPressed();
     }
     public void LevelUpToughness()
     {
-        _playerStats.IncreaseStat(_playerStats.Luck);
+        _playerStats.Toughness.IncreaseStat();
         OnStatLvlUpButtonPressed();
     }
     public void LevelUpCrafting()
     {
-        _playerStats.IncreaseStat(_playerStats.Crafting);
+        _playerStats.Crafting.IncreaseStat();
         OnStatLvlUpButtonPressed();
     }
     private void OnStatLvlUpButtonPressed()
