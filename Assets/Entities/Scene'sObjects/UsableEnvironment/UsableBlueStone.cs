@@ -9,8 +9,7 @@ public class UsableBlueStone : UsableEnvironment
     {
         if (Random.Range(0,2) == 0)
         {
-            int expValue = 3 + Player.Instance.Experience.CurrentLevel +
-                           Random.Range(0, Player.Instance.Experience.CurrentLevel/2);
+            int expValue = Player.Instance.Experience.CurrentLevel + Random.Range(3, 4 + Player.Instance.Experience.CurrentLevel/2);
             Player.Instance.Experience.AddExperience(expValue);
             CanvasWarningGenerator.Instance.CreateWarning("Вы получили опыт!", $"Опыта получено: {expValue}");
         }
