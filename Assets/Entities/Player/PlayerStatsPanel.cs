@@ -97,30 +97,30 @@ public class PlayerStatsPanel : MonoBehaviour
             }
         }
 
-        _diplomacyText.text = "Дипломатия: " + DisplayStat(_playerStats.BaseDiplomacy, _playerStats.AdditionalDiplomacy);
-        _luckText.text = "Удача: " + DisplayStat(_playerStats.BaseLuck, _playerStats.AdditionalLuck);
-        _toughnessText.text = "Стойкость: " + DisplayStat(_playerStats.BaseToughness, _playerStats.AdditionalToughness);
-        _craftingText.text = "Крафтинг: " + DisplayStat(_playerStats.BaseCrafting, _playerStats.AdditionalCrafting);
+        _diplomacyText.text = "Дипломатия: " + DisplayStat(_playerStats.Diplomacy.Base, _playerStats.Diplomacy.Additional);
+        _luckText.text = "Удача: " + DisplayStat(_playerStats.Luck.Base, _playerStats.Luck.Additional);
+        _toughnessText.text = "Стойкость: " + DisplayStat(_playerStats.Toughness.Base, _playerStats.Toughness.Additional);
+        _craftingText.text = "Крафтинг: " + DisplayStat(_playerStats.Crafting.Base, _playerStats.Crafting.Additional);
     }
 
     public void LevelUpDiplomacy()
     {
-        _playerStats.IncreaseDiplomacy();
+        _playerStats.IncreaseStat(_playerStats.Diplomacy);
         OnStatLvlUpButtonPressed();
     }
     public void LevelUpLuck()
     {
-        _playerStats.IncreaseLuck();
+        _playerStats.IncreaseStat(_playerStats.Luck);
         OnStatLvlUpButtonPressed();
     }
     public void LevelUpToughness()
     {
-        _playerStats.IncreaseToughness();
+        _playerStats.IncreaseStat(_playerStats.Luck);
         OnStatLvlUpButtonPressed();
     }
     public void LevelUpCrafting()
     {
-        _playerStats.IncreaseCrafting();
+        _playerStats.IncreaseStat(_playerStats.Crafting);
         OnStatLvlUpButtonPressed();
     }
     private void OnStatLvlUpButtonPressed()

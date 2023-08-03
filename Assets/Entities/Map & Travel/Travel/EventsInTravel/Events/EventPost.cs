@@ -53,7 +53,7 @@ public class EventPost : EventInTravel
                 case 1:
                     //Предложить немного золота, 50% шанс
                     Player.Instance.Money -= avgPriceOfContraband;
-                    if (!TravelEventHandler.EventFire(50f, true, TravelEventHandler.EventMultiplierType.Diplomacy))
+                    if (!TravelEventHandler.EventFire(50f, true, Player.Instance.Statistics.Diplomacy))
                     {
                         foreach (Item bannedItem in BannedItemsHandler.Instance.BannedItems)
                             Player.Instance.Inventory.RemoveAllItemsOfThisItemData(bannedItem);
@@ -63,7 +63,7 @@ public class EventPost : EventInTravel
                 case 2:
                     //Предложить много золота, 80% шанс
                     Player.Instance.Money -= (int)(avgPriceOfContraband * 1.5);
-                    if (!TravelEventHandler.EventFire(80f, true, TravelEventHandler.EventMultiplierType.Diplomacy))
+                    if (!TravelEventHandler.EventFire(80f, true, Player.Instance.Statistics.Diplomacy))
                     {
                         foreach (Item bannedItem in BannedItemsHandler.Instance.BannedItems)
                             Player.Instance.Inventory.RemoveAllItemsOfThisItemData(bannedItem);

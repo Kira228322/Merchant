@@ -5,78 +5,54 @@ using UnityEngine;
 
 public class PlayerStats : ISaveable<PlayerStatsSaveData>
 {
-    public int AdditionalDiplomacy;
-    public int AdditionalToughness;
-    public int AdditionalLuck;
-    public int AdditionalCrafting;
-    public int BaseDiplomacy { get; private set; }
-    public int BaseToughness { get; private set; }
-    public int BaseLuck { get; private set; }
-    public int BaseCrafting { get; private set; }
+    public class PlayerStat
+    {
+        public int Base;
+        public int Additional;
+        public int Total => Base + Additional;
+    }
 
-    public int TotalDiplomacy => BaseDiplomacy + AdditionalDiplomacy; //Влияет на цены и успешность переговоров
-    public int TotalToughness => BaseToughness + AdditionalToughness; //Влияет на скорость убывания сна и еды
-    public int TotalLuck => BaseLuck + AdditionalLuck; //Влияет на частоту происшествия благоприятных и негативных событий
-    public int TotalCrafting => BaseCrafting + AdditionalCrafting; //Влияет на доступность некоторых рецептов крафта
+    public PlayerStat Diplomacy = new(); //Влияет на цены и успешность переговоров
+    public PlayerStat Toughness = new(); //Влияет на скорость убывания сна и еды
+    public PlayerStat Luck = new(); //Влияет на частоту происшествия благоприятных и негативных событий
+    public PlayerStat Crafting = new(); //Влияет на доступность некоторых рецептов крафта
 
-    public void WhenToughnessChange()
+    public void OnToughnessChanged()
     {
         // TODO делать, когда изменяется стойкость
 
-        Player.Instance.Needs.HungerDecayRate = 12 + TotalToughness;
-        Player.Instance.Needs.SleepDecayRate = 16 + TotalToughness;
-        Player.Instance.Needs.MaxHunger = 90 + TotalToughness * 3;
+        Player.Instance.Needs.HungerDecayRate = 12 + Toughness.Total;
+        Player.Instance.Needs.SleepDecayRate = 16 + Toughness.Total;
+        Player.Instance.Needs.MaxHunger = 90 + Toughness.Total * 3;
     }
 
-    public void IncreaseDiplomacy()
+    public void IncreaseStat(PlayerStat playerStat)
     {
-        BaseDiplomacy++;
-    }
-    public void IncreaseToughness()
-    {
-        BaseToughness++;
-    }
-    public void IncreaseLuck()
-    {
-        BaseLuck++;
-    }
-    public void IncreaseCrafting()
-    {
-        BaseCrafting++;
+        playerStat.Base++;
     }
 
-    public float GetCoefForNegativeEvent()
+    public float GetCoefForNegativeEvent(PlayerStat playerStat)
     {
-        return (float)(1 - 0.07f * TotalLuck / (0.07 * TotalLuck + 1));
+        return (float)(1 - 0.07f * playerStat.Total / (0.07 * playerStat.Total + 1));
     }
 
-    public float GetCoefForPositiveEvent()
+    public float GetCoefForPositiveEvent(PlayerStat playerStat)
     {
-        return (float)(1 + 0.07f * TotalLuck / (0.07 * TotalLuck + 1));
-    }
-
-    public float GetCoefForDiplomacyPositiveEvent()
-    {
-        return (float)(1 + 0.07f * TotalDiplomacy / (0.07 * TotalDiplomacy + 1));
-    }
-
-    public float GetCoefForDiplomacyNegativeEvent()
-    {
-        return (float)(1 - 0.07f * TotalDiplomacy / (0.07 * TotalDiplomacy + 1));
+        return (float)(1 + 0.07f * playerStat.Total / (0.07 * playerStat.Total + 1));
     }
 
     //Сохраняются только базовые статы, потому что аддитивные статы будут добавляться через эффекты
     public PlayerStatsSaveData SaveData()
     {
-        PlayerStatsSaveData saveData = new(BaseDiplomacy, BaseToughness, BaseLuck, BaseCrafting);
+        PlayerStatsSaveData saveData = new(Diplomacy.Base, Toughness.Base, Luck.Base, Crafting.Base);
         return saveData;
     }
 
     public void LoadData(PlayerStatsSaveData data)
     {
-        BaseDiplomacy = data.BaseDiplomacy;
-        BaseToughness = data.BaseToughness;
-        BaseLuck = data.BaseLuck;
-        BaseCrafting = data.BaseCrafting;
+        Diplomacy.Base = data.BaseDiplomacy;
+        Toughness.Base = data.BaseToughness;
+        Luck.Base = data.BaseLuck;
+        Crafting.Base = data.BaseCrafting;
     }
 }

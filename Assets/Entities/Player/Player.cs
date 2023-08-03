@@ -51,7 +51,7 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
     {
         Needs.Initialize();
         WagonStats.RecalculateValues();
-        Statistics.WhenToughnessChange();
+        Statistics.OnToughnessChanged();
     }
 
     private void OnSceneChange(Scene scene, LoadSceneMode mode)

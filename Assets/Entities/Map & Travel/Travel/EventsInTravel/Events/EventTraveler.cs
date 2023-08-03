@@ -20,7 +20,7 @@ public class EventTraveler : EventInTravel
     protected override void Start()
     {
         base.Start();
-        _isThief = TravelEventHandler.EventFire(_chanceTravelerIsThief, false, TravelEventHandler.EventMultiplierType.Luck);
+        _isThief = TravelEventHandler.EventFire(_chanceTravelerIsThief, false, Player.Instance.Statistics.Luck);
     }
 
     public override void OnButtonClick(int n)

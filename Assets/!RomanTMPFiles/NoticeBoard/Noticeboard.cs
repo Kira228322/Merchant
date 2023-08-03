@@ -47,7 +47,6 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
             //Те, что уже есть на сцене, не могут выпасть с GetRandomFreeQuestGiver()
 
             int questsToSpawn = Random.Range(0, 3);
-            Debug.Log(questsToSpawn);
             List<NpcQuestGiverData> selectedQuestGivers = new();
             for (int i = 0; i < questsToSpawn; i++)
             {

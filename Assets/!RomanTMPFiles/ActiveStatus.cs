@@ -40,16 +40,16 @@ public class ActiveStatus
             switch (effect.stat)
             {
                 case Status.Effect.Stat.Luck:
-                    Player.Instance.Statistics.AdditionalLuck += effect.value;
+                    Player.Instance.Statistics.Luck.Additional += effect.value;
                     break;
                 case Status.Effect.Stat.ExpGain:
                     Player.Instance.Experience.ExpGain += effect.value / 100f;
                     break;
                 case Status.Effect.Stat.Diplomacy:
-                    Player.Instance.Statistics.AdditionalDiplomacy += effect.value;
+                    Player.Instance.Statistics.Diplomacy.Additional += effect.value;
                     break;
                 case Status.Effect.Stat.Toughness:
-                    Player.Instance.Statistics.AdditionalToughness += effect.value;
+                    Player.Instance.Statistics.Toughness.Additional += effect.value;
                     break;
                 case Status.Effect.Stat.MoveSpeed:
                     Player.Instance.PlayerMover.SpeedModifier += effect.value / 100f;
@@ -66,16 +66,16 @@ public class ActiveStatus
             switch (effect.stat)
             {
                 case Status.Effect.Stat.Luck:
-                    Player.Instance.Statistics.AdditionalLuck -= effect.value;
+                    Player.Instance.Statistics.Luck.Additional -= effect.value;
                     break;
                 case Status.Effect.Stat.ExpGain:
                     Player.Instance.Experience.ExpGain -= effect.value / 100f;
                     break;
                 case Status.Effect.Stat.Diplomacy:
-                    Player.Instance.Statistics.AdditionalDiplomacy -= effect.value;
+                    Player.Instance.Statistics.Diplomacy.Additional -= effect.value;
                     break;
                 case Status.Effect.Stat.Toughness:
-                    Player.Instance.Statistics.AdditionalToughness -= effect.value;
+                    Player.Instance.Statistics.Toughness.Additional -= effect.value;
                     break;
                 case Status.Effect.Stat.MoveSpeed:
                     Player.Instance.PlayerMover.SpeedModifier -= effect.value / 100f;

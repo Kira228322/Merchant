@@ -24,7 +24,7 @@ public class NpcTraderData : NpcData, IResetOnExitPlaymode, ISaveable<NpcTraderS
     {
         foreach (var buyCoefficient in BuyCoefficients)
         {
-            buyCoefficient.CountToBuy += buyCoefficient.DefaultCountToBuy / 3 + Player.Instance.Statistics.TotalDiplomacy + 1;
+            buyCoefficient.CountToBuy += buyCoefficient.DefaultCountToBuy / 3 + Player.Instance.Statistics.Diplomacy.Total + 1;
             if (buyCoefficient.CountToBuy > buyCoefficient.DefaultCountToBuy)
                 buyCoefficient.CountToBuy = buyCoefficient.DefaultCountToBuy;
         }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 
 public class EventBandits : EventInTravel
@@ -9,17 +10,22 @@ public class EventBandits : EventInTravel
     private float _wealthTaken;
     private float _playerWealthDistribution;
     private int _playerTotalWealth;
+    private int _itemTotalWealth;
+    private CanvasWarningGenerator _canvasWarningGenerator;
     public override void SetButtons()
     {
+        _canvasWarningGenerator = FindObjectOfType<CanvasWarningGenerator>();
+        ButtonsLabel.Add("Постараться уехать");
+
         _wealthTaken = Random.Range(_minWealthTaken, _maxWealthTaken);
-        int itemTotalWealth = 0;
+        _itemTotalWealth = 0;
         foreach (InventoryItem item in Player.Instance.Inventory.ItemList)
         {
             if (item.ItemData.IsQuestItem) 
                 continue; //квестовые предметы не учитываются в подсчете общей стоимости
-            itemTotalWealth += item.ItemData.Price * item.CurrentItemsInAStack;
+            _itemTotalWealth += item.ItemData.Price * item.CurrentItemsInAStack;
         }
-        _playerTotalWealth = itemTotalWealth + Player.Instance.Money;
+        _playerTotalWealth = _itemTotalWealth + Player.Instance.Money;
         _playerWealthDistribution = (float)Player.Instance.Money / _playerTotalWealth;
         if (_playerWealthDistribution >= _wealthTaken)
         {
@@ -36,18 +42,41 @@ public class EventBandits : EventInTravel
         switch (n)
         {
             case 0:
-                if (_playerWealthDistribution >= _wealthTaken)
-                    TakePlayersMoney((int)(_playerTotalWealth * _wealthTaken));
-                else
-                    TakePlayersItems((int)(_playerTotalWealth * _wealthTaken));
+                TryRunningAway();
                 break;
             case 1:
-                TakePlayersItems((int)(_playerTotalWealth * _wealthTaken));
+                if (_playerWealthDistribution >= _wealthTaken)
+                {
+                    TakePlayersMoney((int)(_playerTotalWealth * _wealthTaken));
+                    _canvasWarningGenerator.CreateWarning("Ограбление", $"Бандиты забрали {_playerTotalWealth * _wealthTaken} золота");
+                }
+                else
+                {
+                    TakePlayersItems((int)(_playerTotalWealth * _wealthTaken));
+                    _canvasWarningGenerator.CreateWarning("Ограбление", $"Бандиты забрали вещи на сумму {_playerTotalWealth * _wealthTaken} золота");
+                }
+                break;
+            case 2:
+                {
+                    TakePlayersItems((int)(_playerTotalWealth * _wealthTaken));
+                    _canvasWarningGenerator.CreateWarning("Ограбление", $"Бандиты забрали вещи на сумму {_playerTotalWealth * _wealthTaken} золота");
+                }
                 break;
         }
         _eventHandler.EventEnd();
     }
 
+    private void TryRunningAway()
+    {
+        if (!TravelEventHandler.EventFire(10, true, Player.Instance.Statistics.Toughness))
+        {
+            int itemsTaken = (int)(_itemTotalWealth * _wealthTaken);
+            int moneyTaken = (int)(Player.Instance.Money * _wealthTaken);
+            TakePlayersItems(itemsTaken);
+            TakePlayersMoney(moneyTaken);
+            _canvasWarningGenerator.CreateWarning("Неудача", $"Бандиты забрали вещи на сумму {itemsTaken} золота, а также {moneyTaken} золота");
+        }
+    }
     private void TakePlayersMoney(int amount)
     {
         Player.Instance.Money -= amount;
