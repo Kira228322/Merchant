@@ -17,6 +17,7 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
     private List<GlobalEvent_Base> _uncheckedActiveGlobalEvents;
 
     [SerializeField] private NoticeboardUI _noticeBoardWindowPrefab;
+    [SerializeField] private List<Sprite> _boardSprites = new ();
     private float _distanceToUse = 3f;
     private int _cooldownHours = 48; // весты могут по€витьс€ только раз в столько часов
     private Transform _canvas;

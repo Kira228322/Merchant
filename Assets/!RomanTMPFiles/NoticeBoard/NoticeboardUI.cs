@@ -17,6 +17,12 @@ public class NoticeboardUI : MonoBehaviour
     public void Initialize(Noticeboard noticeboard, Noticeboard.CompactedNotice[] compactedNotices)
     {
         _noticeboard = noticeboard;
+        List<int> spawnPointsIndexes = new List<int>();
+        for (int i = 0; i < compactedNotices.Length; i++)
+            spawnPointsIndexes.Add(i);
+        
+        spawnPointsIndexes.Shuffle();
+        
         for (int i = 0; i < compactedNotices.Length; i++)
         {
             if (compactedNotices[i] == null)
@@ -26,11 +32,11 @@ public class NoticeboardUI : MonoBehaviour
             switch (notice)
             {
                 case Noticeboard.CompactedQuestNotice questNotice:
-                    QuestNotice newQuestNotice = AddQuestNotice(i, questNotice.name, questNotice.description, questNotice.questParams);
+                    QuestNotice newQuestNotice = AddQuestNotice(spawnPointsIndexes[i], questNotice.name, questNotice.description, questNotice.questParams);
                     newQuestNotice.QuestGiverID = questNotice.questGiverID; 
                     break;
                 case Noticeboard.CompactedEventNotice eventNotice:
-                    AddEventNotice(i, eventNotice.name, eventNotice.description, eventNotice.globalEvent);
+                    AddEventNotice(spawnPointsIndexes[i], eventNotice.name, eventNotice.description, eventNotice.globalEvent);
                     break;
                 default:
                     Debug.LogError("Здесь нет такого типа notice");
