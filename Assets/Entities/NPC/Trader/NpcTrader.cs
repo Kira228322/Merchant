@@ -45,7 +45,7 @@ public class NpcTrader : Npc
     [Serializable]
     public class BuyCoefficient
     {
-        public Item.ItemType itemType;
+        public Item.ItemType ItemType;
         public float Coefficient;
         private int _countToBuy;
         public int CountToBuy
@@ -61,14 +61,14 @@ public class NpcTrader : Npc
 
         public BuyCoefficient(BuyCoefficient original)
         {
-            itemType = original.itemType;
+            ItemType = original.ItemType;
             Coefficient = original.Coefficient;
             CountToBuy = original.CountToBuy;
             DefaultCountToBuy = original.DefaultCountToBuy;
         }
         public BuyCoefficient(TraderType.TraderGoodType traderGoodType)
         {
-            itemType = traderGoodType.ItemType;
+            ItemType = traderGoodType.ItemType;
             Coefficient = traderGoodType.Coefficient;
             CountToBuy = traderGoodType.CountToBuy;
             DefaultCountToBuy = traderGoodType.CountToBuy;

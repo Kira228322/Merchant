@@ -52,7 +52,7 @@ public class GoodsSellPanel : MonoBehaviour
     }
     public void Refresh()
     {
-        NpcTrader.BuyCoefficient buyCoefficient = _trader.BuyCoefficients.FirstOrDefault(x => x.itemType == _item.ItemData.TypeOfItem);
+        NpcTrader.BuyCoefficient buyCoefficient = _trader.BuyCoefficients.FirstOrDefault(x => x.ItemType == _item.ItemData.TypeOfItem);
         if (buyCoefficient == null || buyCoefficient.CountToBuy <= 0 || _trader.NpcData.CurrentMoney < _cost)
         {
             _sellButton.interactable = false;
@@ -75,7 +75,7 @@ public class GoodsSellPanel : MonoBehaviour
         _playerInventoryItemGrid.RemoveItemsFromAStack(_item, 1);
         _currentCount--;
         //Уменьшить CountToBuy у коэффициента с этим типом товара
-        _trader.BuyCoefficients.FirstOrDefault(x => x.itemType == _item.ItemData.TypeOfItem).CountToBuy--;
+        _trader.BuyCoefficients.FirstOrDefault(x => x.ItemType == _item.ItemData.TypeOfItem).CountToBuy--;
         GoodsBuyPanel panel = TradeManager.Instance.BuyPanelContent.GetComponentsInChildren<GoodsBuyPanel>().FirstOrDefault(i => i.Item.Good == _item.ItemData && i.IsOriginatedFromTrader == false);
         if (panel != null)
         {
@@ -118,7 +118,7 @@ public class GoodsSellPanel : MonoBehaviour
         float traderTypeCoef = 0;
         for (int i = 0; i < _trader.BuyCoefficients.Count; i++)
         {
-            if (_trader.BuyCoefficients[i].itemType == item.TypeOfItem)
+            if (_trader.BuyCoefficients[i].ItemType == item.TypeOfItem)
             {
                 traderTypeCoef = _trader.BuyCoefficients[i].Coefficient;
                 break;

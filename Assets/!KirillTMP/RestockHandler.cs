@@ -72,7 +72,7 @@ public class RestockHandler : MonoBehaviour
                     // у мейн шмоток коэф 1
                     if ((traderBuyCoefficient.Coefficient == 1) == isMainGood)
                     {
-                        newItem = ItemDatabase.GetRandomItemOfThisType(traderBuyCoefficient.itemType);
+                        newItem = ItemDatabase.GetRandomItemOfThisType(traderBuyCoefficient.ItemType);
                         
                         if (BannedItemsHandler.Instance.IsItemBanned(newItem))
                             continue;
