@@ -126,23 +126,22 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
     private void RefreshSprite()
     {
         int fullness = _compactedNoticeArray.Count(notice => notice != null);
-        float ratio = (float)fullness / _noticeBoardWindowPrefab.NoticeSpawnPoints.Count; // сколько процентов доски заполнено
         int spriteIndex;
-        switch (ratio)
+        switch (fullness)
         {
-            case <= 0:
+            case 0:
                 spriteIndex = 0;
                 break;
-            case <= 0.2f:
+            case 1:
                 spriteIndex = 1;
                 break;
-            case <= 0.4f:
+            case 2:
                 spriteIndex = 2;
                 break;
-            case <= 0.6f:
+            case 3:
                 spriteIndex = 3;
                 break;
-            case <= 0.8f:
+            case 4:
                 spriteIndex = 4;
                 break;
             default:
