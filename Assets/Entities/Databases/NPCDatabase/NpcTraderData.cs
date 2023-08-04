@@ -60,39 +60,37 @@ public class NpcTraderData : NpcData, IResetOnExitPlaymode, ISaveable<NpcTraderS
         AdditiveGoods.Clear();
         BuyCoefficients.Clear();
     }
-
     private void SetBuyCoefficients()
     {
-        _baseBuyCoefficients.Clear();
-        Dictionary<Item.ItemType, TraderType.TraderGoodType> mergedTraderGoods = new();
+        //Грубо говоря, что происходит: сначала берутся все TraderGoodTypes из TraderTypes.
+        //Они делятся на группы IGrouping из LINQ по признаку ItemType.
+        //Если есть специализация (т.е коэффициент равен 1 хотя бы у одного вхождения в группу), то
+        //для итогового элемента устанавливается коэффициент 1 и максимальный CountToBuy из всех.
+        //Если специализации нет, то в каждой группе считается средний коэффициент и средний CountToBuy
+        //(при этом очевидно, что если в группе только один элемент,
+        //то его коэффициент и CountToBuy останутся прежними)
 
-        foreach (var traderGoodType in TraderTypes.SelectMany(tt => tt.TraderGoodTypes))
-        {
-            // Если в словаре уже есть такой ItemType, то обновляет его значения
-            // (считает средние между старым и новым или приравнивает к единице)
-            // Если ещё нету, то добавляет новый TraderGoodType с этим ItemType
-            mergedTraderGoods[traderGoodType.ItemType] = mergedTraderGoods.TryGetValue(traderGoodType.ItemType, out var existingTraderGoodType)
-                ? new TraderType.TraderGoodType
+        var allGoodTypes = TraderTypes
+            .SelectMany(tt => tt.TraderGoodTypes)               
+            .Select(traderGoodType => new TraderType.TraderGoodType(traderGoodType))                       
+            .ToList();
+
+        var mergedTraderGoods = allGoodTypes
+            .GroupBy(item => item.ItemType)                             
+            .ToDictionary(group => group.Key, group =>
+            {
+                float averageCoefficient = group.Average(item => item.Coefficient);
+                int averageCountToBuy = (int)group.Average(item => item.CountToBuy);
+                int maxCountToBuy = group.Max(item => item.CountToBuy);
+                return new TraderType.TraderGoodType()
                 {
-                    ItemType = traderGoodType.ItemType,
-                    Coefficient = traderGoodType.Coefficient != 1 && existingTraderGoodType.Coefficient != 1
-                    ? (existingTraderGoodType.Coefficient + traderGoodType.Coefficient) / 2
-                    : 1,
-                    CountToBuy = traderGoodType.Coefficient != 1 && existingTraderGoodType.Coefficient != 1
-                    ? (existingTraderGoodType.CountToBuy + traderGoodType.CountToBuy) / 2
-                    : Math.Max(existingTraderGoodType.CountToBuy, traderGoodType.CountToBuy)
-                }
-                : new(traderGoodType);
-        }
-
-        List<NpcTrader.BuyCoefficient> resultingBuyCoefficients = mergedTraderGoods.Values.Select
-            (type => new NpcTrader.BuyCoefficient(type)).ToList();
-        _baseBuyCoefficients.AddRange(resultingBuyCoefficients);
-        
-        foreach (var BC in BuyCoefficients)
-        {
-            Debug.Log(BC.itemType + ": " + BC.Coefficient + " " + BC.DefaultCountToBuy);
-        }
+                    ItemType = group.Key,
+                    Coefficient = group.Max(item => item.Coefficient) == 1 ? 1 : averageCoefficient,
+                    CountToBuy = group.Max(item => item.Coefficient) == 1 ? maxCountToBuy : averageCountToBuy
+                };
+            });
+        _baseBuyCoefficients.Clear();
+        _baseBuyCoefficients.AddRange(mergedTraderGoods.Values.Select(type => new NpcTrader.BuyCoefficient(type)));
     }
     
 }
