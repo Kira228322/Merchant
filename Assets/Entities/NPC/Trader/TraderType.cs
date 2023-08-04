@@ -8,7 +8,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "newTraderType", menuName = "Trader/TraderType")]
 public class TraderType : ScriptableObject
 {
-    [HideInInspector] public List<TraderGoodType> TraderGoodTypes;
+    [HideInInspector] public List<TraderGoodType> TraderGoodTypes = new ();
     [System.Serializable]
     public class TraderGoodType
     {

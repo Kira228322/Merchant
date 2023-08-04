@@ -88,7 +88,11 @@ public class NpcTraderData : NpcData, IResetOnExitPlaymode, ISaveable<NpcTraderS
         List<NpcTrader.BuyCoefficient> resultingBuyCoefficients = mergedTraderGoods.Values.Select
             (type => new NpcTrader.BuyCoefficient(type)).ToList();
         _baseBuyCoefficients.AddRange(resultingBuyCoefficients);
-
+        
+        foreach (var BC in BuyCoefficients)
+        {
+            Debug.Log(BC.itemType + ": " + BC.Coefficient + " " + BC.DefaultCountToBuy);
+        }
     }
     
 }

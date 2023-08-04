@@ -20,8 +20,10 @@ MonoBehaviour:
   ID: 69
   InkJSON: {fileID: 4900000, guid: 42ec4a2723d8b42478233eaff171235e, type: 3}
   TraderTypes:
+  - {fileID: 11400000, guid: dda987acf4bc2a148a32ee077cd93837, type: 2}
   - {fileID: 11400000, guid: e6572bc3b8ee63a4b8071ae6ce8579b7, type: 2}
   - {fileID: 11400000, guid: 997f1667faefd604aad534ee42560049, type: 2}
+  IsBlackMarket: 0
   _baseGoods:
   - Good: {fileID: 11400000, guid: 86ed694dd10ff2a4f8940bdcaa5165db, type: 2}
     MaxCount: 33
@@ -42,22 +44,31 @@ MonoBehaviour:
   _baseBuyCoefficients:
   - itemType: 0
     Coefficient: 1
-    DefaultCountToBuy: 150
-  - itemType: 3
-    Coefficient: 0.55
     DefaultCountToBuy: 20
-  - itemType: 4
-    Coefficient: 1
-    DefaultCountToBuy: 50
-  - itemType: 6
-    Coefficient: 0.315
-    DefaultCountToBuy: 31
   - itemType: 1
-    Coefficient: 0.7
-    DefaultCountToBuy: 30
+    Coefficient: 0.70000005
+    DefaultCountToBuy: 2
+  - itemType: 2
+    Coefficient: 0.675
+    DefaultCountToBuy: 0
+  - itemType: 3
+    Coefficient: 0.8
+    DefaultCountToBuy: 10
+  - itemType: 4
+    Coefficient: 0.1
+    DefaultCountToBuy: 0
   - itemType: 5
-    Coefficient: 1
-    DefaultCountToBuy: 14
+    Coefficient: 0.1
+    DefaultCountToBuy: 0
+  - itemType: 6
+    Coefficient: 0.1
+    DefaultCountToBuy: 0
+  - itemType: 7
+    Coefficient: 0.1
+    DefaultCountToBuy: 0
+  - itemType: 8
+    Coefficient: 0.1
+    DefaultCountToBuy: 0
   Goods: []
   AdditiveGoods: []
   BuyCoefficients: []
