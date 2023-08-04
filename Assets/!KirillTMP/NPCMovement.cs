@@ -165,8 +165,6 @@ abstract public class NPCMovement : MonoBehaviour
         else if (DefaultViewDirectionIsRight)
             _spriteRenderer.flipX = true;
         else _spriteRenderer.flipX = false;
-            
-            
     }
 
 }

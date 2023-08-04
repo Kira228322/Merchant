@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 public class NPCMovementByScene : NPCMovement
 {
-    private float _minMoveDistance = 2f; // 3
+    private float _minMoveDistance = 2f; // 3 //TODO
     private float _maxMoveDistance = 6f; // 12
     
     protected override void OnEnable()
@@ -54,7 +54,5 @@ public class NPCMovementByScene : NPCMovement
         transform.position = targetPosition;
         StartIDLE(false);
     }
-
-
     
 }
