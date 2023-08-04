@@ -6,11 +6,11 @@ using Random = UnityEngine.Random;
 
 public class Animal : MonoBehaviour
 {
-    private float _minMoveDistance = 2f; // 2 //TODO
-    private float _maxMoveDistance = 6f; // 9
+    private float _minMoveDistance = 2f; 
+    private float _maxMoveDistance = 9f; 
 
     private float _IDLEDuration = 4f;
-    private float _AFKDuration = 12f;
+    private float _AFKDuration = 15f;
     [SerializeField] protected float _speed = 2f;
     
     public bool DefaultViewDirectionIsRight = true;
@@ -27,6 +27,11 @@ public class Animal : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
         Animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
+    private void Start()
+    {
+        StartCoroutine(Move());
     }
 
     public void RevertViewDirection(bool moveDirectionIsRight)
@@ -81,13 +86,17 @@ public class Animal : MonoBehaviour
         WaitForSeconds waitForSeconds;
         if (Random.Range(0, 2) == 0)
         {
+            Animator.SetTrigger("IDLE");
             waitForSeconds = new WaitForSeconds(Random.Range(_IDLEDuration * 0.75f, _IDLEDuration * 1.25f));
             yield return waitForSeconds;
         }
         else
         {
+            Animator.SetTrigger("AFK");
             waitForSeconds = new WaitForSeconds(Random.Range(_AFKDuration * 0.75f, _AFKDuration * 1.25f));
             yield return waitForSeconds;
         }
+        Animator.SetTrigger("Move");
+        StartCoroutine(Move());
     }
 }
