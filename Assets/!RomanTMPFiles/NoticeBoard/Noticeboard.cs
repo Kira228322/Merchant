@@ -17,11 +17,16 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
     private List<GlobalEvent_Base> _uncheckedActiveGlobalEvents;
 
     [SerializeField] private NoticeboardUI _noticeBoardWindowPrefab;
+    [SerializeField] private SpriteRenderer _currentBoardSprite;
     [SerializeField] private List<Sprite> _boardSprites = new ();
     private float _distanceToUse = 3f;
     private int _cooldownHours = 48; //Квесты могут появиться только раз в столько часов
     private Transform _canvas;
     private CooldownHandler _cooldownHandler;
+    private List<Transform> _randomizedSpawnPoints; //Копирует спавнпоинты из NoticeboardUI,
+                                                    //рандомизирует их и передает обратно.
+                                                    //Чтобы точки спавна оставались одинаковыми
+                                                    //при каждом открытии доски
 
     private CompactedNotice[] _compactedNoticeArray; //Информация об объявлениях, которая будет передаваться в UI
     //Размер массива - столько, сколько возможных точек спавна в префабе NoticeboardUI.
@@ -32,11 +37,14 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
         _uniqueID = GetComponent<UniqueID>();
         _cooldownHandler = FindObjectOfType<CooldownHandler>();
 
-        _compactedNoticeArray = new CompactedNotice[_noticeBoardWindowPrefab.SpawnPointsCount];
+        _compactedNoticeArray = new CompactedNotice[_noticeBoardWindowPrefab.NoticeSpawnPoints.Count];
     }
 
     private void Start() 
     {
+
+        _randomizedSpawnPoints = _noticeBoardWindowPrefab.NoticeSpawnPoints;
+        _randomizedSpawnPoints.Shuffle();
 
         int spawnPointIndex = 0;
 
@@ -76,6 +84,8 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
             }
             _uncheckedActiveGlobalEvents.Remove(randomGlobalEvent);
         }
+
+        RefreshSprite();
     }
 
     private bool IsReadyToGiveQuest()
@@ -96,6 +106,7 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
     public void RemoveNotice(int index)
     {
         _compactedNoticeArray[index] = null;
+        RefreshSprite();
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -104,7 +115,7 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
             return;
 
         NoticeboardUI noticeboardUI = Instantiate(_noticeBoardWindowPrefab, _canvas);
-        noticeboardUI.Initialize(this, _compactedNoticeArray);
+        noticeboardUI.Initialize(this, _compactedNoticeArray, _randomizedSpawnPoints);
         
     }
     public void StartCooldown()
@@ -112,7 +123,35 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
         _cooldownHandler.Register(_uniqueID.ID, _cooldownHours);
     }
 
+    private void RefreshSprite()
+    {
+        int fullness = _compactedNoticeArray.Count(notice => notice != null);
+        float ratio = (float)fullness / _noticeBoardWindowPrefab.NoticeSpawnPoints.Count; // сколько процентов доски заполнено
+        int spriteIndex;
+        switch (ratio)
+        {
+            case <= 0:
+                spriteIndex = 0;
+                break;
+            case <= 0.2f:
+                spriteIndex = 1;
+                break;
+            case <= 0.4f:
+                spriteIndex = 2;
+                break;
+            case <= 0.6f:
+                spriteIndex = 3;
+                break;
+            case <= 0.8f:
+                spriteIndex = 4;
+                break;
+            default:
+                spriteIndex = 5;
+                break;
+        }
+        _currentBoardSprite.sprite = _boardSprites[spriteIndex];
 
+    }
 
     public abstract class CompactedNotice
     {

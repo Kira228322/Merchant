@@ -11,18 +11,14 @@ public class NoticeboardUI : MonoBehaviour
     [SerializeField] private List<GameObject> _eventNoticePrefabs;
     [SerializeField] private List<GameObject> _questNoticePrefabs;
     [SerializeField] private NoticeInformationPanel _noticeInformationPanel;
-    public int SpawnPointsCount => _noticeSpawnPoints.Count;
+    public List<Transform> NoticeSpawnPoints => _noticeSpawnPoints;
     private Noticeboard _noticeboard;
+    private List<Transform> _randomizedSpawnPoints;
 
-    public void Initialize(Noticeboard noticeboard, Noticeboard.CompactedNotice[] compactedNotices)
+    public void Initialize(Noticeboard noticeboard, Noticeboard.CompactedNotice[] compactedNotices, List<Transform> randomizedSpawnPoints)
     {
         _noticeboard = noticeboard;
-        List<int> spawnPointsIndexes = new List<int>();
-        for (int i = 0; i < compactedNotices.Length; i++)
-            spawnPointsIndexes.Add(i);
-        
-        spawnPointsIndexes.Shuffle();
-        
+        _randomizedSpawnPoints = randomizedSpawnPoints;
         for (int i = 0; i < compactedNotices.Length; i++)
         {
             if (compactedNotices[i] == null)
@@ -32,11 +28,11 @@ public class NoticeboardUI : MonoBehaviour
             switch (notice)
             {
                 case Noticeboard.CompactedQuestNotice questNotice:
-                    QuestNotice newQuestNotice = AddQuestNotice(spawnPointsIndexes[i], questNotice.name, questNotice.description, questNotice.questParams);
+                    QuestNotice newQuestNotice = AddQuestNotice(i, questNotice.name, questNotice.description, questNotice.questParams);
                     newQuestNotice.QuestGiverID = questNotice.questGiverID; 
                     break;
                 case Noticeboard.CompactedEventNotice eventNotice:
-                    AddEventNotice(spawnPointsIndexes[i], eventNotice.name, eventNotice.description, eventNotice.globalEvent);
+                    AddEventNotice(i, eventNotice.name, eventNotice.description, eventNotice.globalEvent);
                     break;
                 default:
                     Debug.LogError("Здесь нет такого типа notice");
@@ -50,7 +46,7 @@ public class NoticeboardUI : MonoBehaviour
     {
         EventNotice notice = Instantiate(_eventNoticePrefabs[Random.Range(0, _eventNoticePrefabs.Count)], _noticeSpawnPoints[spawnPointIndex])
             .GetComponent<EventNotice>();
-        notice.transform.position = _noticeSpawnPoints[spawnPointIndex].position;
+        notice.transform.position = _randomizedSpawnPoints[spawnPointIndex].position;
         notice.Initialize(_noticeboard, name, description, spawnPointIndex);
         notice.DisplayButton.onClick.AddListener(() => OnNoticeClick(notice));
         return notice;
@@ -59,7 +55,7 @@ public class NoticeboardUI : MonoBehaviour
     {
         QuestNotice notice = Instantiate(_questNoticePrefabs[Random.Range(0, _questNoticePrefabs.Count)], _noticeSpawnPoints[spawnPointIndex])
             .GetComponent<QuestNotice>();
-        notice.transform.position = _noticeSpawnPoints[spawnPointIndex].position;
+        notice.transform.position = _randomizedSpawnPoints[spawnPointIndex].position;
         notice.RandomQuest = questParams;
         notice.Initialize(_noticeboard, name, description, spawnPointIndex);
         notice.DisplayButton.onClick.AddListener(() => OnNoticeClick(notice));

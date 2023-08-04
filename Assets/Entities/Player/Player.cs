@@ -144,38 +144,7 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
             Debug.Log("Test Load");
             FindObjectOfType<GameManager>().LoadGame();
         }
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            FindObjectOfType<BannedItemEventController>().AddEvent();
-        }
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            QuestHandler.AddQuest(PregenQuestDatabase.GetQuestParams("collect3apples_wait3hours"));
-        }
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            Debug.Log("Current Active Global Events:");
-            foreach (var globalEvent in GlobalEventHandler.Instance.ActiveGlobalEvents)
-            {
-                Debug.Log(globalEvent.GlobalEventName + " " + globalEvent.DurationHours);
-            }
 
-            Debug.Log("BannedItemController Prediction:");
-            {
-                BannedItemEventController bannedItemEventController = FindObjectOfType<BannedItemEventController>();
-                Debug.Log($"{bannedItemEventController.ItemToBan}, on day {bannedItemEventController.DateOfNextEvent}, hour {bannedItemEventController.HourOfNextEvent}, for {bannedItemEventController.DurationOfEvent} days");
-            }
-
-            if (GlobalEventHandler.Instance.IsEventActive<GlobalEvent_BannedItem>())
-            {
-                GlobalEvent_BannedItem bannedEvent = GlobalEventHandler.Instance.GetActiveEventByType<GlobalEvent_BannedItem>();
-                Debug.Log($"Banned Item: {bannedEvent.BannedItemName}, {bannedEvent.DurationHours} часа осталось");
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            QuestHandler.AddQuest(PregenQuestDatabase.GetQuestParams("collect3apples_wait3hours"));
-        }
 
 
 
