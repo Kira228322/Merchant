@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum CraftingStationType { Null, Campfire}
+public enum CraftingStationType { Null, Campfire, CraftingTable}
 [CreateAssetMenu(fileName = "New Crafting station", menuName = "Crafting/Crafting Station")]
 public class CraftingStationSO : ScriptableObject
 { 

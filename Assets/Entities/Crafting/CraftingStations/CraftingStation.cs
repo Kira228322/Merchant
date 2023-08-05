@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class CraftingStation : MonoBehaviour, IPointerClickHandler
 {
-    private float _distanceToUse = 2;
+    private float _distanceToUse = 2.4f;
     [SerializeField] private CraftingStationSO _craftingStationSO;
     
     public void OnPointerClick(PointerEventData eventData)
