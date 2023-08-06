@@ -141,9 +141,10 @@ public class TravelEventHandler : MonoBehaviour
         else if (MapManager.Advertisement == false)
             MapManager.Advertisement = null;
         
-        if (EventFire(MapManager.CurrentRoad.Danger, false, Player.Instance.Statistics.Luck))
+        if (EventFire(MapManager.CurrentRoad.Danger * MapManager.CurrentRoad._dangerMultiplier, false, Player.Instance.Statistics.Luck))
             _banditEvent = true;
         else _banditEvent = false;
+        MapManager.CurrentRoad.SetNormalDangerMultiplier();
         
         RollNextEvent();
     }
@@ -176,7 +177,7 @@ public class TravelEventHandler : MonoBehaviour
             _delayToNextEvent++;
         }
 
-        if (_delayToNextEvent == _timeCounter.Duration - 1)
+        if (_delayToNextEvent >= _timeCounter.Duration - 1)
             _delayToNextEvent += 10; // событие не случится 
     }
 

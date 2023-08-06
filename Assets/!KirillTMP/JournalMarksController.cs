@@ -9,6 +9,7 @@ public class JournalMarksController : MonoBehaviour
     private static JournalMarksController Instance;
     [SerializeField] private GameObject _mainRedPoint;
     [SerializeField] private GameObject _questsRedPoint;
+    [SerializeField] private GameObject _complitedQuestRedPoint;
     [SerializeField] private GameObject _statsRedPoint;
 
     private void Start()
@@ -34,11 +35,13 @@ public class JournalMarksController : MonoBehaviour
         {
             Instance._mainRedPoint.SetActive(true);
             Instance._questsRedPoint.SetActive(true);
+            Instance._complitedQuestRedPoint.SetActive(true);
         }
         else
         {
             Instance._mainRedPoint.SetActive(false);
             Instance._questsRedPoint.SetActive(false);
+            Instance._complitedQuestRedPoint.SetActive(false);
         }
     }
 

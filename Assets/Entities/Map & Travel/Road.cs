@@ -31,6 +31,7 @@ public class Road : MonoBehaviour
     private float _lengthOfRoad;
     public float LengthOfRoad => _lengthOfRoad;
 
+    public float _dangerMultiplier { get; private set; }
     private void Start()
     {
         _lengthsOfWays = new float[WayPoints.Count];
@@ -39,5 +40,19 @@ public class Road : MonoBehaviour
             _lengthsOfWays[i] = (WayPoints[i + 1].position - WayPoints[i].position).magnitude;
             _lengthOfRoad += _lengthsOfWays[i];
         }
+    }
+
+    public void SetRoadDangerMultiplier(float value)
+    {
+        _dangerMultiplier = value;
+        
+        if (_danger * _dangerMultiplier > 70)
+            _dangerMultiplier = 70f / _danger;
+        
+    }
+
+    public void SetNormalDangerMultiplier()
+    {
+        _dangerMultiplier = 1f;
     }
 }
