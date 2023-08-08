@@ -42,12 +42,21 @@ public class TestCheatGlobalEvents : MonoBehaviour
         informationField.text = "";
         foreach (IEventController eventController in eventControllers)
         {
-            informationField.text += $"<color=red>{eventController.GetType()}</color>: Следующий ивент запланирован на день {eventController.DateOfNextEvent}, час {eventController.HourOfNextEvent}. Запланированная длительность ивента: {eventController.DurationOfEvent}. Задержка между ивентами: {eventController.MinDelayToNextEvent}-{eventController.MaxDelayToNextEvent} дней. Последний ивент этого типа был в день {eventController.LastEventDay}\n";
+            informationField.text += $"<color=red>{eventController.GetType()}</color>: " +
+                $"Следующий ивент запланирован на день " +
+                $"{eventController.DateOfNextEvent}, час " +
+                $"{eventController.HourOfNextEvent}. Запланированная " +
+                $"длительность ивента: {eventController.DurationOfEvent}. " +
+                $"Задержка между ивентами: {eventController.MinDelayToNextEvent}-" +
+                $"{eventController.MaxDelayToNextEvent} дней. " +
+                $"Последний ивент этого типа был в день {eventController.LastEventDay}\n";
         }
         informationField.text += "\n <color=green>Активные ивенты:</color> \n";
         foreach (GlobalEvent_Base globalEvent in GlobalEventHandler.Instance.ActiveGlobalEvents)
         {
-            informationField.text += $"{(globalEvent.GlobalEventName == "" || globalEvent.GlobalEventName == null? "Безымянный": globalEvent.GlobalEventName)}. Осталось {globalEvent.DurationHours} часов. {globalEvent.Description}\n";
+            informationField.text += $"" +
+                $"{(globalEvent.GlobalEventName == "" || globalEvent.GlobalEventName == null? "Безымянный": globalEvent.GlobalEventName)}. " +
+                $"Осталось {globalEvent.DurationHours} часов. {globalEvent.Description}\n";
         }
     }
 

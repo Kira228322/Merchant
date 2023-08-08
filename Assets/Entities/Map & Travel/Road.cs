@@ -31,7 +31,7 @@ public class Road : MonoBehaviour
     private float _lengthOfRoad;
     public float LengthOfRoad => _lengthOfRoad;
 
-    public float _dangerMultiplier { get; private set; }
+    public float DangerMultiplier { get; private set; }
     private void Start()
     {
         _lengthsOfWays = new float[WayPoints.Count];
@@ -43,16 +43,17 @@ public class Road : MonoBehaviour
     }
 
     public void SetRoadDangerMultiplier(float value)
+    //Java?
     {
-        _dangerMultiplier = value;
+        DangerMultiplier = value;
         
-        if (_danger * _dangerMultiplier > 70)
-            _dangerMultiplier = 70f / _danger;
+        if (_danger * DangerMultiplier > 70)
+            DangerMultiplier = 70f / _danger;
         
     }
 
     public void SetNormalDangerMultiplier()
     {
-        _dangerMultiplier = 1f;
+        DangerMultiplier = 1f;
     }
 }

@@ -144,7 +144,10 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
             Debug.Log("Test Load");
             FindObjectOfType<GameManager>().LoadGame();
         }
-
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            Debug.Log(GlobalEventHandler.Instance.ActiveGlobalEvents.Count);
+        }
 
 
 
