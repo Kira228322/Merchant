@@ -112,33 +112,33 @@ public class DialogueManager : MonoBehaviour
             Debug.LogError("В Ink предполагается, что этот Npc QuestGiver, а на самом деле не так. Ошибка в написании диалога");
             return "null";
         });
-        _currentStory.BindExternalFunction("get_active_quest_for_this_npc", () =>
-        {
-            //Возвращает первый квест из активных для этого нпс.
-            //Я не знаю, как передать массив в Ink, поэтому буду работать с таким предположением, что
-            //у questGiver нпс не может быть более одного активного квеста за раз
-            List<Quest> activeQuests = QuestHandler.GetActiveQuestsForThisNPC(_currentNPC.NpcData.ID);
-            if (activeQuests.Count > 0) 
-                return activeQuests[0].QuestSummary;
-            return "null";
-        });
-        _currentStory.BindExternalFunction("get_active_quests_for_this_npc", () =>
+        _currentStory.BindExternalFunction("get_activeQuestList", () =>
         {
             //UPD 03.08.23: Теперь я знаю, как передавать массивы,
             //а предположение что у нпс не может быть двух квестов достаточно глупо.
             //Поэтому делаю чтоб было нормально
+            //UPD 09.08.23: После продолжительных исследований выяснилось,
+            //что нихуя я не знаю, как передавать массивы. Зато придумал любопытнейший костыль:
+            //Можно же передавать сплошную строку, а потом сделать экст.функцию contains чтобы определять,
+            //содержит ли эта строка нужное.
+            //Например квесты zheba_strela и zheba_cactus передадутся как zheba_strelazheba_cactus
             List<Quest> activeQuests = QuestHandler.GetActiveQuestsForThisNPC(_currentNPC.NpcData.ID);
-            var resultList = new InkList();
+            string result = "";
             if (activeQuests.Count > 0)
             {
                 foreach (Quest quest in activeQuests)
                 {
-                    resultList.AddItem(quest.QuestSummary);
-                    Debug.Log("'added' " + quest.QuestSummary);
+                    result += quest.QuestSummary;
                 }
-                return resultList;
             }
-            return "null";
+            return result;
+
+        });
+        _currentStory.BindExternalFunction("contains", (string source, string substring) =>
+        {
+            if (source.Contains(substring))
+                return true;
+            return false;
         });
     }
     #endregion

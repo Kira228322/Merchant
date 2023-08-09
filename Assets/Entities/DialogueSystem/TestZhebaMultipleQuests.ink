@@ -1,5 +1,4 @@
 INCLUDE MainInkLibrary.ink
-
 ->greeting
 
 === greeting ===
@@ -9,9 +8,10 @@ INCLUDE MainInkLibrary.ink
 
 
 === general ===
-LIST myList = amogus
-~ myList = get_active_quests_for_this_npc()
-~debug_log(myList)
+
+~temp questSummaries = get_activeQuestList()
+~debug_log(contains(questSummaries, "zheba_cactus"))
+~debug_log(contains(questSummaries, "zheba_strela"))
 
 +[Дай квест 1]
     Даю
