@@ -84,12 +84,14 @@ public class DialogueManager : MonoBehaviour
                     {
                         if (giveItemsGoal.RequiredIDOfNPC == _currentNPC.NpcData.ID)
                         {
-                            return Player.Instance.Inventory.HasEnoughItemsOfThisItemData(
-                                ItemDatabase.GetItem(giveItemsGoal.RequiredItemName), 
-                                giveItemsGoal.RequiredAmount);
+                            if (!Player.Instance.Inventory.HasEnoughItemsOfThisItemData(
+                                ItemDatabase.GetItem(giveItemsGoal.RequiredItemName),
+                                giveItemsGoal.RequiredAmount))
+                                return false;
                         }
                     }
                 }
+                return true;
             }
             return "null";
         });
@@ -106,7 +108,6 @@ public class DialogueManager : MonoBehaviour
         {
             if (_currentNPC.NpcData is NpcQuestGiverData npcQuestGiverData)
             {
-                //TODO: не должны дублироваться, если уже активен такой квест
                 return npcQuestGiverData.GiveRandomQuest().questSummary;
             }
             Debug.LogError("В Ink предполагается, что этот Npc QuestGiver, а на самом деле не так. Ошибка в написании диалога");
@@ -139,6 +140,10 @@ public class DialogueManager : MonoBehaviour
             if (source.Contains(substring))
                 return true;
             return false;
+        });
+        _currentStory.BindExternalFunction("is_empty", (string str) =>
+        {
+            return str == "";
         });
     }
     #endregion

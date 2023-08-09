@@ -27,6 +27,22 @@ public class NpcQuestGiverData : NpcData, IResetOnExitPlaymode, ISaveable<NpcQue
     public QuestParams GiveRandomQuest()
     {
         SetCooldown();
+        List<PregenQuestSO> questsToRoll = new(pregenQuests);
+        while (questsToRoll.Count != 0)
+        {
+            PregenQuestSO rolledQuest = questsToRoll[Random.Range(0, questsToRoll.Count)];
+            if (QuestHandler.GetActiveQuestBySummary(rolledQuest.QuestSummary) != null) //такой квест уже висит
+                questsToRoll.Remove(rolledQuest);
+            else return rolledQuest.GenerateQuestParams();
+        }
+        //Если квесты, которые можно зароллить у нпс закончились в этом while => они все уже активные.
+        //Если здесь возвращать null, то это нужно будет учитывать также при написании диалогов
+        //Значит, об этом придется помнить и потенциально это может создать баги,
+        //которые даже не выявятся во время теста и попадут в финальную игру (потому что рандом)
+        //Поэтому здесь будет преграда в виде костыля что если не удалось найти уникального квеста,
+        //то всё-таки выдастся дублирующийся.
+        //Всё равно в игре такое вряд ли случится, потому что у квестов должен будет
+        //быть срок на выполнение в 7 дней (как раз кулдаун квестгивера), но всё-таки подстрахуюсь
         return pregenQuests[Random.Range(0, pregenQuests.Count)].GenerateQuestParams();
     }
     public void SetCooldown()

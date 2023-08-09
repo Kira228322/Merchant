@@ -1,0 +1,43 @@
+get_quest_state(questSummary)
+Возвращает quest.CurrentState или null, если квест не был взят.
+
+check_if_quest_has_been_taken(questSummary)
+Возвращает true, если квест с таким summary был когда-либо взят (в том числе завершен), или false иначе.
+Мало смысла использовать для многоразовых (дублирующихся) квестов.
+
+set_color(colorName)
+Устанавливает цвет текста. Поддерживаются следующие цвета:
+red, cyan, blue, darkblue, lightblue, purple, yellow, lime, fuchsia, white, silver, grey, black, orange, brown, maroon, green, olive, navy, teal, aqua, magenta
+Или в формате #00FF00
+
+add_quest(questSummary)
+Добавляет игроку квест с указанным questSummary. Квест должен быть в датабазе PregenQuestSO.
+
+invoke_dialogue_event(line)
+Вызывает ивент, на который реагируют квесты. line должна быть такая, как указано в квесте. (RequiredLine или FailingLine)
+
+debug_log(param)
+Дублирует Debug.Log(string param).
+
+has_enough_items(string questSummary)
+Если квест неактивен/не взят, возвращает "null"
+Иначе проверяет все GiveItemsGoal в этом квесте и возвращает false, если хотя бы в одном GiveItemsGoal не хватает предметов.
+Если везде предметов хватает, либо квест не содержал GiveItemsGoal вообще, возвращает true.
+
+is_questgiver_ready_to_give_quest()
+Если НПС - квестгивер, и не находится на кулдауне для выдачи квеста, возвращает true. Если кулдаун - false.
+Если НПС - не квестгивер, возвращается "null" и ошибка в Debug.Log.
+
+get_random_questparams_of_questgiver()
+Получает случайную строку questParams от этого квестгивера и уводит его на кулдаун.
+Если НПС - не квестгивер, возвращается "null" и ошибка в Debug.Log.
+
+get_activeQuestList()
+Возвращает строку, в которой соединены все questSummary активных квестов для этого нпс.
+Строку необходимо обрабатывать через метод contains(source, substring).
+
+contains(source, substring)
+Возвращает true, если строка source содержит строку substring. Иначе возвращает false.
+
+is_empty(str)
+Возвращает true, если строка выглядит как "". Иначе возвращает false.
