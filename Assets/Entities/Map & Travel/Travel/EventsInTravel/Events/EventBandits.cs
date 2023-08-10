@@ -11,11 +11,9 @@ public class EventBandits : EventInTravel
     private float _playerWealthDistribution;
     private int _playerTotalWealth;
     private int _itemTotalWealth;
-    private CanvasWarningGenerator _canvasWarningGenerator;
     public override void SetButtons()
     {
-        _canvasWarningGenerator = FindObjectOfType<CanvasWarningGenerator>();
-        ButtonsLabel.Add("Постараться уехать");
+        ButtonsLabel.Add("Попытаться уехать");
 
         _wealthTaken = Random.Range(_minWealthTaken, _maxWealthTaken);
         _itemTotalWealth = 0;
@@ -48,22 +46,20 @@ public class EventBandits : EventInTravel
                 if (_playerWealthDistribution >= _wealthTaken)
                 {
                     TakePlayersMoney((int)(_playerTotalWealth * _wealthTaken));
-                    _canvasWarningGenerator.CreateWarning("Ограбление", $"Бандиты забрали {_playerTotalWealth * _wealthTaken} золота");
+                    _eventWindow.ChangeDescription($"Ограбление. Бандиты забрали {_playerTotalWealth * _wealthTaken} золота");
                 }
                 else
                 {
                     TakePlayersItems((int)(_playerTotalWealth * _wealthTaken));
-                    _canvasWarningGenerator.CreateWarning("Ограбление", $"Бандиты забрали вещи на сумму {_playerTotalWealth * _wealthTaken} золота");
+                    _eventWindow.ChangeDescription($"Ограбление. Бандиты забрали вещи на сумму {_playerTotalWealth * _wealthTaken} золота");
                 }
                 break;
             case 2:
-                {
-                    TakePlayersItems((int)(_playerTotalWealth * _wealthTaken));
-                    _canvasWarningGenerator.CreateWarning("Ограбление", $"Бандиты забрали вещи на сумму {_playerTotalWealth * _wealthTaken} золота");
-                }
+                TakePlayersItems((int)(_playerTotalWealth * _wealthTaken));
+                _eventWindow.ChangeDescription($"Ограбление. Бандиты забрали вещи на сумму {_playerTotalWealth * _wealthTaken} золота");
                 break;
         }
-        _eventHandler.EventEnd();
+        
     }
 
     private void TryRunningAway()
@@ -74,7 +70,11 @@ public class EventBandits : EventInTravel
             int moneyTaken = (int)(Player.Instance.Money * _wealthTaken);
             TakePlayersItems(itemsTaken);
             TakePlayersMoney(moneyTaken);
-            _canvasWarningGenerator.CreateWarning("Неудача", $"Бандиты забрали вещи на сумму {itemsTaken} золота, а также {moneyTaken} золота");
+            _eventWindow.ChangeDescription($"Неудача. Бандиты забрали вещи на сумму {itemsTaken} золота, а также {moneyTaken} золота");
+        }
+        else
+        {
+            _eventWindow.ChangeDescription("Вам чудом удалось сбежать от бандитов. Ваши деньги и имущество цело");
         }
     }
     private void TakePlayersMoney(int amount)

@@ -32,6 +32,6 @@ public class EventTraveler : EventInTravel
             case 1:
                 break;
         }
-        _eventHandler.EventEnd();
+        
     }
 }

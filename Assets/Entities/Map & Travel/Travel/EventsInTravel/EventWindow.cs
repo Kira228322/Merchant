@@ -15,14 +15,22 @@ public class EventWindow : MonoBehaviour
     [SerializeField] private Transform _sceneContainer;
     [SerializeField] private GameObject _buttonPrefab;
     private Animator _animator;
+    private TravelEventHandler _eventHandler;
 
     private void Start()
     {
         _animator = GetComponent<Animator>();
+        _eventHandler = FindObjectOfType<TravelEventHandler>();
+    }
+
+    public void ChangeDescription(string text)
+    {
+        _description.text = text;
     }
 
     public void Init(EventInTravel eventInTravel)
     {
+        eventInTravel.Init(this);
         _eventNameText.text = eventInTravel.EventName;
         _description.text = eventInTravel.Description;
 
@@ -41,10 +49,21 @@ public class EventWindow : MonoBehaviour
             EventInTravelButton button = Instantiate(_buttonPrefab, _contentButtons).GetComponent<EventInTravelButton>();
             button.number = i;
             button.ButtonComponent.onClick.AddListener(() => travelEvent.OnButtonClick(button.number));
+            button.ButtonComponent.onClick.AddListener(() => DeleteAllButtons());
             button.ButtonText.text = travelEvent.ButtonsLabel[i];
         }
     }
 
+    public void DeleteAllButtons()
+    {
+        for (int i = 0; i < _contentButtons.childCount; i++)
+            Destroy(_contentButtons.GetChild(_contentButtons.childCount - 1 - i).gameObject);
+        
+        EventInTravelButton button = Instantiate(_buttonPrefab, _contentButtons).GetComponent<EventInTravelButton>();
+        button.ButtonComponent.onClick.AddListener(() => _eventHandler.EventEnd());
+        button.ButtonText.text = "Продолжить";
+    }
+    
     public IEnumerator EventEnd()
     {
         _animator.SetTrigger("EventEnd");

@@ -8,12 +8,8 @@ public class EventPost : EventInTravel
     private bool contrabandSpotted = false;
     private List<InventoryItem> contrabandItems = new();
     private int avgPriceOfContraband = 0;
-    private CanvasWarningGenerator canvasWarningGenerator;
     public override void SetButtons()
     {
-
-        canvasWarningGenerator = FindObjectOfType<CanvasWarningGenerator>();
-
         foreach (Item bannedItem in BannedItemsHandler.Instance.BannedItems)
         {
             contrabandItems.AddRange(Player.Instance.Inventory.GetInventoryItemsOfThisData(bannedItem));
@@ -49,6 +45,10 @@ public class EventPost : EventInTravel
                     //Отдать всю контрабанду
                     foreach (Item bannedItem in BannedItemsHandler.Instance.BannedItems)
                         Player.Instance.Inventory.RemoveAllItemsOfThisItemData(bannedItem);
+                    if (contrabandSpotted)
+                        _eventWindow.ChangeDescription("Вы передали всю контрабанду блюстителю порядка");
+                    else
+                        _eventWindow.ChangeDescription("У вас все чисто. Охрана позволяет вам проехать.");
                     break;
                 case 1:
                     //Предложить немного золота, 50% шанс
@@ -57,8 +57,9 @@ public class EventPost : EventInTravel
                     {
                         foreach (Item bannedItem in BannedItemsHandler.Instance.BannedItems)
                             Player.Instance.Inventory.RemoveAllItemsOfThisItemData(bannedItem);
-                        canvasWarningGenerator.CreateWarning("Неудача", "Стражник взял взятку, но всё равно забрал контрабанду");
+                        _eventWindow.ChangeDescription("Неудача. Стражник взял взятку, но всё равно забрал контрабанду");
                     }
+                    _eventWindow.ChangeDescription("Вам удалось договориться со стражником");
                     break;
                 case 2:
                     //Предложить много золота, 80% шанс
@@ -67,13 +68,13 @@ public class EventPost : EventInTravel
                     {
                         foreach (Item bannedItem in BannedItemsHandler.Instance.BannedItems)
                             Player.Instance.Inventory.RemoveAllItemsOfThisItemData(bannedItem);
-                        canvasWarningGenerator.CreateWarning("Неудача", "Стражник взял взятку, но всё равно забрал контрабанду");
+                        _eventWindow.ChangeDescription("Неудача. Стражник взял взятку, но всё равно забрал контрабанду");
                     }
+                    _eventWindow.ChangeDescription("Вам удалось договориться со стражником");
                     break;
             }
         }
         //else: contrabandSpotted == false. Пройти проверку и ехать дальше. Ничего не происходит
-        _eventHandler.EventEnd();
     }
 
 }

@@ -25,6 +25,6 @@ public class EventWagonTrade : EventInTravel
             case 1:
                 break;
         }
-        _eventHandler.EventEnd();
+        
     }
 }

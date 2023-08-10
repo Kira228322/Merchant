@@ -20,6 +20,6 @@ public class EventSunflower : EventInTravel
             case 1:
                 break;
         }
-        _eventHandler.EventEnd();
+        
     }
 }

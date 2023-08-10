@@ -19,6 +19,5 @@ public class EventAdvertisement : EventInTravel
             case 1:
                 break;
         }
-        _eventHandler.EventEnd();
     }
 }

@@ -22,6 +22,6 @@ public class EventBumpyRoad : EventInTravel
             case 1:
                 break;
         }
-        _eventHandler.EventEnd();
+        
     }
 }
