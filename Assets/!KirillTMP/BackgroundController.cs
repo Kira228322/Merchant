@@ -34,11 +34,11 @@ public class BackgroundController : MonoBehaviour
         _nearBackground.uvRect = new Rect(new Vector2(_nearBackground.uvRect.x + delta *_parallaxFactor, 0), _nearBackground.uvRect.size);
         
         float value = (currentPositionX - _leftEdgeX) / (_rightEdgeX - _leftEdgeX);
-        _farBackground.uvRect = new Rect(new Vector2(math.lerp(-0.044f, 0.044f, value), 0), _farBackground.uvRect.size);
+        _farBackground.uvRect = new Rect(new Vector2(math.lerp(-0.083f, 0.083f, value), 0), _farBackground.uvRect.size);
     }
 
     private void Update()
     {
-        UpdateBackground(Player.Instance.transform.position.x);
+        // UpdateBackground(Player.Instance.transform.position.x);
     }
 }

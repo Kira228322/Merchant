@@ -140,11 +140,20 @@ public class Region : MonoBehaviour
             currentQuantity = A - C1 - 1;
 
         budget += P / 2;
-        budget += Random.Range(-budget/10, budget/10 +1);
+        budget += Random.Range(-budget/10, budget/10 + 1);
         
         int boughtCount = (int)Math.Round(budget / ((float)A / (currentQuantity + C) - B));
         int produceCount = (int)Math.Round(budget / ((float)A / (-currentQuantity + A - C1) - B));
 
+        if (produceCount == boughtCount) // 10%, что если товара на рынке равновесное число, то при рестоке это значение 
+            if (Random.Range(0, 10) == 0) // сдвинется с равновесного. Чтобы был хоть иногда какой-то движ кроме ивентов
+            {
+                if (Random.Range(0, 2) == 0)
+                    produceCount += Q / 6 + 2;
+                else
+                    boughtCount += Q / 6 + 2;
+            }
+        
         return produceCount - boughtCount;
     }
 }
