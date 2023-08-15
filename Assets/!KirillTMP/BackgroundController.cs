@@ -37,8 +37,5 @@ public class BackgroundController : MonoBehaviour
         _farBackground.uvRect = new Rect(new Vector2(math.lerp(-0.083f, 0.083f, value), 0), _farBackground.uvRect.size);
     }
 
-    private void Update()
-    {
-        // UpdateBackground(Player.Instance.transform.position.x);
-    }
+    
 }

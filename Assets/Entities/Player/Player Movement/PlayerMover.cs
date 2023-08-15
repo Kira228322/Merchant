@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class PlayerMover : MonoBehaviour
 {
+    [SerializeField] private BackgroundController _backgroundController;
     [SerializeField] private ContactFilter2D _contactFilter2D;
     private float _speed = 3.5f;
     public float Speed => _speed;
@@ -26,7 +27,10 @@ public class PlayerMover : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
         _minDistToLet = MinConstDist + _collider.bounds.size.x/2; 
         _lastValue = transform.position.x;
+        _backgroundController.UpdateBackground(transform.position.x);
     }
+
+    
 
     public void StartMove(Vector3 startPos,Vector3 targetPos)
     {
@@ -77,6 +81,7 @@ public class PlayerMover : MonoBehaviour
             for (float i = 1; i <= count; i++) 
             {
                 transform.position = new Vector3(math.lerp(startPos.x, targetPos.x, i/count), transform.position.y);
+                _backgroundController.UpdateBackground(transform.position.x);
                 yield return waitForSeconds;
                     // проверка если игрок спуститься вниз, то y поменяется и нужно снова отслеживать препятствие
                 if (i % 5 == 0)
@@ -106,6 +111,7 @@ public class PlayerMover : MonoBehaviour
             for (float i = 1; i <= count; i++)
             {
                 transform.position = new Vector3(math.lerp(startPos.x, targetPosX, i / count), transform.position.y);
+                _backgroundController.UpdateBackground(transform.position.x);
                 yield return waitForSeconds;
                 if (i % 5 == 0)
                     if (_rigidbody.Cast(castDirection, _contactFilter2D, raycastHit2D,
@@ -122,7 +128,7 @@ public class PlayerMover : MonoBehaviour
 
             if (!moveIsDone)
             {
-                waitForSeconds = new WaitForSeconds(0.04f); // задержка перед подпрыгиванием 
+                waitForSeconds = new WaitForSeconds(2 * deltaTime); // задержка перед подпрыгиванием 
                 yield return waitForSeconds;
                 castDirection = new Vector2(raycastHit2D[0].point.x - transform.position.x, 0).normalized;
                 castDirection += new Vector2(0, 2.25f); // max высота ступеньки, на которую может
@@ -140,6 +146,7 @@ public class PlayerMover : MonoBehaviour
                 yield return waitForSeconds;
                 while (!_collider.IsTouchingLayers()) // ждем пока приземлимся 
                 {
+                    _backgroundController.UpdateBackground(transform.position.x);
                     yield return waitForSeconds;
                 }
                 
