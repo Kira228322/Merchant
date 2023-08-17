@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class CameraFollow : MonoBehaviour
 {
     public Transform target;
-    public float smoothTime = 0.3f;
+    public float smoothTime = 0.2f;
     private Vector3 velocity = Vector3.zero;
 
     private void LateUpdate()

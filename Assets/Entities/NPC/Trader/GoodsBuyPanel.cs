@@ -63,6 +63,7 @@ public class GoodsBuyPanel : MonoBehaviour
             
             if (Player.Instance.Money < _cost)
             {
+                TradeManager.Instance.NotEnoughPlayerMoney();
                 return;
             }
             
@@ -74,11 +75,13 @@ public class GoodsBuyPanel : MonoBehaviour
             InventoryItem boughtItem = InventoryController.Instance.TryCreateAndInsertItem(Player.Instance.Inventory.ItemGrid, _item.Good, 1, _boughtDaysAgo, true);
             if (boughtItem == null) //не было места поместить вещь
             {
+                TradeManager.Instance.NotEnoughSpace();
                 return;
             }
 
             Player.Instance.Money -= _cost;
             _trader.NpcData.CurrentMoney += _cost;
+            TradeManager.Instance.ChangeTraderMoneyText(_trader.NpcData.CurrentMoney);
             CurrentCount--;
             
             if (IsOriginatedFromTrader)

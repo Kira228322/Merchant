@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -23,9 +24,14 @@ public class TradeManager : MonoBehaviour
     public GoodsSellPanel GoodsSellPanelPrefab => _goodsSellPanelPrefab;
     [SerializeField] private Transform _sellPanelContent;
     public Transform SellPanelContent => _sellPanelContent;
+    [SerializeField] private TMP_Text _traderMoney;
+    [SerializeField] private Animator _playerMoneyAnimator;
+    [SerializeField] private Animator _inventoryAnimator;
+    private Animator _traderMoneyAnimator;
 
     private void Start()
     {
+        _traderMoneyAnimator = _traderMoney.gameObject.GetComponent<Animator>();
         if (Instance == null)
         {
             Instance = this;
@@ -35,11 +41,31 @@ public class TradeManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    public void NotEnoughPlayerMoney()
+    {
+        _playerMoneyAnimator.SetTrigger("NotEnoughMoney");
+    }
+
+    public void NotEnoughTraderMoney()
+    {
+        _traderMoneyAnimator.SetTrigger("NotEnoughMoney");
+    }
+
+    public void NotEnoughSpace()
+    {
+        _inventoryAnimator.SetTrigger("NotEnoughSpace");
+    }
+    
+    
     public void OpenTradeWindow(NpcTrader trader)
     {
         InventoryController.Instance.enabled = false;
         _playerBlock.alpha = 0;
+        _playerBlock.blocksRaycasts = false;
+        GameManager.Instance.ButtonsBlock.SetActive(false);
         _closeTradeButton.SetActive(true);
+        
         OpenBuyPanel(trader);
         OpenSellPanel(trader);
         OpenInventory();
@@ -76,6 +102,8 @@ public class TradeManager : MonoBehaviour
             
         InventoryController.Instance.enabled = true;
         _playerBlock.alpha = 1;
+        _playerBlock.blocksRaycasts = true;
+        GameManager.Instance.ButtonsBlock.SetActive(true);
         _closeTradeButton.SetActive(false);
         BuyPanel.SetActive(false);
         SellPanel.SetActive(false);
@@ -84,6 +112,7 @@ public class TradeManager : MonoBehaviour
     private void OpenBuyPanel(NpcTrader trader)
     {
         BuyPanel.SetActive(true);
+        
         for (int i = BuyPanelContent.childCount - 1; i >= 0; i--)
             Destroy(BuyPanelContent.GetChild(i).gameObject);
 
@@ -105,7 +134,8 @@ public class TradeManager : MonoBehaviour
     private void OpenSellPanel(NpcTrader trader)
     {
         SellPanel.SetActive(true);
-
+        ChangeTraderMoneyText(trader.NpcData.CurrentMoney);
+        
         for (int i = SellPanelContent.childCount - 1; i >= 0; i--)
             Destroy(SellPanelContent.GetChild(i).gameObject);
 
@@ -114,6 +144,11 @@ public class TradeManager : MonoBehaviour
             GameObject tradersGoods = Instantiate(GoodsSellPanelPrefab.gameObject, SellPanelContent);
             tradersGoods.GetComponent<GoodsSellPanel>().Init(trader, Player.Instance.Inventory.ItemList[i], Player.Instance.Inventory.ItemGrid);
         }
+    }
+
+    public void ChangeTraderMoneyText(int money)
+    {
+        _traderMoney.text = money.ToString();
     }
     private void OpenInventory()
     {

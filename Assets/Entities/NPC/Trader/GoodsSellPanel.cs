@@ -53,7 +53,7 @@ public class GoodsSellPanel : MonoBehaviour
     public void Refresh()
     {
         NpcTrader.BuyCoefficient buyCoefficient = _trader.BuyCoefficients.FirstOrDefault(x => x.ItemType == _item.ItemData.TypeOfItem);
-        if (buyCoefficient == null || buyCoefficient.CountToBuy <= 0 || _trader.NpcData.CurrentMoney < _cost)
+        if (buyCoefficient == null || buyCoefficient.CountToBuy <= 0)
         {
             _sellButton.interactable = false;
         }
@@ -68,9 +68,14 @@ public class GoodsSellPanel : MonoBehaviour
 
     public void OnSellButtonClick()
     {
+        if (_trader.NpcData.CurrentMoney < _cost)
+        {
+            TradeManager.Instance.NotEnoughTraderMoney();
+            return;
+        }
         Player.Instance.Money += _cost;
         _trader.NpcData.CurrentMoney -= _cost;
-        
+        TradeManager.Instance.ChangeTraderMoneyText(_trader.NpcData.CurrentMoney);
         
         _playerInventoryItemGrid.RemoveItemsFromAStack(_item, 1);
         _currentCount--;
