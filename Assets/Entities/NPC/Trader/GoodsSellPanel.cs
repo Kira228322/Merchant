@@ -10,12 +10,12 @@ using UnityEngine.UI;
 public class GoodsSellPanel : MonoBehaviour
 {
     [FormerlySerializedAs("_cost")] [SerializeField] private TMP_Text _costText;
-    private int _cost;
     [SerializeField] private TMP_Text _countText;
     [SerializeField] private Image _icon;
     [SerializeField] private TMP_Text _itemName;
     [SerializeField] private SlidersController _spoilSlider;
     [SerializeField] private Button _sellButton;
+    private int _cost;
     private int _currentCount;
     private ItemGrid _playerInventoryItemGrid;
     private InventoryItem _item;
@@ -89,7 +89,7 @@ public class GoodsSellPanel : MonoBehaviour
         else
         {
             GameObject tradersGoods = Instantiate(TradeManager.Instance.GoodsBuyPanelPrefab.gameObject, TradeManager.Instance.BuyPanelContent);
-            tradersGoods.GetComponent<GoodsBuyPanel>().Init(_trader, _item.ItemData, _item.BoughtDaysAgo, false, 1);
+            tradersGoods.GetComponent<GoodsBuyPanel>().Init(_trader, _item.ItemData, _item.BoughtDaysAgo, false, 1, _cost);
         }
         if (_currentCount <= 0)
         {

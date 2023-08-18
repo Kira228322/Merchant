@@ -23,6 +23,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: dda987acf4bc2a148a32ee077cd93837, type: 2}
   - {fileID: 11400000, guid: e6572bc3b8ee63a4b8071ae6ce8579b7, type: 2}
   - {fileID: 11400000, guid: 997f1667faefd604aad534ee42560049, type: 2}
+  - {fileID: 11400000, guid: f79f4b99f7a29d249984ef4bb821b632, type: 2}
   IsBlackMarket: 0
   _baseGoods:
   - Good: {fileID: 11400000, guid: 86ed694dd10ff2a4f8940bdcaa5165db, type: 2}
@@ -42,46 +43,31 @@ MonoBehaviour:
     CurrentCount: 33
     CurrentPrice: 73
   _baseBuyCoefficients:
-  - itemType: 0
-    Coefficient: 0.65
-    DefaultCountToBuy: 150
-  - itemType: 3
-    Coefficient: 0.55
-    DefaultCountToBuy: 30
-  - itemType: 4
-    Coefficient: 0.6
-    DefaultCountToBuy: 50
-  - itemType: 6
-    Coefficient: 0.315
-    DefaultCountToBuy: 50
-  - itemType: 1
-    Coefficient: 0.7
-    DefaultCountToBuy: 30
-  - itemType: 5
+  - ItemType: 0
     Coefficient: 1
     DefaultCountToBuy: 20
-  - itemType: 1
-    Coefficient: 0.70000005
+  - ItemType: 1
+    Coefficient: 0.7
     DefaultCountToBuy: 2
-  - itemType: 2
-    Coefficient: 0.675
+  - ItemType: 2
+    Coefficient: 0.7
     DefaultCountToBuy: 0
-  - itemType: 3
+  - ItemType: 3
     Coefficient: 0.8
     DefaultCountToBuy: 10
-  - itemType: 4
+  - ItemType: 4
     Coefficient: 0.1
     DefaultCountToBuy: 0
-  - itemType: 5
+  - ItemType: 5
     Coefficient: 0.1
     DefaultCountToBuy: 0
-  - itemType: 6
+  - ItemType: 6
     Coefficient: 0.1
     DefaultCountToBuy: 0
-  - itemType: 7
+  - ItemType: 7
     Coefficient: 0.1
     DefaultCountToBuy: 0
-  - itemType: 8
+  - ItemType: 8
     Coefficient: 0.1
     DefaultCountToBuy: 0
   Goods: []

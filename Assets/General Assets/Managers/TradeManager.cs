@@ -97,7 +97,7 @@ public class TradeManager : MonoBehaviour
                 newPrice = panel.Item.Good.Price + Random.Range(1, panel.Item.Good.Price / 12 + 2);
             
             panel.Trader.AdditiveGoods.Add(new NpcTrader.TraderGood
-                (panel.Item.Good.Name, panel.CurrentCount, panel.Item.CurrentCount, newPrice));
+                (panel.Item.Good.Name, panel.CurrentCount, panel.CurrentCount, newPrice));
         }
             
         InventoryController.Instance.enabled = true;

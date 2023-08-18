@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -90,18 +91,27 @@ public class NpcTrader : Npc
     {
         TradeManager.Instance.OpenTradeWindow(this);
     }
-    
-    
 
     public void SellItem(Item item)
     {
-        foreach (TraderGood traderGood in Goods)
+        TraderGood traderGood = Goods.FirstOrDefault(good => good.Good.Name == item.Name);
+        if (traderGood != null)
         {
-            if (item == traderGood.Good)
+            traderGood.CurrentCount--;
+            return;
+        }
+        traderGood = AdditiveGoods.FirstOrDefault(good => good.Good.Name == item.Name);
+        if (traderGood != null)
+        {
+            traderGood.CurrentCount--;
+            if (traderGood.CurrentCount <= 0)
             {
-                traderGood.CurrentCount--;
-                break;
+                AdditiveGoods.Remove(traderGood);
             }
+        }
+        else
+        {
+            Debug.LogError("Такого предмета не было в Goods или AdditiveGoods");
         }
     }
 }

@@ -10,10 +10,19 @@ using UnityEngine.Serialization;
 public class GoodsBuyPanel : MonoBehaviour
 {
     [FormerlySerializedAs("_cost")] [SerializeField] private TMP_Text _costText;
-    private int _cost;
     [SerializeField] private TMP_Text _countText;
     [SerializeField] private Image _icon;
     [SerializeField] private TMP_Text _itemName;
+    private int _cost;
+    private int _currentCount;
+    //TODO:  акой смысл в _currentCount, если это можно отслеживать в _item.CurrentCount?
+    //√рубо говор€, зачем раздел€ть CurrentCount у панели и у того TraderGood, который она содержит?
+    private float _boughtDaysAgo;
+    private NpcTrader.TraderGood _item;
+    private NpcTrader _trader;
+    public bool IsOriginatedFromTrader;
+    public NpcTrader Trader => _trader;
+    public NpcTrader.TraderGood Item => _item;
     public int CurrentCount
     {
         get { return _currentCount; }
@@ -23,17 +32,10 @@ public class GoodsBuyPanel : MonoBehaviour
             _countText.text = _currentCount.ToString();
         }
     }
-    private int _currentCount;
-    private NpcTrader.TraderGood _item;
-    private NpcTrader _trader;
-    public NpcTrader Trader => _trader;
-    private float _boughtDaysAgo;
-    public bool IsOriginatedFromTrader;
-    public NpcTrader.TraderGood Item => _item;
     public void Init(NpcTrader trader, Item goods, float boughtDaysAgo, bool isOriginatedFromTrader, int count)
     {
         _trader = trader;
-        _item = new NpcTrader.TraderGood(goods.Name, 1,1, goods.Price);
+        _item = new NpcTrader.TraderGood(goods.Name, 1,1, goods.Price); //TODO проверить: должно быть 1, 1 или count, count
         _boughtDaysAgo = boughtDaysAgo;
         IsOriginatedFromTrader = isOriginatedFromTrader;
         CurrentCount = count;
@@ -42,7 +44,21 @@ public class GoodsBuyPanel : MonoBehaviour
         _icon.sprite = _item.Good.Icon;
         _itemName.text = goods.Name;
     }
-
+    public void Init(NpcTrader trader, Item goods, float boughtDaysAgo, bool isOriginatedFromTrader, int count, int price)
+    {
+        //ѕерегрузка, в которой цена предмета не считаетс€ на основе экономики, а остаетс€ такой как при продаже.
+        //Ќужно дл€ того, чтобы создавать новую GoodsBuyPanel из GoodsSellPanel. „тобы игрок мог "выкупить" предмет
+        //по той цене, по которой продал до закрыти€ окна торговли.
+        _trader = trader;
+        _item = new NpcTrader.TraderGood(goods.Name, 1, 1, goods.Price); //TODO проверить: должно быть 1, 1 или count, count
+        _boughtDaysAgo = boughtDaysAgo;
+        IsOriginatedFromTrader = isOriginatedFromTrader;
+        CurrentCount = count;
+        _cost = price;
+        _costText.text = _cost.ToString();
+        _icon.sprite = _item.Good.Icon;
+        _itemName.text = goods.Name;
+    }
     public void Init(NpcTrader trader, NpcTrader.TraderGood goods, float boughtDaysAgo, bool isOriginatedFromTrader, int count)
     {
         _trader = trader;
