@@ -10,6 +10,7 @@ public class NoticeboardUI : MonoBehaviour
     [SerializeField] private List<Transform> _noticeSpawnPoints;
     [SerializeField] private List<GameObject> _eventNoticePrefabs;
     [SerializeField] private List<GameObject> _questNoticePrefabs;
+    [SerializeField] private List<GameObject> _infoNoticePrefabs;
     [SerializeField] private NoticeInformationPanel _noticeInformationPanel;
     public List<Transform> NoticeSpawnPoints => _noticeSpawnPoints;
     private Noticeboard _noticeboard;
@@ -34,6 +35,9 @@ public class NoticeboardUI : MonoBehaviour
                 case Noticeboard.CompactedEventNotice eventNotice:
                     AddEventNotice(i, eventNotice.name, eventNotice.description, eventNotice.globalEvent);
                     break;
+                case Noticeboard.CompactedInfoNotice infoNotice:
+                    AddInfoNotice(i, infoNotice.name, infoNotice.description);
+                    break;
                 default:
                     Debug.LogError("Здесь нет такого типа notice");
                     break;
@@ -57,6 +61,15 @@ public class NoticeboardUI : MonoBehaviour
             .GetComponent<QuestNotice>();
         notice.transform.position = _randomizedSpawnPoints[spawnPointIndex].position;
         notice.RandomQuest = questParams;
+        notice.Initialize(_noticeboard, name, description, spawnPointIndex);
+        notice.DisplayButton.onClick.AddListener(() => OnNoticeClick(notice));
+        return notice;
+    }
+    private InfoNotice AddInfoNotice(int spawnPointIndex, string name, string description)
+    {
+        InfoNotice notice = Instantiate(_infoNoticePrefabs[Random.Range(0, _questNoticePrefabs.Count)], _noticeSpawnPoints[spawnPointIndex])
+            .GetComponent<InfoNotice>();
+        notice.transform.position = _randomizedSpawnPoints[spawnPointIndex].position;
         notice.Initialize(_noticeboard, name, description, spawnPointIndex);
         notice.DisplayButton.onClick.AddListener(() => OnNoticeClick(notice));
         return notice;

@@ -1,3 +1,4 @@
+using Mono.Cecil.Cil;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,7 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
     [SerializeField] private NoticeboardUI _noticeBoardWindowPrefab;
     [SerializeField] private SpriteRenderer _currentBoardSprite;
     [SerializeField] private List<Sprite> _boardSprites = new ();
+    [SerializeField] private InfoNoticeSO _infoNoticeSO;
     private float _distanceToUse = 3f;
     private int _cooldownHours = 48; // весты могут по€витьс€ только раз в столько часов
     private Transform _canvas;
@@ -77,12 +79,24 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
         while (spawnPointIndex < _compactedNoticeArray.Length && _uncheckedActiveGlobalEvents.Count != 0)
         {
             GlobalEvent_Base randomGlobalEvent = _uncheckedActiveGlobalEvents[Random.Range(0, _uncheckedActiveGlobalEvents.Count)];
-            if (randomGlobalEvent.GlobalEventName != null & randomGlobalEvent.Description != null)
+            if (randomGlobalEvent.GlobalEventName != null && randomGlobalEvent.Description != null)
             {
                 _compactedNoticeArray[spawnPointIndex] = new CompactedEventNotice(randomGlobalEvent);
                 spawnPointIndex++;
             }
             _uncheckedActiveGlobalEvents.Remove(randomGlobalEvent);
+        }
+
+        //—павн бесполезной информации по типу "продам гараж"
+
+        if(spawnPointIndex < _compactedNoticeArray.Length - 1)
+        {
+            int infoNoticesToAdd = Random.Range(0, _compactedNoticeArray.Length - spawnPointIndex);
+            List<CompactedInfoNotice> compactedNotices = _infoNoticeSO.GetRandomNoticeInfos(infoNoticesToAdd);
+            for (int i = 0; i < infoNoticesToAdd; i++)
+            {
+                _compactedNoticeArray[spawnPointIndex + i] = compactedNotices[i];
+            }
         }
 
         RefreshSprite();
@@ -177,6 +191,14 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
             this.globalEvent = globalEvent;
             description = globalEvent.Description;
             name = globalEvent.GlobalEventName;
+        }
+    }
+    public class CompactedInfoNotice : CompactedNotice
+    {
+        public CompactedInfoNotice(string name, string description)
+        {
+            this.name = name;
+            this.description = description;
         }
     }
 
