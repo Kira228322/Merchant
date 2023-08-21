@@ -18,6 +18,9 @@ public class PlentifulHarvestEventController : MonoBehaviour, IEventController<G
 
     public List<Location> PossibleLocations = new();
     //TODO: по готовности локаций вставить в инспекторе те, которые имеют хорошие условия для роста продуктов
+
+    //TODO: нужно как-то выбирать айтем, принадлежащий к категории "Пища", которого и так больше всего в деревне (типа они его производят)
+    //т.е роллить предмет в зависимости от заролленой локации.
     public GlobalEvent_PlentifulHarvest AddEvent()
     {
         GlobalEvent_PlentifulHarvest newEvent = new()

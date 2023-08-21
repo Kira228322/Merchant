@@ -46,6 +46,13 @@ public class BannedItemEventController : MonoBehaviour, IEventController<GlobalE
         HourOfNextEvent = Random.Range(1, 24);
         DurationOfEvent = Random.Range(5, 9); //дней
         ItemToBan = ItemDatabase.GetRandomItem();
+        if (BannedItemsHandler.Instance.IsItemBanned(ItemToBan))
+        {
+            ItemToBan = ItemDatabase.GetRandomItem(); 
+            //ѕовторно роллитс€, чтобы уменьшить шансы на бан двух одинаковых предметов.
+            //Ўанс и так невысок, а глубокие проверки чтобы достать точно не содержащийс€ рандомный айтем,
+            //кажутс€ невыгодными. ѕоэтому просто роллитс€ два раза в этом случае
+        }
     }
 
 }
