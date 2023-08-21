@@ -7,11 +7,19 @@ using Unity.VisualScripting;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using UnityEngine.UIElements;
 
 [RequireComponent(typeof(Volume))]
 public class DayNightCycle : MonoBehaviour
 {
+    [SerializeField]private RawImage _farBackground;
+    [SerializeField]private RawImage _nearBackground;
+    private Color _white = new Color(0.95f,0.95f,0.95f);
+    private Color _grey = new Color(0.8f,0.8f,0.8f);
+    private Color _darkGrey = new Color(0.25f,0.25f,0.25f);
+    private Color _black = new Color(0.18f,0.18f,0.18f);
+    
     private Volume _volume;
     private Light2D _sun;
     private List<Light2D> _lights = new();
@@ -75,8 +83,12 @@ public class DayNightCycle : MonoBehaviour
                 volumeWeight = Mathf.Cos(cosineValue * Mathf.PI) * 0.5f + 0.5f;
                 break;
         }
+        
         _volume.weight = volumeWeight + _rainWeightOffset;
-        _sun.intensity = Mathf.Lerp(0.13f, 0.96f, 1-volumeWeight); // 0.13 и 0.96 это min и max значения которыми может быть освещение
+        _sun.intensity = Mathf.Lerp(0.15f, 0.96f, 1-volumeWeight); // 0.15 и 0.96 это min и max значения которыми может быть освещение
+        _nearBackground.color = Color.Lerp(_white, _darkGrey, volumeWeight);
+        _farBackground.color = Color.Lerp(_grey, _black, volumeWeight);
+        
         if (_volume.weight >= 1) _volume.weight = 1;
         if (!_activateLights)
         {
