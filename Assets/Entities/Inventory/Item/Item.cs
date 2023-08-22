@@ -12,7 +12,7 @@ public class Item : ScriptableObject
     public enum ItemType
     {
         RichClothes, WarmClothes, LightClothers, CeramicProduct, EverydayItem, CostumeJewelry, SouthPlant, NorthPlant, 
-        Cactus
+        Cactus, MagicThing, Chemicals, Cosmetics, SouthFood, NorthFood, Food
     }
     
     public ItemType TypeOfItem;
@@ -22,7 +22,7 @@ public class Item : ScriptableObject
     [TextArea(2,5)]public string Description;
     public Sprite Icon;
     public int Price;
-    [Range(0,100)]public int Fragility; 
+    [Range(0,50)]public int Fragility; 
 
     public float Weight;
     public int MaxItemsInAStack;
