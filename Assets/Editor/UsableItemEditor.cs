@@ -5,12 +5,13 @@ using UnityEngine;
 
 
 [CustomEditor(typeof(UsableItem))]
-class UsableItemEditor : Editor
+class UsableItemEditor : ItemEditor
 {
     private UsableItem item;
-    private void OnEnable()
+    protected override  void OnEnable()
     {
         item = (UsableItem)target;
+        base.OnEnable();
     }
 
     public override void OnInspectorGUI()

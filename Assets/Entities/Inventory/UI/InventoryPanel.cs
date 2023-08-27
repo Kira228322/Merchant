@@ -24,31 +24,20 @@ public class InventoryPanel : MonoBehaviour
         
         
     }
-
-    private void OnPlayerSingletonChanged()
-    {
-        // https://forum.unity.com/threads/do-i-need-to-unsubscribe-if-an-object-containing-event-handler-is-destroyed.1062824/
-        // Пост №4. Сказано, что если обладатель ивента уничтожается, то нет нужды отписываться. Надеюсь, правда. Таким образом,
-        // просто переподписываюсь на тот же ивент.
-
-        Player.Instance.MoneyChanged += OnMoneyChanged;
-    }
-
+    
     private void OnEnable()
     {
-        Player.Instance.MoneyChanged += OnMoneyChanged;
         _playersInventory.WeightChanged += OnWeightChanged;
         Refresh();
+        _goldText.text = Player.Instance.Money.ToString();
 
     }
     private void OnDisable()
     {
-        Player.Instance.MoneyChanged -= OnMoneyChanged;
         _playersInventory.WeightChanged -= OnWeightChanged;
     }
     private void Refresh()
     {
-        _goldText.text = Player.Instance.Money.ToString();
         _weightText.text = _currentTotalWeight.ToString("F1") + " / " + _maxTotalWeight.ToString("F1"); //.ToString("F1") округляет до 1 знаков после запятой
         if (_playersInventory.IsOverencumbered)
         {
@@ -59,10 +48,6 @@ public class InventoryPanel : MonoBehaviour
             Color brown = new(125f / 255, 97f / 255, 65f / 255);
             _weightText.color = brown;
         }
-    }
-    private void OnMoneyChanged(int money)
-    {
-        Refresh();
     }
     private void OnWeightChanged(float currentWeight, float maxWeight)
     {

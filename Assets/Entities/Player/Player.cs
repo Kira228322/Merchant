@@ -32,12 +32,9 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
             {
                 _money = 0;
             }
-            MoneyChanged?.Invoke(Money);
+            
         }
     }
-
-    public event UnityAction<int> MoneyChanged;
-
 
     private void Awake()
     {

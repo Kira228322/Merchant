@@ -8,7 +8,7 @@ using UnityEditor;
 public class ItemEditor : Editor
 {
     private Item item;
-    private void OnEnable()
+    protected virtual  void OnEnable()
     {
         item = (Item)target;
     }

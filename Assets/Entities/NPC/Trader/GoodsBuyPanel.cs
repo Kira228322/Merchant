@@ -95,6 +95,7 @@ public class GoodsBuyPanel : MonoBehaviour
                 return;
             }
 
+            TradeManager.Instance.PlayerGoldDecrease(_cost);
             Player.Instance.Money -= _cost;
             _trader.NpcData.CurrentMoney += _cost;
             TradeManager.Instance.ChangeTraderMoneyText(_trader.NpcData.CurrentMoney);

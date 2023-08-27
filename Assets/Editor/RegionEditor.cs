@@ -27,6 +27,16 @@ public class RegionEditor : Editor
                 _region.tmpFloat.Add(1);
             }
         }
+
+        if (_region.tmpFloat.Count != Enum.GetValues(typeof(Item.ItemType)).Length)
+        {
+            _region.tmpFloat = new List<float>();
+        
+            foreach (var _ in Enum.GetValues(typeof(Item.ItemType)))
+            {
+                _region.tmpFloat.Add(1);
+            }
+        }
     
         GUILayout.Space(5);
         int i = 0;

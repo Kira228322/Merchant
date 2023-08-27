@@ -26,12 +26,14 @@ public class TradeManager : MonoBehaviour
     public Transform SellPanelContent => _sellPanelContent;
     [SerializeField] private TMP_Text _traderMoney;
     [SerializeField] private Animator _playerMoneyAnimator;
+    private AdditiveGoldAnimation _additiveGoldAnimation;
     [SerializeField] private Animator _inventoryAnimator;
     private Animator _traderMoneyAnimator;
 
     private void Start()
     {
         _traderMoneyAnimator = _traderMoney.gameObject.GetComponent<Animator>();
+        _additiveGoldAnimation = _playerMoneyAnimator.gameObject.GetComponent<AdditiveGoldAnimation>();
         if (Instance == null)
         {
             Instance = this;
@@ -40,6 +42,16 @@ public class TradeManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public void PlayerGoldIncrease(int amount)
+    {
+        _additiveGoldAnimation.PlayGoldIncrease(amount);
+    }
+
+    public void PlayerGoldDecrease(int amount)
+    {
+        _additiveGoldAnimation.PlayGoldDecrease(amount);
     }
 
     public void NotEnoughPlayerMoney()
