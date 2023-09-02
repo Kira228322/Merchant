@@ -83,16 +83,17 @@ public class GoodsBuyPanel : MonoBehaviour
                 return;
             }
             
-            if (!IsOriginatedFromTrader) 
-            {
-                //увеличить BuyCoefficient.CountToBuy с таким же типом как _item.TypeOfItem
-                _trader.BuyCoefficients.FirstOrDefault(x => x.ItemType == _item.Good.TypeOfItem).CountToBuy++;
-            }
             InventoryItem boughtItem = InventoryController.Instance.TryCreateAndInsertItem(Player.Instance.Inventory.ItemGrid, _item.Good, 1, _boughtDaysAgo, true);
             if (boughtItem == null) //не было места поместить вещь
             {
                 TradeManager.Instance.NotEnoughSpace();
                 return;
+            }
+            
+            if (!IsOriginatedFromTrader) 
+            {
+                //увеличить BuyCoefficient.CountToBuy с таким же типом как _item.TypeOfItem
+                _trader.BuyCoefficients.FirstOrDefault(x => x.ItemType == _item.Good.TypeOfItem).CountToBuy++;
             }
 
             TradeManager.Instance.PlayerGoldDecrease(_cost);

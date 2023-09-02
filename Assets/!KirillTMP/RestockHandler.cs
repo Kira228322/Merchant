@@ -44,13 +44,21 @@ public class RestockHandler : MonoBehaviour
     {
         foreach (var trader in traders)
         {
+            if (!trader.HaveAdditiveGoods)
+                continue;
+                
             if (trader.AdditiveGoods.Count > 7)
                 trader.AdditiveGoods.RemoveAt(Random.Range(6, trader.AdditiveGoods.Count));
             if (trader.AdditiveGoods.Count > 4)
                 trader.AdditiveGoods.RemoveAt(Random.Range(0, trader.AdditiveGoods.Count));
-
+            else
+            {
+                if (Random.Range(0,3) == 0)
+                    trader.AdditiveGoods.RemoveAt(Random.Range(0, trader.AdditiveGoods.Count));
+            }
+            
             if (Random.Range(0,3) == 0)
-                return;
+                continue;
             
             int count = Random.Range(1, 3); 
             for (int i = 0; i < count; i++)

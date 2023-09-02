@@ -8,6 +8,7 @@ public class NpcTraderData : NpcData, IResetOnExitPlaymode, ISaveable<NpcTraderS
 {
     public List<TraderType> TraderTypes;
     public bool IsBlackMarket;
+    public bool HaveAdditiveGoods;
 
     [HideInInspector, SerializeField] private List<NpcTrader.TraderGood> _baseGoods = new ();
     [HideInInspector, SerializeField] private List<NpcTrader.BuyCoefficient> _baseBuyCoefficients = new ();

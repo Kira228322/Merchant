@@ -30,12 +30,7 @@ public class RegionEditor : Editor
 
         if (_region.tmpFloat.Count != Enum.GetValues(typeof(Item.ItemType)).Length)
         {
-            _region.tmpFloat = new List<float>();
-        
-            foreach (var _ in Enum.GetValues(typeof(Item.ItemType)))
-            {
-                _region.tmpFloat.Add(1);
-            }
+            return;
         }
     
         GUILayout.Space(5);

@@ -104,6 +104,8 @@ public class GoodsSellPanel : MonoBehaviour
             sellPanel.Refresh();
         }
     }
+    
+    
 
     private int CalculatePrice(Item item)
     {
