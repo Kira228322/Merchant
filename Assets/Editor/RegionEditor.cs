@@ -28,6 +28,9 @@ public class RegionEditor : Editor
             }
         }
 
+        if (GUI.changed)
+            EditorUtility.SetDirty(_region);
+        
         if (_region.tmpFloat.Count != Enum.GetValues(typeof(Item.ItemType)).Length)
         {
             return;

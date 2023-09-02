@@ -25,7 +25,7 @@ public class GoodsSellPanel : MonoBehaviour
 
     public void Init(NpcTrader trader, InventoryItem itemToSell, ItemGrid playerInventoryItemGrid)
     {
-        
+        TradeManager.Instance.GoodsSellPanels.Add(this);
         _playerInventoryItemGrid = playerInventoryItemGrid;
         _trader = trader;
         _item = itemToSell;
@@ -73,10 +73,13 @@ public class GoodsSellPanel : MonoBehaviour
             TradeManager.Instance.NotEnoughTraderMoney();
             return;
         }
+        
         TradeManager.Instance.PlayerGoldIncrease(_cost);
         Player.Instance.Money += _cost;
         _trader.NpcData.CurrentMoney -= _cost;
         TradeManager.Instance.ChangeTraderMoneyText(_trader.NpcData.CurrentMoney);
+        MapManager.CurrentLocation.ChangeCountOfCurrentItemOnScene(_item.ItemData.Name, 1);
+        TradeManager.Instance.RefreshPriceOnThisGood(_item.ItemData.Name);
         
         _playerInventoryItemGrid.RemoveItemsFromAStack(_item, 1);
         _currentCount--;
@@ -104,8 +107,12 @@ public class GoodsSellPanel : MonoBehaviour
             sellPanel.Refresh();
         }
     }
-    
-    
+
+    public void RefreshPrice()
+    {
+        _cost = CalculatePrice(_item.ItemData);
+        _costText.text = _cost.ToString(); 
+    }
 
     private int CalculatePrice(Item item)
     {

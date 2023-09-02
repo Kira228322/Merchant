@@ -29,7 +29,8 @@ public class TradeManager : MonoBehaviour
     private AdditiveGoldAnimation _additiveGoldAnimation;
     [SerializeField] private Animator _inventoryAnimator;
     private Animator _traderMoneyAnimator;
-
+    public List<GoodsBuyPanel> GoodsBuyPanels = new ();
+    public List<GoodsSellPanel> GoodsSellPanels = new ();
     private void Start()
     {
         _traderMoneyAnimator = _traderMoney.gameObject.GetComponent<Animator>();
@@ -165,5 +166,20 @@ public class TradeManager : MonoBehaviour
     private void OpenInventory()
     {
         Player.Instance.Inventory.InventoryPanel.SetActive(true);
+    }
+
+    public void RefreshPriceOnThisGood(string itemName)
+    {
+        foreach (var goodsBuyPanel in GoodsBuyPanels)
+        {
+            if (goodsBuyPanel.Item.Good.Name == itemName)
+                goodsBuyPanel.RefreshPrice();
+        }
+
+        foreach (var goodsSellPanel in GoodsSellPanels)
+        {
+            if (goodsSellPanel.Item.ItemData.Name == itemName)
+                goodsSellPanel.RefreshPrice();
+        }
     }
 }

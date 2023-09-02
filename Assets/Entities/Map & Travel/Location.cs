@@ -64,7 +64,7 @@ public class Location : MonoBehaviour
     {
         //Здесь полагается, что в регионе уже подсосан словарь из файла.
         //Поэтому этот метод вызывается самим регионом, а не в Start
-        float coef = 1.1f * _populationOfVillage / _region.AveragePopulation;
+        float coef = 1.05f * _populationOfVillage / _region.AveragePopulation;
         foreach (var EconomyParam in _region.ItemEconomyParams)
         {
             ItemEconomyParams.Add(EconomyParam.Key, new[]
@@ -105,6 +105,12 @@ public class Location : MonoBehaviour
             }
             
         }
+    }
+
+    public void ChangeCountOfCurrentItemOnScene(string itemName, int value)
+    {
+        CountOfEachItem[itemName] += value;
+        _region.CountOfEachItem[itemName] += value;
     }
 
     public void DeleteItemsFromTraders(string itemToDeleteName)

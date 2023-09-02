@@ -34,6 +34,7 @@ public class GoodsBuyPanel : MonoBehaviour
     }
     public void Init(NpcTrader trader, Item goods, float boughtDaysAgo, bool isOriginatedFromTrader, int count)
     {
+        TradeManager.Instance.GoodsBuyPanels.Add(this);
         _trader = trader;
         _item = new NpcTrader.TraderGood(goods.Name, 1,1, goods.Price); //TODO проверить: должно быть 1, 1 или count, count
         _boughtDaysAgo = boughtDaysAgo;
@@ -61,6 +62,7 @@ public class GoodsBuyPanel : MonoBehaviour
     }
     public void Init(NpcTrader trader, NpcTrader.TraderGood goods, float boughtDaysAgo, bool isOriginatedFromTrader, int count)
     {
+        TradeManager.Instance.GoodsBuyPanels.Add(this);
         _trader = trader;
         _item = goods;
         _boughtDaysAgo = boughtDaysAgo;
@@ -101,6 +103,8 @@ public class GoodsBuyPanel : MonoBehaviour
             _trader.NpcData.CurrentMoney += _cost;
             TradeManager.Instance.ChangeTraderMoneyText(_trader.NpcData.CurrentMoney);
             CurrentCount--;
+            MapManager.CurrentLocation.ChangeCountOfCurrentItemOnScene(_item.Good.Name, -1);
+            TradeManager.Instance.RefreshPriceOnThisGood(_item.Good.Name);
             
             if (IsOriginatedFromTrader)
                 _trader.SellItem(_item.Good);
@@ -124,6 +128,12 @@ public class GoodsBuyPanel : MonoBehaviour
             tradersGoods.GetComponent<GoodsSellPanel>().Init(_trader, boughtItem, Player.Instance.Inventory.ItemGrid);
 
         }
+    }
+    
+    public void RefreshPrice()
+    {
+        _cost = CalculatePrice(_item);
+        _costText.text = _cost.ToString(); 
     }
 
     private int CalculatePrice(NpcTrader.TraderGood item)
