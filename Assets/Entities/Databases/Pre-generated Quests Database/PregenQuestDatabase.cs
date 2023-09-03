@@ -7,7 +7,7 @@ public class PregenQuestDatabase : MonoBehaviour
 {
     public PregenQuestDatabaseSO Quests;
     private static PregenQuestDatabase Instance;
-
+    public static PregenQuestDatabaseSO QuestList => Instance.Quests;
     private void Awake()
     {
         if (Instance == null)

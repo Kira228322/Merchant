@@ -64,7 +64,14 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
     #region Методы получения информации о квестах
     public static List<Quest> GetActiveQuestsForThisNPC(int ID)
     {
-        return Instance.ActiveQuests.Where(quest => quest.QuestGiver.ID == ID).ToList();
+        //null propagation запрещена для unityобъектов, поэтому не использую LINQ (для проверки questgiver != null)
+        List<Quest> result = new();
+        foreach (Quest quest in Instance.ActiveQuests)
+        {
+            if (quest.QuestGiver != null && quest.QuestGiver.ID == ID)
+                result.Add(quest);
+        }
+        return result;
     }
     public static Quest GetQuestBySummary(string summary)
     {

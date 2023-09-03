@@ -35,16 +35,16 @@ public class QuestAppearanceController : MonoBehaviour
 
     private void CheckAppearance()
     {
+        bool shouldShow = _appearance == Appearance.Show;
         foreach (var control in _controls)
         {
             if (!control.IsReady())
             {
-                return;
+                shouldShow = !shouldShow;
+                break;
             }
         }
 
-
-        bool shouldShow = _appearance == Appearance.Show;
         gameObject.SetActive(shouldShow);
     }
 }
