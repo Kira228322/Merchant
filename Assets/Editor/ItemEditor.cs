@@ -16,6 +16,8 @@ public class ItemEditor : Editor
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
+
+        item.Icon = (Sprite)EditorGUILayout.ObjectField("Icon", item.Icon, typeof(Sprite), false);
         
         EditorGUILayout.Space(5);
 

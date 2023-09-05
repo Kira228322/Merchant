@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "newItem", menuName = "Item/Item")]
 public class Item : ScriptableObject
@@ -20,7 +16,7 @@ public class Item : ScriptableObject
     
     
     [TextArea(2,5)]public string Description;
-    public Sprite Icon;
+    [HideInInspector]public Sprite Icon;
     public int Price;
     [Range(0,50)]public int Fragility; 
 
