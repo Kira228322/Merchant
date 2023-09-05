@@ -22,9 +22,9 @@ public class Node : MonoBehaviour
         movement.Collider.enabled = false;
         movement.StartPosition = movement.transform.position;
         movement.MoveDistanceAndDirection = Random.Range(0.8f, 1.4f) * Math.Sign(AnotherNode.position.x - movement.StartPosition.x); 
-        // Random.Range(0.8f, 1.4f) - кастыль, надежда, что после ступенек не будет никакого барьера (По логике
-        // если мы ставим ступеньки, то они куда-то обязательно должны вести, и сразу же тупика быть не должно)
-        // Если сильно надо будет -- переделаю, так экономнее выходит для производительности
+        // Random.Range(0.8f, 1.4f) - РєР°СЃС‚С‹Р»СЊ, РЅР°РґРµР¶РґР°, С‡С‚Рѕ РїРѕСЃР»Рµ СЃС‚СѓРїРµРЅРµРє РЅРµ Р±СѓРґРµС‚ РЅРёРєР°РєРѕРіРѕ Р±Р°СЂСЊРµСЂР° (РџРѕ Р»РѕРіРёРєРµ
+        // РµСЃР»Рё РјС‹ СЃС‚Р°РІРёРј СЃС‚СѓРїРµРЅСЊРєРё, С‚Рѕ РѕРЅРё РєСѓРґР°-С‚Рѕ РѕР±СЏР·Р°С‚РµР»СЊРЅРѕ РґРѕР»Р¶РЅС‹ РІРµСЃС‚Рё, Рё СЃСЂР°Р·Сѓ Р¶Рµ С‚СѓРїРёРєР° Р±С‹С‚СЊ РЅРµ РґРѕР»Р¶РЅРѕ)
+        // Р•СЃР»Рё СЃРёР»СЊРЅРѕ РЅР°РґРѕ Р±СѓРґРµС‚ -- РїРµСЂРµРґРµР»Р°СЋ, С‚Р°Рє СЌРєРѕРЅРѕРјРЅРµРµ РІС‹С…РѕРґРёС‚ РґР»СЏ РїСЂРѕРёР·РІРѕРґРёС‚РµР»СЊРЅРѕСЃС‚Рё
         WaitForFixedUpdate waitForFixedUpdate = new();
         
         float countOfFrames = (AnotherNode.position-movement.StartPosition).magnitude / (movement.Speed * 0.75f * Time.fixedDeltaTime);
@@ -32,7 +32,7 @@ public class Node : MonoBehaviour
         for (float i = 0; i < countOfFrames; i++)
         {
             movement.transform.position = Vector3.Lerp(movement.StartPosition, AnotherNode.position, i/countOfFrames);
-            yield return  waitForFixedUpdate; // по ступенькам поднимаемся
+            yield return  waitForFixedUpdate; // РїРѕ СЃС‚СѓРїРµРЅСЊРєР°Рј РїРѕРґРЅРёРјР°РµРјСЃСЏ
         }
         
         movement.transform.position = AnotherNode.position;
@@ -44,7 +44,7 @@ public class Node : MonoBehaviour
         for (float i = 0; i < countOfFrames; i++)
         {
             movement.transform.position = Vector3.Lerp(movement.StartPosition, targetPos, i/countOfFrames);
-            yield return  waitForFixedUpdate; // а потом идем дальше
+            yield return  waitForFixedUpdate; // Р° РїРѕС‚РѕРј РёРґРµРј РґР°Р»СЊС€Рµ
         }
 
         movement.transform.position = targetPos;

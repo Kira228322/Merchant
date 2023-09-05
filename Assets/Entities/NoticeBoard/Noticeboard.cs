@@ -1,4 +1,3 @@
-using Mono.Cecil.Cil;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,10 +7,10 @@ using UnityEngine.EventSystems;
 
 public class Noticeboard: MonoBehaviour, IPointerClickHandler
 {
-    //Почему не наследуется от UsableEnvironment:
-    //Потому что UsableEnvironment предполагает, что у предмета есть кулдаун,
-    //партиклы и изменение спрайта при использовании. Ничего из этого здесь не нужно
-    //UPD 28.06.23: ну кулдаун всё-таки нужен, но он был реализован отдельно от UsableEnvironment
+    //РџРѕС‡РµРјСѓ РЅРµ РЅР°СЃР»РµРґСѓРµС‚СЃСЏ РѕС‚ UsableEnvironment:
+    //РџРѕС‚РѕРјСѓ С‡С‚Рѕ UsableEnvironment РїСЂРµРґРїРѕР»Р°РіР°РµС‚, С‡С‚Рѕ Сѓ РїСЂРµРґРјРµС‚Р° РµСЃС‚СЊ РєСѓР»РґР°СѓРЅ,
+    //РїР°СЂС‚РёРєР»С‹ Рё РёР·РјРµРЅРµРЅРёРµ СЃРїСЂР°Р№С‚Р° РїСЂРё РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРё. РќРёС‡РµРіРѕ РёР· СЌС‚РѕРіРѕ Р·РґРµСЃСЊ РЅРµ РЅСѓР¶РЅРѕ
+    //UPD 28.06.23: РЅСѓ РєСѓР»РґР°СѓРЅ РІСЃС‘-С‚Р°РєРё РЅСѓР¶РµРЅ, РЅРѕ РѕРЅ Р±С‹Р» СЂРµР°Р»РёР·РѕРІР°РЅ РѕС‚РґРµР»СЊРЅРѕ РѕС‚ UsableEnvironment
 
     private UniqueID _uniqueID;
 
@@ -22,16 +21,16 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
     [SerializeField] private List<Sprite> _boardSprites = new ();
     [SerializeField] private InfoNoticeSO _infoNoticeSO;
     private float _distanceToUse = 3f;
-    private int _cooldownHours = 48; //Квесты могут появиться только раз в столько часов
+    private int _cooldownHours = 48; //РљРІРµСЃС‚С‹ РјРѕРіСѓС‚ РїРѕСЏРІРёС‚СЊСЃСЏ С‚РѕР»СЊРєРѕ СЂР°Р· РІ СЃС‚РѕР»СЊРєРѕ С‡Р°СЃРѕРІ
     private Transform _canvas;
     private CooldownHandler _cooldownHandler;
-    private List<Transform> _randomizedSpawnPoints; //Копирует спавнпоинты из NoticeboardUI,
-                                                    //рандомизирует их и передает обратно.
-                                                    //Чтобы точки спавна оставались одинаковыми
-                                                    //при каждом открытии доски
+    private List<Transform> _randomizedSpawnPoints; //РљРѕРїРёСЂСѓРµС‚ СЃРїР°РІРЅРїРѕРёРЅС‚С‹ РёР· NoticeboardUI,
+                                                    //СЂР°РЅРґРѕРјРёР·РёСЂСѓРµС‚ РёС… Рё РїРµСЂРµРґР°РµС‚ РѕР±СЂР°С‚РЅРѕ.
+                                                    //Р§С‚РѕР±С‹ С‚РѕС‡РєРё СЃРїР°РІРЅР° РѕСЃС‚Р°РІР°Р»РёСЃСЊ РѕРґРёРЅР°РєРѕРІС‹РјРё
+                                                    //РїСЂРё РєР°Р¶РґРѕРј РѕС‚РєСЂС‹С‚РёРё РґРѕСЃРєРё
 
-    private CompactedNotice[] _compactedNoticeArray; //Информация об объявлениях, которая будет передаваться в UI
-    //Размер массива - столько, сколько возможных точек спавна в префабе NoticeboardUI.
+    private CompactedNotice[] _compactedNoticeArray; //РРЅС„РѕСЂРјР°С†РёСЏ РѕР± РѕР±СЉСЏРІР»РµРЅРёСЏС…, РєРѕС‚РѕСЂР°СЏ Р±СѓРґРµС‚ РїРµСЂРµРґР°РІР°С‚СЊСЃСЏ РІ UI
+    //Р Р°Р·РјРµСЂ РјР°СЃСЃРёРІР° - СЃС‚РѕР»СЊРєРѕ, СЃРєРѕР»СЊРєРѕ РІРѕР·РјРѕР¶РЅС‹С… С‚РѕС‡РµРє СЃРїР°РІРЅР° РІ РїСЂРµС„Р°Р±Рµ NoticeboardUI.
 
     private void Awake()
     {
@@ -50,12 +49,12 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
 
         int spawnPointIndex = 0;
 
-        //Спавн квестов
+        //РЎРїР°РІРЅ РєРІРµСЃС‚РѕРІ
 
-        if (IsReadyToGiveQuest()) // если доска не на кд
+        if (IsReadyToGiveQuest()) // РµСЃР»Рё РґРѕСЃРєР° РЅРµ РЅР° РєРґ
         {
-            //Абуз с квестгиверами (взять квест ртом, потом с объявления) был решен в Region.cs, 37.
-            //Те, что уже есть на сцене, не могут выпасть с GetRandomFreeQuestGiver()
+            //РђР±СѓР· СЃ РєРІРµСЃС‚РіРёРІРµСЂР°РјРё (РІР·СЏС‚СЊ РєРІРµСЃС‚ СЂС‚РѕРј, РїРѕС‚РѕРј СЃ РѕР±СЉСЏРІР»РµРЅРёСЏ) Р±С‹Р» СЂРµС€РµРЅ РІ Region.cs, 37.
+            //РўРµ, С‡С‚Рѕ СѓР¶Рµ РµСЃС‚СЊ РЅР° СЃС†РµРЅРµ, РЅРµ РјРѕРіСѓС‚ РІС‹РїР°СЃС‚СЊ СЃ GetRandomFreeQuestGiver()
 
             int questsToSpawn = Random.Range(0, 3);
             List<NpcQuestGiverData> selectedQuestGivers = new();
@@ -72,7 +71,7 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
             }
         }
 
-        //Спавн держи-в-курсе информации по текущим ивентам в мире
+        //РЎРїР°РІРЅ РґРµСЂР¶Рё-РІ-РєСѓСЂСЃРµ РёРЅС„РѕСЂРјР°С†РёРё РїРѕ С‚РµРєСѓС‰РёРј РёРІРµРЅС‚Р°Рј РІ РјРёСЂРµ
 
         _uncheckedActiveGlobalEvents = new(GlobalEventHandler.Instance.ActiveGlobalEvents);
 
@@ -87,7 +86,7 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
             _uncheckedActiveGlobalEvents.Remove(randomGlobalEvent);
         }
 
-        //Спавн бесполезной информации по типу "продам гараж"
+        //РЎРїР°РІРЅ Р±РµСЃРїРѕР»РµР·РЅРѕР№ РёРЅС„РѕСЂРјР°С†РёРё РїРѕ С‚РёРїСѓ "РїСЂРѕРґР°Рј РіР°СЂР°Р¶"
 
         if(spawnPointIndex < _compactedNoticeArray.Length - 1)
         {
