@@ -8,7 +8,8 @@ public class Item : ScriptableObject
     public enum ItemType
     {
         RichClothes, WarmClothes, LightClothes, CeramicProduct, EverydayItem, CostumeJewelry, SouthPlant, NorthPlant, 
-        Cactus, MagicThing, Chemicals, Cosmetics, SouthFood, NorthFood, Food, Tea, Spices, EastSpices, MagicMaterial
+        Cactus, MagicThing, Chemicals, Cosmetics, SouthFood, NorthFood, Food, Tea, Spices, EastSpices, MagicMaterial,
+        Fish
     }
     
     public ItemType TypeOfItem;
