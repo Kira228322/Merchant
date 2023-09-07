@@ -152,6 +152,34 @@ public class InventoryController : MonoBehaviour
             }
         }
     }
+    private bool IsItemAcceptable()
+    {
+        if (SelectedItemGrid == null) 
+            return false;
+        if (SelectedItemGrid.gameObject.TryGetComponent(out ItemContainer container))
+        {
+            if (container.RequiredItemTypes.Count != 0)
+            {
+                if (!container.RequiredItemTypes.Contains(CurrentSelectedItem.ItemData.TypeOfItem))
+                    return false;
+            }
+            switch (container.QuestItemsBehaviour)
+            {
+                case ItemContainer.QuestItemsBehaviourEnum.NotQuestItems:
+                    if (CurrentSelectedItem.ItemData.IsQuestItem)
+                        return false;
+                    break;
+                case ItemContainer.QuestItemsBehaviourEnum.OnlyQuestItems:
+                    if (!CurrentSelectedItem.ItemData.IsQuestItem)
+                        return false;
+                    break;
+                default:
+                    break;
+            }
+        }
+        
+        return true;
+    }
     private void OnLeftMouseButtonRelease()
     {
         _pressAndHoldTime = 0;
@@ -162,7 +190,7 @@ public class InventoryController : MonoBehaviour
             {
                 gridPickedUpFromScrollRect.enabled = true; 
             }
-            if (SelectedItemGrid == null)
+            if (!IsItemAcceptable())
             {
                 SelectedItemGrid = _gridPickedUpFrom;
                 PlaceDown(_itemPickedUpFromPosition);
@@ -211,7 +239,6 @@ public class InventoryController : MonoBehaviour
             position.x -= (CurrentSelectedItem.Width - 1) * ItemGrid.TileSizeWidth / 2;
             position.y += (CurrentSelectedItem.Height - 1) * ItemGrid.TileSizeHeight / 2;
         }
-
         return SelectedItemGrid.GetTileGridPosition(position, _canvasTransform.localScale);
     }
 
@@ -286,6 +313,51 @@ public class InventoryController : MonoBehaviour
         что в игре не будет часто происходить. (26.01.23)
         */
 
+    }
+    public bool IsThereAvailableSpaceForInsertingMultipleItems(ItemGrid itemGrid, List<InventoryItem> inventoryItems)
+    {
+        List<InventoryItem> items = new(inventoryItems);
+
+        /*
+         Метод проверяет, есть ли место для размещения нескольких предметов. Сам не размещает (почему - комментарий внизу)
+        */
+        if (items.Count == 0)
+        {
+            return true;
+        }
+
+        //Начнем с того, что отсортируем лист помещаемых предметов от самого крупного к самому маленькому
+        //Если поместить сначала мелкие, для крупных может не остаться места.
+
+        items.Sort((x, y) => (y.ItemData.CellSizeWidth * y.ItemData.CellSizeHeight).CompareTo(x.ItemData.CellSizeWidth * x.ItemData.CellSizeHeight));
+        //^ сортировка по занимаемой площади https://stackoverflow.com/a/3309292
+
+        Dictionary<InventoryItem, int> placedInventoryItems = new();
+        //^Дикционарий для того, чтобы запомнить, какие вещи были помещены и сколько каждой вещи было помещено.
+        //Это нужно, чтобы если не получится поместить все, знать сколько чего и куда было помещено и убрать столько, сколько нужно.
+        //(Если некоторые были помещены в стак, то нужно убрать не весь стак, а столько, сколько в него положили, так ведь?)
+
+        foreach (InventoryItem item in items)
+        {
+            InventoryItem placedItem = TryCreateAndInsertItem(itemGrid, item.ItemData, item.CurrentItemsInAStack, item.BoughtDaysAgo, true);
+            if (placedItem != null)
+            {
+                placedInventoryItems.Add(placedItem, item.CurrentItemsInAStack);
+            }
+            else
+            {
+                foreach (var dictionaryItem in placedInventoryItems)
+                {
+                    itemGrid.RemoveItemsFromAStack(dictionaryItem.Key, dictionaryItem.Value);
+                }
+                return false;
+            }
+        }
+        foreach (var item in placedInventoryItems)
+        {
+            itemGrid.RemoveItemsFromAStack(item.Key, item.Value);
+        }
+        return true;
     }
     public InventoryItem TryCreateAndInsertItem(ItemGrid itemGrid, Item item, int amount, float daysBoughtAgo, bool isFillingStackFirst)
     {
@@ -464,6 +536,22 @@ public class InventoryController : MonoBehaviour
             }
         }
 
+    }
+    public InventoryItem MoveFromGridToGrid(ItemGrid source, ItemGrid destination, InventoryItem item)
+    {
+        ItemGrid initialItemGridState = SelectedItemGrid;
+        SelectedItemGrid = source;
+
+        Vector2Int itemPosition = new(item.XPositionOnTheGrid, item.YPositionOnTheGrid);
+        PickUp(itemPosition);
+        InventoryItem pickedUpItem = CurrentSelectedItem;
+        InventoryItem result = TryCreateAndInsertItem(destination, item.ItemData, item.CurrentItemsInAStack, item.BoughtDaysAgo, isFillingStackFirst: true);
+        if (result != null)
+        {
+            Destroy(pickedUpItem.gameObject);
+            SelectedItemGrid = initialItemGridState;
+        }
+        return result;
     }
     private InventoryItem TryInsertItem (InventoryItem itemToInsert, bool isFillingStackFirst)
     {

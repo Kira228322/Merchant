@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "newItem", menuName = "Item/Item")]
@@ -31,5 +32,38 @@ public class Item : ScriptableObject
     [HideInInspector] public bool IsQuestItem;
     
     [HideInInspector] public float DaysToHalfSpoil;
-    [HideInInspector] public float DaysToSpoil; 
+    [HideInInspector] public float DaysToSpoil;
+
+    public string TranslatedItemType => translatedItemTypes[TypeOfItem];
+
+    public static string TranslateItemType(ItemType type)
+    {
+        return translatedItemTypes[type];
+    }
+
+    private static readonly Dictionary<ItemType, string> translatedItemTypes = new()
+    {
+        {ItemType.RichClothes, "Богатая одежда" },
+        {ItemType.WarmClothes, "Тёплая одежда" },
+        {ItemType.LightClothes, "Лёгкая одежда"},
+        {ItemType.CeramicProduct ,"Керамика"},
+        {ItemType.EverydayItem ,"Повседневная вещь"},
+        {ItemType.CostumeJewelry ,"Драгоценности"},
+        {ItemType.SouthPlant ,"Южное растение"},
+        {ItemType.NorthPlant ,"Северное растение"},
+        {ItemType.Cactus ,"Кактус"},
+        {ItemType.MagicThing ,"Магический предмет"},
+        {ItemType.Chemicals ,"Химикаты"},
+        {ItemType.Cosmetics ,"Косметика"},
+        {ItemType.SouthFood ,"Южная еда"},
+        {ItemType.NorthFood ,"Северная еда"},
+        {ItemType.Food ,"Еда"},
+        {ItemType.Tea ,"Чай"},
+        {ItemType.Spices ,"Специи"},
+        {ItemType.EastSpices ,"Восточные специи"},
+        {ItemType.MagicMaterial ,"Магические материалы"},
+        {ItemType.Fish ,"Рыба"},
+    };
+
+    
 }

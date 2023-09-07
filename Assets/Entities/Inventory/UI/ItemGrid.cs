@@ -163,7 +163,6 @@ public class ItemGrid : MonoBehaviour
 
         _tileGridPosition.x = (int)(_positionOnTheGrid.x / TileSizeWidth / canvasLocalScale.x);
         _tileGridPosition.y = (int)(_positionOnTheGrid.y / TileSizeHeight / canvasLocalScale.y);
-
         return _tileGridPosition;
     }
     public InventoryItem GetItem(int x, int y)
