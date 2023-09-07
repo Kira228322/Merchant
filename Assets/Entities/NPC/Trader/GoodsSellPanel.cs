@@ -74,18 +74,18 @@ public class GoodsSellPanel : MonoBehaviour
             return;
         }
         
-        TradeManager.Instance.PlayerGoldIncrease(_cost);
-        Player.Instance.Money += _cost;
-        _trader.NpcData.CurrentMoney -= _cost;
-        TradeManager.Instance.ChangeTraderMoneyText(_trader.NpcData.CurrentMoney);
         MapManager.CurrentLocation.ChangeCountOfCurrentItemOnScene(_item.ItemData.Name, 1);
         TradeManager.Instance.RefreshPriceOnThisGood(_item.ItemData.Name);
+        TradeManager.Instance.PlayerGoldIncrease(_cost);
+        TradeManager.Instance.ChangeTraderMoneyText(_trader.NpcData.CurrentMoney);
+        Player.Instance.Money += _cost;
+        _trader.NpcData.CurrentMoney -= _cost;
         
         _playerInventoryItemGrid.RemoveItemsFromAStack(_item, 1);
         _currentCount--;
         //Уменьшить CountToBuy у коэффициента с этим типом товара
         _trader.BuyCoefficients.FirstOrDefault(x => x.ItemType == _item.ItemData.TypeOfItem).CountToBuy--;
-        GoodsBuyPanel panel = TradeManager.Instance.BuyPanelContent.GetComponentsInChildren<GoodsBuyPanel>().FirstOrDefault(i => i.Item.Good == _item.ItemData && i.IsOriginatedFromTrader == false);
+        GoodsBuyPanel panel = TradeManager.Instance.BuyPanelContent.GetComponentsInChildren<GoodsBuyPanel>().FirstOrDefault(i => i.Item.Good == _item.ItemData && i.IsOriginatedFromTrader == false && i.Cost == _cost);
         if (panel != null)
         {
             panel.CurrentCount++;
