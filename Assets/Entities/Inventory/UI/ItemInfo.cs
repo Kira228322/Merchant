@@ -29,6 +29,7 @@ public class ItemInfo : MonoBehaviour
     [SerializeField] private TMP_Text _daysToSpoilText;
     [SerializeField] private TMP_Text _boughtDaysAgoText;
     [SerializeField] private TMP_Text _foodValueText;
+    [SerializeField] private TMP_Text _itemTypeText;
 
     private Dictionary<UsableItem.UsableType, Action> _usableActions;
 
@@ -61,6 +62,7 @@ public class ItemInfo : MonoBehaviour
         _itemIcon.sprite = item.ItemData.Icon;
         _itemName.text = item.ItemData.Name;
         _itemDescription.text = "Описание: " + item.ItemData.Description;
+        // _itemTypeText.text
 
         if (item.CurrentItemsInAStack == 1)
         {

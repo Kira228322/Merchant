@@ -13,7 +13,7 @@ public static class MapManager
     public static Region CurrentRegion => CurrentLocation.Region;
     public static Road CurrentRoad;
     public static bool IsActiveSceneTravel;
-    public static bool? Advertisement = true; // троичная логика на месте
+    public static bool? Advertisement = true; // С‚СЂРѕРёС‡РЅР°СЏ Р»РѕРіРёРєР° РЅР° РјРµСЃС‚Рµ
     
     private static string _travelingScene;
     private static SceneTransiter _loadScreen;
@@ -30,7 +30,7 @@ public static class MapManager
 
     public static void Init(string travelingScene, SceneTransiter loadScreen, GameObject roadWin, 
             GameObject villageWin, Canvas canvas, GameObject playerIcon, Location startLocation) 
-        // В начале игры надо будет инициализировать
+        // Р’ РЅР°С‡Р°Р»Рµ РёРіСЂС‹ РЅР°РґРѕ Р±СѓРґРµС‚ РёРЅРёС†РёР°Р»РёР·РёСЂРѕРІР°С‚СЊ
     {
         _travelingScene = travelingScene;
         _loadScreen = loadScreen;

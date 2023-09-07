@@ -8,9 +8,9 @@ using UnityEngine.UI;
 
 public class SceneTransiter : MonoBehaviour, ISaveable<SceneSaveData>
 {
-    [SerializeField] private GameObject _map;
     [SerializeField] private Image _loadingBar;
     [SerializeField] private TMP_Text _loadingText;
+    [SerializeField] private Toggle _mapButton;
     
     private Animator _animator;
     private AsyncOperation _loadingSceneOperation;
@@ -41,7 +41,7 @@ public class SceneTransiter : MonoBehaviour, ISaveable<SceneSaveData>
 
     public void StartTransit(string scene, Road road)
     {
-        _map.SetActive(false);
+        _mapButton.isOn = false;
         _road = road;
         MapManager.TravelInit(_road);
         
@@ -56,7 +56,7 @@ public class SceneTransiter : MonoBehaviour, ISaveable<SceneSaveData>
     
     public void StartTransit(Location location)
     {
-        _map.SetActive(false);
+        _mapButton.isOn = false;
         _road = null;
         enabled = true;
         _animator.SetTrigger("StartTransition");
