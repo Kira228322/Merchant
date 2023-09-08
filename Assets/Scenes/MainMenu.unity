@@ -2061,6 +2061,8 @@ GameObject:
   - component: {fileID: 295020383}
   - component: {fileID: 295020384}
   - component: {fileID: 295020385}
+  - component: {fileID: 295020387}
+  - component: {fileID: 295020386}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2147,6 +2149,35 @@ MonoBehaviour:
   _controls:
   - QuestSummary: 
     questState: 0
+--- !u!114 &295020386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 295020380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a5fd4818c9c95c48866157d96767998, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  androidAdID: Rewarded_Android
+  iOSAdID: Rewarded_iOS
+--- !u!114 &295020387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 295020380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14b09f7a3e15140489c545fe5c09a0a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AndroindGameID: 5409405
+  IOSGameID: 5409404
+  testMode: 1
 --- !u!1 &297650404
 GameObject:
   m_ObjectHideFlags: 0
@@ -15097,7 +15128,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.89800006, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 17.99997, y: -2.4374008}
+  m_AnchoredPosition: {x: 18, y: -2.4374008}
   m_SizeDelta: {x: -19.7692, y: -25.1251}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!1 &2041095451
@@ -23957,18 +23988,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 26884492}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
   m_IsOn: 0
 --- !u!224 &3279153274295546433
 RectTransform:
@@ -25695,7 +25714,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _roadName: road 1
   _description: papsld aspl daspld alsd alpd
-  _travelingTime: 5
+  _travelingTime: 8
   _quality: 40
   _danger: 1
   _cost: 0
