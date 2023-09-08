@@ -41,3 +41,8 @@ contains(source, substring)
 
 is_empty(str)
 Возвращает true, если строка выглядит как "". Иначе возвращает false.
+
+open_item_container(questSummary, deliveryGoalNumber)
+Если квест questSummary активен и его Goals[deliveryGoalNumber] это DeliveryGoal, то
+скрывает диалоговую панель, открывает контейнер и настраивает его для этого goal.
+Нажатие кнопки отмены закрывает диалог, кнопка принятия продолжает диалог с того места где он остановился

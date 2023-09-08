@@ -6,9 +6,6 @@ using UnityEngine;
 [Serializable]
 public class DeliveryGoal : Goal
 {
-    /// <summary>
-    /// WIP
-    /// </summary>
   
     public List<Item.ItemType> RequiredItemCategories;
     public ItemContainer.QuestItemsBehaviourEnum QuestItemsBehaviour;
@@ -26,13 +23,10 @@ public class DeliveryGoal : Goal
     }
     public override void Initialize()
     {
-        //Container.AcceptedItems(string summary) += OnAcceptedItems;
-
         Evaluate();
     }
     public override void Deinitialize()
     {
-        //container.AcceptedItems(string summary) -= OnAcceptedItems;
     }
 
 }

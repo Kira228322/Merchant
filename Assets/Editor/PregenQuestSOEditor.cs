@@ -159,7 +159,7 @@ class EditorPregenQuest : Editor
                         EditorGUILayout.LabelField("Accepted item categories:");
                         EditorGUILayout.EndHorizontal();
 
-                        if (goal.RequiredItemCategories.Count == 0)
+                        if (goal.RequiredItemCategories?.Count == 0)
                         {
                             EditorGUILayout.LabelField("Everything is accepted");
                         }

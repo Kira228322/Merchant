@@ -72,6 +72,7 @@ public class ItemContainer : MonoBehaviour
         ItemRotThreshold = requiredRotThreshold;
 
         _labelText.text = label;
+        _requiredItemTypesText.text = "";
         for (int i = 0; i < RequiredItemTypes.Count - 1; i++)
         {
             _requiredItemTypesText.text += Item.TranslateItemType(RequiredItemTypes[i]) + "/ ";
@@ -133,9 +134,9 @@ public class ItemContainer : MonoBehaviour
     }
     public void Accept()
     {
-        foreach (InventoryItem item in Items)
+        for (int i = Items.Count - 1; i >= 0; i--)
         {
-            _inventoryController.DestroyItem(_containerItemGrid, item);
+            _inventoryController.DestroyItem(_containerItemGrid, Items[i]);
         }
 
 
