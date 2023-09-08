@@ -13,22 +13,29 @@ public class ItemContainer : MonoBehaviour
     [SerializeField] private Toggle InventoryPanelButton;
     [SerializeField] private GameObject _itemContainerPanel;
 
-    [SerializeField] private TMP_Text _label;
-    [SerializeField] private TMP_Text _requiredItemTypes;
-    [SerializeField] private TMP_Text _requiredValue;
+    [SerializeField] private TMP_Text _labelText;
+    [SerializeField] private TMP_Text _requiredItemTypesText;
+    [SerializeField] private TMP_Text _requiredValueText;
+    [SerializeField] private TMP_Text _itemRotThresholdText;
 
     [SerializeField] private Button _acceptButton;
-
-    public List<Item.ItemType> RequiredItemTypes;
     public enum QuestItemsBehaviourEnum { NotQuestItems, AnyItems, OnlyQuestItems};
-    public QuestItemsBehaviourEnum QuestItemsBehaviour;
-    public List<InventoryItem> Items = new();
-    public float CurrentWeight;
-    public float RequiredWeight;
-    public int CurrentAmount;
-    public int RequiredAmount;
-    
-    
+
+    [HideInInspector] public List<Item.ItemType> RequiredItemTypes;
+    [HideInInspector] public QuestItemsBehaviourEnum QuestItemsBehaviour;
+    [HideInInspector] public List<InventoryItem> Items = new();
+    [HideInInspector] public float CurrentWeight;
+    [HideInInspector] public float RequiredWeight;
+    [HideInInspector] public int CurrentAmount;
+    [HideInInspector] public int RequiredAmount;
+    [HideInInspector] public float ItemRotThreshold;
+    /*
+    ItemRotThreshold > 0: Только предметы свежее чем ItemRotThreshold.
+    ItemRotThreshold < 0: Только предметы испорченнее чем Math.Abs(ItemRotThreshold).
+    Пример: Предмет полностью портится через 10 дней после покупки (DaysUntilSpoil == 10)
+    ItemRotThreshold = 0.8 => допускается если предмет лежит 2 дня или меньше
+    ItemRotThreshold = -0.8 => допускается если предмет лежит 2 дня или больше
+    */
 
 
     public event UnityAction DepositSuccessful;
@@ -56,33 +63,54 @@ public class ItemContainer : MonoBehaviour
     }
 
 
-    private void Init(List<Item.ItemType> acceptedItemTypes, QuestItemsBehaviourEnum questItemsBehaviour, float requiredWeight, int requiredAmount, string label)
+    public void Init(List<Item.ItemType> acceptedItemTypes, QuestItemsBehaviourEnum questItemsBehaviour, float requiredWeight, int requiredAmount, float requiredRotThreshold, string label)
     {
         QuestItemsBehaviour = questItemsBehaviour;
         RequiredItemTypes = new(acceptedItemTypes);
         RequiredWeight = requiredWeight;
         RequiredAmount = requiredAmount;
+        ItemRotThreshold = requiredRotThreshold;
 
-        _label.text = label;
+        _labelText.text = label;
+        _requiredItemTypesText.text = "";
         for (int i = 0; i < RequiredItemTypes.Count - 1; i++)
         {
-            _requiredItemTypes.text += Item.TranslateItemType(RequiredItemTypes[i]) + "/ ";
+            _requiredItemTypesText.text += Item.TranslateItemType(RequiredItemTypes[i]) + "/ ";
         }
-        _requiredItemTypes.text += Item.TranslateItemType(RequiredItemTypes[^1]);
+        _requiredItemTypesText.text += Item.TranslateItemType(RequiredItemTypes[^1]);
+        if (ItemRotThreshold != 0)
+        {
+            _itemRotThresholdText.gameObject.SetActive(true);
+            _itemRotThresholdText.text = "Свежесть: " + (ItemRotThreshold > 0 ? ">" : "<") + -System.Math.Round((1 - ItemRotThreshold) * 100, 2) + "%";
+        }
+        else _itemRotThresholdText.gameObject.SetActive(false);
         Refresh();
     }
     private void Refresh()
     {
         if (RequiredWeight > 0)
-            _requiredValue.text = $"{CurrentWeight}/{RequiredWeight} кг";
+            _requiredValueText.text = $"{CurrentWeight}/{RequiredWeight} кг";
         else
-            _requiredValue.text = $"{CurrentAmount}/{RequiredAmount} шт";
+            _requiredValueText.text = $"{CurrentAmount}/{RequiredAmount} шт";
+
+        if (ItemRotThreshold != 0)
+        {
+            _itemRotThresholdText.gameObject.SetActive(true);
+            _itemRotThresholdText.text = "Свежесть: " + (ItemRotThreshold > 0 ? ">" : "<") + System.Math.Round((ItemRotThreshold) * 100, 2) + "%";
+        }
+        else _itemRotThresholdText.gameObject.SetActive(false);
 
         if (CurrentWeight >= RequiredWeight && CurrentAmount >= RequiredAmount)
         {
             _acceptButton.interactable = true;
+            _requiredValueText.color = Color.green;
         }
-        else _acceptButton.interactable = false;
+        else
+        {
+            _acceptButton.interactable = false;
+            _requiredValueText.color = Color.red;
+        }
+
     }
     private void OnItemPlacedInTheGrid(InventoryItem item)
     {
@@ -106,12 +134,14 @@ public class ItemContainer : MonoBehaviour
     }
     public void Accept()
     {
-            foreach (InventoryItem item in Items)
-            {
-                _inventoryController.DestroyItem(_containerItemGrid, item);
-            }
+        for (int i = Items.Count - 1; i >= 0; i--)
+        {
+            _inventoryController.DestroyItem(_containerItemGrid, Items[i]);
+        }
 
-            DepositSuccessful?.Invoke();
+
+        ShowItselfAndInventory(false);
+        DepositSuccessful?.Invoke();
 
     }
     public void Cancel()
@@ -127,13 +157,17 @@ public class ItemContainer : MonoBehaviour
         {
             _inventoryController.MoveFromGridToGrid(_containerItemGrid, playerItemGrid, Items[i]);
         }
-        
-        
-        InventoryPanelButton.isOn = false;
-        _itemContainerPanel.SetActive(false);
+
+
+        ShowItselfAndInventory(false);
         DepositAborted?.Invoke();
     }
 
+    public void ShowItselfAndInventory(bool state)
+    {
+        InventoryPanelButton.isOn = state;
+        _itemContainerPanel.SetActive(state);
+    }
 
 
 }

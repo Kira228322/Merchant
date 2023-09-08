@@ -23,6 +23,7 @@ public class GoodsBuyPanel : MonoBehaviour
     public bool IsOriginatedFromTrader;
     public NpcTrader Trader => _trader;
     public NpcTrader.TraderGood Item => _item;
+    public int Cost => _cost;
     public int CurrentCount
     {
         get { return _currentCount; }

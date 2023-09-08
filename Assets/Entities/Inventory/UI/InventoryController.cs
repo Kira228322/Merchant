@@ -154,8 +154,9 @@ public class InventoryController : MonoBehaviour
     }
     private bool IsItemAcceptable()
     {
-        if (SelectedItemGrid == null) 
+        if (SelectedItemGrid == null)
             return false;
+
         if (SelectedItemGrid.gameObject.TryGetComponent(out ItemContainer container))
         {
             if (container.RequiredItemTypes.Count != 0)
@@ -163,16 +164,36 @@ public class InventoryController : MonoBehaviour
                 if (!container.RequiredItemTypes.Contains(CurrentSelectedItem.ItemData.TypeOfItem))
                     return false;
             }
+            if (container.ItemRotThreshold != 0 && CurrentSelectedItem.ItemData.IsPerishable)
+            {
+                if (container.ItemRotThreshold > 0)
+                {
+                    if (1 - (CurrentSelectedItem.BoughtDaysAgo / CurrentSelectedItem.ItemData.DaysToSpoil) < container.ItemRotThreshold)
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    if (1 - (CurrentSelectedItem.BoughtDaysAgo / CurrentSelectedItem.ItemData.DaysToSpoil) > -container.ItemRotThreshold)
+                    {
+                        return false;
+                    }
+                }
+
+            }
             switch (container.QuestItemsBehaviour)
             {
                 case ItemContainer.QuestItemsBehaviourEnum.NotQuestItems:
                     if (CurrentSelectedItem.ItemData.IsQuestItem)
-                        return false;
+                    return false;
                     break;
+
                 case ItemContainer.QuestItemsBehaviourEnum.OnlyQuestItems:
                     if (!CurrentSelectedItem.ItemData.IsQuestItem)
-                        return false;
+                    return false;
                     break;
+
                 default:
                     break;
             }
