@@ -10,7 +10,7 @@ public class Item : ScriptableObject
     {
         RichClothes, WarmClothes, LightClothes, CeramicProduct, EverydayItem, CostumeJewelry, SouthPlant, NorthPlant, 
         Cactus, MagicThing, Chemicals, Cosmetics, SouthFood, NorthFood, Food, Tea, Spices, EastSpices, MagicMaterial,
-        Fish
+        Fish, Seeds, MagicSeeds, SouthFruit, NorthFruit, Sushi, AlcoholDrink, Drink
     }
     
     public ItemType TypeOfItem;

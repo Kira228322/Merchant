@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Linq;
+using UnityEngine.Serialization;
 
 public class ItemInfo : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class ItemInfo : MonoBehaviour
     [SerializeField] private Image _itemIcon;
     [SerializeField] private Button _splitButton;
     [SerializeField] private Button _rotateButton;
-    [SerializeField] private Button _eatButton;
+    [FormerlySerializedAs("_eatButton")] [SerializeField] private Button _useButton;
     [SerializeField] private Button _destroyButton;
     [SerializeField] private ItemInfoSplitSlider _splitSliderPanel;
 
@@ -49,9 +50,12 @@ public class ItemInfo : MonoBehaviour
             { UsableItem.UsableType.Potion, UsePotion},
             { UsableItem.UsableType.Teleport , UseTeleport},
             { UsableItem.UsableType.Recipe, UseRecipe},
-            { UsableItem.UsableType.Note, UseNote }
+            { UsableItem.UsableType.Note, UseNote },
+            { UsableItem.UsableType.Energetic , EatEnergetic}
         };
     }
+    // TODO хрен его знает сделано это или нет, но надо чтобы наполовину гнилые предметы восстанавлиавли
+    // половину value. А сгнившие нельзя использовать.
 
     public void Initialize(InventoryItem item, ItemGrid itemGrid)
     {
@@ -107,15 +111,24 @@ public class ItemInfo : MonoBehaviour
         if (item.ItemData is UsableItem)
         {
             _currentUsableItem = _currentItemSelected.ItemData as UsableItem;
-            _foodValueText.alpha = 1;
-            _foodValueText.text = $"+{_currentUsableItem.UsableValue} сытости";
-            _eatButton.gameObject.SetActive(true);
+            if (_currentUsableItem.UsableItemType == UsableItem.UsableType.Edible)
+            {
+                _foodValueText.alpha = 1;
+                _foodValueText.text = $"+{_currentUsableItem.UsableValue} сытости";
+            }
+            else if (_currentUsableItem.UsableItemType == UsableItem.UsableType.Energetic)
+            {
+                _foodValueText.alpha = 1;
+                _foodValueText.text = 
+                    $"+{_currentUsableItem.UsableValue} сытости  +{_currentUsableItem.SecondValue} бодрости";
+            }
+            _useButton.gameObject.SetActive(true);
         }
         else
         {
             _foodValueText.alpha = 0;
-            _eatButton.interactable = false;
-            _eatButton.gameObject.SetActive(false);
+            _useButton.interactable = false;
+            _useButton.gameObject.SetActive(false);
         }
     }
     #endregion
@@ -162,6 +175,13 @@ public class ItemInfo : MonoBehaviour
     private void Eat()
     {
         _player.Needs.RestoreHunger(_currentUsableItem.UsableValue);
+        RemoveOneItemAfterUse();
+    }
+
+    private void EatEnergetic()
+    {
+        _player.Needs.RestoreHunger(_currentUsableItem.UsableValue);
+        _player.Needs.RestoreSleep(_currentUsableItem.SecondValue);
         RemoveOneItemAfterUse();
     }
 

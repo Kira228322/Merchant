@@ -85,6 +85,11 @@ public class PlayerNeeds: ISaveable<PlayerNeedsSaveData>
     {
         CurrentHunger += foodValue;
     }
+
+    public void RestoreSleep(int value)
+    {
+        CurrentSleep += value;
+    }
     private void SleptOneHour()
     {
         _hoursLeftToSleep--;

@@ -28,6 +28,20 @@ class UsableItemEditor : ItemEditor
                 
                 EditorGUILayout.EndHorizontal();
                 break;
+            case UsableItem.UsableType.Energetic:
+                EditorGUILayout.BeginHorizontal();
+                
+                GUILayout.Label("Food value", GUILayout.MaxWidth(120));
+                item.UsableValue = EditorGUILayout.IntField(item.UsableValue);
+                
+                EditorGUILayout.EndHorizontal();
+                EditorGUILayout.BeginHorizontal();
+                
+                GUILayout.Label("SleepRestore value", GUILayout.MaxWidth(120));
+                item.SecondValue = EditorGUILayout.IntField(item.SecondValue);
+                
+                EditorGUILayout.EndHorizontal();
+                break;
             case UsableItem.UsableType.Teleport:
                 break;
             case UsableItem.UsableType.Bottle:
