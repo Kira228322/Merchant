@@ -88,8 +88,14 @@ public class PregenQuestSO : ScriptableObject
 
                     if (pregenGoal.AdditiveMoneyReward)
                         questParams.moneyReward += ItemDatabase.GetItem(pregenGoal.RequiredItemName).Price * additiveRewardItemCount;
-
                     break;
+                case CompactedGoal.GoalType.DeliveryGoal:
+                    newGoal = new DeliveryGoal(pregenGoal.goalState, pregenGoal.description,
+                        pregenGoal.currentAmount, 1, pregenGoal.RequiredItemCategories, 
+                        pregenGoal.QuestItemsBehaviour, pregenGoal.RequiredDeliveryWeight, 
+                        pregenGoal.RequiredDeliveryCount, pregenGoal.RequiredRotThreshold);
+                    break;
+
                 default:
                     Debug.LogError("Нет такого типа Goal");
                     break;
@@ -102,7 +108,7 @@ public class PregenQuestSO : ScriptableObject
     [Serializable]
     public class CompactedGoal
     {
-        public enum GoalType { CollectItemsGoal, TalkToNPCGoal, WaitingGoal, TimedGoal, GiveItemsGoal}
+        public enum GoalType { CollectItemsGoal, TalkToNPCGoal, WaitingGoal, TimedGoal, GiveItemsGoal, DeliveryGoal}
 
         public GoalType goalType;
         public Goal.State goalState;
@@ -119,6 +125,12 @@ public class PregenQuestSO : ScriptableObject
         public string FailingLine;
 
         public string RequiredItemName;
+
+        public List<Item.ItemType> RequiredItemCategories;
+        public ItemContainer.QuestItemsBehaviourEnum QuestItemsBehaviour;
+        public float RequiredDeliveryWeight;
+        public int RequiredDeliveryCount;
+        public float RequiredRotThreshold;
     }
 
 }

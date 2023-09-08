@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using Codice.Client.BaseCommands.Merge.Xml;
 
 [CustomEditor(typeof(PregenQuestSO))]
 class EditorPregenQuest : Editor
@@ -9,6 +10,7 @@ class EditorPregenQuest : Editor
     private bool randomExp;
     private bool randomReward;
     private PregenQuestSO _quest;
+    private Item.ItemType tmpItemCategory;
     private void OnEnable()
     {
         _quest = (PregenQuestSO)target;
@@ -131,6 +133,53 @@ class EditorPregenQuest : Editor
                         EditorGUILayout.BeginHorizontal();
                         goal.AdditiveMoneyReward = GUILayout.Toggle(goal.AdditiveMoneyReward, "Additive money reward");
                         EditorGUILayout.EndHorizontal();
+                        break;
+                    case PregenQuestSO.CompactedGoal.GoalType.DeliveryGoal:
+                        GUILayout.Space(10);
+
+                        EditorGUILayout.BeginHorizontal();
+                        goal.QuestItemsBehaviour = (ItemContainer.QuestItemsBehaviourEnum)EditorGUILayout.EnumPopup("Quest items behaviour", goal.QuestItemsBehaviour);
+                        EditorGUILayout.EndHorizontal();
+
+                        EditorGUILayout.BeginHorizontal();
+                        goal.RequiredDeliveryWeight = EditorGUILayout.FloatField("Required weight", goal.RequiredDeliveryWeight);
+                        EditorGUILayout.EndHorizontal();
+
+                        EditorGUILayout.BeginHorizontal();
+                        goal.RequiredDeliveryCount = EditorGUILayout.IntField("Required count", goal.RequiredDeliveryCount);
+                        EditorGUILayout.EndHorizontal();
+
+                        EditorGUILayout.BeginHorizontal();
+                        goal.RequiredRotThreshold = EditorGUILayout.Slider(new GUIContent("Accepted rot value", "value > 0: only items fresher than value*100% \nvalue == 0: ignored \nvalue < 0: only items more expired than |value|*100% "), goal.RequiredRotThreshold, -1, 1);
+                        EditorGUILayout.EndHorizontal();
+
+                        GUILayout.Space(10);
+
+                        EditorGUILayout.BeginHorizontal();
+                        EditorGUILayout.LabelField("Accepted item categories:");
+                        EditorGUILayout.EndHorizontal();
+
+                        if (goal.RequiredItemCategories.Count == 0)
+                        {
+                            EditorGUILayout.LabelField("Everything is accepted");
+                        }
+
+                        foreach (var type in goal.RequiredItemCategories)
+                        {
+                            EditorGUILayout.BeginHorizontal();
+                            if (GUILayout.Button("X", GUILayout.Height(17), GUILayout.Width(18)))
+                            {
+                                goal.RequiredItemCategories.Remove(type);
+                                break;
+                            }
+                            EditorGUILayout.LabelField(type.ToString());
+                            EditorGUILayout.EndHorizontal();
+                        }
+
+                        tmpItemCategory = (Item.ItemType)EditorGUILayout.EnumPopup("Select category", tmpItemCategory);
+
+                        if (GUILayout.Button("Add accepted Category"))
+                            goal.RequiredItemCategories.Add(tmpItemCategory);
 
                         break;
                 }

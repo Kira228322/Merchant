@@ -133,12 +133,14 @@ public class ItemContainer : MonoBehaviour
     }
     public void Accept()
     {
-            foreach (InventoryItem item in Items)
-            {
-                _inventoryController.DestroyItem(_containerItemGrid, item);
-            }
+        foreach (InventoryItem item in Items)
+        {
+            _inventoryController.DestroyItem(_containerItemGrid, item);
+        }
 
-            DepositSuccessful?.Invoke();
+
+        ShowItselfAndInventory(false);
+        DepositSuccessful?.Invoke();
 
     }
     public void Cancel()
@@ -154,13 +156,17 @@ public class ItemContainer : MonoBehaviour
         {
             _inventoryController.MoveFromGridToGrid(_containerItemGrid, playerItemGrid, Items[i]);
         }
-        
-        
-        InventoryPanelButton.isOn = false;
-        _itemContainerPanel.SetActive(false);
+
+
+        ShowItselfAndInventory(false);
         DepositAborted?.Invoke();
     }
 
+    public void ShowItselfAndInventory(bool state)
+    {
+        InventoryPanelButton.isOn = state;
+        _itemContainerPanel.SetActive(state);
+    }
 
 
 }

@@ -18,13 +18,17 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private Button _continueButton;
     [SerializeField] private GameObject _lineFinishedIndicator;
     [Tooltip("Чем меньше значение, тем быстрее печатается текст. 1/Typing Speed")]
-    [SerializeField]private float _typingSpeed = 0.04f;
+    [SerializeField] private float _typingSpeed = 0.04f;
+
+    [SerializeField] private ItemContainer _itemContainer;
 
     private TMP_Text[] _choicesText;
     private Npc _currentNPC;
     private Story _currentStory;
     private Coroutine _currentDisplayLineCoroutine;
     private bool _isCurrentlyWritingALine;
+
+    private DeliveryGoal _currentDeliveryGoal;
 
     //Первый параметр - с кем поговорил. Второй параметр - о чём.
     public event UnityAction<Npc, string> TalkedToNPCAboutSomething;
@@ -36,6 +40,24 @@ public class DialogueManager : MonoBehaviour
         ColorUtility.TryParseHtmlString(colorName, out Color result);
         //Почему HtmlString? Потому что такой метод уже встроен в библиотеку, и он работает для этого случая
         _dialogueText.color = result;
+    }
+    private void OnDepositSuccessful()
+    {
+        _itemContainer.DepositAborted -= OnDepositAborted;
+        _itemContainer.DepositSuccessful -= OnDepositSuccessful;
+        _dialogueWindow.SetActive(true);
+        if (_currentStory.currentChoices.Count != 0)
+            DisplayChoices();
+        _currentDeliveryGoal.CurrentAmount = _currentDeliveryGoal.RequiredAmount;
+        _currentDeliveryGoal.Initialize(); //типа костыль, работает вместо Evaluate() пока в Initiazize() ничего нет.
+        _currentDeliveryGoal = null;
+    }
+    private void OnDepositAborted()
+    {
+        _itemContainer.DepositAborted -= OnDepositAborted;
+        _itemContainer.DepositSuccessful -= OnDepositSuccessful;
+        _currentDeliveryGoal = null;
+        ExitDialogueMode();
     }
     private void BindFunctions()
     {
@@ -144,6 +166,32 @@ public class DialogueManager : MonoBehaviour
         _currentStory.BindExternalFunction("is_empty", (string str) =>
         {
             return str == "";
+        });
+        _currentStory.BindExternalFunction("open_item_container", (string questSummary, int deliveryGoalNumber) =>
+        {
+            Quest quest = QuestHandler.GetActiveQuestBySummary(questSummary);
+            if (quest != null)
+            {
+                if (quest.Goals[deliveryGoalNumber] is DeliveryGoal deliveryGoal)
+                {
+                    _itemContainer.Init(new(deliveryGoal.RequiredItemCategories), deliveryGoal.QuestItemsBehaviour, deliveryGoal.RequiredWeight, deliveryGoal.RequiredCount, deliveryGoal.RequiredRotThreshold, _currentNPC.NpcData.Name);
+                    //open item container, halt dialogue;
+                    _itemContainer.ShowItselfAndInventory(true);
+                    HideChoices();
+                    _dialogueWindow.SetActive(false);
+                    _currentDeliveryGoal = deliveryGoal;
+                    _itemContainer.DepositAborted += OnDepositAborted;
+                    _itemContainer.DepositSuccessful += OnDepositSuccessful;
+                }
+                else
+                {
+                    Debug.LogError("У этого квеста нет DeliveryGoal под этим индексом, ошибка в написании диалога");
+                }
+            }
+            else
+            {
+                Debug.LogError("Такого квеста нет в активных, ошибка при написании диалога");
+            }
         });
     }
     #endregion
