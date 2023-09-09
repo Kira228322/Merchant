@@ -2060,7 +2060,6 @@ GameObject:
   - component: {fileID: 295020381}
   - component: {fileID: 295020383}
   - component: {fileID: 295020384}
-  - component: {fileID: 295020385}
   - component: {fileID: 295020387}
   - component: {fileID: 295020386}
   m_Layer: 0
@@ -2133,22 +2132,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 900a3ea4b728e744099f102a14ed6d45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &295020385
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 295020380}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f44f38a1f112404196c4abf8b76be7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _appearance: 0
-  _controls:
-  - QuestSummary: 
-    questState: 0
 --- !u!114 &295020386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2161,8 +2144,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a5fd4818c9c95c48866157d96767998, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  androidAdID: Rewarded_Android
-  iOSAdID: Rewarded_iOS
+  _rewardList:
+  - {fileID: 11400000, guid: 63ae3070bea77f74c9d0ee78ccec0a40, type: 2}
+  - {fileID: 11400000, guid: 17fc249dc6585c049b1f783385a2786c, type: 2}
+  - {fileID: 11400000, guid: 09458c858b4f9b946aeb38dbd30c7338, type: 2}
+  - {fileID: 11400000, guid: efc5b0fa713bcf54e845166c8adf8049, type: 2}
+  - {fileID: 11400000, guid: 484e0d3ad59a9ec458818249df2df45f, type: 2}
+  - {fileID: 11400000, guid: 86ed694dd10ff2a4f8940bdcaa5165db, type: 2}
+  - {fileID: 11400000, guid: d9ebf4c4b6c626740aae6ed3b26e2c3f, type: 2}
+  - {fileID: 11400000, guid: 5acdc877aab69cf4b9bf6f2bad65976a, type: 2}
+  - {fileID: 11400000, guid: 83a4945ba6a200446b78f8c012ea145e, type: 2}
+  - {fileID: 11400000, guid: eaabf7144a38fd341937c5e85fd35fdb, type: 2}
+  - {fileID: 11400000, guid: fb046bbc96864bb4ea030010b2be1def, type: 2}
+  - {fileID: 11400000, guid: f300102ff12f3904cb5e688a37017013, type: 2}
 --- !u!114 &295020387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6477,6 +6471,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a38e14d3ff59a5d47898ceb4939ac969, type: 2}
   - {fileID: 11400000, guid: 08ea09ff77731274691145ae0477cf29, type: 2}
   tmpFloat:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
   - 1
   - 1
   - 1

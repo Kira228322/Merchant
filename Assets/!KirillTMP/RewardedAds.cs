@@ -8,10 +8,42 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
 {
     public static RewardedAds Instance;
 
-    [SerializeField] private string androidAdID = "Rewarded_Android";
-    [SerializeField] private string iOSAdID = "Rewarded_iOS";
+    private string androidAdID = "Rewarded_Android";
+    private string iOSAdID = "Rewarded_iOS";
 
+    [SerializeField] private List<Item> _rewardList = new ();
+    private int _moneyReward = 200;
     private string adID;
+
+    private void GiveRewardToPlayer()
+    {
+        if (Random.Range(0, 10) == 0)
+        {
+            GiveMoneyReward();
+        }
+        else
+        {
+            Item item = _rewardList[Random.Range(0, _rewardList.Count)];
+            int count = item.Price <= 100 ? 2 : 1;
+            
+            if (InventoryController.Instance.TryCreateAndInsertItem(Player.Instance.Inventory.ItemGrid,
+                     ItemDatabase.GetItem(item.Name), count, 0, true))
+            {
+                CanvasWarningGenerator.Instance.CreateWarning("Спасибо за просмотр", $"Вы получили предмет {item.Name} в количестве {count}");
+            }
+            else
+            {
+                GiveMoneyReward();
+            }
+        }
+    }
+
+    private void GiveMoneyReward()
+    {
+        int money = _moneyReward + Random.Range(Player.Instance.Experience.CurrentLevel, Player.Instance.Experience.CurrentLevel * 10);
+        Player.Instance.Money += money;
+        CanvasWarningGenerator.Instance.CreateWarning("Спасибо за просмотр", $"Вы получили {money} золота");
+    }
 
     private void Awake()
     {
@@ -23,9 +55,7 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
     private void Start()
     {
         LoadAd();
-
-        if (Instance == null)
-            Instance = this;
+        Instance = this;
     }
 
     public void LoadAd()
@@ -63,6 +93,11 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
     public void OnUnityAdsShowComplete(string adUnitId, UnityAdsShowCompletionState showCompletionState)
     {
         LoadAd();
+        
+        if (adUnitId.Equals(adID) && showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED))
+        {
+            GiveRewardToPlayer();
+        }
     }
     
     // TODO чел из видео говорил, что после того, как показало рекламу нужно грузить следующую.
