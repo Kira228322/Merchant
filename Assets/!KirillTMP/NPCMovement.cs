@@ -35,6 +35,10 @@ abstract public class NPCMovement : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _rigidbody = GetComponent<Rigidbody2D>();
         _collider = GetComponent<Collider2D>();
+        _groundMask.useLayerMask = true;
+        LayerMask layerMask = new LayerMask();
+        layerMask = 128; // 2^7
+        _groundMask.layerMask = layerMask;
         ChooseHome();
     }
 
@@ -54,7 +58,6 @@ abstract public class NPCMovement : MonoBehaviour
             _currentCoroutine = StartCoroutine(IDLE(true));
         else
             _currentCoroutine = StartCoroutine(IDLE(false));
-        
     }
     private IEnumerator IDLE(bool quick)
     {
@@ -69,6 +72,50 @@ abstract public class NPCMovement : MonoBehaviour
         Animator.SetTrigger("Move");
     }
 
+    public void MakeNPCBusy()
+    {
+        if (_currentCoroutine != null)
+            StopCoroutine(_currentCoroutine);
+        
+        _currentCoroutine = StartCoroutine(IDLEWhileBusy());
+        TurnToPlayer();
+    }
+    
+    private IEnumerator IDLEWhileBusy()
+    {
+        Animator.SetTrigger("IDLE");
+        WaitForSeconds waitForSeconds = new WaitForSeconds(100f);
+        while (true)
+        {
+            yield return waitForSeconds;
+        }
+    }
+
+    public void NPCMakeFree()
+    {
+        StopCoroutine(_currentCoroutine);
+        StartIDLE(true);
+    }
+
+    private void TurnToPlayer()
+    {
+        bool playerRighter = transform.position.x < Player.Instance.transform.position.x;
+        if (DefaultViewDirectionIsRight)
+        {
+            if (playerRighter)
+                _spriteRenderer.flipX = false;
+            else
+                _spriteRenderer.flipX = true;
+        }
+        else
+        {
+            if (playerRighter)
+                _spriteRenderer.flipX = true;
+            else
+                _spriteRenderer.flipX = false;
+        }
+    }
+    
     protected abstract IEnumerator Move();
     
     private void ChooseHome()
@@ -95,19 +142,20 @@ abstract public class NPCMovement : MonoBehaviour
 
     private void OnMinuteChange()
     {
-        if (!MoveByNodeIsActive)
-            if (_isGoingToHome)
-            {
-                if (_currentCoroutine != null)
-                    StopCoroutine(_currentCoroutine);
-                _currentCoroutine = StartCoroutine(MoveDirectlyAtHome(_home.x));
-            }
-            else
-            {
-                GameTime.MinuteChanged -= OnMinuteChange;
-                GameTime.HourChanged += OnHourChangeWhenAtHome;
-                EnableNPC(false);
-            }
+        if (MoveByNodeIsActive) 
+            return;
+        if (_isGoingToHome)
+        {
+            if (_currentCoroutine != null)
+                StopCoroutine(_currentCoroutine);
+            _currentCoroutine = StartCoroutine(MoveDirectlyAtHome(_home.x));
+        }
+        else
+        {
+            GameTime.MinuteChanged -= OnMinuteChange;
+            GameTime.HourChanged += OnHourChangeWhenAtHome;
+            EnableNPC(false);
+        }
     }
     
     public void OnCollisionWithNode(Node node)

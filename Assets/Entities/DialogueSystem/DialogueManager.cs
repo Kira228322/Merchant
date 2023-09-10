@@ -223,7 +223,8 @@ public class DialogueManager : MonoBehaviour
             _choices[i].SetActive(false);
         }
 
-        ExitDialogueMode();
+        _dialogueWindow.SetActive(false);
+        _dialogueText.text = "";
     }
     #endregion
 
@@ -299,6 +300,7 @@ public class DialogueManager : MonoBehaviour
     {
         _dialogueWindow.SetActive(false);
         _dialogueText.text = "";
+        _currentNPC.StopInteraction();
     }
     #endregion
 

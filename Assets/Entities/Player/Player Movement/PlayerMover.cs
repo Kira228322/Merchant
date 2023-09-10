@@ -30,10 +30,28 @@ public class PlayerMover : MonoBehaviour
         _backgroundController.UpdateBackground(transform.position.x);
     }
 
-    
+    public void DisableMove()
+    {
+        if (_currentMove != null)
+        {
+            StopCoroutine(_currentMove);
+            _currentMove = null;
+            _rigidbody.velocity = new Vector2(0,0);
+        }
+
+        enabled = false;
+    }
+
+    public void EnableMove()
+    {
+        enabled = true;
+    }
 
     public void StartMove(Vector3 startPos,Vector3 targetPos)
     {
+        if (enabled == false)
+            return;
+        
         if (_currentMoveCD == 0)
         {
             _currentMoveCD = _moveCD;

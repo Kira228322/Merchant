@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Pidor Pidorovich
   m_EditorClassIdentifier: 
   Name: Pidor Pidorovich
-  StartWalkingTime: 0
-  FinishWalkingTime: 0
+  StartWalkingTime: 6
+  FinishWalkingTime: 22
   GameStartMoney: 150
   CurrentMoney: 150
   ID: 69
@@ -25,6 +25,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 997f1667faefd604aad534ee42560049, type: 2}
   - {fileID: 11400000, guid: f79f4b99f7a29d249984ef4bb821b632, type: 2}
   IsBlackMarket: 0
+  HaveAdditiveGoods: 0
   _baseGoods:
   - Good: {fileID: 11400000, guid: 86ed694dd10ff2a4f8940bdcaa5165db, type: 2}
     MaxCount: 33
@@ -50,8 +51,8 @@ MonoBehaviour:
     Coefficient: 0.7
     DefaultCountToBuy: 2
   - ItemType: 2
-    Coefficient: 0.7
-    DefaultCountToBuy: 0
+    Coefficient: 0.6975
+    DefaultCountToBuy: 13
   - ItemType: 3
     Coefficient: 0.8
     DefaultCountToBuy: 10
@@ -62,14 +63,57 @@ MonoBehaviour:
     Coefficient: 0.1
     DefaultCountToBuy: 0
   - ItemType: 6
-    Coefficient: 0.1
-    DefaultCountToBuy: 0
+    Coefficient: 0.425
+    DefaultCountToBuy: 27
   - ItemType: 7
     Coefficient: 0.1
     DefaultCountToBuy: 0
   - ItemType: 8
     Coefficient: 0.1
     DefaultCountToBuy: 0
-  Goods: []
+  Goods:
+  - Good: {fileID: 11400000, guid: 86ed694dd10ff2a4f8940bdcaa5165db, type: 2}
+    MaxCount: 33
+    CurrentCount: 33
+    CurrentPrice: 100
+  - Good: {fileID: 11400000, guid: 837714733ab95cd4386adfbf67e874f4, type: 2}
+    MaxCount: 33
+    CurrentCount: 33
+    CurrentPrice: 35
+  - Good: {fileID: 11400000, guid: a6f25cda845aa324e9a8b5b3fac3da99, type: 2}
+    MaxCount: 33
+    CurrentCount: 33
+    CurrentPrice: 60
+  - Good: {fileID: 11400000, guid: 59436fb2773791c4884376fe4fb621cb, type: 2}
+    MaxCount: 33
+    CurrentCount: 33
+    CurrentPrice: 73
   AdditiveGoods: []
-  BuyCoefficients: []
+  BuyCoefficients:
+  - ItemType: 0
+    Coefficient: 1
+    DefaultCountToBuy: 20
+  - ItemType: 1
+    Coefficient: 0.7
+    DefaultCountToBuy: 2
+  - ItemType: 2
+    Coefficient: 0.6975
+    DefaultCountToBuy: 13
+  - ItemType: 3
+    Coefficient: 0.8
+    DefaultCountToBuy: 10
+  - ItemType: 4
+    Coefficient: 0.1
+    DefaultCountToBuy: 0
+  - ItemType: 5
+    Coefficient: 0.1
+    DefaultCountToBuy: 0
+  - ItemType: 6
+    Coefficient: 0.425
+    DefaultCountToBuy: 27
+  - ItemType: 7
+    Coefficient: 0.1
+    DefaultCountToBuy: 0
+  - ItemType: 8
+    Coefficient: 0.1
+    DefaultCountToBuy: 0

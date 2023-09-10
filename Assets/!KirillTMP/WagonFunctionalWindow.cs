@@ -6,6 +6,11 @@ public class WagonFunctionalWindow : MonoBehaviour
 {
     [SerializeField] private GameObject _sleepPanelPrefab;
  
+    private void OnEnable()
+    {
+        Player.Instance.PlayerMover.DisableMove();
+    }
+    
     public void OnSleepButtonClick()
     {
         Instantiate(_sleepPanelPrefab, MapManager.Canvas.transform);
@@ -20,6 +25,7 @@ public class WagonFunctionalWindow : MonoBehaviour
 
     public void OnCloseButtonClick()
     {
+        Player.Instance.PlayerMover.EnableMove();
         Destroy(gameObject);
     }
 }

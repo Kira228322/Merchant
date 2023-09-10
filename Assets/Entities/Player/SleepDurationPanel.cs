@@ -23,6 +23,7 @@ public class SleepDurationPanel : MonoBehaviour
     {
         _player.Needs.FinishedSleeping -= OnFinishedSleeping;
         _player.Needs.SleptOneHourEvent -= OnSleptOneHour;
+        Player.Instance.PlayerMover.EnableMove();
     }
 
     private void Awake()

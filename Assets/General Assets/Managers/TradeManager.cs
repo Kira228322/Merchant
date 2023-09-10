@@ -31,6 +31,7 @@ public class TradeManager : MonoBehaviour
     private Animator _traderMoneyAnimator;
     public List<GoodsBuyPanel> GoodsBuyPanels = new ();
     public List<GoodsSellPanel> GoodsSellPanels = new ();
+    private NpcTrader _trader;
     private void Start()
     {
         _traderMoneyAnimator = _traderMoney.gameObject.GetComponent<Animator>();
@@ -121,9 +122,11 @@ public class TradeManager : MonoBehaviour
         BuyPanel.SetActive(false);
         SellPanel.SetActive(false);
         Player.Instance.Inventory.InventoryPanel.SetActive(false);
+        _trader.StopInteraction();
     }
     private void OpenBuyPanel(NpcTrader trader)
     {
+        _trader = trader;
         BuyPanel.SetActive(true);
         
         for (int i = BuyPanelContent.childCount - 1; i >= 0; i--)

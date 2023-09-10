@@ -7,6 +7,19 @@ public class Npc : MonoBehaviour
     [SerializeField] private GameObject _exclamationMarkPrefab;
     public GameObject ExclamationMark;
 
+    public void StartInteraction()
+    {
+        Player.Instance.PlayerMover.DisableMove();
+        if(gameObject.TryGetComponent(out NPCMovement movement))
+            movement.MakeNPCBusy();
+    }
+
+    public void StopInteraction()
+    {
+        Player.Instance.PlayerMover.EnableMove();
+        if(gameObject.TryGetComponent(out NPCMovement movement))
+            movement.NPCMakeFree();
+    }
 
     private void OnEnable()
     {

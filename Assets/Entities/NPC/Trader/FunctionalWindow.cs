@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -11,11 +12,12 @@ public class FunctionalWindow : MonoBehaviour
     private Transform _canvas;
 
     
-    
     public void Init(Npc npc)
     {
         _canvas = FindObjectOfType<CanvasWarningGenerator>().transform;
         _NPC = npc;
+        
+        _NPC.StartInteraction();
         
         _NPCName.text = _NPC.NpcData.Name; 
         // Выставление кнопок:
@@ -52,6 +54,7 @@ public class FunctionalWindow : MonoBehaviour
 
     public void OnCloseButtonClick()
     {
+        _NPC.StopInteraction();
         Destroy(gameObject);
     }
 }

@@ -74,6 +74,7 @@ public class WagonUpgradeWindow : MonoBehaviour
     public void OnCloseButtonClick()
     {
         TradeManager.Instance.PlayerBlock.alpha = 1;
+        _wagonUpgrader.StopInteraction();
         Destroy(gameObject);
     }
 }

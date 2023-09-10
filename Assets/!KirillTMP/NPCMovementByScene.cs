@@ -6,8 +6,8 @@ using Random = UnityEngine.Random;
 
 public class NPCMovementByScene : NPCMovement
 {
-    private float _minMoveDistance = 2f; // 3 //TODO
-    private float _maxMoveDistance = 6f; // 12
+    private float _minMoveDistance = 3f; 
+    private float _maxMoveDistance = 12f; 
     
     protected override void OnEnable()
     {
@@ -18,8 +18,6 @@ public class NPCMovementByScene : NPCMovement
             Animator.SetTrigger("Move");
         }
     }
-
-    
 
     private void ChooseMoveRangeAndDirection()
     {
