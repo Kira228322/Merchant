@@ -70,7 +70,9 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
                 spawnPointIndex++;
             }
         }
-
+        //Спавн одного рекламного объявления
+        _compactedNoticeArray[spawnPointIndex] = new CompactedAdNotice("Рекламное объявление", "Посмотрите это объявление, чтобы получить подарок");
+        spawnPointIndex++;
         //Спавн держи-в-курсе информации по текущим ивентам в мире
 
         _uncheckedActiveGlobalEvents = new(GlobalEventHandler.Instance.ActiveGlobalEvents);
@@ -195,6 +197,14 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
     public class CompactedInfoNotice : CompactedNotice
     {
         public CompactedInfoNotice(string name, string description)
+        {
+            this.name = name;
+            this.description = description;
+        }
+    }
+    public class CompactedAdNotice : CompactedNotice
+    {
+        public CompactedAdNotice(string name, string description)
         {
             this.name = name;
             this.description = description;

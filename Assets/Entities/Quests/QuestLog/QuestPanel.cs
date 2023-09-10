@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
+using UnityEditor.VersionControl;
 
 public class QuestPanel : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class QuestPanel : MonoBehaviour
     [SerializeField] private List<TMP_Text> _rewardTexts = new();
 
     [SerializeField] private Button _rewardButton;
+
+    [SerializeField] private Sprite _completedGoalSprite;
+    [SerializeField] private Sprite _uncompletedGoalSprite;
 
     [SerializeField] private Color _activeGoalColor;
     [SerializeField] private Color _completedGoalColor;
@@ -36,7 +40,25 @@ public class QuestPanel : MonoBehaviour
         for (int i = 0; i < _quest.Goals.Count; i++)
         {
             _goalTexts[i].gameObject.SetActive(true);
-            _goalTexts[i].text = _quest.Goals[i].Description + " " + _quest.Goals[i].CurrentAmount + " / " + _quest.Goals[i].RequiredAmount;
+            Image completionImage = _goalTexts[i].gameObject.GetComponentInChildren<Image>();
+            if (_quest.Goals[i].RequiredAmount == 1)
+            {
+                completionImage.gameObject.SetActive(true);
+                if (_quest.Goals[i].CurrentAmount == _quest.Goals[i].RequiredAmount)
+                {
+                    completionImage.sprite = _completedGoalSprite;
+                }
+                else
+                {
+                    completionImage.sprite = _uncompletedGoalSprite;
+                }
+                _goalTexts[i].text = _quest.Goals[i].Description + " ";
+            }
+            else
+            {
+                completionImage.gameObject.SetActive(false);
+                _goalTexts[i].text = _quest.Goals[i].Description + " " + _quest.Goals[i].CurrentAmount + " / " + _quest.Goals[i].RequiredAmount;
+            }
         }
 
         if (_quest.ExperienceReward != 0)
@@ -85,19 +107,26 @@ public class QuestPanel : MonoBehaviour
 
         for (int i = 0; i < _quest.Goals.Count; i++)
         {
-            _goalTexts[i].text = _quest.Goals[i].Description + ": " + _quest.Goals[i].CurrentAmount + " / " + _quest.Goals[i].RequiredAmount;
+            Image mark = _goalTexts[i].GetComponentInChildren<Image>();
+            if (_quest.Goals[i].RequiredAmount == 1)
+                _goalTexts[i].text = _quest.Goals[i].Description + " ";
+            else
+                _goalTexts[i].text = _quest.Goals[i].Description + ": " + _quest.Goals[i].CurrentAmount + " / " + _quest.Goals[i].RequiredAmount;
             switch (_quest.Goals[i].CurrentState)
             {
                 case Goal.State.Active:
                     _goalTexts[i].color = _activeGoalColor;
+                    mark.sprite = _uncompletedGoalSprite;
                     break;
 
                 case Goal.State.Completed:
                     _goalTexts[i].color = _completedGoalColor;
+                    mark.sprite = _completedGoalSprite;
                     break;
 
                 case Goal.State.Failed:
                     _goalTexts[i].color = _failedGoalColor;
+                    mark.sprite = _uncompletedGoalSprite;
                     break;
             }
         }

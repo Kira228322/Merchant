@@ -45,10 +45,7 @@ public class EventPost : EventInTravel
                     //Отдать всю контрабанду
                     foreach (Item bannedItem in BannedItemsHandler.Instance.BannedItems)
                         Player.Instance.Inventory.RemoveAllItemsOfThisItemData(bannedItem);
-                    if (contrabandSpotted)
-                        _eventWindow.ChangeDescription("Вы передали всю контрабанду блюстителю порядка");
-                    else
-                        _eventWindow.ChangeDescription("У вас все чисто. Охрана позволяет вам проехать.");
+                    _eventWindow.ChangeDescription("Вы передали всю контрабанду блюстителю порядка");    
                     break;
                 case 1:
                     //Предложить немного золота, 50% шанс
@@ -75,6 +72,7 @@ public class EventPost : EventInTravel
             }
         }
         //else: contrabandSpotted == false. Пройти проверку и ехать дальше. Ничего не происходит
+        else _eventWindow.ChangeDescription("У вас все чисто. Охрана позволяет вам проехать.");
     }
 
 }

@@ -35,7 +35,7 @@ public class EventWindow : MonoBehaviour
         _description.text = eventInTravel.Description;
 
         EventInTravel travelEvent = Instantiate(eventInTravel.gameObject, _sceneContainer).GetComponent<EventInTravel>();
-        
+        travelEvent.Init(this);
         
         // travelEvent.gameObject.transform.localScale = 
         //     new Vector3(travelEvent.gameObject.transform.localScale.x, travelEvent.gameObject.transform.localScale.y,1);

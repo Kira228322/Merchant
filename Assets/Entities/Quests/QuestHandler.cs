@@ -151,6 +151,12 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
                             oldGoal.CurrentAmount, oldGoal.RequiredAmount, oldGoal.RequiredItemName,
                             oldGoal.RequiredIDOfNPC, oldGoal.RequiredLine);
                         break;
+                    case DeliveryGoal oldGoal:
+                        newGoal = new DeliveryGoal(oldGoal.CurrentState, oldGoal.Description,
+                            oldGoal.CurrentAmount, oldGoal.RequiredAmount, oldGoal.RequiredItemCategories,
+                            oldGoal.QuestItemsBehaviour, oldGoal.RequiredWeight, oldGoal.RequiredCount,
+                            oldGoal.RequiredRotThreshold);
+                        break;
                     default:
                         Debug.LogError("Нет такого типа Goal");
                         break;
