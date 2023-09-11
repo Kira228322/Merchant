@@ -92,8 +92,8 @@ public class PregenQuestSO : ScriptableObject
                 case CompactedGoal.GoalType.DeliveryGoal:
                     newGoal = new DeliveryGoal(pregenGoal.goalState, pregenGoal.description,
                         pregenGoal.currentAmount, 1, pregenGoal.RequiredItemCategories, 
-                        pregenGoal.QuestItemsBehaviour, pregenGoal.RequiredDeliveryWeight, 
-                        pregenGoal.RequiredDeliveryCount, pregenGoal.RequiredRotThreshold);
+                        pregenGoal.QuestItemsBehaviour, (float)Math.Round(Random.Range(pregenGoal.MinRequiredDeliveryWeight, pregenGoal.MaxRequiredDeliveryWeight), 1), 
+                        Random.Range(pregenGoal.MinRequiredDeliveryCount, pregenGoal.MaxRequiredDeliveryCount), pregenGoal.RequiredRotThreshold);
                     break;
 
                 default:
@@ -128,8 +128,12 @@ public class PregenQuestSO : ScriptableObject
 
         public List<Item.ItemType> RequiredItemCategories;
         public ItemContainer.QuestItemsBehaviourEnum QuestItemsBehaviour;
-        public float RequiredDeliveryWeight;
-        public int RequiredDeliveryCount;
+        public bool RandomDeliveryWeight;
+        public bool RandomDeliveryCount;
+        public float MinRequiredDeliveryWeight;
+        public float MaxRequiredDeliveryWeight;
+        public int MinRequiredDeliveryCount;
+        public int MaxRequiredDeliveryCount;
         public float RequiredRotThreshold;
     }
 

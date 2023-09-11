@@ -59,8 +59,10 @@ class EditorPregenQuest : Editor
                 EditorGUILayout.EndHorizontal();
 
                 EditorGUILayout.BeginHorizontal();
-                GUIStyle style = new GUIStyle(EditorStyles.textField);
-                style.wordWrap = true;
+                GUIStyle style = new(EditorStyles.textField)
+                {
+                    wordWrap = true
+                };
                 goal.description = EditorGUILayout.TextField("Description", goal.description, style,
                     GUILayout.ExpandHeight(true), GUILayout.MaxHeight(25));
                 EditorGUILayout.EndHorizontal();
@@ -142,15 +144,49 @@ class EditorPregenQuest : Editor
                         EditorGUILayout.EndHorizontal();
 
                         EditorGUILayout.BeginHorizontal();
-                        goal.RequiredDeliveryWeight = EditorGUILayout.FloatField("Required weight", goal.RequiredDeliveryWeight);
+                        GUILayout.Label("Required Weight:");
+                        GUILayout.Label("Random", GUILayout.MaxWidth(50));
+                        goal.RandomDeliveryWeight = EditorGUILayout.Toggle(goal.RandomDeliveryWeight, GUILayout.MaxWidth(20));
+                        if (goal.RandomDeliveryWeight)
+                        {
+                            GUILayout.Label("min", GUILayout.MaxWidth(25));
+                            goal.MinRequiredDeliveryWeight =
+                                EditorGUILayout.FloatField(goal.MinRequiredDeliveryWeight);
+                            GUILayout.Label("max", GUILayout.MaxWidth(29));
+                            goal.MaxRequiredDeliveryWeight =
+                                EditorGUILayout.FloatField(goal.MaxRequiredDeliveryWeight);
+                        }
+                        else
+                        {
+                            GUILayout.Label("Weight", GUILayout.MaxWidth(50));
+                            goal.MinRequiredDeliveryWeight = EditorGUILayout.FloatField(goal.MinRequiredDeliveryWeight);
+                            goal.MaxRequiredDeliveryWeight = goal.MinRequiredDeliveryWeight;
+                        }
                         EditorGUILayout.EndHorizontal();
 
                         EditorGUILayout.BeginHorizontal();
-                        goal.RequiredDeliveryCount = EditorGUILayout.IntField("Required count", goal.RequiredDeliveryCount);
+                        GUILayout.Label("Required Count:");
+                        GUILayout.Label("Random", GUILayout.MaxWidth(50));
+                        goal.RandomDeliveryCount = EditorGUILayout.Toggle(goal.RandomDeliveryCount, GUILayout.MaxWidth(20));
+                        if (goal.RandomDeliveryCount)
+                        {
+                            GUILayout.Label("min", GUILayout.MaxWidth(25));
+                            goal.MinRequiredDeliveryCount =
+                                EditorGUILayout.IntField(goal.MinRequiredDeliveryCount);
+                            GUILayout.Label("max", GUILayout.MaxWidth(29));
+                            goal.MaxRequiredDeliveryCount =
+                                EditorGUILayout.IntField(goal.MaxRequiredDeliveryCount);
+                        }
+                        else
+                        {
+                            GUILayout.Label("Count", GUILayout.MaxWidth(50));
+                            goal.MinRequiredDeliveryCount = EditorGUILayout.IntField(goal.MinRequiredDeliveryCount);
+                            goal.MaxRequiredDeliveryCount = goal.MinRequiredDeliveryCount;
+                        }
                         EditorGUILayout.EndHorizontal();
 
                         EditorGUILayout.BeginHorizontal();
-                        goal.RequiredRotThreshold = EditorGUILayout.Slider(new GUIContent("Accepted rot value", "value > 0: only items fresher than value*100% \nvalue == 0: ignored \nvalue < 0: only items more expired than |value|*100% "), goal.RequiredRotThreshold, -1, 1);
+                        goal.RequiredRotThreshold = EditorGUILayout.Slider(new GUIContent("Accepted rot value*", "value > 0: only items fresher than value*100% \nvalue == 0: ignored \nvalue < 0: only items more expired than |value|*100% "), goal.RequiredRotThreshold, -1, 1);
                         EditorGUILayout.EndHorizontal();
 
                         GUILayout.Space(10);

@@ -11,6 +11,7 @@ public class ItemContainer : MonoBehaviour
 {
     [SerializeField] private ItemGrid _containerItemGrid;
     [SerializeField] private Toggle InventoryPanelButton;
+    [SerializeField] private Toggle MapButton; 
     [SerializeField] private GameObject _itemContainerPanel;
 
     [SerializeField] private TMP_Text _labelText;
@@ -166,6 +167,9 @@ public class ItemContainer : MonoBehaviour
     public void ShowItselfAndInventory(bool state)
     {
         InventoryPanelButton.isOn = state;
+        InventoryPanelButton.interactable = !state;
+        MapButton.isOn = false;
+        MapButton.interactable = !state;
         _itemContainerPanel.SetActive(state);
     }
 
