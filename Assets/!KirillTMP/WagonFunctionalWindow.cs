@@ -20,6 +20,7 @@ public class WagonFunctionalWindow : MonoBehaviour
     public void OnSaveButtonClick()
     {
         GameManager.Instance.SaveGame();
+        Player.Instance.PlayerMover.EnableMove();
         Destroy(gameObject);
     }
 

@@ -32,7 +32,6 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
             {
                 _money = 0;
             }
-            
         }
     }
 

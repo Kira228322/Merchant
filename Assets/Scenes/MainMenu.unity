@@ -18623,7 +18623,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 41.3
+  m_fontSize: 40.95
   m_fontSizeBase: 42
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -21309,21 +21309,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &3279153273210302149
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4523655441138798886}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80ad4811f427336448cfa9be2189dfa4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _playersInventory: {fileID: 4868548358382525315}
-  _goldText: {fileID: 3279153272238798403}
-  _weightText: {fileID: 3279153274285060326}
 --- !u!224 &3279153273304979290
 RectTransform:
   m_ObjectHideFlags: 0
@@ -23843,7 +23828,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 41.1
+  m_fontSize: 40.8
   m_fontSizeBase: 42
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -24835,7 +24820,7 @@ GameObject:
   - component: {fileID: 4523655441138798891}
   - component: {fileID: 4523655441138798888}
   - component: {fileID: 4523655441138798889}
-  - component: {fileID: 3279153273210302149}
+  - component: {fileID: 4523655441138798892}
   m_Layer: 5
   m_Name: InventoryPanel
   m_TagString: Untagged
@@ -24905,6 +24890,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1920, y: 1080.7494}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4523655441138798892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4523655441138798886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80ad4811f427336448cfa9be2189dfa4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playersInventory: {fileID: 4868548358382525315}
+  _goldText: {fileID: 3279153272238798403}
+  _weightText: {fileID: 3279153274285060326}
 --- !u!1 &4523655441370404976
 GameObject:
   m_ObjectHideFlags: 0

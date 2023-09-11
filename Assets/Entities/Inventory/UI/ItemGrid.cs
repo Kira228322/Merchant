@@ -301,7 +301,6 @@ public class ItemGrid : MonoBehaviour
                 return null;
             }
             PlaceItem(item, positionX, positionY);
-
             ItemPlacedInTheGrid?.Invoke(item);
             return item;
         }

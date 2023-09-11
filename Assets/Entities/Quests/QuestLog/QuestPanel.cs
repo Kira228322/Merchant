@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
-using UnityEditor.VersionControl;
 
 public class QuestPanel : MonoBehaviour
 {

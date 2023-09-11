@@ -45,6 +45,7 @@ public class SleepDurationPanel : MonoBehaviour
         _slider.interactable = true;
         GameManager.Instance.ButtonsBlock.SetActive(true);
         _player.HidePlayer(false);
+        Player.Instance.PlayerMover.EnableMove();
         StartCoroutine(FadeOutBlackScreen());
     }
 
