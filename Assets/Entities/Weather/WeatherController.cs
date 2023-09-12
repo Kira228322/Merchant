@@ -41,15 +41,15 @@ public class WeatherController : MonoBehaviour, IEventController<GlobalEvent_Wea
         switch (_strengthOfWeather)
         {
             case StrengthOfWeather.Light:
-                SetRainParams(35, 6.5f, 0.11f);
+                SetRainParams(32, 6.5f, 0.11f);
                 DurationOfEvent = Random.Range(3, 12);
                 break;
             case StrengthOfWeather.Medium:
-                SetRainParams(80, 7f, 0.14f);
+                SetRainParams(60, 7f, 0.14f);
                 DurationOfEvent = Random.Range(4, 15);
                 break;
             case StrengthOfWeather.Heavy:
-                SetRainParams(145, 7.7f, 0.16f);
+                SetRainParams(115, 7.7f, 0.16f);
                 DurationOfEvent = Random.Range(3, 8);
                 break;
         }

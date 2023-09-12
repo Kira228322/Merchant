@@ -12,7 +12,8 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
     private string iOSAdID = "Rewarded_iOS";
 
     [SerializeField] private List<Item> _rewardList = new ();
-    private int _moneyReward = 200;
+    private int _moneyReward = 150;
+    private int _expirienceBonus = 5;
     private string adID;
 
     private void GiveRewardToPlayer()
@@ -29,7 +30,8 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
             if (InventoryController.Instance.TryCreateAndInsertItem(Player.Instance.Inventory.ItemGrid,
                      ItemDatabase.GetItem(item.Name), count, 0, true))
             {
-                CanvasWarningGenerator.Instance.CreateWarning("Спасибо за просмотр", $"Вы получили предмет {item.Name} в количестве {count}");
+                Player.Instance.Experience.AddExperience(_expirienceBonus);
+                CanvasWarningGenerator.Instance.CreateWarning("Спасибо за просмотр", $"Вы получили {item.Name} в количестве {count}, а так же {_expirienceBonus} опыта");
             }
             else
             {
@@ -42,7 +44,8 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
     {
         int money = _moneyReward + Random.Range(Player.Instance.Experience.CurrentLevel, Player.Instance.Experience.CurrentLevel * 10);
         Player.Instance.Money += money;
-        CanvasWarningGenerator.Instance.CreateWarning("Спасибо за просмотр", $"Вы получили {money} золота");
+        Player.Instance.Experience.AddExperience(_expirienceBonus);
+        CanvasWarningGenerator.Instance.CreateWarning("Спасибо за просмотр", $"Вы получили {money} золота, а так же {_expirienceBonus} опыта");
     }
 
     private void Awake()
@@ -79,7 +82,7 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
 
     public void OnUnityAdsShowFailure(string placementId, UnityAdsShowError error, string message)
     {
-        Debug.Log($"Error showing Ad Unit {adID}: {error.ToString()} - {message}");
+        CanvasWarningGenerator.Instance.CreateWarning("Не удалось показать рекламу", "Награда не будет выдана");
     }
 
     public void OnUnityAdsShowStart(string placementId)

@@ -71,8 +71,31 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
             }
         }
         //Спавн одного рекламного объявления
-        _compactedNoticeArray[spawnPointIndex] = new CompactedAdNotice("Рекламное объявление", "Посмотрите это объявление, чтобы получить подарок");
-        spawnPointIndex++;
+        if (Random.Range(0, 5) != 0) // 80% что заспавнится реклама 
+        {
+            string description = "";
+            switch (Random.Range(0,4))
+            {
+                case 0:
+                    description = "Таинственный странствующий цирк приглашает вас на представление! " +
+                                  "Билет не стоит ни копейки! Напротив - вы сами получите подарок после представления";
+                    break;
+                case 1:
+                    description = "Приглашение на театральное представление. Вам будет предоставлено зрелище к просмотру." +
+                                  "Никаких взносов, оплат и прочего. После просмотра вы получите приз.";
+                    break;
+                case 2:
+                    description = "Временная акция! Посмотри представление и получи подарок! Успей воспользовать!";
+                    break;
+                case 3:
+                    description = "Если вы это читаете, то вам неслыханно повезло! Посмотрите магическое шоу совершенно бесплатно!" +
+                                  "А после просмотра получите подарок!";
+                    break;
+            }
+            _compactedNoticeArray[spawnPointIndex] = new CompactedAdNotice("Рекламное объявление", description);
+            spawnPointIndex++;
+        }
+        
         //Спавн держи-в-курсе информации по текущим ивентам в мире
 
         _uncheckedActiveGlobalEvents = new(GlobalEventHandler.Instance.ActiveGlobalEvents);
