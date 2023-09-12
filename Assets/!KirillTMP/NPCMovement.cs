@@ -162,8 +162,10 @@ abstract public class NPCMovement : MonoBehaviour
     {
         if (_currentCoroutine != null)
             StopCoroutine(_currentCoroutine);
-        _currentCoroutine = StartCoroutine(node.MoveByNode(this));
+        _currentCoroutine = StartCoroutine(node.MoveNPCByNode(this));
     }
+
+    
 
     private void OnHourChangeWhenAtHome()
     {

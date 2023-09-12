@@ -9,25 +9,25 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] private BackgroundController _backgroundController;
     [SerializeField] private ContactFilter2D _contactFilter2D;
     private float _speed = 3.5f;
-    public float Speed => _speed;
-    public float SpeedModifier;
-    private Rigidbody2D _rigidbody;
-    private Collider2D _collider;
-    private float _minDistToLet;
+    [HideInInspector]public float _currentSpeed;
+
+    public float SpeedModifier = 0;
+
+    [HideInInspector] public Rigidbody2D _rigidbody;
+    [HideInInspector] public Collider2D _collider;
     
     private Coroutine _currentMove;
-    private float _lastValue;
 
     private float _moveCD = 0.3f;
     private float _currentMoveCD;
-    private const float MinConstDist = 0.2f; // минимальное расстояние, которое может возникнуть между игроком и стеной 
+    private Vector3 _finishTargetPos;
+    [HideInInspector] public Vector3 _lastNodePos;
     private void Start()
     {
         _collider = GetComponent<Collider2D>();
         _rigidbody = GetComponent<Rigidbody2D>();
-        _minDistToLet = MinConstDist + _collider.bounds.size.x/2; 
-        _lastValue = transform.position.x;
         _backgroundController.UpdateBackground(transform.position.x);
+        ChangeCurrentSpeed();
     }
 
     public void DisableMove()
@@ -63,12 +63,7 @@ public class PlayerMover : MonoBehaviour
                 _currentMove = null;
                 _rigidbody.velocity = new Vector2(0,0);
             }
-
-            if (_collider.IsTouchingLayers()) // двигаться можно, только если ты не в прыжке
-            {
-                _currentMove = StartCoroutine(Move(startPos, targetPos));
-            }
-            
+            _currentMove = StartCoroutine(Move(startPos, targetPos));
         }
     }
 
@@ -78,103 +73,72 @@ public class PlayerMover : MonoBehaviour
         yield return waitForSeconds;
         _currentMoveCD = 0;
     }
+
+    public void ChangeCurrentSpeed()
+    {
+        _currentSpeed = _speed * (1 + SpeedModifier);
+    }
+    
+    public void MoveByNode(Node node)
+    {
+        if (_currentMove != null)
+        {
+            StopCoroutine(_currentMove);
+        }
+        _currentMove = StartCoroutine(node.MovePlayerByNode(this));
+    }
+
+    public void MoveAfterNode()
+    {
+        if (_currentMove != null)
+        {
+            StopCoroutine(_currentMove);
+        }
+        // если точка задана на лестницу, то движение не продолжается
+        if (_lastNodePos.x < transform.position.x && _lastNodePos.x >_finishTargetPos.x)
+            return;
+        if (_lastNodePos.x > transform.position.x && _lastNodePos.x < _finishTargetPos.x)
+            return;
+        // если нужно двигаться дальше
+        
+        StartMove(transform.position, _finishTargetPos);
+    }
     
     public IEnumerator Move(Vector3 startPos,Vector3 targetPos)
     {
-        bool moveIsDone = false;
-
-
-        float deltaTime = 0.02f;
-        WaitForSeconds waitForSeconds = new WaitForSeconds(deltaTime);
-        yield return waitForSeconds;
+        WaitForEndOfFrame forEndOfFrameUnit = new WaitForEndOfFrame();
+        yield return forEndOfFrameUnit;
+        _finishTargetPos = targetPos;
+        Vector3 moveDirection;
+        if (targetPos.x > startPos.x)
+            moveDirection = Vector3.right;
+        else
+            moveDirection = Vector3.left;
+        
         RaycastHit2D[] raycastHit2D = new RaycastHit2D[8];
 
-        Vector2 castDirection = new Vector3(targetPos.x - startPos.x, 0.05f); //+0.05y,чтобы не коллизился с полом
-        int count;
+        Vector2 castDirection = new Vector2(targetPos.x - startPos.x, 0.05f); //+0.05y,чтобы не коллизился с полом
+
+        float distance;
+        
         if (_rigidbody.Cast(castDirection, _contactFilter2D, raycastHit2D, 
-                Math.Abs(targetPos.x - startPos.x) ) == 0)
-        { // Если препятствий нет
-            
-            count = Convert.ToInt32(Math.Abs(targetPos.x - startPos.x) / (_speed * (1 + SpeedModifier) * deltaTime));
-            for (float i = 1; i <= count; i++) 
-            {
-                transform.position = new Vector3(math.lerp(startPos.x, targetPos.x, i/count), transform.position.y);
-                _backgroundController.UpdateBackground(transform.position.x);
-                yield return waitForSeconds;
-                    // проверка если игрок спуститься вниз, то y поменяется и нужно снова отслеживать препятствие
-                if (i % 5 == 0)
-                    if (_rigidbody.Cast(castDirection, _contactFilter2D, raycastHit2D, 
-                            Math.Abs(targetPos.x - transform.position.x) + _minDistToLet) != 0)
-                    {
-                        if (raycastHit2D[0].distance > 0.01f) // Это надо, чтобы при спуске вниз, когда объект касается с
-                        { // землей не ломалось движение 
-                            StartCoroutine(Move(transform.position, targetPos));
-                            break;
-                        }
-                    }
-            }
-        }
-        else 
+                Math.Abs(targetPos.x - startPos.x) ) != 0)
         {
-            Vector2 jumpDirection;
-            float distToLet = raycastHit2D[0].distance - MinConstDist; 
-
-            count = Convert.ToInt32(Math.Abs(distToLet) / (_speed * (1 + SpeedModifier) * deltaTime));
-            
-            float targetPosX = raycastHit2D[0].point.x;
-            if (targetPosX > startPos.x)
-                targetPosX -= _minDistToLet;
-            else targetPosX += _minDistToLet;
-
-            for (float i = 1; i <= count; i++)
-            {
-                transform.position = new Vector3(math.lerp(startPos.x, targetPosX, i / count), transform.position.y);
-                _backgroundController.UpdateBackground(transform.position.x);
-                yield return waitForSeconds;
-                if (i % 5 == 0)
-                    if (_rigidbody.Cast(castDirection, _contactFilter2D, raycastHit2D,
-                            Math.Abs(targetPosX - transform.position.x) - _minDistToLet) != 0)
-                    {
-                        if (raycastHit2D[0].distance > 0.01f)
-                        {
-                            moveIsDone = true;
-                            StartCoroutine(Move(transform.position, targetPos));
-                            break;
-                        }
-                    }
-            }
-
-            if (!moveIsDone)
-            {
-                waitForSeconds = new WaitForSeconds(2 * deltaTime); // задержка перед подпрыгиванием 
-                yield return waitForSeconds;
-                castDirection = new Vector2(raycastHit2D[0].point.x - transform.position.x, 0).normalized;
-                castDirection += new Vector2(0, 2.25f); // max высота ступеньки, на которую может
-                // прыгнуть игрок * (1/MinConstDist) ; пусть высота = 0.4, тогда y = 2 // Не помню зачем это так. Сделал 2.25
-                if (_rigidbody.Cast(castDirection, _contactFilter2D, raycastHit2D, _minDistToLet) == 0) 
-                {
-                    if (raycastHit2D[0].point.x > transform.position.x)
-                        jumpDirection = new Vector2(0.259f, 0.965f); // 75 градусов
-                    else jumpDirection = new Vector2(-0.259f, 0.965f);
-
-                    _rigidbody.AddForce(jumpDirection * 180);
-                }
-
-                
-                yield return waitForSeconds;
-                while (!_collider.IsTouchingLayers()) // ждем пока приземлимся 
-                {
-                    _backgroundController.UpdateBackground(transform.position.x);
-                    yield return waitForSeconds;
-                }
-                
-                if (Math.Abs(transform.position.x - targetPos.x) > 0.4f && _lastValue != transform.position.x)
-                { // (transform.position.x - targetPos.x) > 0.4f - небольшая погрешность, на всякий случай
-                    _lastValue = transform.position.x; // надо если игрок задал движение в недостижимую точку
-                    yield return waitForSeconds;
-                    _currentMove = StartCoroutine(Move(transform.position, targetPos));
-                }
-            }
+            distance = raycastHit2D[0].distance;
+        }
+        else
+        {
+            distance = Math.Abs(targetPos.x - startPos.x);
+        }
+        
+        float travelledDistance = 0f;
+        while (travelledDistance < distance)
+        {
+            travelledDistance += _currentSpeed * Time.deltaTime;
+            transform.position += _currentSpeed * Time.deltaTime * moveDirection;
+            yield return forEndOfFrameUnit;
         }
     }
+    
+    
 }

@@ -53,6 +53,7 @@ public class ActiveStatus
                     break;
                 case Status.Effect.Stat.MoveSpeed:
                     Player.Instance.PlayerMover.SpeedModifier += effect.value / 100f;
+                    Player.Instance.PlayerMover.ChangeCurrentSpeed();
                     break;
                     // TODO добавлять новые действия с появлением статов
             }
@@ -79,6 +80,7 @@ public class ActiveStatus
                     break;
                 case Status.Effect.Stat.MoveSpeed:
                     Player.Instance.PlayerMover.SpeedModifier -= effect.value / 100f;
+                    Player.Instance.PlayerMover.ChangeCurrentSpeed();
                     break;
                     // TODO добавлять новые действия с появлением статов
             }
