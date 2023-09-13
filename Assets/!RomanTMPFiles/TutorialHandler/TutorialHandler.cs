@@ -49,9 +49,13 @@ public class TutorialHandler : MonoBehaviour
         _currentPresentationSlidesCount = presentation.Slides.Count;
 
         RectTransform slideCounterTransform = _slideCounterLayoutGroup.GetComponent<RectTransform>();
-        while (slideCounterTransform.childCount > 0) 
-            //уничтожить всех детей этой панели, оставшихся с прошлых раз
-            Destroy(slideCounterTransform.GetChild(0).gameObject);
+
+        for (int i = slideCounterTransform.childCount - 1; i >= 0; i--)
+        {
+            Destroy(slideCounterTransform.GetChild(i).gameObject);
+        }
+
+        _slideCounterElements = new();
         for (int i = 0; i < _currentPresentationSlidesCount; i++)
         {
             Image slideCounterElement = Instantiate(_slideCounterElementPrefab, slideCounterTransform).GetComponent<Image>();
@@ -73,7 +77,7 @@ public class TutorialHandler : MonoBehaviour
             _closeButton.interactable = true;
         }
     }
-    
+
     public void ShowPresentation(bool state)
     {
         _blockingPanel.SetActive(state);
