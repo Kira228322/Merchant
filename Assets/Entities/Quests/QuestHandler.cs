@@ -10,7 +10,7 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
     #region Поля, свойства и события
     
     public static QuestLog QuestLog => Instance._questLog;
-    public static event UnityAction QuestChangedState; 
+    public static event UnityAction<Quest> QuestChangedState; 
     private static QuestHandler Instance;
 
     [SerializeField] private QuestLog _questLog; //UI-КвестЛог
@@ -34,7 +34,7 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
             Instance.ActiveQuests.Add(quest);
         QuestLog.AddQuest(quest);
         quest.QuestChangedState += Instance.OnQuestChangedState;
-        QuestChangedState?.Invoke();
+        QuestChangedState?.Invoke(quest);
     }
     public static void AddQuest(QuestParams questParams, NpcData questGiver)
     {
@@ -47,7 +47,7 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
             Instance.ActiveQuests.Add(quest);
         QuestLog.AddQuest(quest);
         quest.QuestChangedState += Instance.OnQuestChangedState;
-        QuestChangedState?.Invoke();
+        QuestChangedState?.Invoke(quest);
     }
     private void OnQuestChangedState(Quest quest, Quest.State oldState, Quest.State newState)
     {
@@ -58,7 +58,7 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
 
         if (newState == Quest.State.Completed || newState == Quest.State.Failed)
             quest.QuestChangedState -= Instance.OnQuestChangedState;
-        QuestChangedState?.Invoke();
+        QuestChangedState?.Invoke(quest);
     }
     #endregion
     #region Методы получения информации о квестах

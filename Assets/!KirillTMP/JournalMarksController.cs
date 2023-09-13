@@ -29,7 +29,7 @@ public class JournalMarksController : MonoBehaviour
             Instance = this;
     }
 
-    public static void CheckQuests()
+    public static void CheckQuests(Quest quest)
     {
         if (QuestHandler.AnyUncollectedRewards())
         {

@@ -33,10 +33,10 @@ public class Npc : MonoBehaviour
 
     private void Start()
     {
-        CheckExclamationMark();
+        CheckExclamationMark(null);
     }
 
-    private void CheckExclamationMark()
+    private void CheckExclamationMark(Quest quest)
     {
         if (QuestHandler.GetActiveQuestsForThisNPC(NpcData.ID).Count > 0)
         {

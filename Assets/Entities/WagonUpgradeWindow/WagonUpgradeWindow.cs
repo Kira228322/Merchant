@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -66,8 +63,9 @@ public class WagonUpgradeWindow : MonoBehaviour
         for (int i = 0; i < _container.childCount; i++)
             Destroy(_container.GetChild(i).gameObject);
 
-        _wagonUpgrader.NpcData.CurrentMoney += wagonPart.UpgradePrice; 
-        
+        _wagonUpgrader.NpcData.CurrentMoney += wagonPart.UpgradePrice;
+        Player.Instance.Money -= wagonPart.UpgradePrice;
+
         Init(_wagonUpgrader);
     }
 
