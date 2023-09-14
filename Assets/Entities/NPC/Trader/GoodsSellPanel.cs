@@ -74,12 +74,11 @@ public class GoodsSellPanel : MonoBehaviour
             return;
         }
         
-        MapManager.CurrentLocation.ChangeCountOfCurrentItemOnScene(_item.ItemData.Name, 1);
-        TradeManager.Instance.RefreshPriceOnThisGood(_item.ItemData.Name);
+        
         TradeManager.Instance.PlayerGoldIncrease(_cost);
-        TradeManager.Instance.ChangeTraderMoneyText(_trader.NpcData.CurrentMoney);
         Player.Instance.Money += _cost;
         _trader.NpcData.CurrentMoney -= _cost;
+        TradeManager.Instance.ChangeTraderMoneyText(_trader.NpcData.CurrentMoney);
         
         _playerInventoryItemGrid.RemoveItemsFromAStack(_item, 1);
         _currentCount--;
@@ -95,6 +94,8 @@ public class GoodsSellPanel : MonoBehaviour
             GameObject tradersGoods = Instantiate(TradeManager.Instance.GoodsBuyPanelPrefab.gameObject, TradeManager.Instance.BuyPanelContent);
             tradersGoods.GetComponent<GoodsBuyPanel>().Init(_trader, _item.ItemData, _item.BoughtDaysAgo, false, 1, _cost);
         }
+        MapManager.CurrentLocation.ChangeCountOfCurrentItemOnScene(_item.ItemData.Name, 1);
+        TradeManager.Instance.RefreshPriceOfThisGood(_item.ItemData.Name);
         if (_currentCount <= 0)
         {
             InventoryController.Instance.DestroyItem(_playerInventoryItemGrid, _item);

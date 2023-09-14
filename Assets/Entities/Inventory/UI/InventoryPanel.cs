@@ -16,6 +16,7 @@ public class InventoryPanel : MonoBehaviour
     {
         _playersInventory.WeightChanged += OnWeightChanged;
         Refresh();
+        _goldText.text = Player.Instance.Money.ToString();
     }
     private void OnDisable()
     {
@@ -23,7 +24,6 @@ public class InventoryPanel : MonoBehaviour
     }
     private void Refresh()
     {
-        _goldText.text = Player.Instance.Money.ToString();
         _weightText.text = _playersInventory.CurrentTotalWeight.ToString("F1") + " / "
             + _playersInventory.MaxTotalWeight.ToString("F1"); //.ToString("F1") округляет до 1 знаков после запятой
 

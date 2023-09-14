@@ -103,9 +103,10 @@ public class GoodsBuyPanel : MonoBehaviour
             Player.Instance.Money -= _cost;
             _trader.NpcData.CurrentMoney += _cost;
             TradeManager.Instance.ChangeTraderMoneyText(_trader.NpcData.CurrentMoney);
-            CurrentCount--;
             MapManager.CurrentLocation.ChangeCountOfCurrentItemOnScene(_item.Good.Name, -1);
-            TradeManager.Instance.RefreshPriceOnThisGood(_item.Good.Name);
+            TradeManager.Instance.RefreshPriceOfThisGood(_item.Good.Name);
+            CurrentCount--;
+            
             
             if (IsOriginatedFromTrader)
                 _trader.SellItem(_item.Good);
@@ -114,7 +115,8 @@ public class GoodsBuyPanel : MonoBehaviour
             {
                 Destroy(gameObject);
             }
-
+            
+            
             //Пересасывание SellPanel заменено на обновление только одной панели / создание новой
             foreach (GoodsSellPanel sellPanel in TradeManager.Instance.SellPanelContent.GetComponentsInChildren<GoodsSellPanel>())
             {
@@ -128,6 +130,7 @@ public class GoodsBuyPanel : MonoBehaviour
             GameObject tradersGoods = Instantiate(TradeManager.Instance.GoodsSellPanelPrefab.gameObject, TradeManager.Instance.SellPanelContent);
             tradersGoods.GetComponent<GoodsSellPanel>().Init(_trader, boughtItem, Player.Instance.Inventory.ItemGrid);
 
+            
         }
     }
     

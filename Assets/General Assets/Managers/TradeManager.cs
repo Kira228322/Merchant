@@ -171,7 +171,7 @@ public class TradeManager : MonoBehaviour
         Player.Instance.Inventory.InventoryPanel.SetActive(true);
     }
 
-    public void RefreshPriceOnThisGood(string itemName)
+    public void RefreshPriceOfThisGood(string itemName)
     {
         foreach (var goodsBuyPanel in GoodsBuyPanels)
         {
