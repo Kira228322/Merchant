@@ -16,4 +16,5 @@ public class GlobalSaveData
     public GlobalEventHandlerSaveData GlobalEventHandlerSaveData;
     public RegionSaveData RegionSaveData;
     public SceneSaveData SceneSaveData;
+    public TutorialStateTrackerSaveData TutorialTrackerSaveData;
 }

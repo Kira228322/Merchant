@@ -1,13 +1,14 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TutorialHandler : MonoBehaviour
+public class PresentationDisplayer : MonoBehaviour
 {
-    private TutorialHandler Instance;
+    public static PresentationDisplayer Instance;
 
     [HideInInspector] public TutorialPresentation CurrentPresentation;
 
@@ -28,22 +29,19 @@ public class TutorialHandler : MonoBehaviour
     [SerializeField] private Sprite _inactiveSliderCounter;
     [SerializeField] private Sprite _activeSliderCounter;
 
+    [SerializeField] private List<TutorialPresentation> Presentations = new();
+
     private int _currentSlideNumber;
     private int _currentPresentationSlidesCount;
     private List<Image> _slideCounterElements;
 
-    public TutorialPresentation TESTPRESA;
-
     private void Start()
     {
-        if (Instance = null)
+        if (Instance == null)
             Instance = this;
-
-        Init(TESTPRESA);
-        ShowPresentation(true);
     }
 
-    public void Init(TutorialPresentation presentation)
+    public void ShowPresentation(TutorialPresentation presentation)
     {
         CurrentPresentation = presentation;
         _currentPresentationSlidesCount = presentation.Slides.Count;
@@ -61,24 +59,24 @@ public class TutorialHandler : MonoBehaviour
             Image slideCounterElement = Instantiate(_slideCounterElementPrefab, slideCounterTransform).GetComponent<Image>();
             _slideCounterElements.Add(slideCounterElement);
         }
-
         _currentSlideNumber = 0;
 
-        _presentationTitle.text = presentation.Title;
-        _presentationImage.sprite = presentation.Slides[_currentSlideNumber].Image;
-        _presentationDescription.text = presentation.Slides[_currentSlideNumber].Text;
+        ChangeSlide(0);
 
-        _leftButton.interactable = false;
-        if (_currentPresentationSlidesCount > 1)
-            _rightButton.interactable = true;
-        else
+        ShowUIElements(true);
+    }
+    public void ShowPresentation(string presentationSummary)
+    {
+        TutorialPresentation presentation = Presentations.FirstOrDefault(presentation => presentation.Summary == presentationSummary);
+        if (presentation == null)
         {
-            _rightButton.interactable = false;
-            _closeButton.interactable = true;
+            Debug.LogError("Презентации с таким summary нет в листе у PresentationDisplayer");
+            return;
         }
+        ShowPresentation(presentation);
     }
 
-    public void ShowPresentation(bool state)
+    public void ShowUIElements(bool state)
     {
         _blockingPanel.SetActive(state);
         _presentationPanel.SetActive(state);
@@ -97,7 +95,7 @@ public class TutorialHandler : MonoBehaviour
         if (newSlideNumber < 0 || newSlideNumber >= CurrentPresentation.Slides.Count)
         {
             Debug.LogError("Ошибка в презентации!");
-            ShowPresentation(false);
+            ShowUIElements(false);
             return;
         }
 
