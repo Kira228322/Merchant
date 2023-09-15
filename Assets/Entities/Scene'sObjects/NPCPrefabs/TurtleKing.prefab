@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 9094307061712068912}
   - component: {fileID: 7479913747342949963}
   - component: {fileID: 1283467654980197664}
+  - component: {fileID: -4079632887147554739}
   m_Layer: 8
   m_Name: TurtleKing
   m_TagString: Untagged
@@ -75,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_Sprite: {fileID: 375854529, guid: c56263c9cd1d2894096aa433700d3098, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -155,3 +156,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.2358902, y: 1.5373235}
   m_EdgeRadius: 0
+--- !u!114 &-4079632887147554739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5703497044735243572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69d1cab34ca7cbf4ebf5c3a13dbedd58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _functionalWindow: {fileID: 5289728729292001670, guid: 3ce96e4509a08d04eb97293620c6c319, type: 3}

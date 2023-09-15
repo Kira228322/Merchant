@@ -9,7 +9,7 @@ abstract public class NPCMovement : MonoBehaviour
 {
     public bool DefaultViewDirectionIsRight = true;
     [SerializeField] protected ContactFilter2D _groundMask;
-    [SerializeField] protected float _speed = 2.8f;
+    [SerializeField] protected float _speed = 2f;
     public float Speed => _speed;
     protected float _minIDLEDuration = 2f; // 6 // TODO значения для теста. Потом сбалансить
     protected float _maxIDLEDuration = 3f; // 20

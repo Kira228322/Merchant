@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4593085870656183985}
   - component: {fileID: 1173781707273031523}
   - component: {fileID: 1244000173630381598}
+  - component: {fileID: -6091513276058856519}
   m_Layer: 8
   m_Name: CatFishWarrior
   m_TagString: Untagged
@@ -75,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_Sprite: {fileID: -657325718, guid: fee0a14ef4de82f4fa177b51299c8edf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -155,3 +156,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.96267605, y: 0.89331985}
   m_EdgeRadius: 0
+--- !u!114 &-6091513276058856519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4593085870656183986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69d1cab34ca7cbf4ebf5c3a13dbedd58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _functionalWindow: {fileID: 5289728729292001670, guid: 3ce96e4509a08d04eb97293620c6c319, type: 3}

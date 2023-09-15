@@ -961,7 +961,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.25
+      scalar: 0.4
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -1122,7 +1122,7 @@ ParticleSystem:
           m_PostInfinity: 2
           m_RotationOrder: 4
       cycleCount: 0
-      repeatInterval: 6
+      repeatInterval: 6.25
       probability: 0.5
   SizeModule:
     enabled: 0
@@ -5110,6 +5110,7 @@ MonoBehaviour:
   _defaultSprite: {fileID: -1844762625905599298, guid: 893704cf2aa8f5448b15e9dfb66c1db6, type: 3}
   _spriteAfterUse: {fileID: 21300114, guid: 7810966f0f690954c87305933cabf2b0, type: 3}
   _particleSystem: {fileID: 8995099853400955592}
+  _berry: {fileID: 0}
 --- !u!114 &8995099853477211147
 MonoBehaviour:
   m_ObjectHideFlags: 0

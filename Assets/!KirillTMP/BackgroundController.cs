@@ -24,6 +24,7 @@ public class BackgroundController : MonoBehaviour
         _previousPositionX = Player.Instance.transform.position.x;
         _leftEdgeX = leftEdge;
         _rightEdgeX = rightEdge;
+        UpdateBackground(_previousPositionX);
     }
     
     public void UpdateBackground(float currentPositionX)

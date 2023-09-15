@@ -76,6 +76,7 @@ public class Node : MonoBehaviour
         for (float i = 0; i < countOfFrames; i++)
         {
             movement.transform.position = Vector3.Lerp(startPos, AnotherNode.position, i/countOfFrames);
+            movement.BackgroundController.UpdateBackground(movement.transform.position.x);
             yield return  waitForFixedUpdate; // по ступенькам поднимаемся
         }
         
@@ -89,6 +90,7 @@ public class Node : MonoBehaviour
         for (float i = 0; i < countOfFrames; i++)
         {
             movement.transform.position = Vector3.Lerp(startPos, targetPos, i/countOfFrames);
+            movement.BackgroundController.UpdateBackground(movement.transform.position.x);
             yield return  waitForFixedUpdate; // а потом идем дальше
         }
         

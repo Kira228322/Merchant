@@ -85,7 +85,7 @@ public class DayNightCycle : MonoBehaviour
         }
         
         _volume.weight = volumeWeight + _rainWeightOffset;
-        _sun.intensity = Mathf.Lerp(0.15f, 0.96f, 1-volumeWeight); // 0.15 и 0.96 это min и max значения которыми может быть освещение
+        _sun.intensity = Mathf.Lerp(0.16f, 0.96f, 1-volumeWeight); // 0.16 и 0.96 это min и max значения которыми может быть освещение
         _nearBackground.color = Color.Lerp(_white, _darkGrey, volumeWeight);
         _farBackground.color = Color.Lerp(_grey, _black, volumeWeight);
         

@@ -3,10 +3,11 @@ using System.Collections;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PlayerMover : MonoBehaviour
 {
-    [SerializeField] private BackgroundController _backgroundController;
+    [FormerlySerializedAs("_backgroundController")] [SerializeField] public BackgroundController BackgroundController;
     [SerializeField] private ContactFilter2D _contactFilter2D;
     private float _speed = 3.5f;
     [HideInInspector]public float _currentSpeed;
@@ -26,7 +27,7 @@ public class PlayerMover : MonoBehaviour
     {
         _collider = GetComponent<Collider2D>();
         _rigidbody = GetComponent<Rigidbody2D>();
-        _backgroundController.UpdateBackground(transform.position.x);
+        BackgroundController.UpdateBackground(transform.position.x);
         ChangeCurrentSpeed();
     }
 
@@ -136,6 +137,7 @@ public class PlayerMover : MonoBehaviour
         {
             travelledDistance += _currentSpeed * Time.deltaTime;
             transform.position += _currentSpeed * Time.deltaTime * moveDirection;
+            BackgroundController.UpdateBackground(transform.position.x);
             yield return forEndOfFrameUnit;
         }
     }
