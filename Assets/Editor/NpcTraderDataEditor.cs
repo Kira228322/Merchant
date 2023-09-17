@@ -4,11 +4,12 @@ using UnityEngine;
 using UnityEditor;
 
 [CustomEditor(typeof(NpcTraderData))]
-class EditorTrader : Editor
+class NpcTraderDataEditor : Editor
 {
     private NpcTraderData _traderData;
     private void OnEnable()
     {
+        Debug.Log(target.GetType());
         _traderData = (NpcTraderData)target;
     }
 

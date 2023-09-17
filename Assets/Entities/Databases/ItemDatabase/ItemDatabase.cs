@@ -35,7 +35,7 @@ public class ItemDatabase : MonoBehaviour
         {
             return result;
         }
-        Debug.LogWarning("Такого айтема не существует!");
+        Debug.LogWarning($"Такого айтема {name} не существует!");
         return null;
     }
 

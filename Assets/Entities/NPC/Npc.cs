@@ -5,7 +5,7 @@ public class Npc : MonoBehaviour
 {
     public NpcData NpcData;
     [SerializeField] private GameObject _exclamationMarkPrefab;
-    public GameObject ExclamationMark;
+    [HideInInspector] public GameObject ExclamationMark;
 
     public void StartInteraction()
     {
@@ -38,6 +38,7 @@ public class Npc : MonoBehaviour
 
     private void CheckExclamationMark(Quest quest)
     {
+
         if (QuestHandler.GetActiveQuestsForThisNPC(NpcData.ID).Count > 0)
         {
             ExclamationMark = Instantiate(_exclamationMarkPrefab, gameObject.transform);

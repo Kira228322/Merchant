@@ -80,8 +80,13 @@ public class NpcTrader : Npc
         }
     }
     
-    [SerializeField] private NpcTraderData _npcTraderData;
-    
+    private NpcTraderData _npcTraderData;
+
+    private void Awake()
+    {
+        _npcTraderData = (NpcTraderData)NpcData;
+    }
+
     public List<TraderGood> Goods => _npcTraderData.Goods;
     public List<TraderGood> AdditiveGoods => _npcTraderData.AdditiveGoods; // TODO Еще не знаю как это работает,
                                                                            // но если вдруг осталось 0 предметов, то удаляется ли 
