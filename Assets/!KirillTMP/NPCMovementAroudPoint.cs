@@ -19,6 +19,7 @@ public class NPCMovementAroudPoint : NPCMovement
     {
         base.Awake();
         _pointPosition = transform.position;
+        GetComponent<SpriteRenderer>().sortingOrder = 5;
     }
 
     protected override void OnEnable()

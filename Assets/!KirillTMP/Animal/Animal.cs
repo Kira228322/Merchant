@@ -9,7 +9,7 @@ public class Animal : MonoBehaviour
     private float _minMoveDistance = 2f; 
     private float _maxMoveDistance = 9f; 
 
-    private float _IDLEDuration = 4f;
+    private float _IDLEDuration = 4.5f;
     private float _AFKDuration = 15f;
     [SerializeField] protected float _speed = 2f;
     
