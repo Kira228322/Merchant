@@ -63,7 +63,8 @@ public class TutorialStateTracker : MonoBehaviour, ISaveable<TutorialStateTracke
             QuestTriggerConditions[foundPresentation] = true; //теперь она стала показана (т.е true),
                                                               //больше не будет показана
             
-            //TODO: передача в Diary для повторного просмотра там
+            //оставил на завтра
+            //Diary.Instance.AddPresentation()
         }
     }
 

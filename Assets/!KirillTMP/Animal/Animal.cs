@@ -6,12 +6,12 @@ using Random = UnityEngine.Random;
 
 public class Animal : MonoBehaviour
 {
-    private float _minMoveDistance = 2f; 
-    private float _maxMoveDistance = 9f; 
+    [SerializeField]private float _minMoveDistance; 
+    [SerializeField]private float _maxMoveDistance; 
 
-    private float _IDLEDuration = 4.5f;
-    private float _AFKDuration = 15f;
-    [SerializeField] protected float _speed = 2f;
+    [SerializeField]private float _IDLEDuration;
+    [SerializeField]private float _AFKDuration;
+    [SerializeField] protected float _speed;
     
     public bool DefaultViewDirectionIsRight = true;
     [HideInInspector] public float MoveDistanceAndDirection;

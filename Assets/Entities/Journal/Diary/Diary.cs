@@ -13,7 +13,10 @@ public class Diary : MonoBehaviour, ISaveable<DiarySaveData>
 
     [SerializeField] private VerticalLayoutGroup _scrollViewContentHints;
     [SerializeField] private VerticalLayoutGroup _scrollViewContentNews;
+    [SerializeField] private VerticalLayoutGroup _scrollViewContentTutorials;
+    
     [SerializeField] private TMP_Text _diaryEntryPrefab;
+    [SerializeField] private GameObject _tutorialEntryPrefab;
 
     private List<TMP_Text> _entriesNews = new();
     private List<TMP_Text> _entriesHints = new();
@@ -44,6 +47,14 @@ public class Diary : MonoBehaviour, ISaveable<DiarySaveData>
             _entriesHints.Add(newEntry);
             newEntry.gameObject.GetComponentInChildren<Button>().onClick.AddListener(() => RemoveEntry(_entriesHints, newEntry));
         }
+    }
+    public void AddTutorial(TutorialStateTracker.PresentationInfo presentationInfo)
+    {
+        /* оставил на завтра
+         TMP_Text newEntry = Instantiate(_diaryEntryPrefab, _scrollViewContentTutorials.transform);
+         newEntry.text = "Обучение: " + presentationInfo.PresentationSummary
+
+         */
     }
     public void RemoveEntry(List<TMP_Text> list, TMP_Text entry)
     {
