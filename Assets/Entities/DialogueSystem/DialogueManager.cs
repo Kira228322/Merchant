@@ -12,6 +12,7 @@ public class DialogueManager : MonoBehaviour
     public static DialogueManager Instance;
 
     #region Поля, свойства и события
+    [SerializeField] private GameObject _blockerPanel;
     [SerializeField] private GameObject _dialogueWindow;
     [SerializeField] private TMP_Text _dialogueText;
     [SerializeField] private GameObject[] _choices;
@@ -275,7 +276,8 @@ public class DialogueManager : MonoBehaviour
     #region Внешние методы работы с диалогом (продвинуть историю, начать и закончить диалог)
     public void EnterDialogueMode(Npc npc)
     {
-        //TODO Выключать другие действия игрока, напр. инвентарь, playerMover, карту
+        Player.Instance.PlayerMover.DisableMove();
+        _blockerPanel.gameObject.SetActive(true);
         _currentNPC = npc;
         TextAsset npcInkJson = _currentNPC.NpcData.InkJSON;
         _currentStory = new Story(npcInkJson.text);
@@ -298,6 +300,8 @@ public class DialogueManager : MonoBehaviour
     
     private void ExitDialogueMode()
     {
+        Player.Instance.PlayerMover.EnableMove();
+        _blockerPanel.SetActive(false);
         _dialogueWindow.SetActive(false);
         _dialogueText.text = "";
         _currentNPC.StopInteraction();
