@@ -67,15 +67,19 @@ public class PresentationDisplayer : MonoBehaviour
     }
     public void ShowPresentation(string presentationSummary)
     {
-        TutorialPresentation presentation = Presentations.FirstOrDefault(presentation => presentation.Summary == presentationSummary);
+        TutorialPresentation presentation = GetPresentationBySummary(presentationSummary);
+        ShowPresentation(presentation);
+    }
+    public TutorialPresentation GetPresentationBySummary(string summary)
+    {
+        TutorialPresentation presentation = Presentations.FirstOrDefault(presentation => presentation.Summary == summary);
         if (presentation == null)
         {
             Debug.LogError("Презентации с таким summary нет в листе у PresentationDisplayer");
-            return;
+            return null;
         }
-        ShowPresentation(presentation);
+        return presentation;
     }
-
     public void ShowUIElements(bool state)
     {
         _blockingPanel.SetActive(state);

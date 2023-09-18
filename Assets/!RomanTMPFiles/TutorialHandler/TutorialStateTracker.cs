@@ -62,9 +62,8 @@ public class TutorialStateTracker : MonoBehaviour, ISaveable<TutorialStateTracke
             PresentationDisplayer.Instance.ShowPresentation(foundPresentation.PresentationSummary);
             QuestTriggerConditions[foundPresentation] = true; //теперь она стала показана (т.е true),
                                                               //больше не будет показана
-            
-            //оставил на завтра
-            //Diary.Instance.AddPresentation()
+
+            Diary.Instance.AddTutorial(foundPresentation);
         }
     }
 
@@ -72,7 +71,14 @@ public class TutorialStateTracker : MonoBehaviour, ISaveable<TutorialStateTracke
     {
         QuestTriggerConditions = data.SavedDictionary;
 
-        //TODO: ƒобавл€ть просмотренные презентации в Diary
+        Diary diary = Diary.Instance;
+        foreach (var savedPresentation in QuestTriggerConditions)
+        {
+            if (savedPresentation.Value) //если уже была показана игроку
+            {
+                diary.AddTutorial(savedPresentation.Key);
+            }
+        }
 
         //TODO: ”ничтожать себ€ нельз€, потому что этот объект нужен GameManager дл€ сохранени€
         //(ќн будет вызывать FindObjectOfType, случитс€ Nullref). ≈сли все презентации просмотрены,

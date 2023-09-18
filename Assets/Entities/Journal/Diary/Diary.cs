@@ -45,16 +45,19 @@ public class Diary : MonoBehaviour, ISaveable<DiarySaveData>
             newEntry = Instantiate(_diaryEntryPrefab, _scrollViewContentHints.transform);
             newEntry.text = dateTime + text;
             _entriesHints.Add(newEntry);
-            newEntry.gameObject.GetComponentInChildren<Button>().onClick.AddListener(() => RemoveEntry(_entriesHints, newEntry));
+            newEntry.gameObject.GetComponentInChildren<Button>().onClick.AddListener(
+                () => RemoveEntry(_entriesHints, newEntry));
         }
     }
     public void AddTutorial(TutorialStateTracker.PresentationInfo presentationInfo)
     {
-        /* оставил на завтра
-         TMP_Text newEntry = Instantiate(_diaryEntryPrefab, _scrollViewContentTutorials.transform);
-         newEntry.text = "ќбучение: " + presentationInfo.PresentationSummary
+        TutorialPresentation presentation = PresentationDisplayer.Instance
+            .GetPresentationBySummary(presentationInfo.PresentationSummary);
 
-         */
+        TMP_Text newEntry = Instantiate(_tutorialEntryPrefab, _scrollViewContentTutorials.transform).GetComponent<TMP_Text>();
+        newEntry.text = "ќбучение: " + presentation.Title;
+        newEntry.gameObject.GetComponentInChildren<Button>().onClick.AddListener(
+            () => PresentationDisplayer.Instance.ShowPresentation(presentation));
     }
     public void RemoveEntry(List<TMP_Text> list, TMP_Text entry)
     {
@@ -73,6 +76,8 @@ public class Diary : MonoBehaviour, ISaveable<DiarySaveData>
 
     public DiarySaveData SaveData()
     {
+        //“уториалы не сохран€ютс€, потому что они добавл€ютс€ сюда через TutorialStateTracker 
+
         List<string> news = new();
         List<string> hints = new();
         foreach (var entry in _entriesNews)
