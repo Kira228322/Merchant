@@ -17,8 +17,7 @@ public class Node : MonoBehaviour
         {
             col.gameObject.GetComponent<NPCMovement>().OnCollisionWithNode(this);
         }
-
-        if (col.gameObject.layer == 6) // player
+        else if (col.gameObject.layer == 6) // player
         {
             col.gameObject.GetComponent<PlayerMover>().MoveByNode(this);
         }
@@ -35,7 +34,7 @@ public class Node : MonoBehaviour
         // Если сильно надо будет -- переделаю, так экономнее выходит для производительности
         WaitForFixedUpdate waitForFixedUpdate = new();
         
-        float countOfFrames = (AnotherNode.position-movement.StartPosition).magnitude / (movement.Speed * 0.75f * Time.fixedDeltaTime);
+        float countOfFrames = (AnotherNode.position-movement.StartPosition).magnitude / (movement.Speed * 0.8f * Time.fixedDeltaTime);
         
         for (float i = 0; i < countOfFrames; i++)
         {
