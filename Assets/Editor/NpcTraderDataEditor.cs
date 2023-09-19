@@ -9,7 +9,6 @@ class NpcTraderDataEditor : Editor
     private NpcTraderData _traderData;
     private void OnEnable()
     {
-        Debug.Log(target.GetType());
         _traderData = (NpcTraderData)target;
     }
 

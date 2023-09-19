@@ -27,9 +27,11 @@ abstract public class NPCMovement : MonoBehaviour
     private Npc _npc;
     private SpriteRenderer _spriteRenderer;
     [HideInInspector] public Animator Animator;
+    private NpcClickFunctional _clickFunctional;
 
     protected virtual void Awake()
     {
+        _clickFunctional = GetComponent<NpcClickFunctional>();
         Animator = GetComponent<Animator>();
         _npc = GetComponent<Npc>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
@@ -45,6 +47,7 @@ abstract public class NPCMovement : MonoBehaviour
     protected virtual void OnEnable()
     {
         GameTime.HourChanged += OnHourChangeWhenNotAtHome;
+        OnHourChangeWhenNotAtHome();
     }
 
     protected virtual void OnDisable()
@@ -126,17 +129,30 @@ abstract public class NPCMovement : MonoBehaviour
 
     private void OnHourChangeWhenNotAtHome()
     {
-        if (GameTime.Hours >= _npc.NpcData.FinishWalkingTime)
+        if (_npc.NpcData.FinishWalkingTime > _npc.NpcData.StartWalkingTime)
         {
-            GameTime.MinuteChanged += OnMinuteChange;
-            GameTime.HourChanged -= OnHourChangeWhenNotAtHome;
-            if (!MoveByNodeIsActive)
+            if (((GameTime.Hours > _npc.NpcData.FinishWalkingTime && GameTime.Hours > _npc.NpcData.StartWalkingTime) ||
+                (GameTime.Hours < _npc.NpcData.FinishWalkingTime && GameTime.Hours < _npc.NpcData.StartWalkingTime)) == false)
             {
-                if (_currentCoroutine != null)
-                    StopCoroutine(_currentCoroutine);
-                _currentCoroutine = StartCoroutine(MoveDirectlyAtHome(_home.x));
-                
+                return;
             }
+        }
+        else
+        {
+            if ((GameTime.Hours < _npc.NpcData.StartWalkingTime && GameTime.Hours > _npc.NpcData.FinishWalkingTime) == false)
+            {
+                return;
+            }
+        }
+        
+        GameTime.MinuteChanged += OnMinuteChange;
+        GameTime.HourChanged -= OnHourChangeWhenNotAtHome;
+        if (!MoveByNodeIsActive)
+        {
+            if (_currentCoroutine != null)
+                StopCoroutine(_currentCoroutine);
+            _currentCoroutine = StartCoroutine(MoveDirectlyAtHome(_home.x));
+            Animator.SetTrigger("Move");
         }
     }
 
@@ -149,12 +165,19 @@ abstract public class NPCMovement : MonoBehaviour
             if (_currentCoroutine != null)
                 StopCoroutine(_currentCoroutine);
             _currentCoroutine = StartCoroutine(MoveDirectlyAtHome(_home.x));
+            Animator.SetTrigger("Move");
         }
         else
         {
             GameTime.MinuteChanged -= OnMinuteChange;
             GameTime.HourChanged += OnHourChangeWhenAtHome;
+            if (_currentCoroutine!= null)
+            {
+                StopCoroutine(_currentCoroutine);
+                _currentCoroutine = null;
+            }
             EnableNPC(false);
+            Animator.SetTrigger("IDLE");
         }
     }
     
@@ -169,20 +192,39 @@ abstract public class NPCMovement : MonoBehaviour
 
     private void OnHourChangeWhenAtHome()
     {
-        if (GameTime.Hours >= _npc.NpcData.StartWalkingTime && GameTime.Hours < _npc.NpcData.FinishWalkingTime)
+        if (_npc.NpcData.FinishWalkingTime > _npc.NpcData.StartWalkingTime)
         {
-            GameTime.HourChanged -= OnHourChangeWhenAtHome;
-            GameTime.HourChanged += OnHourChangeWhenNotAtHome;
-            EnableNPC(true);
-            StartIDLE(true);
+            if ((GameTime.Hours > _npc.NpcData.FinishWalkingTime && GameTime.Hours > _npc.NpcData.StartWalkingTime) ||
+                (GameTime.Hours < _npc.NpcData.FinishWalkingTime && GameTime.Hours < _npc.NpcData.StartWalkingTime))
+            {
+                return;
+            }
         }
+        else
+        {
+            if (GameTime.Hours < _npc.NpcData.StartWalkingTime && GameTime.Hours > _npc.NpcData.FinishWalkingTime)
+            {
+                return;
+            }
+        }
+        
+        GameTime.HourChanged -= OnHourChangeWhenAtHome;
+        GameTime.HourChanged += OnHourChangeWhenNotAtHome;
+        EnableNPC(true);
+        if (_currentCoroutine!= null)
+        {
+            StopCoroutine(_currentCoroutine);
+            _currentCoroutine = null;
+        }
+        StartIDLE(true);
+        
     }
 
     private void EnableNPC(bool enable)
     {
         _spriteRenderer.enabled = enable;
-        enabled = enable;
         _collider.enabled = enable;
+        _rigidbody.simulated = enable;
     }
     
     private IEnumerator MoveDirectlyAtHome(float targetPosX)
@@ -192,6 +234,8 @@ abstract public class NPCMovement : MonoBehaviour
         StartPosition = transform.position;
         Vector3 targetPosition = new(targetPosX, StartPosition.y);
         WaitForFixedUpdate waitForFixedUpdate = new();
+        
+        RevertViewDirection(targetPosition.x - StartPosition.x > 0);
         
         float countOfFrames = Math.Abs(MoveDistanceAndDirection / (_speed * Time.fixedDeltaTime));
         for (float i = 0; i < countOfFrames; i++)
