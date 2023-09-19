@@ -40,7 +40,7 @@ public class PlentifulHarvestEventController : MonoBehaviour, IEventController<G
         DateOfNextEvent = LastEventDay + Random.Range(MinDelayToNextEvent, MaxDelayToNextEvent + 1);
         HourOfNextEvent = Random.Range(1, 24);
         DurationOfEvent = 24; //Ётот ивент одноразовый, но у игрока будет 24 часа чтобы заметить объ€вление на доске
-        MultiplyCoefficient = Random.Range(1.2f, 1.6f); //TODO баланс коэффициента
+        MultiplyCoefficient = Random.Range(1.4f, 1.6f); 
         List<Location> sameRegionLocations = PossibleLocations.Where(location => location.Region == MapManager.CurrentRegion).ToList();
         Location = sameRegionLocations[Random.Range(0, sameRegionLocations.Count)];
     }

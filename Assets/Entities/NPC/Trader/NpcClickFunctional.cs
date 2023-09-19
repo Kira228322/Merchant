@@ -20,6 +20,8 @@ public class NpcClickFunctional : MonoBehaviour, IPointerClickHandler
     {
         if ((transform.position - Player.Instance.transform.position).magnitude > _distanceToUse)
             return;
+        if(!enabled)
+            return;
         
         GameObject window = Instantiate(_functionalWindow, MapManager.Canvas.transform);
         window.transform.position = Camera.main.WorldToScreenPoint(new Vector3((transform.position.x + Player.Instance.transform.position.x) / 2,

@@ -37,6 +37,7 @@ public static class GameTime
                 CurrentDay++;
                 DayChanged?.Invoke();
             }
+            HourChanged?.Invoke();
         }
     }
     public static int Minutes
@@ -49,7 +50,6 @@ public static class GameTime
             {
                 _minutes = 0;
                 Hours++;
-                HourChanged?.Invoke();
             }
             MinuteChanged?.Invoke();
         }

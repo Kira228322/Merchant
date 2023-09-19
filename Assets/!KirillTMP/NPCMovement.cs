@@ -147,6 +147,7 @@ abstract public class NPCMovement : MonoBehaviour
         
         GameTime.MinuteChanged += OnMinuteChange;
         GameTime.HourChanged -= OnHourChangeWhenNotAtHome;
+        _clickFunctional.enabled = false;
         if (!MoveByNodeIsActive)
         {
             if (_currentCoroutine != null)
@@ -225,6 +226,7 @@ abstract public class NPCMovement : MonoBehaviour
         _spriteRenderer.enabled = enable;
         _collider.enabled = enable;
         _rigidbody.simulated = enable;
+        _clickFunctional.enabled = enable;
     }
     
     private IEnumerator MoveDirectlyAtHome(float targetPosX)
