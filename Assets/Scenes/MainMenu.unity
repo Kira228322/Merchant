@@ -1622,7 +1622,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.003479167, y: 0.7556724}
   m_AnchorMax: {x: 0.22247916, y: 0.94100004}
-  m_AnchoredPosition: {x: 1.5, y: -1.4724121}
+  m_AnchoredPosition: {x: 1.4997559, y: -1.4724121}
   m_SizeDelta: {x: -8.710815, y: -13.313782}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &162733588
@@ -2032,7 +2032,7 @@ GameObject:
   - component: {fileID: 218340572}
   - component: {fileID: 218340573}
   m_Layer: 0
-  m_Name: PlentifulHarvestController
+  m_Name: MultiplyPositiveController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2067,6 +2067,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Location: {fileID: 0}
   MultiplyCoefficient: 0
+  SelectedItem: 
+  _isPositive: 1
   PossibleLocations:
   - {fileID: 9056293358578365361}
 --- !u!1 &224485297
@@ -4237,7 +4239,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1225097156}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &491121115
 MonoBehaviour:
@@ -8847,6 +8849,7 @@ MonoBehaviour:
   - {fileID: 1295880114}
   - {fileID: 1919962549}
   - {fileID: 218340573}
+  - {fileID: 2075961864}
   - {fileID: 491121115}
   - {fileID: 1067397722}
 --- !u!4 &954038799
@@ -10656,7 +10659,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1225097156}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1073771476
 GameObject:
@@ -12069,6 +12072,7 @@ Transform:
   - {fileID: 1295880113}
   - {fileID: 1919962548}
   - {fileID: 218340572}
+  - {fileID: 2075961863}
   - {fileID: 491121114}
   - {fileID: 1067397723}
   m_Father: {fileID: 954038799}
@@ -15987,7 +15991,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.52533865, y: 0.21172138}
   m_AnchorMax: {x: 1, y: 0.29621676}
-  m_AnchoredPosition: {x: 1.7197266, y: -1.0142212}
+  m_AnchoredPosition: {x: 1.7197266, y: -1.0142822}
   m_SizeDelta: {x: -3.4399996, y: -6.6839}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1787131560
@@ -18261,6 +18265,56 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5508047470961868739, guid: aae20a2c617fc624b8b6fe0e4b828a4f, type: 3}
   m_PrefabInstance: {fileID: 5508047469270326759}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2075961862
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2075961863}
+  - component: {fileID: 2075961864}
+  m_Layer: 0
+  m_Name: MultiplyNegativeController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2075961863
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2075961862}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1225097156}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2075961864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2075961862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1d5b9b292ab1be4abb14e23bb848528, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Location: {fileID: 0}
+  MultiplyCoefficient: 0
+  SelectedItem: 
+  _isPositive: 0
+  PossibleLocations:
+  - {fileID: 9056293358578365361}
 --- !u!1 &2097175639
 GameObject:
   m_ObjectHideFlags: 0
@@ -25543,7 +25597,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000061035156, y: -1.4149017}
+  m_AnchoredPosition: {x: -0.000061035156, y: -1.4149055}
   m_SizeDelta: {x: 0, y: 9.511}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3279153273769300981
@@ -27246,7 +27300,7 @@ MonoBehaviour:
   _icon: {fileID: 21300000, guid: da7129ed6a246f048a49d8d97de2d2d4, type: 3}
   _villageName: South Village
   _description: Village with apples. A lot of apples.
-  _populationOfVillage: 0
+  _populationOfVillage: 200
   _sceneName: SecKirScene
   _relatedPlaces:
   - {fileID: 9056293358578365361}
@@ -29187,7 +29241,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!222 &7466371012112126503
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -29661,10 +29715,10 @@ RectTransform:
   m_Father: {fileID: 7199292215046667522}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 576.3, y: 439.3}
-  m_SizeDelta: {x: 22, y: 22}
+  m_AnchorMin: {x: 0.305, y: 0.41000003}
+  m_AnchorMax: {x: 0.31746042, y: 0.4323009}
+  m_AnchoredPosition: {x: -0.19995117, y: 0.2999878}
+  m_SizeDelta: {x: -1, y: -2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &9056293358578365361
 MonoBehaviour:
@@ -29690,7 +29744,10 @@ MonoBehaviour:
   - {fileID: 0}
   _roads: []
   NpcTraders:
-  - {fileID: 11400000, guid: 8be527381f0379444abf678a8923756d, type: 2}
+  - {fileID: 11400000, guid: 1769188ea31d68e4da241b9cd34397f0, type: 2}
+  - {fileID: 11400000, guid: 0b4bbc22facc95f4a83207d088d56ce8, type: 2}
+  - {fileID: 11400000, guid: 2ffb5c69fae6b8541901a5d56f08a099, type: 2}
+  - {fileID: 11400000, guid: fb6a01203da7f504291e5795cb439c74, type: 2}
 --- !u!1 &9066488760400233121
 GameObject:
   m_ObjectHideFlags: 0

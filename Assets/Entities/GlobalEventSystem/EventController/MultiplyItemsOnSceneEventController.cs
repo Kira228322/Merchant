@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class PlentifulHarvestEventController : MonoBehaviour, IEventController<GlobalEvent_PlentifulHarvest>
+public class MultiplyItemsOnSceneEventController : MonoBehaviour, IEventController<GlobalEvent_MultiplyItemsOnScene>
 {
     public int MinDelayToNextEvent => 6;
     public int MaxDelayToNextEvent => 13;
@@ -15,19 +15,22 @@ public class PlentifulHarvestEventController : MonoBehaviour, IEventController<G
 
     [HideInInspector] public Location Location;
     [HideInInspector] public float MultiplyCoefficient;
+    [HideInInspector] public string SelectedItem;
+
+    [SerializeField] private bool _isPositive;
 
     public List<Location> PossibleLocations = new();
     //TODO: по готовности локаций вставить в инспекторе те, которые имеют хорошие условия для роста продуктов
 
-    //TODO: нужно как-то выбирать айтем, принадлежащий к категории "Пища", которого и так больше всего в деревне (типа они его производят)
-    //т.е роллить предмет в зависимости от заролленой локации.
-    public GlobalEvent_PlentifulHarvest AddEvent()
+    public GlobalEvent_MultiplyItemsOnScene AddEvent()
     {
-        GlobalEvent_PlentifulHarvest newEvent = new()
+        GlobalEvent_MultiplyItemsOnScene newEvent = new()
         {
             DurationHours = DurationOfEvent,
             Location = Location,
             MultiplyCoefficient = MultiplyCoefficient,
+            ItemToMultiplyName = SelectedItem,
+            IsPositive = _isPositive,
         };
         var eventToAdd = GlobalEventHandler.Instance.AddGlobalEvent(newEvent);
         LastEventDay = GameTime.CurrentDay;
@@ -40,9 +43,15 @@ public class PlentifulHarvestEventController : MonoBehaviour, IEventController<G
         DateOfNextEvent = LastEventDay + Random.Range(MinDelayToNextEvent, MaxDelayToNextEvent + 1);
         HourOfNextEvent = Random.Range(1, 24);
         DurationOfEvent = 24; //Этот ивент одноразовый, но у игрока будет 24 часа чтобы заметить объявление на доске
-        MultiplyCoefficient = Random.Range(1.4f, 1.6f); 
+
+        if (_isPositive)
+            MultiplyCoefficient = Random.Range(1.4f, 1.6f);
+        else
+            MultiplyCoefficient = Random.Range(0.6f, 0.8f);
+
         List<Location> sameRegionLocations = PossibleLocations.Where(location => location.Region == MapManager.CurrentRegion).ToList();
         Location = sameRegionLocations[Random.Range(0, sameRegionLocations.Count)];
+        SelectedItem = SelectApplicableItem();
     }
 
     public void PrepareEvent()
@@ -54,5 +63,22 @@ public class PlentifulHarvestEventController : MonoBehaviour, IEventController<G
     public void RemoveEvent()
     {
 
+    }
+
+    private string SelectApplicableItem()
+    {
+        var sortedItems = Location.NpcTraders.SelectMany(trader => trader.Goods)
+            .GroupBy(item => item.Good)
+            .Select(group => new
+            {
+                Item = group.Key,
+                TotalCount = group.Sum(item => item.MaxCount * item.Good.Price)
+            })
+            .OrderByDescending(group => group.TotalCount)
+            .ToList();
+        if (sortedItems.Count < 5)
+            Debug.LogError("На локации меньше 5 предметов!!!"); //TODO убрать на релизе
+
+        return sortedItems[Random.Range(0, 5)].Item.Name;
     }
 }
