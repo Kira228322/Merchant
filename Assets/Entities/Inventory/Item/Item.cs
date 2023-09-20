@@ -66,9 +66,10 @@ public class Item : ScriptableObject
         {ItemType.Seeds, "Семена"},
         {ItemType.MagicSeeds, "Магические семена"},
         {ItemType.SouthFruit, "Южный фрукт"},
+        {ItemType.NorthFruit, "Северный фрукт"},
         {ItemType.Sushi, "Суши"},
         {ItemType.AlcoholDrink, "Спиртной напиток"},
-        {ItemType.Drink, "Напиток" }
+        {ItemType.Drink, "Напиток"}
     };
 
     
