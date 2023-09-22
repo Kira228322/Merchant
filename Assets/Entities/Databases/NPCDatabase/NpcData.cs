@@ -14,11 +14,8 @@ public class NpcData : ScriptableObject, IResetOnExitPlaymode, ISaveable<NpcSave
     //правильно назначала сейвдату при загрузке, основыва€сь на этом айди
     //¬ теории оно должно было бы работать и так, ведь там идет проход по NpcList,
     //но дл€ уверенности сделали тогда так
-    //(см. комментарий в NpsDatabase.LoadData())
+    //(см. комментарий в NpcDatabase.LoadData())
     public int ID;
-
-
-    public TextAsset InkJSON;
 
     public NpcSaveData SaveData()
     {

@@ -44,6 +44,6 @@ public class BanLiftEventController : MonoBehaviour, IEventController<GlobalEven
 
     public void RemoveEvent()
     {
-        throw new System.NotImplementedException();
+
     }
 }

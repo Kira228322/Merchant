@@ -277,9 +277,9 @@ public class DialogueManager : MonoBehaviour
     public void EnterDialogueMode(Npc npc)
     {
         Player.Instance.PlayerMover.DisableMove();
-        _blockerPanel.gameObject.SetActive(true);
+        _blockerPanel.SetActive(true);
         _currentNPC = npc;
-        TextAsset npcInkJson = _currentNPC.NpcData.InkJSON;
+        TextAsset npcInkJson = _currentNPC.InkJSON;
         _currentStory = new Story(npcInkJson.text);
         InitializeErrorHandler();
         BindFunctions();
