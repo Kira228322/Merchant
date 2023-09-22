@@ -1,3 +1,4 @@
+    using System;
     using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,8 @@ using UnityEngine;
     [SerializeField] private GameObject _wheelGameObject;
     [SerializeField] private GameObject _bodyGameObject;
     [SerializeField] private GameObject _suspensionGameObject;
+    [SerializeField] private List<GameObject> _mediumWeightObjects = new ();
+    [SerializeField] private List<GameObject> _highWeightObjects = new ();
 
     public Wheel Wheel;
     public Body Body;
@@ -22,7 +25,7 @@ using UnityEngine;
     private void Start()
     {
         _wagonStats = Player.Instance.WagonStats;
-        Player.Instance.WagonStats.WagonStatsRefreshed += OnWagonStatsRefreshed;
+        
         //^ из-за порядка выполнения скриптов мы не можем помещать подписку на ивент в OnEnable (см. пост #5 https://forum.unity.com/threads/onenable-before-awake.361429/)
         //Поэтому подписываемся в старте, после того как Player и его подсосы выполнят Awake.
         //Единственная проблема может быть тем, что Start срабатывает только один раз при спавне этого скрипта.
@@ -37,9 +40,44 @@ using UnityEngine;
         //_qualityModifier = Wheel.QualityModifier;
     }
 
+    private void OnEnable()
+    {
+        Player.Instance.WagonStats.WagonStatsRefreshed += OnWagonStatsRefreshed;
+        Player.Instance.Inventory.WeightChanged += OnWeightChange;
+    }
+
     private void OnDisable()
     {
         Player.Instance.WagonStats.WagonStatsRefreshed -= OnWagonStatsRefreshed;
+        Player.Instance.Inventory.WeightChanged -= OnWeightChange;
+    }
+
+    private void OnWeightChange(float currentWeight, float maxWeight)
+    {
+        if (currentWeight >= 0.9f * maxWeight)
+        {
+            foreach (var gameObject in _mediumWeightObjects)
+                gameObject.SetActive(true);
+            
+            foreach (var gameObject in _highWeightObjects)
+                gameObject.SetActive(true);
+        }
+        else if (currentWeight >= 0.5f * maxWeight)
+        {
+            foreach (var gameObject in _mediumWeightObjects)
+                gameObject.SetActive(true);
+            
+            foreach (var gameObject in _highWeightObjects)
+                gameObject.SetActive(false);
+        }
+        else
+        {
+            foreach (var gameObject in _mediumWeightObjects)
+                gameObject.SetActive(false);
+            
+            foreach (var gameObject in _highWeightObjects)
+                gameObject.SetActive(false);
+        }
     }
 
     private void OnWagonStatsRefreshed()
@@ -51,8 +89,6 @@ using UnityEngine;
         _wheelGameObject.GetComponent<SpriteRenderer>().sprite = Wheel.Sprite;
         _bodyGameObject.GetComponent<SpriteRenderer>().sprite = Body.Sprite;
         _suspensionGameObject.GetComponent<SpriteRenderer>().sprite = Suspension.Sprite;
-
-
     }
 
     
