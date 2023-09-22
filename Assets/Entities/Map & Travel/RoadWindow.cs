@@ -91,7 +91,16 @@ public class RoadWindow : Window
     }
 
     public void OnTravelButtonClick()
-    { 
+    {
+        if (Player.Instance.Money < _roads[_numberOfRoad].Cost)
+        {
+            CanvasWarningGenerator.Instance.CreateWarning("У вас недостаточно золота",
+                "Для проезда по этой дороге необходимо внести оплату");
+            return;
+        }
+
+        Player.Instance.Money -= _roads[_numberOfRoad].Cost;
+        
         MapManager.TransitionToTravelScene(_roads[_numberOfRoad]);
         MapManager.TargetLocation = _place;
         Destroy(gameObject);

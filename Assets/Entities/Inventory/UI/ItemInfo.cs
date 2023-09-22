@@ -87,8 +87,8 @@ public class ItemInfo : MonoBehaviour
         else _destroyButton.interactable = true;
 
         _quantityText.text = $"Количество: {item.CurrentItemsInAStack}";
-        _weightText.text = $"Вес: {item.ItemData.Weight}";
-        _totalWeightText.text = $"Общий вес: {item.ItemData.Weight * item.CurrentItemsInAStack}";
+        _weightText.text = $"Вес: {item.ItemData.Weight:F1}";
+        _totalWeightText.text = $"Общий вес: {item.ItemData.Weight * item.CurrentItemsInAStack:F1}";
         _maxItemsInAStackText.text = $"Макс. количество: {item.ItemData.MaxItemsInAStack}";
         _fragilityText.text = $"Хрупкость: {item.ItemData.Fragility}";
         _averagePriceText.text = $"Средняя цена: {item.ItemData.Price}";
@@ -110,19 +110,33 @@ public class ItemInfo : MonoBehaviour
         }
         if (item.ItemData is UsableItem)
         {
+            
             _currentUsableItem = _currentItemSelected.ItemData as UsableItem;
             if (_currentUsableItem.UsableItemType == UsableItem.UsableType.Edible)
             {
                 _foodValueText.alpha = 1;
-                _foodValueText.text = $"+{_currentUsableItem.UsableValue} сытости";
+                if (item.BoughtDaysAgo >= item.ItemData.DaysToHalfSpoil)
+                    _foodValueText.text = $"+<color=#F8523C>{_currentUsableItem.UsableValue/2}</color> сытости";
+                else
+                    _foodValueText.text = $"+{_currentUsableItem.UsableValue} сытости";
             }
             else if (_currentUsableItem.UsableItemType == UsableItem.UsableType.Energetic)
             {
                 _foodValueText.alpha = 1;
-                _foodValueText.text = 
-                    $"+{_currentUsableItem.UsableValue} сытости  +{_currentUsableItem.SecondValue} бодрости";
+                if (item.BoughtDaysAgo >= item.ItemData.DaysToHalfSpoil)
+                {
+                    _foodValueText.text = $"+<color=#F8523C>{_currentUsableItem.UsableValue/2}</color> сытости" +
+                                          $"  +<color=#F8523C>{_currentUsableItem.SecondValue/2}</color> бодрости";
+                }
+                else
+                    _foodValueText.text = 
+                     $"+{_currentUsableItem.UsableValue} сытости  +{_currentUsableItem.SecondValue} бодрости";
             }
+            
             _useButton.gameObject.SetActive(true);
+            if (item.ItemData.IsPerishable)
+                if (item.BoughtDaysAgo >= item.ItemData.DaysToSpoil)
+                     _useButton.interactable = false;
         }
         else
         {
@@ -174,23 +188,35 @@ public class ItemInfo : MonoBehaviour
 
     private void Eat()
     {
-        _player.Needs.RestoreHunger(_currentUsableItem.UsableValue);
+        if (_currentItemSelected.BoughtDaysAgo >= _currentItemSelected.ItemData.DaysToHalfSpoil && _currentItemSelected.ItemData.IsPerishable)
+            _player.Needs.RestoreHunger(_currentUsableItem.UsableValue/2);
+        else
+            _player.Needs.RestoreHunger(_currentUsableItem.UsableValue);
         RemoveOneItemAfterUse();
     }
 
     private void EatEnergetic()
     {
-        _player.Needs.RestoreHunger(_currentUsableItem.UsableValue);
-        _player.Needs.RestoreSleep(_currentUsableItem.SecondValue);
+        if (_currentItemSelected.BoughtDaysAgo >= _currentItemSelected.ItemData.DaysToHalfSpoil && _currentItemSelected.ItemData.IsPerishable)
+        {
+            _player.Needs.RestoreHunger(_currentUsableItem.UsableValue/2);
+            _player.Needs.RestoreSleep(_currentUsableItem.SecondValue/2);
+        }
+        else
+        {
+            _player.Needs.RestoreHunger(_currentUsableItem.UsableValue);
+            _player.Needs.RestoreSleep(_currentUsableItem.SecondValue);
+        }
         RemoveOneItemAfterUse();
     }
 
     private void UseBottle()
     {
+        RemoveOneItemAfterUse();
         InventoryController.Instance.TryCreateAndInsertItem
             (_player.ItemGrid, ItemDatabase.GetItem("Empty bottle"), 1, 0, true);
         _player.Needs.RestoreHunger(_currentUsableItem.UsableValue);
-        RemoveOneItemAfterUse();
+        
     }
 
     private void UsePotion()
