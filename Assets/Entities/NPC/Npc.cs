@@ -4,6 +4,7 @@ using UnityEngine;
 public class Npc : MonoBehaviour
 {
     public NpcData NpcData;
+    public TextAsset InkJSON;
     [SerializeField] private GameObject _exclamationMarkPrefab;
     [HideInInspector] public GameObject ExclamationMark;
 
