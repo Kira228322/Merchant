@@ -80,6 +80,7 @@ public static class MapManager
         }
     }
     public static Road GetRoadByName (string name)
+    //TODO: нигде не используется и очень дорогой метод. Что-то хотели сделать, но в итоге сделали иначе?
     {
         RegionHandler regionHandler = Object.FindObjectOfType<RegionHandler>(true);
         return regionHandler.Regions

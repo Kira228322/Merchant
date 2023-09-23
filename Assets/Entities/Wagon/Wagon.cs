@@ -20,16 +20,9 @@ using UnityEngine;
 
     private PlayerWagonStats _wagonStats;
 
-    // private float _qualityModifier; // Перемещено в PlayerWagonStats.QualityModifier
-
     private void Start()
     {
         _wagonStats = Player.Instance.WagonStats;
-        
-        //^ из-за порядка выполнения скриптов мы не можем помещать подписку на ивент в OnEnable (см. пост #5 https://forum.unity.com/threads/onenable-before-awake.361429/)
-        //Поэтому подписываемся в старте, после того как Player и его подсосы выполнят Awake.
-        //Единственная проблема может быть тем, что Start срабатывает только один раз при спавне этого скрипта.
-        //Нужно будет проверять, правильно ли подписывается, если будем включать/выключать Вагон
 
         //Загрузка статоу из Player.WagonStats
 
