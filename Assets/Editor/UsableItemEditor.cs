@@ -1,3 +1,4 @@
+using Codice.CM.SEIDInfo;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -79,11 +80,20 @@ class UsableItemEditor : ItemEditor
             case UsableItem.UsableType.Note:
                 EditorGUILayout.BeginHorizontal();
 
-                GUILayout.Label("Text to add", GUILayout.MaxWidth(80));
+                GUILayout.Label("Note header", GUILayout.MaxWidth(80));
+                EditorStyles.textField.wordWrap = false;
+                usableItem.NoteHeader = EditorGUILayout.TextArea(usableItem.NoteHeader, GUILayout.Height(20));
+                EditorGUILayout.EndHorizontal();
+
+                EditorGUILayout.BeginHorizontal();
+
+                GUILayout.Label("Note text", GUILayout.MaxWidth(80));
                 EditorStyles.textField.wordWrap = true;
                 usableItem.NoteText = EditorGUILayout.TextArea(usableItem.NoteText, GUILayout.Height(256));
                 EditorGUILayout.EndHorizontal();
                 break;
         }
+        if (GUI.changed)
+            EditorUtility.SetDirty(usableItem);
     }
 }

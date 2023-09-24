@@ -7,19 +7,20 @@ using UnityEngine.UI;
 
 public class Diary : MonoBehaviour, ISaveable<DiarySaveData>
 {
-    //По сути, просто сохраняемый лист строк - история игрока в этом мире
 
     public static Diary Instance;
 
     [SerializeField] private VerticalLayoutGroup _scrollViewContentHints;
     [SerializeField] private VerticalLayoutGroup _scrollViewContentNews;
     [SerializeField] private VerticalLayoutGroup _scrollViewContentTutorials;
-    
-    [SerializeField] private TMP_Text _diaryEntryPrefab;
+
+
+    [SerializeField] private DiaryEntryDisplayer _diaryEntryDisplayer;
+    [SerializeField] private DiaryEntry _diaryEntryPrefab;
     [SerializeField] private GameObject _tutorialEntryPrefab;
 
-    private List<TMP_Text> _entriesNews = new();
-    private List<TMP_Text> _entriesHints = new();
+    private List<DiaryEntry> _entriesNews = new();
+    private List<DiaryEntry> _entriesHints = new();
 
     private void Awake()
     {
@@ -28,25 +29,32 @@ public class Diary : MonoBehaviour, ISaveable<DiarySaveData>
     }
 
 
-    public void AddEntry(string text, bool news)
+    public void AddEntry(string header, string text, bool news)
     {
         string dateTime = $"<i>День {GameTime.CurrentDay}, {(GameTime.Hours < 10? "0": "")}{GameTime.Hours}:{(GameTime.Minutes < 10 ? "0" : "")}{GameTime.Minutes}: </i>";
 
-        TMP_Text newEntry;
+        DiaryEntry newEntry;
         if (news)
         {
-            newEntry = Instantiate(_diaryEntryPrefab, _scrollViewContentNews.transform);
-            newEntry.text = dateTime + text;
+            newEntry = Instantiate(_diaryEntryPrefab, _scrollViewContentNews.transform).GetComponent<DiaryEntry>();
+            newEntry.Header = header;
+            newEntry.TextInfo = text;
+            newEntry.DateTimeAcquired = dateTime;
+            newEntry.HeaderText.text = dateTime + header;
             _entriesNews.Add(newEntry);
-            newEntry.gameObject.GetComponentInChildren<Button>().onClick.AddListener(() => RemoveEntry(_entriesNews, newEntry));
+            newEntry.GetComponent<Button>().onClick.AddListener
+                (() => DisplayEntry(newEntry));
         }
         else
         {
             newEntry = Instantiate(_diaryEntryPrefab, _scrollViewContentHints.transform);
-            newEntry.text = dateTime + text;
+            newEntry.Header = header;
+            newEntry.TextInfo = text;
+            newEntry.DateTimeAcquired = dateTime;
+            newEntry.HeaderText.text = dateTime + header;
             _entriesHints.Add(newEntry);
-            newEntry.gameObject.GetComponentInChildren<Button>().onClick.AddListener(
-                () => RemoveEntry(_entriesHints, newEntry));
+            newEntry.GetComponent<Button>().onClick.AddListener
+                (() => DisplayEntry(newEntry));
         }
     }
     public void AddTutorial(TutorialStateTracker.PresentationInfo presentationInfo)
@@ -59,47 +67,62 @@ public class Diary : MonoBehaviour, ISaveable<DiarySaveData>
         newEntry.gameObject.GetComponentInChildren<Button>().onClick.AddListener(
             () => PresentationDisplayer.Instance.ShowPresentation(presentation));
     }
+
+    public void DisplayEntry(DiaryEntry entry)
+    {
+        _diaryEntryDisplayer.ShowEntry(entry);
+    }
+    /* 
+    (24.09.23) Убрал этот метод из функционала, потому что добавил новый экран показа этих текстов.
+    Если всё-таки нужно будет их убирать, то лучше сделать разделение на квестовые 
+    и не квестовые записи. Убрать можно только не квестовые.
+
     public void RemoveEntry(List<TMP_Text> list, TMP_Text entry)
     {
         list.Remove(entry);
         Destroy(entry.gameObject);
     }
-    private void CreateSavedEntry(string text, bool news)
+    */
+    private void CreateSavedEntry(string dateTime, string header, string text, bool news)
     {
-        TMP_Text newEntry;
+        DiaryEntry newEntry;
         if (news)
             newEntry = Instantiate(_diaryEntryPrefab, _scrollViewContentNews.transform);
         else 
             newEntry = Instantiate(_diaryEntryPrefab, _scrollViewContentHints.transform);
-        newEntry.text = text;
+        newEntry.HeaderText.text = dateTime + header;
+        newEntry.Header = header;
+        newEntry.TextInfo = text;
+        newEntry.GetComponent<Button>().onClick.AddListener(
+                () => DisplayEntry(newEntry));
     }
 
     public DiarySaveData SaveData()
     {
         //Туториалы не сохраняются, потому что они добавляются сюда через TutorialStateTracker 
 
-        List<string> news = new();
-        List<string> hints = new();
+        List<DiarySaveData.EntrySaveData> news = new();
+        List<DiarySaveData.EntrySaveData> hints = new();
         foreach (var entry in _entriesNews)
         {
-            news.Add(entry.text);
+            news.Add(new(entry.DateTimeAcquired, entry.Header, entry.TextInfo));
         }
         foreach (var entry in _entriesHints)
         {
-            hints.Add(entry.text);
+            hints.Add(new(entry.DateTimeAcquired, entry.Header, entry.TextInfo));
         }
         return new(news, hints);
     }
 
     public void LoadData(DiarySaveData data)
     {
-        foreach (string entry in data.EntriesNews)
+        foreach (DiarySaveData.EntrySaveData entry in data.EntriesNews)
         {
-            CreateSavedEntry(entry, true);
+            CreateSavedEntry(entry.DateTimeAcquired, entry.Header, entry.Text, true);
         }
-        foreach (string entry in data.EntriesHints)
+        foreach (DiarySaveData.EntrySaveData entry in data.EntriesHints)
         {
-            CreateSavedEntry(entry, false);
+            CreateSavedEntry(entry.DateTimeAcquired, entry.Header, entry.Text, false);
         }
     }
 }

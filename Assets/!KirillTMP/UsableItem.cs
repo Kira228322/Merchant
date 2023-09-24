@@ -16,5 +16,6 @@ public class UsableItem : Item
     [HideInInspector] public int SecondValue;
     [HideInInspector] public Status Effect;
     [HideInInspector] public List<CraftingRecipe> Recipes;
+    [HideInInspector] public string NoteHeader;
     [HideInInspector] public string NoteText;
 }
