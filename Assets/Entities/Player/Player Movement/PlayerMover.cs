@@ -69,7 +69,7 @@ public class PlayerMover : MonoBehaviour
                 _currentMove = null;
                 _rigidbody.velocity = new Vector2(0,0);
             }
-            _animator.SetTrigger("Move");
+            else _animator.SetTrigger("Move");
             _currentMove = StartCoroutine(Move(startPos, targetPos));
         }
     }
@@ -106,11 +106,13 @@ public class PlayerMover : MonoBehaviour
         if (_lastNodePos.x < transform.position.x && _lastNodePos.x + 0.5f >_finishTargetPos.x)
         {
             _animator.SetTrigger("IDLE");
+            _currentMove = null;
             return;
         }
         if (_lastNodePos.x > transform.position.x && _lastNodePos.x - 0.5f < _finishTargetPos.x)
         {
             _animator.SetTrigger("IDLE");
+            _currentMove = null;
             return;
         }
         // если нужно двигаться дальше
@@ -155,6 +157,7 @@ public class PlayerMover : MonoBehaviour
             yield return forEndOfFrameUnit;
         }
         _animator.SetTrigger("IDLE");
+        _currentMove = null;
     }
 
     private void RevertPlayer(bool rightMove)
