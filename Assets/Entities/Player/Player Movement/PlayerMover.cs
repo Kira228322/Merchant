@@ -9,13 +9,15 @@ public class PlayerMover : MonoBehaviour
 {
     [FormerlySerializedAs("_backgroundController")] [SerializeField] public BackgroundController BackgroundController;
     [SerializeField] private ContactFilter2D _contactFilter2D;
-    private float _speed = 3.5f;
+    private float _speed = 3.9f;
     [HideInInspector]public float _currentSpeed;
 
     public float SpeedModifier = 0;
 
     [HideInInspector] public Rigidbody2D _rigidbody;
     [HideInInspector] public Collider2D _collider;
+    private Animator _animator;
+    private SpriteRenderer _spriteRenderer;
     
     private Coroutine _currentMove;
 
@@ -25,6 +27,8 @@ public class PlayerMover : MonoBehaviour
     [HideInInspector] public Vector3 _lastNodePos;
     private void Start()
     {
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _animator = GetComponent<Animator>();
         _collider = GetComponent<Collider2D>();
         _rigidbody = GetComponent<Rigidbody2D>();
         BackgroundController.UpdateBackground(transform.position.x);
@@ -33,6 +37,7 @@ public class PlayerMover : MonoBehaviour
 
     public void DisableMove()
     {
+        _animator.SetTrigger("IDLE");
         if (_currentMove != null)
         {
             StopCoroutine(_currentMove);
@@ -64,6 +69,7 @@ public class PlayerMover : MonoBehaviour
                 _currentMove = null;
                 _rigidbody.velocity = new Vector2(0,0);
             }
+            _animator.SetTrigger("Move");
             _currentMove = StartCoroutine(Move(startPos, targetPos));
         }
     }
@@ -86,6 +92,7 @@ public class PlayerMover : MonoBehaviour
         {
             StopCoroutine(_currentMove);
         }
+        
         _currentMove = StartCoroutine(node.MovePlayerByNode(this));
     }
 
@@ -96,10 +103,16 @@ public class PlayerMover : MonoBehaviour
             StopCoroutine(_currentMove);
         }
         // если точка задана на лестницу, то движение не продолжается
-        if (_lastNodePos.x < transform.position.x && _lastNodePos.x >_finishTargetPos.x)
+        if (_lastNodePos.x < transform.position.x && _lastNodePos.x + 0.5f >_finishTargetPos.x)
+        {
+            _animator.SetTrigger("IDLE");
             return;
-        if (_lastNodePos.x > transform.position.x && _lastNodePos.x < _finishTargetPos.x)
+        }
+        if (_lastNodePos.x > transform.position.x && _lastNodePos.x - 0.5f < _finishTargetPos.x)
+        {
+            _animator.SetTrigger("IDLE");
             return;
+        }
         // если нужно двигаться дальше
         
         StartMove(transform.position, _finishTargetPos);
@@ -107,6 +120,7 @@ public class PlayerMover : MonoBehaviour
     
     public IEnumerator Move(Vector3 startPos,Vector3 targetPos)
     {
+        RevertPlayer(targetPos.x > startPos.x);
         WaitForEndOfFrame forEndOfFrameUnit = new WaitForEndOfFrame();
         yield return forEndOfFrameUnit;
         _finishTargetPos = targetPos;
@@ -140,7 +154,15 @@ public class PlayerMover : MonoBehaviour
             BackgroundController.UpdateBackground(transform.position.x);
             yield return forEndOfFrameUnit;
         }
+        _animator.SetTrigger("IDLE");
     }
-    
+
+    private void RevertPlayer(bool rightMove)
+    {
+        if (rightMove)
+            _spriteRenderer.flipX = false;
+        else
+            _spriteRenderer.flipX = true;
+    }
     
 }
