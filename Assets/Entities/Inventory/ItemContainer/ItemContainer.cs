@@ -149,7 +149,7 @@ public class ItemContainer : MonoBehaviour
     {
         ItemGrid playerItemGrid = Player.Instance.ItemGrid;
 
-        if (!_inventoryController.IsThereAvailableSpaceForInsertingMultipleItems(playerItemGrid, Items))
+        if (!_inventoryController.CanInsertMultipleItems(playerItemGrid, Items))
         {
             CanvasWarningGenerator.Instance.CreateWarning("Недостаточно места!", "Освободите место в инвентаре, чтобы вернуть предметы");
             return;

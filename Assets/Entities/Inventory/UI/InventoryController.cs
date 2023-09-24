@@ -28,13 +28,13 @@ public class InventoryController : MonoBehaviour
     private ItemGrid _gridPickedUpFrom;
     private Vector2Int _itemPickedUpFromPosition;
 
-    public InventoryItem CurrentSelectedItem { 
-        get 
+    public InventoryItem CurrentSelectedItem {
+        get
         { return _selectedItem; }
-        private set 
+        private set
         {
             _selectedItem = value;
-        } 
+        }
     }
     public ItemGrid SelectedItemGrid
     {
@@ -65,7 +65,7 @@ public class InventoryController : MonoBehaviour
     private void Update()
     {
         ItemIconDrag();
-        
+
         if (SelectedItemGrid != null)
         {
             _currentTileGridPosition = GetTileGridPosition();
@@ -88,10 +88,10 @@ public class InventoryController : MonoBehaviour
     }
     private void HighlightUpdate()
     {
-        if (SelectedItemGrid == null) 
+        if (SelectedItemGrid == null)
         {
             _inventoryHighlight.Show(false);
-            return; 
+            return;
         }
 
         Vector2Int positionOnGrid = GetTileGridPosition();
@@ -115,7 +115,7 @@ public class InventoryController : MonoBehaviour
         else
         {
             _inventoryHighlight.Show(SelectedItemGrid.IsInCorrectPosition(
-                positionOnGrid.x, 
+                positionOnGrid.x,
                 positionOnGrid.y,
                 CurrentSelectedItem.Width,
                 CurrentSelectedItem.Height)
@@ -186,19 +186,19 @@ public class InventoryController : MonoBehaviour
             {
                 case ItemContainer.QuestItemsBehaviourEnum.NotQuestItems:
                     if (CurrentSelectedItem.ItemData.IsQuestItem)
-                    return false;
+                        return false;
                     break;
 
                 case ItemContainer.QuestItemsBehaviourEnum.OnlyQuestItems:
                     if (!CurrentSelectedItem.ItemData.IsQuestItem)
-                    return false;
+                        return false;
                     break;
 
                 default:
                     break;
             }
         }
-        
+
         return true;
     }
     private void OnLeftMouseButtonRelease()
@@ -207,9 +207,9 @@ public class InventoryController : MonoBehaviour
         if (CurrentSelectedItem != null)
         {
             var gridPickedUpFromScrollRect = _gridPickedUpFrom.GetComponentInParent<ScrollRect>();
-            if (gridPickedUpFromScrollRect != null) 
+            if (gridPickedUpFromScrollRect != null)
             {
-                gridPickedUpFromScrollRect.enabled = true; 
+                gridPickedUpFromScrollRect.enabled = true;
             }
             if (!IsItemAcceptable())
             {
@@ -271,7 +271,7 @@ public class InventoryController : MonoBehaviour
         public int amount;
         public float daysBoughtAgo;
     }
-    public bool IsThereAvailableSpaceForInsertingMultipleItems(ItemGrid itemGrid, List<ItemReward> rewardItems)
+    public bool CanInsertMultipleItems(ItemGrid itemGrid, List<ItemReward> rewardItems)
     {
         List<CompactedItem> items = new();
         foreach (var item in rewardItems)
@@ -300,12 +300,12 @@ public class InventoryController : MonoBehaviour
         //Это нужно, чтобы если не получится поместить все, знать сколько чего и куда было помещено и убрать столько, сколько нужно.
         //(Если некоторые были помещены в стак, то нужно убрать не весь стак, а столько, сколько в него положили, так ведь?)
 
-        foreach(CompactedItem itemReward in items)
+        foreach (CompactedItem itemReward in items)
         {
             InventoryItem placedItem = TryCreateAndInsertItem(itemGrid, itemReward.item, itemReward.amount, itemReward.daysBoughtAgo, true);
             if (placedItem != null)
             {
-                placedInventoryItems.Add(placedItem, itemReward.amount); 
+                placedInventoryItems.Add(placedItem, itemReward.amount);
             }
             else
             {
@@ -335,7 +335,7 @@ public class InventoryController : MonoBehaviour
         */
 
     }
-    public bool IsThereAvailableSpaceForInsertingMultipleItems(ItemGrid itemGrid, List<InventoryItem> inventoryItems)
+    public bool CanInsertMultipleItems(ItemGrid itemGrid, List<InventoryItem> inventoryItems)
     {
         List<InventoryItem> items = new(inventoryItems);
 
@@ -484,7 +484,7 @@ public class InventoryController : MonoBehaviour
             _rectTransform.position = Input.mousePosition;
         }
     }
-    private void CreateItem(Item item, int amount, float boughtDaysAgo)
+    private InventoryItem CreateItem(Item item, int amount, float boughtDaysAgo)
     {
         InventoryItem spawnedItem = Instantiate(_itemPrefab, _canvasTransform).GetComponent<InventoryItem>();
         spawnedItem.SetItemFromData(item);
@@ -498,7 +498,7 @@ public class InventoryController : MonoBehaviour
 
         CurrentSelectedItem.transform.localScale = Vector2.one;
 
-
+        return spawnedItem;
     }
     private void CreateItemRotated(Item item, int amount, float boughtDaysAgo)
     {

@@ -239,7 +239,7 @@ public class ItemInfo : MonoBehaviour
             {
                 FindObjectOfType<CanvasWarningGenerator>().CreateWarning("Рецепт уже известен", 
                     $"Вы уже изучили рецепт {craftRecipe.ResultingItem.Name}");
-                return;
+                continue;
             }
             Player.Instance.Recipes.Add(craftRecipe);
         }
