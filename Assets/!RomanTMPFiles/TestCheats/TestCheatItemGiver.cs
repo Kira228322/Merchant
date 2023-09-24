@@ -18,6 +18,10 @@ public class TestCheatItemGiver : MonoBehaviour
         {
             itemNames.Add(item.Name);
         }
+        foreach (Item item in ItemDatabase.Instance.Items.QuestItemList)
+        {
+            itemNames.Add(item.Name);
+        }
         itemSelector.AddOptions(itemNames);
 
     }

@@ -7,10 +7,10 @@ using UnityEngine;
 [CustomEditor(typeof(UsableItem))]
 class UsableItemEditor : ItemEditor
 {
-    private UsableItem item;
+    private UsableItem usableItem;
     protected override  void OnEnable()
     {
-        item = (UsableItem)target;
+        usableItem = (UsableItem)target;
         base.OnEnable();
     }
 
@@ -18,13 +18,13 @@ class UsableItemEditor : ItemEditor
     {
         base.OnInspectorGUI();
         
-        switch (item.UsableItemType)
+        switch (usableItem.UsableItemType)
         {
             case UsableItem.UsableType.Edible:
                 EditorGUILayout.BeginHorizontal();
                 
                 GUILayout.Label("Food value", GUILayout.MaxWidth(80));
-                item.UsableValue = EditorGUILayout.IntField(item.UsableValue);
+                usableItem.UsableValue = EditorGUILayout.IntField(usableItem.UsableValue);
                 
                 EditorGUILayout.EndHorizontal();
                 break;
@@ -32,13 +32,13 @@ class UsableItemEditor : ItemEditor
                 EditorGUILayout.BeginHorizontal();
                 
                 GUILayout.Label("Food value", GUILayout.MaxWidth(120));
-                item.UsableValue = EditorGUILayout.IntField(item.UsableValue);
+                usableItem.UsableValue = EditorGUILayout.IntField(usableItem.UsableValue);
                 
                 EditorGUILayout.EndHorizontal();
                 EditorGUILayout.BeginHorizontal();
                 
                 GUILayout.Label("SleepRestore value", GUILayout.MaxWidth(120));
-                item.SecondValue = EditorGUILayout.IntField(item.SecondValue);
+                usableItem.SecondValue = EditorGUILayout.IntField(usableItem.SecondValue);
                 
                 EditorGUILayout.EndHorizontal();
                 break;
@@ -49,27 +49,27 @@ class UsableItemEditor : ItemEditor
             case UsableItem.UsableType.Potion:
                 EditorGUILayout.BeginHorizontal();
                 GUILayout.Label("Effect", GUILayout.MaxWidth(60));
-                item.Effect = (Status)EditorGUILayout.ObjectField(item.Effect, typeof(Status), false);
+                usableItem.Effect = (Status)EditorGUILayout.ObjectField(usableItem.Effect, typeof(Status), false);
                 EditorGUILayout.EndHorizontal();
                 break;
             case UsableItem.UsableType.Recipe:
                 
                 if (GUILayout.Button("Добавить рецепт крафта в список"))
-                    item.Recipes.Add(CreateInstance<CraftingRecipe>());
+                    usableItem.Recipes.Add(CreateInstance<CraftingRecipe>());
                 
                 
-                if (item.Recipes.Count > 0)
+                if (usableItem.Recipes.Count > 0)
                 {
-                    for (int i = 0; i < item.Recipes.Count; i++)
+                    for (int i = 0; i < usableItem.Recipes.Count; i++)
                     {
                         EditorGUILayout.BeginHorizontal();
                         if (GUILayout.Button("X", GUILayout.Height(17), GUILayout.Width(18)))
                         {
-                            item.Recipes.RemoveAt(i);
+                            usableItem.Recipes.RemoveAt(i);
                             break;
                         }
                         GUILayout.Label("Recipe", GUILayout.MaxWidth(60));
-                        item.Recipes[i] = (CraftingRecipe)EditorGUILayout.ObjectField(item.Recipes[i], typeof(CraftingRecipe), false);
+                        usableItem.Recipes[i] = (CraftingRecipe)EditorGUILayout.ObjectField(usableItem.Recipes[i], typeof(CraftingRecipe), false);
                         EditorGUILayout.EndHorizontal();
                     }
                 }
@@ -81,7 +81,7 @@ class UsableItemEditor : ItemEditor
 
                 GUILayout.Label("Text to add", GUILayout.MaxWidth(80));
                 EditorStyles.textField.wordWrap = true;
-                item.NoteText = EditorGUILayout.TextArea(item.NoteText, GUILayout.Height(80));
+                usableItem.NoteText = EditorGUILayout.TextArea(usableItem.NoteText, GUILayout.Height(256));
                 EditorGUILayout.EndHorizontal();
                 break;
         }
