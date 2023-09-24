@@ -249,7 +249,7 @@ public class ItemInfo : MonoBehaviour
 
     private void UseNote()
     {
-        Diary.Instance.AddEntry(_currentUsableItem.NoteHeader, _currentUsableItem.NoteText, false);
+        Diary.Instance.DisplayEntry(Diary.Instance.AddEntry(_currentUsableItem.NoteHeader, _currentUsableItem.NoteText, false));
         RemoveOneItemAfterUse();
     }
 
