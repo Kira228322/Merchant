@@ -4548,7 +4548,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.3175396, y: 0.38536385}
   m_AnchorMax: {x: 0.32284164, y: 0.39400002}
-  m_AnchoredPosition: {x: -0.30004883, y: 1.1000061}
+  m_AnchoredPosition: {x: -0.2999878, y: 1.1000061}
   m_SizeDelta: {x: -1, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &261896521
@@ -11123,7 +11123,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.39346042, y: 0.33900002}
   m_AnchorMax: {x: 0.40500003, y: 0.36}
-  m_AnchoredPosition: {x: -0.2000122, y: 0.1000061}
+  m_AnchoredPosition: {x: -0.2000122, y: 0.099975586}
   m_SizeDelta: {x: -1, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &674283883
@@ -13506,7 +13506,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.22500001, y: 0.10266299}
   m_AnchorMax: {x: 0.22500001, y: 0.10266299}
-  m_AnchoredPosition: {x: -1.000061, y: 0.5999756}
+  m_AnchoredPosition: {x: -1.0001221, y: 0.5999756}
   m_SizeDelta: {x: 9, y: 9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &799196341
@@ -24653,7 +24653,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.22546043, y: 0.77000004}
   m_AnchorMax: {x: 0.22546043, y: 0.77000004}
-  m_AnchoredPosition: {x: -0.39996338, y: 0.9959717}
+  m_AnchoredPosition: {x: -0.4000244, y: 0.9959717}
   m_SizeDelta: {x: 9, y: 9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1488796872
@@ -34527,7 +34527,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.20877711, y: 0.532}
   m_AnchorMax: {x: 0.22100002, y: 0.555}
-  m_AnchoredPosition: {x: 1.5999756, y: -1.2999878}
+  m_AnchoredPosition: {x: 1.5998535, y: -1.2999878}
   m_SizeDelta: {x: -1, y: -3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2131873469
@@ -40514,7 +40514,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.014871633, y: 0.66200006}
   m_AnchorMax: {x: 0.97556424, y: 1}
-  m_AnchoredPosition: {x: 3.0003662, y: 8.925293}
+  m_AnchoredPosition: {x: 3.0004883, y: 8.925293}
   m_SizeDelta: {x: -6.53, y: 17.8505}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3279153273562807695
@@ -42825,6 +42825,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1221850169}
     m_Modifications:
+    - target: {fileID: 3500183979610176049, guid: 025abd263d37c9f40b53d6be92b53249, type: 3}
+      propertyPath: m_Intensity
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3500183979610176049, guid: 025abd263d37c9f40b53d6be92b53249, type: 3}
+      propertyPath: m_NormalMapQuality
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3500183979610176049, guid: 025abd263d37c9f40b53d6be92b53249, type: 3}
+      propertyPath: m_NormalMapDistance
+      value: 1.2
+      objectReference: {fileID: 0}
     - target: {fileID: 3500183979610176050, guid: 025abd263d37c9f40b53d6be92b53249, type: 3}
       propertyPath: m_Name
       value: TX Village Props Road Lamp Light On
@@ -42835,11 +42847,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3500183979610176055, guid: 025abd263d37c9f40b53d6be92b53249, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.644
       objectReference: {fileID: 0}
     - target: {fileID: 3500183979610176055, guid: 025abd263d37c9f40b53d6be92b53249, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.961
       objectReference: {fileID: 0}
     - target: {fileID: 3500183979610176055, guid: 025abd263d37c9f40b53d6be92b53249, type: 3}
       propertyPath: m_LocalPosition.z
@@ -44712,7 +44724,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 246db29dbc1a4ec4ca0fc1045265fc41, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -44733,12 +44745,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 7
-  m_Sprite: {fileID: -1124979448, guid: f15800e3a3ab19c4ea7bf97007dd22c5, type: 3}
+  m_Sprite: {fileID: 1965870476, guid: f0dcb0928ef2e674b9118ab25deedebd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.78779465, y: 2.0062501}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -45303,8 +45315,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
-    oldSize: {x: 0.78791535, y: 2.0062501}
-    newSize: {x: 1, y: 1}
+    oldSize: {x: 0.78779465, y: 2.0062501}
+    newSize: {x: 0.78779465, y: 2.0062501}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
