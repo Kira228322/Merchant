@@ -26,7 +26,7 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
     }
     #endregion
     #region Методы работы с квестами (добавить, изменить состояние)
-    public static void AddQuest(QuestParams questParams)
+    public static Quest AddQuest(QuestParams questParams)
     {
         Quest quest = new(questParams);
         Instance.Quests.Add(quest);
@@ -35,8 +35,9 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
         QuestLog.AddQuest(quest);
         quest.QuestChangedState += Instance.OnQuestChangedState;
         QuestChangedState?.Invoke(quest);
+        return quest;
     }
-    public static void AddQuest(QuestParams questParams, NpcData questGiver)
+    public static Quest AddQuest(QuestParams questParams, NpcData questGiver)
     {
         Quest quest = new(questParams)
         {
@@ -48,6 +49,7 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
         QuestLog.AddQuest(quest);
         quest.QuestChangedState += Instance.OnQuestChangedState;
         QuestChangedState?.Invoke(quest);
+        return quest;
     }
     private void OnQuestChangedState(Quest quest, Quest.State oldState, Quest.State newState)
     {
@@ -114,7 +116,7 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
                 questName = quest.QuestName,
                 questSummary = quest.QuestSummary,
                 description = quest.Description,
-                questGiverID = quest.QuestGiver.ID,
+                questGiverID = quest.QuestGiver != null? quest.QuestGiver.ID: 0,
                 experienceReward = quest.ExperienceReward,
                 moneyReward = quest.MoneyReward,
                 itemRewards = quest.ItemRewards,

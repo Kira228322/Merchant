@@ -47,7 +47,10 @@ public class QuestLog : MonoBehaviour
 
             case Quest.State.RewardUncollected:
                 if (quest.NextQuestParams != null)
-                    QuestHandler.AddQuest(quest.NextQuestParams);
+                {
+                    Quest addedQuest = QuestHandler.AddQuest(quest.NextQuestParams);
+                    addedQuest.QuestGiver = quest.QuestGiver;
+                }
                 AddToFinishedQuests(quest);
                 break;
 
@@ -56,7 +59,11 @@ public class QuestLog : MonoBehaviour
                 {
                     AddToFinishedQuests(quest);
                 }
-                else QuestHandler.AddQuest(quest.NextQuestParams);
+                else
+                {
+                    Quest addedQuest = QuestHandler.AddQuest(quest.NextQuestParams);
+                    addedQuest.QuestGiver = quest.QuestGiver;
+                }
                 break;
 
             case Quest.State.Failed:
