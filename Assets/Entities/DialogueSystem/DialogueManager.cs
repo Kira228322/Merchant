@@ -18,8 +18,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private GameObject[] _choices;
     [SerializeField] private Button _continueButton;
     [SerializeField] private GameObject _lineFinishedIndicator;
-    [Tooltip("„ем меньше значение, тем быстрее печатаетс€ текст. 1/Typing Speed")]
-    [SerializeField] private float _typingSpeed = 0.04f;
+    [SerializeField] private float _typingSpeed = 25f;
 
     [SerializeField] private ItemContainer _itemContainer;
 
@@ -242,7 +241,7 @@ public class DialogueManager : MonoBehaviour
 
         HideChoices();
 
-        WaitForSeconds waitForSeconds = new(_typingSpeed);
+        WaitForSeconds waitForSeconds = new(1 / _typingSpeed);
         foreach (char letter in line.ToCharArray())
         {
             _dialogueText.text += letter;

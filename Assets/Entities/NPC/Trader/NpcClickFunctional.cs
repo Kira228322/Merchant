@@ -18,11 +18,13 @@ public class NpcClickFunctional : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if ((transform.position - Player.Instance.transform.position).magnitude > _distanceToUse)
-            return;
         if(!enabled)
             return;
-        
+        if ((transform.position - Player.Instance.transform.position).magnitude > _distanceToUse)
+            return;
+        if (FindObjectOfType<FunctionalWindow>() != null) //Ќикогда не бывает два таких окна одновременно
+            return;
+
         GameObject window = Instantiate(_functionalWindow, MapManager.Canvas.transform);
         window.transform.position = Camera.main.WorldToScreenPoint(new Vector3((transform.position.x + Player.Instance.transform.position.x) / 2,
              transform.position.y + 3.5f));

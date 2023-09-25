@@ -66,7 +66,10 @@ public class ItemInfo : MonoBehaviour
         _itemIcon.sprite = item.ItemData.Icon;
         _itemName.text = item.ItemData.Name;
         _itemDescription.text = "Описание: " + item.ItemData.Description;
-        _itemTypeText.text = "Категория предмета: " + Item.TranslateItemType(item.ItemData.TypeOfItem);
+        if (item.ItemData.TypeOfItem != Item.ItemType.Null)
+            _itemTypeText.text = "Категория предмета: " + Item.TranslateItemType(item.ItemData.TypeOfItem);
+        else
+            _itemTypeText.text = "";
 
         if (item.CurrentItemsInAStack == 1)
         {

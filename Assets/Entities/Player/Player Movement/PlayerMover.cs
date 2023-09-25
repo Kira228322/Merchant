@@ -37,9 +37,9 @@ public class PlayerMover : MonoBehaviour
 
     public void DisableMove()
     {
-        _animator.SetTrigger("IDLE");
         if (_currentMove != null)
         {
+            _animator.SetTrigger("IDLE");
             StopCoroutine(_currentMove);
             _currentMove = null;
             _rigidbody.velocity = new Vector2(0,0);

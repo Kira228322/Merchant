@@ -8,7 +8,11 @@ public class Item : ScriptableObject
 
     public enum ItemType
     {
-        RichClothes, WarmClothes, LightClothes, CeramicProduct, EverydayItem, CostumeJewelry, SouthPlant, NorthPlant, 
+        Null = 1337, 
+        //1337 чтобы добавить Null, но не засрать уже существующие предметы
+        //(Ну обращение ведь по номеру этого Enum. Если бы я сделал ему номер 0,
+        //то все существующие предметы сдвинулись бы на одну категорию назад)
+        RichClothes = 0, WarmClothes, LightClothes, CeramicProduct, EverydayItem, CostumeJewelry, SouthPlant, NorthPlant, 
         Cactus, MagicThing, Chemicals, Cosmetics, SouthFood, NorthFood, Food, Tea, Spices, EastSpices, MagicMaterial,
         Fish, Seeds, MagicSeeds, SouthFruit, NorthFruit, Sushi, AlcoholDrink, Drink
     }
@@ -43,6 +47,7 @@ public class Item : ScriptableObject
 
     private static readonly Dictionary<ItemType, string> translatedItemTypes = new()
     {
+        {ItemType.Null, ""},
         {ItemType.RichClothes, "Богатая одежда" },
         {ItemType.WarmClothes, "Тёплая одежда" },
         {ItemType.LightClothes, "Лёгкая одежда"},
@@ -69,7 +74,7 @@ public class Item : ScriptableObject
         {ItemType.NorthFruit, "Северный фрукт"},
         {ItemType.Sushi, "Суши"},
         {ItemType.AlcoholDrink, "Спиртной напиток"},
-        {ItemType.Drink, "Напиток"}
+        {ItemType.Drink, "Напиток"},
     };
 
     
