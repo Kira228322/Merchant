@@ -13,6 +13,7 @@ public class UIClock : MonoBehaviour
     [SerializeField] private List<Sprite> _weatherSprites = new();
     private WeatherController _weatherController;
     private Coroutine _currentCoroutine;
+    private Coroutine _sleepCoroutine;
     
 
 
@@ -127,11 +128,38 @@ public class UIClock : MonoBehaviour
     }
     private IEnumerator ShowDetailedTime()
     {
-        WaitForSeconds waitForSeconds = new(2.5f);
+        WaitForSeconds waitForSeconds = new(0.5f);
         _detailedTimeObject.SetActive(true);
-        _detailedTime.text = $"Δενό {GameTime.CurrentDay}\n{GameTime.Hours:D2}:{GameTime.Minutes:D2}";
-        yield return waitForSeconds;
+        for (int i = 0; i < 6; i++)
+        {
+            _detailedTime.text = $"Δενό {GameTime.CurrentDay}\n{GameTime.Hours:D2}:{GameTime.Minutes:D2}";
+            yield return waitForSeconds;
+        }
         _detailedTimeObject.SetActive(false);
+    }
+
+    private IEnumerator ShowDetailedTimeWhileSleep()
+    {
+        WaitForSeconds waitForSeconds = new(0.5f);
+        _detailedTimeObject.SetActive(true);
+        while(true)
+        {
+            _detailedTime.text = $"Δενό {GameTime.CurrentDay}\n{GameTime.Hours:D2}:{GameTime.Minutes:D2}";
+            yield return waitForSeconds;
+        }
+    }
+
+    public void OnOpenSleepPanel()
+    {
+        _sleepCoroutine = StartCoroutine(ShowDetailedTimeWhileSleep());
+    }
+
+    public void OnCloseSleepPanel()
+    {
+        if (_sleepCoroutine != null)
+            StopCoroutine(_sleepCoroutine);
+        _detailedTimeObject.SetActive(false);
+        _sleepCoroutine = null;
     }
 
 }

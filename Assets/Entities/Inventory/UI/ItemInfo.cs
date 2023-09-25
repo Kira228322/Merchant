@@ -115,10 +115,11 @@ public class ItemInfo : MonoBehaviour
         {
             
             _currentUsableItem = _currentItemSelected.ItemData as UsableItem;
-            if (_currentUsableItem.UsableItemType == UsableItem.UsableType.Edible)
+            if (_currentUsableItem.UsableItemType == UsableItem.UsableType.Edible 
+                || _currentUsableItem.UsableItemType == UsableItem.UsableType.Bottle)
             {
                 _foodValueText.alpha = 1;
-                if (item.BoughtDaysAgo >= item.ItemData.DaysToHalfSpoil)
+                if (item.BoughtDaysAgo >= item.ItemData.DaysToHalfSpoil && item.ItemData.IsPerishable)
                     _foodValueText.text = $"+<color=#F8523C>{_currentUsableItem.UsableValue/2}</color> сытости";
                 else
                     _foodValueText.text = $"+{_currentUsableItem.UsableValue} сытости";
@@ -134,6 +135,10 @@ public class ItemInfo : MonoBehaviour
                 else
                     _foodValueText.text = 
                      $"+{_currentUsableItem.UsableValue} сытости  +{_currentUsableItem.SecondValue} бодрости";
+            }
+            else
+            {
+                _foodValueText.alpha = 0;
             }
             
             _useButton.gameObject.SetActive(true);

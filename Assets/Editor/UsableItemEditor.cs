@@ -46,6 +46,10 @@ class UsableItemEditor : ItemEditor
             case UsableItem.UsableType.Teleport:
                 break;
             case UsableItem.UsableType.Bottle:
+                EditorGUILayout.BeginHorizontal();
+                GUILayout.Label("Food value", GUILayout.MaxWidth(80));
+                usableItem.UsableValue = EditorGUILayout.IntField(usableItem.UsableValue);
+                EditorGUILayout.EndHorizontal();
                 break;
             case UsableItem.UsableType.Potion:
                 EditorGUILayout.BeginHorizontal();

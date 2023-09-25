@@ -10,6 +10,7 @@ public class SleepDurationPanel : MonoBehaviour
     [SerializeField] private Button _doneButton;
     [SerializeField] private Button _closeButton;
     [SerializeField] private Image _blackScreen;
+    
     private int _timeScaleWhenSleeping = 30;
     private Player _player;
     private Timeflow _timeflow;
@@ -24,6 +25,7 @@ public class SleepDurationPanel : MonoBehaviour
         _player.Needs.FinishedSleeping -= OnFinishedSleeping;
         _player.Needs.SleptOneHourEvent -= OnSleptOneHour;
         Player.Instance.PlayerMover.EnableMove();
+        GameManager.Instance.UIClock.OnCloseSleepPanel();
     }
 
     private void Awake()
@@ -31,6 +33,7 @@ public class SleepDurationPanel : MonoBehaviour
         _player = Player.Instance;
         _player.GetComponent<Rigidbody2D>().simulated = false;
         _timeflow = FindObjectOfType<Timeflow>();
+        GameManager.Instance.UIClock.OnOpenSleepPanel();
     }
 
     private void OnSleptOneHour()
@@ -43,7 +46,6 @@ public class SleepDurationPanel : MonoBehaviour
         _doneButton.interactable = true;
         _closeButton.interactable = true;
         _slider.interactable = true;
-        GameManager.Instance.ButtonsBlock.SetActive(true);
         _player.HidePlayer(false);
         Player.Instance.PlayerMover.EnableMove();
         StartCoroutine(FadeOutBlackScreen());
@@ -54,7 +56,6 @@ public class SleepDurationPanel : MonoBehaviour
         _player.Needs.StartSleeping((int)_slider.value);
         _timeflow.TimeScale = _timeScaleWhenSleeping;
         _slider.interactable = false;
-        GameManager.Instance.ButtonsBlock.SetActive(false);
         _player.HidePlayer(true);
         StartCoroutine(FadeInBlackScreen());
     }

@@ -57,4 +57,14 @@ public class FunctionalWindow : MonoBehaviour
         _NPC.StopInteraction();
         Destroy(gameObject);
     }
+
+    private void OnEnable()
+    {
+        GameManager.Instance.CurrentFunctionalWindow = gameObject;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.Instance.CurrentFunctionalWindow = null;
+    }
 }

@@ -5088,6 +5088,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _canvas: {fileID: 3279153274007544278}
   ButtonsBlock: {fileID: 100020304}
+  CurrentFunctionalWindow: {fileID: 0}
+  UIClock: {fileID: 5565779630728927556}
   _travelingScene: UnitedScene
   _sceneTransiter: {fileID: 3279153272921693973}
   _roadWindow: {fileID: 5013232437122515196, guid: de00a2e83833b79428e44e562cc42361, type: 3}
@@ -10803,7 +10805,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000061035156, y: 0.00048828125}
+  m_AnchoredPosition: {x: 0, y: 0.00048828125}
   m_SizeDelta: {x: 0.000061035, y: 0.00048828}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &648937459
@@ -14913,7 +14915,6 @@ GameObject:
   - component: {fileID: 892953235}
   - component: {fileID: 892953234}
   - component: {fileID: 892953233}
-  - component: {fileID: 892953236}
   m_Layer: 7
   m_Name: Tilemap
   m_TagString: Untagged
@@ -15327,18 +15328,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!114 &892953236
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 892953231}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 293292b2298d77e499c4da796adb89b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &895932103
 GameObject:
   m_ObjectHideFlags: 0
@@ -23737,7 +23726,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.65882355}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.78431374}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -23776,6 +23765,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _header: {fileID: 87064223}
   _mainText: {fileID: 1620817285}
+  _scrollbar: {fileID: 2116996154}
 --- !u!1 &1349841633
 GameObject:
   m_ObjectHideFlags: 0
@@ -35252,7 +35242,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 555282786}
   m_HandleRect: {fileID: 555282785}
   m_Direction: 2
-  m_Value: 1.0000001
+  m_Value: 1
   m_Size: 0.41256046
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -35577,7 +35567,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.164, y: 0.123}
   m_AnchorMax: {x: 0.17642514, y: 0.14631279}
-  m_AnchoredPosition: {x: -1.6999512, y: 1}
+  m_AnchoredPosition: {x: -1.6999512, y: 1.000061}
   m_SizeDelta: {x: 2, y: -2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2124475274
@@ -45937,6 +45927,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6805797347860253898, guid: 66733b0df5c79014690ae5e11fbd5e92, type: 3}
   m_PrefabInstance: {fileID: 5565779630728927553}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5565779630728927556 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2481921734305054757, guid: 66733b0df5c79014690ae5e11fbd5e92, type: 3}
+  m_PrefabInstance: {fileID: 5565779630728927553}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab745351d08ebf1458c63040e0a26653, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5700995607410445508
 GameObject:
   m_ObjectHideFlags: 0

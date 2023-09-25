@@ -71,11 +71,11 @@ public class DayNightCycle : MonoBehaviour
             case int n when n >= 22 || n <= 2:
                 volumeWeight = 1;
                 break;
-            case int n when n >= 3 && n <= 11:
+            case int n when n >= 3 && n <= 10:
                 cosineValue = ((GameTime.Hours-3) * 60 + GameTime.Minutes) / 540f; // изменяется от 0 до 1, когда время изменяется от 3 до 12
                 volumeWeight = Mathf.Cos(cosineValue * Mathf.PI) * 0.5f + 0.5f; // см f(x) = cos(Px)/2 + 0.5f
                 break;
-            case int n when n >= 12 && n <= 16:
+            case int n when n >= 11 && n <= 16:
                 volumeWeight = 0;
                 break;
             case int n when n >= 17 && n <= 21:

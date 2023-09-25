@@ -9,6 +9,7 @@ public class WagonFunctionalWindow : MonoBehaviour
     private void OnEnable()
     {
         Player.Instance.PlayerMover.DisableMove();
+        GameManager.Instance.CurrentFunctionalWindow = gameObject;
     }
     
     public void OnSleepButtonClick()
@@ -27,6 +28,7 @@ public class WagonFunctionalWindow : MonoBehaviour
     public void OnCloseButtonClick()
     {
         Player.Instance.PlayerMover.EnableMove();
+        GameManager.Instance.CurrentFunctionalWindow = null;
         Destroy(gameObject);
     }
 }

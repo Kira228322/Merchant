@@ -28,6 +28,7 @@ abstract public class NPCMovement : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     [HideInInspector] public Animator Animator;
     private NpcClickFunctional _clickFunctional;
+    private bool _currentStateIsIDLE; 
 
     protected virtual void Awake()
     {
@@ -61,6 +62,7 @@ abstract public class NPCMovement : MonoBehaviour
             _currentCoroutine = StartCoroutine(IDLE(true));
         else
             _currentCoroutine = StartCoroutine(IDLE(false));
+        _currentStateIsIDLE = true;
     }
     private IEnumerator IDLE(bool quick)
     {
@@ -73,6 +75,7 @@ abstract public class NPCMovement : MonoBehaviour
         yield return waitForSeconds;
         _currentCoroutine = StartCoroutine(Move());
         Animator.SetTrigger("Move");
+        _currentStateIsIDLE = false;
     }
 
     public void MakeNPCBusy()
@@ -86,7 +89,8 @@ abstract public class NPCMovement : MonoBehaviour
     
     private IEnumerator IDLEWhileBusy()
     {
-        Animator.SetTrigger("IDLE");
+        if (!_currentStateIsIDLE)
+            Animator.SetTrigger("IDLE");
         WaitForSeconds waitForSeconds = new WaitForSeconds(100f);
         while (true)
         {
@@ -97,7 +101,9 @@ abstract public class NPCMovement : MonoBehaviour
     public void NPCMakeFree()
     {
         StopCoroutine(_currentCoroutine);
-        StartIDLE(true);
+        _currentCoroutine = StartCoroutine(Move());
+        Animator.SetTrigger("Move");
+        _currentStateIsIDLE = false;
     }
 
     private void TurnToPlayer()

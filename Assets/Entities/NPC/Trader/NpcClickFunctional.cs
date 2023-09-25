@@ -22,7 +22,7 @@ public class NpcClickFunctional : MonoBehaviour, IPointerClickHandler
             return;
         if ((transform.position - Player.Instance.transform.position).magnitude > _distanceToUse)
             return;
-        if (FindObjectOfType<FunctionalWindow>() != null) //Ќикогда не бывает два таких окна одновременно
+        if (GameManager.Instance.CurrentFunctionalWindow != null)
             return;
 
         GameObject window = Instantiate(_functionalWindow, MapManager.Canvas.transform);
