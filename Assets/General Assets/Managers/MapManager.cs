@@ -39,6 +39,7 @@ public static class MapManager
         Canvas = canvas;
         _playerIcon = playerIcon;
         CurrentLocation = startLocation;
+        _playerIcon.transform.position = CurrentLocation.transform.position;
     }
 
     public static void TransitionToTravelScene(Road road)
