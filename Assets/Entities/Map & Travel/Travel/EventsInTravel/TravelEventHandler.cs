@@ -28,7 +28,7 @@ public class TravelEventHandler : MonoBehaviour
 
     private void Start()
     {
-        _mainCanvas = FindObjectOfType<CanvasWarningGenerator>().gameObject.transform;
+        _mainCanvas = CanvasWarningGenerator.Instance.gameObject.transform;
     }
 
     

@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "newItem", menuName = "Item/UsableItem")]
 public class UsableItem : Item
 {
-    public enum UsableType {Edible, Potion, Bottle, Teleport, Recipe, Note, Energetic}
+    public enum UsableType {Edible, Potion, Teleport, Recipe, Note, Energetic}
     
     [Space]
     [Header("Special settings")]
@@ -14,6 +14,8 @@ public class UsableItem : Item
     
     [HideInInspector] public int UsableValue;
     [HideInInspector] public int SecondValue;
+    [HideInInspector] public bool GivesItemsAfterUse;
+    [HideInInspector] public List<ItemReward> ItemsGivenAfterUse;
     [HideInInspector] public Status Effect;
     [HideInInspector] public List<CraftingRecipe> Recipes;
     [HideInInspector] public string NoteHeader;

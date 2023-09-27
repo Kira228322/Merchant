@@ -2,6 +2,7 @@ using Codice.CM.SEIDInfo;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
+using UnityEditor.PackageManager.Requests;
 using UnityEngine;
 
 
@@ -44,12 +45,6 @@ class UsableItemEditor : ItemEditor
                 EditorGUILayout.EndHorizontal();
                 break;
             case UsableItem.UsableType.Teleport:
-                break;
-            case UsableItem.UsableType.Bottle:
-                EditorGUILayout.BeginHorizontal();
-                GUILayout.Label("Food value", GUILayout.MaxWidth(80));
-                usableItem.UsableValue = EditorGUILayout.IntField(usableItem.UsableValue);
-                EditorGUILayout.EndHorizontal();
                 break;
             case UsableItem.UsableType.Potion:
                 EditorGUILayout.BeginHorizontal();
@@ -97,6 +92,41 @@ class UsableItemEditor : ItemEditor
                 EditorGUILayout.EndHorizontal();
                 break;
         }
+
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.LabelField("Gives items after use?");
+        usableItem.GivesItemsAfterUse = EditorGUILayout.Toggle(usableItem.GivesItemsAfterUse);
+        EditorGUILayout.EndHorizontal();
+
+        if (usableItem.GivesItemsAfterUse)
+        {
+            foreach (var item in usableItem.ItemsGivenAfterUse)
+            {
+                GUILayout.Space(-1);
+                EditorGUILayout.BeginVertical("box");
+
+                EditorGUILayout.BeginHorizontal();
+                GUILayout.Space(-20);
+                if (GUILayout.Button("X", GUILayout.Height(17), GUILayout.Width(18)))
+                {
+                    usableItem.ItemsGivenAfterUse.Remove(item);
+                    break;
+                }
+                GUILayout.Label("Name", GUILayout.MaxWidth(38));
+                item.itemName = EditorGUILayout.TextField(item.itemName);
+                EditorGUILayout.EndHorizontal();
+                EditorGUILayout.BeginHorizontal();
+                GUILayout.Label("Amount", GUILayout.MaxWidth(50));
+                item.amount = EditorGUILayout.IntField(item.amount);
+                GUILayout.Label("DayBoughtAgo", GUILayout.MaxWidth(80));
+                item.daysBoughtAgo = EditorGUILayout.FloatField(item.daysBoughtAgo);
+                EditorGUILayout.EndHorizontal();
+                EditorGUILayout.EndVertical();
+            }
+            if (GUILayout.Button("Add item"))
+                usableItem.ItemsGivenAfterUse.Add(new("", 0, 0));
+        }
+
         if (GUI.changed)
             EditorUtility.SetDirty(usableItem);
     }

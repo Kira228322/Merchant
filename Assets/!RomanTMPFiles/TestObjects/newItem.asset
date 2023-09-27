@@ -10,30 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 87eabc4cbfd5ed347b633eed377e46ca, type: 3}
-  m_Name: WaterBottle
+  m_Name: newItem
   m_EditorClassIdentifier: 
-  Name: WaterBottle
-  TypeOfItem: 26
-  Description: 1
-  Icon: {fileID: 21300000, guid: 3a481bc5b3972b54ab4918d5226622af, type: 3}
-  Price: 1
-  Fragility: 1
-  Weight: 1
-  MaxItemsInAStack: 1
-  CellSizeWidth: 1
-  CellSizeHeight: 1
+  Name: 
+  TypeOfItem: 0
+  Description: 
+  Icon: {fileID: 0}
+  Price: 0
+  Fragility: 0
+  Weight: 0
+  MaxItemsInAStack: 0
+  CellSizeWidth: 0
+  CellSizeHeight: 0
   IsPerishable: 0
   IsQuestItem: 0
   DaysToHalfSpoil: 0
   DaysToSpoil: 0
-  UsableItemType: 2
-  UsableValue: 3
+  UsableItemType: 6
+  UsableValue: 0
   SecondValue: 0
   GivesItemsAfterUse: 1
-  ItemsGivenAfterUse:
-  - itemName: EmptyBottle
-    amount: 1
-    daysBoughtAgo: 0
+  ItemsGivenAfterUse: []
   Effect: {fileID: 0}
   Recipes: []
   NoteHeader: 

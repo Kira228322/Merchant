@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -164,6 +165,12 @@ public class ItemGrid : MonoBehaviour
         _tileGridPosition.x = (int)(_positionOnTheGrid.x / TileSizeWidth / canvasLocalScale.x);
         _tileGridPosition.y = (int)(_positionOnTheGrid.y / TileSizeHeight / canvasLocalScale.y);
         return _tileGridPosition;
+    }
+    public int GetFreeSlotsCount()
+    {
+        int result = _storedInventoryItems.SelectMany(row => row.itemArray)
+                                          .Count(slot => slot == null);
+        return result;
     }
     public InventoryItem GetItem(int x, int y)
     {

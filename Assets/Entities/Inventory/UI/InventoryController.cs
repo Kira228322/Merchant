@@ -382,6 +382,8 @@ public class InventoryController : MonoBehaviour
     }
     public InventoryItem TryCreateAndInsertItem(ItemGrid itemGrid, Item item, int amount, float daysBoughtAgo, bool isFillingStackFirst)
     {
+        if (amount <= 0)
+            return null;
         InventoryItem result = TryCreateAndInsertItemUnrotated(itemGrid, item, amount, daysBoughtAgo, isFillingStackFirst);
         if (result == null)
         {

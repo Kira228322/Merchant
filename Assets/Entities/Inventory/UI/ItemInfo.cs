@@ -46,7 +46,6 @@ public class ItemInfo : MonoBehaviour
         _usableActions = new()
         {
             { UsableItem.UsableType.Edible, Eat },
-            { UsableItem.UsableType.Bottle , UseBottle},
             { UsableItem.UsableType.Potion, UsePotion},
             { UsableItem.UsableType.Teleport , UseTeleport},
             { UsableItem.UsableType.Recipe, UseRecipe},
@@ -115,8 +114,7 @@ public class ItemInfo : MonoBehaviour
         {
             
             _currentUsableItem = _currentItemSelected.ItemData as UsableItem;
-            if (_currentUsableItem.UsableItemType == UsableItem.UsableType.Edible 
-                || _currentUsableItem.UsableItemType == UsableItem.UsableType.Bottle)
+            if (_currentUsableItem.UsableItemType == UsableItem.UsableType.Edible)
             {
                 _foodValueText.alpha = 1;
                 if (item.BoughtDaysAgo >= item.ItemData.DaysToHalfSpoil && item.ItemData.IsPerishable)
@@ -157,9 +155,8 @@ public class ItemInfo : MonoBehaviour
     #region Методы работы с кнопками
     public void OnUseButtonPressed()
     {
-        _usableActions[_currentUsableItem.UsableItemType]();
-        //Удаление одного предмета после использования вынесено в метод RemoveOneItemAfterUse()
-        //и теперь вызывается в методах словаря. 09.04.23
+        if (CanPlaceAfterUseItems())
+            _usableActions[_currentUsableItem.UsableItemType]();
     }
     public void OnRotateButtonPressed()
     {
@@ -200,7 +197,7 @@ public class ItemInfo : MonoBehaviour
             _player.Needs.RestoreHunger(_currentUsableItem.UsableValue/2);
         else
             _player.Needs.RestoreHunger(_currentUsableItem.UsableValue);
-        RemoveOneItemAfterUse();
+        AfterUse();
     }
 
     private void EatEnergetic()
@@ -215,28 +212,18 @@ public class ItemInfo : MonoBehaviour
             _player.Needs.RestoreHunger(_currentUsableItem.UsableValue);
             _player.Needs.RestoreSleep(_currentUsableItem.SecondValue);
         }
-        RemoveOneItemAfterUse();
+        AfterUse();
     }
-
-    private void UseBottle()
-    {
-        RemoveOneItemAfterUse();
-        InventoryController.Instance.TryCreateAndInsertItem
-            (_player.ItemGrid, ItemDatabase.GetItem("Empty bottle"), 1, 0, true);
-        _player.Needs.RestoreHunger(_currentUsableItem.UsableValue);
-        
-    }
-
     private void UsePotion()
     {
         StatusManager.Instance.AddStatusForPlayer(_currentUsableItem.Effect);
-        RemoveOneItemAfterUse();
+        AfterUse();
     }
 
     private void UseTeleport()
     {
         //TODO логика телепорта здесь
-        RemoveOneItemAfterUse();
+        AfterUse();
     }
 
     private void UseRecipe()
@@ -245,33 +232,82 @@ public class ItemInfo : MonoBehaviour
         {
             if (Player.Instance.Recipes.Any(recipe => recipe.ResultingItem.Name == craftRecipe.ResultingItem.Name))
             {
-                FindObjectOfType<CanvasWarningGenerator>().CreateWarning("Рецепт уже известен", 
+                CanvasWarningGenerator.Instance.CreateWarning("Рецепт уже известен", 
                     $"Вы уже изучили рецепт {craftRecipe.ResultingItem.Name}");
                 continue;
             }
             Player.Instance.Recipes.Add(craftRecipe);
         }
         
-        RemoveOneItemAfterUse();
+        AfterUse();
     }
 
     private void UseNote()
     {
         Diary.Instance.DisplayEntry(Diary.Instance.AddEntry(_currentUsableItem.NoteHeader, _currentUsableItem.NoteText, false));
-        RemoveOneItemAfterUse();
+        AfterUse();
     }
 
-    private void RemoveOneItemAfterUse()
+    private void AfterUse()
+    {
+        RemoveOneItem();
+        AddItems();
+    }
+    private void RemoveOneItem()
     {
         _lastItemGridSelected.RemoveItemsFromAStack(_currentItemSelected, 1);
         _quantityText.text = "Количество: " + _currentItemSelected.CurrentItemsInAStack.ToString();
-        
+
         if (_currentItemSelected.CurrentItemsInAStack == 0)
         {
             Destroy(gameObject);
         }
     }
+    private void AddItems()
+    {
+        foreach (var item in _currentUsableItem.ItemsGivenAfterUse)
+        {
+            Item itemData = ItemDatabase.GetItem(item.itemName);
+            int countLeftToAdd = item.amount;
+            while (countLeftToAdd > itemData.MaxItemsInAStack)
+            {
+                InventoryController.Instance.TryCreateAndInsertItem
+                (Player.Instance.ItemGrid, itemData,
+                itemData.MaxItemsInAStack, item.daysBoughtAgo, true);
+                countLeftToAdd -= itemData.MaxItemsInAStack;
+            }
+            InventoryController.Instance.TryCreateAndInsertItem
+                (Player.Instance.ItemGrid, itemData, 
+                countLeftToAdd, item.daysBoughtAgo, true);
+        }
+    }
 
+    #endregion
+    #region Методы проверки
+    private bool CanPlaceAfterUseItems()
+    {
+        int requiredSlots = 0;
+
+        foreach (var item in _currentUsableItem.ItemsGivenAfterUse)
+        {
+            Item itemData = ItemDatabase.GetItem(item.itemName);
+            for (int i = 0; i < item.amount; i += itemData.MaxItemsInAStack)
+            {
+                requiredSlots += itemData.CellSizeWidth * itemData.CellSizeHeight;
+            }
+        }
+        int freeSlots = Player.Instance.ItemGrid.GetFreeSlotsCount();
+        if (_currentItemSelected.CurrentItemsInAStack == 1)
+            //Если предмет всего 1, то после использования он удалится. Значит ещё один слот станет свободным
+            freeSlots++;
+
+        if (requiredSlots <= freeSlots)
+            return true;
+        CanvasWarningGenerator.Instance.CreateWarning
+            ("Недостаточно места", $"Освободите место в инвентаре, чтобы получить предметы. " +
+            $"Свободных клеточек необходимо: {requiredSlots - freeSlots}");
+        return false;
+    }
     #endregion
     public void Split(int amountToSplit) //Мб переместить его в InventoryController?
     {

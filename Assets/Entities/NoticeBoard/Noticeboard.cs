@@ -34,7 +34,7 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
 
     private void Awake()
     {
-        _canvas = FindObjectOfType<CanvasWarningGenerator>().transform;
+        _canvas = CanvasWarningGenerator.Instance.transform;
         _uniqueID = GetComponent<UniqueID>();
         _cooldownHandler = FindObjectOfType<CooldownHandler>();
 

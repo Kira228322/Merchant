@@ -14,7 +14,7 @@ public class FunctionalWindow : MonoBehaviour
     
     public void Init(Npc npc)
     {
-        _canvas = FindObjectOfType<CanvasWarningGenerator>().transform;
+        _canvas = CanvasWarningGenerator.Instance.transform;
         _NPC = npc;
         
         _NPC.StartInteraction();
