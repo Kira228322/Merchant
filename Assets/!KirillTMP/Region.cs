@@ -103,12 +103,14 @@ public class Region : MonoBehaviour
             _locations[i].FillDictionary();
         }
     }
-    
+
     public void CountAllItemsInRegion()
     {
         for (int i = 0; i < _locations.Count; i++)
             foreach (var countOfItem in _locations[i].CountOfEachItem)
+            {
                 CountOfEachItem[countOfItem.Key] += countOfItem.Value;
+            }
     }
     
 

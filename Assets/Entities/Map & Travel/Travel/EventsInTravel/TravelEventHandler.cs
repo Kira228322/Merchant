@@ -50,7 +50,8 @@ public class TravelEventHandler : MonoBehaviour
         List<InventoryItem> unverifiedItems = new();
         
         foreach (var item in Player.Instance.Inventory.ItemList)
-            unverifiedItems.Add(item);
+            if (!item.ItemData.IsQuestItem)
+                unverifiedItems.Add(item);
 
         List<InventoryItem> deletedItems = new();
         

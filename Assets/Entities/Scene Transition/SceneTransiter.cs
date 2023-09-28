@@ -24,13 +24,11 @@ public class SceneTransiter : MonoBehaviour, ISaveable<SceneSaveData>
 
     private void OnEnable()
     {
-        
         SceneManager.sceneLoaded += OnSceneChanged;
     }
 
     private void OnDisable()
     {
-        
         SceneManager.sceneLoaded -= OnSceneChanged;
     }
 
@@ -76,7 +74,7 @@ public class SceneTransiter : MonoBehaviour, ISaveable<SceneSaveData>
             enabled = false;
         }
     }
-
+    
     public void OnAnimationOver()
     {
         _loadingSceneOperation.allowSceneActivation = true;
@@ -84,13 +82,26 @@ public class SceneTransiter : MonoBehaviour, ISaveable<SceneSaveData>
         {
             GameTime.SetTimeScale(GameTime.TimeScaleInTravel);
         }
+        else
+        {
+            MapManager.PlayerIcon.transform.position = MapManager.CurrentLocation.transform.position;
+        }
         _animator.SetTrigger("EndTransition");
     }
 
     public void OnSceneChanged(Scene scene, LoadSceneMode mode)
     {
+        //TODO: ≈сли заходить с главного меню по кнопке, то этот метод не триггеритс€.
+        //≈сли загрузка срабатывает после поездки, то триггеритс€. “ак происходит потому что успевает сделать себе в Update
+        //this = false, соответственно срабатывает OnDisable и этот метод уже не триггеритс€
+        //Ќо почему в разных случа€х разное поведение, и как должно быть?
+        //(28.09.23) я добавл€ю авто-сохранение здесь, а не там, потому что здесь работает, а там не работает.
+        //я не знаю почему и не смог сам разобратьс€.
         if (_road == null)
+        {
+            GameManager.Instance.SaveGame();
             MapManager.OnLocationChange();
+        }
     }
 
     public SceneSaveData SaveData()

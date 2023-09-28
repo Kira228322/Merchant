@@ -83,7 +83,8 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
             GlobalEventHandlerSaveData = GlobalEventHandler.Instance.SaveData(),
             RegionSaveData = _regionHandler.SaveData(),
             SceneSaveData = _sceneTransiter.SaveData(),
-        };
+
+            };
         return saveData;
     }
 
