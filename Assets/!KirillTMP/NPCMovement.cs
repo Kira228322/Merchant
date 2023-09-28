@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -11,8 +12,8 @@ abstract public class NPCMovement : MonoBehaviour
     [SerializeField] protected ContactFilter2D _groundMask;
     [SerializeField] protected float _speed = 2f;
     public float Speed => _speed;
-    protected float _minIDLEDuration = 2f; // 6 // TODO значения для теста. Потом сбалансить
-    protected float _maxIDLEDuration = 3f; // 20
+    protected float _minIDLEDuration = 5f; 
+    protected float _maxIDLEDuration = 15f; 
     [HideInInspector] public float MoveDistanceAndDirection;
     [HideInInspector] public Vector3 StartPosition;
     protected Coroutine _currentCoroutine;
@@ -69,7 +70,7 @@ abstract public class NPCMovement : MonoBehaviour
         Animator.SetTrigger("IDLE");
         WaitForSeconds waitForSeconds;
         if (quick)
-            waitForSeconds = new(Random.Range(1, 1.5f));
+            waitForSeconds = new(Random.Range(0.75f, 1.25f));
         else
             waitForSeconds = new(Random.Range(_minIDLEDuration, _maxIDLEDuration));
         yield return waitForSeconds;
@@ -130,7 +131,9 @@ abstract public class NPCMovement : MonoBehaviour
     private void ChooseHome()
     {
         Home[] homes = FindObjectsOfType<Home>();
-        _home = homes[Random.Range(0, homes.Length)].DoorTransform.position;
+        
+        _home = homes.OrderBy(home => Vector3.Distance(transform.position, home.DoorTransform.position))
+            .FirstOrDefault().DoorTransform.position;
     }
 
     private void OnHourChangeWhenNotAtHome()
