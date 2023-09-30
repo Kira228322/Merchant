@@ -16,6 +16,7 @@ public class LivingLight : MonoBehaviour
     [SerializeField] private float _minRadius;
     private float _maxIntensity;
     private float _minIntensity;
+    private float _phase;
 
     private void OnEnable()
     {
@@ -33,13 +34,14 @@ public class LivingLight : MonoBehaviour
         _maxIntensity = _maxBobbingIntensity;
         _minIntensity = _minBobbingIntensity;
         ChangeIntensityByTime();
+        _phase = Random.Range(0, 10f);
     }
 
     private void Update()
     {
-        float IntensityArgument = (float)Math.Sin(Time.time / 1.8f)/2 + 0.5f ;
+        float IntensityArgument = (float)Math.Sin((Time.time + _phase) / 1.8f)/2 + 0.5f ;
         _light.intensity = _maxIntensity * IntensityArgument + _minIntensity * (1-IntensityArgument);
-        float RadiusArgument = (float)Math.Sin(Time.time + 2 * IntensityArgument)/2 + 0.5f;
+        float RadiusArgument = (float)Math.Sin(Time.time + _phase + 2 * IntensityArgument)/2 + 0.5f;
         _light.pointLightOuterRadius = _maxRadius * RadiusArgument + _minRadius * (1-RadiusArgument);
         _light.pointLightInnerRadius = _light.pointLightOuterRadius/2.75f;
     }
