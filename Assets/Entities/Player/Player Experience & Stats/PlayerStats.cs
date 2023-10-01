@@ -35,8 +35,8 @@ public class PlayerStats : ISaveable<PlayerStatsSaveData>
     {
         // TODO делать, когда измен€етс€ стойкость
 
-        Player.Instance.Needs.HungerDecayRate = 12 + Toughness.Total;
-        Player.Instance.Needs.SleepDecayRate = 16 + Toughness.Total;
+        Player.Instance.Needs.HungerDecayRate = 14 + Toughness.Total + Toughness.Total/2;
+        Player.Instance.Needs.SleepDecayRate = 16 + Toughness.Total + (Toughness.Total+1)/2;
         Player.Instance.Needs.MaxHunger = 90 + Toughness.Total * 3;
     }
     //—охран€ютс€ только базовые статы, потому что аддитивные статы будут добавл€тьс€ через эффекты

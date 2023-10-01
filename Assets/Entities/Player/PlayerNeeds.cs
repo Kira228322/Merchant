@@ -11,7 +11,7 @@ public class PlayerNeeds: ISaveable<PlayerNeedsSaveData>
     [SerializeField] private SlidersController _sleepScale;
 
     [SerializeField][HideInInspector] public int HungerDecayRate; //"—колько нужно минут, чтобы голод уменьшилс€ на 1"
-    [SerializeField][HideInInspector] public int HungerDivisorWhenSleeping = 2; // "¬о сколько раз замедл€етс€ падение голода во врем€ сна"
+    [SerializeField][HideInInspector] public int HungerDivisorWhenSleeping = 5; // "¬о сколько раз замедл€етс€ падение голода во врем€ сна"
     [SerializeField][HideInInspector] public int SleepDecayRate; //"—колько нужно минут, чтобы сон уменьшилс€ на 1"
     [SerializeField][HideInInspector] public int SleepRestorationRate = 5; // "—колько нужно минут во врем€ сна, чтобы сон восстановилс€ на 1"
 
