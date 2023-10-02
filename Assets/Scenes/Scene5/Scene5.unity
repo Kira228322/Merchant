@@ -7335,10 +7335,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79a945950e755d84687f3b1373277464, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _leftEdge: 0
-  _rightEdge: 0
-  FarBg: {fileID: 0}
-  NearBg: {fileID: 0}
+  _leftEdge: -65
+  _rightEdge: 30
+  FarBg: {fileID: 21300000, guid: a61bad8edb3d22241b5412b2ac338a9e, type: 3}
+  NearBg: {fileID: 21300000, guid: f9f7e78f856dced49aeaced0dc9de731, type: 3}
 --- !u!4 &439467279
 Transform:
   m_ObjectHideFlags: 0
@@ -7929,7 +7929,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 526589769}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.16, y: -2.97, z: 9.904502}
+  m_LocalPosition: {x: -2.21, y: -2.97, z: 9.904502}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9850,6 +9850,8 @@ Transform:
   - {fileID: 1707610403}
   - {fileID: 1774779155}
   - {fileID: 118709350}
+  - {fileID: 4273474015538078842}
+  - {fileID: 8440597620094565070}
   - {fileID: 1313324359}
   - {fileID: 599314930}
   - {fileID: 541895173}
@@ -9869,7 +9871,7 @@ Transform:
   - {fileID: 1789732356}
   - {fileID: 1549216383}
   - {fileID: 1239632723}
-  - {fileID: 4273474015538078842}
+  - {fileID: 997517743}
   - {fileID: 1709905947}
   - {fileID: 1754819624}
   - {fileID: 569466539}
@@ -9884,11 +9886,9 @@ Transform:
   - {fileID: 1765718307}
   - {fileID: 1854592189}
   - {fileID: 212994731}
-  - {fileID: 8440597620094565070}
   - {fileID: 620367782}
   - {fileID: 1405635035}
   - {fileID: 2142756259}
-  - {fileID: 997517743}
   - {fileID: 1353652719}
   - {fileID: 952754575}
   - {fileID: 596768840}
@@ -10342,7 +10342,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 902023096}
-  m_RootOrder: 68
+  m_RootOrder: 51
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -89.837}
 --- !u!4 &1017560845 stripped
 Transform:
@@ -15117,7 +15117,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 902023096}
-  m_RootOrder: 49
+  m_RootOrder: 30
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 2.6520002}
 --- !u!1 &6234108193506881293
 GameObject:
@@ -15236,7 +15236,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 902023096}
-  m_RootOrder: 64
+  m_RootOrder: 31
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8440597620094565071
 SpriteRenderer:
