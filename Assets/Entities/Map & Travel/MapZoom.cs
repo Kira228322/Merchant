@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class MapZoom : MonoBehaviour
 {
     private float _minScale = 1;
-    private float _maxScale = 1.9f;
+    private float _maxScale = 2.1f;
     [SerializeField] private ScrollRect _scrollRect;
     [SerializeField] private GameObject _content;
     private RectTransform _contentRectTransform;
@@ -30,16 +30,16 @@ public class MapZoom : MonoBehaviour
             float previousMagnitude = (touchZeroPrevious - touchOnePrevious).magnitude;
             float currentMagnitude = (touchZero.position - touchOne.position).magnitude;
 
-            float difference = (currentMagnitude - previousMagnitude) * 0.01f;
-            transform.localScale += new Vector3(difference, difference);
-            if (transform.localScale.x > _maxScale)
+            float difference = (currentMagnitude - previousMagnitude) * 0.005f;
+            _contentRectTransform.localScale += new Vector3(difference, difference);
+            if (_contentRectTransform.localScale.x > _maxScale)
             {
-                transform.localScale = new Vector3(_maxScale, _maxScale);
+                _contentRectTransform.localScale = new Vector3(_maxScale, _maxScale);
             }
-            else if (transform.localScale.x < _minScale)
-                transform.localScale = new Vector3(_minScale, _minScale);
+            else if (_contentRectTransform.localScale.x < _minScale)
+                _contentRectTransform.localScale = new Vector3(_minScale, _minScale);
 
-            if (transform.localScale.x > 1.1f)
+            if (_contentRectTransform.localScale.x > 1.1f)
                 _scrollRect.enabled = true;
             else
             {
@@ -53,6 +53,6 @@ public class MapZoom : MonoBehaviour
     {
         _scrollRect.enabled = false;
         _contentRectTransform.position = new Vector3(Screen.width/2, Screen.height/2);
-        transform.localScale = Vector3.one;
+        _contentRectTransform.localScale = Vector3.one;
     }
 }
