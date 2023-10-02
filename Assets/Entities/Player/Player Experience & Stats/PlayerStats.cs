@@ -30,7 +30,7 @@ public class PlayerStats : ISaveable<PlayerStatsSaveData>
     public PlayerStat Toughness = new(); //Влияет на скорость убывания сна и еды
     public PlayerStat Luck = new(); //Влияет на частоту происшествия благоприятных и негативных событий
     public PlayerStat Crafting = new(); //Влияет на доступность некоторых рецептов крафта
-
+    public float StatusDurationModifier = 1;
     public void OnToughnessChanged()
     {
         // TODO делать, когда изменяется стойкость

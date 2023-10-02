@@ -9,6 +9,11 @@ public class PlayerMover : MonoBehaviour
 {
     [FormerlySerializedAs("_backgroundController")] [SerializeField] public BackgroundController BackgroundController;
     [SerializeField] private ContactFilter2D _contactFilter2D;
+
+    [SerializeField] private HoldableButton _holdableButtonRight;
+    [SerializeField] private HoldableButton _holdableButtonLeft;
+
+    
     private float _speed = 3.9f;
     [HideInInspector]public float _currentSpeed;
 
@@ -18,15 +23,25 @@ public class PlayerMover : MonoBehaviour
     [HideInInspector] public Collider2D _collider;
     private Animator _animator;
     private SpriteRenderer _spriteRenderer;
-    
-    private Coroutine _currentMove;
 
-    private float _moveCD = 0.3f;
-    private float _currentMoveCD;
+    private Coroutine _currentMove;
+    private Coroutine _tickMove;
+    
     private Vector3 _finishTargetPos;
     [HideInInspector] public Vector3 _lastNodePos;
+    
+
+    private void OnDestroy()
+    {
+        _holdableButtonRight.IsButtonPressed -= OnRightButtonChangedState;
+        _holdableButtonLeft.IsButtonPressed -= OnLeftButtonChangedState;
+    }
+
     private void Start()
     {
+        _holdableButtonRight.IsButtonPressed += OnRightButtonChangedState;
+        _holdableButtonLeft.IsButtonPressed += OnLeftButtonChangedState;
+        
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
         _collider = GetComponent<Collider2D>();
@@ -58,27 +73,53 @@ public class PlayerMover : MonoBehaviour
         if (enabled == false)
             return;
         
-        if (_currentMoveCD == 0)
+        if (_currentMove != null)
         {
-            _currentMoveCD = _moveCD;
-            StartCoroutine(ResetMoveCD());
-            
-            if (_currentMove != null)
-            {
-                StopCoroutine(_currentMove);
-                _currentMove = null;
-                _rigidbody.velocity = new Vector2(0,0);
-            }
-            else _animator.SetTrigger("Move");
-            _currentMove = StartCoroutine(Move(startPos, targetPos));
+            StopCoroutine(_currentMove);
+            _currentMove = null;
+            _rigidbody.velocity = new Vector2(0,0);
+        }
+        else _animator.SetTrigger("Move");
+
+        _currentMove = StartCoroutine(Move(startPos, targetPos));
+    }
+
+    private void OnLeftButtonChangedState(bool isPressed)
+    {
+        if (isPressed && _tickMove == null && enabled)
+            _tickMove = StartCoroutine(StartTickMove(false));
+        else
+        {
+            StopCoroutine(_tickMove);
+            _tickMove = null;
         }
     }
 
-    private IEnumerator ResetMoveCD()
+    private void OnRightButtonChangedState(bool isPressed)
     {
-        WaitForSeconds waitForSeconds = new WaitForSeconds(_moveCD);
-        yield return waitForSeconds;
-        _currentMoveCD = 0;
+        Debug.Log("!");
+        if (isPressed && _tickMove == null && enabled)
+            _tickMove = StartCoroutine(StartTickMove(true));
+        else
+        {
+            StopCoroutine(_tickMove);
+            _tickMove = null;
+        }
+    }
+
+    private IEnumerator StartTickMove(bool rightDirection)
+    {
+        WaitForSeconds waitForSeconds = new(0.1f);
+        float distance;
+        if (rightDirection) 
+            distance = 0.8f;
+        else
+            distance = -0.8f;
+        while (true)
+        {
+            StartMove(transform.position, new(transform.position.x + distance, transform.position.y));
+            yield return waitForSeconds;
+        }
     }
 
     public void ChangeCurrentSpeed()

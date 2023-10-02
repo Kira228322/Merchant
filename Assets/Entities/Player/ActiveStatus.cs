@@ -11,7 +11,10 @@ public class ActiveStatus
     public void Init(Status status)
     {
         StatusData = status;
-        CurrentDurationHours = status.HourDuration;
+        if (status.Type == Status.StatusType.Buff)
+            CurrentDurationHours = status.HourDuration * Player.Instance.Statistics.StatusDurationModifier;
+        else
+            CurrentDurationHours = status.HourDuration;
         Activate();
     }
     public void RefreshStatus()
@@ -55,6 +58,9 @@ public class ActiveStatus
                     Player.Instance.PlayerMover.SpeedModifier += effect.value / 100f;
                     Player.Instance.PlayerMover.ChangeCurrentSpeed();
                     break;
+                case Status.Effect.Stat.StatusDurationModifier:
+                    Player.Instance.Statistics.StatusDurationModifier += effect.value / 100f;
+                    break;
                     // TODO добавлять новые действия с появлением статов
             }
         }
@@ -81,6 +87,9 @@ public class ActiveStatus
                 case Status.Effect.Stat.MoveSpeed:
                     Player.Instance.PlayerMover.SpeedModifier -= effect.value / 100f;
                     Player.Instance.PlayerMover.ChangeCurrentSpeed();
+                    break;
+                case Status.Effect.Stat.StatusDurationModifier:
+                    Player.Instance.Statistics.StatusDurationModifier -= effect.value / 100f;
                     break;
                     // TODO добавлять новые действия с появлением статов
             }
