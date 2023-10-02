@@ -97,7 +97,6 @@ public class PlayerMover : MonoBehaviour
 
     private void OnRightButtonChangedState(bool isPressed)
     {
-        Debug.Log("!");
         if (isPressed && _tickMove == null && enabled)
             _tickMove = StartCoroutine(StartTickMove(true));
         else

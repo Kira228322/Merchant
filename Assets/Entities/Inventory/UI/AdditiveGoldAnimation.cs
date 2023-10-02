@@ -39,6 +39,7 @@ public class AdditiveGoldAnimation : MonoBehaviour
         WaitForSeconds waitForSeconds = new WaitForSeconds(0.02f);
 
         int startGold = Player.Instance.Money;
+        _playerGold.text = Player.Instance.Money.ToString();
         int finishGold = startGold + gold;
 
         _AdditiveGold.gameObject.SetActive(true);
@@ -73,6 +74,7 @@ public class AdditiveGoldAnimation : MonoBehaviour
         WaitForSeconds waitForSeconds = new WaitForSeconds(0.02f);
 
         int startGold = Player.Instance.Money;
+        _playerGold.text = Player.Instance.Money.ToString();
         int finishGold = startGold - gold;
 
         _AdditiveGold.gameObject.SetActive(true);
