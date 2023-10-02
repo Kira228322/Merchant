@@ -26,7 +26,7 @@ public class Status : ScriptableObject
     [Serializable]
     public class Effect
     {
-        public enum Stat { Luck, ExpGain, Diplomacy, Toughness, MoveSpeed }
+        public enum Stat { Luck, ExpGain, Diplomacy, Toughness, MoveSpeed, StatusDurationModifier }
         public Stat stat;
         public int value;
     }
