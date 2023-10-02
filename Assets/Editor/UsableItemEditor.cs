@@ -94,7 +94,7 @@ class UsableItemEditor : ItemEditor
         }
 
         EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField("Gives items after use?");
+        EditorGUILayout.LabelField(new GUIContent("Gives items after use?*", "These items should be 1x1"));
         usableItem.GivesItemsAfterUse = EditorGUILayout.Toggle(usableItem.GivesItemsAfterUse);
         EditorGUILayout.EndHorizontal();
 
