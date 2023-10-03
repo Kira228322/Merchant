@@ -1,5 +1,6 @@
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -28,12 +29,17 @@ public class TradeManager : MonoBehaviour
     [SerializeField] private Animator _playerMoneyAnimator;
     private AdditiveGoldAnimation _additiveGoldAnimation;
     [SerializeField] private Animator _inventoryAnimator;
+    [SerializeField] private Animator _inventoryBlockAnimator;
+    private Animator _buyPanelAnimator;
+    private Animator _sellPanelAnimator;
     private Animator _traderMoneyAnimator;
     public List<GoodsBuyPanel> GoodsBuyPanels = new ();
     public List<GoodsSellPanel> GoodsSellPanels = new ();
     private NpcTrader _trader;
     private void Start()
     {
+        _buyPanelAnimator = BuyPanel.GetComponent<Animator>();
+        _sellPanelAnimator = SellPanel.GetComponent<Animator>();
         _traderMoneyAnimator = _traderMoney.gameObject.GetComponent<Animator>();
         _additiveGoldAnimation = _playerMoneyAnimator.gameObject.GetComponent<AdditiveGoldAnimation>();
         if (Instance == null)
@@ -86,6 +92,18 @@ public class TradeManager : MonoBehaviour
     }
     public void CloseTradeWindow()
     {
+        StartCoroutine(CloseTradeWindowCoroutine());
+    }
+
+    private IEnumerator CloseTradeWindowCoroutine()
+    {
+        _inventoryBlockAnimator.SetTrigger("Close");
+        _sellPanelAnimator.SetTrigger("Close");
+        _buyPanelAnimator.SetTrigger("Close");
+        
+        WaitForSeconds oneSecond = new WaitForSeconds(0.9f);
+        yield return oneSecond;
+        
         List<GoodsBuyPanel> goodsBuyPanels = BuyPanelContent.GetComponentsInChildren<GoodsBuyPanel>().
             Where(panel => panel.IsOriginatedFromTrader == false).ToList();
         
@@ -150,6 +168,7 @@ public class TradeManager : MonoBehaviour
     private void OpenSellPanel(NpcTrader trader)
     {
         SellPanel.SetActive(true);
+        
         ChangeTraderMoneyText(trader.NpcData.CurrentMoney);
         
         for (int i = SellPanelContent.childCount - 1; i >= 0; i--)

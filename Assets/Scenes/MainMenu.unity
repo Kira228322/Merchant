@@ -35870,7 +35870,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.164, y: 0.123}
   m_AnchorMax: {x: 0.17642514, y: 0.14631279}
-  m_AnchoredPosition: {x: -1.6999512, y: 1}
+  m_AnchoredPosition: {x: -1.6999512, y: 1.0001221}
   m_SizeDelta: {x: 2, y: -2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2124475274
@@ -38623,6 +38623,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: -1.2479248
       objectReference: {fileID: 0}
+    - target: {fileID: 2384157880325098408, guid: 2e2ddaa5b5469f747b03ef9718e09bb3, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -1.0000305
+      objectReference: {fileID: 0}
     - target: {fileID: 2384157880666257006, guid: 2e2ddaa5b5469f747b03ef9718e09bb3, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 3.1865845
@@ -39916,6 +39920,7 @@ GameObject:
   - component: {fileID: 3279153272442809617}
   - component: {fileID: 3279153272442809619}
   - component: {fileID: 3279153272442809616}
+  - component: {fileID: 3279153272442809623}
   m_Layer: 5
   m_Name: BuyPanel
   m_TagString: Untagged
@@ -39923,6 +39928,27 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!95 &3279153272442809623
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3279153272442809622}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c7ec8c19907543c49a4063213d60870c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!222 &3279153272512602489
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -40376,6 +40402,7 @@ GameObject:
   - component: {fileID: 3279153272621279794}
   - component: {fileID: 3279153272621279804}
   - component: {fileID: 3279153272621279805}
+  - component: {fileID: 3279153272621279806}
   m_Layer: 5
   m_Name: SellPanel
   m_TagString: Untagged
@@ -40421,6 +40448,27 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &3279153272621279806
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3279153272621279795}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e3a77893b0565ee4984447cf4dde3fdc, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3279153272672538592
 GameObject:
   m_ObjectHideFlags: 0
@@ -40943,7 +40991,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -255.99991, y: 503.83798}
+  m_AnchoredPosition: {x: -255.99991, y: 503.83804}
   m_SizeDelta: {x: 512, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &3279153272918751245
@@ -41671,7 +41719,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -256.9999, y: 490.74744}
+  m_AnchoredPosition: {x: -256.9999, y: 490.74747}
   m_SizeDelta: {x: 514, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &3279153273170535439
@@ -43412,6 +43460,7 @@ MonoBehaviour:
   _traderMoney: {fileID: 1310283586}
   _playerMoneyAnimator: {fileID: 3279153272238798406}
   _inventoryAnimator: {fileID: 4523655442209590639}
+  _inventoryBlockAnimator: {fileID: 4523655441138798894}
   GoodsBuyPanels: []
   GoodsSellPanels: []
 --- !u!224 &3279153273887743345
@@ -45368,6 +45417,8 @@ GameObject:
   - component: {fileID: 4523655441138798888}
   - component: {fileID: 4523655441138798889}
   - component: {fileID: 4523655441138798892}
+  - component: {fileID: 4523655441138798894}
+  - component: {fileID: 4523655441138798893}
   m_Layer: 5
   m_Name: InventoryPanel
   m_TagString: Untagged
@@ -45452,6 +45503,39 @@ MonoBehaviour:
   _playersInventory: {fileID: 4868548358382525315}
   _goldText: {fileID: 3279153272238798403}
   _weightText: {fileID: 3279153274285060326}
+--- !u!225 &4523655441138798893
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4523655441138798886}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!95 &4523655441138798894
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4523655441138798886}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 429800b3c2172f5468b4c16649dc3740, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &4523655441370404976
 GameObject:
   m_ObjectHideFlags: 0
@@ -45651,7 +45735,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0.9999999}
+  m_AnchorMax: {x: 1, y: 0.9999998}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
