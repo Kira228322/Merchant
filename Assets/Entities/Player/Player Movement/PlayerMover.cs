@@ -35,13 +35,22 @@ public class PlayerMover : MonoBehaviour
     {
         _holdableButtonRight.IsButtonPressed -= OnRightButtonChangedState;
         _holdableButtonLeft.IsButtonPressed -= OnLeftButtonChangedState;
+
+        MapManager.SceneTransiter.EnteredTravelScene -= HideMoveButtons;
+        MapManager.SceneTransiter.EnteredVillageScene -= ShowMoveButtons;
     }
 
     private void Start()
     {
         _holdableButtonRight.IsButtonPressed += OnRightButtonChangedState;
         _holdableButtonLeft.IsButtonPressed += OnLeftButtonChangedState;
-        
+
+        MapManager.SceneTransiter.EnteredTravelScene += HideMoveButtons;
+        MapManager.SceneTransiter.EnteredVillageScene += ShowMoveButtons;
+        //Охуенно хитрый костыль также существовал для ShowMoveButtons - это просто переключать их состояние (enabled = !enabled)
+        //Потому что после сцены поездки всегда идет сцена ходьбы и наоборот. Но посчитал, что мы пишем
+        //не на ассемблере и таких лайфхаков лучше избегать. Поэтому сделал по-нормальному
+
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _animator = GetComponent<Animator>();
         _collider = GetComponent<Collider2D>();
@@ -82,6 +91,17 @@ public class PlayerMover : MonoBehaviour
         else _animator.SetTrigger("Move");
 
         _currentMove = StartCoroutine(Move(startPos, targetPos));
+    }
+    
+    private void ShowMoveButtons()
+    {
+        _holdableButtonLeft.gameObject.SetActive(true);
+        _holdableButtonRight.gameObject.SetActive(true);
+    }
+    private void HideMoveButtons()
+    {
+        _holdableButtonLeft.gameObject.SetActive(false);
+        _holdableButtonRight.gameObject.SetActive(false);
     }
 
     private void OnLeftButtonChangedState(bool isPressed)

@@ -32,6 +32,15 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
     [SerializeField] private Button _newGameButton;
     [SerializeField] private Button _loadGameButton;
 
+    private void OnEnable()
+    {
+        _sceneTransiter.EnteredVillageScene += SaveGame;
+    }
+    private void OnDisable()
+    {
+        _sceneTransiter.EnteredVillageScene -= SaveGame;
+    }
+
     private void Start()
     {
         if (Instance == null)

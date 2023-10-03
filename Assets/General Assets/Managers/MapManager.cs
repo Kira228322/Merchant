@@ -17,6 +17,7 @@ public static class MapManager
     
     private static string _travelingScene;
     private static SceneTransiter _loadScreen;
+    public static SceneTransiter SceneTransiter => _loadScreen;
 
     private static GameObject _roadWindow;
     public static GameObject RoadWindow => _roadWindow;

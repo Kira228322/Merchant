@@ -11,30 +11,28 @@ public class SceneTransiter : MonoBehaviour, ISaveable<SceneSaveData>
     [SerializeField] private Image _loadingBar;
     [SerializeField] private TMP_Text _loadingText;
     [SerializeField] private Toggle _mapButton;
-    
+
+    public event UnityAction EnteredVillageScene;
+    public event UnityAction EnteredTravelScene;
+
     private Animator _animator;
     private AsyncOperation _loadingSceneOperation;
     private Road _road;
-
 
     private void Awake()
     {
         _animator = GetComponent<Animator>();
     }
 
-    private void OnEnable()
-    {
-        SceneManager.sceneLoaded += OnSceneChanged;
-    }
-
-    private void OnDisable()
-    {
-        SceneManager.sceneLoaded -= OnSceneChanged;
-    }
-
     private void Start()
     {
+        SceneManager.sceneLoaded += OnSceneChanged;
         enabled = false;
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneChanged;
     }
 
     public void StartTransit(string scene, Road road)
@@ -91,17 +89,13 @@ public class SceneTransiter : MonoBehaviour, ISaveable<SceneSaveData>
 
     public void OnSceneChanged(Scene scene, LoadSceneMode mode)
     {
-        //TODO: ≈сли заходить с главного меню по кнопке, то этот метод не триггеритс€.
-        //≈сли загрузка срабатывает после поездки, то триггеритс€. “ак происходит потому что успевает сделать себе в Update
-        //enabled = false, соответственно срабатывает OnDisable и этот метод уже не триггеритс€
-        //Ќо почему в разных случа€х разное поведение, и как должно быть?
-        //(28.09.23) я добавл€ю авто-сохранение здесь, а не там, потому что здесь работает, а там не работает.
-        //я не знаю почему и не смог сам разобратьс€.
         if (_road == null)
         {
-            GameManager.Instance.SaveGame();
             MapManager.OnLocationChange();
+            EnteredVillageScene?.Invoke();
         }
+        else
+            EnteredTravelScene?.Invoke();
     }
 
     public SceneSaveData SaveData()
