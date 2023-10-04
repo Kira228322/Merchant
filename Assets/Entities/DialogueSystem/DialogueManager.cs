@@ -193,6 +193,22 @@ public class DialogueManager : MonoBehaviour
                 Debug.LogError("Такого квеста нет в активных, ошибка при написании диалога");
             }
         });
+        _currentStory.BindExternalFunction("has_money", (string amount) =>
+        {
+            return Player.Instance.Money >= int.Parse(amount);
+        });
+        _currentStory.BindExternalFunction("change_player_money", (string amount) =>
+        {
+            Player.Instance.Money += int.Parse(amount);
+        });
+        _currentStory.BindExternalFunction("check_if_can_place_item", (string itemName, string amount) =>
+        {
+            return InventoryController.Instance.CanInsertItem(Player.Instance.ItemGrid, ItemDatabase.GetItem(itemName), int.Parse(amount));
+        });
+        _currentStory.BindExternalFunction("place_item", (string itemName, string amount, string daysBoughtAgo) =>
+        {
+            InventoryController.Instance.TryCreateAndInsertItem(Player.Instance.ItemGrid, ItemDatabase.GetItem(itemName), int.Parse(amount), float.Parse(daysBoughtAgo), true);
+        });
     }
     #endregion
 

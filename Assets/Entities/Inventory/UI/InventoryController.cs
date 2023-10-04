@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class InventoryController : MonoBehaviour
 {
@@ -380,6 +382,17 @@ public class InventoryController : MonoBehaviour
         }
         return true;
     }
+    public bool CanInsertItem(ItemGrid itemGrid, Item item, int amount)
+    {
+        InventoryItem placedItem = TryCreateAndInsertItem(itemGrid, item, amount, 0, true);
+        if (placedItem == null)
+        {
+            itemGrid.RemoveItemsFromAStack(placedItem, amount);
+            return false;
+        }
+        itemGrid.RemoveItemsFromAStack(placedItem, amount);
+        return true;
+    }
     public InventoryItem TryCreateAndInsertItem(ItemGrid itemGrid, Item item, int amount, float daysBoughtAgo, bool isFillingStackFirst)
     {
         if (amount <= 0)
@@ -389,6 +402,7 @@ public class InventoryController : MonoBehaviour
         {
             result = TryCreateAndInsertItemRotated(itemGrid, item, amount, daysBoughtAgo, isFillingStackFirst);
         }
+        Debug.Log("returned " + (result == null? "null": result.XPositionOnTheGrid + ":" + result.YPositionOnTheGrid));
         return result;
     }
     private InventoryItem TryCreateAndInsertItemUnrotated(ItemGrid itemGrid, Item item, int amount, float daysBoughtAgo, bool isFillingStackFirst)
