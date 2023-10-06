@@ -101,7 +101,7 @@ public class TradeManager : MonoBehaviour
         _sellPanelAnimator.SetTrigger("Close");
         _buyPanelAnimator.SetTrigger("Close");
         
-        WaitForSeconds oneSecond = new WaitForSeconds(0.9f);
+        WaitForSeconds oneSecond = new WaitForSeconds(1f);
         yield return oneSecond;
         
         List<GoodsBuyPanel> goodsBuyPanels = BuyPanelContent.GetComponentsInChildren<GoodsBuyPanel>().
