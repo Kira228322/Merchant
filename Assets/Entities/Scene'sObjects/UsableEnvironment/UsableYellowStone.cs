@@ -6,9 +6,11 @@ public class UsableYellowStone : UsableEnvironment
 {
     [SerializeField] private Status _luckBuff;
     [SerializeField] private Status _luckDebuff;
+    [SerializeField] private Status _SpeedBuff;
+    [SerializeField] private Status _SpeedDeBuff;
     protected override bool IsFunctionalComplete()
     {
-        int randomValue = Random.Range(0, 5);
+        int randomValue = Random.Range(0, 7);
         int value;
         switch (randomValue)
         {
@@ -36,6 +38,12 @@ public class UsableYellowStone : UsableEnvironment
                 break;
             case 4:
                 StatusManager.Instance.AddStatusForPlayer(_luckDebuff);
+                break;
+            case 5:
+                StatusManager.Instance.AddStatusForPlayer(_SpeedBuff);
+                break;
+            case 6:
+                StatusManager.Instance.AddStatusForPlayer(_SpeedDeBuff);
                 break;
         }
         return true;
