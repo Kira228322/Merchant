@@ -34,7 +34,7 @@ public class StatusUIObject : MonoBehaviour
     {
         if (StatusManager.Instance.CurrentStatusInfoWindow != null)
             Destroy(StatusManager.Instance.CurrentStatusInfoWindow);
-        GameObject window = Instantiate(_infoWindow, gameObject.transform);
+        GameObject window = Instantiate(_infoWindow, MapManager.Canvas.transform);
         window.GetComponent<StatusInfoWindow>().Init
             (_activeStatus.StatusData.StatusName,
             _activeStatus.StatusData.StatusDescription,

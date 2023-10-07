@@ -23,6 +23,11 @@ public class VillageWindow : Window
             _button.interactable = false;
             return;
         }
+        if (MapManager.IsActiveSceneTravel)
+        {
+            _button.interactable = false;
+            return;
+        }
 
         bool related = false;
         for (int i = 0; i < place.RelatedPlaces.Count; i++)
