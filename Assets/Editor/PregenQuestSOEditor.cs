@@ -140,6 +140,10 @@ class EditorPregenQuest : Editor
                         GUILayout.Space(10);
 
                         EditorGUILayout.BeginHorizontal();
+                        goal.RequiredIDofNPC = EditorGUILayout.IntField(new GUIContent("Required ID of NPC*", "На момент 07.10.23 используется только в присвоении восклицательного знака"), goal.RequiredIDofNPC);
+                        EditorGUILayout.EndHorizontal();
+
+                        EditorGUILayout.BeginHorizontal();
                         goal.QuestItemsBehaviour = (ItemContainer.QuestItemsBehaviourEnum)EditorGUILayout.EnumPopup("Quest items behaviour", goal.QuestItemsBehaviour);
                         EditorGUILayout.EndHorizontal();
 

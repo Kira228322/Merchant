@@ -27,8 +27,6 @@ public class Quest
     public string QuestSummary;
     public string Description;
 
-    public NpcData QuestGiver;
-
     public int ExperienceReward;
     public int MoneyReward;
     public List<ItemReward> ItemRewards;
@@ -49,9 +47,6 @@ public class Quest
         QuestName = questParams.questName;
         QuestSummary = questParams.questSummary;
         Description = questParams.description;
-
-        if (questParams.questGiverID != 0)
-            QuestGiver = NpcDatabase.GetNPCData(questParams.questGiverID);
 
         ExperienceReward = questParams.experienceReward;
         MoneyReward = questParams.moneyReward;
@@ -140,6 +135,29 @@ public class Quest
     private void OnGoalUpdated(Goal goal)
     {
         CheckGoals();
+    }
+    public bool IsNpcPartOfQuest(int ID) 
+        //Заслуживает ли NPC с этим айди, чтобы над ним горел восклицательный знак
+    {
+        foreach (Goal goal in Goals)
+        {
+            if (goal is TalkToNPCGoal talkToNpcGoal)
+            {
+                if (talkToNpcGoal.RequiredIDOfNPC == ID)
+                    return true;
+            }
+            if (goal is GiveItemsGoal giveItemsGoal)
+            {
+                if (giveItemsGoal.RequiredIDOfNPC == ID)
+                    return true;
+            }
+            if (goal is DeliveryGoal deliveryGoal)
+            {
+                if (deliveryGoal.RequiredIDOfNPC == ID)
+                    return true;
+            }
+        }
+        return false;
     }
 
 }

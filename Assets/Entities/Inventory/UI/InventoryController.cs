@@ -387,7 +387,6 @@ public class InventoryController : MonoBehaviour
         InventoryItem placedItem = TryCreateAndInsertItem(itemGrid, item, amount, 0, true);
         if (placedItem == null)
         {
-            itemGrid.RemoveItemsFromAStack(placedItem, amount);
             return false;
         }
         itemGrid.RemoveItemsFromAStack(placedItem, amount);

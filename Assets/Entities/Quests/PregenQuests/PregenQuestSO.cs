@@ -91,7 +91,7 @@ public class PregenQuestSO : ScriptableObject
                     break;
                 case CompactedGoal.GoalType.DeliveryGoal:
                     newGoal = new DeliveryGoal(pregenGoal.goalState, pregenGoal.description,
-                        pregenGoal.currentAmount, 1, pregenGoal.RequiredItemCategories, 
+                        pregenGoal.currentAmount, 1, pregenGoal.RequiredIDofNPC, pregenGoal.RequiredItemCategories, 
                         pregenGoal.QuestItemsBehaviour, (float)Math.Round(Random.Range(pregenGoal.MinRequiredDeliveryWeight, pregenGoal.MaxRequiredDeliveryWeight), 1), 
                         Random.Range(pregenGoal.MinRequiredDeliveryCount, pregenGoal.MaxRequiredDeliveryCount), pregenGoal.RequiredRotThreshold);
                     break;

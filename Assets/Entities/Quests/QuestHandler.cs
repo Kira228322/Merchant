@@ -43,10 +43,7 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
     }
     public static Quest AddQuest(QuestParams questParams, NpcData questGiver)
     {
-        Quest quest = new(questParams)
-        {
-            QuestGiver = questGiver
-        };
+        Quest quest = new(questParams);
         Instance.Quests.Add(quest);
         if (quest.CurrentState == Quest.State.Active)
             Instance.ActiveQuests.Add(quest);
@@ -74,9 +71,8 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
         List<Quest> result = new();
         foreach (Quest quest in Instance.ActiveQuests)
         {
-            if (quest.QuestGiver != null) 
-                if (quest.QuestGiver.ID == ID)
-                    result.Add(quest);
+            if (quest.IsNpcPartOfQuest(ID))
+                result.Add(quest);
         }
         return result;
     }
@@ -120,7 +116,6 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
                 questName = quest.QuestName,
                 questSummary = quest.QuestSummary,
                 description = quest.Description,
-                questGiverID = quest.QuestGiver != null? quest.QuestGiver.ID: 0,
                 experienceReward = quest.ExperienceReward,
                 moneyReward = quest.MoneyReward,
                 itemRewards = quest.ItemRewards,
@@ -160,7 +155,7 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
                         break;
                     case DeliveryGoal oldGoal:
                         newGoal = new DeliveryGoal(oldGoal.CurrentState, oldGoal.Description,
-                            oldGoal.CurrentAmount, oldGoal.RequiredAmount, oldGoal.RequiredItemCategories,
+                            oldGoal.CurrentAmount, oldGoal.RequiredAmount, oldGoal.RequiredIDOfNPC, oldGoal.RequiredItemCategories,
                             oldGoal.QuestItemsBehaviour, oldGoal.RequiredWeight, oldGoal.RequiredCount,
                             oldGoal.RequiredRotThreshold);
                         break;
