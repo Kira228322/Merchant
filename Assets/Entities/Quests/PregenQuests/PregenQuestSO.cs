@@ -12,17 +12,21 @@ public class PregenQuestSO : ScriptableObject
     public QuestParams.State StartingState;
     public string QuestName;
     public string QuestSummary;
+
+    [Tooltip("Айди нпс, который выдал квест. Используется для проверок в " +
+        "диалогах, но не влияет на ExclamationMark над головой")] public int QuestGiverID;
+
     [TextArea(2,5)] public string Description;
     [HideInInspector] public int MinExperienceReward; 
     [HideInInspector] public int MaxExperienceReward; 
     [HideInInspector] public int MinMoneyReward;
     [HideInInspector] public int MaxMoneyReward;
-    
 
-   public PregenQuestSO NextQuest;
-   [HideInInspector] public List<CompactedGoal> goals = new();
-    
-   [HideInInspector] public List<ItemReward> ItemRewards = new();
+
+    public PregenQuestSO NextQuest;
+    [HideInInspector] public List<CompactedGoal> goals = new();
+
+    [HideInInspector] public List<ItemReward> ItemRewards = new();
 
     public QuestParams GenerateQuestParams()
     {
@@ -32,6 +36,7 @@ public class PregenQuestSO : ScriptableObject
             currentState = StartingState,
             questName = QuestName,
             questSummary = QuestSummary,
+            questGiverID = QuestGiverID,
             description = Description,
             experienceReward = Random.Range(MinExperienceReward, MaxExperienceReward + 1),
             moneyReward = Random.Range(MinMoneyReward, MaxMoneyReward + 1),

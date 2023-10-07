@@ -71,10 +71,14 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
         List<Quest> result = new();
         foreach (Quest quest in Instance.ActiveQuests)
         {
-            if (quest.IsNpcPartOfQuest(ID))
+            if (quest.IsNpcTargetOfQuest(ID) || quest.IsNpcSourceOfQuest(ID))
                 result.Add(quest);
         }
         return result;
+    }
+    public static bool IsNpcTargetOfAnyActiveQuest(int ID)
+    {
+        return Instance.ActiveQuests.Any(quest => quest.IsNpcTargetOfQuest(ID));
     }
     public static Quest GetQuestBySummary(string summary)
     {
