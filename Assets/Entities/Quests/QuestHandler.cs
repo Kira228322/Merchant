@@ -76,6 +76,10 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
         }
         return result;
     }
+    public static bool IsNpcTargetOfAnyActiveQuest(int ID)
+    {
+        return Instance.ActiveQuests.Any(quest => quest.IsNpcTargetOfQuest(ID));
+    }
     public static Quest GetQuestBySummary(string summary)
     {
         return Instance.Quests.FirstOrDefault(quest => quest.QuestSummary == summary);
