@@ -17,9 +17,18 @@ public class ActiveStatus
             CurrentDurationHours = status.HourDuration;
         Activate();
     }
-    public void RefreshStatus()
+    public void RefreshStatus(Status newStatus)
     {
-        CurrentDurationHours = StatusData.HourDuration;
+        if (StatusData.Type == Status.StatusType.Buff)
+        {
+            if (CurrentDurationHours < newStatus.HourDuration * Player.Instance.Statistics.StatusDurationModifier)
+                CurrentDurationHours = StatusData.HourDuration * Player.Instance.Statistics.StatusDurationModifier;
+        }
+        else
+        {
+            if (CurrentDurationHours < newStatus.HourDuration)
+                CurrentDurationHours = StatusData.HourDuration;
+        }
     }
     public void SetDuration(float duration)
     {

@@ -17,10 +17,10 @@ public class StatusManager : MonoBehaviour, ISaveable<StatusManagerSaveData>
 
     public ActiveStatus AddStatusForPlayer(Status status)
     {
-        ActiveStatus alreadyActive = ActiveStatuses.FirstOrDefault(s => s.StatusData == status);
+        ActiveStatus alreadyActive = ActiveStatuses.FirstOrDefault(s => s.StatusData.StatusName == status.StatusName);
         if (alreadyActive != null)
         {
-            alreadyActive.RefreshStatus();
+            alreadyActive.RefreshStatus(status);
             return alreadyActive;
         }
         ActiveStatus newStatus = new();
