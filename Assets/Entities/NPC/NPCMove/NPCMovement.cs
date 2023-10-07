@@ -57,6 +57,13 @@ abstract public class NPCMovement : MonoBehaviour
         GameTime.HourChanged -= OnHourChangeWhenNotAtHome;
     }
 
+    private void OnDestroy()
+    {
+        GameTime.HourChanged -= OnHourChangeWhenNotAtHome;
+        GameTime.MinuteChanged -= OnMinuteChange;
+        GameTime.HourChanged -= OnHourChangeWhenAtHome;
+    }
+
     public void StartIDLE(bool quick)
     {
         if (quick)

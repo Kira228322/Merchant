@@ -10,7 +10,7 @@ public class ExclamationMark : MonoBehaviour
     {
         if (parentCollider.bounds.size.y > 1.5f)
             gameObject.transform.localScale *= 1.05f;
-        startPos = parentCollider.bounds.center + new Vector3(0,parentCollider.bounds.size.y * 0.8f + 0.5f);
+        startPos = new Vector3(0,parentCollider.bounds.size.y * 1.5f + 0.5f);
         StartCoroutine(Animation());
     }
 

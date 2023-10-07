@@ -128,7 +128,7 @@ public class PlayerMover : MonoBehaviour
 
     private IEnumerator StartTickMove(bool rightDirection)
     {
-        WaitForSeconds waitForSeconds = new(0.1f);
+        WaitForSeconds waitForSeconds = new(0.06f);
         float distance;
         if (rightDirection) 
             distance = 0.8f;
