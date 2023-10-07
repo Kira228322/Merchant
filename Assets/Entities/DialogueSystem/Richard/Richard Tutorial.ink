@@ -1,5 +1,5 @@
 INCLUDE ../MainInkLibrary.ink
-->about_relic
+->greeting
 
 
 === greeting ===
@@ -11,7 +11,11 @@ INCLUDE ../MainInkLibrary.ink
     +[Привет, ты Ричард? Я ищу своего отца. Он сказал, что пошёл забрать какую-то вещь у бандитов]
         -> about_relic
 }
-+[До встречи]
+{contains(questSummaries, "tutorial_buy_relic_from_richard"):
+    +[Я готов купить у тебя вещь моего отца. (200 золотых)]
+        -> buy_relic
+}
++[Мне пора идти.]
     Пока-пока.
     -> END
 
@@ -26,6 +30,20 @@ INCLUDE ../MainInkLibrary.ink
             Ха-ха, ещё чёго! Просто так я тебе ничего не отдам.
             Пацан, ты знаешь поговорку "деньги правят миром"? За определённую плату мы могли бы договориться.
             Да не трясись, я даже сделаю тебе скидку, потому что твой батя меня спас.
-->DONE
+            ~invoke_dialogue_event("tutorial_talk_to_richard")
+            ~add_quest("tutorial_buy_relic_from_richard")
+                ->END
+    
+=== buy_relic ===
+Тогда давай сюда деньги.
+{has_money(200) and check_if_can_place_item("tutorial_relic", 1):
+    +[(Отдать 200 золота)]
+        ~change_player_money(-200)
+        ~invoke_dialogue_event("tutorial_buy_relic_from_richard")
+        ~place_item("tutorialRelic", 1, 0)
+        Вот это другой разговор. На, держи, мне она без толку.
+        ->END
+}
+    +[Я передумал.]
+        ->END
 
--> END

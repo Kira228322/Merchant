@@ -7,8 +7,8 @@ using UnityEngine;
 public class NpcTraderData : NpcData, IResetOnExitPlaymode, ISaveable<NpcTraderSaveData>
 {
     public List<TraderType> TraderTypes;
-    public bool IsBlackMarket;
-    public bool HaveAdditiveGoods;
+    [Tooltip("Будет ли торговец покупать запрещенные предметы")]public bool IsBlackMarket;
+    [Tooltip("Будет ли торговец продавать то, что купил у игрока")]public bool HaveAdditiveGoods;
 
     [HideInInspector, SerializeField] private List<NpcTrader.TraderGood> _baseGoods = new ();
     [HideInInspector, SerializeField] private List<NpcTrader.BuyCoefficient> _baseBuyCoefficients = new ();

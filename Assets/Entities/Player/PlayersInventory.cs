@@ -23,6 +23,8 @@ public class PlayersInventory : MonoBehaviour, ISaveable<PlayersInventorySaveDat
 
     public event UnityAction<float, float> WeightChanged;
 
+    public event UnityAction<UsableItem> ItemUsed;
+
     public float CurrentTotalWeight
     {
         get
@@ -74,6 +76,10 @@ public class PlayersInventory : MonoBehaviour, ISaveable<PlayersInventorySaveDat
     {
         MaxTotalWeight = _startingMaxTotalWeight;
         CurrentTotalWeight = CalculateWeight();
+    }
+    public void OnItemUsed(UsableItem usableItem)
+    {
+        ItemUsed?.Invoke(usableItem);
     }
     public int GetCount(Item item)
     {

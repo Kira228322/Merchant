@@ -94,6 +94,16 @@ class UsableItemEditor : ItemEditor
         }
 
         EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.LabelField("Gives quest after use?");
+        usableItem.GivesQuestAfterUse = EditorGUILayout.Toggle(usableItem.GivesQuestAfterUse);
+        EditorGUILayout.EndHorizontal();
+
+        if (usableItem.GivesQuestAfterUse)
+        {
+            GUILayout.Label("Given quest's summary:");
+            usableItem.QuestSummaryGivenAfterUse = EditorGUILayout.TextArea(usableItem.QuestSummaryGivenAfterUse, GUILayout.Height(20));
+        }
+        EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField(new GUIContent("Gives items after use?*", "These items should be 1x1"));
         usableItem.GivesItemsAfterUse = EditorGUILayout.Toggle(usableItem.GivesItemsAfterUse);
         EditorGUILayout.EndHorizontal();

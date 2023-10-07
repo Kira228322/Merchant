@@ -218,6 +218,12 @@ class EditorPregenQuest : Editor
                             goal.RequiredItemCategories.Add(tmpItemCategory);
 
                         break;
+                    case PregenQuestSO.CompactedGoal.GoalType.UseItemsGoal:
+                        GUILayout.Space(10);
+                        EditorGUILayout.BeginHorizontal();
+                        goal.RequiredItemName = EditorGUILayout.TextField("Required item name", goal.RequiredItemName);
+                        EditorGUILayout.EndHorizontal();
+                        break;
                 }
 
                 EditorGUILayout.EndVertical();

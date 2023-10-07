@@ -95,7 +95,10 @@ public class PregenQuestSO : ScriptableObject
                         pregenGoal.QuestItemsBehaviour, (float)Math.Round(Random.Range(pregenGoal.MinRequiredDeliveryWeight, pregenGoal.MaxRequiredDeliveryWeight), 1), 
                         Random.Range(pregenGoal.MinRequiredDeliveryCount, pregenGoal.MaxRequiredDeliveryCount), pregenGoal.RequiredRotThreshold);
                     break;
-
+                case CompactedGoal.GoalType.UseItemsGoal:
+                    newGoal = new UseItemsGoal(pregenGoal.goalState, pregenGoal.description,
+                        pregenGoal.currentAmount, Random.Range(pregenGoal.minRequiredAmount, pregenGoal.maxRequiredAmount), pregenGoal.RequiredItemName);
+                    break;
                 default:
                     Debug.LogError("Нет такого типа Goal");
                     break;
@@ -108,7 +111,7 @@ public class PregenQuestSO : ScriptableObject
     [Serializable]
     public class CompactedGoal
     {
-        public enum GoalType { CollectItemsGoal, TalkToNPCGoal, WaitingGoal, TimedGoal, GiveItemsGoal, DeliveryGoal}
+        public enum GoalType { CollectItemsGoal, TalkToNPCGoal, WaitingGoal, TimedGoal, GiveItemsGoal, DeliveryGoal, UseItemsGoal}
 
         public GoalType goalType;
         public Goal.State goalState;

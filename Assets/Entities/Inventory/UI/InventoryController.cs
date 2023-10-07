@@ -402,7 +402,6 @@ public class InventoryController : MonoBehaviour
         {
             result = TryCreateAndInsertItemRotated(itemGrid, item, amount, daysBoughtAgo, isFillingStackFirst);
         }
-        Debug.Log("returned " + (result == null? "null": result.XPositionOnTheGrid + ":" + result.YPositionOnTheGrid));
         return result;
     }
     private InventoryItem TryCreateAndInsertItemUnrotated(ItemGrid itemGrid, Item item, int amount, float daysBoughtAgo, bool isFillingStackFirst)

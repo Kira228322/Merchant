@@ -16,6 +16,8 @@ public class UsableItem : Item
     [HideInInspector] public int SecondValue;
     [HideInInspector] public bool GivesItemsAfterUse;
     [HideInInspector] public List<ItemReward> ItemsGivenAfterUse;
+    [HideInInspector] public bool GivesQuestAfterUse;
+    [HideInInspector] public string QuestSummaryGivenAfterUse;
     [HideInInspector] public Status Effect;
     [HideInInspector] public List<CraftingRecipe> Recipes;
     [HideInInspector] public string NoteHeader;

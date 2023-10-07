@@ -17,8 +17,7 @@ MonoBehaviour:
   FinishWalkingTime: 1
   GameStartMoney: 0
   CurrentMoney: 0
-  ID: 5
-  InkJSON: {fileID: 0}
+  ID: 1341
   TraderTypes: []
   IsBlackMarket: 0
   HaveAdditiveGoods: 0
@@ -40,6 +39,22 @@ MonoBehaviour:
     CurrentCount: 2
     CurrentPrice: 80
   _baseBuyCoefficients: []
-  Goods: []
+  Goods:
+  - Good: {fileID: 11400000, guid: 09458c858b4f9b946aeb38dbd30c7338, type: 2}
+    MaxCount: 65
+    CurrentCount: 65
+    CurrentPrice: 88
+  - Good: {fileID: 11400000, guid: 1cd5e64c387b5824b80ae33a5e5cd7a9, type: 2}
+    MaxCount: 12
+    CurrentCount: 12
+    CurrentPrice: 66
+  - Good: {fileID: 11400000, guid: b25d18e2b978ea34fbb337cd54d3d704, type: 2}
+    MaxCount: 14
+    CurrentCount: 14
+    CurrentPrice: 14
+  - Good: {fileID: 11400000, guid: 79bd5d80bb79ad041acee3a2b9321d3d, type: 2}
+    MaxCount: 2
+    CurrentCount: 2
+    CurrentPrice: 80
   AdditiveGoods: []
   BuyCoefficients: []

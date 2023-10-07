@@ -251,7 +251,11 @@ public class ItemInfo : MonoBehaviour
     private void AfterUse()
     {
         RemoveOneItem();
-        AddItems();
+        if (_currentUsableItem.ItemsGivenAfterUse.Count > 0)
+            AddItems();
+        if (_currentUsableItem.GivesQuestAfterUse)
+            AddQuest();
+        Player.Instance.Inventory.OnItemUsed(_currentUsableItem);
     }
     private void RemoveOneItem()
     {
@@ -280,6 +284,10 @@ public class ItemInfo : MonoBehaviour
                 (Player.Instance.ItemGrid, itemData, 
                 countLeftToAdd, item.daysBoughtAgo, true);
         }
+    }
+    private void AddQuest()
+    {
+        QuestHandler.AddQuest(_currentUsableItem.QuestSummaryGivenAfterUse);
     }
 
     #endregion

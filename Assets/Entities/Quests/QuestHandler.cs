@@ -37,6 +37,10 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
         QuestChangedState?.Invoke(quest);
         return quest;
     }
+    public static Quest AddQuest(string questSummary)
+    {
+        return AddQuest(PregenQuestDatabase.GetQuestParams(questSummary));
+    }
     public static Quest AddQuest(QuestParams questParams, NpcData questGiver)
     {
         Quest quest = new(questParams)
@@ -159,6 +163,10 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
                             oldGoal.CurrentAmount, oldGoal.RequiredAmount, oldGoal.RequiredItemCategories,
                             oldGoal.QuestItemsBehaviour, oldGoal.RequiredWeight, oldGoal.RequiredCount,
                             oldGoal.RequiredRotThreshold);
+                        break;
+                    case UseItemsGoal oldGoal:
+                        newGoal = new UseItemsGoal(oldGoal.CurrentState, oldGoal.Description,
+                            oldGoal.CurrentAmount, oldGoal.RequiredAmount, oldGoal.RequiredItemName);
                         break;
                     default:
                         Debug.LogError("Нет такого типа Goal");
