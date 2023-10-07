@@ -27,6 +27,8 @@ public class Quest
     public string QuestSummary;
     public string Description;
 
+    public int QuestGiverID;
+
     public int ExperienceReward;
     public int MoneyReward;
     public List<ItemReward> ItemRewards;
@@ -47,6 +49,8 @@ public class Quest
         QuestName = questParams.questName;
         QuestSummary = questParams.questSummary;
         Description = questParams.description;
+
+        QuestGiverID = questParams.questGiverID;
 
         ExperienceReward = questParams.experienceReward;
         MoneyReward = questParams.moneyReward;
@@ -136,28 +140,34 @@ public class Quest
     {
         CheckGoals();
     }
-    public bool IsNpcPartOfQuest(int ID) 
+    public bool IsNpcSourceOfQuest(int ID)
+        //Ќужно дл€ проверки на активные квесты, чтобы пон€ть относитс€ ли этот квест к этому Ќѕ—.
+        //Ќо не св€зано с восклицательным знаком, потому что то что он выдал этот квест ещЄ не €вл€етс€
+        //основанием того что с ним об€зательно надо взаимодействовать
+    {
+        if (QuestGiverID == ID)
+            return true;
+        return false;
+    }
+    public bool IsNpcTargetOfQuest(int ID) 
         //«аслуживает ли NPC с этим айди, чтобы над ним горел восклицательный знак
     {
-        foreach (Goal goal in Goals)
+        return Goals.Any(goal =>
         {
             if (goal is TalkToNPCGoal talkToNpcGoal)
             {
-                if (talkToNpcGoal.RequiredIDOfNPC == ID)
-                    return true;
+                return talkToNpcGoal.RequiredIDOfNPC == ID;
             }
             if (goal is GiveItemsGoal giveItemsGoal)
             {
-                if (giveItemsGoal.RequiredIDOfNPC == ID)
-                    return true;
+                return giveItemsGoal.RequiredIDOfNPC == ID;
             }
             if (goal is DeliveryGoal deliveryGoal)
             {
-                if (deliveryGoal.RequiredIDOfNPC == ID)
-                    return true;
+                return deliveryGoal.RequiredIDOfNPC == ID;
             }
-        }
-        return false;
+            return false;
+        });
     }
 
 }
