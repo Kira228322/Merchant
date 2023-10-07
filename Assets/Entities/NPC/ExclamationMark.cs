@@ -19,7 +19,7 @@ public class ExclamationMark : MonoBehaviour
         WaitForSeconds waitForSeconds = new WaitForSeconds(0.02f);
         while (true)
         {
-            transform.position = startPos + new Vector3(0, (float)Math.Sin(1.3f * Time.time)/3.5f);
+            transform.localPosition = startPos + new Vector3(0, (float)Math.Sin(1.3f * Time.time)/3.5f);
             yield return waitForSeconds;
         }
     }
