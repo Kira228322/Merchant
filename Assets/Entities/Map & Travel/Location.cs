@@ -88,21 +88,20 @@ public class Location : MonoBehaviour
 
     public void CountAllItemsOnScene()
     {
-        NpcTrader[] traders = FindObjectsOfType<NpcTrader>(); // берем всех трейдеров на локе 
-        
         foreach (var item in ItemEconomyParams)
             CountOfEachItem[item.Key] = 0; // занулили
-
-        for (int i = 0; i < traders.Length; i++) // посчитали сколько чего
+        Debug.Log("___" + _sceneName);
+        for (int i = 0; i < NpcTraders.Count; i++) // посчитали сколько чего
         {
-            for (int j = 0; j < traders[i].Goods.Count; j++)
+            for (int j = 0; j < NpcTraders[i].Goods.Count; j++)
             {
-                CountOfEachItem[traders[i].Goods[j].Good.Name] += traders[i].Goods[j].CurrentCount;
+                Debug.Log(NpcTraders[i].Goods[j].Good.Name);
+                CountOfEachItem[NpcTraders[i].Goods[j].Good.Name] += NpcTraders[i].Goods[j].CurrentCount;
             }
 
-            for (int j = 0; j < traders[i].AdditiveGoods.Count; j++)
+            for (int j = 0; j < NpcTraders[i].AdditiveGoods.Count; j++)
             {
-                CountOfEachItem[traders[i].AdditiveGoods[j].Good.Name] += traders[i].AdditiveGoods[j].CurrentCount;
+                CountOfEachItem[NpcTraders[i].AdditiveGoods[j].Good.Name] += NpcTraders[i].AdditiveGoods[j].CurrentCount;
             }
             
         }

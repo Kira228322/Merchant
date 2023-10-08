@@ -23,6 +23,8 @@ public class RestockHandler : MonoBehaviour
     private void Start()
     {
         _locations = FindObjectsOfType<Location>(true);
+        foreach (var location in _locations)
+            location.CountAllItemsOnScene();
     }
 
     private void CheckRestock()
@@ -77,13 +79,15 @@ public class RestockHandler : MonoBehaviour
             if (!trader.HaveAdditiveGoods)
                 continue;
 
+            if (trader.AdditiveGoods.Count > 10)
+                trader.AdditiveGoods.RemoveAt(Random.Range(9, trader.AdditiveGoods.Count));
             if (trader.AdditiveGoods.Count > 7)
                 trader.AdditiveGoods.RemoveAt(Random.Range(6, trader.AdditiveGoods.Count));
             if (trader.AdditiveGoods.Count > 4)
                 trader.AdditiveGoods.RemoveAt(Random.Range(0, trader.AdditiveGoods.Count));
             else
             {
-                if (Random.Range(0, 3) == 0)
+                if (Random.Range(0, 2) == 0)
                     trader.AdditiveGoods.RemoveAt(Random.Range(0, trader.AdditiveGoods.Count));
             }
 
@@ -102,7 +106,7 @@ public class RestockHandler : MonoBehaviour
                     isMainGood = false; // не мейн тип шмотки торговца 
                 else
                     isMainGood = true; // мейн тип шмотки торговца
-
+    
                 while (true)
                 {
                     reallyNew = true;
@@ -146,6 +150,9 @@ public class RestockHandler : MonoBehaviour
 
     private void RestockMainGoods(List<NpcTraderData> traders, Location location)
     {
+        if (traders.Count <= 0)
+            return;
+        
         List<NpcTraderData> activeTraders = new List<NpcTraderData>(); // трейдеры которые будут учавствовать в очередной итерации foreach
         int gainCount;
 
@@ -155,6 +162,19 @@ public class RestockHandler : MonoBehaviour
             // считаем сколько должно прирасти таких предметов на локации
             // budget (последний параметр метода) основывается на населении локации и на интересе в этом типе предмета локацией (CoefsForItemTypes)
             // чем интерес в этом предмете больше значит тем он редкостнее и его прирастает меньше.
+            activeTraders.Clear();
+            
+            foreach (var trader in traders) // из всех трейдеров выбирамем тех, кто торгует таким товаром
+            foreach (var traderGood in trader.Goods)
+                if (item.Name == traderGood.Good.Name)
+                {
+                    activeTraders.Add(trader);
+                    break;
+                }
+            if (activeTraders.Count == 0)
+                if (Random.Range(0,20) != 0)
+                    continue;
+            
             gainCount = location.Region.CalculateGainOnMarket(location.CountOfEachItem[item.Name], item.Price,
                 location.ItemEconomyParams[item.Name][0], location.ItemEconomyParams[item.Name][1],
                 location.ItemEconomyParams[item.Name][2],
@@ -163,13 +183,12 @@ public class RestockHandler : MonoBehaviour
             if (gainCount == 0)
                 continue;
 
-            activeTraders.Clear();
-
             // забаненные предметы будут прибавляться мало и только у одного торговца разом (типо поставка)(и экономия ресурсов)
             // убавляться не будут, так как тяжело придумать ситуацию, когда запрещенный предмет будет в избытке
             // (ведь он пропадает у всех торговцев, когда появляется ивент) 
             if (BannedItemsHandler.Instance.IsItemBanned(item))
             {
+                activeTraders.Clear();
                 foreach (var trader in traders)
                     if (trader.IsBlackMarket)
                         activeTraders.Add(trader);
@@ -192,15 +211,6 @@ public class RestockHandler : MonoBehaviour
                 }
             }
 
-
-            foreach (var trader in traders) // из всех трейдеров выбирамем тех, кто торгует таким товаром
-                foreach (var traderGood in trader.Goods)
-                    if (item.Name == traderGood.Good.Name)
-                    {
-                        activeTraders.Add(trader);
-                        break;
-                    }
-
             activeTraders.Shuffle(); // Благодаря бездушной машине сделал расширения для List 
                                      // этот метод перемешивает мместами элементы в листе в случайном порядке
                                      // Для чего это нужно? чтобы ресток не начинался с одного и того же трейдера каждый раз 
@@ -213,16 +223,13 @@ public class RestockHandler : MonoBehaviour
                 if (activeTraders.Count == 0)
                 {
                     // Если на локации вообще нет торговцев, которые торгует этим 
-                    // то предмет рестокнется с 25% шансом и только на половину от необходимого числа.
-                    if (Random.Range(0, 4) == 0)
-                    {
-                        gainCount /= 2;
-                        if (gainCount > 0)
-                            traders[Random.Range(0, traders.Count)].AdditiveGoods.Add(new NpcTrader.TraderGood(item.Name,
-                                gainCount, gainCount, item.Price + Random.Range(1, item.Price / 10 + 2)));
-                    }
+                    // то предмет рестокнется только на половину от необходимого числа.
+                    gainCount /= 2;
+                    if (gainCount > 0)
+                        traders[Random.Range(0, traders.Count)].AdditiveGoods.Add(new NpcTrader.TraderGood(item.Name,
+                            gainCount, gainCount, item.Price + Random.Range(1, item.Price / 10 + 2)));
+                    
                 }
-
                 else
                 {
                     // 5 раз прохожусь по всем трейдерам у которых есть этот предмет. Определнное число, так как если делать это
@@ -249,7 +256,7 @@ public class RestockHandler : MonoBehaviour
                     }
 
                     while (gainCount > 0) // если после этого еще надо добавить предметов то добавляем их уже сверх Max 
-                    {
+                    {   
                         foreach (var trader in activeTraders)
                         {
                             NpcTrader.TraderGood traderGood =
@@ -271,10 +278,11 @@ public class RestockHandler : MonoBehaviour
                     foreach (var traderGood in trader.AdditiveGoods) // смотрим у кого в дополнительных есть товар
                         if (item.Name == traderGood.Good.Name)
                         {
+                            //TODO проверить может ли быть такое, что предмет одновременно находится и в mainGoods и в additive
                             activeTraders.Add(trader);
                             break;
                         }
-
+            
                 // а вот тут по идеи не может случиться такой ситуации, когда gaincount != 0 
                 // а предметы у торговцев закончились, так как gainCount всегда толкает числа к равновесному числу.
                 while (gainCount != 0)
@@ -283,6 +291,9 @@ public class RestockHandler : MonoBehaviour
                     {
                         NpcTrader.TraderGood traderGood =
                             trader.AdditiveGoods.FirstOrDefault(good => good.Good.Name == item.Name);
+                        if (traderGood == null)
+                            traderGood = trader.Goods.FirstOrDefault(good => good.Good.Name == item.Name);
+                        
                         if (traderGood.CurrentCount > 0)
                         {
                             traderGood.CurrentCount--;
