@@ -13,6 +13,9 @@ public class SuspensionPanel : WagonPartPanel
         _image.sprite = suspension.Sprite;
         _partNameText.text = suspension.Name;
         _cost.text = suspension.UpgradePrice.ToString();
+
+        if (Player.Instance.WagonStats.Suspension.Level >= _wagonPart.Level)
+            _installButton.interactable = false;
     }
 
 }

@@ -13,6 +13,9 @@ public class BodyPanel : WagonPartPanel
         _image.sprite = body.Sprite;
         _partNameText.text = body.Name;
         _cost.text = body.UpgradePrice.ToString();
+
+        if (Player.Instance.WagonStats.Body.Level >= _wagonPart.Level)
+            _installButton.interactable = false;
     }
 
 }
