@@ -36,7 +36,8 @@ public class Location : MonoBehaviour
     // места в которые можно попасть из данного места (как ребра в графе) 
     public List<Location> RelatedPlaces => _relatedPlaces;
     [HideInInspector] public List<Road> _roads = new();
-    [SerializeField] public List<NpcTraderData> NpcTraders = new ();
+    public List<NpcTraderData> NpcTraders = new ();
+    public List<NpcWagonUpgraderData> WagonUpgraders = new();
     
     private void Start()
     {

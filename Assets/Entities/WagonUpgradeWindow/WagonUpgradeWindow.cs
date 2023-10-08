@@ -16,8 +16,8 @@ public class WagonUpgradeWindow : MonoBehaviour
     [SerializeField] private TMP_Text _weightText;
     [SerializeField] private TMP_Text _modifierText;
 
-    private NPCWagonUpgrader _wagonUpgrader;
-    public void Init(NPCWagonUpgrader wagonUpgrader)
+    private NpcWagonUpgrader _wagonUpgrader;
+    public void Init(NpcWagonUpgrader wagonUpgrader)
     {
         _wagonUpgrader = wagonUpgrader;
         _body.sprite = Player.Instance.WagonStats.Body.Sprite;
@@ -27,7 +27,7 @@ public class WagonUpgradeWindow : MonoBehaviour
         _weightText.text = $"Макс. масса груза: {Player.Instance.WagonStats.Suspension.MaxWeight}кг";
         _modifierText.text = $"Модификатор дороги: {Math.Round(Player.Instance.WagonStats.Wheel.QualityModifier - 1, 2) * 100}";
         
-        foreach (var upgrades in wagonUpgrader.WagonUpgrades)
+        foreach (var upgrades in wagonUpgrader.CurrentUpgrades)
         {
             if (upgrades == null) // Если вдруг игрок вкачался на максимум, то в рестоке у wagonUpgradera будут null'ы
                 continue;
@@ -49,13 +49,13 @@ public class WagonUpgradeWindow : MonoBehaviour
 
     public void OnPlayerBoughtAnything(WagonPart wagonPart)
     {
-        _wagonUpgrader.WagonUpgrades.Remove(wagonPart);
-        foreach (var part in _wagonUpgrader.WagonUpgrades)
+        _wagonUpgrader.CurrentUpgrades.Remove(wagonPart);
+        foreach (var part in _wagonUpgrader.CurrentUpgrades)
         { // Если игрок покупает деталь на +2 уровня, то деталь на +1 уровень у торговца надо удалить
             if (wagonPart.GetType() == part.GetType())
             {
                 if (wagonPart.Level > part.Level)
-                    _wagonUpgrader.WagonUpgrades.Remove(part);
+                    _wagonUpgrader.CurrentUpgrades.Remove(part);
                 break;
             }
         }

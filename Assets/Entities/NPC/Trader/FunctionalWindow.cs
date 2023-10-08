@@ -14,6 +14,7 @@ public class FunctionalWindow : MonoBehaviour
     
     public void Init(Npc npc)
     {
+        //TODO (08.10.23) Пофиксить "если 2 ифа не верны, то он апргейдер, у него все 3 кнопки"
         _canvas = CanvasWarningGenerator.Instance.transform;
         _NPC = npc;
         
@@ -23,7 +24,7 @@ public class FunctionalWindow : MonoBehaviour
         // Выставление кнопок:
         if (_NPC is NpcTrader) // Если он трейдер то 2 кнопки (трейд и разговор)
             Destroy(_wagonUpButton);
-        else if (!(_NPC is NPCWagonUpgrader)) // Если он не трейдер и не апгрейдер, то он обычный нпс (только поговорить)
+        else if (!(_NPC is NpcWagonUpgrader)) // Если он не трейдер и не апгрейдер, то он обычный нпс (только поговорить)
         {
             Destroy(_wagonUpButton);
             Destroy(_tradeButton);
@@ -47,7 +48,7 @@ public class FunctionalWindow : MonoBehaviour
 
     public void OnWagonUpgradeButtonClick()
     {
-        Instantiate(_wagonUpgradeWindow.gameObject, _canvas).GetComponent<WagonUpgradeWindow>().Init((NPCWagonUpgrader)_NPC);
+        Instantiate(_wagonUpgradeWindow.gameObject, _canvas).GetComponent<WagonUpgradeWindow>().Init((NpcWagonUpgrader)_NPC);
         TradeManager.Instance.PlayerBlock.alpha = 0;
         Destroy(gameObject);
     }

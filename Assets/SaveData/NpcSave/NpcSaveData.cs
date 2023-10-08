@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -19,7 +20,7 @@ public class NpcSaveData
 }
 
 [Serializable]
-public class NpcTraderSaveData: NpcSaveData
+public class NpcTraderSaveData : NpcSaveData
 {
 
     [Serializable]
@@ -63,6 +64,16 @@ public class NpcQuestGiverSaveData : NpcSaveData
     public NpcQuestGiverSaveData(int id, int money, int day) : base(id,money)
     {
         LastGiveQuestDay = day;
+    }
+}
+
+[Serializable]
+public class NpcWagonUpgraderSaveData : NpcSaveData
+{
+    public List<string> CurrentUpgrades;
+    public NpcWagonUpgraderSaveData(int id, int money, List<WagonPart> currentUpgrades) : base(id, money)
+    {
+        CurrentUpgrades = currentUpgrades.Select(upgrade => upgrade.Name).ToList();
     }
 }
 
