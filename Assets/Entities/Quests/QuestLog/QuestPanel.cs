@@ -106,7 +106,7 @@ public class QuestPanel : MonoBehaviour
 
         for (int i = 0; i < _quest.Goals.Count; i++)
         {
-            Image mark = _goalTexts[i].GetComponentInChildren<Image>();
+            Image mark = _goalTexts[i].GetComponentInChildren<Image>(true);
             if (_quest.Goals[i].RequiredAmount == 1)
                 _goalTexts[i].text = _quest.Goals[i].Description + " ";
             else

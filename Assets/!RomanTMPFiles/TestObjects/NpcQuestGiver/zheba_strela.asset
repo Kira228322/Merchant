@@ -16,6 +16,7 @@ MonoBehaviour:
   QuestName: "\u041F\u0440\u0438\u043D\u0435\u0441\u0442\u0438 \u0416\u044D\u0431\u0435
     \u0441\u0442\u0440\u0435\u043B\u044B"
   QuestSummary: zheba_strela
+  QuestGiverID: 99
   Description: "\u0426\u0430\u0440\u0435\u0432\u043D\u0430-\u043B\u044F\u0433\u0443\u0448\u043A\u0430
     \u0437\u0430\u043F\u0440\u0430\u0448\u0438\u0432\u0430\u0435\u0442 \u0441\u0442\u0440\u0435\u043B\u044B,
     \u0447\u0442\u043E\u0431\u044B \u0441\u0442\u0440\u0435\u043B\u044F\u0442\u044C
@@ -24,7 +25,7 @@ MonoBehaviour:
   MinExperienceReward: 4
   MaxExperienceReward: 8
   MinMoneyReward: 3
-  MaxMoneyReward: 5
+  MaxMoneyReward: 3
   NextQuest: {fileID: 0}
   goals:
   - goalType: 4
@@ -39,4 +40,13 @@ MonoBehaviour:
     RequiredLine: zheba_strela_complete
     FailingLine: 
     RequiredItemName: "\u0421\u0442\u0440\u0435\u043B\u0430"
+    RequiredItemCategories: 
+    QuestItemsBehaviour: 0
+    RandomDeliveryWeight: 0
+    RandomDeliveryCount: 0
+    MinRequiredDeliveryWeight: 0
+    MaxRequiredDeliveryWeight: 0
+    MinRequiredDeliveryCount: 0
+    MaxRequiredDeliveryCount: 0
+    RequiredRotThreshold: 0
   ItemRewards: []
