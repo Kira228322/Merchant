@@ -18,6 +18,12 @@ public class TravelTimeCounter : MonoBehaviour
     private float _elementRoad;
     private float count;
 
+    public void ChangeDuraion(int addTime)
+    {
+        _duration += addTime;
+        SetTravelTimeText();
+    }
+
     private void Awake()
     {
         Init(MapManager.CurrentRoad, MapManager.PlayerIcon);
