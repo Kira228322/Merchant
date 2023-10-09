@@ -154,6 +154,9 @@ public class Region : MonoBehaviour
                     produceCount += Q / 6 + 2;
                 else
                     boughtCount += Q / 6 + 2;
+
+                if (produceCount - boughtCount < -currentQuantity)
+                    return -currentQuantity;
             }
         
         return produceCount - boughtCount;
