@@ -26,6 +26,7 @@ public class TravelEventHandler : MonoBehaviour
     private bool _banditEvent;
     private Transform _previousPlayerParent;
 
+    public float RoadBadnessMultiplier = 1;
     private void Start()
     {
         _mainCanvas = CanvasWarningGenerator.Instance.gameObject.transform;
@@ -43,6 +44,12 @@ public class TravelEventHandler : MonoBehaviour
         }
     }
 
+    public void ChangeTravelTime(int addTime)
+    {
+        _timeCounter.ChangeDuraion(addTime);
+        RollNextEvent();
+    }
+
     public void BreakingItemAfterJourney()
     {
         OnTravelSceneExit();
@@ -56,6 +63,7 @@ public class TravelEventHandler : MonoBehaviour
         List<InventoryItem> deletedItems = new();
         
         float Roadbadness = (100 - MapManager.CurrentRoad.Quality) / Player.Instance.WagonStats.QualityModifier;
+        Roadbadness *= RoadBadnessMultiplier;
         // формула вероятности сломать предмет хрупкостью 100%
         
         
@@ -133,6 +141,8 @@ public class TravelEventHandler : MonoBehaviour
 
     public void OnTravelSceneEnter()
     {
+        RoadBadnessMultiplier = 1;
+        
         _previousPlayerParent = Player.Instance.transform.parent;
         Player.Instance.transform.parent = _cameraTransform;
         Player.Instance.transform.position = Vector3.zero;
