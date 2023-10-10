@@ -60,6 +60,7 @@ public class PlayersInventory : MonoBehaviour, ISaveable<PlayersInventorySaveDat
     private void OnEnable() 
     { 
         GameTime.HourChanged += OnHourChanged;
+        GameTime.TimeSkipped += OnTimeSkipped;
         _inventoryItemGrid.ItemPlacedInTheGrid += AddItemInInventory;
         _inventoryItemGrid.ItemUpdated += ItemUpdated;
         _inventoryItemGrid.ItemRemovedFromTheGrid += RemoveItemInInventory;
@@ -68,6 +69,7 @@ public class PlayersInventory : MonoBehaviour, ISaveable<PlayersInventorySaveDat
     private void OnDisable() 
     { 
         GameTime.HourChanged -= OnHourChanged;
+        GameTime.TimeSkipped -= OnTimeSkipped;
         _inventoryItemGrid.ItemPlacedInTheGrid -= AddItemInInventory;
         _inventoryItemGrid.ItemUpdated -= ItemUpdated;
         _inventoryItemGrid.ItemRemovedFromTheGrid -= RemoveItemInInventory;
@@ -185,6 +187,11 @@ public class PlayersInventory : MonoBehaviour, ISaveable<PlayersInventorySaveDat
     {
         CheckSpoilItems();
     }
+    private void OnTimeSkipped(int daysSkipped, int hoursSkipped, int minutesSkipped)
+    {
+        float totalHoursSkipped = daysSkipped * 24 + hoursSkipped + (float)minutesSkipped / 60;
+        CheckSpoilItems(totalHoursSkipped);
+    }
     private float CalculateWeight()
     {
         float totalWeight = 0;
@@ -206,6 +213,18 @@ public class PlayersInventory : MonoBehaviour, ISaveable<PlayersInventorySaveDat
             }
         }
     }
+    private void CheckSpoilItems(float hoursSkipped)
+    {
+        foreach (var item in ItemList)
+        {
+            if (item.ItemData.IsPerishable)
+            {
+                item.BoughtDaysAgo += hoursSkipped / 24f; // +hoursSkipped часов к испорченности
+                item.RefreshSliderValue();
+            }
+        }
+    }
+
 
     public PlayersInventorySaveData SaveData()
     {
@@ -217,8 +236,9 @@ public class PlayersInventory : MonoBehaviour, ISaveable<PlayersInventorySaveDat
     {
         foreach(var item in saveData.items)
         {
-            InventoryController.Instance.TryCreateAndInsertItem(ItemGrid,
+            InventoryItem inventoryItem = InventoryController.Instance.TryCreateAndInsertItem(ItemGrid,
                 ItemDatabase.GetItem(item.itemName), item.currentItemsInAStack, item.boughtDaysAgo, true);
+            inventoryItem.RefreshSliderValue();
         }
     }
 }

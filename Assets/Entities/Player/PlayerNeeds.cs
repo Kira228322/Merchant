@@ -65,8 +65,8 @@ public class PlayerNeeds: ISaveable<PlayerNeedsSaveData>
 
     public void Initialize()
     {
-        _sleepScale.SetValue(CurrentSleep, MaxSleep);
-        _hungerScale.SetValue(CurrentHunger, MaxHunger);
+        CurrentSleep = MaxSleep;
+        CurrentHunger = MaxHunger;
     }
 
     public void StartSleeping(int hours)
@@ -130,6 +130,13 @@ public class PlayerNeeds: ISaveable<PlayerNeedsSaveData>
                 CurrentSleep--;
             }
         }
+    }
+    public void SkipNeeds(int minutesPassed)
+    {
+        CurrentHunger -= minutesPassed / HungerDecayRate;
+        CurrentSleep -= minutesPassed / SleepDecayRate;
+        if (_currentHunger <= 0 || _currentSleep <= 0)
+            StatusManager.Instance.AddLowNeedsDebuff();
     }
 
     public PlayerNeedsSaveData SaveData()

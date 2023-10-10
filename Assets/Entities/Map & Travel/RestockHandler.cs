@@ -13,11 +13,13 @@ public class RestockHandler : MonoBehaviour
     private void OnEnable()
     {
         GameTime.HourChanged += CheckRestock;
+        GameTime.TimeSkipped += OnTimeSkipped;
     }
 
     private void OnDisable()
     {
         GameTime.HourChanged -= CheckRestock;
+        GameTime.TimeSkipped -= OnTimeSkipped;
     }
 
     private void Start()
@@ -35,6 +37,10 @@ public class RestockHandler : MonoBehaviour
                 Restock();
             }
     }
+    private void OnTimeSkipped(int skippedDays, int skippedHours, int skippedMinutes)
+    {
+        CheckRestock();
+    }
     
     public void Restock()
     {
@@ -47,7 +53,7 @@ public class RestockHandler : MonoBehaviour
             RestockWagonUpgraders(location);
         }
 
-        Debug.Log($"RestockHandler завершил ресток в {_locations.Length} локациях");
+
         _lastRestockDay = GameTime.CurrentDay;
     }
     private void RestockTraders(Location location)
@@ -219,7 +225,6 @@ public class RestockHandler : MonoBehaviour
 
             if (gainCount > 0) // прирост товара
             {
-                Debug.Log($"Деревня {location.VillageName} сцена {location.SceneName}. Количество трейдеров {traders.Count}. Количество активных трейдеров {activeTraders.Count}");
                 if (activeTraders.Count == 0)
                 {
                     // Если на локации вообще нет торговцев, которые торгует этим 

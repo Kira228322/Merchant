@@ -41,6 +41,19 @@ public class StatusManager : MonoBehaviour, ISaveable<StatusManagerSaveData>
             }
         }
     }
+    private void OnTimeSkipped(int daysAdded, int hoursAdded, int minutesAdded)
+    {
+        float hoursSkipped = daysAdded * 24 + hoursAdded + ((float)minutesAdded / 60);
+        for (int i = ActiveStatuses.Count - 1; i >= 0; i--)
+        {
+            ActiveStatus status = ActiveStatuses[i];
+            status.DecreaseDuration(hoursSkipped);
+            if (!status.IsActive)
+            {
+                ActiveStatuses.RemoveAt(i);
+            }
+        }
+    }
 
     public void AddLowNeedsDebuff()
     {
@@ -53,8 +66,13 @@ public class StatusManager : MonoBehaviour, ISaveable<StatusManagerSaveData>
             Instance = this;
 
         GameTime.MinuteChanged += DecreaseDuration;
+        GameTime.TimeSkipped += OnTimeSkipped;
     }
-
+    private void OnDestroy()
+    {
+        GameTime.MinuteChanged -= DecreaseDuration;
+        GameTime.TimeSkipped -= OnTimeSkipped;
+    }
     public StatusManagerSaveData SaveData()
     {
         StatusManagerSaveData saveData = new(ActiveStatuses);

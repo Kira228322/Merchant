@@ -21,18 +21,20 @@ public class UIClock : MonoBehaviour
     {
         _weatherController = FindObjectOfType<WeatherController>();
         GameTime.HourChanged += OnHourChanged;
+        GameTime.TimeSkipped += OnTimeSkipped;
         _weatherController.WeatherStarted += OnWeatherIsActive;
     }
     private void OnDisable()
     {
         GameTime.HourChanged -= OnHourChanged;
+        GameTime.TimeSkipped -= OnTimeSkipped;
         _weatherController.WeatherStarted -= OnWeatherIsActive;
     }
 
     private void Start()
     {
         _currentTimeImage.sprite = _timeSprites[0];
-        OnHourChanged();
+        Refresh();
     }
 
     private void OnWeatherIsActive()
@@ -58,6 +60,15 @@ public class UIClock : MonoBehaviour
         ChangeImage();
     }
     private void OnHourChanged()
+    {
+        Refresh();
+    }
+    private void OnTimeSkipped(int skippedDays, int skippedHours, int skippedMinutes)
+    {
+        Refresh();
+    }
+
+    private void Refresh()
     {
         bool isWeatherActive = GlobalEventHandler.Instance.IsEventActive<GlobalEvent_Weather>();
         if (isWeatherActive)
@@ -86,7 +97,7 @@ public class UIClock : MonoBehaviour
                 _nextTimeImage.sprite = _timeSprites[5];
                 break;
         }
-        
+
         ChangeImage();
     }
 

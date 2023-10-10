@@ -35,10 +35,12 @@ public class CooldownHandler: MonoBehaviour, ISaveable<CooldownHandlerSaveData>
     private void OnEnable()
     {
         GameTime.HourChanged += OnHourChanged;
+        GameTime.TimeSkipped += OnTimeSkipped;
     }
     private void OnDisable()
     {
         GameTime.HourChanged -= OnHourChanged;
+        GameTime.TimeSkipped -= OnTimeSkipped;
     }
 
     public void Register(string uniqueID, int cooldownHours)
@@ -55,7 +57,19 @@ public class CooldownHandler: MonoBehaviour, ISaveable<CooldownHandlerSaveData>
         foreach (ObjectOnCooldown objectOnCooldown in ObjectsOnCooldown.ToList())
         {
             objectOnCooldown.HoursLeft--;
-            if (objectOnCooldown.HoursLeft == 0)
+            if (objectOnCooldown.HoursLeft <= 0)
+            {
+                ReadyToReset?.Invoke(objectOnCooldown.UniqueID);
+            }
+        }
+    }
+    private void OnTimeSkipped(int skippedDays, int skippedHours, int skippedMinutes)
+    {
+        int totalSkippedHours = skippedDays * 24 + skippedHours + skippedMinutes / 60;
+        foreach (ObjectOnCooldown objectOnCooldown in ObjectsOnCooldown.ToList())
+        {
+            objectOnCooldown.HoursLeft -= totalSkippedHours;
+            if (objectOnCooldown.HoursLeft <= 0)
             {
                 ReadyToReset?.Invoke(objectOnCooldown.UniqueID);
             }

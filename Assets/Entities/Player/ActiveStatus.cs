@@ -43,6 +43,16 @@ public class ActiveStatus
         }
         StatusUpdated?.Invoke();
     }
+    
+    public void DecreaseDuration(float hoursSkipped)
+    {
+        CurrentDurationHours -= hoursSkipped;
+        if (CurrentDurationHours <= 0)
+        {
+            Deactivate();
+        }
+        StatusUpdated?.Invoke();
+    }
 
 
     public void Activate()

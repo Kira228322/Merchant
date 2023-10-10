@@ -21,11 +21,13 @@ public class LivingLight : MonoBehaviour
     private void OnEnable()
     {
         GameTime.HourChanged += ChangeIntensityByTime;
+        GameTime.TimeSkipped += OnTimeSkipped;
     }
 
     private void OnDisable()
     {
         GameTime.HourChanged -= ChangeIntensityByTime;
+        GameTime.TimeSkipped -= OnTimeSkipped;
     }
 
     private void Start()
@@ -67,5 +69,9 @@ public class LivingLight : MonoBehaviour
                 _minIntensity = _minBobbingIntensity;
                 break;
         }
+    }
+    private void OnTimeSkipped (int skippedDays, int skippedHours, int skippedMinutes)
+    {
+        ChangeIntensityByTime();
     }
 }

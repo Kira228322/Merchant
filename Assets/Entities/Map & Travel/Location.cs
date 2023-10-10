@@ -90,12 +90,10 @@ public class Location : MonoBehaviour
     {
         foreach (var item in ItemEconomyParams)
             CountOfEachItem[item.Key] = 0; // занулили
-        Debug.Log("___" + _sceneName);
         for (int i = 0; i < NpcTraders.Count; i++) // посчитали сколько чего
         {
             for (int j = 0; j < NpcTraders[i].Goods.Count; j++)
             {
-                Debug.Log(NpcTraders[i].Goods[j].Good.Name);
                 CountOfEachItem[NpcTraders[i].Goods[j].Good.Name] += NpcTraders[i].Goods[j].CurrentCount;
             }
 

@@ -87,16 +87,23 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
     private void OnEnable()
     {
         GameTime.MinuteChanged += OnMinuteChanged;
+        GameTime.TimeSkipped += OnTimeSkipped;
         SceneManager.sceneLoaded += OnSceneChange;
     }
     private void OnDisable()
     {
         GameTime.MinuteChanged -= OnMinuteChanged;
+        GameTime.TimeSkipped -= OnTimeSkipped;
         SceneManager.sceneLoaded -= OnSceneChange;
     }
     private void OnMinuteChanged()
     {
         Needs.UpdateNeeds();
+    }
+    private void OnTimeSkipped(int daysSkipped, int hoursSkipped, int minutesSkipped)
+    {
+        int totalMinutesSkipped = daysSkipped * 24 + hoursSkipped * 60 + minutesSkipped;
+        Needs.SkipNeeds(totalMinutesSkipped);
     }
 
     public void AddExperience(int amount)
@@ -142,7 +149,7 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
         }
         if (Input.GetKeyDown(KeyCode.I))
         {
-            Debug.Log(GlobalEventHandler.Instance.ActiveGlobalEvents.Count);
+            GameTime.TimeSkip(0, 2, 15);
         }
 
 

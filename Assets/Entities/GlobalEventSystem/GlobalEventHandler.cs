@@ -31,10 +31,12 @@ public class GlobalEventHandler : MonoBehaviour
     private void OnEnable()
     {
         GameTime.HourChanged += OnHourChanged;
+        GameTime.TimeSkipped += OnTimeSkipped;
     }
     private void OnDisable()
     {
-        GameTime.HourChanged -= OnHourChanged;   
+        GameTime.HourChanged -= OnHourChanged;
+        GameTime.TimeSkipped -= OnTimeSkipped;
     }
     public T AddGlobalEvent<T>(int durationHours) where T : GlobalEvent_Base, new()
     {
@@ -78,6 +80,12 @@ public class GlobalEventHandler : MonoBehaviour
         CheckControllersDelay();
         DecreaseDurations();
     }
+    private void OnTimeSkipped(int skippedDays, int skippedHours, int skippedMinutes)
+    {
+        int totalSkippedHours = skippedDays * 24 + skippedHours + skippedMinutes / 60;
+        CheckControllersDelay();
+        DecreaseDurations(totalSkippedHours);
+    }
 
     private void CheckControllersDelay()
     {
@@ -97,6 +105,20 @@ public class GlobalEventHandler : MonoBehaviour
         ActiveGlobalEvents.ForEach(globalEvent =>
         {
             globalEvent.DurationHours--;
+
+            if (globalEvent.DurationHours <= 0)
+            {
+                globalEvent.Terminate();
+
+            }
+        });
+        ActiveGlobalEvents.RemoveAll(globalEvent => globalEvent.DurationHours <= 0);
+    }
+    private void DecreaseDurations(int skippedHours)
+    {
+        ActiveGlobalEvents.ForEach(globalEvent =>
+        {
+            globalEvent.DurationHours -= skippedHours;
 
             if (globalEvent.DurationHours <= 0)
             {
