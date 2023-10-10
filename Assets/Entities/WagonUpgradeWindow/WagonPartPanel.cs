@@ -10,6 +10,7 @@ public abstract class WagonPartPanel : MonoBehaviour
     [SerializeField] protected TMP_Text _descriptionText;
     [SerializeField] protected TMP_Text _partNameText;
     [SerializeField] protected TMP_Text _cost;
+    [SerializeField] protected Button _installButton;
     [HideInInspector] protected WagonPart _wagonPart;
     [HideInInspector] protected WagonUpgradeWindow _window;
 

@@ -16,6 +16,9 @@ public class WheelPanel : WagonPartPanel
         _image.sprite = wheel.Sprite;
         _partNameText.text = wheel.Name;
         _cost.text = wheel.UpgradePrice.ToString();
+
+        if (Player.Instance.WagonStats.Wheel.Level >= _wagonPart.Level)
+            _installButton.interactable = false;
     }
 
     
