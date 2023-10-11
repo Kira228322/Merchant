@@ -31,11 +31,10 @@ public class RestockHandler : MonoBehaviour
 
     private void CheckRestock()
     {
-        if (GameTime.Hours == 1)
-            if (_lastRestockDay + 2 < GameTime.CurrentDay)
-            {
-                Restock();
-            }
+        if (_lastRestockDay + 2 < GameTime.CurrentDay)
+        { 
+            Restock();
+        }
     }
     private void OnTimeSkipped(int skippedDays, int skippedHours, int skippedMinutes)
     {
