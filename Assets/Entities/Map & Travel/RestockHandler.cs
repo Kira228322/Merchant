@@ -57,8 +57,15 @@ public class RestockHandler : MonoBehaviour
         //TODO: Каждый из этих методов проходит через foreach заново всех трейдеров.
         //Сделать методы для одного трейдера и запихнуть под общий foreach (var trader in location)?
         
+        if (location.NpcTraders.Count <= 0)
+            return;
+        if (location.NpcTraders[0].Name != "Pidor Pidorovich")
+            return;
+        
         RestockBuyCoefficients(location.NpcTraders);
-        RestockMainGoods(location.NpcTraders, location);
+        StartCoroutine(RestockMainGoods(location.NpcTraders, location));
+        
+        
         // TODO когда у всех трейдеров будет установлен тип -- раскоммитить строчку! 
         // AddAdditiveGoods(location.NpcTraders);
         location.CountAllItemsOnScene();
@@ -152,10 +159,9 @@ public class RestockHandler : MonoBehaviour
         }
     }
 
-    private void RestockMainGoods(List<NpcTraderData> traders, Location location)
+    private IEnumerator RestockMainGoods(List<NpcTraderData> traders, Location location)
     {
-        if (traders.Count <= 0)
-            return;
+        WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
         
         List<NpcTraderData> activeTraders = new List<NpcTraderData>(); // трейдеры которые будут учавствовать в очередной итерации foreach
         int gainCount;
@@ -168,6 +174,9 @@ public class RestockHandler : MonoBehaviour
             // budget (последний параметр метода) основывается на населении локации и на интересе в этом типе предмета локацией (CoefsForItemTypes)
             // чем интерес в этом предмете больше значит тем он редкостнее и его прирастает меньше.
             activeTraders.Clear();
+            
+            Debug.Log(item.Name);
+            yield return waitForEndOfFrame;
             
             foreach (var trader in traders) // из всех трейдеров выбирамем тех, кто торгует таким товаром
             foreach (var traderGood in trader.Goods)
