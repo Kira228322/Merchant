@@ -132,6 +132,10 @@ public class Region : MonoBehaviour
     {
         if (C > 0)
             C = -C;
+
+        // TODO
+        if (P == 0)
+            P = 100;
         
         int C1 = A - C - 2 * Q;
         float B = (float)A / (C + Q) - P;
@@ -141,8 +145,7 @@ public class Region : MonoBehaviour
         else if (currentQuantity > A - C1)
             currentQuantity = A - C1 - 1;
 
-        budget += P / 2;
-        budget += Random.Range(-budget/10, budget/10 + 1);
+        budget += P / 2 + Random.Range(-budget/10, budget/10 + 1);
         
         int boughtCount = (int)Math.Round(budget / ((float)A / (currentQuantity + C) - B));
         int produceCount = (int)Math.Round(budget / ((float)A / (-currentQuantity + A - C1) - B));

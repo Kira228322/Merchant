@@ -43,9 +43,6 @@ public class RestockHandler : MonoBehaviour
     
     public void Restock()
     {
-        if (GameTime.CurrentDay < _lastRestockDay + 2)
-            return;
-
         foreach (var location in _locations)
         {
             RestockTraders(location);
@@ -59,6 +56,7 @@ public class RestockHandler : MonoBehaviour
     {
         //TODO: Каждый из этих методов проходит через foreach заново всех трейдеров.
         //Сделать методы для одного трейдера и запихнуть под общий foreach (var trader in location)?
+        
         RestockBuyCoefficients(location.NpcTraders);
         RestockMainGoods(location.NpcTraders, location);
         // TODO когда у всех трейдеров будет установлен тип -- раскоммитить строчку! 
@@ -162,6 +160,7 @@ public class RestockHandler : MonoBehaviour
         List<NpcTraderData> activeTraders = new List<NpcTraderData>(); // трейдеры которые будут учавствовать в очередной итерации foreach
         int gainCount;
 
+        
         foreach (var item in ItemDatabase.Instance.Items.ItemList)
         {
 
@@ -178,8 +177,7 @@ public class RestockHandler : MonoBehaviour
                     break;
                 }
             if (activeTraders.Count == 0)
-                if (Random.Range(0,20) != 0)
-                    continue;
+                continue;
             
             gainCount = location.Region.CalculateGainOnMarket(location.CountOfEachItem[item.Name], item.Price,
                 location.ItemEconomyParams[item.Name][0], location.ItemEconomyParams[item.Name][1],
