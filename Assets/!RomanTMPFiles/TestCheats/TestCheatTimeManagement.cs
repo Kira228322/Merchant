@@ -11,17 +11,33 @@ public class TestCheatTimeManagement : MonoBehaviour
     [SerializeField] private TMP_InputField _hourInputField;
     [SerializeField] private TMP_InputField _minuteInputField;
 
+    [SerializeField] private TMP_Text _currentTime;
+
     public void SetTimescale()
     {
         FindObjectOfType<Timeflow>().TimeScale = float.Parse(_timescaleInputField.text);
     }
-    public void SetDate()
+    private void OnEnable()
+    {
+        GameTime.MinuteChanged += OnMinuteChanged;
+    }
+    private void OnDisable()
+    {
+        GameTime.MinuteChanged -= OnMinuteChanged;
+    }
+
+    private void OnMinuteChanged()
+    {
+        _currentTime.text = $"День: {GameTime.CurrentDay}, Час: {GameTime.Hours}, Минута: {GameTime.Minutes}";
+    }
+
+    public void SkipTime()
     {
         int day = int.Parse(_dayInputField.text);
         int hour = int.Parse(_hourInputField.text);
         int minute = int.Parse(_minuteInputField.text);
 
-        GameTime.TimeSet(day, hour, minute);
+        GameTime.TimeSkip(day, hour, minute);
     }
     public void CheckDayInputField()
     {
