@@ -62,7 +62,8 @@ public class RestockHandler : MonoBehaviour
         //Сделать методы для одного трейдера и запихнуть под общий foreach (var trader in location)?
         RestockBuyCoefficients(location.NpcTraders);
         RestockMainGoods(location.NpcTraders, location);
-        AddAdditiveGoods(location.NpcTraders);
+        // TODO когда у всех трейдеров будет установлен тип -- раскоммитить строчку! 
+        // AddAdditiveGoods(location.NpcTraders);
         location.CountAllItemsOnScene();
     }
     private void RestockWagonUpgraders(Location location)
