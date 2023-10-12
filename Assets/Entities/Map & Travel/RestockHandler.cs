@@ -9,7 +9,8 @@ public class RestockHandler : MonoBehaviour
 {
     private int _lastRestockDay;
     private Location[] _locations;
-    
+    [SerializeField] private RegionHandler _regionHandler;
+
     private void OnEnable()
     {
         GameTime.HourChanged += CheckRestock;
@@ -27,6 +28,9 @@ public class RestockHandler : MonoBehaviour
         _locations = FindObjectsOfType<Location>(true);
         foreach (var location in _locations)
             location.CountAllItemsOnScene();
+        foreach (var region in _regionHandler.Regions)
+            region.CountAllItemsInRegion();
+        
     }
 
     private void CheckRestock()
@@ -43,31 +47,31 @@ public class RestockHandler : MonoBehaviour
     
     public void Restock()
     {
+        _lastRestockDay = GameTime.CurrentDay;
         foreach (var location in _locations)
         {
             RestockTraders(location);
             RestockWagonUpgraders(location);
         }
-
-
-        _lastRestockDay = GameTime.CurrentDay;
+        foreach (var region in _regionHandler.Regions)
+            region.CountAllItemsInRegion();
     }
     private void RestockTraders(Location location)
     {
         //TODO: Каждый из этих методов проходит через foreach заново всех трейдеров.
         //Сделать методы для одного трейдера и запихнуть под общий foreach (var trader in location)?
         
+        
+        //TODO убрать потом
         if (location.NpcTraders.Count <= 0)
             return;
-        if (location.NpcTraders[0].Name != "Pidor Pidorovich")
-            return;
-        
-        RestockBuyCoefficients(location.NpcTraders);
-        StartCoroutine(RestockMainGoods(location.NpcTraders, location));
         
         
         // TODO когда у всех трейдеров будет установлен тип -- раскоммитить строчку! 
         // AddAdditiveGoods(location.NpcTraders);
+        
+        RestockBuyCoefficients(location.NpcTraders);
+        RestockMainGoods(location.NpcTraders, location);
         location.CountAllItemsOnScene();
     }
     private void RestockWagonUpgraders(Location location)
@@ -159,24 +163,18 @@ public class RestockHandler : MonoBehaviour
         }
     }
 
-    private IEnumerator RestockMainGoods(List<NpcTraderData> traders, Location location)
+    private void RestockMainGoods(List<NpcTraderData> traders, Location location)
     {
-        WaitForEndOfFrame waitForEndOfFrame = new WaitForEndOfFrame();
-        
         List<NpcTraderData> activeTraders = new List<NpcTraderData>(); // трейдеры которые будут учавствовать в очередной итерации foreach
         int gainCount;
-
         
         foreach (var item in ItemDatabase.Instance.Items.ItemList)
         {
-
             // считаем сколько должно прирасти таких предметов на локации
             // budget (последний параметр метода) основывается на населении локации и на интересе в этом типе предмета локацией (CoefsForItemTypes)
             // чем интерес в этом предмете больше значит тем он редкостнее и его прирастает меньше.
             activeTraders.Clear();
-            
             Debug.Log(item.Name);
-            yield return waitForEndOfFrame;
             
             foreach (var trader in traders) // из всех трейдеров выбирамем тех, кто торгует таким товаром
             foreach (var traderGood in trader.Goods)
@@ -282,6 +280,7 @@ public class RestockHandler : MonoBehaviour
                         }
                     }
                 }
+                
             }
 
             else // убывание товара
@@ -316,7 +315,6 @@ public class RestockHandler : MonoBehaviour
                             break;
                     }
                 }
-
             }
         }
     }

@@ -130,26 +130,28 @@ public class Region : MonoBehaviour
 
     public int CalculateGainOnMarket(int currentQuantity, int P, int Q, int A, int C, int budget)
     {
-        if (C > 0)
-            C = -C;
-
-        // TODO
-        if (P == 0)
-            P = 100;
+        // upd раньше С было число отрицательное, теперь положительное. Везде поменял знаки (в десмосе все еще отрицательное, в таблицу записывать по модулю)
+        int C1 = A + C - 2 * Q;
+        float B = (float)A / (Q - C) - P;
         
-        int C1 = A - C - 2 * Q;
-        float B = (float)A / (C + Q) - P;
-        
-        if (currentQuantity < -C)
-            currentQuantity = -C + 1;
-        else if (currentQuantity > A - C1)
+        if (currentQuantity <= C)
+            currentQuantity = C + 1;
+        else if (currentQuantity >= A - C1)
             currentQuantity = A - C1 - 1;
 
         budget += P / 2 + Random.Range(-budget/10, budget/10 + 1);
-        
-        int boughtCount = (int)Math.Round(budget / ((float)A / (currentQuantity + C) - B));
-        int produceCount = (int)Math.Round(budget / ((float)A / (-currentQuantity + A - C1) - B));
 
+        float boughtPrice = (float)A / (currentQuantity - C) - B;
+        float producePrice = (float)A / (-currentQuantity + A - C1) - B;
+
+        if (boughtPrice < P / 10f)
+            boughtPrice = P / 10f;
+        else if (producePrice < P / 10f)
+            producePrice = P / 10f;
+        
+        int boughtCount = (int)Math.Round(budget / boughtPrice);
+        int produceCount = (int)Math.Round(budget / producePrice);
+        
         if (produceCount == boughtCount) // 10%, что если товара на рынке равновесное число, то при рестоке это значение 
             if (Random.Range(0, 10) == 0) // сдвинется с равновесного. Чтобы был хоть иногда какой-то движ кроме ивентов
             {
@@ -161,7 +163,10 @@ public class Region : MonoBehaviour
                 if (produceCount - boughtCount < -currentQuantity)
                     return -currentQuantity;
             }
-        
+
+
+        if (produceCount - boughtCount < -currentQuantity) // если купить предметов нужно больше, чем их есть
+            return -currentQuantity + Q; // то купить надо будет столько, сколько приведет количество к Q 
         return produceCount - boughtCount;
     }
 }

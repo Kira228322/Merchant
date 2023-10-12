@@ -5231,6 +5231,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 900a3ea4b728e744099f102a14ed6d45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _regionHandler: {fileID: 1045987801}
 --- !u!114 &295020386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17887,7 +17888,11 @@ MonoBehaviour:
   - {fileID: 2124475275}
   - {fileID: 1230765450}
   _roads: []
-  NpcTraders: []
+  NpcTraders:
+  - {fileID: 11400000, guid: a6b18742d2b6f2346af4d30bb022eaa8, type: 2}
+  - {fileID: 11400000, guid: a13d0d62255f6b14791ad04b8b122432, type: 2}
+  - {fileID: 11400000, guid: 9d9ab6046333da947a85bc000aebd281, type: 2}
+  - {fileID: 11400000, guid: 473d18e5984329448b303223544fad6e, type: 2}
   WagonUpgraders: []
 --- !u!222 &1015483342
 CanvasRenderer:
