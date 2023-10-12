@@ -102,7 +102,7 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
     }
     private void OnTimeSkipped(int daysSkipped, int hoursSkipped, int minutesSkipped)
     {
-        int totalMinutesSkipped = daysSkipped * 24 + hoursSkipped * 60 + minutesSkipped;
+        int totalMinutesSkipped = (daysSkipped * 24 + hoursSkipped) * 60 + minutesSkipped;
         Needs.SkipNeeds(totalMinutesSkipped);
     }
 
