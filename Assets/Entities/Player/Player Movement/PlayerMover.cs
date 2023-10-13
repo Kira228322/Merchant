@@ -89,7 +89,6 @@ public class PlayerMover : MonoBehaviour
             _rigidbody.velocity = new Vector2(0,0);
         }
         else _animator.SetTrigger("Move");
-
         _currentMove = StartCoroutine(Move(startPos, targetPos));
     }
     
@@ -110,8 +109,11 @@ public class PlayerMover : MonoBehaviour
             _tickMove = StartCoroutine(StartTickMove(false));
         else
         {
-            StopCoroutine(_tickMove);
-            _tickMove = null;
+            if (_tickMove != null)
+            {
+                StopCoroutine(_tickMove);
+                _tickMove = null;
+            }
         }
     }
 
@@ -121,8 +123,11 @@ public class PlayerMover : MonoBehaviour
             _tickMove = StartCoroutine(StartTickMove(true));
         else
         {
-            StopCoroutine(_tickMove);
-            _tickMove = null;
+            if (_tickMove != null)
+            {
+                StopCoroutine(_tickMove);
+                _tickMove = null;
+            }
         }
     }
 

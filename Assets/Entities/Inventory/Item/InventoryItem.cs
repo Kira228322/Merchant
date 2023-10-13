@@ -68,8 +68,8 @@ public class InventoryItem : MonoBehaviour
         {
             RectTransform spoilSliderRectTransform = _spoilSlider.GetComponent<RectTransform>();
             _spoilSlider.gameObject.SetActive(true);
-            spoilSliderRectTransform.localPosition = new(spoilSliderRectTransform.localPosition.x - 5, spoilSliderRectTransform.localPosition.y);
-            _spoilSlider.GetComponent<RectTransform>().sizeDelta = new(Width * ItemGrid.TileSizeWidth - 10, spoilSliderRectTransform.sizeDelta.y);
+            spoilSliderRectTransform.localPosition = new(spoilSliderRectTransform.localPosition.x - Width * 5, spoilSliderRectTransform.localPosition.y);
+            _spoilSlider.GetComponent<RectTransform>().sizeDelta = new(Width * (ItemGrid.TileSizeWidth * 0.9f - 10), spoilSliderRectTransform.sizeDelta.y);
             //Wtf is sizeDelta?? -> https://stackoverflow.com/questions/44471568/how-to-calculate-sizedelta-in-recttransform
             //spoilSliderRectTransform.localPosition.x - 5 и TileSizeWidth - 10:
             //-5 и -10 для того, чтобы слайдер остался по центру, но не был растятут на всю протяженность айтема,
@@ -91,10 +91,12 @@ public class InventoryItem : MonoBehaviour
         _currentItemsInAStackText.rectTransform.anchorMax = new Vector2(IsRotated == true ? 0 : 1, 0);
         _currentItemsInAStackText.rectTransform.localRotation = Quaternion.Euler(0, 0, IsRotated == true ? 270f : 0f);
 
-        sliderRectTransform.anchorMin = new Vector2(IsRotated == true ? 0 : 1, 0);
-        sliderRectTransform.anchorMax = new Vector2(IsRotated == true ? 0 : 1, 0);
-        sliderRectTransform.localRotation = Quaternion.Euler(0, 0, IsRotated == true ? 270f : 0f);
-        sliderRectTransform.sizeDelta = new Vector2(Width * ItemGrid.TileSizeWidth, sliderRectTransform.sizeDelta.y);
+        sliderRectTransform.anchorMin = new Vector2(IsRotated == true? 0: 1, 0);
+        sliderRectTransform.anchorMax = new Vector2(IsRotated == true? 0: 1, 0);
+        sliderRectTransform.pivot = new Vector2(IsRotated == true ? 0 : 1, 0);
+        sliderRectTransform.localPosition = new(sliderRectTransform.localPosition.x, sliderRectTransform.localPosition.y + Width * 5);
+        sliderRectTransform.localRotation = Quaternion.Euler(0, IsRotated == true? 180f: 0f, IsRotated == true ? 90f : 0f);
+        sliderRectTransform.sizeDelta = new(Width * (ItemGrid.TileSizeWidth * 0.9f - 10), sliderRectTransform.sizeDelta.y);
     }
 
     public void RefreshSliderValue()
