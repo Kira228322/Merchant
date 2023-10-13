@@ -15,7 +15,7 @@ public class Item : ScriptableObject
         RichClothes = 0, WarmClothes, LightClothes, CeramicProduct, EverydayItem, CostumeJewelry, SouthPlant, NorthPlant, 
         Cactus, MagicThing, Chemicals, Cosmetics, SouthFood, NorthFood, Food, Tea, Spices, EastSpices, MagicMaterial,
         Fish, Seeds, MagicSeeds, SouthFruit, NorthFruit, Sushi, AlcoholDrink, Drink, Potion, Equipment, Armor, RangeWeapon, 
-        Materials
+        Materials, PreciousMetalsGems
     }
     
     public ItemType TypeOfItem;
