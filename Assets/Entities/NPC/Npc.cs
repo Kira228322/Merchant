@@ -39,7 +39,7 @@ public class Npc : MonoBehaviour
 
     private void CheckExclamationMark(Quest quest)
     {
-
+        
         if (QuestHandler.IsNpcTargetOfAnyActiveQuest(NpcData.ID))
         {
             if (ExclamationMark == null)
@@ -51,6 +51,7 @@ public class Npc : MonoBehaviour
         else if (ExclamationMark != null)
         {
             Destroy(ExclamationMark);
+            ExclamationMark = null;
         }
     }
 }
