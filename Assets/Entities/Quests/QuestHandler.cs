@@ -11,7 +11,7 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
     
     public static QuestLog QuestLog => Instance._questLog;
     public static event UnityAction<Quest> QuestChangedState; 
-    private static QuestHandler Instance;
+    public static QuestHandler Instance;
 
     [SerializeField] private QuestLog _questLog; //UI- вестЋог
     

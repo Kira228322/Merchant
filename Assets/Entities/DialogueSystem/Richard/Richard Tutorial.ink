@@ -40,7 +40,7 @@ INCLUDE ../MainInkLibrary.ink
     +[(Отдать 200 золота)]
         ~change_player_money(-200)
         ~invoke_dialogue_event("tutorial_buy_relic_from_richard")
-        ~place_item("tutorialRelic", 1, 0)
+        ~place_item("tutorial_relic", 1, 0)
         Вот это другой разговор. На, держи, мне она без толку.
         ->END
 }
