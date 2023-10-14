@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine.Events;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ public class ActiveStatus
     public Status StatusData { get; private set; }
     public float CurrentDurationHours { get; private set; }
     public event UnityAction StatusUpdated;
-
+    
     public void Init(Status status)
     {
         StatusData = status;
@@ -113,6 +114,7 @@ public class ActiveStatus
                     // TODO добавлять новые действия с появлением статов
             }
         }
+        
         IsActive = false;
     }
 }

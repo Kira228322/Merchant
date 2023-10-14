@@ -4806,7 +4806,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -25814,7 +25814,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -45511,6 +45511,7 @@ GameObject:
   - component: {fileID: 4219820336388946425}
   - component: {fileID: 4219820336388946427}
   - component: {fileID: 4219820336388946428}
+  - component: {fileID: 4219820336388946429}
   m_Layer: 5
   m_Name: StatusesContainer
   m_TagString: Untagged
@@ -45530,6 +45531,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5071e33b04e378438a32861fc9df9a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _statusPanelRayCastTargeting: {fileID: 4219820336388946429}
   _statusPrefab: {fileID: 8329566529509777845, guid: db4948515ec2fe445ad72cbbbe60720f, type: 3}
   _container: {fileID: 4009832271467827650}
   _lowNeedsDebuff: {fileID: 11400000, guid: 968ae5bcab53baf42a017f3ecaa0a9d5, type: 2}
@@ -45574,6 +45576,20 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &4219820336388946429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4191871859834429932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 520e27f1a654e2845810bbb82ec8ad0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scrollView: {fileID: 1473114975}
+  _viewPort: {fileID: 264292039}
 --- !u!1001 &4378009356465105553
 PrefabInstance:
   m_ObjectHideFlags: 0

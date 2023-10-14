@@ -8,6 +8,7 @@ public class StatusManager : MonoBehaviour, ISaveable<StatusManagerSaveData>
 {
     [HideInInspector] public static StatusManager Instance;
 
+    [SerializeField] private StatusPanelRayCastTargeting _statusPanelRayCastTargeting;
     [SerializeField] private GameObject _statusPrefab;
     [SerializeField] private Transform _container;
     [SerializeField] private Status _lowNeedsDebuff;
@@ -17,6 +18,7 @@ public class StatusManager : MonoBehaviour, ISaveable<StatusManagerSaveData>
 
     public ActiveStatus AddStatusForPlayer(Status status)
     {
+        _statusPanelRayCastTargeting.ChangeEnable(true);
         ActiveStatus alreadyActive = ActiveStatuses.FirstOrDefault(s => s.StatusData.StatusName == status.StatusName);
         if (alreadyActive != null)
         {
@@ -38,6 +40,8 @@ public class StatusManager : MonoBehaviour, ISaveable<StatusManagerSaveData>
             if (!status.IsActive)
             {
                 ActiveStatuses.RemoveAt(i);
+                if (ActiveStatuses.Count == 0)
+                    _statusPanelRayCastTargeting.ChangeEnable(false); 
             }
         }
     }
