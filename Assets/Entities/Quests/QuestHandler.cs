@@ -11,7 +11,7 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
     
     public static QuestLog QuestLog => Instance._questLog;
     public static event UnityAction<Quest> QuestChangedState; 
-    private static QuestHandler Instance;
+    public static QuestHandler Instance;
 
     [SerializeField] private QuestLog _questLog; //UI- вестЋог
     
@@ -54,7 +54,7 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
     }
     private void OnQuestChangedState(Quest quest, Quest.State oldState, Quest.State newState)
     {
-
+        Debug.Log($"{quest.QuestSummary} changed state: {oldState} to {newState}");
         ActiveQuests.Remove(quest); // вест не может изменить своЄ состо€ние на активное,
                                     //он только начинает в таком состо€нии.
                                     //(Quest.ctor не вызывает этот ивент)

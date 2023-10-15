@@ -2,6 +2,9 @@ INCLUDE ../MainInkLibrary.ink
 
 ~temp questSummaries = get_activeQuestList()
 {contains(questSummaries, "tutorial_talk_to_richard"):
+-> farewell
+}
+{contains(questSummaries, "tutorial_talk_to_thomas_after_reading_letter"):
 -> goToRichard
 }
 {contains(questSummaries, "tutorial_readletter"):
@@ -45,9 +48,16 @@ INCLUDE ../MainInkLibrary.ink
 Ну же, прочитай письмо из конверта. Я не вскрывал, так что мне самому интересно, что там!
 -> END
 
+== farewell ===
+Счастливого пути!
+->END
+
 === goToRichard ===
 Ну как, что говорилось в письме?
-    +[Мне нужно поехать в соседнюю деревню и найти там какого-то Ричарда...]
-        Ричарда? Не, я про такого не слышал. По крайней мере, это не наш общий знакомый. 
-        Ну что ж, удачи тебе! Я так понимаю, отец дал тебе воспользоваться ослом. Счастливого пути!
+    +[Мне нужно найти какого-то Ричарда...]
+        Ричарда? Да, слышал про такого. На самом деле, неприятный старик.
+        Деньги любит больше всего на свете, очень скуп и дерзок.
+        Он живёт в соседней деревне под названием Сосновка, на этой повозке легко доедешь.
+        Ну что ж, удачи тебе и счастливого пути!
+        ~invoke_dialogue_event("tutorial_talk_to_thomas_after_reading_letter")
         ->END

@@ -76,6 +76,12 @@ public class Item : ScriptableObject
         {ItemType.Sushi, "Суши"},
         {ItemType.AlcoholDrink, "Спиртной напиток"},
         {ItemType.Drink, "Напиток"},
+        {ItemType.Potion, "Эликсир"},
+        {ItemType.Equipment, "Экипировка"},
+        {ItemType.Armor, "Броня"},
+        {ItemType.RangeWeapon, "Дальнобойное оружие"},
+        {ItemType.Materials, "Материалы"},
+        {ItemType.PreciousMetalsGems, "Драгоценные камни/металлы"}
     };
 
     

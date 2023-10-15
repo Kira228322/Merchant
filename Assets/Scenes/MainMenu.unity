@@ -2849,8 +2849,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tutorialPresentations:
-  - RequiredQuestSummary: delivery_test
-    PresentationSummary: test_presentation
+  - RequiredQuestSummary: tutorial_readletter
+    PresentationSummary: use_items
+  - RequiredQuestSummary: tutorial_talk_to_richard
+    PresentationSummary: travel
 --- !u!1 &151568240
 GameObject:
   m_ObjectHideFlags: 0
@@ -17322,7 +17324,8 @@ MonoBehaviour:
   _inactiveSliderCounter: {fileID: 21300000, guid: 370b39e28ffe4fb308cb43cab34575b9, type: 3}
   _activeSliderCounter: {fileID: 21300000, guid: a0f74f823ced3e4b3a2ac3db3bfcbec9, type: 3}
   Presentations:
-  - {fileID: 11400000, guid: a08d989f2721ac74a816bd5ba068e7d4, type: 2}
+  - {fileID: 11400000, guid: 7967b560f6e9b76429dda9c411fc3396, type: 2}
+  - {fileID: 11400000, guid: 7cac69dd8d8ec3242a38db0ed9c38bf5, type: 2}
 --- !u!1 &983470489
 GameObject:
   m_ObjectHideFlags: 0
@@ -39046,7 +39049,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7157337249745081687, guid: 2e2ddaa5b5469f747b03ef9718e09bb3, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -7.5
+      value: -7.4999695
       objectReference: {fileID: 0}
     - target: {fileID: 7630135532125775447, guid: 2e2ddaa5b5469f747b03ef9718e09bb3, type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -41045,6 +41048,7 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 4
     m_NumAlphaKeys: 2
+  _slider: {fileID: 3279153272848613810}
 --- !u!1 &3279153272896389504
 GameObject:
   m_ObjectHideFlags: 0
@@ -44480,6 +44484,7 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 4
     m_NumAlphaKeys: 2
+  _slider: {fileID: 3279153274134630022}
 --- !u!114 &3279153274143502478
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -39,15 +39,19 @@ public class Npc : MonoBehaviour
 
     private void CheckExclamationMark(Quest quest)
     {
-
+        
         if (QuestHandler.IsNpcTargetOfAnyActiveQuest(NpcData.ID))
         {
-            ExclamationMark = Instantiate(_exclamationMarkPrefab, gameObject.transform);
-            ExclamationMark.GetComponent<ExclamationMark>().Init(gameObject.GetComponent<BoxCollider2D>());
+            if (ExclamationMark == null)
+            {
+                ExclamationMark = Instantiate(_exclamationMarkPrefab, gameObject.transform);
+                ExclamationMark.GetComponent<ExclamationMark>().Init(gameObject.GetComponent<BoxCollider2D>());
+            }
         }
         else if (ExclamationMark != null)
         {
             Destroy(ExclamationMark);
+            ExclamationMark = null;
         }
     }
 }
