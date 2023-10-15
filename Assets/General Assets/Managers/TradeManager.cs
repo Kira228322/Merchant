@@ -97,6 +97,7 @@ public class TradeManager : MonoBehaviour
 
     private IEnumerator CloseTradeWindowCoroutine()
     {
+        Player.Instance.Inventory.InventoryPanel.GetComponent<CanvasGroup>().blocksRaycasts = false;
         _inventoryBlockAnimator.SetTrigger("Close");
         _sellPanelAnimator.SetTrigger("Close");
         _buyPanelAnimator.SetTrigger("Close");
@@ -131,7 +132,8 @@ public class TradeManager : MonoBehaviour
             panel.Trader.AdditiveGoods.Add(new NpcTrader.TraderGood
                 (panel.Item.Good.Name, panel.CurrentCount, panel.CurrentCount, newPrice));
         }
-            
+        
+        Player.Instance.Inventory.InventoryPanel.GetComponent<CanvasGroup>().blocksRaycasts = true;
         InventoryController.Instance.enabled = true;
         _playerBlock.alpha = 1;
         _playerBlock.blocksRaycasts = true;
