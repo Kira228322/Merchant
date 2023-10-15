@@ -20,6 +20,16 @@ public class ItemDatabase : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        //TODO: убрать проверку двух одинаковых предметов перед релизом
+        var duplicateGroups = Instance.Items.ItemList.GroupBy(item => item.Name).Where(group => group.Count() > 1);
+        foreach (var group in duplicateGroups)
+        {
+            Debug.LogWarning($" {group.Key} содержится в базе данных два раза!");
+        }
+    }
+
     public static Item GetItem(string name)
     {
         Item result = Instance.Items.ItemList.FirstOrDefault(item => item.Name.ToLower() == name.ToLower());

@@ -50,7 +50,8 @@ public class NpcTraderData : NpcData, IResetOnExitPlaymode, ISaveable<NpcTraderS
     private void OnEnable()
     {
         Goods = _baseGoods.Select(good => new NpcTrader.TraderGood(good)).ToList();
-        AdditiveGoods.Clear(); //AdditiveGoods рассчитываются только в рантайме или при загрузке сохранения, с инспектором никак не связаны
+        if (AdditiveGoods != null)
+            AdditiveGoods.Clear(); //AdditiveGoods рассчитываются только в рантайме или при загрузке сохранения, с инспектором никак не связаны
         SetBuyCoefficients();
         BuyCoefficients = _baseBuyCoefficients.Select(buyCoefficient => new NpcTrader.BuyCoefficient(buyCoefficient)).ToList();
     }

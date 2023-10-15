@@ -2853,6 +2853,10 @@ MonoBehaviour:
     PresentationSummary: use_items
   - RequiredQuestSummary: tutorial_talk_to_richard
     PresentationSummary: travel
+  - RequiredQuestSummary: crafting_lesson_make_belt
+    PresentationSummary: craft_basic
+  - RequiredQuestSummary: crafting_lesson_make_planks
+    PresentationSummary: craft_station
 --- !u!1 &151568240
 GameObject:
   m_ObjectHideFlags: 0
@@ -17327,6 +17331,8 @@ MonoBehaviour:
   Presentations:
   - {fileID: 11400000, guid: 7967b560f6e9b76429dda9c411fc3396, type: 2}
   - {fileID: 11400000, guid: 7cac69dd8d8ec3242a38db0ed9c38bf5, type: 2}
+  - {fileID: 11400000, guid: 15bbf6d095258254cbe9e0812bd4bc2a, type: 2}
+  - {fileID: 11400000, guid: c973f46c8a59b314f8cf5992a4c0322b, type: 2}
 --- !u!1 &983470489
 GameObject:
   m_ObjectHideFlags: 0
@@ -33060,6 +33066,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Location: {fileID: 0}
+  MultiplyCoefficient: 0
+  SelectedItem: 
   PossibleLocations:
   - {fileID: 9056293358578365361}
 --- !u!1 &1922434230

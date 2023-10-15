@@ -54,7 +54,6 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
     }
     private void OnQuestChangedState(Quest quest, Quest.State oldState, Quest.State newState)
     {
-        Debug.Log($"{quest.QuestSummary} changed state: {oldState} to {newState}");
         ActiveQuests.Remove(quest); // вест не может изменить своЄ состо€ние на активное,
                                     //он только начинает в таком состо€нии.
                                     //(Quest.ctor не вызывает этот ивент)
