@@ -6,23 +6,22 @@ using UnityEngine;
 [Serializable]
 public class GlobalEvent_Flood : GlobalEvent_Base
 {
-    public override string GlobalEventName => $"Наводнение в {Location.VillageName}!";
-
-    public override string Description => $"В {Location.VillageName} произошло наводнение. Ожидается ухудшение урожая пшеницы.";
+    public override string GlobalEventName => $"Наводнение в деревне {Location.VillageName}!";
+    public override string Description => $"В деревне {Location.VillageName} произошло наводнение. Больше всего пострадали запасы продукта {ItemToMultiplyName}.";
 
     [NonSerialized] public Location Location;
-    public string ItemToDeleteName => "Крутецкий кактус"; //TODO: пока пшеницы нет, удаляю Крутецкий кактус.
+    public float MultiplyCoefficient;
+    public string ItemToMultiplyName;
+
     public override void Execute()
     {
-        Location.DeleteItemsFromTraders(ItemToDeleteName);
-      //TODO когда будет категория сельхозпродукта в датабазе:
-      //ItemDatabase.GetRandomItemOfThisType(Item.ItemType.GrownFood)
+        Location.MultiplyItemsInTraders(ItemToMultiplyName, MultiplyCoefficient);
     }
 
     public override void Terminate()
     {
         //Одноразовый ивент.
-        //После удаления пшеницы она медленно начнет возвращаться сама из-за системы экономики.
+        //После высокого/низкого прироста еды она медленно начнет возвращаться сама из-за системы экономики.
         //Поэтому ничего не происходит когда ивент заканчивается.
     }
 }

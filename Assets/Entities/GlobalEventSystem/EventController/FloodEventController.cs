@@ -14,15 +14,20 @@ public class FloodEventController : MonoBehaviour, IEventController<GlobalEvent_
     public int LastEventDay { get; set; }
 
     [HideInInspector] public Location Location;
+    [HideInInspector] public float MultiplyCoefficient;
+    [HideInInspector] public string SelectedItem;
 
     public List<Location> PossibleLocations = new();
-    //TODO: по готовности локаций вставить в инспекторе те, которые близко к воде и имеют риск наводнения
+    //TODO: по готовности локаций вставить в инспекторе те, которые имеют риск наводнения
+
     public GlobalEvent_Flood AddEvent()
     {
         GlobalEvent_Flood newEvent = new()
         {
             DurationHours = DurationOfEvent,
             Location = Location,
+            MultiplyCoefficient = MultiplyCoefficient,
+            ItemToMultiplyName = SelectedItem,
         };
         var eventToAdd = GlobalEventHandler.Instance.AddGlobalEvent(newEvent);
         LastEventDay = GameTime.CurrentDay;
@@ -34,9 +39,13 @@ public class FloodEventController : MonoBehaviour, IEventController<GlobalEvent_
     {
         DateOfNextEvent = LastEventDay + Random.Range(MinDelayToNextEvent, MaxDelayToNextEvent + 1);
         HourOfNextEvent = Random.Range(1, 24);
-        DurationOfEvent = 1; //Этот ивент одноразовый, а не длящийся
+        DurationOfEvent = 24; //Этот ивент одноразовый, но у игрока будет 24 часа чтобы заметить объявление на доске
+
+        MultiplyCoefficient = Random.Range(0.6f, 0.8f);
+
         List<Location> sameRegionLocations = PossibleLocations.Where(location => location.Region == MapManager.CurrentRegion).ToList();
         Location = sameRegionLocations[Random.Range(0, sameRegionLocations.Count)];
+        SelectedItem = SelectApplicableItem();
     }
 
     public void PrepareEvent()
@@ -47,6 +56,23 @@ public class FloodEventController : MonoBehaviour, IEventController<GlobalEvent_
 
     public void RemoveEvent()
     {
-        
+
+    }
+
+    private string SelectApplicableItem()
+    {
+        var sortedItems = Location.NpcTraders.SelectMany(trader => trader.Goods)
+            .GroupBy(item => item.Good)
+            .Select(group => new
+            {
+                Item = group.Key,
+                TotalCount = group.Sum(item => item.MaxCount * item.Good.Price)
+            })
+            .OrderByDescending(group => group.TotalCount)
+            .ToList();
+        if (sortedItems.Count < 5)
+            Debug.LogError("На локации меньше 5 предметов!!!"); //TODO убрать на релизе
+
+        return sortedItems[Random.Range(0, 5)].Item.Name;
     }
 }

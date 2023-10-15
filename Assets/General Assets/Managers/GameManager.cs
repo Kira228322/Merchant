@@ -66,6 +66,8 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
     {
         _sceneTransiter.StartTransit(_startLocation);
         _newGameButton.onClick.RemoveListener(StartNewGame);
+
+        GameTime.TimeSet(1, 8, 0);
     }
     public void LoadGame() //По нажатию кнопки Продолжить в MainMenu
     {
