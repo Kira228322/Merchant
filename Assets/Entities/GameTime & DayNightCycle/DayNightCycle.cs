@@ -15,8 +15,8 @@ public class DayNightCycle : MonoBehaviour
 {
     [SerializeField]private RawImage _farBackground;
     [SerializeField]private RawImage _nearBackground;
-    private Color _white = new Color(0.95f,0.95f,0.95f);
-    private Color _grey = new Color(0.82f,0.82f,0.82f);
+    private Color _white = new Color(0.9f,0.9f,0.9f);
+    private Color _grey = new Color(0.8f,0.8f,0.8f);
     private Color _darkGrey = new Color(0.29f,0.29f,0.29f);
     private Color _black = new Color(0.23f,0.23f,0.23f);
     

@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 
 public abstract class UsableEnvironment : MonoBehaviour, IPointerClickHandler
 {
+    [SerializeField] private MarkerSpawner _markerSpawner;
     [SerializeField] private string _warningLabel;
     [SerializeField] private string _warningMessage;
     [SerializeField] private int _cooldownHours;
@@ -14,7 +15,7 @@ public abstract class UsableEnvironment : MonoBehaviour, IPointerClickHandler
     [SerializeField] private ParticleSystem _particleSystem; // партиклы после юза выключаются 
 
     private bool _isActive = true;
-    private float _distanceToUse = 3;
+    private float _distanceToUse = 3.1f;
     private UniqueID _uniqueID;
     private CooldownHandler _cooldownHandler;
 
@@ -54,6 +55,7 @@ public abstract class UsableEnvironment : MonoBehaviour, IPointerClickHandler
         {
             CosmeticUse();
             _cooldownHandler.Register(_uniqueID.ID, _cooldownHours);
+            _markerSpawner.DisableMarkerSpawner();
         }
         else
             CanvasWarningGenerator.Instance.CreateWarning(_warningLabel, _warningMessage);
@@ -72,6 +74,7 @@ public abstract class UsableEnvironment : MonoBehaviour, IPointerClickHandler
         GetComponent<SpriteRenderer>().sprite = _defaultSprite;
         _particleSystem.Play();
         _isActive = true;
+        _markerSpawner.EnableMarkerSpawner();
     }
     private void OnReadyToReset(string uniqueID)
     {
