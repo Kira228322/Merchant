@@ -22,7 +22,7 @@ INCLUDE ../MainInkLibrary.ink
 
 === making_belt ===
 Ну как там успехи с поясом?
-    {has_enough_items("crafting_lesson_make_belt") and check_if_can_place_item("Рецепт (Деревянная доска)", 1):
+    {has_enough_items("crafting_lesson_make_belt") and check_if_can_place_multiple_items("Рецепт (Деревянная доска)[1],Бревно[1]"):
         +[Вот, погляди. (Отдать 1х Пояс)]
             ~invoke_dialogue_event("crafting_lesson_make_belt")
             Отличная работа! У тебя вышел замечательный пояс.
@@ -53,7 +53,7 @@ INCLUDE ../MainInkLibrary.ink
 === quest_offering ===
 Решил немного поработать на улице. Свежий воздух полезен для здоровья!
 Я смотрю, руки у тебя крепкие. Не хочешь немного помочь мне? Я могу поучить тебя своему ремеслу.
-    {check_if_can_place_item("Рецепт (Пояс)", 1):
+    {check_if_can_place_multiple_items("Кожа[1],Веревка[1],Рецепт (Пояс)[1]"):
     +[Давай.]
         ->crafting_lesson_start
     }

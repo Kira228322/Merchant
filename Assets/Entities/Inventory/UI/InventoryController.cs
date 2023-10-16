@@ -382,6 +382,21 @@ public class InventoryController : MonoBehaviour
         }
         return true;
     }
+    public bool CanInsertMultipleItems(ItemGrid itemGrid, Dictionary<Item, int> itemsAmounts)
+    {
+        List<InventoryItem> items = new();
+        foreach (KeyValuePair<Item, int> itemAmount in itemsAmounts)
+        {
+            items.Add(CreateItem(itemAmount.Key, itemAmount.Value, 0));
+        }
+        bool result = CanInsertMultipleItems(itemGrid, items);
+        //Удалить созданные нужно независимо от результата.
+        //Кажется, я всё равно переделаю это, избавлюсь от этих трёх методов насовсем.
+        //Надеюсь, в релиз они не выйдут - CanInsertMultipleItems доставляет мне ужасный стыд.
+        foreach (InventoryItem item in items)
+            Destroy(item.gameObject);
+        return result;
+    }
     public bool CanInsertItem(ItemGrid itemGrid, Item item, int amount)
     {
         InventoryItem placedItem = TryCreateAndInsertItem(itemGrid, item, amount, 0, true);
