@@ -149,7 +149,7 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
         }
         if (Input.GetKeyDown(KeyCode.I))
         {
-            GameTime.TimeSkip(0, 2, 15);
+            InventoryController.Instance.Sort(Instance.ItemGrid);
         }
 
 

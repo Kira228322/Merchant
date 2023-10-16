@@ -12,6 +12,12 @@ public class InventoryPanel : MonoBehaviour
     [SerializeField] private TMP_Text _goldText;
     [SerializeField] private TMP_Text _weightText;
     
+
+    public void OnSortButtonPressed()
+    {
+        InventoryController.Instance.Sort(_playersInventory.ItemGrid);
+    }
+
     private void OnEnable()
     {
         _playersInventory.WeightChanged += OnWeightChanged;

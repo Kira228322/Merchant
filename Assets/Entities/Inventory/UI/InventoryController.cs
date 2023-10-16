@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 public class InventoryController : MonoBehaviour
 {
@@ -272,6 +272,17 @@ public class InventoryController : MonoBehaviour
         public Item item;
         public int amount;
         public float daysBoughtAgo;
+
+        public CompactedItem(InventoryItem itemToCompact)
+        {
+            item = itemToCompact.ItemData;
+            amount = itemToCompact.CurrentItemsInAStack;
+            daysBoughtAgo = itemToCompact.BoughtDaysAgo;
+        }
+        public CompactedItem()
+        {
+            
+        }
     }
     public bool CanInsertMultipleItems(ItemGrid itemGrid, List<ItemReward> rewardItems)
     {
@@ -407,6 +418,24 @@ public class InventoryController : MonoBehaviour
         itemGrid.RemoveItemsFromAStack(placedItem, amount);
         return true;
     }
+    public void Sort(ItemGrid itemGrid)
+    {
+        //Сортирует выбранную itemGrid по размеру айтемов. Запоминает и удаляет все предметы из неё,
+        //а потом инсертит от больших к маленьким. 
+
+        List<InventoryItem> oldItems = itemGrid.GetAllItemsInTheGrid();
+        List<CompactedItem> items = oldItems.Select(item => new CompactedItem(item)).ToList(); //копирует, запоминает старые предметы
+        foreach (InventoryItem item in oldItems)
+            DestroyItem(itemGrid, item);
+
+        items.Sort((x, y) => (y.item.CellSizeWidth * y.item.CellSizeHeight).CompareTo(x.item.CellSizeWidth * x.item.CellSizeHeight));
+        //^ сортировка по занимаемой площади https://stackoverflow.com/a/3309292
+
+        foreach (CompactedItem item in items)
+        {
+            TryCreateAndInsertItem(itemGrid, item.item, item.amount, item.daysBoughtAgo, true);
+        }
+    }
     public InventoryItem TryCreateAndInsertItem(ItemGrid itemGrid, Item item, int amount, float daysBoughtAgo, bool isFillingStackFirst)
     {
         if (amount <= 0)
@@ -416,6 +445,9 @@ public class InventoryController : MonoBehaviour
         {
             result = TryCreateAndInsertItemRotated(itemGrid, item, amount, daysBoughtAgo, isFillingStackFirst);
         }
+        //(17.10.23)Вот сюда стоит добавить "вставить в тайник". Но GoodsBuyPanel,
+        //например, тоже использует этот метод, а при торговле мы этого не хотим.
+        //Как быть? Добавить ещё bool "инсертает квестовый предмет"?
         return result;
     }
     private InventoryItem TryCreateAndInsertItemUnrotated(ItemGrid itemGrid, Item item, int amount, float daysBoughtAgo, bool isFillingStackFirst)

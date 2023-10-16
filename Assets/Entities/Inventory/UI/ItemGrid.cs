@@ -172,17 +172,17 @@ public class ItemGrid : MonoBehaviour
                                           .Count(slot => slot == null);
         return result;
     }
+    public int GetEmptyRowsCount()
+    {
+        int result = _storedInventoryItems.Count(row => !row.itemArray.Any(item => item != null));
+        return result;
+    }
     public InventoryItem GetItem(int x, int y)
     {
         return _storedInventoryItems[y].itemArray[x];
     }
-    [System.Obsolete] public List<InventoryItem> GetAllItemsInTheGrid()
+    public List<InventoryItem> GetAllItemsInTheGrid()
     {
-        //Дорогой метод, на данный момент нигде не используется, но может быть нужен в будущем.
-        //По сути, его функционал и так выполняет PlayersInventory, следя за всеми айтемами в любой момент (и эффективнее),
-        //но такой метод может быть нужен, если нужно получить все предметы в другой сетке инвентаря (инвентаря не игрока)
-        //может какой нибудь сундук или я хуй знает, в общем, если не найдет своё применение, потом уберу.
-
         List<InventoryItem> result = new();
         for (int i = 0; i < _storedInventoryItems.Count; i++)
         {
@@ -399,6 +399,25 @@ public class ItemGrid : MonoBehaviour
             _storedInventoryItems.Add(newInventoryRow);
         }
         _gridSizeHeight += numberOfRowsToAdd;
+
+        Vector2 size = new(_gridSizeWidth * TileSizeWidth, _gridSizeHeight * TileSizeHeight);
+        _rectTransform.sizeDelta = size;
+
+    }
+    public void RemoveRowsFromGrid(int numberOfRowsToRemove)
+    {
+        if (numberOfRowsToRemove <= 0) return;
+        for (int i = _storedInventoryItems.Count - 1; i >= 0; i--)
+        {
+            InventoryRow rowToRemove = _storedInventoryItems[i];
+            if (rowToRemove.itemArray.Any(item => item != null))
+            {
+                Debug.LogError("Роу, который пытались убрать, содержал айтемы!");
+                return;
+            }
+            _storedInventoryItems.Remove(rowToRemove);
+        }
+        _gridSizeHeight -= numberOfRowsToRemove;
 
         Vector2 size = new(_gridSizeWidth * TileSizeWidth, _gridSizeHeight * TileSizeHeight);
         _rectTransform.sizeDelta = size;
