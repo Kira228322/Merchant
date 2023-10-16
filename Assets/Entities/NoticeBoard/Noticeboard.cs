@@ -11,7 +11,7 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
     //Потому что UsableEnvironment предполагает, что у предмета есть кулдаун,
     //партиклы и изменение спрайта при использовании. Ничего из этого здесь не нужно
     //UPD 28.06.23: ну кулдаун всё-таки нужен, но он был реализован отдельно от UsableEnvironment
-
+    
     private UniqueID _uniqueID;
 
     private List<GlobalEvent_Base> _uncheckedActiveGlobalEvents;
@@ -20,7 +20,7 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
     [SerializeField] private SpriteRenderer _currentBoardSprite;
     [SerializeField] private List<Sprite> _boardSprites = new ();
     [SerializeField] private InfoNoticeSO _infoNoticeSO;
-    private float _distanceToUse = 3f;
+    private float _distanceToUse = 3.1f;
     private int _cooldownHours = 48; //Квесты могут появиться только раз в столько часов
     private Transform _canvas;
     private CooldownHandler _cooldownHandler;
