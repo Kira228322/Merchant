@@ -407,9 +407,9 @@ public class ItemGrid : MonoBehaviour
     public void RemoveRowsFromGrid(int numberOfRowsToRemove)
     {
         if (numberOfRowsToRemove <= 0) return;
-        for (int i = _storedInventoryItems.Count - 1; i >= 0; i--)
+        for (int i = 0; i < numberOfRowsToRemove; i++)
         {
-            InventoryRow rowToRemove = _storedInventoryItems[i];
+            InventoryRow rowToRemove = _storedInventoryItems[^1];
             if (rowToRemove.itemArray.Any(item => item != null))
             {
                 Debug.LogError("Роу, который пытались убрать, содержал айтемы!");

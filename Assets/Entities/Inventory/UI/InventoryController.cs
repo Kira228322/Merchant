@@ -436,7 +436,7 @@ public class InventoryController : MonoBehaviour
             TryCreateAndInsertItem(itemGrid, item.item, item.amount, item.daysBoughtAgo, true);
         }
     }
-    public InventoryItem TryCreateAndInsertItem(ItemGrid itemGrid, Item item, int amount, float daysBoughtAgo, bool isFillingStackFirst)
+    public InventoryItem TryCreateAndInsertItem(ItemGrid itemGrid, Item item, int amount, float daysBoughtAgo, bool isFillingStackFirst = true, bool forcedPlacement = false)
     {
         if (amount <= 0)
             return null;
@@ -448,6 +448,11 @@ public class InventoryController : MonoBehaviour
         //(17.10.23)Вот сюда стоит добавить "вставить в тайник". Но GoodsBuyPanel,
         //например, тоже использует этот метод, а при торговле мы этого не хотим.
         //Как быть? Добавить ещё bool "инсертает квестовый предмет"?
+        ItemGrid additionalItemGrid = Player.Instance.TemporaryItemGrid;
+        if (forcedPlacement)
+        {
+            result = TryCreateAndInsertItem(additionalItemGrid, item, amount, daysBoughtAgo, true, false);
+        }
         return result;
     }
     private InventoryItem TryCreateAndInsertItemUnrotated(ItemGrid itemGrid, Item item, int amount, float daysBoughtAgo, bool isFillingStackFirst)

@@ -14,6 +14,8 @@ public class TemporaryItemHolder : MonoBehaviour
 
     private ItemGrid _itemGrid;
 
+    public ItemGrid ItemGrid => _itemGrid;
+
     private int _defaultRowCount;
 
     private void OnEnable()
@@ -28,6 +30,8 @@ public class TemporaryItemHolder : MonoBehaviour
     }
     private void Awake()
     {
+        _itemGrid = GetComponent<ItemGrid>();
+        _itemGrid.Init();
         _defaultRowCount = _itemGrid.GridSizeHeight;
     }
 
@@ -39,7 +43,7 @@ public class TemporaryItemHolder : MonoBehaviour
         {
             _itemGrid.AddRowsToInventory(3 - emptyRowsCount);
         }
-        InventoryController.Instance.Sort(_itemGrid);
+        //InventoryController.Instance.Sort(_itemGrid);
     }
     private void OnItemRemoved(InventoryItem item)
     {
@@ -53,7 +57,9 @@ public class TemporaryItemHolder : MonoBehaviour
                 _itemGrid.RemoveRowsFromGrid(emptyRowsCount - _defaultRowCount);
             }
             else
+            {
                 _itemGrid.RemoveRowsFromGrid(emptyRowsCount - 3);
+            }
         }
     }
 }
