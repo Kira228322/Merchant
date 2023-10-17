@@ -14,8 +14,8 @@ public class Item : ScriptableObject
         //то все существующие предметы сдвинулись бы на одну категорию назад)
         RichClothes = 0, WarmClothes, LightClothes, CeramicProduct, EverydayItem, CostumeJewelry, SouthPlant, NorthPlant, 
         Cactus, MagicThing, Chemicals, Cosmetics, SouthFood, NorthFood, Food, Tea, Spices, EastSpices, MagicMaterial,
-        Fish, Seeds, MagicSeeds, SouthFruit, NorthFruit, Sushi, AlcoholDrink, Drink, Potion, Equipment, Armor, RangeWeapon, 
-        Materials, PreciousMetalsGems
+        Fish, Seeds, MagicSeeds, SouthFruitAndBerry, NorthFruitAndBerry, Sushi, AlcoholDrink, Drink, Potion, Equipment, Armor, RangeWeapon, 
+        Materials, PreciousMetalsGems, MeleeWeapon
     }
     
     public ItemType TypeOfItem;
@@ -71,8 +71,8 @@ public class Item : ScriptableObject
         {ItemType.Fish, "Рыба"},
         {ItemType.Seeds, "Семена"},
         {ItemType.MagicSeeds, "Магические семена"},
-        {ItemType.SouthFruit, "Южный фрукт"},
-        {ItemType.NorthFruit, "Северный фрукт"},
+        {ItemType.SouthFruitAndBerry, "Южный фрукт/ягода"},
+        {ItemType.NorthFruitAndBerry, "Северный фрукт/ягода"},
         {ItemType.Sushi, "Суши"},
         {ItemType.AlcoholDrink, "Спиртной напиток"},
         {ItemType.Drink, "Напиток"},
@@ -81,7 +81,8 @@ public class Item : ScriptableObject
         {ItemType.Armor, "Броня"},
         {ItemType.RangeWeapon, "Дальнобойное оружие"},
         {ItemType.Materials, "Материалы"},
-        {ItemType.PreciousMetalsGems, "Драгоценные камни/металлы"}
+        {ItemType.PreciousMetalsGems, "Драгоценные камни/металлы"},
+        {ItemType.MeleeWeapon, "Оружие ближнего боя"}
     };
 
     
