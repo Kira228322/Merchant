@@ -7,6 +7,8 @@ using TMPro;
 
 public class CraftingHandler : MonoBehaviour
 {
+    [SerializeField] private GameObject _itemInfoPanel;
+    [SerializeField] private TMP_Text _ItemName;
     [SerializeField] private Image _craftingStationIcon;
     [SerializeField] private TMP_Text _requiredCraftingStationText;
     [SerializeField] private UICraftingRecipe _recipeUIPrefab;
@@ -21,6 +23,13 @@ public class CraftingHandler : MonoBehaviour
     [SerializeField] private UICraftingItemContainer[] _requiredItemContainers = new UICraftingItemContainer[3];
     [HideInInspector] public CraftingRecipe SelectedRecipe;
     private CraftingStationType _currentCraftingStation;
+
+    public void OnIconClick()
+    {
+        ItemInfo itemInfoPanel = Instantiate(_itemInfoPanel, MapManager.Canvas.transform).GetComponent<ItemInfo>();
+        itemInfoPanel.Initialize(SelectedRecipe.ResultingItem);
+    }
+    
     public void ToggleActive()
     {
         gameObject.SetActive(!gameObject.activeSelf);
@@ -28,13 +37,25 @@ public class CraftingHandler : MonoBehaviour
         Refresh();
     }
 
-    public void SetCraftingStation(Sprite icon, string text, CraftingStationType type)
+    public void SetCraftingStation(Sprite icon, CraftingStationType type)
     {
         gameObject.SetActive(true);
         _craftingStationIcon.sprite = icon;
-        _requiredCraftingStationText.text = text;
         _currentCraftingStation = type;
         Refresh();
+    }
+
+    private string GetRequiredCraftingStationText(CraftingStationType craftingStationType)
+    {
+        switch (craftingStationType)
+        {
+            case CraftingStationType.Campfire:
+                return "Требуется источник огня";
+            case CraftingStationType.CraftingTable:
+                return "Требуется стол мастера";
+            default:
+                return "";
+        }
     }
     public void Refresh()
     {
@@ -76,9 +97,13 @@ public class CraftingHandler : MonoBehaviour
 
         if (SelectedRecipe.RequiredCraftingStation != CraftingStationType.Null &&
             SelectedRecipe.RequiredCraftingStation != _currentCraftingStation)
+        {
             _requiredCraftingStationText.gameObject.SetActive(true);
-
+            _requiredCraftingStationText.text = GetRequiredCraftingStationText(SelectedRecipe.RequiredCraftingStation);
+        }
+        
         _resultingItemIcon.sprite = SelectedRecipe.ResultingItem.Icon;
+        _ItemName.text = SelectedRecipe.ResultingItem.Name;
         _resultingItemDescription.text = SelectedRecipe.ResultingItem.Description;
         _requiredCraftingLevelText.text = "Требуемый уровень навыка: " + SelectedRecipe.RequiredCraftingLevel.ToString();
         _currentCraftingLevelText.text = "Текущий уровень навыка: " + (Player.Instance.Statistics.Crafting.Total < SelectedRecipe.RequiredCraftingLevel ? $"<color=red>" : "") + Player.Instance.Statistics.Crafting.Total;

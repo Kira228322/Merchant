@@ -7,7 +7,6 @@ public enum CraftingStationType { Null, Campfire, CraftingTable}
 public class CraftingStationSO : ScriptableObject
 { 
      public Sprite Icon;
-     public string Text;
      
      public CraftingStationType type;
 }

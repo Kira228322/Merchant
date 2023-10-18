@@ -9,6 +9,7 @@ using UnityEngine.Serialization;
 
 public class GoodsBuyPanel : MonoBehaviour
 {
+    [SerializeField] private GameObject _itemInfoPanel;
     [FormerlySerializedAs("_cost")] [SerializeField] private TMP_Text _costText;
     [SerializeField] private TMP_Text _countText;
     [SerializeField] private Image _icon;
@@ -33,6 +34,13 @@ public class GoodsBuyPanel : MonoBehaviour
             _countText.text = _currentCount.ToString();
         }
     }
+
+    public void OnIconClick()
+    {
+        ItemInfo itemInfoPanel = Instantiate(_itemInfoPanel, MapManager.Canvas.transform).GetComponent<ItemInfo>();
+        itemInfoPanel.Initialize(_item.Good);
+    }
+    
     public void Init(NpcTrader trader, Item goods, float boughtDaysAgo, bool isOriginatedFromTrader, int count)
     {
         TradeManager.Instance.GoodsBuyPanels.Add(this);

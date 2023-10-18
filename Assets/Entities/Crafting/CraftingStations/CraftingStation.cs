@@ -12,6 +12,6 @@ public class CraftingStation : MonoBehaviour, IPointerClickHandler
     {
         if ((transform.position - Player.Instance.transform.position).magnitude > _distanceToUse)
             return;
-        FindObjectOfType<CraftingHandler>(true).SetCraftingStation(_craftingStationSO.Icon, _craftingStationSO.Text, _craftingStationSO.type);
+        FindObjectOfType<CraftingHandler>(true).SetCraftingStation(_craftingStationSO.Icon, _craftingStationSO.type);
     }
 }
