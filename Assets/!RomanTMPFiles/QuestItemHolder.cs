@@ -40,24 +40,32 @@ public class QuestItemHolder : MonoBehaviour
     {
         //Добавлять пустые роу так, чтобы их стало 3. Сортировать после постановки айтема сюда (пустые роу должны быть в конце чтобы норм убирались)
 
+        if (_isSortingInProgress)
+            //.Sort() будет сам несколько раз вызывать этот ивент ItemPlaced,       
+            //т.е чтобы избежать рекурсии и StackOverflowException я добавляю такую bool проверку
+            return;
+
         int emptyRowsCount = _itemGrid.GetEmptyRowsCount();
         if (emptyRowsCount < 3)
         {
             _itemGrid.AddRowsToInventory(3 - emptyRowsCount);
         }
-        if (!_isSortingInProgress) 
-            //.Sort() будет сам несколько раз вызывать этот ивент ItemPlaced,       
-            //т.е чтобы избежать рекурсии и StackOverflowException я добавляю такую bool проверку
-        {
-            _isSortingInProgress = true;
-            InventoryController.Instance.Sort(_itemGrid);
-            _isSortingInProgress = false;
-        }
+
+        _isSortingInProgress = true;
+        InventoryController.Instance.Sort(_itemGrid);
+        _isSortingInProgress = false;
+
     }
     private void OnItemRemoved(InventoryItem item)
     {
         //Убирать лишние роу так, чтобы стало 3 пустых роу. Но не менее чем _defaultRowsCount (~4)
         //Не сортировать, иначе предмету сложно будет вернуться на место если что-то пойдет не так
+
+        if (_isSortingInProgress)
+            //.Sort() будет сам несколько раз вызывать этот ивент ItemRemoved,       
+            //т.е чтобы избежать рекурсии и StackOverflowException я добавляю такую bool проверку
+            return;
+
         int emptyRowsCount = _itemGrid.GetEmptyRowsCount();
         if (emptyRowsCount > 3)
         {

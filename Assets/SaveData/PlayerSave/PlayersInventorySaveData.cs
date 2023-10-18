@@ -23,7 +23,7 @@ public class PlayersInventorySaveData
     public List<SavedItem> items = new();
     public PlayersInventorySaveData(PlayersInventory inventory)
     {
-        foreach (InventoryItem item in inventory.BaseItemList)
+        foreach (InventoryItem item in inventory.ItemList)
         {
             items.Add(new SavedItem(item));
         }

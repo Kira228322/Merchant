@@ -290,7 +290,7 @@ public class PlayersInventory : MonoBehaviour, ISaveable<PlayersInventorySaveDat
         foreach(var item in saveData.items)
         {
             InventoryItem inventoryItem = InventoryController.Instance.TryCreateAndInsertItem(
-                ItemDatabase.GetItem(item.itemName), item.currentItemsInAStack, item.boughtDaysAgo, BaseItemGrid);
+                ItemDatabase.GetItem(item.itemName), item.currentItemsInAStack, item.boughtDaysAgo);
             inventoryItem.RefreshSliderValue();
         }
     }
