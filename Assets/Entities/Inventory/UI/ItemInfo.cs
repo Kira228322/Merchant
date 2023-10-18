@@ -53,8 +53,6 @@ public class ItemInfo : MonoBehaviour
             { UsableItem.UsableType.Energetic , EatEnergetic}
         };
     }
-    // TODO хрен его знает сделано это или нет, но надо чтобы наполовину гнилые предметы восстанавлиавли
-    // половину value. ј сгнившие нельз€ использовать.
 
     public void Initialize(InventoryItem item, ItemGrid itemGrid)
     {
