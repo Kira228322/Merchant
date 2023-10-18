@@ -9,6 +9,7 @@ using UnityEngine.UI;
 
 public class GoodsSellPanel : MonoBehaviour
 {
+    [SerializeField] private GameObject _itemInfoPanel;
     [FormerlySerializedAs("_cost")] [SerializeField] private TMP_Text _costText;
     [SerializeField] private TMP_Text _countText;
     [SerializeField] private Image _icon;
@@ -22,6 +23,13 @@ public class GoodsSellPanel : MonoBehaviour
     private NpcTrader _trader;
 
     public InventoryItem Item { get => _item; }
+    
+    
+    public void OnIconClick()
+    {
+        ItemInfo itemInfoPanel = Instantiate(_itemInfoPanel, MapManager.Canvas.transform).GetComponent<ItemInfo>();
+        itemInfoPanel.Initialize(_item);
+    }
 
     public void Init(NpcTrader trader, InventoryItem itemToSell, ItemGrid playerInventoryItemGrid)
     {

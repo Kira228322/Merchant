@@ -149,6 +149,147 @@ public class ItemInfo : MonoBehaviour
             _useButton.gameObject.SetActive(false);
         }
     }
+    
+    public void Initialize(InventoryItem item)
+    {
+        //присвоение текста и иконок
+        _itemIcon.sprite = item.ItemData.Icon;
+        _itemName.text = item.ItemData.Name;
+        _itemDescription.text = "Описание: " + item.ItemData.Description;
+        if (item.ItemData.TypeOfItem != Item.ItemType.Null)
+            _itemTypeText.text = "Категория предмета: " + Item.TranslateItemType(item.ItemData.TypeOfItem);
+        else
+            _itemTypeText.text = "";
+        
+        _splitButton.interactable = false;
+        _rotateButton.interactable = false;
+        _destroyButton.interactable = false;
+
+        _quantityText.text = $"Количество: {item.CurrentItemsInAStack}";
+        _weightText.text = $"Вес: {item.ItemData.Weight:F1}";
+        _totalWeightText.text = $"Общий вес: {item.ItemData.Weight * item.CurrentItemsInAStack:F1}";
+        _maxItemsInAStackText.text = $"Макс. количество: {item.ItemData.MaxItemsInAStack}";
+        _fragilityText.text = $"Хрупкость: {item.ItemData.Fragility}";
+        _averagePriceText.text = $"Средняя цена: {item.ItemData.Price}";
+        
+        if (item.ItemData.IsPerishable)
+        {
+            _daysToHalfSpoilText.alpha = 1;
+            _daysToSpoilText.alpha = 1;
+            _boughtDaysAgoText.alpha = 1;
+            _daysToHalfSpoilText.text = $"Дней до потери свежести: {item.ItemData.DaysToHalfSpoil}";
+            _daysToSpoilText.text = $"Дней до порчи: {item.ItemData.DaysToSpoil}";
+            _boughtDaysAgoText.text = "Хранится уже: " + Math.Round(item.BoughtDaysAgo, 1);
+        }
+        else
+        {
+            _daysToHalfSpoilText.alpha = 0;
+            _daysToSpoilText.alpha = 0;
+            _boughtDaysAgoText.alpha = 0;
+        }
+        if (item.ItemData is UsableItem)
+        {
+            
+            UsableItem currentUsableItem = item.ItemData as UsableItem;
+            if (currentUsableItem.UsableItemType == UsableItem.UsableType.Edible)
+            {
+                _foodValueText.alpha = 1;
+                if (item.BoughtDaysAgo >= item.ItemData.DaysToHalfSpoil && item.ItemData.IsPerishable)
+                    _foodValueText.text = $"+<color=#F8523C>{currentUsableItem.UsableValue/2}</color> сытости";
+                else
+                    _foodValueText.text = $"+{currentUsableItem.UsableValue} сытости";
+            }
+            else if (currentUsableItem.UsableItemType == UsableItem.UsableType.Energetic)
+            {
+                _foodValueText.alpha = 1;
+                if (item.BoughtDaysAgo >= item.ItemData.DaysToHalfSpoil)
+                {
+                    _foodValueText.text = $"+<color=#F8523C>{currentUsableItem.UsableValue/2}</color> сытости" +
+                                          $"  +<color=#F8523C>{currentUsableItem.SecondValue/2}</color> бодрости";
+                }
+                else
+                    _foodValueText.text = 
+                     $"+{currentUsableItem.UsableValue} сытости  +{currentUsableItem.SecondValue} бодрости";
+            }
+            else
+            {
+                _foodValueText.alpha = 0;
+            }
+            
+            _useButton.gameObject.SetActive(true);
+            _useButton.interactable = false;
+        }
+        else
+        {
+            _foodValueText.alpha = 0;
+            _useButton.interactable = false;
+            _useButton.gameObject.SetActive(false);
+        }
+    }
+    
+    public void Initialize(Item item)
+    {
+        //присвоение текста и иконок
+        _itemIcon.sprite = item.Icon;
+        _itemName.text = item.Name;
+        _itemDescription.text = "Описание: " + item.Description;
+        if (item.TypeOfItem != Item.ItemType.Null)
+            _itemTypeText.text = "Категория предмета: " + Item.TranslateItemType(item.TypeOfItem);
+        else
+            _itemTypeText.text = "";
+
+        _splitButton.interactable = false;
+        _rotateButton.interactable = false;
+        _destroyButton.interactable = false;
+
+        _quantityText.text = $"Количество: 1";
+        _weightText.text = $"Вес: {item.Weight:F1}";
+        _totalWeightText.text = $"Общий вес: {item.Weight:F1}";
+        _maxItemsInAStackText.text = $"Макс. количество: {item.MaxItemsInAStack}";
+        _fragilityText.text = $"Хрупкость: {item.Fragility}";
+        _averagePriceText.text = $"Средняя цена: {item.Price}";
+        
+        if (item.IsPerishable)
+        {
+            _daysToHalfSpoilText.alpha = 1;
+            _daysToSpoilText.alpha = 1;
+            _boughtDaysAgoText.alpha = 0;
+            _daysToHalfSpoilText.text = $"Дней до потери свежести: {item.DaysToHalfSpoil}";
+            _daysToSpoilText.text = $"Дней до порчи: {item.DaysToSpoil}";
+        }
+        else
+        {
+            _daysToHalfSpoilText.alpha = 0;
+            _daysToSpoilText.alpha = 0;
+            _boughtDaysAgoText.alpha = 0;
+        }
+        if (item is UsableItem)
+        {
+            UsableItem currentUsableItem = item as UsableItem;
+            if (currentUsableItem.UsableItemType == UsableItem.UsableType.Edible)
+            {
+                _foodValueText.alpha = 1;
+                _foodValueText.text = $"+{currentUsableItem.UsableValue} сытости";
+            }
+            else if (currentUsableItem.UsableItemType == UsableItem.UsableType.Energetic)
+            {
+                _foodValueText.alpha = 1;
+                _foodValueText.text = $"+{currentUsableItem.UsableValue} сытости  +{currentUsableItem.SecondValue} бодрости";
+            }
+            else
+            {
+                _foodValueText.alpha = 0;
+            }
+            
+            _useButton.interactable = false;
+        }
+        else
+        {
+            _foodValueText.alpha = 0;
+            _useButton.interactable = false;
+            _useButton.gameObject.SetActive(false);
+        }
+    }
     #endregion
     #region Методы работы с кнопками
     public void OnUseButtonPressed()
