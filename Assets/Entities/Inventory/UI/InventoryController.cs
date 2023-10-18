@@ -10,6 +10,7 @@ public class InventoryController : MonoBehaviour
 
     public static InventoryController Instance;
 
+    [SerializeField] private QuestItemHolder _questItemHolder;
     [HideInInspector] private ItemGrid _selectedItemGrid;
 
     [SerializeField] private GameObject _itemPrefab;
@@ -159,7 +160,7 @@ public class InventoryController : MonoBehaviour
         if (SelectedItemGrid == null)
             return false;
 
-        if (SelectedItemGrid.gameObject.TryGetComponent(out ItemContainer container))
+        if (SelectedItemGrid.gameObject.TryGetComponent(out ItemContainer container)) //–аботаем с правым контейнером
         {
             if (container.RequiredItemTypes.Count != 0)
             {
@@ -199,7 +200,18 @@ public class InventoryController : MonoBehaviour
                 default:
                     break;
             }
-        }
+        } 
+        if (SelectedItemGrid == _questItemHolder.ItemGrid) //–аботаем с левым доп.контейнером
+        { 
+            //«десь можно было бы даже не делать проверку и всегда возвращать false,
+            //потому что в этот контейнер вообще ничего нельз€ положить, только достать.
+            //Ќо € всЄ-таки добавлю, чтобы в него можно было ложить квестовые айтемы,
+            //на случай если они всЄ-же как-то оказались в основном инвентаре
+            if (!CurrentSelectedItem.ItemData.IsQuestItem)
+                return false;
+        } 
+        if (CurrentSelectedItem.ItemData.IsQuestItem)   //–аботаем с основным инвентарем
+            return false;
 
         return true;
     }

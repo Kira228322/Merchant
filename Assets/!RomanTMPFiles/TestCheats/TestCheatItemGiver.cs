@@ -29,10 +29,20 @@ public class TestCheatItemGiver : MonoBehaviour
     public void AddItem()
     {
         Item itemToGive = ItemDatabase.GetItem(itemSelector.captionText.text);
-        InventoryController.Instance.TryCreateAndInsertItem(Player.Instance.ItemGrid, itemToGive, int.Parse(itemInputField.text), 0, true);
+        int amountToGive = 1;
+        if (int.TryParse(itemInputField.text, out int number))
+        {
+            amountToGive = number;
+        }
+        InventoryController.Instance.TryCreateAndInsertItem(Player.Instance.ItemGrid, itemToGive, amountToGive, 0, true);
     }
     public void SetMoney()
     {
-        Player.Instance.Money = int.Parse(moneyInputField.text);
+        int amountToSet = 5000;
+        if (int.TryParse(moneyInputField.text, out int number))
+        {
+            amountToSet = number;
+        }
+        Player.Instance.Money = amountToSet;
     }
 }
