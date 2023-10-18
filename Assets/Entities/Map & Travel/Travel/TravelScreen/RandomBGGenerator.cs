@@ -56,7 +56,7 @@ public class RandomBGGenerator : MonoBehaviour
                     {                      // следующие заспавнились чуть позже, что бы не было возможного нагромождения
                         if (groundObject != otherObject)
                         {
-                            if (otherObject._minTimeSpawn - otherObject._minTimeSpawn < 0.25f)
+                            if (otherObject._minTimeSpawn - otherObject._lastTimeSpawn < 0.25f)
                                 otherObject._lastTimeSpawn -= 0.25f;
                         }
                     }
@@ -115,7 +115,7 @@ public class RandomBGGenerator : MonoBehaviour
         }
         else
         {
-            spawnedObj.transform.position += new Vector3(0, -0.105f); // объекты что ближе, ниже (так выглядит лучше)
+            spawnedObj.transform.position += new Vector3(0, -0.1f); // объекты что ближе, ниже (так выглядит лучше)
             renderer.sortingOrder = 8;
             if (renderer.gameObject.transform.childCount != 0)
                 for (int i = 0; i < renderer.gameObject.transform.childCount; i++)
@@ -141,7 +141,7 @@ public class RandomBGGenerator : MonoBehaviour
         {
             _objects = objects;
             _minTimeSpawn = timeSpawn;
-            _lastTimeSpawn = Random.Range(0, timeSpawn);
+            _lastTimeSpawn = Random.Range(timeSpawn * 0.6f, timeSpawn);
         }
     }
 }
