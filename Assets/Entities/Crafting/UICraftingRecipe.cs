@@ -14,6 +14,7 @@ public class UICraftingRecipe : MonoBehaviour
     }
     [SerializeField] private RequiredItem[] requiredItems = new RequiredItem[3];
     [SerializeField] private Image resultingItemIcon;
+    [SerializeField] private TMP_Text _itemName;
     private CraftingHandler _craftingHandler;
     private CraftingRecipe _recipe;
 
@@ -22,6 +23,7 @@ public class UICraftingRecipe : MonoBehaviour
         _craftingHandler = craftingHandler;
         _recipe = recipe;
         resultingItemIcon.sprite = _recipe.ResultingItem.Icon;
+        _itemName.text = _recipe.ResultingItem.Name;
 
         for (int i = 0; i < _recipe.RequiredItems.Count; i++)
         {

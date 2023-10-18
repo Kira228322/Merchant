@@ -3,15 +3,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using static PlayerStats;
+using UnityEngine.Events;
 
 public class PlayerStats : ISaveable<PlayerStatsSaveData>
 {
     public class PlayerStat
     {
-        public int Base;
-        public int Additional;
+        private int _base;
+        private int _additional;
+        public int Base
+        {
+            get => _base;
+            set
+            {
+                _base = value;
+                StatChanged?.Invoke();
+            }
+        }
+        public int Additional
+        {
+            get => _additional;
+            set
+            {
+                _additional = value;
+                StatChanged?.Invoke();
+            }
+        }
         public int Total => Base + Additional;
-
+        public event UnityAction StatChanged;
         public float GetCoefForPositiveEvent()
         {
             return (float)(1 + 0.07f * Total / (0.07 * Total + 1));
@@ -35,8 +54,8 @@ public class PlayerStats : ISaveable<PlayerStatsSaveData>
     {
         // TODO делать, когда измен€етс€ стойкость
 
-        Player.Instance.Needs.HungerDecayRate = 14 + Toughness.Total + Toughness.Total/2;
-        Player.Instance.Needs.SleepDecayRate = 16 + Toughness.Total + (Toughness.Total+1)/2;
+        Player.Instance.Needs.HungerDecayRate = 15 + Toughness.Total + Toughness.Total/2;
+        Player.Instance.Needs.SleepDecayRate = 18 + Toughness.Total + (Toughness.Total+1)/2;
         Player.Instance.Needs.MaxHunger = 90 + Toughness.Total * 3;
     }
     //—охран€ютс€ только базовые статы, потому что аддитивные статы будут добавл€тьс€ через эффекты

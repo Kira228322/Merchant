@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -51,6 +52,12 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
         Needs.Initialize();
         WagonStats.RecalculateValues();
         Statistics.OnToughnessChanged();
+        Statistics.Toughness.StatChanged += Statistics.OnToughnessChanged;
+    }
+
+    private void OnDestroy()
+    {
+        Statistics.Toughness.StatChanged -= Statistics.OnToughnessChanged;
     }
 
     private void OnSceneChange(Scene scene, LoadSceneMode mode)
