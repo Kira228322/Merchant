@@ -77,7 +77,7 @@ public class TravelEventHandler : MonoBehaviour
                 {
                     Roadbadness *= 0.98f - (Player.Instance.WagonStats.QualityModifier - 1) * 0.1f;
                     deletedItems.Add(Instantiate(randomItem));
-                    Player.Instance.Inventory.ItemGrid.RemoveItemsFromAStack(randomItem, 1);
+                    Player.Instance.Inventory.BaseItemGrid.RemoveItemsFromAStack(randomItem, 1);
                     i--;
                 }
             }

@@ -31,7 +31,7 @@ public class CollectItemsGoal : Goal
         }
         Evaluate();
 
-        ItemGrid playerInventoryItemGrid = Player.Instance.Inventory.ItemGrid;
+        ItemGrid playerInventoryItemGrid = Player.Instance.Inventory.BaseItemGrid;
         playerInventoryItemGrid.ItemPlacedInTheGrid += ItemCollected;
         playerInventoryItemGrid.ItemUpdated += ItemUpdated;
         playerInventoryItemGrid.ItemRemovedFromTheGrid += ItemRemoved;
@@ -39,7 +39,7 @@ public class CollectItemsGoal : Goal
 
     public override void Deinitialize()
     {
-        ItemGrid playerInventoryItemGrid = Player.Instance.Inventory.ItemGrid;
+        ItemGrid playerInventoryItemGrid = Player.Instance.Inventory.BaseItemGrid;
         playerInventoryItemGrid.ItemPlacedInTheGrid -= ItemCollected;
         playerInventoryItemGrid.ItemUpdated -= ItemUpdated;
         playerInventoryItemGrid.ItemRemovedFromTheGrid -= ItemRemoved;

@@ -27,8 +27,8 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
             Item item = _rewardList[Random.Range(0, _rewardList.Count)];
             int count = item.Price <= 100 ? 2 : 1;
             
-            if (InventoryController.Instance.TryCreateAndInsertItem(Player.Instance.Inventory.ItemGrid,
-                     ItemDatabase.GetItem(item.Name), count, 0, true))
+            if (InventoryController.Instance.TryCreateAndInsertItem(
+                     ItemDatabase.GetItem(item.Name), count, 0))
             {
                 Player.Instance.Experience.AddExperience(_expirienceBonus);
                 CanvasWarningGenerator.Instance.CreateWarning("Спасибо за просмотр", $"Вы получили {item.Name} в количестве {count}, а так же {_expirienceBonus} опыта");

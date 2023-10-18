@@ -132,7 +132,7 @@ public class QuestPanel : MonoBehaviour
     }
     public void OnRewardButtonClick()
     {
-        if (_quest.ItemRewards.Count != 0 && !InventoryController.Instance.CanInsertMultipleItems(Player.Instance.Inventory.ItemGrid, _quest.ItemRewards))
+        if (_quest.ItemRewards.Count != 0 && !InventoryController.Instance.CanInsertMultipleItems(Player.Instance.Inventory.BaseItemGrid, _quest.ItemRewards))
         {
             CanvasWarningGenerator.Instance.CreateWarning("Предупреждение", "В инвентаре недостаточно места!");
         }

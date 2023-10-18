@@ -206,7 +206,7 @@ public class DialogueManager : MonoBehaviour
         });
         _currentStory.BindExternalFunction("place_item", (string itemName, string amount, string daysBoughtAgo) =>
         {
-            InventoryController.Instance.TryCreateAndInsertItem(Player.Instance.ItemGrid, ItemDatabase.GetItem(itemName), int.Parse(amount), float.Parse(daysBoughtAgo), true, true);
+            InventoryController.Instance.TryCreateAndInsertItem(ItemDatabase.GetItem(itemName), int.Parse(amount), float.Parse(daysBoughtAgo));
         });
     }
     #endregion

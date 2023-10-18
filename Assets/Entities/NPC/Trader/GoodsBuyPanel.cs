@@ -86,7 +86,7 @@ public class GoodsBuyPanel : MonoBehaviour
                 return;
             }
             
-            InventoryItem boughtItem = InventoryController.Instance.TryCreateAndInsertItem(Player.Instance.Inventory.ItemGrid, _item.Good, 1, _boughtDaysAgo, true);
+            InventoryItem boughtItem = InventoryController.Instance.TryCreateAndInsertItem(_item.Good, 1, _boughtDaysAgo);
             if (boughtItem == null) //не было места поместить вещь
             {
                 TradeManager.Instance.NotEnoughSpace();
@@ -128,7 +128,7 @@ public class GoodsBuyPanel : MonoBehaviour
             }
             //“акой селлѕанели не обнаружено:
             GameObject tradersGoods = Instantiate(TradeManager.Instance.GoodsSellPanelPrefab.gameObject, TradeManager.Instance.SellPanelContent);
-            tradersGoods.GetComponent<GoodsSellPanel>().Init(_trader, boughtItem, Player.Instance.Inventory.ItemGrid);
+            tradersGoods.GetComponent<GoodsSellPanel>().Init(_trader, boughtItem, Player.Instance.Inventory.BaseItemGrid);
 
             
         }

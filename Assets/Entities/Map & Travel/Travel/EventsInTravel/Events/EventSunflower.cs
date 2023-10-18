@@ -15,7 +15,7 @@ public class EventSunflower : EventInTravel
         switch (n)
         {
             case 0:
-                if (InventoryController.Instance.TryCreateAndInsertItem(Player.Instance.Inventory.ItemGrid, ItemDatabase.GetItem("Подсолнух"), 2, 0))
+                if (InventoryController.Instance.TryCreateAndInsertItem(ItemDatabase.GetItem("Подсолнух"), 2, 0))
                 {
                     int skippedMinutes = Random.Range(1, 20);
                     _eventWindow.ChangeDescription($"Вы собрали пару подсолнухов и потратили на это 1 час {skippedMinutes} минут");

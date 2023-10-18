@@ -130,7 +130,7 @@ public class Quest
         {
             foreach (var item in ItemRewards)
             {
-                InventoryController.Instance.TryCreateAndInsertItem(Player.Instance.Inventory.ItemGrid, ItemDatabase.GetItem(item.itemName), item.amount, item.daysBoughtAgo, true);
+                InventoryController.Instance.TryCreateAndInsertItem(ItemDatabase.GetItem(item.itemName), item.amount, item.daysBoughtAgo);
             }
         }
 

@@ -123,7 +123,7 @@ public class CraftingHandler : MonoBehaviour
             Player.Instance.Inventory.RemoveItemsOfThisItemData(requiredItem.item, requiredItem.amount);
         }
         InventoryController.Instance.TryCreateAndInsertItem
-            (Player.Instance.Inventory.ItemGrid, SelectedRecipe.ResultingItem, SelectedRecipe.ResultAmount, 0, true);
+            (SelectedRecipe.ResultingItem, SelectedRecipe.ResultAmount, 0);
         Refresh();
     }
     private void ShowCraftingElements(bool value)

@@ -29,7 +29,7 @@ public class EventWagonTrade : EventInTravel
                 {
                     item = _expensiveItems[Random.Range(0, _expensiveItems.Count)];
                     if (InventoryController.Instance.TryCreateAndInsertItem
-                            (Player.Instance.ItemGrid, item, 1, 0, true) != null)
+                            (item, 1, 0) != null)
                     {
                         _eventWindow.ChangeDescription($"Внутри оказался ценный товар: {item.Name}. Вы с удовольствием забираете его себе, платя торговцу его 100 золотых");
                         Player.Instance.Money -= 100;
@@ -43,7 +43,7 @@ public class EventWagonTrade : EventInTravel
                 {
                     item = _cheapItems[Random.Range(0, _cheapItems.Count)];
                     if (InventoryController.Instance.TryCreateAndInsertItem
-                            (Player.Instance.ItemGrid, item, 1, 0, true) != null)
+                            (item, 1, 0) != null)
                     {
                         _eventWindow.ChangeDescription($"Внутри совсем не ценный товар: {item.Name}. Вы с забираете его себе, платя торговцу его грязные 100 золотых");
                         Player.Instance.Money -= 100;

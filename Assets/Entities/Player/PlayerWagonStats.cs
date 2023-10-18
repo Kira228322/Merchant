@@ -30,8 +30,8 @@ public class PlayerWagonStats: ISaveable<PlayerWagonStatsSaveData>
     {
         QualityModifier = Wheel.QualityModifier;
 
-        int rowsToAdd = Body.InventoryRows - Player.Instance.Inventory.ItemGrid.GridSizeHeight;
-        Player.Instance.Inventory.ItemGrid.AddRowsToInventory(rowsToAdd);
+        int rowsToAdd = Body.InventoryRows - Player.Instance.Inventory.BaseItemGrid.GridSizeHeight;
+        Player.Instance.Inventory.BaseItemGrid.AddRowsToInventory(rowsToAdd);
 
         Player.Instance.Inventory.MaxTotalWeight = Suspension.MaxWeight;
         WagonStatsRefreshed?.Invoke();

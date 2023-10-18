@@ -23,11 +23,8 @@ public class UsableWell : UsableEnvironment
                 {
                     StatusManager.Instance.AddStatusForPlayer(_wellBuff);
                 }
-                InventoryController.Instance.DestroyItem(Player.Instance.ItemGrid, item);
-                InventoryController.Instance.TryCreateAndInsertItem(
-                    Player.Instance.ItemGrid,
-                    ItemDatabase.GetItem("Бутылка с водой"),
-                    1, 0, true);
+                InventoryController.Instance.DestroyItem(Player.Instance.BaseItemGrid, item);
+                InventoryController.Instance.TryCreateAndInsertItem(ItemDatabase.GetItem("Бутылка с водой"), 1, 0);
                 return true;
             }
         }

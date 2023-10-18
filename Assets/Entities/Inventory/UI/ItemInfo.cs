@@ -274,13 +274,13 @@ public class ItemInfo : MonoBehaviour
             while (countLeftToAdd > itemData.MaxItemsInAStack)
             {
                 InventoryController.Instance.TryCreateAndInsertItem
-                (Player.Instance.ItemGrid, itemData,
-                itemData.MaxItemsInAStack, item.daysBoughtAgo, true);
+                (itemData,
+                itemData.MaxItemsInAStack, item.daysBoughtAgo);
                 countLeftToAdd -= itemData.MaxItemsInAStack;
             }
             InventoryController.Instance.TryCreateAndInsertItem
-                (Player.Instance.ItemGrid, itemData, 
-                countLeftToAdd, item.daysBoughtAgo, true);
+                (itemData, 
+                countLeftToAdd, item.daysBoughtAgo);
         }
     }
     private void AddQuest()
@@ -302,7 +302,7 @@ public class ItemInfo : MonoBehaviour
                 requiredSlots += itemData.CellSizeWidth * itemData.CellSizeHeight;
             }
         }
-        int freeSlots = Player.Instance.ItemGrid.GetFreeSlotsCount();
+        int freeSlots = Player.Instance.BaseItemGrid.GetFreeSlotsCount();
         if (_currentItemSelected.CurrentItemsInAStack == 1)
             //Если предмет всего 1, то после использования он удалится. Значит ещё один слот станет свободным
             freeSlots++;
@@ -318,7 +318,7 @@ public class ItemInfo : MonoBehaviour
     public void Split(int amountToSplit) //Мб переместить его в InventoryController?
     {
         _lastItemGridSelected.RemoveItemsFromAStack(_currentItemSelected, amountToSplit); //вроде бы предусмотрено на случай всех невозможных ситуаций через другие скрипты и свойства кнопок
-        InventoryItem item = InventoryController.Instance.TryCreateAndInsertItem(_lastItemGridSelected, _currentItemSelected.ItemData, amountToSplit, _currentItemSelected.BoughtDaysAgo, isFillingStackFirst: false);
+        InventoryItem item = InventoryController.Instance.TryCreateAndInsertItem(_currentItemSelected.ItemData, amountToSplit, _currentItemSelected.BoughtDaysAgo, false, _lastItemGridSelected);
         if (item != null)
         {
             Destroy(gameObject);

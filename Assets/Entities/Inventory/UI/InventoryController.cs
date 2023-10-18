@@ -327,7 +327,7 @@ public class InventoryController : MonoBehaviour
 
         foreach (CompactedItem itemReward in items)
         {
-            InventoryItem placedItem = TryCreateAndInsertItem(itemGrid, itemReward.item, itemReward.amount, itemReward.daysBoughtAgo, true);
+            InventoryItem placedItem = TryCreateAndInsertItem(itemReward.item, itemReward.amount, itemReward.daysBoughtAgo, itemGrid);
             if (placedItem != null)
             {
                 placedInventoryItems.Add(placedItem, itemReward.amount);
@@ -385,7 +385,7 @@ public class InventoryController : MonoBehaviour
 
         foreach (InventoryItem item in items)
         {
-            InventoryItem placedItem = TryCreateAndInsertItem(itemGrid, item.ItemData, item.CurrentItemsInAStack, item.BoughtDaysAgo, true);
+            InventoryItem placedItem = TryCreateAndInsertItem(item.ItemData, item.CurrentItemsInAStack, item.BoughtDaysAgo, itemGrid);
             if (placedItem != null)
             {
                 placedInventoryItems.Add(placedItem, item.CurrentItemsInAStack);
@@ -422,7 +422,7 @@ public class InventoryController : MonoBehaviour
     }
     public bool CanInsertItem(ItemGrid itemGrid, Item item, int amount)
     {
-        InventoryItem placedItem = TryCreateAndInsertItem(itemGrid, item, amount, 0, true);
+        InventoryItem placedItem = TryCreateAndInsertItem(item, amount, 0, itemGrid);
         if (placedItem == null)
         {
             return false;
@@ -445,13 +445,15 @@ public class InventoryController : MonoBehaviour
 
         foreach (CompactedItem item in items)
         {
-            TryCreateAndInsertItem(itemGrid, item.item, item.amount, item.daysBoughtAgo, true);
+            TryCreateAndInsertItem(item.item, item.amount, item.daysBoughtAgo, itemGrid);
         }
     }
-    public InventoryItem TryCreateAndInsertItem(ItemGrid itemGrid, Item item, int amount, float daysBoughtAgo, bool isFillingStackFirst = true, bool forcedPlacement = false)
+    public InventoryItem TryCreateAndInsertItem(Item item, int amount, float daysBoughtAgo, bool isFillingStackFirst = true, ItemGrid itemGrid = null, bool forcedPlacement = false)
     {
         if (amount <= 0)
             return null;
+        if (itemGrid == null)
+            itemGrid = Player.Instance.BaseItemGrid;
         ItemGrid additionalItemGrid = Player.Instance.QuestItemGrid;
 
         if (item.IsQuestItem)
@@ -618,7 +620,7 @@ public class InventoryController : MonoBehaviour
         InventoryItem pickedUpItem = CurrentSelectedItem;
         if (itemInInventory.IsRotated)
         {
-            InventoryItem result = TryCreateAndInsertItem(itemGrid, itemInInventory.ItemData, itemInInventory.CurrentItemsInAStack, itemInInventory.BoughtDaysAgo, isFillingStackFirst: false);
+            InventoryItem result = TryCreateAndInsertItem(itemInInventory.ItemData, itemInInventory.CurrentItemsInAStack, itemInInventory.BoughtDaysAgo, itemGrid);
             if (result != null)
             {
                 Destroy(pickedUpItem.gameObject);
@@ -658,7 +660,7 @@ public class InventoryController : MonoBehaviour
         Vector2Int itemPosition = new(item.XPositionOnTheGrid, item.YPositionOnTheGrid);
         PickUp(itemPosition);
         InventoryItem pickedUpItem = CurrentSelectedItem;
-        InventoryItem result = TryCreateAndInsertItem(destination, item.ItemData, item.CurrentItemsInAStack, item.BoughtDaysAgo, isFillingStackFirst: true);
+        InventoryItem result = TryCreateAndInsertItem(item.ItemData, item.CurrentItemsInAStack, item.BoughtDaysAgo, destination);
         if (result != null)
         {
             Destroy(pickedUpItem.gameObject);

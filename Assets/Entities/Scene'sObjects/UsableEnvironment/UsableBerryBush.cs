@@ -9,7 +9,7 @@ public class UsableBerryBush : UsableEnvironment
     {
         // TODO проверить есть ли место свободное в инвентаре и добавить ягоду какую-нибудь
         if (InventoryController.Instance.TryCreateAndInsertItem
-                (Player.Instance.ItemGrid, _berry, 1, 0, true) != null) 
+                (_berry, 1, 0) != null) 
             return true;
         return false;
     }

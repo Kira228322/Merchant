@@ -147,7 +147,7 @@ public class ItemContainer : MonoBehaviour
     }
     public void Cancel()
     {
-        ItemGrid playerItemGrid = Player.Instance.ItemGrid;
+        ItemGrid playerItemGrid = Player.Instance.BaseItemGrid;
 
         if (!_inventoryController.CanInsertMultipleItems(playerItemGrid, Items))
         {

@@ -34,7 +34,7 @@ public class TestCheatItemGiver : MonoBehaviour
         {
             amountToGive = number;
         }
-        InventoryController.Instance.TryCreateAndInsertItem(Player.Instance.ItemGrid, itemToGive, amountToGive, 0, true);
+        InventoryController.Instance.TryCreateAndInsertItem(itemToGive, amountToGive, 0);
     }
     public void SetMoney()
     {

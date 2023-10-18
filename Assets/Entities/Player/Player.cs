@@ -16,7 +16,7 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
 
     public PlayersInventory Inventory => _inventory;
 
-    public ItemGrid ItemGrid => Inventory.BaseItemGrid;
+    public ItemGrid BaseItemGrid => Inventory.BaseItemGrid;
     public ItemGrid QuestItemGrid => Inventory.QuestItemGrid;
 
     public PlayerExperience Experience = new();
@@ -157,7 +157,7 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
         }
         if (Input.GetKeyDown(KeyCode.I))
         {
-            InventoryController.Instance.Sort(Instance.ItemGrid);
+            InventoryController.Instance.Sort(Instance.BaseItemGrid);
         }
 
 
