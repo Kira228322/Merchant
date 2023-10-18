@@ -440,19 +440,33 @@ public class InventoryController : MonoBehaviour
     {
         if (amount <= 0)
             return null;
-        InventoryItem result = TryCreateAndInsertItemUnrotated(itemGrid, item, amount, daysBoughtAgo, isFillingStackFirst);
+        ItemGrid additionalItemGrid = Player.Instance.QuestItemGrid;
+
+        if (item.IsQuestItem)
+        {
+            InventoryItem result = TryCreateInsertTypeSelection(additionalItemGrid, item, amount, daysBoughtAgo, isFillingStackFirst);
+            if (result == null)
+                Debug.LogError($"Не удалось поместить квестовый предмет {item.Name} в доп.инвентарь!");
+            return result;
+        }
+        else
+        {
+            InventoryItem result = TryCreateInsertTypeSelection(itemGrid, item, amount, daysBoughtAgo, isFillingStackFirst);
+            if (result == null && forcedPlacement)
+            {
+                result = TryCreateInsertTypeSelection(additionalItemGrid, item, amount, daysBoughtAgo, isFillingStackFirst);
+                if (result == null)
+                    Debug.LogError($"{item.Name} не квестовый, но должен был быть помещен в дополнительный инвентарь, чего сделать не удалось!");
+            }
+            return result;
+        }
+    }
+    private InventoryItem TryCreateInsertTypeSelection(ItemGrid itemGrid, Item item, int amount, float daysBoughtAgo, bool isFillingStackFirst)
+    {
+        InventoryItem result;
+        result = TryCreateAndInsertItemUnrotated(itemGrid, item, amount, daysBoughtAgo, isFillingStackFirst);
         if (result == null)
-        {
             result = TryCreateAndInsertItemRotated(itemGrid, item, amount, daysBoughtAgo, isFillingStackFirst);
-        }
-        //(17.10.23)Вот сюда стоит добавить "вставить в тайник". Но GoodsBuyPanel,
-        //например, тоже использует этот метод, а при торговле мы этого не хотим.
-        //Как быть? Добавить ещё bool "инсертает квестовый предмет"?
-        ItemGrid additionalItemGrid = Player.Instance.TemporaryItemGrid;
-        if (forcedPlacement)
-        {
-            result = TryCreateAndInsertItem(additionalItemGrid, item, amount, daysBoughtAgo, true, false);
-        }
         return result;
     }
     private InventoryItem TryCreateAndInsertItemUnrotated(ItemGrid itemGrid, Item item, int amount, float daysBoughtAgo, bool isFillingStackFirst)
