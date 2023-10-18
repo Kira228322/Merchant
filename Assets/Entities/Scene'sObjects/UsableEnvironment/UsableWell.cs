@@ -8,7 +8,7 @@ public class UsableWell : UsableEnvironment
     [SerializeField] private Status _wellBuff;
     protected override bool IsFunctionalComplete()
     {
-        foreach (var item in Player.Instance.Inventory.ItemList)
+        foreach (var item in Player.Instance.Inventory.BaseItemList)
         {
             if (item.ItemData.Name == "Пустая бутылка")
             {

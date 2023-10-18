@@ -7,17 +7,23 @@ using UnityEngine.Events;
 public class PlayersInventory : MonoBehaviour, ISaveable<PlayersInventorySaveData>
 {
     [SerializeField] private ItemGrid _inventoryItemGrid;
+    [SerializeField] private QuestItemHolder _questItemHolder;
     [SerializeField] private float _startingMaxTotalWeight;
 
     private List<InventoryItem> _inventory = new();
+    private List<InventoryItem> _questInventory = new();
 
     private float _currentTotalWeight;
     private float _maxTotalWeight;
 
     public GameObject InventoryPanel; //в инспекторе нужно задать ссылку на главную панель, содержащую весь инвентарь
 
-    public List<InventoryItem> ItemList => _inventory;
-    public ItemGrid ItemGrid => _inventoryItemGrid;
+    public List<InventoryItem> ItemList => _questInventory.Concat(_inventory).ToList();
+    public List<InventoryItem> BaseItemList => _inventory;
+    public List<InventoryItem> QuestItemList => _questInventory;
+
+    public ItemGrid BaseItemGrid => _inventoryItemGrid;
+    public ItemGrid QuestItemGrid => _questItemHolder.ItemGrid;
 
     public bool IsOverencumbered; //тяжело ли ослику тащить повозку в данный момент? //upd. Какая прелесть
 
@@ -54,7 +60,7 @@ public class PlayersInventory : MonoBehaviour, ISaveable<PlayersInventorySaveDat
 
     private void Awake()
     {
-        ItemGrid.Init();
+        BaseItemGrid.Init();
     }
 
     private void OnEnable() 
@@ -64,6 +70,9 @@ public class PlayersInventory : MonoBehaviour, ISaveable<PlayersInventorySaveDat
         _inventoryItemGrid.ItemPlacedInTheGrid += AddItemInInventory;
         _inventoryItemGrid.ItemUpdated += ItemUpdated;
         _inventoryItemGrid.ItemRemovedFromTheGrid += RemoveItemInInventory;
+        QuestItemGrid.ItemPlacedInTheGrid += AddItemInQuestItems;
+        QuestItemGrid.ItemUpdated += ItemUpdated;
+        QuestItemGrid.ItemRemovedFromTheGrid += RemoveItemInQuestItems;
 
     }
     private void OnDisable() 
@@ -73,6 +82,9 @@ public class PlayersInventory : MonoBehaviour, ISaveable<PlayersInventorySaveDat
         _inventoryItemGrid.ItemPlacedInTheGrid -= AddItemInInventory;
         _inventoryItemGrid.ItemUpdated -= ItemUpdated;
         _inventoryItemGrid.ItemRemovedFromTheGrid -= RemoveItemInInventory;
+        QuestItemGrid.ItemPlacedInTheGrid -= AddItemInQuestItems;
+        QuestItemGrid.ItemUpdated -= ItemUpdated;
+        QuestItemGrid.ItemRemovedFromTheGrid -= RemoveItemInQuestItems;
     }
     private void Start()
     {
@@ -85,14 +97,10 @@ public class PlayersInventory : MonoBehaviour, ISaveable<PlayersInventorySaveDat
     }
     public int GetCount(Item item)
     {
-        int result = 0;
-        foreach (InventoryItem inventoryItem in ItemList)
-        {
-            if (inventoryItem.ItemData.Name == item.Name)
-            {
-                result += inventoryItem.CurrentItemsInAStack;
-            }
-        }
+        int result = ItemList
+            .Where(inventoryItem => inventoryItem.ItemData.Name == item.Name)
+            .Sum(inventoryItem => inventoryItem.CurrentItemsInAStack);
+
         return result;
     }
     public List<InventoryItem> GetInventoryItemsOfThisData(Item itemData)
@@ -101,6 +109,8 @@ public class PlayersInventory : MonoBehaviour, ISaveable<PlayersInventorySaveDat
     }
     public bool HasEnoughItemsOfThisItemData(Item itemData, int amount)
     {
+        //TODO Протестировать оба инвентаря, чтобы не было сомнений что здесь не возникнет бага никогда
+        //Debug.Log($"GetCount {itemData.Name}: base {GetCount(itemData)}, additional {_questItemHolder.GetCount(itemData)}");
         if (GetCount(itemData) >= amount)
             return true;
         return false;
@@ -109,8 +119,19 @@ public class PlayersInventory : MonoBehaviour, ISaveable<PlayersInventorySaveDat
     {
         //Удалить предметов на такую стоимость
         //Квестовые предметы игнорируются
+        /*UPD 18.10.23 (делаем доп.инвентарь): Решил, что из доп.инвентаря
+        не будут убираться предметы в этом методе. На данный момент мы решили,
+        что предметы в тот инвентарь будут попадать только из-за диалога,
+        пусть даже не все из них квестовые.
+        То есть если нпс дал тебе предмет, то он для чего-то всё таки нужен. Бандиты его не спиздят
+        Зачем так? Потому что посчитал, что тогда метод сильно усложнится - нужно будет
+        отсортировать по цене в двух инвентарях совместно, а потом запомнить какому инвентарю какой предмет принадлежит
+        (ну потому что не получится убрать сначала все из основного,
+        потом все из дополнительного, надо как бы комбинировать. 
+        Надеюсь хоть что-то из вышеописанного имеет смысл)
+        */
         int priceLeftToRemove = price;
-        List<InventoryItem> sortedItems = ItemList.Where(item => !item.ItemData.IsQuestItem).OrderBy(item => item.TotalPrice).ToList();
+        List<InventoryItem> sortedItems = BaseItemList.Where(item => !item.ItemData.IsQuestItem).OrderBy(item => item.TotalPrice).ToList();
         List<InventoryItem> itemsToRemove = new();
         InventoryItem partiallyRemovedItem = null;
         foreach (InventoryItem item in sortedItems)
@@ -125,12 +146,12 @@ public class PlayersInventory : MonoBehaviour, ISaveable<PlayersInventorySaveDat
         }
         for (int i = itemsToRemove.Count - 1; i >= 0; i--)
         {
-            ItemGrid.RemoveItemsFromAStack(itemsToRemove[i], itemsToRemove[i].CurrentItemsInAStack);
+            BaseItemGrid.RemoveItemsFromAStack(itemsToRemove[i], itemsToRemove[i].CurrentItemsInAStack);
         }
         if (partiallyRemovedItem != null)
         {
             int items = (int)Mathf.Ceil((float)priceLeftToRemove / partiallyRemovedItem.ItemData.Price);
-            ItemGrid.RemoveItemsFromAStack(partiallyRemovedItem, items);
+            BaseItemGrid.RemoveItemsFromAStack(partiallyRemovedItem, items);
         }
     }
     public void RemoveItemsOfThisItemData(Item itemType, int amount)
@@ -142,40 +163,72 @@ public class PlayersInventory : MonoBehaviour, ISaveable<PlayersInventorySaveDat
         }
         int leftToRemove = amount;
 
-        for (int i = ItemList.Count - 1; i >= 0; i--)
+        for (int i = QuestItemList.Count - 1; i >= 0; i--)
         {
-            if (ItemList[i].ItemData.Name == itemType.Name)
+            if (QuestItemList[i].ItemData.Name == itemType.Name)
             {
-                if (ItemList[i].CurrentItemsInAStack <= leftToRemove)
+                if (QuestItemList[i].CurrentItemsInAStack <= leftToRemove)
                 {
-                    leftToRemove -= ItemList[i].CurrentItemsInAStack;
-                    ItemGrid.RemoveItemsFromAStack(ItemList[i], ItemList[i].CurrentItemsInAStack);
+                    leftToRemove -= QuestItemList[i].CurrentItemsInAStack;
+                    QuestItemGrid.RemoveItemsFromAStack(QuestItemList[i], QuestItemList[i].CurrentItemsInAStack);
                 }
                 else
                 {
-                    ItemGrid.RemoveItemsFromAStack(ItemList[i], leftToRemove); 
+                    QuestItemGrid.RemoveItemsFromAStack(QuestItemList[i], leftToRemove); 
+                }
+            }
+        }
+        for (int i = BaseItemList.Count - 1; i >= 0; i--)
+        {
+            if (BaseItemList[i].ItemData.Name == itemType.Name)
+            {
+                if (BaseItemList[i].CurrentItemsInAStack <= leftToRemove)
+                {
+                    leftToRemove -= BaseItemList[i].CurrentItemsInAStack;
+                    BaseItemGrid.RemoveItemsFromAStack(BaseItemList[i], BaseItemList[i].CurrentItemsInAStack);
+                }
+                else
+                {
+                    BaseItemGrid.RemoveItemsFromAStack(BaseItemList[i], leftToRemove);
                 }
             }
         }
     }
     public void RemoveAllItemsOfThisItemData(Item itemType)
     {
-        for (int i = ItemList.Count - 1; i >= 0; i--)
+        for (int i = QuestItemList.Count - 1; i >= 0; i--)
         {
-            if (ItemList[i].ItemData.Name == itemType.Name)
+            if (QuestItemList[i].ItemData.Name == itemType.Name)
             {
-                ItemGrid.RemoveItemsFromAStack(ItemList[i], ItemList[i].CurrentItemsInAStack);
+                QuestItemGrid.RemoveItemsFromAStack(QuestItemList[i], QuestItemList[i].CurrentItemsInAStack);
+            }
+        }
+        for (int i = BaseItemList.Count - 1; i >= 0; i--)
+        {
+            if (BaseItemList[i].ItemData.Name == itemType.Name)
+            {
+                BaseItemGrid.RemoveItemsFromAStack(BaseItemList[i], BaseItemList[i].CurrentItemsInAStack);
             }
         }
     }
-    public void AddItemInInventory(InventoryItem item)
+    private void AddItemInInventory(InventoryItem item)
     {
-        ItemList.Add(item);
+        BaseItemList.Add(item);
         CurrentTotalWeight += item.ItemData.Weight * item.CurrentItemsInAStack;
     }
-    public void RemoveItemInInventory(InventoryItem item)
+    private void RemoveItemInInventory(InventoryItem item)
     {
-        ItemList.Remove(item);
+        BaseItemList.Remove(item);
+        CurrentTotalWeight -= item.ItemData.Weight * item.CurrentItemsInAStack;
+    }
+    private void AddItemInQuestItems(InventoryItem item)
+    {
+        QuestItemList.Add(item);
+        CurrentTotalWeight += item.ItemData.Weight * item.CurrentItemsInAStack;
+    }
+    private void RemoveItemInQuestItems(InventoryItem item)
+    {
+        QuestItemList.Remove(item);
         CurrentTotalWeight -= item.ItemData.Weight * item.CurrentItemsInAStack;
     }
     private void ItemUpdated(InventoryItem item, int howManyWereChanged)
@@ -236,7 +289,7 @@ public class PlayersInventory : MonoBehaviour, ISaveable<PlayersInventorySaveDat
     {
         foreach(var item in saveData.items)
         {
-            InventoryItem inventoryItem = InventoryController.Instance.TryCreateAndInsertItem(ItemGrid,
+            InventoryItem inventoryItem = InventoryController.Instance.TryCreateAndInsertItem(BaseItemGrid,
                 ItemDatabase.GetItem(item.itemName), item.currentItemsInAStack, item.boughtDaysAgo, true);
             inventoryItem.RefreshSliderValue();
         }

@@ -12,13 +12,12 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
 
     [HideInInspector] public PlayerMover PlayerMover;
     private PlayersInventory _inventory;
-    private QuestItemHolder _questItemHolder;
     private int _money;
 
     public PlayersInventory Inventory => _inventory;
 
-    public ItemGrid ItemGrid => Inventory.ItemGrid;
-    public ItemGrid QuestItemGrid => _questItemHolder.ItemGrid;
+    public ItemGrid ItemGrid => Inventory.BaseItemGrid;
+    public ItemGrid QuestItemGrid => Inventory.QuestItemGrid;
 
     public PlayerExperience Experience = new();
     public PlayerStats Statistics = new();
@@ -44,7 +43,6 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
         PlayerMover = GetComponent<PlayerMover>();
 
         _inventory = FindObjectOfType<PlayersInventory>(true);
-        _questItemHolder = FindObjectOfType<QuestItemHolder>(true);
     }
 
     private void Start()

@@ -183,17 +183,10 @@ public class ItemGrid : MonoBehaviour
     }
     public List<InventoryItem> GetAllItemsInTheGrid()
     {
-        List<InventoryItem> result = new();
-        for (int i = 0; i < _storedInventoryItems.Count; i++)
-        {
-            for (int j = 0; j < _storedInventoryItems[i].itemArray.Length; j++)
-            {
-                if (_storedInventoryItems[i].itemArray[j] != null && !result.Contains(_storedInventoryItems[i].itemArray[j]))
-                {
-                    result.Add(_storedInventoryItems[i].itemArray[j]);
-                }
-            }
-        }
+        List<InventoryItem> result = _storedInventoryItems.SelectMany(item => item.itemArray)
+            .Where(item => item != null)
+            .Distinct()
+            .ToList();
         return result;
     }
 

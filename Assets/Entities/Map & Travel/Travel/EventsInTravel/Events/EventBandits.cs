@@ -17,7 +17,7 @@ public class EventBandits : EventInTravel
 
         _wealthTaken = Random.Range(_minWealthTaken, _maxWealthTaken);
         _itemTotalWealth = 0;
-        foreach (InventoryItem item in Player.Instance.Inventory.ItemList)
+        foreach (InventoryItem item in Player.Instance.Inventory.BaseItemList)
         {
             if (item.ItemData.IsQuestItem) 
                 continue; //квестовые предметы не учитываются в подсчете общей стоимости
