@@ -204,44 +204,9 @@ public class DialogueManager : MonoBehaviour
         {
             Player.Instance.Money += int.Parse(amount);
         });
-        _currentStory.BindExternalFunction("check_if_can_place_item", (string itemName, string amount) =>
-        {
-            return InventoryController.Instance.CanInsertItem(Player.Instance.ItemGrid, ItemDatabase.GetItem(itemName), int.Parse(amount));
-        });
-        _currentStory.BindExternalFunction("check_if_can_place_multiple_items", (string joinedItemsAmounts) =>
-        {
-            //Ужасные извращения - парсить из текста диалога айтемы и их количество. Что поделать, я не вижу сейчас другого пути,
-            //кроме как делать внешний инвентарь бесконечного размера
-
-            Dictionary<Item, int> parsedItemsAmounts = new();
-
-            //Предположение таково: строка joinedItemsAmounts должна выглядеть вот так: Хлеб[1],Рецепт (Пояс)[2]...
-
-            string[] separatedItemsAmounts = joinedItemsAmounts.Split(',');
-            //После Split(',') она бъется на:
-            //Хлеб[1]
-            //Рецепт (Пояс)[2]
-            foreach (string itemAmount in separatedItemsAmounts)
-            {
-                string[] splitPair = itemAmount.Split('[', ']');
-                //После Split('[', ']') Рецепт (Пояс)[2] бъется на:
-                //Рецепт (Пояс)
-                //2
-                //*пустая строка*
-                if (splitPair.Length == 3)
-                {
-                    string itemName = splitPair[0];
-                    int amount = int.Parse(splitPair[1]);
-                    parsedItemsAmounts.Add(ItemDatabase.GetItem(itemName), amount);
-                }
-                else Debug.LogWarning($"Ошибка в написании диалога! check_if_can_place_multiple_items");
-            }
-
-            return InventoryController.Instance.CanInsertMultipleItems(Player.Instance.ItemGrid, parsedItemsAmounts);
-        });
         _currentStory.BindExternalFunction("place_item", (string itemName, string amount, string daysBoughtAgo) =>
         {
-            InventoryController.Instance.TryCreateAndInsertItem(Player.Instance.ItemGrid, ItemDatabase.GetItem(itemName), int.Parse(amount), float.Parse(daysBoughtAgo), true);
+            InventoryController.Instance.TryCreateAndInsertItem(Player.Instance.ItemGrid, ItemDatabase.GetItem(itemName), int.Parse(amount), float.Parse(daysBoughtAgo), true, true);
         });
     }
     #endregion

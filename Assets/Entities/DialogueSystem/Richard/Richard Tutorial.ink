@@ -36,7 +36,7 @@ INCLUDE ../MainInkLibrary.ink
     
 === buy_relic ===
 Тогда давай сюда деньги.
-{has_money(200) and check_if_can_place_item("placeholder_tutorial_relic", 1):
+{has_money(200):
     +[(Отдать 200 золота)]
         ~change_player_money(-200)
         ~invoke_dialogue_event("tutorial_buy_relic_from_richard")
