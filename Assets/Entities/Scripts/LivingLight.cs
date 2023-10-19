@@ -45,26 +45,26 @@ public class LivingLight : MonoBehaviour
         _light.intensity = _maxIntensity * IntensityArgument + _minIntensity * (1-IntensityArgument);
         float RadiusArgument = (float)Math.Sin(Time.time + _phase + 2 * IntensityArgument)/2 + 0.5f;
         _light.pointLightOuterRadius = _maxRadius * RadiusArgument + _minRadius * (1-RadiusArgument);
-        _light.pointLightInnerRadius = _light.pointLightOuterRadius/2.75f;
+        _light.pointLightInnerRadius = _light.pointLightOuterRadius/2.9f;
     }
 
     private void ChangeIntensityByTime()
     {
         switch (GameTime.Hours)
         {
-            case int n when n >= 3 && n <= 10:
-                _maxIntensity = Mathf.Lerp(_maxBobbingIntensity, _maxBobbingIntensity/2.2f -0.2f, (float)(GameTime.Hours-2)/8);
-                _minIntensity = Mathf.Lerp(_minBobbingIntensity, _minBobbingIntensity/2.2f -0.2f, (float)(GameTime.Hours-2)/8);
+            case int n when n >= 4 && n <= 10:
+                _maxIntensity = Mathf.Lerp(_maxBobbingIntensity, _maxBobbingIntensity/1.8f -0.2f, (float)(GameTime.Hours-3)/7);
+                _minIntensity = Mathf.Lerp(_minBobbingIntensity, _minBobbingIntensity/1.8f -0.2f, (float)(GameTime.Hours-3)/7);
                 break;
             case int n when n >= 11 && n <= 14:
-                _maxIntensity = _maxBobbingIntensity / 2.2f - 0.2f;
-                _minIntensity = _minBobbingIntensity / 2.2f - 0.2f;
+                _maxIntensity = _maxBobbingIntensity / 1.8f - 0.2f;
+                _minIntensity = _minBobbingIntensity / 1.8f - 0.2f;
                 break;
-            case int n when n >= 15 && n <= 22:
-                _maxIntensity = Mathf.Lerp(_maxBobbingIntensity/2.2f -0.2f, _maxBobbingIntensity, (float)(GameTime.Hours-14)/8);
-                _minIntensity = Mathf.Lerp(_minBobbingIntensity/2.2f -0.2f, _minBobbingIntensity, (float)(GameTime.Hours-14)/8);
+            case int n when n >= 15 && n <= 21:
+                _maxIntensity = Mathf.Lerp(_maxBobbingIntensity/1.8f -0.2f, _maxBobbingIntensity, (float)(GameTime.Hours-14)/7);
+                _minIntensity = Mathf.Lerp(_minBobbingIntensity/1.8f -0.2f, _minBobbingIntensity, (float)(GameTime.Hours-14)/7);
                 break;
-            case int n when n >= 23 || n <= 2:
+            case int n when n >= 22 || n <= 2:
                 _maxIntensity = _maxBobbingIntensity;
                 _minIntensity = _minBobbingIntensity;
                 break;

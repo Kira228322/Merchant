@@ -15,10 +15,10 @@ public class DayNightCycle : MonoBehaviour
 {
     [SerializeField]private RawImage _farBackground;
     [SerializeField]private RawImage _nearBackground;
-    private Color _white = new Color(0.9f,0.9f,0.9f);
-    private Color _grey = new Color(0.8f,0.8f,0.8f);
-    private Color _darkGrey = new Color(0.29f,0.29f,0.29f);
-    private Color _black = new Color(0.23f,0.23f,0.23f);
+    private Color _white = new Color(0.84f,0.84f,0.84f);
+    private Color _grey = new Color(0.78f,0.78f,0.78f);
+    private Color _darkGrey = new Color(0.21f,0.21f,0.21f);
+    private Color _black = new Color(0.18f,0.18f,0.18f);
     
     private Volume _volume;
     private Light2D _sun;
@@ -85,7 +85,7 @@ public class DayNightCycle : MonoBehaviour
         }
         
         _volume.weight = volumeWeight + _rainWeightOffset;
-        _sun.intensity = Mathf.Lerp(0.16f, 0.96f, 1-volumeWeight); // 0.16 и 0.96 это min и max значения которыми может быть освещение
+        _sun.intensity = Mathf.Lerp(0.08f, 0.98f, 1-volumeWeight); // 0.07 и 0.98 это min и max значения которыми может быть освещение
         _nearBackground.color = Color.Lerp(_white, _darkGrey, volumeWeight);
         _farBackground.color = Color.Lerp(_grey, _black, volumeWeight);
         
