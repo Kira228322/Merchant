@@ -143,6 +143,11 @@ public class CraftingHandler : MonoBehaviour
     }
     public void OnCraftButtonClick()
     {
+        if (!InventoryController.Instance.CanInsertItem(SelectedRecipe.ResultingItem, SelectedRecipe.ResultAmount))
+        {       
+            CanvasWarningGenerator.Instance.CreateWarning("Недостаточно места", "Освободите место в инвентаре, чтобы создать предмет");
+            return;
+        }
         foreach (CraftingRecipe.CraftingItem requiredItem in SelectedRecipe.RequiredItems)
         {
             Player.Instance.Inventory.RemoveItemsOfThisItemData(requiredItem.item, requiredItem.amount);
