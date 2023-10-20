@@ -15,7 +15,7 @@ public class Item : ScriptableObject
         RichClothes = 0, WarmClothes, LightClothes, CeramicProduct, EverydayItem, CostumeJewelry, SouthPlant, NorthPlant, 
         Cactus, MagicThing, Chemicals, Cosmetics, SouthFood, NorthFood, Food, Tea, Spices, EastSpices, MagicMaterial,
         Fish, Seeds, MagicSeeds, SouthFruitAndBerry, NorthFruitAndBerry, Sushi, AlcoholDrink, Drink, Potion, Equipment, Armor, RangeWeapon, 
-        Materials, PreciousMetalsGems, MeleeWeapon
+        Materials, PreciousMetalsGems, MeleeWeapon, LootFromMonster
     }
     
     public ItemType TypeOfItem;
@@ -82,7 +82,8 @@ public class Item : ScriptableObject
         {ItemType.RangeWeapon, "Дальнобойное оружие"},
         {ItemType.Materials, "Материалы"},
         {ItemType.PreciousMetalsGems, "Драгоценные камни/металлы"},
-        {ItemType.MeleeWeapon, "Оружие ближнего боя"}
+        {ItemType.MeleeWeapon, "Оружие ближнего боя"},
+        { ItemType.LootFromMonster , "Добыча с монстра"}
     };
 
     
