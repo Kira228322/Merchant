@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.TextCore.Text;
 using UnityEngine;
 
 public class QuestAppearanceController : MonoBehaviour
@@ -23,28 +24,55 @@ public class QuestAppearanceController : MonoBehaviour
             return false;
         }
     }
-    private enum Appearance { Show, Hide }
-    [SerializeField] private Appearance _appearance;
 
-    [SerializeField] private List<AppearanceControls> _controls = new();
+    private enum AppearanceBehavior { HideThenShow, ShowThenHide}
 
-    private void Start()
+    [SerializeField] private AppearanceBehavior _appearanceBehaviour;
+
+    [SerializeField] private List<AppearanceControls> _showConditions = new();
+    [SerializeField] private List<AppearanceControls> _hideConditions = new();
+
+    //Смотрит на поведение _appearanceBehaviour. Если HideThenShow, то объект начинает скрытым.
+    //Если соблюдаются все showConditions, то появляется. Если также соблюдаются hideConditions, то снова скрывается.
+
+    //Если ShowThenHide, то начинает показанным.
+    //Если соблюдаются HideConditions, то скрываются. Если также соблюдаются ShowConditions, то снова появляется.
+
+    private void Awake()
     {
         CheckAppearance();
     }
 
-    private void CheckAppearance()
+    private bool AreControlsReady(List<AppearanceControls> controls)
     {
-        bool shouldShow = _appearance == Appearance.Show;
-        foreach (var control in _controls)
+        if (controls.Count == 0)
+            return false;
+
+        foreach (AppearanceControls control in controls)
         {
-            if (!control.IsReady())
+            if (!control.IsReady()) 
             {
-                shouldShow = !shouldShow;
-                break;
+                return false;
             }
         }
+        return true;
+    }
 
-        gameObject.SetActive(shouldShow);
+    private void CheckAppearance()
+    {
+        bool showControls = AreControlsReady(_showConditions);
+        bool hideControls = AreControlsReady(_hideConditions);
+        bool appearanceBehaviour = _appearanceBehaviour == AppearanceBehavior.ShowThenHide;
+
+        bool result = (appearanceBehaviour && (showControls || !hideControls)) || (showControls && !hideControls);
+        //Просто минимизированная функция с вектором 00101011,
+        //где x1 == appearanceBehaviour, x2 == showControls, x3 == hideControls
+
+        gameObject.SetActive(result);
+    }
+
+    private bool Test(bool appearanceBehaviour, bool showControls, bool hideControls)
+    {
+        return (appearanceBehaviour && (showControls || !hideControls)) || (showControls && !hideControls);
     }
 }
