@@ -70,9 +70,4 @@ public class QuestAppearanceController : MonoBehaviour
 
         gameObject.SetActive(result);
     }
-
-    private bool Test(bool appearanceBehaviour, bool showControls, bool hideControls)
-    {
-        return (appearanceBehaviour && (showControls || !hideControls)) || (showControls && !hideControls);
-    }
 }
