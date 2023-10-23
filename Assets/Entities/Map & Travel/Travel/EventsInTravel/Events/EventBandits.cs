@@ -11,9 +11,14 @@ public class EventBandits : EventInTravel
     private float _playerWealthDistribution;
     private int _playerTotalWealth;
     private int _itemTotalWealth;
+
+    private int _runningAwayProbability = 10;
     public override void SetButtons()
     {
         ButtonsLabel.Add("Попытаться уехать");
+        SetInfoButton($"Попытаться уехать - шанс успеха " +
+                      $"{TravelEventHandler.GetProbability(_runningAwayProbability, Player.Instance.Statistics.Toughness)}% \n" +
+                      $"Шанс зависит от вашей выносливости");
 
         _wealthTaken = Random.Range(_minWealthTaken, _maxWealthTaken);
         _itemTotalWealth = 0;
@@ -64,7 +69,7 @@ public class EventBandits : EventInTravel
 
     private void TryRunningAway()
     {
-        if (!TravelEventHandler.EventFire(10, true, Player.Instance.Statistics.Toughness))
+        if (!TravelEventHandler.EventFire(_runningAwayProbability, true, Player.Instance.Statistics.Toughness))
         {
             int itemsTaken = (int)(_itemTotalWealth * _wealthTaken);
             int moneyTaken = (int)(Player.Instance.Money * _wealthTaken);

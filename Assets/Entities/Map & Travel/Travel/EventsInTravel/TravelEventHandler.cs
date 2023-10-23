@@ -242,4 +242,17 @@ public class TravelEventHandler : MonoBehaviour
 
         return false;
     }
+    public static float GetProbability(float probability, PlayerStats.PlayerStat playerStat, bool positiveEvent = true )
+    {
+        if (probability < 1)
+            probability *= 100; // Если вероятность по ошибке была написана не в %, а в долях
+        
+        if (positiveEvent)
+        {
+            return (float)Math.Round(100 - (100 - probability) / playerStat.GetCoefForPositiveEvent(), 1);
+        }
+        
+        return (float)Math.Round(probability * playerStat.GetCoefForNegativeEvent(), 1);
+    }
+    
 }

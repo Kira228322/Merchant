@@ -128,8 +128,10 @@ public class CraftingHandler : MonoBehaviour
             else _requiredItemContainers[i].SetCompletedColor(false);
         }
 
-        _craftButton.interactable = isCraftButtonEnabled;
-            
+        if (MapManager.IsActiveSceneTravel)
+            _craftButton.interactable = false;
+        else 
+            _craftButton.interactable = isCraftButtonEnabled;
     }
 
     private bool IsCraftButtonEnabled()

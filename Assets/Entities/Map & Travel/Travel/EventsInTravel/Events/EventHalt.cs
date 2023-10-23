@@ -8,6 +8,7 @@ public class EventHalt : EventInTravel
     {
         ButtonsLabel.Add("Устроить привал");
         ButtonsLabel.Add("Продолжить странствие");
+        SetInfoButton("");
     }
 
     public override void OnButtonClick(int n)
@@ -21,6 +22,7 @@ public class EventHalt : EventInTravel
                 _eventWindow.ChangeDescription($"Вас накормили досыта. Вы провели в хорошей компании {hours} часа. " + CreateStory());
                 break;
             case 1:
+                _eventWindow.ChangeDescription("Радушное приглашение странников вас не завлекло, и вы поехали дальше...");
                 break;
         }
     }

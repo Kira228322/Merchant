@@ -23,12 +23,12 @@ public class ActiveStatus
         if (StatusData.Type == Status.StatusType.Buff)
         {
             if (CurrentDurationHours < newStatus.HourDuration * Player.Instance.Statistics.StatusDurationModifier)
-                CurrentDurationHours = StatusData.HourDuration * Player.Instance.Statistics.StatusDurationModifier;
+                CurrentDurationHours = newStatus.HourDuration * Player.Instance.Statistics.StatusDurationModifier;
         }
         else
         {
             if (CurrentDurationHours < newStatus.HourDuration)
-                CurrentDurationHours = StatusData.HourDuration;
+                CurrentDurationHours = newStatus.HourDuration;
         }
     }
     public void SetDuration(float duration)

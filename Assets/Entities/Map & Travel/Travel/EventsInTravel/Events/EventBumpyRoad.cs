@@ -12,6 +12,7 @@ public class EventBumpyRoad : EventInTravel
     {
         ButtonsLabel.Add("≈хать по ухабистой дороге");
         ButtonsLabel.Add("≈хать в объезд");
+        SetInfoButton("≈зда по ухабистой дороге может привести к увеличенному количеству сломанных предметов в конце поездки");
     }
 
     public override void OnButtonClick(int n)

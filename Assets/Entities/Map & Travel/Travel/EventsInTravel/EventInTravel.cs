@@ -27,4 +27,11 @@ public abstract class EventInTravel : MonoBehaviour
     public abstract void SetButtons();
     
     public abstract void OnButtonClick(int n);
+
+    protected void SetInfoButton(string text)
+    {
+        _eventWindow.SetInfoButton(text);
+    }
+    
+    
 }

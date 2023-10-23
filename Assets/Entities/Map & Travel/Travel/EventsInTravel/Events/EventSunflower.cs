@@ -8,6 +8,7 @@ public class EventSunflower : EventInTravel
     {
         ButtonsLabel.Add("Собрать подсолнухи"); 
         ButtonsLabel.Add("Ехать дальше");
+        SetInfoButton("");
     }
 
     public override void OnButtonClick(int n)
@@ -17,7 +18,7 @@ public class EventSunflower : EventInTravel
             case 0:
                 if (InventoryController.Instance.TryCreateAndInsertItem(ItemDatabase.GetItem("Подсолнух"), 2, 0))
                 {
-                    int skippedMinutes = Random.Range(1, 20);
+                    int skippedMinutes = Random.Range(5, 16);
                     _eventWindow.ChangeDescription($"Вы собрали пару подсолнухов и потратили на это 1 час {skippedMinutes} минут");
                     GameTime.TimeSkip(0,1,skippedMinutes);
                 }

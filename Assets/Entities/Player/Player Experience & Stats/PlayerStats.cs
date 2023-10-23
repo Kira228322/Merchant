@@ -33,11 +33,11 @@ public class PlayerStats : ISaveable<PlayerStatsSaveData>
         public event UnityAction StatChanged;
         public float GetCoefForPositiveEvent()
         {
-            return (float)(1 + 0.07f * Total / (0.07 * Total + 1));
+            return (float)(1 + 0.08f * Total / (0.08 * Total + 1));
         }
         public float GetCoefForNegativeEvent() 
         {
-            return (float)(1 - 0.07f * Total / (0.07 * Total + 1));
+            return (float)(1 - 0.08f * Total / (0.08 * Total + 1));
         }
         public void IncreaseStat()
         {

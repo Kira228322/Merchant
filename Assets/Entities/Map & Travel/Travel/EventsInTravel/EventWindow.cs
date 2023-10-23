@@ -14,8 +14,44 @@ public class EventWindow : MonoBehaviour
     [SerializeField] private Transform _contentButtons; // родительский объект для кнопок
     [SerializeField] private Transform _sceneContainer;
     [SerializeField] private GameObject _buttonPrefab;
+    [SerializeField] private GameObject _infoButton;
+    [SerializeField] private EventInTravelInfoPanel _infoPanelPrefab;
+    private EventInTravelInfoPanel _currentInfoPanel;
+    private string _infoText;
     private Animator _animator;
     private TravelEventHandler _eventHandler;
+    
+    public void SetInfoButton(string text)
+    {
+        if (text == "")
+            _infoButton.SetActive(false);
+        else
+        {
+            _infoButton.SetActive(true);
+            _infoText = text;
+        }
+    }
+
+    public void OnInfoButtonClick()
+    {
+        if (_currentInfoPanel != null)
+            Destroy(_currentInfoPanel.gameObject);
+
+        _currentInfoPanel = Instantiate(_infoPanelPrefab.gameObject,transform)
+            .GetComponent<EventInTravelInfoPanel>();
+        _currentInfoPanel.Init(this);
+        _currentInfoPanel.transform.position = _infoButton.transform.position;
+        _currentInfoPanel._infoText.text = _infoText;
+    }
+
+    public void DestroyInfoPanel()
+    {
+        if (_currentInfoPanel != null)
+        {
+            Destroy(_currentInfoPanel.gameObject);
+            _currentInfoPanel = null;
+        }
+    }
 
     private void Start()
     {
@@ -75,6 +111,7 @@ public class EventWindow : MonoBehaviour
             Destroy(_contentButtons.GetChild(_contentButtons.childCount - 1 - i).gameObject);
         
         Destroy(_sceneContainer.GetChild(0).gameObject);
+        DestroyInfoPanel();
         gameObject.SetActive(false);
     }
 }

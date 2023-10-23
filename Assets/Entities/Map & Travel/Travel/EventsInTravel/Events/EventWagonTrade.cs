@@ -6,10 +6,14 @@ public class EventWagonTrade : EventInTravel
 {
     [SerializeField] private List<Item> _cheapItems;
     [SerializeField] private List<Item> _expensiveItems;
+
+    private int RareItemprobability = 40;
     public override void SetButtons()
     {
         ButtonsLabel.Add("Купить товар у торговца");
         ButtonsLabel.Add("Отказаться от предложения");
+        SetInfoButton($"У торговца с вероятностью {TravelEventHandler.GetProbability(RareItemprobability, Player.Instance.Statistics.Diplomacy)}% " +
+                      $"окажется редкий предмет \nШанс успеха зависит от вашей дипломатии");
     }
 
     public override void OnButtonClick(int n)
@@ -24,7 +28,7 @@ public class EventWagonTrade : EventInTravel
                 }
 
                 Item item;
-                if (TravelEventHandler.EventFire(40, true, Player.Instance.Statistics.Diplomacy))
+                if (TravelEventHandler.EventFire(RareItemprobability, true, Player.Instance.Statistics.Diplomacy))
                 {
                     item = _expensiveItems[Random.Range(0, _expensiveItems.Count)];
                     if (InventoryController.Instance.TryCreateAndInsertItem
@@ -35,7 +39,7 @@ public class EventWagonTrade : EventInTravel
                     }
                     else
                     {
-                        _eventWindow.ChangeDescription($"Внутри оказался ценный товар: {item.Name}. Но у вас не было места в инвентаре, чтобы поместить его. Торговец решил оставить этот товар себе");
+                        _eventWindow.ChangeDescription($"Внутри оказался ценный товар: {item.Name}. Но у вас не было места в инвентаре, чтобы поместить его. Торговец решил оставить этот товар себе. (Вы ничего не заплатили)");
                     }
                 }
                 else
@@ -49,7 +53,7 @@ public class EventWagonTrade : EventInTravel
                     }
                     else
                     {
-                        _eventWindow.ChangeDescription($"Внутри совсем не ценный товар: {item.Name}. Но у вас не было места в инвентаре, чтобы поместить его. Торговец решил оставить этот товар себе");
+                        _eventWindow.ChangeDescription($"Внутри совсем не ценный товар: {item.Name}. Но у вас не было места в инвентаре, чтобы поместить его. Торговец решил оставить этот товар себе. (Вы ничего не заплатили)");
                     }
                 }
                 

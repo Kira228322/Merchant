@@ -19,6 +19,7 @@ public class EventTraveler : EventInTravel
     {
         ButtonsLabel.Add("Подвезти путника");
         ButtonsLabel.Add("Ехать дальше");
+        SetInfoButton("");
     }
 
     protected override void Start()

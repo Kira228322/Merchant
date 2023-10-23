@@ -7,12 +7,15 @@ public class EventWizard : EventInTravel
     [SerializeField] private List<Status> _commonStatuses;
     [SerializeField] private List<Status> _rareStatuses;
 
+    private int _rareBuffProbability = 20;
     private int cost;
     public override void SetButtons()
     {
         cost = Random.Range(75, 111);
         ButtonsLabel.Add($"Получить улучшение ({cost} золота)");
         ButtonsLabel.Add("Спасибо, не нужно");
+        SetInfoButton($"Существует {TravelEventHandler.GetProbability(_rareBuffProbability, Player.Instance.Statistics.Diplomacy)}% " +
+                      $"шанс, что волшебник наложит редкое заклинание \nШанс успеха зависит от вашей дипломатии");
     }
 
     public override void OnButtonClick(int n)
@@ -29,7 +32,7 @@ public class EventWizard : EventInTravel
                 
                 Player.Instance.Money -= cost;
                 
-                if (TravelEventHandler.EventFire(20, true, Player.Instance.Statistics.Diplomacy))
+                if (TravelEventHandler.EventFire(_rareBuffProbability, true, Player.Instance.Statistics.Diplomacy))
                 {
                     index = Random.Range(0, _rareStatuses.Count);
                     StatusManager.Instance.AddStatusForPlayer(_rareStatuses[index]);

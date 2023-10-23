@@ -8,6 +8,7 @@ public class EventAdvertisement : EventInTravel
     {
         ButtonsLabel.Add("Посмотреть представление");
         ButtonsLabel.Add("Проехать мимо");
+        SetInfoButton("");
     }
 
     public override void OnButtonClick(int n)
