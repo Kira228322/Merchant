@@ -199,21 +199,24 @@ class EditorPregenQuest : Editor
                         EditorGUILayout.LabelField("Accepted item categories:");
                         EditorGUILayout.EndHorizontal();
 
-                        if (goal.RequiredItemCategories?.Count == 0)
+                        if (goal.RequiredItemCategories != null)
                         {
-                            EditorGUILayout.LabelField("Everything is accepted");
-                        }
-
-                        foreach (var type in goal.RequiredItemCategories)
-                        {
-                            EditorGUILayout.BeginHorizontal();
-                            if (GUILayout.Button("X", GUILayout.Height(17), GUILayout.Width(18)))
+                            if (goal.RequiredItemCategories.Count == 0)
+                                EditorGUILayout.LabelField("Everything is accepted");
+                            else
                             {
-                                goal.RequiredItemCategories.Remove(type);
-                                break;
+                                foreach (var type in goal.RequiredItemCategories)
+                                {
+                                    EditorGUILayout.BeginHorizontal();
+                                    if (GUILayout.Button("X", GUILayout.Height(17), GUILayout.Width(18)))
+                                    {
+                                        goal.RequiredItemCategories.Remove(type);
+                                        break;
+                                    }
+                                    EditorGUILayout.LabelField(type.ToString());
+                                    EditorGUILayout.EndHorizontal();
+                                }
                             }
-                            EditorGUILayout.LabelField(type.ToString());
-                            EditorGUILayout.EndHorizontal();
                         }
 
                         tmpItemCategory = (Item.ItemType)EditorGUILayout.EnumPopup("Select category", tmpItemCategory);
