@@ -2,26 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using Codice.Client.BaseCommands.Merge.Xml;
 
 [CustomEditor(typeof(PregenQuestSO))]
 class EditorPregenQuest : Editor
 {
-    private bool randomExp;
-    private bool randomReward;
     private PregenQuestSO _quest;
     private Item.ItemType tmpItemCategory;
     private void OnEnable()
     {
         _quest = (PregenQuestSO)target;
-        randomExp = EditorPrefs.GetBool("randomExp", false);
-        randomReward = EditorPrefs.GetBool("randomReward", false);
-    }
-
-    private void OnDisable()
-    {
-        EditorPrefs.SetBool("randomExp", randomExp);
-        EditorPrefs.SetBool("randomReward", randomReward);
     }
 
     public override void OnInspectorGUI()
@@ -240,9 +229,9 @@ class EditorPregenQuest : Editor
         GUILayout.Space(5);
         EditorGUILayout.LabelField("Reward", EditorStyles.boldLabel);
         GUILayout.Space(5);
-        randomExp = GUILayout.Toggle(randomExp, "Random experience");
+        _quest.RandomExp = GUILayout.Toggle(_quest.RandomExp, "Random experience");
 
-        if (randomExp)
+        if (_quest.RandomExp)
         {
             EditorGUILayout.BeginHorizontal();
             _quest.MinExperienceReward = EditorGUILayout.IntField("Min exp", _quest.MinExperienceReward);
@@ -256,9 +245,9 @@ class EditorPregenQuest : Editor
             _quest.MaxExperienceReward = _quest.MinExperienceReward;
         }
 
-        randomReward = GUILayout.Toggle(randomReward, "Random money");
+        _quest.RandomReward = GUILayout.Toggle(_quest.RandomReward, "Random money");
 
-        if (randomReward)
+        if (_quest.RandomReward)
         {
             EditorGUILayout.BeginHorizontal();
             _quest.MinMoneyReward = EditorGUILayout.IntField("Min money", _quest.MinMoneyReward);

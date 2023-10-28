@@ -17,6 +17,10 @@ public class PregenQuestSO : ScriptableObject
         "диалогах, но не влияет на ExclamationMark над головой")] public int QuestGiverID;
 
     [TextArea(2,5)] public string Description;
+
+    [HideInInspector] public bool RandomExp;
+    [HideInInspector] public bool RandomReward;
+
     [HideInInspector] public int MinExperienceReward; 
     [HideInInspector] public int MaxExperienceReward; 
     [HideInInspector] public int MinMoneyReward;
