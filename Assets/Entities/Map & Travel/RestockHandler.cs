@@ -183,8 +183,22 @@ public class RestockHandler : MonoBehaviour
                     activeTraders.Add(trader);
                     break;
                 }
+
             if (activeTraders.Count == 0)
-                continue;
+            {
+                if (Random.Range(0,10) != 0)
+                    continue;
+                foreach (var trader in traders) // из всех трейдеров выбирамем тех, кто торгует таким товаром
+                foreach (var traderGood in trader.AdditiveGoods)
+                    if (item.Name == traderGood.Good.Name)
+                    {
+                        activeTraders.Add(trader);
+                        break;
+                    }
+                if (activeTraders.Count == 0)
+                    continue;
+            }
+            
             
             gainCount = location.Region.CalculateGainOnMarket(location.CountOfEachItem[item.Name], item.Price,
                 location.ItemEconomyParams[item.Name][0], location.ItemEconomyParams[item.Name][1],
