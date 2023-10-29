@@ -1,4 +1,4 @@
-INCLUDE ../MainInkLibrary.ink
+INCLUDE ../../MainInkLibrary.ink
 
 ~temp questSummaries = get_activeQuestList()
 {contains(questSummaries, "tutorial_talk_to_richard"):

@@ -1,4 +1,4 @@
-INCLUDE ../MainInkLibrary.ink
+INCLUDE ../../MainInkLibrary.ink
 
 -> greeting
 
