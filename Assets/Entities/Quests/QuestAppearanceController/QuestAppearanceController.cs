@@ -11,17 +11,26 @@ public class QuestAppearanceController : MonoBehaviour
     {
         public string QuestSummary;
         public Quest.State questState;
-        
+        [Tooltip("Сколько часов должно пройти с момента выполнения квеста, чтобы изменения вступили в силу")] 
+        public int HoursDelay;
         public bool IsReady()
         {
             Quest quest = QuestHandler.GetQuestBySummary(QuestSummary);
-            if (quest == null)
-                return false;
-            if (questState == quest.CurrentState)
-                return true;
-            if (questState == Quest.State.Completed && quest.CurrentState == Quest.State.RewardUncollected)
-                return true;
+
+            if (quest != null && IsTimeExpired(quest.DayFinishedOn, quest.HourFinishedOn))
+            {
+                return (questState == quest.CurrentState) ||
+                       (questState == Quest.State.Completed && quest.CurrentState == Quest.State.RewardUncollected);
+            }
+
             return false;
+        }
+
+        private bool IsTimeExpired(int dayFinishedOn, int hourFinishedOn)
+        {
+            int totalHoursPassed = (GameTime.CurrentDay - dayFinishedOn) * 24 + GameTime.Hours - hourFinishedOn;
+
+            return totalHoursPassed >= HoursDelay;
         }
     }
 

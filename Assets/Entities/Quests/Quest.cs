@@ -39,6 +39,9 @@ public class Quest
 
     public QuestPanel questPanel = null; //она сама себя назначит
 
+    public int DayFinishedOn;  //TODO: Можно было бы объединить поля в общий класс Timespan. 
+    public int HourFinishedOn; //Но надо было это делать в самом начале, щас уже незачем...
+
     public event UnityAction<Quest> QuestUpdated;
     public event UnityAction<Quest, State, State> QuestChangedState;
 
@@ -101,6 +104,9 @@ public class Quest
         {
             CurrentState = State.Completed;
         }
+
+        DayFinishedOn = GameTime.CurrentDay;
+        HourFinishedOn = GameTime.Hours;
     }
     private void Fail()
     {
@@ -110,6 +116,9 @@ public class Quest
         }
 
         CurrentState = State.Failed;
+
+        DayFinishedOn = GameTime.CurrentDay;
+        HourFinishedOn = GameTime.Hours;
     }
 
     public void CompleteManually()
