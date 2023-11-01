@@ -21,7 +21,7 @@ public class EventBumpyRoad : EventInTravel
         {
             case 0:
                 FindObjectOfType<TravelEventHandler>().RoadBadnessMultiplier += _reduceQuality;
-                _eventWindow.ChangeDescription("Вы решили поехать напрямую, незадерживаясь в своем путешествии.");
+                _eventWindow.ChangeDescription("Вы решили поехать напрямую, не задерживаясь.");
                 break;
             case 1:
                 FindObjectOfType<TravelEventHandler>().ChangeTravelTime(Random.Range(_minTimeToGoAround, _maxTimeToGoAround +1));
