@@ -300,6 +300,17 @@ public class DialogueManager : MonoBehaviour
         _dialogueWindow.SetActive(true);
         ContinueStory();
     }
+    public void EnterDialogueMode(TextAsset inkJson)
+    {
+        Player.Instance.PlayerMover.DisableMove();
+        _blockerPanel.SetActive(true);
+        TextAsset objectInkJson = inkJson;
+        _currentStory = new Story(objectInkJson.text);
+        InitializeErrorHandler();
+        BindFunctions();
+        _dialogueWindow.SetActive(true);
+        ContinueStory();
+    }
 
     private void ContinueStory()
     {
@@ -318,7 +329,8 @@ public class DialogueManager : MonoBehaviour
         _blockerPanel.SetActive(false);
         _dialogueWindow.SetActive(false);
         _dialogueText.text = "";
-        _currentNPC.StopInteraction();
+        if (_currentNPC != null)
+            _currentNPC.StopInteraction();
     }
     #endregion
 
