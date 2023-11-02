@@ -44,9 +44,9 @@ public class GiveItemsGoal : Goal
         DialogueManager.Instance.TalkedToNPCAboutSomething -= OnTalkWithNPC;
     }
 
-    private void OnTalkWithNPC(Npc npc, string line)
+    private void OnTalkWithNPC(NpcData npcData, string line)
     {
-        if (npc.NpcData == RequiredNPC)
+        if (npcData == RequiredNPC)
         {
             if (line == RequiredLine)
             {

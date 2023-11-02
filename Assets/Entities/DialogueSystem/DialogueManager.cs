@@ -34,7 +34,7 @@ public class DialogueManager : MonoBehaviour
     private DeliveryGoal _currentDeliveryGoal;
 
     //Первый параметр - с кем поговорил. Второй параметр - о чём.
-    public event UnityAction<Npc, string> TalkedToNPCAboutSomething;
+    public event UnityAction<NpcData, string> TalkedToNPCAboutSomething;
     #endregion
 
     #region External функции Ink и всё что связано с ними
@@ -92,7 +92,7 @@ public class DialogueManager : MonoBehaviour
         });
         _currentStory.BindExternalFunction("invoke_dialogue_event", (string param) =>
         {
-            TalkedToNPCAboutSomething?.Invoke(_currentNPC, param);
+            TalkedToNPCAboutSomething?.Invoke(_currentNPC.NpcData, param);
         });
         _currentStory.BindExternalFunction("debug_log", (string param) =>
         {
@@ -295,17 +295,6 @@ public class DialogueManager : MonoBehaviour
         _currentNPC = npc;
         TextAsset npcInkJson = _currentNPC.InkJSON;
         _currentStory = new Story(npcInkJson.text);
-        InitializeErrorHandler();
-        BindFunctions();
-        _dialogueWindow.SetActive(true);
-        ContinueStory();
-    }
-    public void EnterDialogueMode(TextAsset inkJson)
-    {
-        Player.Instance.PlayerMover.DisableMove();
-        _blockerPanel.SetActive(true);
-        TextAsset objectInkJson = inkJson;
-        _currentStory = new Story(objectInkJson.text);
         InitializeErrorHandler();
         BindFunctions();
         _dialogueWindow.SetActive(true);
