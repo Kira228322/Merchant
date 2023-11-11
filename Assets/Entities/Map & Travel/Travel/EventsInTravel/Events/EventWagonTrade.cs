@@ -7,9 +7,10 @@ public class EventWagonTrade : EventInTravel
     [SerializeField] private List<Item> _cheapItems;
     [SerializeField] private List<Item> _expensiveItems;
 
-    private int RareItemprobability = 40;
+    private int RareItemprobability = 39;
     public override void SetButtons()
     {
+        RareItemprobability += Random.Range(0, 6);
         ButtonsLabel.Add("Купить товар у торговца");
         ButtonsLabel.Add("Отказаться от предложения");
         SetInfoButton($"У торговца с вероятностью {TravelEventHandler.GetProbability(RareItemprobability, Player.Instance.Statistics.Diplomacy)}% " +
