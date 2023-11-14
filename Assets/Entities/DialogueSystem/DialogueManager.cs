@@ -94,6 +94,10 @@ public class DialogueManager : MonoBehaviour
         {
             TalkedToNPCAboutSomething?.Invoke(_currentNPC.NpcData, param);
         });
+        _currentStory.BindExternalFunction("invoke_dialogue_event_universal", (string param) =>
+        {
+            TalkedToNPCAboutSomething?.Invoke(null, param);
+        });
         _currentStory.BindExternalFunction("debug_log", (string param) =>
         {
             print(param);

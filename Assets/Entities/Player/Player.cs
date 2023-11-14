@@ -157,7 +157,7 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
         }
         if (Input.GetKeyDown(KeyCode.I))
         {
-            InventoryController.Instance.Sort(Instance.BaseItemGrid);
+
         }
 
 

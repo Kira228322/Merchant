@@ -16,6 +16,10 @@ add_quest(questSummary)
 invoke_dialogue_event(line)
 Вызывает ивент, на который реагируют квесты. line должна быть такая, как указано в квесте. (RequiredLine или FailingLine)
 
+invoke_dialogue_event_universal(line)
+То же, что и invoke_dialogue_event(line), но не обращает внимания на то, какой нпс вызвал этот ивент. 
+То есть, по сути, игнорируется поле "НПС, с которым нужно поговорить". Полезно, если нужно поговорить с одним любым из нескольких нпс.
+
 debug_log(param)
 Дублирует Debug.Log(string param).
 

@@ -46,7 +46,7 @@ public class GiveItemsGoal : Goal
 
     private void OnTalkWithNPC(NpcData npcData, string line)
     {
-        if (npcData == RequiredNPC)
+        if (npcData == RequiredNPC || npcData == null)
         {
             if (line == RequiredLine)
             {

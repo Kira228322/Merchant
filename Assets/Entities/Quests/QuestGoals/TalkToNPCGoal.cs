@@ -34,14 +34,14 @@ public class TalkToNPCGoal : Goal
 
     private void OnTalkWithNPC(NpcData npcData, string line)
     {
-        if (npcData == RequiredNPC)
+        if (npcData == null || npcData == RequiredNPC)
         {
             if (line == RequiredLine)
             {
                 CurrentAmount++;
                 Evaluate();
             }
-            if (line == FailingLine)
+            else if (line == FailingLine)
             {
                 Fail();
             }
