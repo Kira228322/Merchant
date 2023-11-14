@@ -8,7 +8,7 @@ public class NpcDatabase : MonoBehaviour, ISaveable<NpcDatabaseSaveData>
 {
     public NpcDatabaseSO NpcDatabaseSO;
 
-    private static NpcDatabase Instance;
+    public static NpcDatabase Instance;
 
     private void Awake()
     {

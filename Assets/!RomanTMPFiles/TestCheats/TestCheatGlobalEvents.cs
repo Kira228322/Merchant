@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -64,5 +65,17 @@ public class TestCheatGlobalEvents : MonoBehaviour
     {
         eventControllers[newEventSelector.value].PrepareEvent();
         Refresh();
+    }
+
+    public void OnNpcDatabaseCheckClick()
+    {
+        //Это не тот скрипт, ну да мне лень делать отдельный для одного метода. Похуй, это же чит-панель
+        List<NpcData> sortedList = new(NpcDatabase.Instance.NpcDatabaseSO.NpcList);
+        sortedList = sortedList.OrderBy(npc => npc.ID).ToList();
+        foreach (var npc in sortedList)
+        {
+            Debug.Log($"ID {npc.ID}: {npc.Name}. Денег: Сейчас - {npc.CurrentMoney}, старт игры: {npc.GameStartMoney}");
+        }
+
     }
 }
