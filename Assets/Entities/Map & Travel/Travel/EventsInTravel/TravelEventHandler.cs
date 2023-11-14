@@ -152,7 +152,7 @@ public class TravelEventHandler : MonoBehaviour
         else if (MapManager.Advertisement == false)
             MapManager.Advertisement = null;
         
-        if (EventFire(MapManager.CurrentRoad.Danger * MapManager.CurrentRoad.DangerMultiplier, false, Player.Instance.Statistics.Luck))
+        if (EventFire(MapManager.CurrentRoad.Danger * MapManager.CurrentRoad.DangerMultiplier))
             _banditEvent = true;
         else _banditEvent = false;
         MapManager.CurrentRoad.SetNormalDangerMultiplier();
