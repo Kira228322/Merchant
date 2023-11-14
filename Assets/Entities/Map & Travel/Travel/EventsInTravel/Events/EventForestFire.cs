@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EventForestFire : EventInTravel
 {
-    [SerializeField] private List<ParticleSystem> _fire;
+    [SerializeField] private List<GameObject> _destroyedObjects;
     public override void SetButtons()
     {
         ButtonsLabel.Add("Помочь в тушении");
@@ -24,8 +24,8 @@ public class EventForestFire : EventInTravel
                 Player.Instance.Experience.AddExperience(exp);
                 _eventWindow.ChangeDescription($"Пожар был успешно потушен! Вы получили {exp} опыта!");
                 
-                foreach (var fire in _fire)
-                    fire.Stop();
+                foreach (var obj in _destroyedObjects)
+                    Destroy(obj);
                 
                 break;
             case 1:
