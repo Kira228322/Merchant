@@ -19,6 +19,8 @@ public abstract class UsableEnvironment : MonoBehaviour, IPointerClickHandler
     private UniqueID _uniqueID;
     private CooldownHandler _cooldownHandler;
 
+    [SerializeField] private AudioSource _audioSource;
+
     private void Awake()
     {
         _cooldownHandler = FindObjectOfType<CooldownHandler>();
@@ -56,6 +58,8 @@ public abstract class UsableEnvironment : MonoBehaviour, IPointerClickHandler
             CosmeticUse();
             _cooldownHandler.Register(_uniqueID.ID, _cooldownHours);
             _markerSpawner.DisableMarkerSpawner();
+            
+            _audioSource.PlayWithRandomPitch();
         }
         else
             CanvasWarningGenerator.Instance.CreateWarning(_warningLabel, _warningMessage);

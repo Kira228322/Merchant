@@ -30,7 +30,8 @@ public class MarkerSpawner : MonoBehaviour
 
     public void DisableMarkerSpawner()
     {
-        Destroy(_currentMarker.gameObject);
+        if (_currentMarker != null)
+            Destroy(_currentMarker.gameObject);
         _boxCollider2D.enabled = false;
     }
 

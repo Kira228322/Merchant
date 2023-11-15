@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
@@ -17,21 +18,83 @@ public class WeatherController : MonoBehaviour, IEventController<GlobalEvent_Wea
     public int DurationOfEvent { get; set; }
 
     public int MinDelayToNextEvent => 3;
-    public int MaxDelayToNextEvent => 9;
+    public int MaxDelayToNextEvent => 7;
     
 
     public event UnityAction WeatherStarted;
     public event UnityAction WeatherFinished;
 
-    public void StartWeather()
+    [SerializeField] private AudioClip _weakRain;
+    [SerializeField] private AudioClip _strongRain;
+    [SerializeField] private AudioSource _audioSource;
+    private Coroutine _currentSound;
+    
+    public void StartWeather(StrengthOfWeather strength)
     {
         _rain.Play();
+        _currentSound = StartCoroutine(PlaySound(strength));
         WeatherStarted?.Invoke();
         _rain.transform.rotation = Quaternion.Euler(0,0, -Random.Range(10, 16));
     }
 
+    private IEnumerator PlaySound(StrengthOfWeather strength)
+    {
+        WaitForSeconds waitForSeconds;
+        AudioClip audioClip = null;
+        float maxVolume = 0;
+        _audioSource.volume = 0;
+        switch (strength)
+        {
+            case StrengthOfWeather.Light:
+                audioClip = _weakRain;
+                maxVolume = 0.6f;
+                _audioSource.clip = audioClip;
+                break;
+            case StrengthOfWeather.Medium:
+                audioClip = _weakRain;
+                maxVolume = 0.8f;
+                _audioSource.clip = audioClip;
+                break;
+            case StrengthOfWeather.Heavy:
+                audioClip = _strongRain;
+                maxVolume = 0.2f;
+                _audioSource.clip = audioClip;
+                break;
+        }
+        while (true)
+        {
+            _audioSource.volume = 0;
+            _audioSource.Play();
+            waitForSeconds = new WaitForSeconds(0.02f);
+            while (_audioSource.volume < maxVolume)
+            {
+                _audioSource.volume += maxVolume/100;
+                yield return waitForSeconds;
+            }
 
+            waitForSeconds = new WaitForSeconds(audioClip.length - 4);
+            yield return waitForSeconds;
+                    
+            waitForSeconds = new WaitForSeconds(0.02f);
+            while (_audioSource.volume > 0)
+            {
+                _audioSource.volume -= maxVolume/100;
+                yield return waitForSeconds;
+            }
+        }
+    }
 
+    private IEnumerator StopSound()
+    {
+        WaitForSeconds waitForSeconds = new WaitForSeconds(0.02f);
+        while (_audioSource.volume > 0)
+        {
+            _audioSource.volume -= 0.005f;
+            yield return waitForSeconds;
+        }
+        _audioSource.Stop();
+        StopCoroutine(_currentSound);
+    }
     public void PredictNextEvent()
     {
         DateOfNextEvent = LastEventDay + Random.Range(MinDelayToNextEvent, MaxDelayToNextEvent + 1);
@@ -41,7 +104,7 @@ public class WeatherController : MonoBehaviour, IEventController<GlobalEvent_Wea
         switch (_strengthOfWeather)
         {
             case StrengthOfWeather.Light:
-                SetRainParams(32, 6.5f, 0.11f);
+                SetRainParams(37, 6.5f, 0.13f);
                 DurationOfEvent = Random.Range(3, 12);
                 break;
             case StrengthOfWeather.Medium:
@@ -50,7 +113,7 @@ public class WeatherController : MonoBehaviour, IEventController<GlobalEvent_Wea
                 break;
             case StrengthOfWeather.Heavy:
                 SetRainParams(115, 7.7f, 0.16f);
-                DurationOfEvent = Random.Range(3, 8);
+                DurationOfEvent = Random.Range(3, 9);
                 break;
         }
     }
@@ -78,12 +141,13 @@ public class WeatherController : MonoBehaviour, IEventController<GlobalEvent_Wea
             .AddGlobalEvent<GlobalEvent_Weather>(DurationOfEvent);
         eventToAdd.StrengthOfWeather = (int)_strengthOfWeather;
         LastEventDay = GameTime.CurrentDay;
-        StartWeather();
+        StartWeather(_strengthOfWeather);
         return eventToAdd;
     }
     public void RemoveEvent()
     {
         _rain.Stop();
+        StartCoroutine(StopSound());
         WeatherFinished?.Invoke();
     }
 
