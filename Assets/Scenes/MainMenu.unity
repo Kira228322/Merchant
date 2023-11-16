@@ -2324,6 +2324,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rain: {fileID: 924130963}
+  _audioMixer: {fileID: -5310054340607305612, guid: c9aed5e9ad5569547bd28ce1c4349756, type: 2}
   _weakRain: {fileID: 8300000, guid: 768356c56b57d8f41b3bbd10634cd435, type: 3}
   _strongRain: {fileID: 8300000, guid: 3d2d20a77f65af54ba08f2cfbaa1f8bc, type: 3}
   _audioSource: {fileID: 924130967}
@@ -32381,7 +32382,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 5617673884423173361, guid: c9aed5e9ad5569547bd28ce1c4349756, type: 2}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -49382,6 +49383,18 @@ PrefabInstance:
     - target: {fileID: 5934612169841967313, guid: bcbf0ab5376a5914492ffad23c342589, type: 3}
       propertyPath: m_Name
       value: Rain
+      objectReference: {fileID: 0}
+    - target: {fileID: 5934612169841967318, guid: bcbf0ab5376a5914492ffad23c342589, type: 3}
+      propertyPath: ShapeModule.m_Scale.y
+      value: 21
+      objectReference: {fileID: 0}
+    - target: {fileID: 5934612169841967318, guid: bcbf0ab5376a5914492ffad23c342589, type: 3}
+      propertyPath: ShapeModule.m_Position.x
+      value: -1.42
+      objectReference: {fileID: 0}
+    - target: {fileID: 5934612169841967318, guid: bcbf0ab5376a5914492ffad23c342589, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 60
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bcbf0ab5376a5914492ffad23c342589, type: 3}

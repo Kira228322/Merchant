@@ -1,12 +1,14 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 public class WeatherController : MonoBehaviour, IEventController<GlobalEvent_Weather>, ISaveable<WeatherControllerSaveData>
 {
     [SerializeField] private ParticleSystem _rain;
+    [SerializeField] private AudioMixerGroup _audioMixer;
     public enum StrengthOfWeather {Light, Medium, Heavy}
     private StrengthOfWeather _strengthOfWeather;
     public StrengthOfWeather WeatherStrength => _strengthOfWeather;
@@ -39,6 +41,7 @@ public class WeatherController : MonoBehaviour, IEventController<GlobalEvent_Wea
 
     private IEnumerator PlaySound(StrengthOfWeather strength)
     {
+        _audioMixer.audioMixer.SetFloat("MusicParentVolume", -2.5f);
         WaitForSeconds waitForSeconds;
         AudioClip audioClip = null;
         float maxVolume = 0;
@@ -47,7 +50,7 @@ public class WeatherController : MonoBehaviour, IEventController<GlobalEvent_Wea
         {
             case StrengthOfWeather.Light:
                 audioClip = _weakRain;
-                maxVolume = 0.6f;
+                maxVolume = 0.62f;
                 _audioSource.clip = audioClip;
                 break;
             case StrengthOfWeather.Medium:
@@ -57,7 +60,7 @@ public class WeatherController : MonoBehaviour, IEventController<GlobalEvent_Wea
                 break;
             case StrengthOfWeather.Heavy:
                 audioClip = _strongRain;
-                maxVolume = 0.2f;
+                maxVolume = 0.11f;
                 _audioSource.clip = audioClip;
                 break;
         }
@@ -86,6 +89,7 @@ public class WeatherController : MonoBehaviour, IEventController<GlobalEvent_Wea
 
     private IEnumerator StopSound()
     {
+        _audioMixer.audioMixer.SetFloat("MusicParentVolume", 0);
         WaitForSeconds waitForSeconds = new WaitForSeconds(0.02f);
         while (_audioSource.volume > 0)
         {
@@ -104,15 +108,15 @@ public class WeatherController : MonoBehaviour, IEventController<GlobalEvent_Wea
         switch (_strengthOfWeather)
         {
             case StrengthOfWeather.Light:
-                SetRainParams(37, 6.5f, 0.13f);
+                SetRainParams(38, 6.5f, 0.13f);
                 DurationOfEvent = Random.Range(3, 12);
                 break;
             case StrengthOfWeather.Medium:
-                SetRainParams(60, 7f, 0.14f);
+                SetRainParams(65, 7f, 0.14f);
                 DurationOfEvent = Random.Range(4, 15);
                 break;
             case StrengthOfWeather.Heavy:
-                SetRainParams(115, 7.7f, 0.16f);
+                SetRainParams(125, 7.5f, 0.17f);
                 DurationOfEvent = Random.Range(3, 9);
                 break;
         }
