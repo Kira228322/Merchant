@@ -33,6 +33,18 @@ public class WeatherController : MonoBehaviour, IEventController<GlobalEvent_Wea
     
     public void StartWeather(StrengthOfWeather strength)
     {
+        switch (strength)
+        {
+            case StrengthOfWeather.Light:
+                SetRainParams(38, 6.5f, 0.13f);
+                break;
+            case StrengthOfWeather.Medium:
+                SetRainParams(65, 7f, 0.14f);
+                break;
+            case StrengthOfWeather.Heavy:
+                SetRainParams(125, 7.5f, 0.17f);
+                break;
+        }
         _rain.Play();
         _currentSound = StartCoroutine(PlaySound(strength));
         WeatherStarted?.Invoke();
@@ -108,15 +120,12 @@ public class WeatherController : MonoBehaviour, IEventController<GlobalEvent_Wea
         switch (_strengthOfWeather)
         {
             case StrengthOfWeather.Light:
-                SetRainParams(38, 6.5f, 0.13f);
                 DurationOfEvent = Random.Range(3, 12);
                 break;
             case StrengthOfWeather.Medium:
-                SetRainParams(65, 7f, 0.14f);
                 DurationOfEvent = Random.Range(4, 15);
                 break;
             case StrengthOfWeather.Heavy:
-                SetRainParams(125, 7.5f, 0.17f);
                 DurationOfEvent = Random.Range(3, 9);
                 break;
         }
