@@ -9,6 +9,7 @@ public class WeatherController : MonoBehaviour, IEventController<GlobalEvent_Wea
 {
     [SerializeField] private ParticleSystem _rain;
     [SerializeField] private AudioMixerGroup _audioMixer;
+    [SerializeField] private WindSound _windSound;
     public enum StrengthOfWeather {Light, Medium, Heavy}
     private StrengthOfWeather _strengthOfWeather;
     public StrengthOfWeather WeatherStrength => _strengthOfWeather;
@@ -63,49 +64,52 @@ public class WeatherController : MonoBehaviour, IEventController<GlobalEvent_Wea
             case StrengthOfWeather.Light:
                 audioClip = _weakRain;
                 maxVolume = 0.62f;
+                _windSound.Volume = 0.8f;
                 _audioSource.clip = audioClip;
                 break;
             case StrengthOfWeather.Medium:
                 audioClip = _weakRain;
                 maxVolume = 0.8f;
+                _windSound.Volume = 0.9f;
                 _audioSource.clip = audioClip;
                 break;
             case StrengthOfWeather.Heavy:
                 audioClip = _strongRain;
                 maxVolume = 0.11f;
+                _windSound.Volume = 0.9f;
                 _audioSource.clip = audioClip;
                 break;
         }
+        
+        _audioSource.volume = 0;
+        _audioSource.PlayOneShot(_audioSource.clip);
+        waitForSeconds = new WaitForSeconds(0.02f);
+        for (int i = 0; i < 100; i++)
+        {
+            _audioSource.volume += maxVolume/100;
+            yield return waitForSeconds;
+        }
+        
+        waitForSeconds = new WaitForSeconds(audioClip.length - 2.9f);
+        yield return waitForSeconds;
+        _audioSource.PlayOneShot(_audioSource.clip);
+        waitForSeconds = new WaitForSeconds(audioClip.length - 0.9f);
         while (true)
         {
-            _audioSource.volume = 0;
-            _audioSource.Play();
-            waitForSeconds = new WaitForSeconds(0.02f);
-            while (_audioSource.volume < maxVolume)
-            {
-                _audioSource.volume += maxVolume/100;
-                yield return waitForSeconds;
-            }
-
-            waitForSeconds = new WaitForSeconds(audioClip.length - 4);
             yield return waitForSeconds;
-                    
-            waitForSeconds = new WaitForSeconds(0.02f);
-            while (_audioSource.volume > 0)
-            {
-                _audioSource.volume -= maxVolume/100;
-                yield return waitForSeconds;
-            }
+            _audioSource.PlayOneShot(_audioSource.clip);
         }
     }
 
     private IEnumerator StopSound()
     {
+        _windSound.Volume = 0.7f;
         _audioMixer.audioMixer.SetFloat("MusicParentVolume", 0);
         WaitForSeconds waitForSeconds = new WaitForSeconds(0.02f);
-        while (_audioSource.volume > 0)
+        float maxVolume = _audioSource.volume;
+        for (int i = 0; i < 50; i++)
         {
-            _audioSource.volume -= 0.005f;
+            _audioSource.volume -= maxVolume/50;
             yield return waitForSeconds;
         }
         _audioSource.Stop();
