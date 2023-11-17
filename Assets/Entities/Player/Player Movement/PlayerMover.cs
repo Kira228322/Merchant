@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class PlayerMover : MonoBehaviour
 {
@@ -29,7 +31,12 @@ public class PlayerMover : MonoBehaviour
     
     private Vector3 _finishTargetPos;
     [HideInInspector] public Vector3 _lastNodePos;
-    
+
+    [FormerlySerializedAs("_wentDistance")]
+    [Header("Sound")]
+    [HideInInspector] public float WentDistance;
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private List<AudioClip> _footSteps;
 
     private void OnDestroy()
     {
@@ -181,7 +188,6 @@ public class PlayerMover : MonoBehaviour
             return;
         }
         // если нужно двигаться дальше
-        
         StartMove(transform.position, _finishTargetPos);
     }
     
@@ -213,16 +219,31 @@ public class PlayerMover : MonoBehaviour
             distance = Math.Abs(targetPos.x - startPos.x);
         }
         
+        
         float travelledDistance = 0f;
+        float distanceOfOneStep;
         while (travelledDistance < distance)
         {
-            travelledDistance += _currentSpeed * Time.deltaTime;
-            transform.position += _currentSpeed * Time.deltaTime * moveDirection;
+            distanceOfOneStep = _currentSpeed * Time.deltaTime;
+            travelledDistance += distanceOfOneStep;
+            WentDistance += distanceOfOneStep;
+            if (WentDistance >= 1.7f) // подобрано эмпирическим путем
+            {
+                WentDistance -= 1.7f;
+                PlaySoundOfFootsteps();
+            }
+            transform.position += distanceOfOneStep * moveDirection;
             BackgroundController.UpdateBackground(transform.position.x);
             yield return forEndOfFrameUnit;
         }
         _animator.SetTrigger("IDLE");
         _currentMove = null;
+    }
+
+    public void PlaySoundOfFootsteps()
+    {
+        _audioSource.clip = _footSteps[Random.Range(0, _footSteps.Count)];
+        _audioSource.PlayOneShotWithRandomPitch();
     }
 
     private void RevertPlayer(bool rightMove)

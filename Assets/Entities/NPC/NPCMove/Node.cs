@@ -72,7 +72,15 @@ public class Node : MonoBehaviour
         
         float countOfFrames = (AnotherNode.position-startPos).magnitude / (movement._currentSpeed * 0.9f * Time.fixedDeltaTime);
         
-        for (float i = 0; i < countOfFrames; i++)
+        for (float i = 0; i < countOfFrames/2; i++)
+        {
+            movement.transform.position = Vector3.Lerp(startPos, AnotherNode.position, i/countOfFrames);
+            movement.BackgroundController.UpdateBackground(movement.transform.position.x);
+            yield return  waitForFixedUpdate; // по ступенькам поднимаемся
+        }
+        movement.PlaySoundOfFootsteps();
+        movement.WentDistance = 1;
+        for (float i = countOfFrames/2; i < countOfFrames; i++)
         {
             movement.transform.position = Vector3.Lerp(startPos, AnotherNode.position, i/countOfFrames);
             movement.BackgroundController.UpdateBackground(movement.transform.position.x);

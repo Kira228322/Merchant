@@ -145,6 +145,11 @@ public class CraftingHandler : MonoBehaviour
     }
     public void OnCraftButtonClick()
     {
+        if (Player.Instance.Needs.CurrentHunger == 0 || Player.Instance.Needs.CurrentSleep == 0)
+        {
+            CanvasWarningGenerator.Instance.CreateWarning("Вы устали или голодны", "Вы не можете создавать предметы, пока вы голодны или хотите спать");
+            return;
+        }
         if (!InventoryController.Instance.CanInsertItem(SelectedRecipe.ResultingItem, SelectedRecipe.ResultAmount))
         {       
             CanvasWarningGenerator.Instance.CreateWarning("Недостаточно места", "Освободите место в инвентаре, чтобы создать предмет");

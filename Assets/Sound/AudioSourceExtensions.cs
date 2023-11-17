@@ -9,4 +9,10 @@ public static class AudioSourceExtensions
         audioSource.pitch = Random.Range(0.9f, 1.1f);
         audioSource.Play();
     }
+    
+    public static void PlayOneShotWithRandomPitch(this AudioSource audioSource)
+    {
+        audioSource.pitch = Random.Range(0.9f, 1.1f);
+        audioSource.PlayOneShot(audioSource.clip);
+    }
 }
