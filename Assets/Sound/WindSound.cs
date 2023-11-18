@@ -14,9 +14,10 @@ public class WindSound : MonoBehaviour
 
     private IEnumerator PlayWindSound()
     {
-        WaitForSeconds waitForSeconds = new WaitForSeconds(Random.Range(25,51));
+        WaitForSeconds waitForSeconds;
         while (true)
         {
+            waitForSeconds = new WaitForSeconds(Random.Range(25,56));
             yield return waitForSeconds;
             _audioSource.volume = Volume;
             _audioSource.PlayWithRandomPitch();

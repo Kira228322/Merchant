@@ -65,40 +65,29 @@ public class WeatherController : MonoBehaviour, IEventController<GlobalEvent_Wea
                 audioClip = _weakRain;
                 maxVolume = 0.62f;
                 _windSound.Volume = 0.8f;
-                _audioSource.clip = audioClip;
                 break;
             case StrengthOfWeather.Medium:
                 audioClip = _weakRain;
                 maxVolume = 0.8f;
-                _windSound.Volume = 0.9f;
-                _audioSource.clip = audioClip;
+                _windSound.Volume = 0.85f;
                 break;
             case StrengthOfWeather.Heavy:
                 audioClip = _strongRain;
-                maxVolume = 0.11f;
+                maxVolume = 0.09f;
                 _windSound.Volume = 0.9f;
-                _audioSource.clip = audioClip;
                 break;
         }
-        
+        _audioSource.clip = audioClip;
         _audioSource.volume = 0;
-        _audioSource.PlayOneShot(_audioSource.clip);
+        _audioSource.Play();
         waitForSeconds = new WaitForSeconds(0.02f);
         for (int i = 0; i < 100; i++)
         {
             _audioSource.volume += maxVolume/100;
             yield return waitForSeconds;
         }
-        
-        waitForSeconds = new WaitForSeconds(audioClip.length - 2.9f);
-        yield return waitForSeconds;
-        _audioSource.PlayOneShot(_audioSource.clip);
-        waitForSeconds = new WaitForSeconds(audioClip.length - 0.9f);
-        while (true)
-        {
-            yield return waitForSeconds;
-            _audioSource.PlayOneShot(_audioSource.clip);
-        }
+
+        _currentSound = null;
     }
 
     private IEnumerator StopSound()
@@ -113,7 +102,8 @@ public class WeatherController : MonoBehaviour, IEventController<GlobalEvent_Wea
             yield return waitForSeconds;
         }
         _audioSource.Stop();
-        StopCoroutine(_currentSound);
+        if (_currentSound != null)
+            StopCoroutine(_currentSound);
     }
     public void PredictNextEvent()
     {
