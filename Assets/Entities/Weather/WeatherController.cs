@@ -54,7 +54,8 @@ public class WeatherController : MonoBehaviour, IEventController<GlobalEvent_Wea
 
     private IEnumerator PlaySound(StrengthOfWeather strength)
     {
-        _audioMixer.audioMixer.SetFloat("MusicParentVolume", -2.5f);
+        _audioMixer.audioMixer.GetFloat("MusicParentVolume", out var MusicParentVolume);
+        _audioMixer.audioMixer.SetFloat("MusicParentVolume", MusicParentVolume - 2.25f);
         WaitForSeconds waitForSeconds;
         AudioClip audioClip = null;
         float maxVolume = 0;
@@ -64,17 +65,17 @@ public class WeatherController : MonoBehaviour, IEventController<GlobalEvent_Wea
             case StrengthOfWeather.Light:
                 audioClip = _weakRain;
                 maxVolume = 0.62f;
-                _windSound.Volume = 0.8f;
+                _windSound.Volume = 0.77f;
                 break;
             case StrengthOfWeather.Medium:
                 audioClip = _weakRain;
                 maxVolume = 0.8f;
-                _windSound.Volume = 0.85f;
+                _windSound.Volume = 0.82f;
                 break;
             case StrengthOfWeather.Heavy:
                 audioClip = _strongRain;
                 maxVolume = 0.09f;
-                _windSound.Volume = 0.9f;
+                _windSound.Volume = 0.87f;
                 break;
         }
         _audioSource.clip = audioClip;
@@ -92,8 +93,9 @@ public class WeatherController : MonoBehaviour, IEventController<GlobalEvent_Wea
 
     private IEnumerator StopSound()
     {
-        _windSound.Volume = 0.7f;
-        _audioMixer.audioMixer.SetFloat("MusicParentVolume", 0);
+        _windSound.Volume = 0.67f;
+        _audioMixer.audioMixer.GetFloat("MusicParentVolume", out var MusicParentVolume);
+        _audioMixer.audioMixer.SetFloat("MusicParentVolume", MusicParentVolume + 2.25f);
         WaitForSeconds waitForSeconds = new WaitForSeconds(0.02f);
         float maxVolume = _audioSource.volume;
         for (int i = 0; i < 50; i++)

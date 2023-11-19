@@ -8,7 +8,7 @@ public class WindSound : MonoBehaviour
     [HideInInspector] public float Volume; 
     private void Start()
     {
-        Volume = 0.7f;
+        Volume = 0.67f;
         StartCoroutine(PlayWindSound());
     }
 
