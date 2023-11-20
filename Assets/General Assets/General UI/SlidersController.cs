@@ -15,7 +15,12 @@ public class SlidersController : MonoBehaviour
         _slider.value = value / maxValue;
         if (_colour.Evaluate(1) != Color.white)
             _fillArea.color = _colour.Evaluate(_slider.normalizedValue);
-        
+    }
+
+    public void OnValueChange()
+    {
+        if (_colour.Evaluate(1) != Color.white)
+            _fillArea.color = _colour.Evaluate(_slider.normalizedValue);
     }
 
     public void SetColour(Color color)
