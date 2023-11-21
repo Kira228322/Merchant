@@ -17,4 +17,5 @@ public class GlobalSaveData
     public RegionSaveData RegionSaveData;
     public SceneSaveData SceneSaveData;
     public TutorialStateTrackerSaveData TutorialTrackerSaveData;
+    public MenuSaveData MenuSaveData;
 }

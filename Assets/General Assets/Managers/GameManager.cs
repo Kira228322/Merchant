@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
     [SerializeField] private GameObject _villageWindow;
     [SerializeField] private GameObject _playerIcone;
     [SerializeField] private Location _startLocation;
+    [SerializeField] private Menu _optionsMenu;
 
     [Header("GameTime")] 
     [FormerlySerializedAs("Timeflow")] [SerializeField] private Timeflow _timeflow;
@@ -94,6 +95,7 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
             GlobalEventHandlerSaveData = GlobalEventHandler.Instance.SaveData(),
             RegionSaveData = _regionHandler.SaveData(),
             SceneSaveData = _sceneTransiter.SaveData(),
+            MenuSaveData = _optionsMenu.SaveData(),
 
             };
         return saveData;
@@ -118,5 +120,6 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
         GlobalEventHandler.Instance.LoadData(data.GlobalEventHandlerSaveData);
         _regionHandler.LoadData(data.RegionSaveData);
         _sceneTransiter.LoadData(data.SceneSaveData);
+        _optionsMenu.LoadData(data.MenuSaveData);
     }
 }

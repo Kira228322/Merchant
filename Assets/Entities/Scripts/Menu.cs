@@ -4,15 +4,14 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class Menu : MonoBehaviour
+public class Menu : MonoBehaviour, ISaveable<MenuSaveData>
 {
     [SerializeField] private GameObject _menuPanel;
-    [SerializeField] private Slider _soundslider;
-    [SerializeField] private Slider _Musicslider;
-    [SerializeField] private Slider _playerPanelslider;
+    [SerializeField] private Slider _soundSlider;
+    [SerializeField] private Slider _musicSlider;
+    [SerializeField] private Slider _playerPanelSlider;
     [SerializeField] private AudioMixerGroup _sound;
     [SerializeField] private AudioMixerGroup _music;
     [SerializeField] private AudioMixerGroup _questSound;
@@ -23,7 +22,7 @@ public class Menu : MonoBehaviour
     private Image _rightButtonImage;
 
     [SerializeField] private Animator _animator;
-    private float _PlayerMovePanelsTimer;
+    private float _playerMovePanelsTimer;
     private Coroutine FadeIn;
     private Coroutine FadeOut;
 
@@ -33,8 +32,6 @@ public class Menu : MonoBehaviour
     {
         _leftButtonImage = _leftButton.gameObject.GetComponent<Image>();
         _rightButtonImage = _rightButton.gameObject.GetComponent<Image>();
-        
-        // TODO задать всем 3 слайдерам сохранненое значение
     }
 
     public void OnMenuButtonClick()
@@ -63,24 +60,24 @@ public class Menu : MonoBehaviour
     
     public void OnSoundValueChange()
     {
-        float value = math.lerp(-80, 0, _soundslider.value);
+        float value = math.lerp(-80, 0, _soundSlider.value);
         _sound.audioMixer.SetFloat("SoundsVolume", value);
     }
 
     public void OnMusicValueChange()
     {
-        float value = math.lerp(-80, 0, _Musicslider.value);
+        float value = math.lerp(-80, 0, _musicSlider.value);
         _music.audioMixer.SetFloat("MusicVolume", value);
         _questSound.audioMixer.SetFloat("QuestVolume", value);
     }
 
     public void OnPlayerMovePanelValueChange()
     {
-        float value = math.lerp(0, 490, _playerPanelslider.value);
+        float value = math.lerp(0, 490, _playerPanelSlider.value);
         _leftButton.sizeDelta = new Vector2(value, _leftButton.sizeDelta.y);
         _rightButton.sizeDelta = new Vector2(value, _rightButton.sizeDelta.y);
         
-        _PlayerMovePanelsTimer = 2.2f;
+        _playerMovePanelsTimer = 2.2f;
         
         if (FadeIn == null)
         {
@@ -97,9 +94,9 @@ public class Menu : MonoBehaviour
     private IEnumerator Timer()
     {
         WaitForSeconds waitForSeconds = new WaitForSeconds(0.05f);
-        while (_PlayerMovePanelsTimer >= 0)
+        while (_playerMovePanelsTimer >= 0)
         {
-            _PlayerMovePanelsTimer -= 0.05f;
+            _playerMovePanelsTimer -= 0.05f;
             yield return waitForSeconds;
         }
 
@@ -142,5 +139,25 @@ public class Menu : MonoBehaviour
         color.a = 0;
         _leftButtonImage.color = color;
         _rightButtonImage.color = color;
+    }
+
+    public MenuSaveData SaveData()
+    {
+        MenuSaveData saveData = new(_soundSlider.value, _musicSlider.value, _playerPanelSlider.value);
+        return saveData;
+    }
+
+    public void LoadData(MenuSaveData data)
+    {
+        _soundSlider.value = data.SoundSliderValue;
+        _musicSlider.value = data.MusicSliderValue;
+        _playerPanelSlider.SetValueWithoutNotify(data.PlayerPanelsValue); //удивительная функция не триггерит ивенты слайдера, не вызывая OnPlayerMovePanelValueChange()
+
+     
+        //TODO информация для размышления:
+        //Настройки не будут загружены, пока игрок не нажмёт продолжить игру, из-за принципов на которых у нас строится сохранение.
+        //То есть потенциально, игрок может оглушаться каждый раз при запуске игры.
+        //Это нехорошо, и есть вариант либо сделать дефолтные значения тихими,
+        //либо исследовать другие методы сохранения только для настроек
     }
 }

@@ -32,7 +32,7 @@ public class QuestComplete : MonoBehaviour
     public void ChangeText(string textName)
     {
         _tmpText.text = $"{textName}\nВыполнено";
-        enabled = true;
+        gameObject.SetActive(true);
     }
 
     public void Disable()

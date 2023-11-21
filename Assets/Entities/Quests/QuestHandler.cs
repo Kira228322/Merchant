@@ -14,6 +14,7 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
     public static QuestHandler Instance;
 
     [SerializeField] private QuestLog _questLog; //UI- вестЋог
+    [SerializeField] private QuestComplete _questCompleteAnnouncer;
     
     public List<Quest> Quests = new(); // —одержит все квесты, в том числе проваленные или выполненные
     public List<Quest> ActiveQuests = new(); // »змен€ет свой набор в AddQuest и OnQuestChangedState
@@ -57,6 +58,11 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
         ActiveQuests.Remove(quest); // вест не может изменить своЄ состо€ние на активное,
                                     //он только начинает в таком состо€нии.
                                     //(Quest.ctor не вызывает этот ивент)
+
+        if (newState == Quest.State.RewardUncollected || (!quest.HasRewards() && newState == Quest.State.Completed))
+        {
+            _questCompleteAnnouncer.ChangeText(quest.QuestName);
+        }
 
         if (newState == Quest.State.Completed || newState == Quest.State.Failed)
             quest.QuestChangedState -= Instance.OnQuestChangedState;

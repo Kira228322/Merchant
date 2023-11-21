@@ -2330,6 +2330,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2057593423}
+        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+        m_MethodName: PlayerMovePanelAnimation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 81687261}
         m_TargetAssemblyTypeName: SlidersController, Assembly-CSharp
         m_MethodName: OnValueChange
@@ -5923,6 +5935,7 @@ MonoBehaviour:
   _villageWindow: {fileID: 206261255061392119, guid: 3b587cbc31ff6204cac6caf95bf63443, type: 3}
   _playerIcone: {fileID: 1999711143276523148}
   _startLocation: {fileID: 228818839}
+  _optionsMenu: {fileID: 2057593423}
   _timeflow: {fileID: 1439652978}
   _regionHandler: {fileID: 1045987801}
   _newGameButton: {fileID: 1783209939}
@@ -18314,6 +18327,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _questLog: {fileID: 3657474711769714512}
+  _questCompleteAnnouncer: {fileID: 1981243475}
 --- !u!222 &935423574
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -39740,9 +39754,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _menuPanel: {fileID: 2057593419}
-  _soundslider: {fileID: 1420846209}
-  _Musicslider: {fileID: 310461269}
-  _playerPanelslider: {fileID: 81687262}
+  _soundSlider: {fileID: 1420846209}
+  _musicSlider: {fileID: 310461269}
+  _playerPanelSlider: {fileID: 81687262}
   _sound: {fileID: -5778705857816448847, guid: c9aed5e9ad5569547bd28ce1c4349756, type: 2}
   _music: {fileID: 5617673884423173361, guid: c9aed5e9ad5569547bd28ce1c4349756, type: 2}
   _questSound: {fileID: 5692778425390302315, guid: c9aed5e9ad5569547bd28ce1c4349756, type: 2}
