@@ -2330,18 +2330,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 2057593423}
-        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
-        m_MethodName: PlayerMovePanelAnimation
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 81687261}
         m_TargetAssemblyTypeName: SlidersController, Assembly-CSharp
         m_MethodName: OnValueChange
@@ -5929,13 +5917,13 @@ MonoBehaviour:
   ButtonsBlock: {fileID: 100020304}
   CurrentFunctionalWindow: {fileID: 0}
   UIClock: {fileID: 5565779630728927556}
+  _optionsMenu: {fileID: 2057593423}
   _travelingScene: UnitedScene
   _sceneTransiter: {fileID: 3279153272921693973}
   _roadWindow: {fileID: 5013232437122515196, guid: de00a2e83833b79428e44e562cc42361, type: 3}
   _villageWindow: {fileID: 206261255061392119, guid: 3b587cbc31ff6204cac6caf95bf63443, type: 3}
   _playerIcone: {fileID: 1999711143276523148}
   _startLocation: {fileID: 228818839}
-  _optionsMenu: {fileID: 2057593423}
   _timeflow: {fileID: 1439652978}
   _regionHandler: {fileID: 1045987801}
   _newGameButton: {fileID: 1783209939}
@@ -39765,6 +39753,9 @@ MonoBehaviour:
   _animator: {fileID: 2057593424}
   Normal: {fileID: 7014962939660590488, guid: c9aed5e9ad5569547bd28ce1c4349756, type: 2}
   InMenu: {fileID: 3434987220717308800, guid: c9aed5e9ad5569547bd28ce1c4349756, type: 2}
+  _defaultSoundMultiplier: 0.5
+  _defaultMusicMultiplier: 0.5
+  _defaultPlayerMoveButtonSizeMultiplier: 0.5
 --- !u!95 &2057593424
 Animator:
   serializedVersion: 5

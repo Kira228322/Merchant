@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
-public class Menu : MonoBehaviour, ISaveable<MenuSaveData>
+public class Menu : MonoBehaviour
 {
     [SerializeField] private GameObject _menuPanel;
     [SerializeField] private Slider _soundSlider;
@@ -28,6 +28,12 @@ public class Menu : MonoBehaviour, ISaveable<MenuSaveData>
 
     [SerializeField] private AudioMixerSnapshot Normal;
     [SerializeField] private AudioMixerSnapshot InMenu;
+
+    [Header("Default values")]
+    [SerializeField][Range(0, 1)] private float _defaultSoundMultiplier;
+    [SerializeField][Range(0, 1)] private float _defaultMusicMultiplier;
+    [SerializeField][Range(0, 1)] private float _defaultPlayerMoveButtonSizeMultiplier;
+
     private void Awake()
     {
         _leftButtonImage = _leftButton.gameObject.GetComponent<Image>();
@@ -62,6 +68,8 @@ public class Menu : MonoBehaviour, ISaveable<MenuSaveData>
     {
         float value = math.lerp(-80, 0, _soundSlider.value);
         _sound.audioMixer.SetFloat("SoundsVolume", value);
+
+        SaveData();
     }
 
     public void OnMusicValueChange()
@@ -69,6 +77,8 @@ public class Menu : MonoBehaviour, ISaveable<MenuSaveData>
         float value = math.lerp(-80, 0, _musicSlider.value);
         _music.audioMixer.SetFloat("MusicVolume", value);
         _questSound.audioMixer.SetFloat("QuestVolume", value);
+
+        SaveData();
     }
 
     public void OnPlayerMovePanelValueChange()
@@ -89,6 +99,8 @@ public class Menu : MonoBehaviour, ISaveable<MenuSaveData>
             FadeIn = StartCoroutine(FadeInPlayerMovePanels());
             StartCoroutine(Timer());
         }
+
+        SaveData();
     }
 
     private IEnumerator Timer()
@@ -141,23 +153,31 @@ public class Menu : MonoBehaviour, ISaveable<MenuSaveData>
         _rightButtonImage.color = color;
     }
 
-    public MenuSaveData SaveData()
+    public void SaveData() //Не путать с ISaveable.SaveData - здесь только PlayerPrefs
     {
-        MenuSaveData saveData = new(_soundSlider.value, _musicSlider.value, _playerPanelSlider.value);
-        return saveData;
+        PlayerPrefs.SetFloat("SavedSoundVolume", _soundSlider.value);
+        PlayerPrefs.SetFloat("SavedMusicVolume", _musicSlider.value);
+        PlayerPrefs.SetFloat("SavedMovePanelSize", _playerPanelSlider.value);
     }
 
-    public void LoadData(MenuSaveData data)
+    public void LoadData()
     {
-        _soundSlider.value = data.SoundSliderValue;
-        _musicSlider.value = data.MusicSliderValue;
-        _playerPanelSlider.SetValueWithoutNotify(data.PlayerPanelsValue); //удивительная функция не триггерит ивенты слайдера, не вызывая OnPlayerMovePanelValueChange()
+        if (!PlayerPrefs.HasKey("SavedSoundVolume") ||
+            !PlayerPrefs.HasKey("SavedMusicVolume") ||
+            !PlayerPrefs.HasKey("SavedMovePanelSize"))
+        {
+            _soundSlider.SetValueWithoutNotify(_defaultSoundMultiplier);
+            _musicSlider.SetValueWithoutNotify(_defaultMusicMultiplier);
+            _playerPanelSlider.SetValueWithoutNotify(_defaultPlayerMoveButtonSizeMultiplier);
+        }
+        else
+        {
+            _soundSlider.SetValueWithoutNotify(PlayerPrefs.GetFloat("SavedSoundVolume"));
+            _musicSlider.SetValueWithoutNotify(PlayerPrefs.GetFloat("SavedMusicVolume"));
+            _playerPanelSlider.SetValueWithoutNotify(PlayerPrefs.GetFloat("SavedMovePanelSize")); //удивительная функция не триггерит ивенты слайдера, не вызывая OnPlayerMovePanelValueChange()
+        }
 
-     
-        //TODO информация для размышления:
-        //Настройки не будут загружены, пока игрок не нажмёт продолжить игру, из-за принципов на которых у нас строится сохранение.
-        //То есть потенциально, игрок может оглушаться каждый раз при запуске игры.
-        //Это нехорошо, и есть вариант либо сделать дефолтные значения тихими,
-        //либо исследовать другие методы сохранения только для настроек
+        OnMusicValueChange();
+        OnSoundValueChange();
     }
 }

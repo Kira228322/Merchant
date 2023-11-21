@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
     public GameObject ButtonsBlock;
     public GameObject CurrentFunctionalWindow;
     public UIClock UIClock;
+
+    [SerializeField] private Menu _optionsMenu;
+
     [Header("MapManager")] 
     [SerializeField] private string _travelingScene;
     [SerializeField] private SceneTransiter _sceneTransiter;
@@ -21,7 +24,6 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
     [SerializeField] private GameObject _villageWindow;
     [SerializeField] private GameObject _playerIcone;
     [SerializeField] private Location _startLocation;
-    [SerializeField] private Menu _optionsMenu;
 
     [Header("GameTime")] 
     [FormerlySerializedAs("Timeflow")] [SerializeField] private Timeflow _timeflow;
@@ -61,6 +63,8 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
             _loadGameButton.interactable = true;
         }
         else _loadGameButton.interactable = false;
+
+        _optionsMenu.LoadData(); //Загрузка из PlayerPrefs настроек игрока
     }
 
     public void StartNewGame() //По нажатию кнопки Новая игра в MainMenu
@@ -82,6 +86,7 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
 
     public GlobalSaveData SaveData()
     {
+
         GlobalSaveData saveData = new()
         {
             PlayerData = Player.Instance.SaveData(),
@@ -95,7 +100,6 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
             GlobalEventHandlerSaveData = GlobalEventHandler.Instance.SaveData(),
             RegionSaveData = _regionHandler.SaveData(),
             SceneSaveData = _sceneTransiter.SaveData(),
-            MenuSaveData = _optionsMenu.SaveData(),
 
             };
         return saveData;
@@ -120,6 +124,5 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
         GlobalEventHandler.Instance.LoadData(data.GlobalEventHandlerSaveData);
         _regionHandler.LoadData(data.RegionSaveData);
         _sceneTransiter.LoadData(data.SceneSaveData);
-        _optionsMenu.LoadData(data.MenuSaveData);
     }
 }
