@@ -17,8 +17,8 @@ public class DayNightCycle : MonoBehaviour
     [SerializeField]private RawImage _nearBackground;
     private Color _white = new Color(0.84f,0.84f,0.84f);
     private Color _grey = new Color(0.78f,0.78f,0.78f);
-    private Color _darkGrey = new Color(0.21f,0.21f,0.21f);
-    private Color _black = new Color(0.18f,0.18f,0.18f);
+    private Color _darkGrey = new Color(0.2f,0.2f,0.2f);
+    private Color _black = new Color(0.14f,0.14f,0.14f);
     
     private Volume _volume;
     private Light2D _sun;
@@ -26,7 +26,7 @@ public class DayNightCycle : MonoBehaviour
     private bool _activateLights;
     private WeatherController _weatherController;
     private float _rainWeightOffset; //Дождь плавно слегка затемняет экран
-    private int _weatherStrength;
+    private float _weatherStrength;
 
     private void Awake()
     {
@@ -85,7 +85,7 @@ public class DayNightCycle : MonoBehaviour
         }
         
         _volume.weight = volumeWeight + _rainWeightOffset;
-        _sun.intensity = Mathf.Lerp(0.08f, 0.98f, 1-volumeWeight); // 0.07 и 0.98 это min и max значения которыми может быть освещение
+        _sun.intensity = Mathf.Lerp(0.08f, 0.975f, 1-volumeWeight); // 0.07 и 0.975 это min и max значения которыми может быть освещение
         _nearBackground.color = Color.Lerp(_white, _darkGrey, volumeWeight);
         _farBackground.color = Color.Lerp(_grey, _black, volumeWeight);
         
@@ -116,7 +116,8 @@ public class DayNightCycle : MonoBehaviour
     private void OnWeatherStarted()
     {
         GameTime.MinuteChanged += IncreaseWeatherWeightOffset;
-        _weatherStrength = Convert.ToInt32(_weatherController.WeatherStrength) + 1;
+        _weatherStrength = Convert.ToInt32(_weatherController.WeatherStrength) + 1.1f; // возможные значения 1.1 2.1 3.1
+        _weatherStrength += (3.5f - _weatherStrength) * 0.1f;
     }
     private void OnWeatherFinished()
     {

@@ -66,7 +66,7 @@ public class Menu : MonoBehaviour
     
     public void OnSoundValueChange()
     {
-        float value = math.lerp(-80, 0, _soundSlider.value);
+        float value = math.lerp(-80, 0, (float)Math.Pow(_soundSlider.value, 0.33f));
         _sound.audioMixer.SetFloat("SoundsVolume", value);
 
         SaveData();
@@ -74,7 +74,7 @@ public class Menu : MonoBehaviour
 
     public void OnMusicValueChange()
     {
-        float value = math.lerp(-80, 0, _musicSlider.value);
+        float value = math.lerp(-80, 0, (float)Math.Pow(_musicSlider.value, 0.33f));
         _music.audioMixer.SetFloat("MusicVolume", value);
         _questSound.audioMixer.SetFloat("QuestVolume", value);
 
