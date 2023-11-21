@@ -8,7 +8,12 @@ public class SlidersController : MonoBehaviour
 {
     [SerializeField] private Image _fillArea;
     [SerializeField] private Gradient _colour;
-    [SerializeField] private Slider _slider; 
+    [SerializeField] private Slider _slider;
+
+    private void Start()
+    {
+        OnValueChange();
+    }
 
     public void SetValue(float value, float maxValue)
     {
