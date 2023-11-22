@@ -19,6 +19,4 @@ public class QuestParams
     public List<ItemReward> itemRewards;
 
     public List<Goal> goals;
-
-    public QuestParams nextQuestParams;
 }

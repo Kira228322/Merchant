@@ -27,10 +27,15 @@ public class PregenQuestSO : ScriptableObject
     [HideInInspector] public int MaxMoneyReward;
 
 
-    public PregenQuestSO NextQuest;
+    [Tooltip("Назначается автоматически в QuestLine.OnEnable, здесь это поле лучше не трогать")]
+    public QuestLine QuestLine;
+
+    public List<PregenQuestSO> PrerequisiteQuests = new(); //те квесты, которые должны быть выполнены, чтобы этот автоматически заспавнился.
+
     [HideInInspector] public List<CompactedGoal> goals = new();
 
     [HideInInspector] public List<ItemReward> ItemRewards = new();
+
 
     public QuestParams GenerateQuestParams()
     {
@@ -47,11 +52,6 @@ public class PregenQuestSO : ScriptableObject
 
             itemRewards = ItemRewards
         };
-
-        if (NextQuest != null)
-        {
-            questParams.nextQuestParams = NextQuest.GenerateQuestParams();
-        }
 
         questParams.goals = new();
         foreach (CompactedGoal pregenGoal in goals)

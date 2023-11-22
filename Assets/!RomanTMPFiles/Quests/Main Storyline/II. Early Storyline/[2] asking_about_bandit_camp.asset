@@ -30,7 +30,9 @@ MonoBehaviour:
   MaxExperienceReward: 0
   MinMoneyReward: 0
   MaxMoneyReward: 0
-  NextQuest: {fileID: 0}
+  QuestLine: {fileID: 0}
+  PrerequisiteQuests:
+  - {fileID: 11400000, guid: 65f91365a8de00d4baad5106899d84cc, type: 2}
   goals:
   - goalType: 1
     goalState: 0

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO.IsolatedStorage;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,11 +18,7 @@ public class QuestLog : MonoBehaviour
         quest.QuestChangedState += OnQuestChangedState;
         quest.QuestUpdated += OnQuestUpdated;
 
-        if (quest.CurrentState == Quest.State.Active)
-        {
-            AddToActiveQuests(quest);
-        }
-        else AddToFinishedQuests(quest);
+        CheckQuestLineAndAddNewPanel(quest, quest.CurrentState);
     }
     private void AddToActiveQuests(Quest quest)
     {
@@ -35,38 +32,43 @@ public class QuestLog : MonoBehaviour
         questPanel.Initialize(quest);
         _finishedQuests.Add(questPanel);
     }
+
+    //ƒумаю: получать через Quest quest.QuestSummary PregenQuestSO через базу данных. ” него мы знаем его QuestLine, знаем первый он или последний.
+    //≈сли последний и он выполн€етс€, то играть анимацию завершени€ цепочки.
+    //≈сли первый и он добавл€етс€, то создавать цепочку.
+    //≈сли добавл€етс€ не первый, добавл€ть его в существующую цепочку. (“ут надо внимательно насчЄт сохранени€ - если первый уже завершен?)
+    //(“о есть если цепочки нет, создавать еЄ всЄ равно)
+
     private void OnQuestChangedState(Quest quest, Quest.State oldState, Quest.State newState)
     {
         Destroy(quest.questPanel.gameObject);
+        CheckQuestLineAndAddNewPanel(quest, newState);
+  
+    }
+    private void CheckQuestLineAndAddNewPanel(Quest quest, Quest.State newState)
+    {
+        PregenQuestSO pregenQuest = PregenQuestDatabase.GetPregenQuest(quest.QuestSummary);
+        QuestLine questLine = pregenQuest.QuestLine;
+        bool isFirst = false;
+        bool isLast = false;
 
-        switch (newState)
+        if (questLine != null)
         {
-            case Quest.State.Active:
-                AddToActiveQuests(quest);
-                break;
+            isFirst = questLine.IsFirst(pregenQuest);
+            isLast = questLine.IsLast(pregenQuest);
+        }
 
-            case Quest.State.RewardUncollected:
-                if (quest.NextQuestParams != null)
-                {
-                    QuestHandler.AddQuest(quest.NextQuestParams);
-                }
-                AddToFinishedQuests(quest);
-                break;
-
-            case Quest.State.Completed:
-                if (quest.NextQuestParams == null || quest.HasRewards())
-                {
-                    AddToFinishedQuests(quest);
-                }
-                else
-                {
-                    QuestHandler.AddQuest(quest.NextQuestParams);
-                }
-                break;
-
-            case Quest.State.Failed:
-                AddToFinishedQuests(quest);
-                break;
+        if (newState == Quest.State.Active)
+        {
+            AddToActiveQuests(quest); //плюс логика создани€ цепочки из коммента выше
+            if (isFirst)
+                Debug.Log("ƒобавл€емый квест первый в цепочке, значит нужно создать еЄ");
+        }
+        else
+        {
+            AddToFinishedQuests(quest); //плюс логика удалени€ цепочки из коммента выше
+            if (isLast)
+                Debug.Log("«авершаемый квест последний в цепочке, значит она удал€етс€");
         }
     }
     private void OnQuestUpdated(Quest quest)

@@ -67,12 +67,23 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
         if (newState == Quest.State.Completed || newState == Quest.State.Failed)
             quest.QuestChangedState -= Instance.OnQuestChangedState;
         QuestChangedState?.Invoke(quest);
+
+        //В момент выполнения квеста нужно пройтись по всей базе квестов:
+        //Отобрать из них только те квесты, которые ещё не были взяты и имеющие какие-то требования 
+        //Отобрать из них только те квесты, у которых выполнены все требования
+        //Добавить все получившиеся квесты.
+        foreach (var pregenQuest in PregenQuestDatabase.QuestList.ScriptedQuests
+            .Where(quest => quest.PrerequisiteQuests.Count > 0 && !HasQuestBeenTaken(quest.QuestSummary))
+            .Where(quest => quest.PrerequisiteQuests.All(prerequisite => HasQuestBeenCompleted(prerequisite.QuestSummary)))
+            .Select(quest => quest.GenerateQuestParams()))
+        {
+            AddQuest(pregenQuest);
+        }
     }
     #endregion
     #region Методы получения информации о квестах
     public static List<Quest> GetActiveQuestsForThisNPC(int ID)
     {
-        //null propagation запрещена для unityобъектов, поэтому не использую LINQ (для проверки questgiver != null)
         List<Quest> result = new();
         foreach (Quest quest in Instance.ActiveQuests)
         {
@@ -96,6 +107,13 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
     public static bool HasQuestBeenTaken(string summary)
     {
         return Instance.Quests.Any(quest => quest.QuestSummary == summary);
+    }
+    public static bool HasQuestBeenCompleted(string summary)
+    {
+        return Instance.Quests.Any
+            (quest => quest.QuestSummary == summary &&
+            (quest.CurrentState == Quest.State.RewardUncollected
+            || quest.CurrentState == Quest.State.Completed));
     }
     public static bool AnyUncollectedRewards()
     {

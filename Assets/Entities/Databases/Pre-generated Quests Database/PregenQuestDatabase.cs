@@ -20,6 +20,17 @@ public class PregenQuestDatabase : MonoBehaviour
         }
     }
 
+    public static PregenQuestSO GetPregenQuest(string summary)
+    {
+        PregenQuestSO pregenQuestSO = Instance.Quests.ScriptedQuests.FirstOrDefault(quest => quest.QuestSummary == summary);
+        if (pregenQuestSO == null)
+        {
+            Debug.LogWarning(" веста с таким summary нет в базе");
+            return null;
+        }
+        return pregenQuestSO;
+    }
+
     public static QuestParams GetQuestParams(string summary)
     {
         PregenQuestSO pregenQuestSO = Instance.Quests.ScriptedQuests.FirstOrDefault(quest => quest.QuestSummary == summary);

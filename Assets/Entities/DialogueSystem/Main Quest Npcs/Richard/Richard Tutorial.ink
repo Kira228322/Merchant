@@ -31,7 +31,6 @@ INCLUDE ../../MainInkLibrary.ink
             Пацан, ты знаешь поговорку "деньги правят миром"? За определённую плату мы могли бы договориться.
             Да не трясись, я даже сделаю тебе скидку, потому что твой батя меня спас.
             ~invoke_dialogue_event("tutorial_talk_to_richard")
-            ~add_quest("tutorial_buy_relic_from_richard")
                 ->END
     
 === buy_relic ===

@@ -33,8 +33,6 @@ public class Quest
     public int MoneyReward;
     public List<ItemReward> ItemRewards;
 
-    public QuestParams NextQuestParams;
-
     public List<Goal> Goals;
 
     public QuestPanel questPanel = null; //она сама себя назначит
@@ -58,8 +56,6 @@ public class Quest
         ExperienceReward = questParams.experienceReward;
         MoneyReward = questParams.moneyReward;
         ItemRewards = questParams.itemRewards;
-
-        NextQuestParams = questParams.nextQuestParams;
 
         Goals = questParams.goals;
 

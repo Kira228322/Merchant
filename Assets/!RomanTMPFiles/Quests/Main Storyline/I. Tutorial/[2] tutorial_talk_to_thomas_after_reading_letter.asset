@@ -24,11 +24,15 @@ MonoBehaviour:
     \u041D\u0443\u0436\u043D\u043E \u0441\u043F\u0440\u043E\u0441\u0438\u0442\u044C
     \u0443 \u0422\u043E\u043C\u0430\u0441\u0430, \u0432 \u043A\u0430\u043A\u043E\u0439
     \u0434\u0435\u0440\u0435\u0432\u043D\u0435 \u043E\u043D \u043D\u0430\u0445\u043E\u0434\u0438\u0442\u0441\u044F..."
+  RandomExp: 0
+  RandomReward: 0
   MinExperienceReward: 2
   MaxExperienceReward: 2
   MinMoneyReward: 0
   MaxMoneyReward: 0
-  NextQuest: {fileID: 11400000, guid: 157d6985a117078428e0f1b8cb71a473, type: 2}
+  QuestLine: {fileID: 0}
+  PrerequisiteQuests:
+  - {fileID: 11400000, guid: 98f0e80a2d81f844f8fdb7e0a86e1792, type: 2}
   goals:
   - goalType: 1
     goalState: 0
