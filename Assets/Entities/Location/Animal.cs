@@ -31,7 +31,7 @@ public class Animal : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(Move());
+        StartCoroutine(IDLEorAFK());
     }
 
     public void RevertViewDirection(bool moveDirectionIsRight)
