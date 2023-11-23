@@ -13,6 +13,9 @@ public class QuestLog : MonoBehaviour
     private List<QuestPanel> _activeQuests = new();
     private List<QuestPanel> _finishedQuests = new();
 
+    private Dictionary<QuestLine, QuestLinePanel> _activeQuestLines = new();
+    private Dictionary<QuestLine, QuestLinePanel> _finishedQuestLines = new();
+
     public void AddQuest(Quest quest)
     {
         quest.QuestChangedState += OnQuestChangedState;
@@ -20,56 +23,128 @@ public class QuestLog : MonoBehaviour
 
         CheckQuestLineAndAddNewPanel(quest, quest.CurrentState);
     }
-    private void AddToActiveQuests(Quest quest)
+    private void AddToActiveQuests(Quest quest, QuestLine questLine)
     {
-        QuestPanel questPanel = Instantiate(_questPanelPrefab, _activeQuestsContent.transform).GetComponent<QuestPanel>();
+        //TODO: сортировка по дате взятия после добавления новых квестов
+
+        Transform targetTransform = null;
+
+        if (questLine != null)
+        {
+            if (!_activeQuestLines.ContainsKey(questLine))
+            {
+                // QuestLinePanel newQuestLinePanel = Instantiate(_questLinePanelPrefab, _activeQuestsContent.transform).GetComponent<QuestLinePanel>();
+                //_activeQuestLines.Add(questLine, newQuestLinePanel);
+                // newQuestLinePanel.Initialize(questLine)
+                // targetTransform = newQuestLinePanel.transform;
+            }
+            else
+            {
+                //targetTransform = _activeQuestLines[questLine].transform;
+            }
+        }
+        else //Квесты без цепочки могут отправляться в цепочку "Разное". Это фейк-цепочка
+        {
+            if (_activeQuestLines[null] == null) //[null] будет соответствовать "Разное"
+            {
+                // QuestLinePanel newQuestLinePanel = Instantiate(_questLinePanelPrefab, _activeQuestsContent.transform).GetComponent<QuestLinePanel>();
+                // _activeQuestLines[null] = newQuestLinePanel;
+                // newQuestLinePanel.Initialize(null);
+                // targetTransform = newQuestLinePanel.transform;
+            }
+            else
+            {
+                //targetTransform = _activeQuestLines[null].transform;
+            }
+        }
+        QuestPanel questPanel = Instantiate(_questPanelPrefab, targetTransform).GetComponent<QuestPanel>();
         questPanel.Initialize(quest);
         _activeQuests.Add(questPanel);
     }
-    private void AddToFinishedQuests(Quest quest)
+    private void AddToFinishedQuests(Quest quest, QuestLine questLine)
     {
-        QuestPanel questPanel = Instantiate(_questPanelPrefab, _finishedQuestsContent.transform).GetComponent<QuestPanel>();
+        Transform targetTransform = null;
+
+        if (questLine != null)
+        {
+            if (!_activeQuestLines.ContainsKey(questLine))
+            {
+                // QuestLinePanel newQuestLinePanel = Instantiate(_questLinePanelPrefab, _activeQuestsContent.transform).GetComponent<QuestLinePanel>();
+                // _activeQuestLines.Add(questLine, newQuestLinePanel);
+                // newQuestLinePanel.Initialize(questLine)
+                // targetTransform = newQuestLinePanel.transform;
+            }
+            else
+            {
+                //targetTransform = _activeQuestLines[questLine].transform;
+            }
+        }
+        else //Квесты без цепочки могут отправляться в цепочку "Разное". Это фейк-цепочка
+        {
+            if (_activeQuestLines[null] == null) //[null] будет соответствовать "Разное"
+            {
+                // QuestLinePanel newQuestLinePanel = Instantiate(_questLinePanelPrefab, _activeQuestsContent.transform).GetComponent<QuestLinePanel>();
+                // _activeQuestLines[null] = newQuestLinePanel;
+                // newQuestLinePanel.Initialize(null);
+                // targetTransform = newQuestLinePanel.transform;
+            }
+            else
+            {
+                //targetTransform = _activeQuestLines[null].transform;
+            }
+        }
+
+        QuestPanel questPanel = Instantiate(_questPanelPrefab, targetTransform.transform).GetComponent<QuestPanel>();
         questPanel.Initialize(quest);
         _finishedQuests.Add(questPanel);
     }
 
-    //Думаю: получать через Quest quest.QuestSummary PregenQuestSO через базу данных. У него мы знаем его QuestLine, знаем первый он или последний.
-    //Если последний и он выполняется, то играть анимацию завершения цепочки.
-    //Если первый и он добавляется, то создавать цепочку.
-    //Если добавляется не первый, добавлять его в существующую цепочку. (Тут надо внимательно насчёт сохранения - если первый уже завершен?)
-    //(То есть если цепочки нет, создавать её всё равно)
-
     private void OnQuestChangedState(Quest quest, Quest.State oldState, Quest.State newState)
     {
+        //В целом так и остаётся, нужно удалить квест внутри его цепочки и заспавнить его в цепочке другого раздела
         Destroy(quest.questPanel.gameObject);
         CheckQuestLineAndAddNewPanel(quest, newState);
   
     }
     private void CheckQuestLineAndAddNewPanel(Quest quest, Quest.State newState)
     {
+        //Думаю: получать через Quest quest.QuestSummary PregenQuestSO через базу данных. У него мы знаем его QuestLine, знаем первый он или последний.
+        //Если последний и он выполняется, то играть анимацию завершения цепочки.
+        //Если первый и он добавляется, то создавать цепочку.
+        //Если добавляется не первый, добавлять его в существующую цепочку. (Тут надо внимательно насчёт сохранения - если первый уже завершен?)
+        //(То есть если цепочки нет, создавать её всё равно)
+        
+        //На самом деле всегда, когда добавляем квест, нужно чекать, а есть ли уже такая цепочка.
+        //Если нету, создавать её. Если квест активен и он последний в цепочке, то её нужно удалить.
+        //Если мы говорим про завершенные цепочки, они не удаляются никогда.
+
         PregenQuestSO pregenQuest = PregenQuestDatabase.GetPregenQuest(quest.QuestSummary);
         QuestLine questLine = pregenQuest.QuestLine;
-        bool isFirst = false;
         bool isLast = false;
 
         if (questLine != null)
         {
-            isFirst = questLine.IsFirst(pregenQuest);
             isLast = questLine.IsLast(pregenQuest);
         }
 
+        
         if (newState == Quest.State.Active)
         {
-            AddToActiveQuests(quest); //плюс логика создания цепочки из коммента выше
-            if (isFirst)
-                Debug.Log("Добавляемый квест первый в цепочке, значит нужно создать её");
+            AddToActiveQuests(quest, questLine);
         }
         else
         {
-            AddToFinishedQuests(quest); //плюс логика удаления цепочки из коммента выше
-            if (isLast)
-                Debug.Log("Завершаемый квест последний в цепочке, значит она удаляется");
+            //Если квест последний в цепочке и для него создана QuestLinePanel (а она не будет создана, если это загрузка) то удалить её.
+            //Квест никогда не становится активным из выполненного, а выполненные цепочки никогда не уничтожаются.
+            if (isLast && _activeQuestLines[questLine] != null)
+            {
+                Destroy(_activeQuestLines[questLine]);
+                _activeQuestLines.Remove(questLine);
+            }
+            AddToFinishedQuests(quest, questLine);
         }
+
+        //TODO сортировать список панелек по дате взятия/выполнения после добавления квеста?
     }
     private void OnQuestUpdated(Quest quest)
     {

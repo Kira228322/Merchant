@@ -61,24 +61,26 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
 
         if (newState == Quest.State.RewardUncollected || (!quest.HasRewards() && newState == Quest.State.Completed))
         {
-            _questCompleteAnnouncer.ChangeText(quest.QuestName);
+            _questCompleteAnnouncer.ChangeText(quest.QuestName); //TODO заменить на выполнение цепочки
+
+            //¬ момент выполнени€ квеста нужно пройтись по всей базе квестов:
+            //ќтобрать из них только те квесты, которые ещЄ не были вз€ты и имеющие какие-то требовани€ 
+            //ќтобрать из них только те квесты, у которых выполнены все требовани€
+            //ƒобавить все получившиес€ квесты.
+
+            foreach (var pregenQuest in PregenQuestDatabase.QuestList.ScriptedQuests
+            .Where(quest => quest.PrerequisiteQuests.Count > 0 && !HasQuestBeenTaken(quest.QuestSummary))
+            .Where(quest => quest.PrerequisiteQuests.All(prerequisite => HasQuestBeenCompleted(prerequisite.QuestSummary)))
+            .Select(quest => quest.GenerateQuestParams()))
+            {
+                AddQuest(pregenQuest);
+            }
         }
 
         if (newState == Quest.State.Completed || newState == Quest.State.Failed)
             quest.QuestChangedState -= Instance.OnQuestChangedState;
         QuestChangedState?.Invoke(quest);
-
-        //¬ момент выполнени€ квеста нужно пройтись по всей базе квестов:
-        //ќтобрать из них только те квесты, которые ещЄ не были вз€ты и имеющие какие-то требовани€ 
-        //ќтобрать из них только те квесты, у которых выполнены все требовани€
-        //ƒобавить все получившиес€ квесты.
-        foreach (var pregenQuest in PregenQuestDatabase.QuestList.ScriptedQuests
-            .Where(quest => quest.PrerequisiteQuests.Count > 0 && !HasQuestBeenTaken(quest.QuestSummary))
-            .Where(quest => quest.PrerequisiteQuests.All(prerequisite => HasQuestBeenCompleted(prerequisite.QuestSummary)))
-            .Select(quest => quest.GenerateQuestParams()))
-        {
-            AddQuest(pregenQuest);
-        }
+        
     }
     #endregion
     #region ћетоды получени€ информации о квестах

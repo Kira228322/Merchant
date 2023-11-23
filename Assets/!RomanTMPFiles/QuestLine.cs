@@ -9,10 +9,6 @@ public class QuestLine : ScriptableObject
     public string QuestLineDescription;
     public List<PregenQuestSO> QuestsInLine = new();
 
-    public bool IsFirst(PregenQuestSO pregenQuest)
-    {
-        return QuestsInLine.IndexOf(pregenQuest) == 0;
-    }
     public bool IsLast(PregenQuestSO pregenQuest)
     {
         return QuestsInLine.IndexOf(pregenQuest) == QuestsInLine.Count - 1;
