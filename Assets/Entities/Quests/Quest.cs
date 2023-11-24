@@ -37,8 +37,11 @@ public class Quest
 
     public QuestPanel questPanel = null; //она сама себя назначит
 
-    public int DayFinishedOn;  //TODO: Можно было бы объединить поля в общий класс Timespan. 
-    public int HourFinishedOn; //Но надо было это делать в самом начале, щас уже незачем...
+    public int DayStartedOn;
+    public int HourStartedOn;
+
+    public int DayFinishedOn;  
+    public int HourFinishedOn;
 
     public event UnityAction<Quest> QuestUpdated;
     public event UnityAction<Quest, State, State> QuestChangedState;
@@ -56,6 +59,12 @@ public class Quest
         ExperienceReward = questParams.experienceReward;
         MoneyReward = questParams.moneyReward;
         ItemRewards = questParams.itemRewards;
+
+        DayStartedOn = questParams.dayStartedOn;
+        HourStartedOn = questParams.hourStartedOn;
+
+        DayFinishedOn = questParams.dayFinishedOn;
+        HourFinishedOn = questParams.hourFinishedOn;
 
         Goals = questParams.goals;
 
@@ -94,12 +103,10 @@ public class Quest
         {
             goal.Deinitialize();
         }
-        if (HasRewards()) //Если есть хоть какие-то награды
-        CurrentState = State.RewardUncollected;
+        if (HasRewards() && CurrentState != State.Completed) //Если есть хоть какие-то награды
+            CurrentState = State.RewardUncollected;
         else
-        {
             CurrentState = State.Completed;
-        }
 
         DayFinishedOn = GameTime.CurrentDay;
         HourFinishedOn = GameTime.Hours;

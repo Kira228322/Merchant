@@ -14,6 +14,12 @@ public class QuestParams
 
     public int questGiverID;
 
+    public int dayStartedOn;
+    public int hourStartedOn;
+
+    public int dayFinishedOn;
+    public int hourFinishedOn;
+
     public int experienceReward;
     public int moneyReward;
     public List<ItemReward> itemRewards;

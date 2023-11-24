@@ -49,7 +49,8 @@ public class PregenQuestSO : ScriptableObject
             description = Description,
             experienceReward = Random.Range(MinExperienceReward, MaxExperienceReward + 1),
             moneyReward = Random.Range(MinMoneyReward, MaxMoneyReward + 1),
-
+            dayStartedOn = GameTime.CurrentDay,
+            hourStartedOn = GameTime.Hours,
             itemRewards = ItemRewards
         };
 

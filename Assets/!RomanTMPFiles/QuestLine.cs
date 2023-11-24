@@ -6,7 +6,6 @@ using UnityEngine;
 public class QuestLine : ScriptableObject
 {
     public string QuestLineName;
-    public string QuestLineDescription;
     public List<PregenQuestSO> QuestsInLine = new();
 
     public bool IsLast(PregenQuestSO pregenQuest)
@@ -14,7 +13,7 @@ public class QuestLine : ScriptableObject
         return QuestsInLine.IndexOf(pregenQuest) == QuestsInLine.Count - 1;
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         foreach (PregenQuestSO pregenQuestSO in QuestsInLine)
         {

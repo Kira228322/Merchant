@@ -28,6 +28,8 @@ public class QuestPanel : MonoBehaviour
 
     private Quest _quest;
 
+    public Quest Quest => _quest;
+
     public void Initialize(Quest quest)
     {
         _quest = quest;

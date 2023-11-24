@@ -1,21 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class QuestLinePanel : MonoBehaviour
 {
-    public string QuestLineName;
-    public string QuestLineDescription;
-    public int DayStartedOn;
-    public int HourStartedOn;
+    [HideInInspector] public string QuestLineName;
+    [HideInInspector] public int DayStartedOn;
+    [HideInInspector] public int HourStartedOn;
 
-    public int DayFinishedOn;
-    public int HourFinishedOn;
+    [HideInInspector] public int DayFinishedOn;
+    [HideInInspector] public int HourFinishedOn;
+    
+    public Transform ItemContentTransform;
+
+    [SerializeField] private TMP_Text _questLineNameText;
 
     public void Initialize(QuestLine questLine)
     {
-        QuestLineName = questLine.QuestLineName;
-        QuestLineDescription = questLine.QuestLineDescription;
+        if (questLine == null)
+            QuestLineName = "Разное";
+        else
+            QuestLineName = questLine.QuestLineName;
+
+        _questLineNameText.text = QuestLineName;
 
         //TODO: (Day/Hour)(Started/Finished)On. Надо ли вообще? Я думаю использовать для сортировки
     }

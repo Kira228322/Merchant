@@ -437,7 +437,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &9194222281503443245
 RectTransform:
   m_ObjectHideFlags: 0
@@ -453,10 +453,10 @@ RectTransform:
   m_Father: {fileID: 9194222282363647656}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 352.71, y: -40.22}
+  m_SizeDelta: {x: 705.42, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9194222281503443242
 CanvasRenderer:
@@ -911,7 +911,7 @@ GameObject:
   - component: {fileID: 9194222282334193111}
   - component: {fileID: 9194222282334193109}
   m_Layer: 5
-  m_Name: QuestName
+  m_Name: QuestLineName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -965,7 +965,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '{QuestName}'
+  m_text: '{QuestLineName}'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f869d7ca46cd2304f921bcde2b3815b4, type: 2}
   m_sharedMaterial: {fileID: 1090580842578484240, guid: f869d7ca46cd2304f921bcde2b3815b4, type: 2}
@@ -1065,8 +1065,6 @@ GameObject:
   - component: {fileID: 9194222282363647656}
   - component: {fileID: 9194222282363647655}
   - component: {fileID: 9194222282363647654}
-  - component: {fileID: 4658963432716620041}
-  - component: {fileID: 2152394401574712890}
   - component: {fileID: 7167560919169509707}
   - component: {fileID: 7167560919169509708}
   m_Layer: 5
@@ -1138,42 +1136,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
   m_VerticalFit: 2
---- !u!114 &4658963432716620041
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9194222282363647657}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b75c95ebe5c72b47b292cc5482544f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TextObjects:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
---- !u!114 &2152394401574712890
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9194222282363647657}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b75c95ebe5c72b47b292cc5482544f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TextObjects:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!114 &7167560919169509707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1207,8 +1169,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   QuestLineName: 
-  QuestLineDescription: 
   DayStartedOn: 0
   HourStartedOn: 0
   DayFinishedOn: 0
   HourFinishedOn: 0
+  ItemContentTransform: {fileID: 9194222281503443245}
+  _questLineNameText: {fileID: 9194222282334193111}
