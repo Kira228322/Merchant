@@ -50,7 +50,10 @@ public class Menu : MonoBehaviour
 
     public void OnExitMenuButtonClick()
     {
-        GameTime.SetTimeScale(1);
+        if (MapManager.IsActiveSceneTravel)
+            GameTime.SetTimeScale(GameTime.TimeScaleInTravel);
+        else 
+            GameTime.SetTimeScale(1);
         Normal.TransitionTo(0.9f);
         StopAllCoroutines();
         if (_leftButtonImage.color.a != 0)

@@ -62,8 +62,8 @@ public class TravelEventHandler : MonoBehaviour
 
         List<InventoryItem> deletedItems = new();
         
-        float Roadbadness = (100 - MapManager.CurrentRoad.Quality) / Player.Instance.WagonStats.QualityModifier;
-        Roadbadness *= RoadBadnessMultiplier;
+        float Roadbadness = (100 - MapManager.CurrentRoad.Quality * RoadBadnessMultiplier)
+                            / Player.Instance.WagonStats.QualityModifier;
         // формула вероятности сломать предмет хрупкостью 100%
         
         
@@ -73,9 +73,9 @@ public class TravelEventHandler : MonoBehaviour
             
             for (int i = 0; i < randomItem.CurrentItemsInAStack; i++)
             {
-                if (EventFire(Roadbadness * randomItem.ItemData.Fragility / 100))
+                if (EventFire(Roadbadness * randomItem.ItemData.Fragility / 100f))
                 {
-                    Roadbadness *= 0.98f - (Player.Instance.WagonStats.QualityModifier - 1) * 0.1f;
+                    Roadbadness *= 0.98f;
                     deletedItems.Add(Instantiate(randomItem));
                     Player.Instance.Inventory.BaseItemGrid.RemoveItemsFromAStack(randomItem, 1);
                     i--;
@@ -221,8 +221,6 @@ public class TravelEventHandler : MonoBehaviour
     
     public static bool EventFire(float probability, bool positiveEvent = true, PlayerStats.PlayerStat playerStat = null)
     {
-        if (probability < 1)
-            probability *= 100; // Если вероятность по ошибке была написана не в %, а в долях
         if (playerStat != null)
         {
 
@@ -244,8 +242,6 @@ public class TravelEventHandler : MonoBehaviour
     }
     public static float GetProbability(float probability, PlayerStats.PlayerStat playerStat, bool positiveEvent = true )
     {
-        if (probability < 1)
-            probability *= 100; // Если вероятность по ошибке была написана не в %, а в долях
         float result;
         
         if (positiveEvent)

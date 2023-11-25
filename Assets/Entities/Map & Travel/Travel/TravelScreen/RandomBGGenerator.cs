@@ -19,6 +19,8 @@ public class RandomBGGenerator : MonoBehaviour
     [SerializeField] private float _minTimeGrassSpawn;
     [SerializeField] private List<GameObject> _other = new();
     [SerializeField] private float _minTimeOtherObjSpawn;
+    [SerializeField] private List<GameObject> _roadLamps = new();
+    [SerializeField] private float _minTimeRoadLampsObjSpawn;
 
 
     [SerializeField] private Transform _cloudPointSpawn;
@@ -35,6 +37,7 @@ public class RandomBGGenerator : MonoBehaviour
         _backGroundObjects.Add(new BackGroundObject(_stones, _minTimeStoneSpawn));
         _backGroundObjects.Add(new BackGroundObject(_grass, _minTimeGrassSpawn));
         _backGroundObjects.Add(new BackGroundObject(_other, _minTimeOtherObjSpawn));
+        _backGroundObjects.Add(new BackGroundObject(_roadLamps, _minTimeRoadLampsObjSpawn));
     }
 
     private void Update()
@@ -87,8 +90,8 @@ public class RandomBGGenerator : MonoBehaviour
         SpriteRenderer renderer = spawnedObj.GetComponent<SpriteRenderer>();
 
         Vector3 localScale = spawnedObj.transform.localScale;
-        localScale = new Vector2(Random.Range(localScale.x * 0.92f, localScale.x * 1.08f), 
-             Random.Range(localScale.y * 0.92f, localScale.y * 1.08f));
+        localScale = new Vector2(Random.Range(localScale.x * 0.93f, localScale.x * 1.08f), 
+             Random.Range(localScale.y * 0.93f, localScale.y * 1.08f));
         spawnedObj.transform.localScale = localScale;
 
         // на сцене буду объекты которые будут спавнить перед игроком (его sortingOrder = 0), их sortingOrder = 1
@@ -97,9 +100,9 @@ public class RandomBGGenerator : MonoBehaviour
         {
             renderer.sortingOrder = -2;
             Color color = renderer.color;
-            color.r /= 1.1f;
-            color.g /= 1.1f;
-            color.b /= 1.1f;
+            color.r /= 1.08f;
+            color.g /= 1.08f;
+            color.b /= 1.08f;
             renderer.color = color;
             if (renderer.gameObject.transform.childCount != 0) 
             {
@@ -128,7 +131,7 @@ public class RandomBGGenerator : MonoBehaviour
                 }
         }
         if (Random.Range(0, 2) == 0)
-            renderer.flipX = !renderer.flipX;
+            renderer.gameObject.transform.rotation = new Quaternion(0, 180, 0, 0);
     }
 
     private class BackGroundObject
