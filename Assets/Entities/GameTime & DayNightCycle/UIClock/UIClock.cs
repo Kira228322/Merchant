@@ -139,9 +139,9 @@ public class UIClock : MonoBehaviour
     }
     private IEnumerator ShowDetailedTime()
     {
-        WaitForSeconds waitForSeconds = new(0.2f);
+        WaitForSeconds waitForSeconds = new(0.1f);
         _detailedTimeObject.SetActive(true);
-        for (int i = 0; i < 15; i++)
+        for (int i = 0; i < 30; i++)
         {
             _detailedTime.text = $"Δενό {GameTime.CurrentDay}\n{GameTime.Hours:D2}:{GameTime.Minutes:D2}";
             yield return waitForSeconds;
@@ -151,7 +151,7 @@ public class UIClock : MonoBehaviour
 
     private IEnumerator ShowDetailedTimeWhileSleep()
     {
-        WaitForSeconds waitForSeconds = new(0.2f);
+        WaitForSeconds waitForSeconds = new(0.1f);
         _detailedTimeObject.SetActive(true);
         while(true)
         {

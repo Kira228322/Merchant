@@ -29,7 +29,7 @@ using UnityEngine;
         Wheel = _wagonStats.Wheel;
         Body = _wagonStats.Body;
         Suspension = _wagonStats.Suspension;
-
+        OnWeightChange(Player.Instance.Inventory.CurrentTotalWeight, Player.Instance.Inventory.MaxTotalWeight);
         //_qualityModifier = Wheel.QualityModifier;
     }
 

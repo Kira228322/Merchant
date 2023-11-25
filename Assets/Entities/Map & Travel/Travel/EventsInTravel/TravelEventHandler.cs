@@ -18,6 +18,7 @@ public class TravelEventHandler : MonoBehaviour
     [SerializeField] private BreakingWindow _breakingWindowPrefab;
     [SerializeField] private Animator _wagonAnimator;
     [SerializeField] private Animator _donkeyAnimator;
+    [SerializeField] private AudioSource _wagonSound;
     private EventInTravel _nextEvent;
     private Transform _mainCanvas;
     [SerializeField] private Transform _cameraTransform;
@@ -107,6 +108,7 @@ public class TravelEventHandler : MonoBehaviour
 
     public void FreezeTravelScene()
     {
+        _wagonSound.Stop();
         _generator.enabled = false;
         foreach (var cloud in _generator.CloudsOnScene)
         {
@@ -121,6 +123,7 @@ public class TravelEventHandler : MonoBehaviour
 
     public void UnFreezeTravelScene()
     {
+        _wagonSound.Play();
         _generator.enabled = true;
         foreach (var cloud in _generator.CloudsOnScene)
         {

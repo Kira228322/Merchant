@@ -5,13 +5,13 @@ using UnityEngine;
 public class EventRoadKeeper : EventInTravel
 {
     private int money;
-    private float _reduceQuality = 0.08f;
+    private float _reduceQuality = 0.07f;
     public override void SetButtons()
     {
         money = Random.Range(28, 38) - Player.Instance.Statistics.Diplomacy.Total - Player.Instance.Statistics.Diplomacy.Total/2;
         ButtonsLabel.Add("Заплатить");
         ButtonsLabel.Add("Игнорировать");
-        SetInfoButton("Ваша дипломатия уменьшает стоимость платы.");
+        SetInfoButton($"Хранитель дороги требует {money} золота.\nВаша дипломатия уменьшает стоимость платы.");
     }
 
     public override void OnButtonClick(int n)
