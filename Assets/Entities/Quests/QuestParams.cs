@@ -12,6 +12,8 @@ public class QuestParams
     public string questSummary;
     public string description;
 
+    public int questCompletionDelay;
+
     public int questGiverID;
 
     public int dayStartedOn;

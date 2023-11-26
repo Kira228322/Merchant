@@ -18,7 +18,7 @@ public class QuestNotice : Notice
         if (QuestGiverID != 0)
         {
             NpcQuestGiverData questGiverData = (NpcQuestGiverData)NpcDatabase.GetNPCData(QuestGiverID);
-            QuestHandler.AddQuest(RandomQuest, questGiverData);
+            QuestHandler.AddQuest(RandomQuest);
             questGiverData.SetCooldown();
         }
         else

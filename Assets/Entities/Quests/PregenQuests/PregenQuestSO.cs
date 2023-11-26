@@ -30,7 +30,11 @@ public class PregenQuestSO : ScriptableObject
     [Tooltip("Назначается автоматически в QuestLine.OnEnable, здесь это поле лучше не трогать")]
     public QuestLine QuestLine;
 
-    public List<PregenQuestSO> PrerequisiteQuests = new(); //те квесты, которые должны быть выполнены, чтобы этот автоматически заспавнился.
+    [Tooltip("Те квесты, которые должны быть выполнены, чтобы этот автоматически заспавнился")]
+    public List<PregenQuestSO> PrerequisiteQuests = new();
+
+    [Tooltip("Время в часах, которое пройдет после выполнения этого квеста, перед тем как выдастся следующий")]
+    public int QuestCompletionDelay;
 
     [HideInInspector] public List<CompactedGoal> goals = new();
 
@@ -47,6 +51,7 @@ public class PregenQuestSO : ScriptableObject
             questSummary = QuestSummary,
             questGiverID = QuestGiverID,
             description = Description,
+            questCompletionDelay = QuestCompletionDelay,
             experienceReward = Random.Range(MinExperienceReward, MaxExperienceReward + 1),
             moneyReward = Random.Range(MinMoneyReward, MaxMoneyReward + 1),
             dayStartedOn = GameTime.CurrentDay,
@@ -118,6 +123,7 @@ public class PregenQuestSO : ScriptableObject
         }
         return questParams;
     }
+
     [Serializable]
     public class CompactedGoal
     {

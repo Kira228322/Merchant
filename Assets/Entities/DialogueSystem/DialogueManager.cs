@@ -88,7 +88,7 @@ public class DialogueManager : MonoBehaviour
         });
         _currentStory.BindExternalFunction("add_quest", (string questSummary) =>
         {
-            QuestHandler.AddQuest(PregenQuestDatabase.GetQuestParams(questSummary), _currentNPC.NpcData);
+            QuestHandler.AddQuest(PregenQuestDatabase.GetQuestParams(questSummary));
         });
         _currentStory.BindExternalFunction("invoke_dialogue_event", (string param) =>
         {

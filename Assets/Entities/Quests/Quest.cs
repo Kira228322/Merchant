@@ -43,6 +43,8 @@ public class Quest
     public int DayFinishedOn;  
     public int HourFinishedOn;
 
+    public int QuestCompletionDelay;
+
     public event UnityAction<Quest> QuestUpdated;
     public event UnityAction<Quest, State, State> QuestChangedState;
 
@@ -53,6 +55,8 @@ public class Quest
         QuestName = questParams.questName;
         QuestSummary = questParams.questSummary;
         Description = questParams.description;
+
+        QuestCompletionDelay = questParams.questCompletionDelay;
 
         QuestGiverID = questParams.questGiverID;
 

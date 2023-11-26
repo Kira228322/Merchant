@@ -17,6 +17,9 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
     
     public List<Quest> Quests = new(); // Содержит все квесты, в том числе проваленные или выполненные
     public List<Quest> ActiveQuests = new(); // Изменяет свой набор в AddQuest и OnQuestChangedState
+
+    public List<AwaitingQuest> AwaitingQuests = new(); //Квесты, которые ждут времени, чтобы выдать себя.
+
     #endregion
     #region Методы инициализации
     private void Awake()
@@ -41,17 +44,6 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
     {
         return AddQuest(PregenQuestDatabase.GetQuestParams(questSummary));
     }
-    public static Quest AddQuest(QuestParams questParams, NpcData questGiver)
-    {
-        Quest quest = new(questParams);
-        Instance.Quests.Add(quest);
-        if (quest.CurrentState == Quest.State.Active)
-            Instance.ActiveQuests.Add(quest);
-        QuestLog.AddQuest(quest);
-        quest.QuestChangedState += Instance.OnQuestChangedState;
-        QuestChangedState?.Invoke(quest);
-        return quest;
-    }
     private void OnQuestChangedState(Quest quest, Quest.State oldState, Quest.State newState)
     {
         ActiveQuests.Remove(quest); //Квест не может изменить своё состояние на активное,
@@ -71,7 +63,14 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
             .Where(quest => quest.PrerequisiteQuests.All(prerequisite => HasQuestBeenCompleted(prerequisite.QuestSummary)))
             .Select(quest => quest.GenerateQuestParams()))
             {
-                AddQuest(pregenQuest);
+                if (quest.QuestCompletionDelay > 0)
+                {
+                    AwaitingQuest awaitingQuest = new(pregenQuest, quest.QuestCompletionDelay);
+                    awaitingQuest.AwaitingQuestGiven += OnAwaitingQuestGiven;
+                    AwaitingQuests.Add(awaitingQuest);
+                }
+                else
+                    AddQuest(pregenQuest);
             }
         }
 
@@ -79,6 +78,12 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
             quest.QuestChangedState -= Instance.OnQuestChangedState;
         QuestChangedState?.Invoke(quest);
         
+    }
+
+    private void OnAwaitingQuestGiven(AwaitingQuest quest)
+    {
+        quest.AwaitingQuestGiven -= OnAwaitingQuestGiven;
+        AwaitingQuests.Remove(quest);
     }
     #endregion
     #region Методы получения информации о квестах
@@ -199,6 +204,10 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
 
             saveData.savedQuestParams.Add(questParams);
         }
+        foreach (AwaitingQuest awaitingQuest in Instance.AwaitingQuests)
+        {
+            saveData.awaitingQuests.Add(new(awaitingQuest.questParams, awaitingQuest.delay));
+        }
         return saveData;
     }
 
@@ -207,6 +216,11 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
         foreach (QuestParams questParams in data.savedQuestParams)
         {
             AddQuest(questParams);
+        }
+        foreach (AwaitingQuest awaitingQuest in data.awaitingQuests)
+        {
+            awaitingQuest.AwaitingQuestGiven += OnAwaitingQuestGiven;
+            AwaitingQuests.Add(new(awaitingQuest.questParams, awaitingQuest.delay));
         }
     }
     #endregion
