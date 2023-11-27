@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a46bd3596c904af40a170307cb676e23, type: 3}
+  m_Name: newTraderData 3
+  m_EditorClassIdentifier: 
+  Name: 3
+  StartWalkingTime: 0
+  FinishWalkingTime: 0
+  GameStartMoney: 0
+  CurrentMoney: 0
+  ID: 6003
+  TraderTypes: []
+  IsBlackMarket: 0
+  HaveAdditiveGoods: 0
+  _baseGoods:
+  - Good: {fileID: 11400000, guid: b25d18e2b978ea34fbb337cd54d3d704, type: 2}
+    MaxCount: 11
+    CurrentCount: 11
+    CurrentPrice: 16
+  - Good: {fileID: 11400000, guid: f831eed7f29efd84abdd8fee5bda879f, type: 2}
+    MaxCount: 1
+    CurrentCount: 1
+    CurrentPrice: 51
+  _baseBuyCoefficients: []
+  Goods: []
+  AdditiveGoods: []
+  BuyCoefficients: []
