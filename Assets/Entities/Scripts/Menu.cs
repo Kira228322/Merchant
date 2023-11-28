@@ -15,6 +15,7 @@ public class Menu : MonoBehaviour
     [SerializeField] private AudioMixerGroup _sound;
     [SerializeField] private AudioMixerGroup _music;
     [SerializeField] private AudioMixerGroup _questSound;
+    [SerializeField] private AudioMixerGroup _UI;
 
     [SerializeField] private RectTransform _leftButton;
     [SerializeField] private RectTransform _rightButton;
@@ -59,6 +60,8 @@ public class Menu : MonoBehaviour
         if (_leftButtonImage.color.a != 0)
             StartCoroutine(FadeOutPlayerMovePanels());
         _animator.SetTrigger("FadeOut");
+        
+        SaveData();
     }
 
     public void Disable()
@@ -71,8 +74,7 @@ public class Menu : MonoBehaviour
     {
         float value = math.lerp(-80, 0, (float)Math.Pow(_soundSlider.value, 0.33f));
         _sound.audioMixer.SetFloat("SoundsVolume", value);
-
-        SaveData();
+        _UI.audioMixer.SetFloat("UIVolume", value);
     }
 
     public void OnMusicValueChange()
@@ -80,8 +82,6 @@ public class Menu : MonoBehaviour
         float value = math.lerp(-80, 0, (float)Math.Pow(_musicSlider.value, 0.33f));
         _music.audioMixer.SetFloat("MusicVolume", value);
         _questSound.audioMixer.SetFloat("QuestVolume", value);
-
-        SaveData();
     }
 
     public void OnPlayerMovePanelValueChange()
