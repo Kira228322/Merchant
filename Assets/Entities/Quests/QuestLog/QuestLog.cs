@@ -44,81 +44,51 @@ public class QuestLog : MonoBehaviour
 
         CheckQuestLineAndAddNewPanel(quest, quest.CurrentState, true);
     }
+    private void AddToQuestList(Quest quest, QuestLine questLine, Dictionary<QuestLine, QuestLinePanel> questLines, List<QuestPanel> quests, Transform contentTransform, QuestLine miscQuestLine)
+    {
+        QuestLinePanel targetQuestLinePanel;
+        if (questLine != null)
+        {
+            if (!questLines.ContainsKey(questLine))
+            {
+                targetQuestLinePanel = Instantiate(_questLinePanelPrefab, contentTransform).GetComponent<QuestLinePanel>();
+                questLines.Add(questLine, targetQuestLinePanel);
+                targetQuestLinePanel.Initialize(questLine);
+            }
+            else
+            {
+                targetQuestLinePanel = questLines[questLine];
+            }
+        }
+        else
+        {
+            if (!questLines.ContainsKey(miscQuestLine))
+            {
+                targetQuestLinePanel = Instantiate(_questLinePanelPrefab, contentTransform).GetComponent<QuestLinePanel>();
+                questLines.Add(miscQuestLine, targetQuestLinePanel);
+                miscQuestLine.QuestsInLine.Add(PregenQuestDatabase.GetPregenQuest(quest.QuestSummary));
+                targetQuestLinePanel.Initialize(miscQuestLine);
+            }
+            else
+            {
+                targetQuestLinePanel = questLines[miscQuestLine];
+            }
+        }
+
+        QuestPanel questPanel = Instantiate(_questPanelPrefab, targetQuestLinePanel.ItemContentTransform).GetComponent<QuestPanel>();
+        questPanel.Initialize(quest);
+        targetQuestLinePanel.Refresh();
+        quests.Add(questPanel);
+    }
+
     private void AddToActiveQuests(Quest quest, QuestLine questLine)
     {
-        //TODO: сортировка по дате взятия после добавления новых квестов
-
-        Transform targetTransform;
-        if (questLine != null)
-        {
-            if (!_activeQuestLines.ContainsKey(questLine))
-            {
-                QuestLinePanel newQuestLinePanel = Instantiate(_questLinePanelPrefab, _activeQuestsContent.transform).GetComponent<QuestLinePanel>();
-                _activeQuestLines.Add(questLine, newQuestLinePanel);
-                newQuestLinePanel.Initialize(questLine);
-                targetTransform = newQuestLinePanel.ItemContentTransform;
-            }
-            else
-            {
-                targetTransform = _activeQuestLines[questLine].ItemContentTransform;
-            }
-        }
-        else //Квесты без цепочки могут отправляться в цепочку "Разное". Это фейк-цепочка
-        {
-            if (!_activeQuestLines.ContainsKey(_miscQuestLineActive))
-            {
-                QuestLinePanel newQuestLinePanel = Instantiate(_questLinePanelPrefab, _activeQuestsContent.transform).GetComponent<QuestLinePanel>();
-                _activeQuestLines.Add(_miscQuestLineActive, newQuestLinePanel);
-                _miscQuestLineActive.QuestsInLine.Add(PregenQuestDatabase.GetPregenQuest(quest.QuestSummary));
-                newQuestLinePanel.Initialize(_miscQuestLineActive);
-                targetTransform = newQuestLinePanel.ItemContentTransform;
-            }
-            else
-            {
-                targetTransform = _activeQuestLines[_miscQuestLineActive].ItemContentTransform;
-            }
-        }
-        QuestPanel questPanel = Instantiate(_questPanelPrefab, targetTransform).GetComponent<QuestPanel>();
-        questPanel.Initialize(quest);
-        _activeQuests.Add(questPanel);
+        AddToQuestList(quest, questLine, _activeQuestLines, _activeQuests, _activeQuestsContent.transform, _miscQuestLineActive);
     }
+
     private void AddToFinishedQuests(Quest quest, QuestLine questLine)
     {
-        Transform targetTransform;
-
-        if (questLine != null)
-        {
-            if (!_finishedQuestLines.ContainsKey(questLine))
-            {
-                QuestLinePanel newQuestLinePanel = Instantiate(_questLinePanelPrefab, _finishedQuestsContent.transform).GetComponent<QuestLinePanel>();
-                _finishedQuestLines.Add(questLine, newQuestLinePanel);
-                newQuestLinePanel.Initialize(questLine);
-                targetTransform = newQuestLinePanel.ItemContentTransform;
-            }
-            else
-            {
-                targetTransform = _finishedQuestLines[questLine].ItemContentTransform;
-            }
-        }
-        else //Квесты без цепочки могут отправляться в цепочку "Разное". Это фейк-цепочка
-        {
-            if (!_finishedQuestLines.ContainsKey(_miscQuestLineFinished))
-            {
-                QuestLinePanel newQuestLinePanel = Instantiate(_questLinePanelPrefab, _finishedQuestsContent.transform).GetComponent<QuestLinePanel>();
-                _finishedQuestLines.Add(_miscQuestLineFinished, newQuestLinePanel);
-                _miscQuestLineFinished.QuestsInLine.Add(PregenQuestDatabase.GetPregenQuest(quest.QuestSummary));
-                newQuestLinePanel.Initialize(_miscQuestLineFinished);
-                targetTransform = newQuestLinePanel.ItemContentTransform;
-            }
-            else
-            {
-                targetTransform = _finishedQuestLines[_miscQuestLineFinished].ItemContentTransform;
-            }
-        }
-
-        QuestPanel questPanel = Instantiate(_questPanelPrefab, targetTransform).GetComponent<QuestPanel>();
-        questPanel.Initialize(quest);
-        _finishedQuests.Add(questPanel);
+        AddToQuestList(quest, questLine, _finishedQuestLines, _finishedQuests, _finishedQuestsContent.transform, _miscQuestLineFinished);
     }
 
     private void OnQuestChangedState(Quest quest, Quest.State oldState, Quest.State newState)

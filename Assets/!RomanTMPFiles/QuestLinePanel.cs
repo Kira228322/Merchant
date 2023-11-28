@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -13,18 +14,40 @@ public class QuestLinePanel : MonoBehaviour
     [HideInInspector] public int HourFinishedOn;
     
     public Transform ItemContentTransform;
-
     [SerializeField] private TMP_Text _questLineNameText;
+    [SerializeField] private Color _activeColor;
+    [SerializeField] private Color _completedColor;
 
     public void Initialize(QuestLine questLine)
     {
         if (questLine == null)
             QuestLineName = "Разное";
         else
+        {
             QuestLineName = questLine.QuestLineName;
-
+        }
         _questLineNameText.text = QuestLineName;
-
-        //TODO: (Day/Hour)(Started/Finished)On. Надо ли вообще? Я думаю использовать для сортировки
     }
+
+    public void Refresh()
+    {
+        QuestPanel[] questPanels = ItemContentTransform.GetComponentsInChildren<QuestPanel>();
+        if (questPanels.Length != 0 && questPanels.All(questPanel => questPanel.Quest.CurrentState == Quest.State.Completed))
+        {
+            _questLineNameText.color = _completedColor;
+        }
+        else
+        {
+            _questLineNameText.color = _activeColor;
+            if (questPanels.Any(questPanel => questPanel.Quest.CurrentState == Quest.State.RewardUncollected))
+            {
+                //TODO добавить появление красной точки
+            }
+            else
+            {
+                //TODO добавить скрытие красной точки
+            }
+        }
+    }
+
 }

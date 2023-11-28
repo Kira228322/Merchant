@@ -172,6 +172,12 @@ public class ItemGrid : MonoBehaviour
                                           .Count(slot => slot == null);
         return result;
     }
+    public int GetOccupiedSlotsCount()
+    {
+        int result = _storedInventoryItems.SelectMany(row => row.itemArray)
+                                                  .Count(slot => slot != null);
+        return result;
+    }
     public int GetEmptyRowsCount()
     {
         int result = _storedInventoryItems.Count(row => !row.itemArray.Any(item => item != null));

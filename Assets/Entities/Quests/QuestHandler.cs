@@ -59,7 +59,7 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
             //Добавить все получившиеся квесты.
 
             foreach (var pregenQuest in PregenQuestDatabase.QuestList.ScriptedQuests
-            .Where(quest => quest.PrerequisiteQuests.Count > 0 && !HasQuestBeenTaken(quest.QuestSummary))
+            .Where(quest => quest.PrerequisiteQuests?.Count > 0 && !HasQuestBeenTaken(quest.QuestSummary))
             .Where(quest => quest.PrerequisiteQuests.All(prerequisite => HasQuestBeenCompleted(prerequisite.QuestSummary)))
             .Select(quest => quest.GenerateQuestParams()))
             {

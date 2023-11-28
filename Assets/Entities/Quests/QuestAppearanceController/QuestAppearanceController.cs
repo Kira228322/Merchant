@@ -34,16 +34,19 @@ public class QuestAppearanceController : MonoBehaviour
 
     private enum AppearanceBehavior { HideThenShow, ShowThenHide}
 
+    [Tooltip("Смотрит на поведение _appearanceBehaviour. " +
+        "Если HideThenShow, то объект начинает скрытым. " +
+        "Если соблюдаются все showConditions, то появляется. " +
+        "Если также соблюдаются hideConditions, то снова скрывается." +
+        "Если ShowThenHide, то начинает показанным." +
+        "Если соблюдаются HideConditions, то скрываются. " +
+        "Если также соблюдаются ShowConditions, то снова появляется.)")]
     [SerializeField] private AppearanceBehavior _appearanceBehaviour;
 
     [SerializeField] private List<AppearanceControls> _showConditions = new();
     [SerializeField] private List<AppearanceControls> _hideConditions = new();
 
-    //Смотрит на поведение _appearanceBehaviour. Если HideThenShow, то объект начинает скрытым.
-    //Если соблюдаются все showConditions, то появляется. Если также соблюдаются hideConditions, то снова скрывается.
 
-    //Если ShowThenHide, то начинает показанным.
-    //Если соблюдаются HideConditions, то скрываются. Если также соблюдаются ShowConditions, то снова появляется.
 
     private void Awake()
     {

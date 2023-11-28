@@ -42,7 +42,7 @@ public class NpcDatabase : MonoBehaviour, ISaveable<NpcDatabaseSaveData>
 
         if (result != null) return result;
 
-        Debug.LogWarning("НПС с таким айди не существует!");
+        Debug.LogWarning($"НПС с таким айди ({ID}) не существует!");
         return null;
     }
     
@@ -52,7 +52,7 @@ public class NpcDatabase : MonoBehaviour, ISaveable<NpcDatabaseSaveData>
 
         if (result != null) return result;
 
-        Debug.LogWarning("НПС с таким именем не существует!");
+        Debug.LogWarning($"НПС с таким именем ({name}) не существует!");
         return null;
     }
 

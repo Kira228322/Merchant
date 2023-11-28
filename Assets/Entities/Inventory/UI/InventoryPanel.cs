@@ -11,6 +11,8 @@ public class InventoryPanel : MonoBehaviour
     [SerializeField] private PlayersInventory _playersInventory;
     [SerializeField] private TMP_Text _goldText;
     [SerializeField] private TMP_Text _weightText;
+    [SerializeField] private QuestItemHolder _questItemHolder;
+    [SerializeField] private GameObject _questItemHolderPanel;
     
     private void OnEnable()
     {
@@ -36,9 +38,16 @@ public class InventoryPanel : MonoBehaviour
             Color brown = new(125f / 255, 97f / 255, 65f / 255);
             _weightText.color = brown;
         }
+
     }
     private void OnWeightChanged(float currentWeight, float maxWeight)
     {
         Refresh();
+    }
+
+    public void DisplayPanel(bool value)
+    {
+        _questItemHolderPanel.SetActive(value && _questItemHolder.ItemGrid.GetOccupiedSlotsCount() > 0);
+        gameObject.SetActive(value);
     }
 }
