@@ -10,6 +10,8 @@ using UnityEngine.UI;
 public class ItemContainer : MonoBehaviour
 {
     [SerializeField] private ItemGrid _containerItemGrid;
+    public ItemGrid ItemGrid => _containerItemGrid;
+    
     [SerializeField] private Toggle InventoryPanelButton;
     [SerializeField] private Toggle MapButton; 
     [SerializeField] private GameObject _itemContainerPanel;

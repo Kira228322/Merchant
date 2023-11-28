@@ -16,6 +16,7 @@ public class EventWindow : MonoBehaviour
     [SerializeField] private GameObject _buttonPrefab;
     [SerializeField] private GameObject _infoButton;
     [SerializeField] private EventInTravelInfoPanel _infoPanelPrefab;
+    [SerializeField] private AudioSource _audioSource;
     private EventInTravelInfoPanel _currentInfoPanel;
     private string _infoText;
     private Animator _animator;
@@ -86,8 +87,14 @@ public class EventWindow : MonoBehaviour
             button.number = i;
             button.ButtonComponent.onClick.AddListener(() => travelEvent.OnButtonClick(button.number));
             button.ButtonComponent.onClick.AddListener(() => DeleteAllButtons());
+            button.ButtonComponent.onClick.AddListener(() => PlaySound());
             button.ButtonText.text = travelEvent.ButtonsLabel[i];
         }
+    }
+
+    public void PlaySound()
+    {
+        _audioSource.PlayOneShotWithRandomPitch();
     }
 
     public void DeleteAllButtons()
@@ -97,6 +104,7 @@ public class EventWindow : MonoBehaviour
         
         EventInTravelButton button = Instantiate(_buttonPrefab, _contentButtons).GetComponent<EventInTravelButton>();
         button.ButtonComponent.onClick.AddListener(() => _eventHandler.EventEnd());
+        button.ButtonComponent.onClick.AddListener(() => PlaySound());
         button.ButtonText.text = "Продолжить";
     }
     
