@@ -164,6 +164,20 @@ public class DialogueManager : MonoBehaviour
             return result;
 
         });
+        _currentStory.BindExternalFunction("get_activeQuestList_universal", () =>
+        {
+            List<Quest> activeQuests = QuestHandler.GetActiveQuests();
+            string result = "";
+            if (activeQuests.Count > 0)
+            {
+                foreach (Quest quest in activeQuests)
+                {
+                    result += quest.QuestSummary;
+                }
+            }
+            return result;
+
+        });
         _currentStory.BindExternalFunction("contains", (string source, string substring) =>
         {
             if (source.Contains(substring))
