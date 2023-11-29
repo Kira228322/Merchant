@@ -18,6 +18,8 @@ public class QuestLinePanel : MonoBehaviour
     [SerializeField] private Color _activeColor;
     [SerializeField] private Color _completedColor;
 
+    [SerializeField] private GameObject _redPoint;
+
     public void Initialize(QuestLine questLine)
     {
         if (questLine == null)
@@ -41,11 +43,11 @@ public class QuestLinePanel : MonoBehaviour
             _questLineNameText.color = _activeColor;
             if (questPanels.Any(questPanel => questPanel.Quest.CurrentState == Quest.State.RewardUncollected))
             {
-                //TODO добавить появление красной точки
+                _redPoint.gameObject.SetActive(true);
             }
             else
             {
-                //TODO добавить скрытие красной точки
+                _redPoint.gameObject.SetActive(false);
             }
         }
     }
