@@ -7074,6 +7074,39 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d5f7066e247357149b9a778fcd53e819, type: 3}
+--- !u!1 &592870754
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 592870755}
+  m_Layer: 0
+  m_Name: Lauras
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &592870755
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 592870754}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1554392353}
+  - {fileID: 1544939041}
+  m_Father: {fileID: 899856081}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &599898755
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8517,7 +8550,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1554392353}
+  - {fileID: 592870755}
   - {fileID: 1918441194}
   - {fileID: 285064349}
   - {fileID: 418981704}
@@ -12261,6 +12294,110 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 295bb10ead83a4d44b8a1398a7f16c99, type: 3}
+--- !u!1001 &1544939040
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 592870755}
+    m_Modifications:
+    - target: {fileID: 3003679853564592859, guid: f6d836d3f129c094dbda66d751fed7c5, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3003679853564592859, guid: f6d836d3f129c094dbda66d751fed7c5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3003679853564592859, guid: f6d836d3f129c094dbda66d751fed7c5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3003679853564592859, guid: f6d836d3f129c094dbda66d751fed7c5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3003679853564592859, guid: f6d836d3f129c094dbda66d751fed7c5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3003679853564592859, guid: f6d836d3f129c094dbda66d751fed7c5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3003679853564592859, guid: f6d836d3f129c094dbda66d751fed7c5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3003679853564592859, guid: f6d836d3f129c094dbda66d751fed7c5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3003679853564592859, guid: f6d836d3f129c094dbda66d751fed7c5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3003679853564592859, guid: f6d836d3f129c094dbda66d751fed7c5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3003679853564592859, guid: f6d836d3f129c094dbda66d751fed7c5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3003679853564592862, guid: f6d836d3f129c094dbda66d751fed7c5, type: 3}
+      propertyPath: m_Name
+      value: Laura_aftercamp
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f6d836d3f129c094dbda66d751fed7c5, type: 3}
+--- !u!4 &1544939041 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3003679853564592859, guid: f6d836d3f129c094dbda66d751fed7c5, type: 3}
+  m_PrefabInstance: {fileID: 1544939040}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1544939042 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3003679853564592862, guid: f6d836d3f129c094dbda66d751fed7c5, type: 3}
+  m_PrefabInstance: {fileID: 1544939040}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1544939043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1544939042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df6ab5e347f61a544b92bcb6d4d270df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NpcData: {fileID: 11400000, guid: fc065fb73f03ac347a221070406cb358, type: 2}
+  InkJSON: {fileID: 4900000, guid: f482f49e71435da46969486e648840a3, type: 3}
+  _exclamationMarkPrefab: {fileID: 3147425638445614604, guid: b1260439a5d175441800ad6cac241efb, type: 3}
+  ExclamationMark: {fileID: 0}
+--- !u!114 &1544939044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1544939042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f44f38a1f112404196c4abf8b76be7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _appearanceBehaviour: 0
+  _showConditions:
+  - QuestSummary: buy_fathers_ring_from_selene
+    questState: 2
+    HoursDelay: 0
+  _hideConditions:
+  - QuestSummary: bring_good_news_to_laura
+    questState: 2
+    HoursDelay: 0
 --- !u!1001 &1553880702
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12337,7 +12474,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 899856081}
+    m_TransformParent: {fileID: 592870755}
     m_Modifications:
     - target: {fileID: 3003679853564592859, guid: f6d836d3f129c094dbda66d751fed7c5, type: 3}
       propertyPath: m_RootOrder
@@ -12385,7 +12522,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3003679853564592862, guid: f6d836d3f129c094dbda66d751fed7c5, type: 3}
       propertyPath: m_Name
-      value: Laura
+      value: Laura_firstgreeting
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f6d836d3f129c094dbda66d751fed7c5, type: 3}
@@ -12415,6 +12552,24 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3003679853564592859, guid: f6d836d3f129c094dbda66d751fed7c5, type: 3}
   m_PrefabInstance: {fileID: 1554392350}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1554392354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1554392351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f44f38a1f112404196c4abf8b76be7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _appearanceBehaviour: 1
+  _showConditions: []
+  _hideConditions:
+  - QuestSummary: buy_fathers_ring_from_selene
+    questState: 2
+    HoursDelay: 0
 --- !u!1001 &1555250084
 PrefabInstance:
   m_ObjectHideFlags: 0
