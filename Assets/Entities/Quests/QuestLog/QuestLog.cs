@@ -95,6 +95,7 @@ public class QuestLog : MonoBehaviour
     {
         //В целом так и остаётся, нужно удалить квест внутри его цепочки и заспавнить его в цепочке другого раздела
         Destroy(quest.questPanel.gameObject);
+        quest.questPanel.transform.SetParent(null); // Destroy не срабатывает сразу, и QuestLinePanel будет помнить про эту панель до конца фрейма, что мешает правильному отображению красной точки (29.11.23)
         CheckQuestLineAndAddNewPanel(quest, newState, false);
   
     }
@@ -147,7 +148,7 @@ public class QuestLog : MonoBehaviour
             {
                 //Если квест последний в цепочке и для него создана QuestLinePanel (а она не будет создана, если это загрузка) то удалить её.
                 //Квест никогда не становится активным из выполненного, а выполненные цепочки никогда не уничтожаются.
-                Destroy(activeQuestLinePanel.gameObject);
+                Destroy(activeQuestLinePanel.gameObject); 
                 _activeQuestLines.Remove(questLine);
             }
         }
@@ -193,6 +194,7 @@ public class QuestLog : MonoBehaviour
     private void OnQuestUpdated(Quest quest)
     {
         quest.questPanel.Refresh();
+        
     }
 
     private void SortPanels(bool activePanels)
