@@ -24,6 +24,8 @@ public class NpcClickFunctional : MonoBehaviour, IPointerClickHandler
             return;
         if (GameManager.Instance.CurrentFunctionalWindow != null)
             return;
+        if (Player.Instance.PlayerMover.enabled == false)
+            return;
 
         GameObject window = Instantiate(_functionalWindow, MapManager.Canvas.transform);
         window.transform.position = Camera.main.WorldToScreenPoint(new Vector3((transform.position.x + Player.Instance.transform.position.x) / 2,
