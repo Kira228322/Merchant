@@ -10,7 +10,7 @@ public class ExclamationMark : MonoBehaviour
     {
         if (parentCollider.bounds.size.y > 1.5f)
             gameObject.transform.localScale *= 1.05f;
-        startPos = new Vector3(0,parentCollider.bounds.size.y * 1.5f + 0.5f);
+        startPos = new Vector3(0,parentCollider.bounds.size.y * 1.4f + 0.5f);
         StartCoroutine(Animation());
     }
 
@@ -19,7 +19,7 @@ public class ExclamationMark : MonoBehaviour
         WaitForSeconds waitForSeconds = new WaitForSeconds(0.02f);
         while (true)
         {
-            transform.localPosition = startPos + new Vector3(0, (float)Math.Sin(1.3f * Time.time)/3.5f);
+            transform.localPosition = startPos + new Vector3(0, (float)Math.Sin(1.3f * Time.time)/3.7f);
             yield return waitForSeconds;
         }
     }
