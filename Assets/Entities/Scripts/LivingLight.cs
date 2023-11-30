@@ -53,16 +53,16 @@ public class LivingLight : MonoBehaviour
         switch (GameTime.Hours)
         {
             case int n when n >= 4 && n <= 10:
-                _maxIntensity = Mathf.Lerp(_maxBobbingIntensity, _maxBobbingIntensity/1.7f -0.1f, (float)(GameTime.Hours-3)/7);
-                _minIntensity = Mathf.Lerp(_minBobbingIntensity, _minBobbingIntensity/1.7f -0.1f, (float)(GameTime.Hours-3)/7);
+                _maxIntensity = Mathf.Lerp(_maxBobbingIntensity, _maxBobbingIntensity/1.75f -0.1f, (float)(GameTime.Hours-3)/7);
+                _minIntensity = Mathf.Lerp(_minBobbingIntensity, _minBobbingIntensity/1.75f -0.1f, (float)(GameTime.Hours-3)/7);
                 break;
             case int n when n >= 11 && n <= 14:
-                _maxIntensity = _maxBobbingIntensity / 1.7f - 0.1f;
-                _minIntensity = _minBobbingIntensity / 1.7f - 0.1f;
+                _maxIntensity = _maxBobbingIntensity / 1.75f - 0.1f;
+                _minIntensity = _minBobbingIntensity / 1.75f - 0.1f;
                 break;
             case int n when n >= 15 && n <= 21:
-                _maxIntensity = Mathf.Lerp(_maxBobbingIntensity/1.7f -0.1f, _maxBobbingIntensity, (float)(GameTime.Hours-14)/7);
-                _minIntensity = Mathf.Lerp(_minBobbingIntensity/1.7f -0.1f, _minBobbingIntensity, (float)(GameTime.Hours-14)/7);
+                _maxIntensity = Mathf.Lerp(_maxBobbingIntensity/1.75f -0.1f, _maxBobbingIntensity, (float)(GameTime.Hours-14)/7);
+                _minIntensity = Mathf.Lerp(_minBobbingIntensity/1.75f -0.1f, _minBobbingIntensity, (float)(GameTime.Hours-14)/7);
                 break;
             case int n when n >= 22 || n <= 2:
                 _maxIntensity = _maxBobbingIntensity;

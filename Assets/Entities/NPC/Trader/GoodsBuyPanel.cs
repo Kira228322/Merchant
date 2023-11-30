@@ -150,6 +150,9 @@ public class GoodsBuyPanel : MonoBehaviour
 
     private int CalculatePrice(NpcTrader.TraderGood item)
     {
+        if (item.Good.IsQuestItem)
+            return item.Good.Price;
+        
         int currentQuantityLoca = MapManager.CurrentLocation.CountOfEachItem[item.Good.Name];
         int currentQuantityReg = MapManager.CurrentLocation.Region.CountOfEachItem[item.Good.Name];
         
