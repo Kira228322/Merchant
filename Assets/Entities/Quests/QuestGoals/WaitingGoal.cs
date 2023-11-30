@@ -20,10 +20,12 @@ public class WaitingGoal : Goal
         Evaluate();
 
         GameTime.MinuteChanged += OnMinuteChanged;
+        GameTime.TimeSkipped += OnTimeSkipped;
     }
     public override void Deinitialize()
     {
         GameTime.MinuteChanged -= OnMinuteChanged;
+        GameTime.TimeSkipped -= OnTimeSkipped;
     }
 
     private void OnMinuteChanged()
@@ -33,6 +35,18 @@ public class WaitingGoal : Goal
         {
             _timeCounter = 0;
             CurrentAmount++;
+            Evaluate();
+        }
+    }
+
+    private void OnTimeSkipped (int days, int hours, int minutes)
+    {
+        int totalMinutesSkipped = (days * 24 + hours) * 60 + minutes;
+        _timeCounter += totalMinutesSkipped;
+        if (_timeCounter >= 60)
+        {
+            _timeCounter = totalMinutesSkipped % 60;
+            CurrentAmount += totalMinutesSkipped / 60;
             Evaluate();
         }
     }

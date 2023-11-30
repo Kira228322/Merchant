@@ -33,7 +33,10 @@ MonoBehaviour:
   MaxExperienceReward: 0
   MinMoneyReward: 0
   MaxMoneyReward: 0
-  NextQuest: {fileID: 0}
+  QuestLine: {fileID: 11400000, guid: 02015db3d2d401c46814517726db1909, type: 2}
+  PrerequisiteQuests:
+  - {fileID: 11400000, guid: 89fe8ff6c3d843347b64763f37d8477b, type: 2}
+  QuestCompletionDelay: 0
   goals:
   - goalType: 0
     goalState: 0
@@ -47,7 +50,8 @@ MonoBehaviour:
     RequiredIDofNPC: 0
     RequiredLine: 
     FailingLine: 
-    RequiredItemName: placeholder_oldmage_relic
+    RequiredItemName: "\u041C\u0430\u0433\u0438\u0447\u0435\u0441\u043A\u0438\u0439
+      \u043B\u0438\u0441\u0442"
     RequiredItemCategories: 
     QuestItemsBehaviour: 0
     RandomDeliveryWeight: 0

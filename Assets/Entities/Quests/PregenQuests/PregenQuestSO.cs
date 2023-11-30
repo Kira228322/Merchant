@@ -43,7 +43,6 @@ public class PregenQuestSO : ScriptableObject
 
     public QuestParams GenerateQuestParams()
     {
-
         QuestParams questParams = new()
         {
             currentState = StartingState,

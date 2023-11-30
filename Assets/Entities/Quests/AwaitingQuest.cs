@@ -21,15 +21,27 @@ public class AwaitingQuest
         this.delay = delay;
 
         GameTime.HourChanged += OnHourChanged;
+        GameTime.TimeSkipped += OnTimeSkipped;
     }
     private void OnHourChanged()
     {
         delay--;
         if (delay <= 0)
-        {
-            QuestHandler.AddQuest(questParams);
-            GameTime.HourChanged -= OnHourChanged;
-            AwaitingQuestGiven?.Invoke(this);
-        }
+            Trigger();
+    }
+    private void OnTimeSkipped(int days, int hours, int minutes)
+    {
+        int totalHoursSkipped = days * 24 + hours;
+        delay -= totalHoursSkipped;
+        if (delay <= 0)
+            Trigger();
+    }
+
+    private void Trigger()
+    {
+        QuestHandler.AddQuest(questParams);
+        GameTime.HourChanged -= OnHourChanged;
+        GameTime.TimeSkipped -= OnTimeSkipped;
+        AwaitingQuestGiven?.Invoke(this);
     }
 }
