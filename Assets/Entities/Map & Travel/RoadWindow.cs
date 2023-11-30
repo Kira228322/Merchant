@@ -43,12 +43,17 @@ public class RoadWindow : Window
             _duration.fontStyle &= ~FontStyles.Underline;
             travelingTime = _roads[_numberOfRoad].TravelingTime;
         }
-                
+
         if (travelingTime / 24 == 0)
-            _duration.text = travelingTime + " часов";
+            _duration.text = travelingTime + " " + TravelTimeCounter.GetLocalizedTime(travelingTime, true);
         else
-            _duration.text = travelingTime / 24 + " дней  " + travelingTime % 24 + " часов";
-        
+        {
+            int durationDays = travelingTime / 24;
+            int durationHours = travelingTime % 24;
+            _duration.text = 
+                durationDays + " " + TravelTimeCounter.GetLocalizedTime(durationDays, false) + 
+                durationHours + " " + TravelTimeCounter.GetLocalizedTime(durationHours, true);
+        }
         _quality.text = "Качество: " + road[0].Quality;
         _danger.text = "Опасность: " + road[0].Danger;
         _cost.text = "Стоимость: " + road[0].Cost;
@@ -79,11 +84,17 @@ public class RoadWindow : Window
             _duration.fontStyle &= ~FontStyles.Underline;
             travelingTime = _roads[_numberOfRoad].TravelingTime;
         }
-                
+
         if (travelingTime / 24 == 0)
-            _duration.text = travelingTime + " часов";
+            _duration.text = travelingTime + " " + TravelTimeCounter.GetLocalizedTime(travelingTime, true);
         else
-            _duration.text = travelingTime / 24 + " дней  " + travelingTime % 24 + " часов";
+        {
+            int durationDays = travelingTime / 24;
+            int durationHours = travelingTime % 24;
+            _duration.text =
+                durationDays + " " + TravelTimeCounter.GetLocalizedTime(durationDays, false) +
+                durationHours + " " + TravelTimeCounter.GetLocalizedTime(durationHours, true);
+        }
 
         _quality.text = "Качество: " + _roads[_numberOfRoad].Quality;
         _danger.text = "Опасность: " + _roads[_numberOfRoad].Danger;

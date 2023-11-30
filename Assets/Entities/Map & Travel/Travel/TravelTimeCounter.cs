@@ -17,6 +17,26 @@ public class TravelTimeCounter : MonoBehaviour
     private int _currentWay;
     private float _elementRoad;
     private float count;
+    public static string GetLocalizedTime(int amount, bool hours)
+    {
+        if (amount % 100 >= 11 && amount % 100 <= 14)
+        {
+            return hours ? "часов" : "дней";
+        }
+
+        int lastDigit = amount % 10;
+        switch (lastDigit)
+        {
+            case 1:
+                return hours ? "час" : "день";
+            case 2:
+            case 3:
+            case 4:
+                return hours ? "часа" : "дня";
+            default:
+                return hours ? "часов" : "дней";
+        }
+    }
 
     public void ChangeDuraion(int addTime)
     {
@@ -78,9 +98,15 @@ public class TravelTimeCounter : MonoBehaviour
     private void SetTravelTimeText()
     {
         if (_duration / 24 == 0)
-            _travelTime.text = _duration + " часов";
+            _travelTime.text = _duration + " " + GetLocalizedTime(_duration, true);
         else
-            _travelTime.text = _duration / 24 + " дней " + _duration % 24 + " часов";
+        {
+            int durationDays = _duration / 24;
+            int durationHours = _duration % 24;
+            _travelTime.text =
+                durationDays + " " + GetLocalizedTime(durationDays, false)
+                + durationHours % 24 + " " + GetLocalizedTime(durationHours, true);
+        }
     }
 
     private void MoveIconOnMap()
