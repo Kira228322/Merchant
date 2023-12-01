@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class QuestAppearanceController : MonoBehaviour
@@ -38,10 +39,15 @@ public class QuestAppearanceController : MonoBehaviour
         "Если HideThenShow, то объект начинает скрытым. " +
         "Если соблюдаются все showConditions, то появляется. " +
         "Если также соблюдаются hideConditions, то снова скрывается." +
+        "\n" +
         "Если ShowThenHide, то начинает показанным." +
         "Если соблюдаются HideConditions, то скрываются. " +
         "Если также соблюдаются ShowConditions, то снова появляется.)")]
     [SerializeField] private AppearanceBehavior _appearanceBehaviour;
+
+    [Tooltip("Если true, объект исчезает/появляется сразу после выполнения квеста, " +
+        "а не при перезаходе на сцену.")]
+    [SerializeField] private bool _isInstant;
 
     [SerializeField] private List<AppearanceControls> _showConditions = new();
     [SerializeField] private List<AppearanceControls> _hideConditions = new();
@@ -51,6 +57,13 @@ public class QuestAppearanceController : MonoBehaviour
     private void Awake()
     {
         CheckAppearance();
+        if (_isInstant)
+            QuestHandler.QuestChangedState += InstantCheckAppearance;
+    }
+    private void OnDestroy()
+    {
+        if (_isInstant)
+            QuestHandler.QuestChangedState -= InstantCheckAppearance;
     }
 
     private bool AreControlsReady(List<AppearanceControls> controls)
@@ -66,6 +79,13 @@ public class QuestAppearanceController : MonoBehaviour
             }
         }
         return true;
+    }
+
+    private void InstantCheckAppearance(Quest quest)
+    {
+        if (_hideConditions.Any(control => control.QuestSummary == quest.QuestSummary)
+            || _showConditions.Any(control => control.QuestSummary == quest.QuestSummary))
+                CheckAppearance();
     }
 
     private void CheckAppearance()

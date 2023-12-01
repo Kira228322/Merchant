@@ -41,6 +41,8 @@ get_random_questparams_of_questgiver()
 get_activeQuestList()
 Возвращает строку, в которой соединены все questSummary активных квестов для этого нпс.
 Строку необходимо обрабатывать через метод contains(source, substring).
+get_activeQuestList_universal()
+Возвращает строку, в которой соединены все questSummary активных квестов для всех нпс.
 
 contains(source, substring)
 Возвращает true, если строка source содержит строку substring. Иначе возвращает false.

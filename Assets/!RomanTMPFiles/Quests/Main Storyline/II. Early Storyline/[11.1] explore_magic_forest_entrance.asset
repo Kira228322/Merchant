@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca299c98acb0c56409a7a3314dcc2b02, type: 3}
-  m_Name: '[11] explore_magic_forest'
+  m_Name: '[11.1] explore_magic_forest_entrance'
   m_EditorClassIdentifier: 
   StartingState: 0
   QuestName: "\u0418\u0441\u0441\u043B\u0435\u0434\u043E\u0432\u0430\u0442\u044C
     \u043C\u0430\u0433\u0438\u0447\u0435\u0441\u043A\u0438\u0439 \u043B\u0435\u0441"
-  QuestSummary: explore_magic_forest
+  QuestSummary: explore_magic_forest_entrance
   QuestGiverID: 7
   Description: "\u0410\u043B\u044C\u0431\u0435\u0440\u0438\u043A \u0441\u043E\u0433\u043B\u0430\u0441\u0438\u043B\u0441\u044F
     \u043D\u0430 \u043E\u0431\u043C\u0435\u043D \u0440\u0435\u043B\u0438\u043A\u0432\u0438\u044F\u043C\u0438.
@@ -33,32 +33,9 @@ MonoBehaviour:
   MaxExperienceReward: 0
   MinMoneyReward: 0
   MaxMoneyReward: 0
-  QuestLine: {fileID: 11400000, guid: 02015db3d2d401c46814517726db1909, type: 2}
+  QuestLine: {fileID: 0}
   PrerequisiteQuests:
-  - {fileID: 11400000, guid: c1af381a142dafe46b6c9103ffe634b7, type: 2}
+  - {fileID: 11400000, guid: 89fe8ff6c3d843347b64763f37d8477b, type: 2}
   QuestCompletionDelay: 0
-  goals:
-  - goalType: 0
-    goalState: 0
-    description: "\u041D\u0430\u0439\u0442\u0438 \u0440\u0435\u043B\u0438\u043A\u0432\u0438\u044E
-      \u0434\u043B\u044F \u0410\u043B\u044C\u0431\u0435\u0440\u0438\u043A\u0430"
-    currentAmount: 0
-    randomAmount: 0
-    minRequiredAmount: 1
-    maxRequiredAmount: 1
-    AdditiveMoneyReward: 0
-    RequiredIDofNPC: 0
-    RequiredLine: 
-    FailingLine: 
-    RequiredItemName: "\u041C\u0430\u0433\u0438\u0447\u0435\u0441\u043A\u0438\u0439
-      \u043B\u0438\u0441\u0442"
-    RequiredItemCategories: 
-    QuestItemsBehaviour: 0
-    RandomDeliveryWeight: 0
-    RandomDeliveryCount: 0
-    MinRequiredDeliveryWeight: 0
-    MaxRequiredDeliveryWeight: 0
-    MinRequiredDeliveryCount: 0
-    MaxRequiredDeliveryCount: 0
-    RequiredRotThreshold: 0
+  goals: []
   ItemRewards: []

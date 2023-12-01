@@ -22,6 +22,8 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private Button _continueButton;
     [SerializeField] private GameObject _lineFinishedIndicator;
     [SerializeField] private float _typingSpeed = 25f;
+    [SerializeField] private TextAutoSizeController _autoSizeController; 
+    [SerializeField] private Color _defaultTextColor;
 
     [SerializeField] private ItemContainer _itemContainer;
 
@@ -40,7 +42,13 @@ public class DialogueManager : MonoBehaviour
     #region External функции Ink и всё что связано с ними
     private void SetTextColor(string colorName)
     {
+        if (colorName == "default" || colorName == "")
+        {
+            _dialogueText.color = _defaultTextColor;
+            return;
+        }
         ColorUtility.TryParseHtmlString(colorName, out Color result);
+        //Возможные колоры: RGB или red, cyan, blue, darkblue, lightblue, purple, yellow, lime, fuchsia, white, silver, grey, black, orange, brown, maroon, green, olive, navy, teal, aqua, magenta.
         //Почему HtmlString? Потому что такой метод уже встроен в библиотеку, и он работает для этого случая
         _dialogueText.color = result;
     }
@@ -302,6 +310,7 @@ public class DialogueManager : MonoBehaviour
             _choices[i].SetActive(true);
             _choicesText[i].text = currentChoices[i].text;
         }
+        _autoSizeController.Activate();
     }
     #endregion
 

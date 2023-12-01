@@ -25198,6 +25198,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _appearanceBehaviour: 0
+  _isInstant: 0
   _showConditions: []
   _hideConditions: []
 --- !u!1 &1225097155
@@ -44366,10 +44367,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 64.05
+  m_fontSize: 24
   m_fontSizeBase: 24
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 36
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -44402,7 +44403,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 5, y: -5, z: 5, w: -5}
+  m_margin: {x: 10, y: -5, z: 10, w: -5}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -45039,10 +45040,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 64.05
+  m_fontSize: 24
   m_fontSizeBase: 24
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 36
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -45075,7 +45076,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 5, y: -5, z: 5, w: -5}
+  m_margin: {x: 10, y: -5, z: 10, w: -5}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -45123,6 +45124,8 @@ MonoBehaviour:
   _continueButton: {fileID: 2162573916564169785}
   _lineFinishedIndicator: {fileID: 2162573914952314659}
   _typingSpeed: 45
+  _autoSizeController: {fileID: 2162573916450463873}
+  _defaultTextColor: {r: 0, g: 0.13725491, b: 0.3764706, a: 1}
   _itemContainer: {fileID: 78739140}
 --- !u!114 &2162573916450463873
 MonoBehaviour:
@@ -45295,17 +45298,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: " \u043F\u0432\u043F \u044B\u0432\u0430\u043F \u044B\u0432\u043F\u0430\u044B
-    \u0430 \u044B\u0430\u043F\u044B  \u044B\u0432\u0430\u043F\u044B\u0432\u0430 \u043F\u043F\u0432\u043F
-    \u044B\u0432\u0430\u043F \u044B\u0432\u043F\u0430\u044B \u0430 \u044B\u0430\u043F\u044B 
-    \u044B\u0432\u0430\u043F\u044B\u0432\u0430 \u043F\u043F\u0432\u043F \u044B\u0432\u0430\u043F
-    \u044B\u0432\u043F\u0430\u044B \u0430 \u044B\u0430\u043F\u044B  \u044B\u0432\u0430\u043F\u044B\u0432\u0430
-    \u043F\u043F\u0432\u043F \u044B\u0432\u0430\u043F \u044B\u0432\u043F\u0430\u044B
-    \u0430 \u044B\u0430\u043F\u044B  \u044B\u0432\u0430\u043F\u044B\u0432\u0430 \u043F\u043F\u0432\u043F
-    \u044B\u0432\u0430\u043F \u044B\u0432\u043F\u0430\u044B \u0430 \u044B\u0430\u043F\u044B 
-    \u044B\u0432\u0430\u043F\u044B\u0432\u0430 \u043F\u043F\u0432\u043F \u044B\u0432\u0430\u043F
-    \u044B\u0432\u043F\u0430\u044B \u0430 \u044B\u0430\u043F\u044B  \u044B\u0432\u0430\u043F\u044B\u0432\u0430
-    \u043F"
+  m_text: asd
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ff33ee687192a304192d559a311ca768, type: 2}
   m_sharedMaterial: {fileID: 4391522976612437101, guid: ff33ee687192a304192d559a311ca768, type: 2}
@@ -45332,10 +45325,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 24
   m_fontSizeBase: 24
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 36
   m_fontSizeMax: 72
   m_fontStyle: 1
@@ -45368,7 +45361,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 5, y: -5, z: 5, w: -5}
+  m_margin: {x: 10, y: -5, z: 10, w: -5}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

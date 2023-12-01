@@ -7,7 +7,7 @@ public class TextAutoSizeController : MonoBehaviour
 {
     public List<TMP_Text> TextObjects = new();
 
-    private void Awake()
+    public void Activate()
     {
         if (TextObjects == null || TextObjects.Count == 0)
             return;
@@ -36,5 +36,10 @@ public class TextAutoSizeController : MonoBehaviour
         // Iterate over all other text objects to set the point size
         for (int i = 0; i < TextObjects.Count; i++)
             TextObjects[i].fontSize = optimumPointSize;
+    }
+
+    private void Awake()
+    {
+        Activate();
     }
 }

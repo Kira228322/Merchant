@@ -347,6 +347,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _appearanceBehaviour: 0
+  _isInstant: 0
   _showConditions:
   - QuestSummary: wait_until_raid_finish
     questState: 2
@@ -1186,6 +1187,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _appearanceBehaviour: 0
+  _isInstant: 0
   _showConditions:
   - QuestSummary: tutorial_buy_relic_from_richard
     questState: 2
@@ -1287,6 +1289,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _appearanceBehaviour: 1
+  _isInstant: 0
   _showConditions: []
   _hideConditions:
   - QuestSummary: start_raid_on_bandit_camp
@@ -6096,6 +6099,25 @@ MonoBehaviour:
   InkJSON: {fileID: 4900000, guid: 4490ace373b5d5147996334274539a67, type: 3}
   _exclamationMarkPrefab: {fileID: 3147425638445614604, guid: b1260439a5d175441800ad6cac241efb, type: 3}
   ExclamationMark: {fileID: 0}
+--- !u!114 &362927348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 362927346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f44f38a1f112404196c4abf8b76be7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _appearanceBehaviour: 1
+  _isInstant: 0
+  _showConditions: []
+  _hideConditions:
+  - QuestSummary: explore_magic_forest
+    questState: 2
+    HoursDelay: 0
 --- !u!1001 &389500053
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7645,6 +7667,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _appearanceBehaviour: 0
+  _isInstant: 0
   _showConditions:
   - QuestSummary: wait_until_raid_finish
     questState: 2
@@ -7741,6 +7764,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _appearanceBehaviour: 1
+  _isInstant: 0
   _showConditions: []
   _hideConditions:
   - QuestSummary: tutorial_buy_relic_from_richard
@@ -7842,6 +7866,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _appearanceBehaviour: 1
+  _isInstant: 0
   _showConditions: []
   _hideConditions:
   - QuestSummary: start_raid_on_bandit_camp
@@ -11890,6 +11915,25 @@ MonoBehaviour:
   InkJSON: {fileID: 4900000, guid: 90a52d8023f256c4d93880234ac5deed, type: 3}
   _exclamationMarkPrefab: {fileID: 3147425638445614604, guid: b1260439a5d175441800ad6cac241efb, type: 3}
   ExclamationMark: {fileID: 0}
+--- !u!114 &1421339670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1421339668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f44f38a1f112404196c4abf8b76be7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _appearanceBehaviour: 0
+  _isInstant: 0
+  _showConditions:
+  - QuestSummary: bring_relic_to_oldmage
+    questState: 2
+    HoursDelay: 0
+  _hideConditions: []
 --- !u!1001 &1427478593
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12767,6 +12811,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _appearanceBehaviour: 0
+  _isInstant: 0
   _showConditions:
   - QuestSummary: buy_fathers_ring_from_selene
     questState: 2
@@ -12942,6 +12987,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _appearanceBehaviour: 1
+  _isInstant: 0
   _showConditions: []
   _hideConditions:
   - QuestSummary: buy_fathers_ring_from_selene
@@ -13550,6 +13596,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _appearanceBehaviour: 1
+  _isInstant: 0
   _showConditions: []
   _hideConditions:
   - QuestSummary: start_raid_on_bandit_camp
@@ -15025,6 +15072,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _appearanceBehaviour: 0
+  _isInstant: 0
   _showConditions:
   - QuestSummary: wait_until_raid_finish
     questState: 2
