@@ -57,7 +57,7 @@ public abstract class UsableEnvironment : MonoBehaviour, IPointerClickHandler
         {
             CosmeticUse();
             _cooldownHandler.Register(_uniqueID.ID, _cooldownHours);
-            _markerSpawner.DisableMarkerSpawner();
+            
             
             _audioSource.PlayWithRandomPitch();
         }
@@ -66,11 +66,11 @@ public abstract class UsableEnvironment : MonoBehaviour, IPointerClickHandler
     }
     protected abstract bool IsFunctionalComplete(); // возвращает true если все прошло как надо
 
-    private void CosmeticUse() //Запретить трогать ещё раз, заменить спрайт и остановить партиклСистему
-                               //(Не стоит понимать как функциональное использование)
+    private void CosmeticUse() 
     {
         GetComponent<SpriteRenderer>().sprite = _spriteAfterUse;
         _particleSystem.Stop();
+        _markerSpawner.DisableMarkerSpawner();
         _isActive = false;
     }
     private void Restore()
