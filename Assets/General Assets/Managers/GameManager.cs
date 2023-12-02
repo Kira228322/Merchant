@@ -10,9 +10,11 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
 {
     public static GameManager Instance;
+    [SerializeField] private GameObject _GameIsSavedText;
     [SerializeField] private Canvas _canvas;
     public GameObject ButtonsBlock;
     public GameObject CurrentFunctionalWindow;
+    public GameObject CurrentWarningWindow;
     public UIClock UIClock;
 
     [SerializeField] private Menu _optionsMenu;
@@ -82,6 +84,7 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
     public void SaveGame()
     {
         SaveLoadSystem<GlobalSaveData>.SaveData(SaveData(), "GlobalSave");
+        _GameIsSavedText.SetActive(true);
     }
 
     public GlobalSaveData SaveData()

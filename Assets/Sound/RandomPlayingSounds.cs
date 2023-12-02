@@ -28,7 +28,7 @@ public class RandomPlayingSounds : MonoBehaviour
 
     private void Start()
     {
-        _baseVolume = _audioSource.volume - 0.04f;
+        _baseVolume = _audioSource.volume - 0.06f;
         SoundStart();
     }
 
@@ -64,7 +64,7 @@ public class RandomPlayingSounds : MonoBehaviour
             waitForSeconds = new WaitForSeconds(Random.Range(_minDelay, _maxDelay));
             yield return waitForSeconds;
             _audioSource.clip = _sounds[Random.Range(0, _sounds.Count)];
-            _audioSource.volume = Random.Range(_baseVolume - 0.04f, _baseVolume + 0.04f);
+            _audioSource.volume = Random.Range(_baseVolume, _baseVolume + 0.06f);
             _audioSource.PlayWithRandomPitch();
         }
     }
