@@ -27,7 +27,8 @@ public class MultiplyItemsOnSceneEventController : MonoBehaviour, IEventControll
         GlobalEvent_MultiplyItemsOnScene newEvent = new()
         {
             DurationHours = DurationOfEvent,
-            Location = Location,
+            LocationSceneName = Location.SceneName,
+            LocationVillageName = Location.VillageName,
             MultiplyCoefficient = MultiplyCoefficient,
             ItemToMultiplyName = SelectedItem,
             IsPositive = _isPositive,

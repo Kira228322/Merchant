@@ -25,7 +25,8 @@ public class FloodEventController : MonoBehaviour, IEventController<GlobalEvent_
         GlobalEvent_Flood newEvent = new()
         {
             DurationHours = DurationOfEvent,
-            Location = Location,
+            LocationSceneName = Location.SceneName,
+            LocationVillageName = Location.VillageName,
             MultiplyCoefficient = MultiplyCoefficient,
             ItemToMultiplyName = SelectedItem,
         };

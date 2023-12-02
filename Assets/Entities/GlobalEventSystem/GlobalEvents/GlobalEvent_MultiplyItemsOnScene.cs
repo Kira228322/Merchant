@@ -6,20 +6,22 @@ using UnityEngine;
 [Serializable]
 public class GlobalEvent_MultiplyItemsOnScene : GlobalEvent_Base
 {
-    public override string GlobalEventName => IsPositive? ($"¬ысокий прирост продуктов в {Location.VillageName}!")
-                                                         :($"”быток продукта в {Location.VillageName}");
+    public override string GlobalEventName => IsPositive? ($"¬ысокий прирост продуктов в {LocationVillageName}!")
+                                                         :($"”быток продукта в {LocationVillageName}");
 
-    public override string Description => IsPositive? ($"Ѕлагодар€ старани€м рабочих, в {Location.VillageName} ожидаетс€ удивительно высокий прирост продукта {ItemToMultiplyName}.")
-                                                     :($"»з-за негативного вли€ни€ магии на деревню {Location.VillageName}, в ней ожидаетс€ убыток продукта {ItemToMultiplyName}");
+    public override string Description => IsPositive? ($"Ѕлагодар€ старани€м рабочих, в {LocationVillageName} ожидаетс€ удивительно высокий прирост продукта {ItemToMultiplyName}.")
+                                                     :($"»з-за негативного вли€ни€ магии на деревню {LocationVillageName}, в ней ожидаетс€ убыток продукта {ItemToMultiplyName}");
 
     public bool IsPositive;
-    [NonSerialized] public Location Location;
+    public string LocationSceneName;
+    public string LocationVillageName;
     public float MultiplyCoefficient;
     public string ItemToMultiplyName;
 
     public override void Execute()
     {
-        Location.MultiplyItemsInTraders(ItemToMultiplyName, MultiplyCoefficient);
+        Location location = MapManager.GetLocationBySceneName(LocationSceneName);
+        location.MultiplyItemsInTraders(ItemToMultiplyName, MultiplyCoefficient);
     }
 
     public override void Terminate()

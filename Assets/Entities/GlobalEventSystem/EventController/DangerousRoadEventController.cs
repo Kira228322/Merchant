@@ -27,7 +27,9 @@ public class DangerousRoadEventController : MonoBehaviour, IEventController<Glob
         GlobalEvent_DangerousRoad newEvent = new()
         {
             DurationHours = DurationOfEvent,
-            targetRoadName = TargetRoad.RoadName,
+            FirstPointLocationSceneName = TargetRoad.Points[0].SceneName,
+            SecondPointLocationSceneName = TargetRoad.Points[1].SceneName,
+            TargetRoadName = TargetRoad.RoadName,
             MultiplyCoefficient = MultiplyCoefficient,
         };
         var eventToAdd = GlobalEventHandler.Instance.AddGlobalEvent(newEvent);
