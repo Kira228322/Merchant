@@ -6,16 +6,18 @@ using UnityEngine;
 [Serializable]
 public class GlobalEvent_Flood : GlobalEvent_Base
 {
-    public override string GlobalEventName => $"Наводнение в деревне {Location.VillageName}!";
-    public override string Description => $"В деревне {Location.VillageName} произошло наводнение. Больше всего пострадали запасы продукта {ItemToMultiplyName}.";
+    public override string GlobalEventName => $"Наводнение в деревне {LocationVillageName}!";
+    public override string Description => $"В деревне {LocationVillageName} произошло наводнение. Больше всего пострадали запасы продукта {ItemToMultiplyName}.";
 
-    [NonSerialized] public Location Location;
+    public string LocationSceneName;
+    public string LocationVillageName;
     public float MultiplyCoefficient;
     public string ItemToMultiplyName;
 
     public override void Execute()
     {
-        Location.MultiplyItemsInTraders(ItemToMultiplyName, MultiplyCoefficient);
+        Location location = MapManager.GetLocationBySceneName(LocationSceneName);
+        location.MultiplyItemsInTraders(ItemToMultiplyName, MultiplyCoefficient);
     }
 
     public override void Terminate()
