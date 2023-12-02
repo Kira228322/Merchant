@@ -17,7 +17,7 @@ public class EventHalt : EventInTravel
         {
             case 0:
                 int hours = Random.Range(3, 5);
-                GameTime.TimeSkip(0,hours,Random.Range(15,30));
+                GameTime.TimeSkip(0,hours,Random.Range(40,45));
                 Player.Instance.Needs.CurrentHunger = Player.Instance.Needs.MaxHunger;
                 _eventWindow.ChangeDescription($"Вас накормили досыта. Вы провели в хорошей компании {hours} часа. " + CreateStory());
                 break;

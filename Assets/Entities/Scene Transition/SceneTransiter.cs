@@ -37,6 +37,9 @@ public class SceneTransiter : MonoBehaviour, ISaveable<SceneSaveData>
 
     public void StartTransit(string scene, Road road)
     {
+        Destroy(GameManager.Instance.CurrentFunctionalWindow);
+        Destroy(GameManager.Instance.CurrentWarningWindow);
+        
         _mapButton.isOn = false;
         _road = road;
         MapManager.TravelInit(_road);
