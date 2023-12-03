@@ -20,5 +20,7 @@ public class Marker : MonoBehaviour, IPointerClickHandler
             craftingStation.OnPointerClick(eventData);
         else if (_usableObject is Noticeboard noticeboard)
             noticeboard.OnPointerClick(eventData);
+        else if (_usableObject is ObjectConversation objectConversation)
+            objectConversation.OnPointerClick(eventData);
     }
 }

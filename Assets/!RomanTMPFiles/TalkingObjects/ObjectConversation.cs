@@ -11,6 +11,8 @@ public class ObjectConversation : MonoBehaviour, IPointerClickHandler
     //Это просто объект, с которым можно говорить
 
     private Npc _npc;
+    private float _distanceToUse = 3.1f;
+    
     private void Awake()
     {
         _npc = GetComponent<Npc>();
@@ -18,6 +20,9 @@ public class ObjectConversation : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if ((transform.position - Player.Instance.transform.position).magnitude > _distanceToUse)
+            return;
+        
         DialogueManager.Instance.EnterDialogueMode(_npc);
     }
 }
