@@ -1,6 +1,6 @@
 INCLUDE ../../MainInkLibrary.ink
 
-~temp activeQuests = get_activeQuestList()
+~temp activeQuests = get_activeQuestList_universal()
 \*Проход закрыт едва заметным синим светом. Вы пытаетесь пройти, но неизвестная сила отталкивает вас назад.*
 {contains(activeQuests, "explore_magic_forest_entrance"):
     ->show_scroll

@@ -9,7 +9,7 @@ INCLUDE ../../MainInkLibrary.ink
 
 === bring_relic ===
 Приветствую, юноша. Как успехи с поиском реликвии?
-{has_enough_items("bring_relic_to_oldmage")}
+{has_enough_items("bring_relic_to_oldmage"):
     +[Вот реликвия из магического леса.]
         Невероятно, тебе всё таки удалось её получить! Ну-ка, давай её скорее сюда.
         \*Альберик осматривает магический лист с интересом*
@@ -26,6 +26,11 @@ INCLUDE ../../MainInkLibrary.ink
                         ~invoke_dialogue_event("bring_relic_to_oldmage")
                         Теперь, мой юный друг, прошу тебя, уходи. Я рад твоей помощи, но мне нужно время, чтобы исследовать эту реликвию.
                         ->END
+-else:
+    +[Уйти]
+        ...
+        ->END
+}
 
 
 === generic ===
