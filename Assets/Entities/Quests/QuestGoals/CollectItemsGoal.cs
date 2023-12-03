@@ -35,6 +35,11 @@ public class CollectItemsGoal : Goal
         playerInventoryItemGrid.ItemPlacedInTheGrid += ItemCollected;
         playerInventoryItemGrid.ItemUpdated += ItemUpdated;
         playerInventoryItemGrid.ItemRemovedFromTheGrid += ItemRemoved;
+
+        ItemGrid playerInventoryQuestItemGrid = Player.Instance.Inventory.QuestItemGrid;
+        playerInventoryQuestItemGrid.ItemPlacedInTheGrid += ItemCollected;
+        playerInventoryQuestItemGrid.ItemUpdated += ItemUpdated;
+        playerInventoryQuestItemGrid.ItemRemovedFromTheGrid += ItemRemoved;
     }
 
     public override void Deinitialize()
@@ -43,6 +48,11 @@ public class CollectItemsGoal : Goal
         playerInventoryItemGrid.ItemPlacedInTheGrid -= ItemCollected;
         playerInventoryItemGrid.ItemUpdated -= ItemUpdated;
         playerInventoryItemGrid.ItemRemovedFromTheGrid -= ItemRemoved;
+
+        ItemGrid playerInventoryQuestItemGrid = Player.Instance.Inventory.QuestItemGrid;
+        playerInventoryQuestItemGrid.ItemPlacedInTheGrid -= ItemCollected;
+        playerInventoryQuestItemGrid.ItemUpdated -= ItemUpdated;
+        playerInventoryQuestItemGrid.ItemRemovedFromTheGrid -= ItemRemoved;
     }
 
     private void ItemCollected(InventoryItem item)
