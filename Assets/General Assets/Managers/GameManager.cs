@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -12,9 +13,10 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
     public static GameManager Instance;
     [SerializeField] private GameObject _GameIsSavedText;
     [SerializeField] private Canvas _canvas;
+    public CanvasGroup PlayerBlock;
     public GameObject ButtonsBlock;
-    public GameObject CurrentFunctionalWindow;
-    public GameObject CurrentWarningWindow;
+    [HideInInspector] public GameObject CurrentFunctionalWindow;
+    [HideInInspector] public GameObject CurrentWarningWindow;
     public UIClock UIClock;
 
     [SerializeField] private Menu _optionsMenu;
@@ -34,7 +36,6 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
     [SerializeField] private RegionHandler _regionHandler;
 
     [Header("Main Menu Buttons")]
-    [SerializeField] private Button _newGameButton;
     [SerializeField] private Button _loadGameButton;
 
     private void OnEnable()
@@ -53,12 +54,10 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
         
         MapManager.Init(_travelingScene, _sceneTransiter, _roadWindow, _villageWindow, _canvas, _playerIcone, _startLocation);
         GameTime.Init(_timeflow);
+        GameTime.SetTimeScale(10);
         GlobalEventHandler.Instance.Initialize();
 
         _regionHandler.InitializeAll(); //Регионы подсосут из текстовика и создадут словари
-
-        _newGameButton.onClick.AddListener(StartNewGame);
-        _loadGameButton.onClick.AddListener(LoadGame);
 
         if (File.Exists(Application.persistentDataPath + "/GlobalSave.data")) //Если нету сейва то кнопка продолжить будет неактивной
         {
@@ -69,17 +68,37 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
         _optionsMenu.LoadData(); //Загрузка из PlayerPrefs настроек игрока
     }
 
+    private void EnableUI()
+    {
+        PlayerBlock.alpha = 1;
+        PlayerBlock.interactable = true;
+
+        CanvasGroup CanvasGroupButtonBlock = ButtonsBlock.GetComponent<CanvasGroup>();
+        CanvasGroupButtonBlock.alpha = 1;
+        CanvasGroupButtonBlock.interactable = true;
+
+        CanvasGroup CanvasGroupUIClock = UIClock.GetComponent<CanvasGroup>();
+        CanvasGroupUIClock.alpha = 1;
+        CanvasGroupUIClock.interactable = true;
+    }
+    
     public void StartNewGame() //По нажатию кнопки Новая игра в MainMenu
     {
+        Player.Instance.Statistics.OnToughnessChanged();
+        GameTime.SetTimeScale(1);
+        EnableUI();
+        Player.Instance.Needs.CurrentHunger = Player.Instance.Needs.MaxHunger;
+        Player.Instance.Needs.CurrentSleep = Player.Instance.Needs.MaxSleep;
         _sceneTransiter.StartTransit(_startLocation);
-        _newGameButton.onClick.RemoveListener(StartNewGame);
 
         GameTime.TimeSet(1, 8, 0);
     }
     public void LoadGame() //По нажатию кнопки Продолжить в MainMenu
     {
+        GameTime.SetTimeScale(1);
+        EnableUI();
         LoadData(SaveLoadSystem<GlobalSaveData>.LoadData("GlobalSave"));
-        _loadGameButton.onClick.RemoveListener(LoadGame);
+        Player.Instance.Statistics.OnToughnessChanged();
     }
     public void SaveGame()
     {

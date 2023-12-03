@@ -49,7 +49,10 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
     {
         Needs.Initialize();
         WagonStats.RecalculateValues();
-        Statistics.OnToughnessChanged();
+        
+        Needs.HungerDecayRate = Int32.MaxValue;
+        Needs.SleepDecayRate = Int32.MaxValue;
+        
         Statistics.Toughness.StatChanged += Statistics.OnToughnessChanged;
     }
 
@@ -159,12 +162,6 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
         {
 
         }
-
-
-
-
-
-
     }
 
 }
