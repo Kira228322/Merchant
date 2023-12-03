@@ -207,6 +207,10 @@ class EditorPregenQuest : Editor
                                 }
                             }
                         }
+                        else
+                        {
+                            goal.RequiredItemCategories = new();
+                        }
 
                         tmpItemCategory = (Item.ItemType)EditorGUILayout.EnumPopup("Select category", tmpItemCategory);
 

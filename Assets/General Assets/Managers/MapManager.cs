@@ -76,7 +76,7 @@ public static class MapManager
         }
         else
         {
-            Debug.LogError("Location with this sceneName not found");
+            Debug.LogError($"Location with this sceneName {sceneName} not found");
             return null;
         }
     }
