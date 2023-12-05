@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Advertisements;
+using Random = UnityEngine.Random;
 
 public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowListener
 {
@@ -18,9 +21,23 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
 
     private void GiveRewardToPlayer()
     {
+        int exp;
+        if (StatusManager.Instance.ActiveStatuses.FirstOrDefault(status =>
+                status.StatusData.StatusName == "Восхищение представлением") != null)
+        {
+            exp = _expirienceBonus * 5;
+            Player.Instance.Experience.AddExperience(exp);
+        }
+        else
+        {
+            exp = _expirienceBonus;
+            Player.Instance.Experience.AddExperience(exp);
+        }
+        StatusManager.Instance.AddStatusForPlayer(StatusDatabase.GetStatus("Восхищение представлением"));
+        
         if (Random.Range(0, 10) == 0)
         {
-            GiveMoneyReward();
+            GiveMoneyReward(exp);
         }
         else
         {
@@ -30,22 +47,22 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
             if (InventoryController.Instance.TryCreateAndInsertItem(
                      ItemDatabase.GetItem(item.Name), count, 0))
             {
-                Player.Instance.Experience.AddExperience(_expirienceBonus);
-                CanvasWarningGenerator.Instance.CreateWarning("Спасибо за просмотр", $"Вы получили {item.Name} в количестве {count}, а так же {_expirienceBonus} опыта");
+                CanvasWarningGenerator.Instance.CreateWarning("Спасибо за просмотр", $"Вы получили {item.Name} в количестве {count}, а так же " +
+                    $"{Convert.ToInt32(Math.Round(exp * (1 + Player.Instance.Experience.ExpGain)))} опыта");
             }
             else
             {
-                GiveMoneyReward();
+                GiveMoneyReward(exp);
             }
         }
     }
 
-    private void GiveMoneyReward()
+    private void GiveMoneyReward(int exp)
     {
         int money = _moneyReward + Random.Range(Player.Instance.Experience.CurrentLevel, Player.Instance.Experience.CurrentLevel * 10);
         Player.Instance.Money += money;
-        Player.Instance.Experience.AddExperience(_expirienceBonus);
-        CanvasWarningGenerator.Instance.CreateWarning("Спасибо за просмотр", $"Вы получили {money} золота, а так же {_expirienceBonus} опыта");
+        CanvasWarningGenerator.Instance.CreateWarning("Спасибо за просмотр", $"Вы получили {money} золота, " +
+                                                                             $"а так же {Convert.ToInt32(Math.Round(exp * (1 + Player.Instance.Experience.ExpGain)))} опыта");
     }
 
     private void Awake()

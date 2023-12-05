@@ -182,7 +182,7 @@ public class TravelEventHandler : MonoBehaviour
                 }
 
             if (Random.Range(0, Convert.ToInt32(Math.Floor(
-                    28/(Math.Pow(_delayToNextEvent, 0.2f) + Math.Pow(_delayToNextEvent, 0.8f)))) -3) == 0)
+                    28/(Math.Pow(_delayToNextEvent, 0.2f) + Math.Pow(_delayToNextEvent, 0.8f)))) -2) == 0)
             {
                 _nextEvent = ChooseEvent();
                 break;
