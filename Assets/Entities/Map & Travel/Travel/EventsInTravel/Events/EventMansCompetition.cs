@@ -8,7 +8,7 @@ public class EventMansCompetition : EventInTravel
     public override void SetButtons()
     {
         _probabilityToWin += Player.Instance.Statistics.Toughness.Total + Random.Range(0,5);
-        ButtonsLabel.Add("Учавствовать");
+        ButtonsLabel.Add("Участвовать");
         ButtonsLabel.Add("Проехать мимо");
         SetInfoButton($"Вероятность победить в состязаниях {TravelEventHandler.GetProbability(_probabilityToWin, Player.Instance.Statistics.Toughness)}%." +
                       $"\nВероятность серьезно зависит от вашей выносливости");
@@ -38,7 +38,7 @@ public class EventMansCompetition : EventInTravel
                 }
                 break;
             case 1:
-                _eventWindow.ChangeDescription("Жители деревни зазывали вас поучавствовать, но вы просто уехали.");
+                _eventWindow.ChangeDescription("Жители деревни зазывали вас поучаствовать, но вы просто уехали.");
                 break;
         }   
     }

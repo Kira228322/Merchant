@@ -48,7 +48,13 @@ abstract public class NPCMovement : MonoBehaviour
 
     protected virtual void OnEnable()
     {
+        StartCoroutine(Enable());
+    }
+
+    private IEnumerator Enable()
+    {
         GameTime.HourChanged += OnHourChangeWhenNotAtHome;
+        yield return null;
         OnHourChangeWhenNotAtHome();
     }
 
@@ -145,6 +151,7 @@ abstract public class NPCMovement : MonoBehaviour
 
     private void OnHourChangeWhenNotAtHome()
     {
+        if (!gameObject.activeSelf) return;
         if (_npc.NpcData.FinishWalkingTime > _npc.NpcData.StartWalkingTime)
         {
             if (((GameTime.Hours > _npc.NpcData.FinishWalkingTime && GameTime.Hours > _npc.NpcData.StartWalkingTime) ||
