@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class MultiplyItemsOnSceneEventController : MonoBehaviour, IEventController<GlobalEvent_MultiplyItemsOnScene>
+public class MultiplyItemsOnSceneEventController : MonoBehaviour, IEventController<GlobalEvent_MultiplyItemsOnScene>, ISaveable<EventControllerSaveData>
 {
     public int MinDelayToNextEvent => 6;
     public int MaxDelayToNextEvent => 13;
@@ -81,5 +81,16 @@ public class MultiplyItemsOnSceneEventController : MonoBehaviour, IEventControll
             Debug.LogError("На локации меньше 5 предметов!!!"); //TODO убрать на релизе
 
         return sortedItems[Random.Range(0, 5)].Item.Name;
+    }
+
+    public EventControllerSaveData SaveData()
+    {
+        EventControllerSaveData saveData = new(LastEventDay);
+        return saveData;
+    }
+
+    public void LoadData(EventControllerSaveData data)
+    {
+        LastEventDay = data.LastEventDay;
     }
 }

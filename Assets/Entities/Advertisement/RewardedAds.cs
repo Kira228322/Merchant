@@ -11,6 +11,8 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
 {
     public static RewardedAds Instance;
 
+    [HideInInspector] public bool IsAdLoaded = false;
+
     private string androidAdID = "Rewarded_Android";
     private string iOSAdID = "Rewarded_iOS";
 
@@ -90,11 +92,13 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
 
     public void OnUnityAdsAdLoaded(string adUnitId)
     {
+        IsAdLoaded = true;
     }
 
     public void OnUnityAdsFailedToLoad(string placementId, UnityAdsLoadError error, string message)
     {
         Debug.Log($"Error loading Ad Unit {adID}: {error.ToString()} - {message}");
+        IsAdLoaded = false;
     }
 
     public void OnUnityAdsShowFailure(string placementId, UnityAdsShowError error, string message)

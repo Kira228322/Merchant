@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class BannedItemEventController : MonoBehaviour, IEventController<GlobalEvent_BannedItem>
+public class BannedItemEventController : MonoBehaviour, IEventController<GlobalEvent_BannedItem>, ISaveable<EventControllerSaveData>
 {
 
     public int LastEventDay { get; set; }
@@ -55,4 +55,14 @@ public class BannedItemEventController : MonoBehaviour, IEventController<GlobalE
         }
     }
 
+    public EventControllerSaveData SaveData()
+    {
+        EventControllerSaveData saveData = new(LastEventDay);
+        return saveData;
+    }
+
+    public void LoadData(EventControllerSaveData data)
+    {
+        LastEventDay = data.LastEventDay;
+    }
 }

@@ -13,6 +13,7 @@ public class GlobalEvent_Weather : GlobalEvent_Base
     {
         //Ну по логике, дождь включается уже и так в WeatherController.
         //Ничего делать не нужно, иначе всё-таки странно выходит.
+        UnityEngine.Object.FindObjectOfType<WeatherController>().StartWeather();
     }
 
     public override void Terminate() 

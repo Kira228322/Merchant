@@ -68,7 +68,7 @@ public class UIClock : MonoBehaviour
         Refresh();
     }
 
-    private void Refresh()
+    public void Refresh()
     {
         bool isWeatherActive = GlobalEventHandler.Instance.IsEventActive<GlobalEvent_Weather>();
         if (isWeatherActive)

@@ -3,9 +3,11 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Events;
+using UnityEngine.Rendering.Universal.Internal;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
-public class WeatherController : MonoBehaviour, IEventController<GlobalEvent_Weather>, ISaveable<WeatherControllerSaveData>
+public class WeatherController : MonoBehaviour, IEventController<GlobalEvent_Weather>, ISaveable<EventControllerSaveData>
 {
     [SerializeField] private ParticleSystem _rain;
     [SerializeField] private AudioMixerGroup _audioMixer;
@@ -32,9 +34,9 @@ public class WeatherController : MonoBehaviour, IEventController<GlobalEvent_Wea
     [SerializeField] private AudioSource _audioSource;
     private Coroutine _currentSound;
     
-    public void StartWeather(StrengthOfWeather strength)
+    public void StartWeather()
     {
-        switch (strength)
+        switch (_strengthOfWeather)
         {
             case StrengthOfWeather.Light:
                 SetRainParams(38, 6.5f, 0.13f);
@@ -47,7 +49,7 @@ public class WeatherController : MonoBehaviour, IEventController<GlobalEvent_Wea
                 break;
         }
         _rain.Play();
-        _currentSound = StartCoroutine(PlaySound(strength));
+        _currentSound = StartCoroutine(PlaySound(_strengthOfWeather));
         WeatherStarted?.Invoke();
         _rain.transform.rotation = Quaternion.Euler(0,0, -Random.Range(10, 16));
     }
@@ -109,9 +111,17 @@ public class WeatherController : MonoBehaviour, IEventController<GlobalEvent_Wea
     }
     public void PredictNextEvent()
     {
-        DateOfNextEvent = LastEventDay + Random.Range(MinDelayToNextEvent, MaxDelayToNextEvent + 1);
-        HourOfNextEvent = Random.Range(1, 24); // на всякий случай от 1 до 24, а не от 0 до 24, тк как хз
-        // как там просиходит событие, когда меняется день. Тонкая штука. См метод CheckDayDelayToRainfall
+        if (SceneManager.GetActiveScene().name == "MainMenu")
+        {
+            DateOfNextEvent = LastEventDay + 2;
+            HourOfNextEvent = Random.Range(1, 24);
+        }
+        else
+        {
+            DateOfNextEvent = LastEventDay + Random.Range(MinDelayToNextEvent, MaxDelayToNextEvent + 1);
+            HourOfNextEvent = Random.Range(1, 24); // на всякий случай от 1 до 24, а не от 0 до 24, тк как хз
+                                                   // как там просиходит событие, когда меняется день. Тонкая штука. См метод CheckDayDelayToRainfall
+        }
         _strengthOfWeather = (StrengthOfWeather)Random.Range(0, Enum.GetNames(typeof(StrengthOfWeather)).Length);
         switch (_strengthOfWeather)
         {
@@ -150,7 +160,7 @@ public class WeatherController : MonoBehaviour, IEventController<GlobalEvent_Wea
             .AddGlobalEvent<GlobalEvent_Weather>(DurationOfEvent);
         eventToAdd.StrengthOfWeather = (int)_strengthOfWeather;
         LastEventDay = GameTime.CurrentDay;
-        StartWeather(_strengthOfWeather);
+        //StartWeather(); вынесено в глобальный ивент
         return eventToAdd;
     }
     public void RemoveEvent()
@@ -160,17 +170,14 @@ public class WeatherController : MonoBehaviour, IEventController<GlobalEvent_Wea
         WeatherFinished?.Invoke();
     }
 
-    public WeatherControllerSaveData SaveData()
+    public EventControllerSaveData SaveData()
     {
-        WeatherControllerSaveData saveData = new(LastEventDay, DateOfNextEvent, HourOfNextEvent, (int)_strengthOfWeather);
+        EventControllerSaveData saveData = new(LastEventDay);
         return saveData;
     }
 
-    public void LoadData(WeatherControllerSaveData data)
+    public void LoadData(EventControllerSaveData data)
     {
         LastEventDay = data.LastEventDay;
-        DateOfNextEvent = data.DateOfPrecipitation;
-        HourOfNextEvent = data.HourOfPrecipitation;
-        _strengthOfWeather = (StrengthOfWeather)data.StrengthOfWeather;
     }
 }

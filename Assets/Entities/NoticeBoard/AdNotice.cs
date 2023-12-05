@@ -15,12 +15,7 @@ public class AdNotice : Notice
 
     public override void OnNoticeTake()
     {
-        if (false) //TODO: Проверять, если нет интернета
-        {
-            CanvasWarningGenerator.Instance.CreateWarning("Нет подключения к Интернету", 
-                "Пожалуйста, проверьте подключение к сети, чтобы посмотреть рекламу");
-        }
-        else
+        if (!RewardedAds.Instance.IsAdLoaded)
         {
             RewardedAds.Instance.ShowAd();
             Noticeboard.RemoveNotice(SpawnPointIndex);

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class FloodEventController : MonoBehaviour, IEventController<GlobalEvent_Flood>
+public class FloodEventController : MonoBehaviour, IEventController<GlobalEvent_Flood>, ISaveable<EventControllerSaveData>
 {
     public int MinDelayToNextEvent => 6;
     public int MaxDelayToNextEvent => 13;
@@ -75,5 +75,16 @@ public class FloodEventController : MonoBehaviour, IEventController<GlobalEvent_
             Debug.LogError($"На локации {Location.VillageName} меньше 5 предметов!!!"); //TODO убрать на релизе
 
         return sortedItems[Random.Range(0, 5)].Item.Name;
+    }
+
+    public EventControllerSaveData SaveData()
+    {
+        EventControllerSaveData saveData = new(LastEventDay);
+        return saveData;
+    }
+
+    public void LoadData(EventControllerSaveData data)
+    {
+        LastEventDay = data.LastEventDay;
     }
 }
