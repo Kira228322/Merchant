@@ -6598,7 +6598,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 295020380}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 900a3ea4b728e744099f102a14ed6d45, type: 3}
   m_Name: 
@@ -9072,7 +9072,7 @@ MonoBehaviour:
   _icon: {fileID: 0}
   _villageName: "\u0427\u0430\u0440\u043E\u043B\u0435\u0441\u044C\u0435"
   _description: 
-  _populationOfVillage: 200
+  _populationOfVillage: 230
   _sceneName: Scene7
   _relatedPlaces:
   - {fileID: 674283884}
@@ -14190,7 +14190,7 @@ MonoBehaviour:
   _icon: {fileID: 21300000, guid: 6e0f265dd23692147a07dece72e95299, type: 3}
   _villageName: "\u0422\u0440\u0430\u0432\u043E\u0441\u0442\u043E\u0439"
   _description: "\u0414\u0435\u0440\u0435\u0432\u043D\u044F \u0420\u043E\u043C\u0430\u0433\u0430"
-  _populationOfVillage: 200
+  _populationOfVillage: 210
   _sceneName: Scene2
   _relatedPlaces:
   - {fileID: 9056293358578365361}
@@ -17010,7 +17010,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _locations:
   - {fileID: 9056293358578365361}
-  - {fileID: 3977917189124624316}
   - {fileID: 674283884}
   - {fileID: 228818839}
   - {fileID: 1015483341}
@@ -17019,44 +17018,44 @@ MonoBehaviour:
   - {fileID: 402871010}
   _questGivers: []
   tmpFloat:
+  - 0.9
+  - 0.9
+  - 0.8
+  - 1
+  - 0.8
+  - 0.8
+  - 0.8
+  - 1
+  - 0.9
+  - 0.8
+  - 1
+  - 1
+  - 0.8
+  - 1
+  - 0.95
+  - 0.8
+  - 1
+  - 1
+  - 0.8
+  - 0.9
+  - 0.9
+  - 0.8
+  - 0.8
   - 1
   - 1
   - 1
+  - 0.9
+  - 0.8
   - 1
+  - 0.8
+  - 0.8
+  - 0.8
+  - 0.85
   - 1
+  - 0.8
   - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  cvsEconomyParams: {fileID: 4900000, guid: fb9dfe8b43976b1468dcf25ff7fd4d35, type: 3}
-  AveragePopulation: 1000
+  cvsEconomyParams: {fileID: 4900000, guid: 664fa42a8904c0b4faa701b855f828d0, type: 3}
+  AveragePopulation: 1400
 --- !u!1 &822322182
 GameObject:
   m_ObjectHideFlags: 0
@@ -26580,7 +26579,7 @@ MonoBehaviour:
   _icon: {fileID: 0}
   _villageName: "\u0421\u0442\u0440\u0435\u0436\u0435\u043D\u044C"
   _description: 
-  _populationOfVillage: 140
+  _populationOfVillage: 160
   _sceneName: Scene6
   _relatedPlaces:
   - {fileID: 674283884}
@@ -34433,6 +34432,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 295020384}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &1694139052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37013,6 +37024,18 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 295020384}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &1783209940
 MonoBehaviour:
@@ -43707,7 +43730,7 @@ MonoBehaviour:
   _icon: {fileID: 21300000, guid: ff13c62c9935261479b6f75351f1711a, type: 3}
   _villageName: "\u0412\u0435\u0442\u0440\u043E\u043B\u0435\u0441"
   _description: "\u0422\u0438\u0445\u043E \u0438 \u0441\u043F\u043E\u043A\u043E\u0439\u043D\u043E"
-  _populationOfVillage: 180
+  _populationOfVillage: 150
   _sceneName: Scene5
   _relatedPlaces:
   - {fileID: 228818839}
@@ -73997,6 +74020,7 @@ MonoBehaviour:
     Suspension: {fileID: 11400000, guid: e5131dd7eacc94e4cae2107c47fd3a9b, type: 2}
     QualityModifier: 0
   Recipes: []
+  _currentTestedRegion: {fileID: 815367770}
 --- !u!114 &6761086532353248289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80429,7 +80453,7 @@ MonoBehaviour:
   _icon: {fileID: 21300000, guid: ce993d5f7ca6ea8459974fd88e71861d, type: 3}
   _villageName: "\u0421\u043E\u0441\u043D\u043E\u0432\u043A\u0430"
   _description: It is good village if you want to escape from goverment
-  _populationOfVillage: 200
+  _populationOfVillage: 170
   _sceneName: Scene0
   _relatedPlaces:
   - {fileID: 3977917189124624316}

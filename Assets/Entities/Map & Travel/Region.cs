@@ -106,6 +106,9 @@ public class Region : MonoBehaviour
 
     public void CountAllItemsInRegion()
     {
+        foreach (var item in ItemEconomyParams)
+            CountOfEachItem[item.Key] = 0;
+        
         for (int i = 0; i < _locations.Count; i++)
             foreach (var countOfItem in _locations[i].CountOfEachItem)
             {
@@ -116,11 +119,11 @@ public class Region : MonoBehaviour
 
     public float CalculatePriceCoef(int currentQuantity, int P, int Q, int A, int C)
     {
-        if (C > 0)
-            C = -C;
+        if (currentQuantity <= C)
+            currentQuantity = C + 1;
         
-        float B = (float)A / (C + Q) - P;
-        float result = (float)Math.Round((float)A / (currentQuantity + C) - B) / P;
+        float B = (float)A / (Q - C) - P;
+        float result = (float)Math.Round((float)A / (currentQuantity - C) - B) / P;
         if (result > 1.4f)
             result = 1.4f;
         else if (result < 0.71f) // 1/1.4f

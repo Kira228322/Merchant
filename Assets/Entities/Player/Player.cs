@@ -140,6 +140,9 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
             Recipes.Add(CraftingRecipeDatabase.GetRecipe(recipeName));
         }
     }
+    
+    // TODO удалить 
+    [SerializeField] private Region _currentTestedRegion;
     private void Update()
     {
         //TODO Тестовые команды
@@ -160,7 +163,26 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
         }
         if (Input.GetKeyDown(KeyCode.I))
         {
+            string t = "";
+            for (int i = 0; i < ItemDatabase.Instance.Items.ItemList.Count; i++)
+            {
+                t += ItemDatabase.Instance.Items.ItemList[i].Name + ItemDatabase.Instance.Items.ItemList[i].Price + "\n";
+            }
+            
+            Debug.Log(t);
+        }
 
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            string txt = "";
+            foreach (var economyParam in _currentTestedRegion.ItemEconomyParams)
+            {
+                txt += economyParam.Key;
+                txt += " ";
+                txt += (_currentTestedRegion.CountOfEachItem[economyParam.Key] - economyParam.Value[0]).ToString();
+                txt += "\n";
+            }
+            Debug.Log(txt);
         }
     }
 
