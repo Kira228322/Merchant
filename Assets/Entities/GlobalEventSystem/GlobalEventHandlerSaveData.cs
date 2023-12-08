@@ -7,8 +7,15 @@ using UnityEngine;
 public class GlobalEventHandlerSaveData
 {
     public List<GlobalEvent_Base> SavedGlobalEvents;
-    public GlobalEventHandlerSaveData(List<GlobalEvent_Base> activeGlobalEvents)
+    public List<EventControllerSaveData> EventControllerSaveDatas;
+    public GlobalEventHandlerSaveData(List<GlobalEvent_Base> activeGlobalEvents, List<IEventController> eventControllers)
     {
         SavedGlobalEvents = new(activeGlobalEvents);
+        EventControllerSaveDatas = new();
+        foreach (var controller in eventControllers)
+        {
+            EventControllerSaveDatas.Add(new(controller.LastEventDay));
+        }
     }
+
 }

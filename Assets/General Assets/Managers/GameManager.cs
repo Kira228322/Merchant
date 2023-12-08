@@ -54,15 +54,14 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
         
         MapManager.Init(_travelingScene, _sceneTransiter, _roadWindow, _villageWindow, _canvas, _playerIcone, _startLocation);
         GameTime.Init(_timeflow);
-        GameTime.SetTimeScale(10);
+        GameTime.SetTimeScale(13);
+        GameTime.TimeSet(0, 7, 30);
         GlobalEventHandler.Instance.Initialize();
 
         _regionHandler.InitializeAll(); //Регионы подсосут из текстовика и создадут словари
 
         if (File.Exists(Application.persistentDataPath + "/GlobalSave.data")) //Если нету сейва то кнопка продолжить будет неактивной
-        {
             _loadGameButton.interactable = true;
-        }
         else _loadGameButton.interactable = false;
 
         _optionsMenu.LoadData(); //Загрузка из PlayerPrefs настроек игрока
@@ -77,6 +76,7 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
         CanvasGroupButtonBlock.alpha = 1;
         CanvasGroupButtonBlock.interactable = true;
 
+        UIClock.Refresh();
         CanvasGroup CanvasGroupUIClock = UIClock.GetComponent<CanvasGroup>();
         CanvasGroupUIClock.alpha = 1;
         CanvasGroupUIClock.interactable = true;
@@ -86,19 +86,24 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
     {
         Player.Instance.Statistics.OnToughnessChanged();
         GameTime.SetTimeScale(1);
-        EnableUI();
         Player.Instance.Needs.CurrentHunger = Player.Instance.Needs.MaxHunger;
         Player.Instance.Needs.CurrentSleep = Player.Instance.Needs.MaxSleep;
         _sceneTransiter.StartTransit(_startLocation);
 
+        GlobalEventHandler.Instance.ResetEvents();
+
         GameTime.TimeSet(1, 8, 0);
+        EnableUI();
     }
     public void LoadGame() //По нажатию кнопки Продолжить в MainMenu
     {
         GameTime.SetTimeScale(1);
-        EnableUI();
+
+        GlobalEventHandler.Instance.ResetEvents(); //Важно, что это происходит до загрузки
+
         LoadData(SaveLoadSystem<GlobalSaveData>.LoadData("GlobalSave"));
         Player.Instance.Statistics.OnToughnessChanged();
+        EnableUI();
     }
     public void SaveGame()
     {

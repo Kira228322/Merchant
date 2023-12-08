@@ -2,8 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
-
+using UnityEngine.SceneManagement;
 
 public class GlobalEventHandler : MonoBehaviour
 {
@@ -28,6 +27,22 @@ public class GlobalEventHandler : MonoBehaviour
             _eventControllers.Add(controller);
         }
     }
+    public void ResetEvents()
+    {
+        //Удаляет имеющиеся ивенты и обновляет предикты. Используется при загрузке/начале игры
+
+        for (int i = ActiveGlobalEvents.Count - 1; i >= 0; i--)
+        {
+            ActiveGlobalEvents[i].Terminate();
+            ActiveGlobalEvents.RemoveAt(i);
+        }
+
+        foreach (IEventController controller in EventControllers)
+        {
+            controller.LastEventDay = 0;
+            controller.PredictNextEvent();
+        }
+    }
     private void OnEnable()
     {
         GameTime.HourChanged += OnHourChanged;
@@ -44,6 +59,10 @@ public class GlobalEventHandler : MonoBehaviour
         {
             DurationHours = durationHours
         };
+        if (SceneManager.GetActiveScene().name == "MainMenu" && globalEvent is not GlobalEvent_Weather)
+        {
+            return null;
+        }
         globalEvent.Execute();
         ActiveGlobalEvents.Add(globalEvent);
         return globalEvent;
@@ -52,6 +71,10 @@ public class GlobalEventHandler : MonoBehaviour
         //Предполагается, что сначала нужно создать такой ивент через new и назначить ему все поля,
         //т.е Duration и остальные. После этого он просто запускается
     {
+        if (SceneManager.GetActiveScene().name == "MainMenu" && createdEvent is not GlobalEvent_Weather)
+        {
+            return null;
+        }
         createdEvent.Execute();
         ActiveGlobalEvents.Add(createdEvent);
         return createdEvent;
@@ -131,7 +154,7 @@ public class GlobalEventHandler : MonoBehaviour
 
     public GlobalEventHandlerSaveData SaveData()
     {
-        GlobalEventHandlerSaveData saveData = new(ActiveGlobalEvents);
+        GlobalEventHandlerSaveData saveData = new(ActiveGlobalEvents, _eventControllers);
         return saveData;
     }
     public void LoadData(GlobalEventHandlerSaveData saveData)
@@ -140,6 +163,14 @@ public class GlobalEventHandler : MonoBehaviour
         {
             ActiveGlobalEvents.Add(globalEvent);
             globalEvent.Execute();
+        }
+        for (int i = 0; i < saveData.EventControllerSaveDatas.Count; i++)
+        {
+            //Порядок контроллеров неизменный, что в сейве, что актуально
+            _eventControllers[i].LastEventDay = saveData.EventControllerSaveDatas[i].LastEventDay;
+
+            //После загрузки стоит перепредиктить ивенты
+            _eventControllers[i].PredictNextEvent();
         }
     }
 }

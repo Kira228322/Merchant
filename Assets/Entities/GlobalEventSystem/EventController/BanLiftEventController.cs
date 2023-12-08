@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BanLiftEventController : MonoBehaviour, IEventController<GlobalEvent_BanLift>
+public class BanLiftEventController : MonoBehaviour, IEventController<GlobalEvent_BanLift>, ISaveable<EventControllerSaveData>
 {
     public int MinDelayToNextEvent => 27;
 
-    public int MaxDelayToNextEvent => 36;
+    public int MaxDelayToNextEvent => 35;
 
     public int DateOfNextEvent { get; set; }
     public int HourOfNextEvent { get; set; }
@@ -15,6 +15,7 @@ public class BanLiftEventController : MonoBehaviour, IEventController<GlobalEven
 
     public GlobalEvent_BanLift AddEvent()
     {
+        LastEventDay = GameTime.CurrentDay;
         int bannedItemsCount = BannedItemsHandler.Instance.BannedItems.Count;
         if (bannedItemsCount == 0)
             return null;
@@ -25,7 +26,6 @@ public class BanLiftEventController : MonoBehaviour, IEventController<GlobalEven
             BanLiftedItemName = itemToUnBanName,
         };
         var eventToAdd = GlobalEventHandler.Instance.AddGlobalEvent(newEvent);
-        LastEventDay = GameTime.CurrentDay;
         return eventToAdd;
     }
 
@@ -45,5 +45,16 @@ public class BanLiftEventController : MonoBehaviour, IEventController<GlobalEven
     public void RemoveEvent()
     {
 
+    }
+
+    public EventControllerSaveData SaveData()
+    {
+        EventControllerSaveData saveData = new(LastEventDay);
+        return saveData;
+    }
+
+    public void LoadData(EventControllerSaveData data)
+    {
+        LastEventDay = data.LastEventDay;
     }
 }

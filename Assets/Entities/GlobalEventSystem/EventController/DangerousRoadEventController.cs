@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class DangerousRoadEventController : MonoBehaviour, IEventController<GlobalEvent_DangerousRoad>
+public class DangerousRoadEventController : MonoBehaviour, IEventController<GlobalEvent_DangerousRoad>, ISaveable<EventControllerSaveData>
 {
     public int MinDelayToNextEvent => 3;
 
@@ -59,5 +59,16 @@ public class DangerousRoadEventController : MonoBehaviour, IEventController<Glob
     public void RemoveEvent()
     {
         
+    }
+
+    public EventControllerSaveData SaveData()
+    {
+        EventControllerSaveData saveData = new(LastEventDay);
+        return saveData;
+    }
+
+    public void LoadData(EventControllerSaveData data)
+    {
+        LastEventDay = data.LastEventDay;
     }
 }
