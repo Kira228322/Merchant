@@ -130,7 +130,7 @@ public class Region : MonoBehaviour
             result = 0.71f;
         return result;
     }
-
+    
     public int CalculateGainOnMarket(int currentQuantity, int P, int Q, int A, int C, int budget)
     {
         // upd раньше С было число отрицательное, теперь положительное. Везде поменял знаки (в десмосе все еще отрицательное, в таблицу записывать по модулю)
@@ -155,19 +155,6 @@ public class Region : MonoBehaviour
         int boughtCount = (int)Math.Round(budget / boughtPrice);
         int produceCount = (int)Math.Round(budget / producePrice);
         
-        if (produceCount == boughtCount) // 10%, что если товара на рынке равновесное число, то при рестоке это значение 
-            if (Random.Range(0, 10) == 0) // сдвинется с равновесного. Чтобы был хоть иногда какой-то движ кроме ивентов
-            {
-                if (Random.Range(0, 2) == 0)
-                    produceCount += Q / 6 + 2;
-                else
-                    boughtCount += Q / 6 + 2;
-        
-                if (produceCount - boughtCount < -currentQuantity)
-                    return -currentQuantity;
-            }
-
-
         if (produceCount - boughtCount < -currentQuantity) // если купить предметов нужно больше, чем их есть
             return -currentQuantity + Q; // то купить надо будет столько, сколько приведет количество к Q 
         return produceCount - boughtCount;
