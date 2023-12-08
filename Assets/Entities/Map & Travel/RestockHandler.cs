@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class RestockHandler : MonoBehaviour
+public class RestockHandler : MonoBehaviour, ISaveable<RestockSaveData>
 {
     private int _lastRestockDay;
     private Location[] _locations;
@@ -333,4 +333,16 @@ public class RestockHandler : MonoBehaviour
         }
     }
 
+    public RestockSaveData SaveData()
+    {
+        RestockSaveData saveData = new(_lastRestockDay);
+        return saveData;   
+    }
+
+
+
+    public void LoadData(RestockSaveData data)
+    {
+        _lastRestockDay = data.LastRestockDay;
+    }
 }

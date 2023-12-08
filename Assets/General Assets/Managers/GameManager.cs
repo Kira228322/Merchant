@@ -122,6 +122,7 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
             JournalSaveData = new(),
             BannedItemsSaveData = FindObjectOfType<BannedItemsHandler>().SaveData(),
             NpcDatabaseSaveData = NpcDatabase.SaveNPCs(),
+            RestockSaveData = GetComponent<RestockHandler>().SaveData(),
             TimeFlowSaveData = GameTime.SaveData(),
             CooldownHandlerSaveData = FindObjectOfType<CooldownHandler>().SaveData(),
             GlobalEventHandlerSaveData = GlobalEventHandler.Instance.SaveData(),
@@ -146,6 +147,7 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
         QuestHandler.LoadQuests(data.JournalSaveData.QuestsSaveData);
         Diary.Instance.LoadData(data.JournalSaveData.DiarySaveData);
         NpcDatabase.LoadNPCs(data.NpcDatabaseSaveData);
+        GetComponent<RestockHandler>().LoadData(data.RestockSaveData);
         GameTime.LoadData(data.TimeFlowSaveData);
         FindObjectOfType<CooldownHandler>().LoadData(data.CooldownHandlerSaveData);
         GlobalEventHandler.Instance.LoadData(data.GlobalEventHandlerSaveData);
