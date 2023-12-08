@@ -47,5 +47,10 @@ public class ItemEditor : Editor
             item.DaysToSpoil = EditorGUILayout.FloatField(item.DaysToSpoil);
             EditorGUILayout.EndHorizontal();
         }
+
+        if (GUI.changed)
+        {
+            EditorUtility.SetDirty(item);
+        }
     }
 }

@@ -150,6 +150,21 @@ public class DialogueManager : MonoBehaviour
             Debug.LogError("В Ink предполагается, что этот Npc QuestGiver, а на самом деле не так. Ошибка в написании диалога");
             return "null";
         });
+        _currentStory.BindExternalFunction("is_goal_completed", (string questSummary, int goalIndex) =>
+        {
+            Quest quest = QuestHandler.GetQuestBySummary(questSummary);
+            if (quest != null)
+            {
+                Goal goal = quest.Goals[goalIndex];
+                if (goal.CurrentState == Goal.State.Completed)
+                    return true;
+                else return false;
+            }
+            else
+            {
+                return false;
+            }
+        });
         _currentStory.BindExternalFunction("get_activeQuestList", () =>
         {
             //UPD 03.08.23: Теперь я знаю, как передавать массивы,
