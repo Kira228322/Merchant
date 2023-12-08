@@ -27,7 +27,10 @@ MonoBehaviour:
   MaxExperienceReward: 0
   MinMoneyReward: 0
   MaxMoneyReward: 0
-  NextQuest: {fileID: 0}
+  QuestLine: {fileID: 11400000, guid: 56ec3176d91fb854aa43ec74e2ebf30c, type: 2}
+  PrerequisiteQuests:
+  - {fileID: 11400000, guid: 59f265bcca17c874b8ba514a01e62fbf, type: 2}
+  QuestCompletionDelay: 0
   goals:
   - goalType: 4
     goalState: 0
@@ -41,7 +44,8 @@ MonoBehaviour:
     RequiredIDofNPC: 4
     RequiredLine: bring_intercepted_relic_to_laura
     FailingLine: 
-    RequiredItemName: placeholder_fourth_relic
+    RequiredItemName: "\u0417\u0430\u0445\u0432\u0430\u0447\u0435\u043D\u043D\u0430\u044F
+      \u0440\u0435\u043B\u0438\u043A\u0432\u0438\u044F"
     RequiredItemCategories: 
     QuestItemsBehaviour: 0
     RandomDeliveryWeight: 0

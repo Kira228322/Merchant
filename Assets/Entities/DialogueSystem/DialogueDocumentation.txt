@@ -38,6 +38,10 @@ get_random_questparams_of_questgiver()
 Получает случайную строку questParams от этого квестгивера и уводит его на кулдаун.
 Если НПС - не квестгивер, возвращается "null" и ошибка в Debug.Log.
 
+is_goal_completed(questSummary, goalIndex)
+Возвращает true, если в quest с указанным questSummary выполнен goal под номером goalIndex.
+Возвращает false иначе или если квест не взят.
+
 get_activeQuestList()
 Возвращает строку, в которой соединены все questSummary активных квестов для этого нпс.
 Строку необходимо обрабатывать через метод contains(source, substring).
