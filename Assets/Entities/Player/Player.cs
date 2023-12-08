@@ -178,7 +178,7 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
             foreach (var economyParam in _currentTestedRegion.ItemEconomyParams)
             {
                 txt += economyParam.Key;
-                txt += " ";
+                txt += "  ";
                 txt += (_currentTestedRegion.CountOfEachItem[economyParam.Key] - economyParam.Value[0]).ToString();
                 txt += "\n";
             }

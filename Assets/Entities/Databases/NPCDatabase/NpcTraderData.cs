@@ -23,9 +23,14 @@ public class NpcTraderData : NpcData, IResetOnExitPlaymode, ISaveable<NpcTraderS
     
     public void RestockCoefficients()
     {
+        if (CurrentMoney > GameStartMoney)
+            CurrentMoney -= (CurrentMoney - GameStartMoney + 3) / 4;
+        else
+            CurrentMoney += (GameStartMoney - CurrentMoney + 1) / 2;
+        
         foreach (var buyCoefficient in BuyCoefficients)
         {
-            buyCoefficient.CountToBuy += buyCoefficient.DefaultCountToBuy / 3 + Player.Instance.Statistics.Diplomacy.Total + 1;
+            buyCoefficient.CountToBuy += buyCoefficient.DefaultCountToBuy / 4 + Player.Instance.Statistics.Diplomacy.Total + 1;
             if (buyCoefficient.CountToBuy > buyCoefficient.DefaultCountToBuy)
                 buyCoefficient.CountToBuy = buyCoefficient.DefaultCountToBuy;
         }
