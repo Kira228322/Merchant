@@ -117,7 +117,7 @@ public class RestockHandler : MonoBehaviour
                 Item newItem;
                 bool reallyNew;
 
-                if (Random.Range(0, 3) == 0)
+                if (Random.Range(0, 6) == 0)
                     isMainGood = false; // не мейн тип шмотки торговца 
                 else
                     isMainGood = true; // мейн тип шмотки торговца
@@ -127,7 +127,7 @@ public class RestockHandler : MonoBehaviour
                     reallyNew = true;
                     traderBuyCoefficient = trader.BuyCoefficients[Random.Range(0, trader.BuyCoefficients.Count)];
                     // у мейн шмоток коэф 1
-                    if ((traderBuyCoefficient.Coefficient == 1) == isMainGood)
+                    if ((traderBuyCoefficient.Coefficient != 1) == isMainGood)
                     {
                         newItem = ItemDatabase.GetRandomItemOfThisType(traderBuyCoefficient.ItemType);
 

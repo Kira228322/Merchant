@@ -38,7 +38,7 @@ class EditorTraderType : Editor
 
                 EditorGUILayout.BeginHorizontal();
                 GUILayout.Label("Coefficient", GUILayout.MaxWidth(80));
-                goodType.Coefficient = EditorGUILayout.Slider(goodType.Coefficient, 0.6f, 1);
+                goodType.Coefficient = EditorGUILayout.Slider(goodType.Coefficient, 0.7f, 1);
                 GUILayout.FlexibleSpace();
                 GUILayout.Label("Count to buy", GUILayout.MaxWidth(80));
                 goodType.CountToBuy = EditorGUILayout.IntField(goodType.CountToBuy);

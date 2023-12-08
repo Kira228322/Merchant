@@ -69,9 +69,9 @@ public class Location : MonoBehaviour
         foreach (var EconomyParam in _region.ItemEconomyParams)
         {
             ItemEconomyParams.Add(EconomyParam.Key, new[]
-                    {Convert.ToInt32(Math.Round(EconomyParam.Value[0] * coef)),
-                    EconomyParam.Value[1],
-                    Convert.ToInt32(Math.Round(EconomyParam.Value[2] * coef))});
+                    {Convert.ToInt32(Math.Round(EconomyParam.Value[0] * coef)), 
+                        Convert.ToInt32(Math.Round(EconomyParam.Value[1] * coef)),
+                        Convert.ToInt32(Math.Round(EconomyParam.Value[2] * coef))});
         }
     }
 
@@ -81,9 +81,8 @@ public class Location : MonoBehaviour
         CountOfEachItem = new();
         foreach (var item in ItemEconomyParams)
         { // инициализация словаря всеми предметами в игре 
-            CountOfEachItem.Add(item.Key, item.Value[0]); // item.Value[0] равновесное число
+            CountOfEachItem.Add(item.Key, item.Value[0]); 
         }
-
     }
 
     public void CountAllItemsOnScene()
@@ -101,7 +100,6 @@ public class Location : MonoBehaviour
             {
                 CountOfEachItem[NpcTraders[i].AdditiveGoods[j].Good.Name] += NpcTraders[i].AdditiveGoods[j].CurrentCount;
             }
-            
         }
     }
 
