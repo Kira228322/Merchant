@@ -17,7 +17,7 @@ MonoBehaviour:
   FinishWalkingTime: 16
   GameStartMoney: 280
   CurrentMoney: 280
-  ID: 500
+  ID: 9000
   TraderTypes:
   - {fileID: 11400000, guid: 51dbe90d250181740b25a6b934ec84ab, type: 2}
   - {fileID: 11400000, guid: a19f5b5c8dfe21f4e90ade716dc35c6b, type: 2}
@@ -82,8 +82,8 @@ MonoBehaviour:
     Coefficient: 1
     DefaultCountToBuy: 20
   - ItemType: 4
-    Coefficient: 0.95
-    DefaultCountToBuy: 16
+    Coefficient: 1
+    DefaultCountToBuy: 30
   - ItemType: 14
     Coefficient: 1
     DefaultCountToBuy: 22
@@ -114,6 +114,18 @@ MonoBehaviour:
   - ItemType: 19
     Coefficient: 0.95
     DefaultCountToBuy: 5
+  - ItemType: 31
+    Coefficient: 1
+    DefaultCountToBuy: 13
+  - ItemType: 28
+    Coefficient: 1
+    DefaultCountToBuy: 13
+  - ItemType: 2
+    Coefficient: 1
+    DefaultCountToBuy: 2
+  - ItemType: 1
+    Coefficient: 1
+    DefaultCountToBuy: 2
   Goods:
   - Good: {fileID: 11400000, guid: b97281cec5b977c42b7938ae0ac32475, type: 2}
     MaxCount: 5
@@ -172,8 +184,8 @@ MonoBehaviour:
     Coefficient: 1
     DefaultCountToBuy: 20
   - ItemType: 4
-    Coefficient: 0.95
-    DefaultCountToBuy: 16
+    Coefficient: 1
+    DefaultCountToBuy: 30
   - ItemType: 14
     Coefficient: 1
     DefaultCountToBuy: 22
@@ -204,3 +216,15 @@ MonoBehaviour:
   - ItemType: 19
     Coefficient: 0.95
     DefaultCountToBuy: 5
+  - ItemType: 31
+    Coefficient: 1
+    DefaultCountToBuy: 13
+  - ItemType: 28
+    Coefficient: 1
+    DefaultCountToBuy: 13
+  - ItemType: 2
+    Coefficient: 1
+    DefaultCountToBuy: 2
+  - ItemType: 1
+    Coefficient: 1
+    DefaultCountToBuy: 2

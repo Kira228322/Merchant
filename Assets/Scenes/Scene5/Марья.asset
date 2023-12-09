@@ -1,0 +1,139 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a46bd3596c904af40a170307cb676e23, type: 3}
+  m_Name: "\u041C\u0430\u0440\u044C\u044F"
+  m_EditorClassIdentifier: 
+  Name: "\u041C\u0430\u0440\u044C\u044F"
+  StartWalkingTime: 7
+  FinishWalkingTime: 21
+  GameStartMoney: 311
+  CurrentMoney: 311
+  ID: 9503
+  TraderTypes:
+  - {fileID: 11400000, guid: 369f7f05ba0335d4bb0a182c75030d8e, type: 2}
+  - {fileID: 11400000, guid: 6c98176e1bde7ff44b1a17e69930a9d0, type: 2}
+  - {fileID: 11400000, guid: f29d03ed2d07c134cab2fdb0a7eb164d, type: 2}
+  IsBlackMarket: 0
+  HaveAdditiveGoods: 1
+  _baseGoods:
+  - Good: {fileID: 11400000, guid: 798203fc4d5aa134db44de065f7e2deb, type: 2}
+    MaxCount: 4
+    CurrentCount: 4
+    CurrentPrice: 35
+  - Good: {fileID: 11400000, guid: 59436fb2773791c4884376fe4fb621cb, type: 2}
+    MaxCount: 5
+    CurrentCount: 5
+    CurrentPrice: 73
+  - Good: {fileID: 11400000, guid: d2a51a3a888004a47bf701d46093efad, type: 2}
+    MaxCount: 4
+    CurrentCount: 4
+    CurrentPrice: 51
+  - Good: {fileID: 11400000, guid: d70fd9c7b0e50c34ab39213bea9787e8, type: 2}
+    MaxCount: 6
+    CurrentCount: 6
+    CurrentPrice: 64
+  - Good: {fileID: 11400000, guid: 359ca71561d6b8e4cac01efaeb5fb56e, type: 2}
+    MaxCount: 5
+    CurrentCount: 5
+    CurrentPrice: 31
+  - Good: {fileID: 11400000, guid: efc5b0fa713bcf54e845166c8adf8049, type: 2}
+    MaxCount: 5
+    CurrentCount: 5
+    CurrentPrice: 76
+  - Good: {fileID: 11400000, guid: 09f61be5e198d5a4db88f8b7f9f91feb, type: 2}
+    MaxCount: 6
+    CurrentCount: 6
+    CurrentPrice: 14
+  - Good: {fileID: 11400000, guid: bc0d266ee29390b4db89f24c4413d1d3, type: 2}
+    MaxCount: 6
+    CurrentCount: 6
+    CurrentPrice: 24
+  - Good: {fileID: 11400000, guid: d7c1c85db86385f42b91403fbc17597a, type: 2}
+    MaxCount: 6
+    CurrentCount: 6
+    CurrentPrice: 39
+  - Good: {fileID: 11400000, guid: 3fa8870e7ddf82849adf409ef626a4b9, type: 2}
+    MaxCount: 4
+    CurrentCount: 4
+    CurrentPrice: 55
+  - Good: {fileID: 11400000, guid: 770095a5b7b7f6b499f93d0a074dbe5c, type: 2}
+    MaxCount: 3
+    CurrentCount: 3
+    CurrentPrice: 63
+  - Good: {fileID: 11400000, guid: 9d3bc02dfe493f24b8a6f3e09410d216, type: 2}
+    MaxCount: 7
+    CurrentCount: 7
+    CurrentPrice: 14
+  - Good: {fileID: 11400000, guid: 314c3101819079747b41bae80d4d6203, type: 2}
+    MaxCount: 6
+    CurrentCount: 6
+    CurrentPrice: 38
+  - Good: {fileID: 11400000, guid: 09458c858b4f9b946aeb38dbd30c7338, type: 2}
+    MaxCount: 5
+    CurrentCount: 5
+    CurrentPrice: 90
+  - Good: {fileID: 11400000, guid: dbfad0a2f8526c745a5e0a68dd7dd109, type: 2}
+    MaxCount: 5
+    CurrentCount: 5
+    CurrentPrice: 64
+  - Good: {fileID: 11400000, guid: ce1bed0d0ef5a204dbe2749afea65fba, type: 2}
+    MaxCount: 4
+    CurrentCount: 4
+    CurrentPrice: 52
+  - Good: {fileID: 11400000, guid: a313505e6b787384ebb09fe35bdca50f, type: 2}
+    MaxCount: 3
+    CurrentCount: 3
+    CurrentPrice: 90
+  - Good: {fileID: 11400000, guid: 47c26d2664100ad4fac6a5701dceaaa2, type: 2}
+    MaxCount: 4
+    CurrentCount: 4
+    CurrentPrice: 45
+  - Good: {fileID: 11400000, guid: 47714c0b6d1412347a6617dc26c20b9e, type: 2}
+    MaxCount: 4
+    CurrentCount: 4
+    CurrentPrice: 61
+  - Good: {fileID: 11400000, guid: e4a23c54f974e6740a7cc6d083120ca4, type: 2}
+    MaxCount: 5
+    CurrentCount: 5
+    CurrentPrice: 57
+  - Good: {fileID: 11400000, guid: 94ed0a8e5e4ba164ebcb8d733e96c3a9, type: 2}
+    MaxCount: 6
+    CurrentCount: 6
+    CurrentPrice: 42
+  - Good: {fileID: 11400000, guid: 55e48378c4edc5743bd73d596f3bb27e, type: 2}
+    MaxCount: 7
+    CurrentCount: 7
+    CurrentPrice: 20
+  - Good: {fileID: 11400000, guid: 82441fcea442b5243bfe6122b1fa1221, type: 2}
+    MaxCount: 5
+    CurrentCount: 5
+    CurrentPrice: 12
+  - Good: {fileID: 11400000, guid: f300102ff12f3904cb5e688a37017013, type: 2}
+    MaxCount: 4
+    CurrentCount: 4
+    CurrentPrice: 78
+  - Good: {fileID: 11400000, guid: 86ed694dd10ff2a4f8940bdcaa5165db, type: 2}
+    MaxCount: 5
+    CurrentCount: 5
+    CurrentPrice: 101
+  - Good: {fileID: 11400000, guid: 642cddc7bf51f4b46b9d42d47a5efe59, type: 2}
+    MaxCount: 5
+    CurrentCount: 5
+    CurrentPrice: 30
+  - Good: {fileID: 11400000, guid: 5cb686dd1ea7dfa4fa43a84801dbd814, type: 2}
+    MaxCount: 5
+    CurrentCount: 5
+    CurrentPrice: 57
+  _baseBuyCoefficients: []
+  Goods: []
+  AdditiveGoods: []
+  BuyCoefficients: []
