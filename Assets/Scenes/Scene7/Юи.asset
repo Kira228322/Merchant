@@ -116,12 +116,12 @@ MonoBehaviour:
     CurrentCount: 5
     CurrentPrice: 51
   - Good: {fileID: 11400000, guid: 7d2a1d726230f5649ae0813944d50e96, type: 2}
-    MaxCount: 17
-    CurrentCount: 17
+    MaxCount: 5
+    CurrentCount: 5
     CurrentPrice: 39
   - Good: {fileID: 11400000, guid: d26fb36da5047fd42b5cf38e3d8ec8f9, type: 2}
-    MaxCount: 21
-    CurrentCount: 21
+    MaxCount: 11
+    CurrentCount: 11
     CurrentPrice: 16
   - Good: {fileID: 11400000, guid: dcae6f5718ae3064faf9c9f99c1e8f26, type: 2}
     MaxCount: 11
@@ -143,7 +143,67 @@ MonoBehaviour:
     MaxCount: 2
     CurrentCount: 2
     CurrentPrice: 242
-  _baseBuyCoefficients: []
+  _baseBuyCoefficients:
+  - ItemType: 18
+    Coefficient: 0.95
+    DefaultCountToBuy: 10
+  - ItemType: 9
+    Coefficient: 1
+    DefaultCountToBuy: 18
+  - ItemType: 3
+    Coefficient: 1
+    DefaultCountToBuy: 20
+  - ItemType: 4
+    Coefficient: 0.95
+    DefaultCountToBuy: 16
+  - ItemType: 0
+    Coefficient: 1
+    DefaultCountToBuy: 7
+  - ItemType: 1
+    Coefficient: 1
+    DefaultCountToBuy: 8
+  - ItemType: 2
+    Coefficient: 1
+    DefaultCountToBuy: 9
+  - ItemType: 11
+    Coefficient: 0.8
+    DefaultCountToBuy: 10
+  - ItemType: 25
+    Coefficient: 1
+    DefaultCountToBuy: 14
+  - ItemType: 19
+    Coefficient: 1
+    DefaultCountToBuy: 5
+  - ItemType: 14
+    Coefficient: 1
+    DefaultCountToBuy: 22
+  - ItemType: 12
+    Coefficient: 1
+    DefaultCountToBuy: 15
+  - ItemType: 13
+    Coefficient: 1
+    DefaultCountToBuy: 15
+  - ItemType: 15
+    Coefficient: 0.9
+    DefaultCountToBuy: 3
+  - ItemType: 16
+    Coefficient: 0.9
+    DefaultCountToBuy: 4
+  - ItemType: 17
+    Coefficient: 0.9
+    DefaultCountToBuy: 3
+  - ItemType: 22
+    Coefficient: 0.95
+    DefaultCountToBuy: 10
+  - ItemType: 23
+    Coefficient: 0.95
+    DefaultCountToBuy: 10
+  - ItemType: 24
+    Coefficient: 1
+    DefaultCountToBuy: 8
+  - ItemType: 26
+    Coefficient: 1
+    DefaultCountToBuy: 16
   Goods: []
   AdditiveGoods: []
   BuyCoefficients: []

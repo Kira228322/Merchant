@@ -98,20 +98,20 @@ MonoBehaviour:
     CurrentCount: 4
     CurrentPrice: 45
   - Good: {fileID: 11400000, guid: 47714c0b6d1412347a6617dc26c20b9e, type: 2}
-    MaxCount: 4
-    CurrentCount: 4
+    MaxCount: 8
+    CurrentCount: 8
     CurrentPrice: 61
   - Good: {fileID: 11400000, guid: e4a23c54f974e6740a7cc6d083120ca4, type: 2}
     MaxCount: 5
     CurrentCount: 5
     CurrentPrice: 57
   - Good: {fileID: 11400000, guid: 94ed0a8e5e4ba164ebcb8d733e96c3a9, type: 2}
-    MaxCount: 6
-    CurrentCount: 6
+    MaxCount: 9
+    CurrentCount: 9
     CurrentPrice: 42
   - Good: {fileID: 11400000, guid: 55e48378c4edc5743bd73d596f3bb27e, type: 2}
-    MaxCount: 7
-    CurrentCount: 7
+    MaxCount: 10
+    CurrentCount: 10
     CurrentPrice: 20
   - Good: {fileID: 11400000, guid: 82441fcea442b5243bfe6122b1fa1221, type: 2}
     MaxCount: 5
@@ -133,7 +133,32 @@ MonoBehaviour:
     MaxCount: 5
     CurrentCount: 5
     CurrentPrice: 57
-  _baseBuyCoefficients: []
+  - Good: {fileID: 11400000, guid: 555cfc2fe08edb7458604d4a73e47d67, type: 2}
+    MaxCount: 17
+    CurrentCount: 17
+    CurrentPrice: 11
+  _baseBuyCoefficients:
+  - ItemType: 7
+    Coefficient: 1
+    DefaultCountToBuy: 22
+  - ItemType: 23
+    Coefficient: 1
+    DefaultCountToBuy: 11
+  - ItemType: 27
+    Coefficient: 1
+    DefaultCountToBuy: 25
+  - ItemType: 2
+    Coefficient: 0.95
+    DefaultCountToBuy: 5
+  - ItemType: 28
+    Coefficient: 1
+    DefaultCountToBuy: 12
+  - ItemType: 31
+    Coefficient: 1
+    DefaultCountToBuy: 35
+  - ItemType: 4
+    Coefficient: 1
+    DefaultCountToBuy: 20
   Goods: []
   AdditiveGoods: []
   BuyCoefficients: []
