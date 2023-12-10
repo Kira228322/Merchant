@@ -13,6 +13,7 @@ INCLUDE ../../../MainInkLibrary.ink
     +[Да. Оскар уже получает первую прибыль.]
         Замечательно! Скоро я и сам туда отправлюсь, отведать местной выпивки.
         ~invoke_dialogue_event("claudius_approved")
+        ~invoke_dialogue_event("return_to_claudius")
         Передай Карлосу, что я считаю, что этот торговый путь ждёт отличное будущее! 
             ->END
 

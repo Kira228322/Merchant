@@ -12,6 +12,7 @@ INCLUDE ../../../MainInkLibrary.ink
 Вот и ты. Удалось ли тебе договориться с рабочими?
     +[Да. В скором времени они приступят к ремону дорог.]
         ~invoke_dialogue_event("hilbert_approved")
+        ~invoke_dialogue_event("return_to_hilbert")
         Хорошо. Можешь сказать Карлосу, что я даю своё одобрение.
             ->END
 

@@ -12,6 +12,7 @@ INCLUDE ../../../MainInkLibrary.ink
 Что, уже вернулся? Получил ли одобрение у властей?
     +[Да. Мою заявку в итоге приняли.]
         ~invoke_dialogue_event("oswald_approved")
+        ~invoke_dialogue_event("return_to_oswald")
         Ну тогда иди отсюда поскорее. Передай Карлосу, что я даю своё одобрение.
             ->END
 

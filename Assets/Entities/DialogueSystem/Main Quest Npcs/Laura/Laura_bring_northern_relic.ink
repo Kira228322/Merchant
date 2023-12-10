@@ -1,7 +1,7 @@
 INCLUDE ../../MainInkLibrary.ink
 
 ~temp activeQuests = get_activeQuestList()
-
+~debug_log(activeQuests)
 {contains(activeQuests, "bring_third_relic_to_laura"):
     ->bring_relic
 -else:
