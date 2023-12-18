@@ -8465,6 +8465,111 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 662194080356567718, guid: 366bd147d3b568843ab9463d10b7fb98, type: 3}
   m_PrefabInstance: {fileID: 295143540}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &297151175
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1048997141}
+    m_Modifications:
+    - target: {fileID: 5788823286673002131, guid: 6bd93b75e0a81ea42be3167d59bc9004, type: 3}
+      propertyPath: m_Name
+      value: Rudolf
+      objectReference: {fileID: 0}
+    - target: {fileID: 5788823286673002134, guid: 6bd93b75e0a81ea42be3167d59bc9004, type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5788823286673002134, guid: 6bd93b75e0a81ea42be3167d59bc9004, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -27.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 5788823286673002134, guid: 6bd93b75e0a81ea42be3167d59bc9004, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5788823286673002134, guid: 6bd93b75e0a81ea42be3167d59bc9004, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5788823286673002134, guid: 6bd93b75e0a81ea42be3167d59bc9004, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5788823286673002134, guid: 6bd93b75e0a81ea42be3167d59bc9004, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5788823286673002134, guid: 6bd93b75e0a81ea42be3167d59bc9004, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5788823286673002134, guid: 6bd93b75e0a81ea42be3167d59bc9004, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5788823286673002134, guid: 6bd93b75e0a81ea42be3167d59bc9004, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5788823286673002134, guid: 6bd93b75e0a81ea42be3167d59bc9004, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5788823286673002134, guid: 6bd93b75e0a81ea42be3167d59bc9004, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6bd93b75e0a81ea42be3167d59bc9004, type: 3}
+--- !u!4 &297151176 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5788823286673002134, guid: 6bd93b75e0a81ea42be3167d59bc9004, type: 3}
+  m_PrefabInstance: {fileID: 297151175}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &297151177 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5788823286673002131, guid: 6bd93b75e0a81ea42be3167d59bc9004, type: 3}
+  m_PrefabInstance: {fileID: 297151175}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &297151178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 297151177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f44f38a1f112404196c4abf8b76be7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _appearanceBehaviour: 0
+  _isInstant: 0
+  _showConditions:
+  - QuestSummary: discuss_tradepath_with_guild_leader
+    questState: 2
+    HoursDelay: 0
+  _hideConditions:
+  - QuestSummary: hire_road_workers
+    questState: 2
+    HoursDelay: 0
+--- !u!114 &297151179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 297151177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df6ab5e347f61a544b92bcb6d4d270df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NpcData: {fileID: 11400000, guid: 9861c41c88de59644a8870a796ac8180, type: 2}
+  InkJSON: {fileID: 4900000, guid: a71305f36b658e94d964698aa1d1acad, type: 3}
+  _exclamationMarkPrefab: {fileID: 3147425638445614604, guid: b1260439a5d175441800ad6cac241efb, type: 3}
+  ExclamationMark: {fileID: 0}
 --- !u!1001 &298627396
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13309,112 +13414,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 75e84fbdb66ab5647a06b786c6662307, type: 3}
---- !u!1001 &843145714
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1048997141}
-    m_Modifications:
-    - target: {fileID: 7345458815765874104, guid: c92292b506614794b8b0bad772f2ccb1, type: 3}
-      propertyPath: m_RootOrder
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 7345458815765874104, guid: c92292b506614794b8b0bad772f2ccb1, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -27.77
-      objectReference: {fileID: 0}
-    - target: {fileID: 7345458815765874104, guid: c92292b506614794b8b0bad772f2ccb1, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1.18
-      objectReference: {fileID: 0}
-    - target: {fileID: 7345458815765874104, guid: c92292b506614794b8b0bad772f2ccb1, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7345458815765874104, guid: c92292b506614794b8b0bad772f2ccb1, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7345458815765874104, guid: c92292b506614794b8b0bad772f2ccb1, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7345458815765874104, guid: c92292b506614794b8b0bad772f2ccb1, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7345458815765874104, guid: c92292b506614794b8b0bad772f2ccb1, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7345458815765874104, guid: c92292b506614794b8b0bad772f2ccb1, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7345458815765874104, guid: c92292b506614794b8b0bad772f2ccb1, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7345458815765874104, guid: c92292b506614794b8b0bad772f2ccb1, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7345458815765874109, guid: c92292b506614794b8b0bad772f2ccb1, type: 3}
-      propertyPath: m_Name
-      value: Rudolf
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: -7625426533287326561, guid: c92292b506614794b8b0bad772f2ccb1, type: 3}
-  m_SourcePrefab: {fileID: 100100000, guid: c92292b506614794b8b0bad772f2ccb1, type: 3}
---- !u!4 &843145715 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7345458815765874104, guid: c92292b506614794b8b0bad772f2ccb1, type: 3}
-  m_PrefabInstance: {fileID: 843145714}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &843145716 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7345458815765874109, guid: c92292b506614794b8b0bad772f2ccb1, type: 3}
-  m_PrefabInstance: {fileID: 843145714}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &843145717
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 843145716}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df6ab5e347f61a544b92bcb6d4d270df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NpcData: {fileID: 11400000, guid: 9861c41c88de59644a8870a796ac8180, type: 2}
-  InkJSON: {fileID: 4900000, guid: a71305f36b658e94d964698aa1d1acad, type: 3}
-  _exclamationMarkPrefab: {fileID: 3147425638445614604, guid: b1260439a5d175441800ad6cac241efb, type: 3}
-  ExclamationMark: {fileID: 0}
---- !u!114 &843145718
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 843145716}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f44f38a1f112404196c4abf8b76be7e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _appearanceBehaviour: 0
-  _isInstant: 0
-  _showConditions:
-  - QuestSummary: discuss_tradepath_with_guild_leader
-    questState: 2
-    HoursDelay: 0
-  _hideConditions:
-  - QuestSummary: hire_road_workers
-    questState: 2
-    HoursDelay: 0
 --- !u!4 &847659456 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5978752676191972173, guid: 9cbd8eb8fec3ae14d8f42a7151d686b5, type: 3}
@@ -15471,7 +15470,7 @@ Transform:
   - {fileID: 1747318181}
   - {fileID: 1537475280}
   - {fileID: 1036448737}
-  - {fileID: 843145715}
+  - {fileID: 297151176}
   - {fileID: 1503702697}
   m_Father: {fileID: 0}
   m_RootOrder: 17
@@ -22235,7 +22234,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1852088775}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.87, y: 0, z: 0}
+  m_LocalPosition: {x: -3.351, y: -0.029, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
