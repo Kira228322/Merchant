@@ -3,9 +3,17 @@ INCLUDE ../../MainInkLibrary.ink
 ~temp activeQuests = get_activeQuestList()
 {contains(activeQuests, "bring_good_news_to_laura"):
     -> bring_good_news
+}
+{contains(activeQuests, "meet_laura_at_new_place"):
+    -> hurryupandleave
 -else:
     -> generic
 }
+
+=== hurryupandleave ===
+Мне нужно собирать вещи. Увидимся в Солнцедолье!
+->END
+
 
 === bring_good_news ===
 Привет. У тебя есть какие-то новости?

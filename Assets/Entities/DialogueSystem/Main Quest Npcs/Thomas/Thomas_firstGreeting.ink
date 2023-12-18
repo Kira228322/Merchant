@@ -10,6 +10,9 @@ INCLUDE ../../MainInkLibrary.ink
 {contains(questSummaries, "tutorial_readletter"):
 -> readLetter
 }
+{contains(questSummaries, "tutorial_buy_relic_from_richard"):
+-> farewell
+}
 -> firstGreeting
 
 

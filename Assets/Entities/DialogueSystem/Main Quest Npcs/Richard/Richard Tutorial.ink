@@ -12,7 +12,7 @@ INCLUDE ../../MainInkLibrary.ink
         -> about_relic
 }
 {contains(questSummaries, "tutorial_buy_relic_from_richard"):
-    +[Я готов купить у тебя вещь моего отца. (200 золотых)]
+    +[Я готов купить у тебя вещь моего отца. (200 золота)]
         -> buy_relic
 }
 +[Мне пора идти.]
@@ -31,7 +31,7 @@ INCLUDE ../../MainInkLibrary.ink
             Пацан, ты знаешь поговорку "деньги правят миром"? За определённую плату мы могли бы договориться.
             Да не трясись, я даже сделаю тебе скидку, потому что твой батя меня спас.
             ~invoke_dialogue_event("tutorial_talk_to_richard")
-                ->END
+                ->greeting
     
 === buy_relic ===
 Тогда давай сюда деньги.
@@ -44,5 +44,6 @@ INCLUDE ../../MainInkLibrary.ink
         ->END
 }
     +[Я передумал.]
+    Не издевайся надо мной, сопляк! Кыш отсюда!
         ->END
 
