@@ -12,7 +12,7 @@ public class EventWitch : EventInTravel
     {
         ButtonsLabel.Add("Согласиться");
         ButtonsLabel.Add("Отказаться");
-        SetInfoButton($"Ведьма может наложить положительное заклять с шансом {TravelEventHandler.GetProbability(_probabilityOfGoodCast, Player.Instance.Statistics.Luck)}%." +
+        SetInfoButton($"Ведьма может наложить положительное заклятье с шансом {TravelEventHandler.GetProbability(_probabilityOfGoodCast, Player.Instance.Statistics.Luck)}%." +
                       $"\nШанс успеха зависит от вашей удачи");
     }
 
@@ -32,7 +32,7 @@ public class EventWitch : EventInTravel
                 {
                     status = _negativeStatuses[Random.Range(0, _negativeStatuses.Count)];
                     StatusManager.Instance.AddStatusForPlayer(status);
-                    _eventWindow.ChangeDescription($"Вам не повезло и ведьма наложила на вас {status.StatusName}." +
+                    _eventWindow.ChangeDescription($"Вам не повезло и ведьма наложила на вас {status.StatusName}. " +
                                                    $"Ведьма предупреждала, что исход может быть и таков.");
                 }
                     

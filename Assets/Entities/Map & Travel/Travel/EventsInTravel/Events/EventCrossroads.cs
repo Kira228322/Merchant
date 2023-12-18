@@ -16,10 +16,10 @@ public class EventCrossroads : EventInTravel
         switch (n)
         {
             case 0:
-                _eventWindow.ChangeDescription("¬ы продолжили свой путь по левой дороге");
+                _eventWindow.ChangeDescription("¬ы продолжили свой путь по левой дороге.");
                 break;
             case 1:
-                _eventWindow.ChangeDescription("¬ы продолжили свой путь по правой дороге");
+                _eventWindow.ChangeDescription("¬ы продолжили свой путь по правой дороге.");
                 break;
         }
 
