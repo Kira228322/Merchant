@@ -53,6 +53,7 @@ abstract public class NPCMovement : MonoBehaviour
 
     private IEnumerator Enable()
     {
+        yield return new WaitForSeconds(5);
         GameTime.HourChanged += OnHourChangeWhenNotAtHome;
         yield return null;
         OnHourChangeWhenNotAtHome();

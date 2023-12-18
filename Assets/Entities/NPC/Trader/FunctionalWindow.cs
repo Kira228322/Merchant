@@ -21,6 +21,9 @@ public class FunctionalWindow : MonoBehaviour
         
         _NPCName.text = _NPC.NpcData.Name;
 
+        if (_NPC.NpcData.ID >= 9000) // не квестовый нпс
+            _NPCName.color = new Color(58f / 255, 58f / 255, 58f / 255, 1);
+        
         switch (_NPC)
         {
             case NpcTrader:
