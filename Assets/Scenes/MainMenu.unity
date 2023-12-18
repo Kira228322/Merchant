@@ -17468,6 +17468,98 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1365424424466870936, guid: af67ceadc087899479232f75d2b79d59, type: 3}
   m_PrefabInstance: {fileID: 2039690254}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &848894792
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 848894793}
+  - component: {fileID: 848894794}
+  m_Layer: 5
+  m_Name: DesertRegion
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &848894793
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 848894792}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1045987800}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &848894794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 848894792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee352021ef0171d458b8c5ed1b825c24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _locations:
+  - {fileID: 2131873470}
+  - {fileID: 1178900869}
+  _questGivers: []
+  tmpFloat:
+  - 0.95
+  - 0.95
+  - 0.9
+  - 0.85
+  - 0.9
+  - 0.95
+  - 0.85
+  - 0.9
+  - 0.8
+  - 1
+  - 1
+  - 1
+  - 0.9
+  - 0.95
+  - 1
+  - 0.9
+  - 0.9
+  - 0.9
+  - 1
+  - 1
+  - 0.8
+  - 0.8
+  - 0.9
+  - 1
+  - 1
+  - 0.9
+  - 1
+  - 1
+  - 0.9
+  - 0.95
+  - 0.95
+  - 0.85
+  - 1
+  - 0.9
+  - 0.95
+  - 1
+  cvsEconomyParams: {fileID: 4900000, guid: ed6a5611dae45dd43a2ce2d75012848e, type: 3}
+  AveragePopulation: 360
 --- !u!1 &851871658
 GameObject:
   m_ObjectHideFlags: 0
@@ -21690,11 +21782,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _region: {fileID: 815367770}
+  _region: {fileID: 1244471384}
   _icon: {fileID: 0}
   _villageName: "\u0412\u0435\u0440\u0445\u043E\u0433\u043E\u0440\u044C\u0435"
   _description: 
-  _populationOfVillage: 0
+  _populationOfVillage: 200
   _sceneName: Scene9
   _relatedPlaces:
   - {fileID: 3977917189124624316}
@@ -22778,6 +22870,8 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 815367769}
+  - {fileID: 848894793}
+  - {fileID: 1244471383}
   m_Father: {fileID: 4503157603631652564}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -22800,6 +22894,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Regions:
   - {fileID: 815367770}
+  - {fileID: 848894794}
+  - {fileID: 1244471384}
 --- !u!224 &1052105216
 RectTransform:
   m_ObjectHideFlags: 0
@@ -25440,17 +25536,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _region: {fileID: 815367770}
+  _region: {fileID: 848894794}
   _icon: {fileID: 0}
   _villageName: "\u0411\u0430\u0440\u0445\u0430\u043D"
   _description: 
-  _populationOfVillage: 0
+  _populationOfVillage: 190
   _sceneName: Scene10
   _relatedPlaces:
   - {fileID: 2131873470}
   - {fileID: 2131877507}
   _roads: []
-  NpcTraders: []
+  NpcTraders:
+  - {fileID: 11400000, guid: cae6d6ebe403f4d4cb2bb2ec96ff1a4b, type: 2}
+  - {fileID: 11400000, guid: 4a7e63517a386344d88c3aee8428ad3a, type: 2}
+  - {fileID: 11400000, guid: ffe872c666908314eac102265a812f72, type: 2}
+  - {fileID: 11400000, guid: 132415d6f345aff488103e0f233619a7, type: 2}
+  - {fileID: 11400000, guid: 83a8e75cfb56d384fb1a4ed4b5f3b068, type: 2}
+  - {fileID: 11400000, guid: 1045082ce2ab6bd4ab7af41f9d45a52c, type: 2}
   WagonUpgraders: []
 --- !u!222 &1178900870
 CanvasRenderer:
@@ -26988,6 +27090,63 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!1 &1244471382
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1244471383}
+  - component: {fileID: 1244471384}
+  m_Layer: 5
+  m_Name: MountainRegion
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1244471383
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1244471382}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1045987800}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1244471384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1244471382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee352021ef0171d458b8c5ed1b825c24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _locations:
+  - {fileID: 3977917189124624316}
+  - {fileID: 1027030863}
+  - {fileID: 2003071510}
+  _questGivers: []
+  tmpFloat: []
+  cvsEconomyParams: {fileID: 4900000, guid: 7c7b27d8b37ed4c4bb3c1975b5907545, type: 3}
+  AveragePopulation: 590
 --- !u!1 &1245905720
 GameObject:
   m_ObjectHideFlags: 0
@@ -41403,11 +41562,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _region: {fileID: 815367770}
+  _region: {fileID: 1244471384}
   _icon: {fileID: 0}
   _villageName: "\u0410\u0440\u043A\u0430\u043D\u0438\u044F"
   _description: 
-  _populationOfVillage: 0
+  _populationOfVillage: 190
   _sceneName: Scene11
   _relatedPlaces:
   - {fileID: 1027030863}
@@ -44120,11 +44279,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _region: {fileID: 815367770}
+  _region: {fileID: 848894794}
   _icon: {fileID: 0}
   _villageName: "\u0421\u043E\u043B\u043D\u0446\u0435\u0434\u043E\u043B\u044C\u0435"
   _description: 
-  _populationOfVillage: 0
+  _populationOfVillage: 170
   _sceneName: Scene8
   _relatedPlaces:
   - {fileID: 9056293358578365361}
@@ -44132,8 +44291,15 @@ MonoBehaviour:
   - {fileID: 1027030863}
   - {fileID: 1178900869}
   _roads: []
-  NpcTraders: []
-  WagonUpgraders: []
+  NpcTraders:
+  - {fileID: 11400000, guid: 66d4a7b50d1b0ef4cbc0c9032558c780, type: 2}
+  - {fileID: 11400000, guid: ddd74631c61438745bef9824dec99af5, type: 2}
+  - {fileID: 11400000, guid: 8c36da9fd8c1d1d4fa1b163725d1489d, type: 2}
+  - {fileID: 11400000, guid: b51393fb960ed504c9168e22a517cbfe, type: 2}
+  - {fileID: 11400000, guid: 722063feff285c9408f434ac76fbdb5e, type: 2}
+  - {fileID: 11400000, guid: c4ca81fa57cb7b54985db5504ec7ccf2, type: 2}
+  WagonUpgraders:
+  - {fileID: 11400000, guid: 73dd14f2f03095f448d71cb671b72fba, type: 2}
 --- !u!114 &2131873471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64430,7 +64596,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _region: {fileID: 815367770}
+  _region: {fileID: 1244471384}
   _icon: {fileID: 21300000, guid: da7129ed6a246f048a49d8d97de2d2d4, type: 3}
   _villageName: "\u041E\u0442\u0440\u043E\u0433"
   _description: Village with apples. A lot of apples.
@@ -64443,7 +64609,14 @@ MonoBehaviour:
   - {fileID: 1027030863}
   - {fileID: 1973853572}
   _roads: []
-  NpcTraders: []
+  NpcTraders:
+  - {fileID: 11400000, guid: 898c6ccc45747f14ea12bea8bbc22d17, type: 2}
+  - {fileID: 11400000, guid: efd828bad75d10b479320c0466e5078c, type: 2}
+  - {fileID: 11400000, guid: 3c04f8074214e2547ab2a78e951f5805, type: 2}
+  - {fileID: 11400000, guid: fbac2f0e0e9f2e84d87c67c3688238db, type: 2}
+  - {fileID: 11400000, guid: a805115bab3b03742b29aa31c07781b9, type: 2}
+  - {fileID: 11400000, guid: 45027d7d23b6d88498fecf17948c6588, type: 2}
+  - {fileID: 11400000, guid: 1e89389eeca98d94fb92207d95cc1e0e, type: 2}
   WagonUpgraders: []
 --- !u!224 &4009832271467827650
 RectTransform:
@@ -74060,7 +74233,7 @@ MonoBehaviour:
     Suspension: {fileID: 11400000, guid: e5131dd7eacc94e4cae2107c47fd3a9b, type: 2}
     QualityModifier: 0
   Recipes: []
-  _currentTestedRegion: {fileID: 815367770}
+  _currentTestedRegion: {fileID: 848894794}
 --- !u!114 &6761086532353248289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74366,7 +74539,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &7424373379410226458
 MonoBehaviour:
   m_ObjectHideFlags: 0
