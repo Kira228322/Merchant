@@ -51,17 +51,17 @@ public class EventBandits : EventInTravel
                 if (_playerWealthDistribution >= _wealthTaken)
                 {
                     TakePlayersMoney((int)(_playerTotalWealth * _wealthTaken));
-                    _eventWindow.ChangeDescription($"Ограбление. Бандиты забрали {_playerTotalWealth * _wealthTaken} золота");
+                    _eventWindow.ChangeDescription($"Ограбление. Бандиты забрали {(int)(_playerTotalWealth * _wealthTaken)} золота");
                 }
                 else
                 {
                     TakePlayersItems((int)(_playerTotalWealth * _wealthTaken));
-                    _eventWindow.ChangeDescription($"Ограбление. Бандиты забрали вещи на сумму {_playerTotalWealth * _wealthTaken} золота");
+                    _eventWindow.ChangeDescription($"Ограбление. Бандиты забрали вещи на сумму {(int)(_playerTotalWealth * _wealthTaken)} золота");
                 }
                 break;
             case 2:
                 TakePlayersItems((int)(_playerTotalWealth * _wealthTaken));
-                _eventWindow.ChangeDescription($"Ограбление. Бандиты забрали вещи на сумму {_playerTotalWealth * _wealthTaken} золота");
+                _eventWindow.ChangeDescription($"Ограбление. Бандиты забрали вещи на сумму {(int)(_playerTotalWealth * _wealthTaken)} золота");
                 break;
         }
         

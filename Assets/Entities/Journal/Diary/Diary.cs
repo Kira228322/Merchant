@@ -88,10 +88,17 @@ public class Diary : MonoBehaviour, ISaveable<DiarySaveData>
     {
         DiaryEntry newEntry;
         if (news)
+        {
             newEntry = Instantiate(_diaryEntryPrefab, _scrollViewContentNews.transform);
-        else 
+            _entriesNews.Add(newEntry);
+        }
+        else
+        {
             newEntry = Instantiate(_diaryEntryPrefab, _scrollViewContentHints.transform);
+            _entriesHints.Add(newEntry);
+        }
         newEntry.HeaderText.text = dateTime + header;
+        newEntry.DateTimeAcquired = dateTime;
         newEntry.Header = header;
         newEntry.TextInfo = text;
         newEntry.GetComponent<Button>().onClick.AddListener(
