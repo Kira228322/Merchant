@@ -17,17 +17,20 @@ MonoBehaviour:
     \u043A\u043E\u0447\u0435\u0432\u043D\u0438\u043A\u043E\u0432 \u041B\u0430\u0443\u0440\u0435"
   QuestSummary: bring_nomad_relic_to_laura
   QuestGiverID: 19
-  Description: "\u041C\u043D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u043F\u043E\u043C\u0435\u043D\u044F\u0442\u044C\u0441\u044F
-    \u0441 \u043A\u043E\u0447\u0435\u0432\u043D\u0438\u043A\u0430\u043C\u0438 \u043D\u0430
-    \u0440\u0435\u043B\u0438\u043A\u0432\u0438\u044E. \u041D\u0443\u0436\u043D\u043E
-    \u043E\u0442\u0434\u0430\u0442\u044C \u0435\u0451 \u041B\u0430\u0443\u0440\u0435."
+  Description: "\u041C\u043D\u0435 \u0443\u0434\u0430\u043B\u043E\u0441\u044C \u0441\u043E\u0432\u0435\u0440\u0448\u0438\u0442\u044C
+    \u043E\u0431\u043C\u0435\u043D \u0441 \u043A\u043E\u0447\u0435\u0432\u043D\u0438\u043A\u0430\u043C\u0438
+    \u0438 \u043F\u043E\u043B\u0443\u0447\u0438\u0442\u044C \u0440\u0435\u043B\u0438\u043A\u0432\u0438\u044E.
+    \u041D\u0443\u0436\u043D\u043E \u043E\u0442\u0434\u0430\u0442\u044C \u0435\u0451
+    \u041B\u0430\u0443\u0440\u0435."
   RandomExp: 0
   RandomReward: 0
   MinExperienceReward: 0
   MaxExperienceReward: 0
   MinMoneyReward: 0
   MaxMoneyReward: 0
-  NextQuest: {fileID: 0}
+  QuestLine: {fileID: 11400000, guid: deac9b5a4faf75e44a67034dbb0dc386, type: 2}
+  PrerequisiteQuests: []
+  QuestCompletionDelay: 0
   goals:
   - goalType: 4
     goalState: 0
@@ -41,7 +44,7 @@ MonoBehaviour:
     RequiredIDofNPC: 4
     RequiredLine: bring_nomad_relic_to_laura
     FailingLine: 
-    RequiredItemName: placeholder_fifth_relic
+    RequiredItemName: "\u0420\u0435\u043B\u0438\u043A\u0432\u0438\u044F \u041A\u043E\u0447\u0435\u0432\u043D\u0438\u043A\u043E\u0432"
     RequiredItemCategories: 
     QuestItemsBehaviour: 0
     RandomDeliveryWeight: 0

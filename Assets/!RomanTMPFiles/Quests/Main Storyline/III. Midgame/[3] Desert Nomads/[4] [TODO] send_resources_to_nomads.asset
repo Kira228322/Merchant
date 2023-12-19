@@ -20,7 +20,7 @@ MonoBehaviour:
   Description: "\u041A\u043E\u0447\u0435\u0432\u043D\u0438\u043A\u0438 \u0441\u043E\u0433\u043B\u0430\u0441\u043D\u044B
     \u043E\u0431\u043C\u0435\u043D\u044F\u0442\u044C \u0441\u0432\u043E\u044E \u0440\u0435\u043B\u0438\u043A\u0432\u0438\u044E.
     \u0412\u0437\u0430\u043C\u0435\u043D \u043E\u043D\u0438 \u0442\u0440\u0435\u0431\u0443\u044E\u0442
-    \u043C\u0435\u0434\u0438\u0446\u0438\u043D\u0441\u043A\u0438\u0435 \u043F\u0440\u0438\u043F\u0430\u0441\u044B
+    \u043C\u0430\u0433\u0438\u0447\u0435\u0441\u043A\u0438\u0435 \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u044B
     \u0438 \u0434\u0440\u0443\u0433\u0438\u0435 \u0440\u0435\u0434\u043A\u0438\u0435
     \u0440\u0435\u0441\u0443\u0440\u0441\u044B, \u043A\u043E\u0442\u043E\u0440\u044B\u0435
     \u0442\u0440\u0443\u0434\u043D\u043E \u0434\u043E\u0441\u0442\u0430\u0442\u044C
@@ -31,28 +31,73 @@ MonoBehaviour:
   MaxExperienceReward: 0
   MinMoneyReward: 0
   MaxMoneyReward: 0
-  NextQuest: {fileID: 0}
+  QuestLine: {fileID: 11400000, guid: deac9b5a4faf75e44a67034dbb0dc386, type: 2}
+  PrerequisiteQuests: []
+  QuestCompletionDelay: 0
   goals:
-  - goalType: 4
+  - goalType: 5
     goalState: 0
-    description: "\u041E\u0442\u043F\u0440\u0430\u0432\u0438\u0442\u044C \u0440\u0435\u0441\u0443\u0440\u0441\u044B
-      \u0441 \u043A\u0430\u0440\u0430\u0432\u0430\u043D\u043E\u043C"
+    description: "\u0414\u043E\u0441\u0442\u0430\u0432\u0438\u0442\u044C 3 \u0437\u0435\u043B\u044C\u044F"
     currentAmount: 0
     randomAmount: 0
-    minRequiredAmount: 1337
-    maxRequiredAmount: 1337
+    minRequiredAmount: 1
+    maxRequiredAmount: 1
     AdditiveMoneyReward: 0
     RequiredIDofNPC: 19
-    RequiredLine: send_resources_to_nomads
+    RequiredLine: 
     FailingLine: 
-    RequiredItemName: TODO
-    RequiredItemCategories: 
+    RequiredItemName: 
+    RequiredItemCategories: 1b000000
     QuestItemsBehaviour: 0
     RandomDeliveryWeight: 0
     RandomDeliveryCount: 0
     MinRequiredDeliveryWeight: 0
     MaxRequiredDeliveryWeight: 0
+    MinRequiredDeliveryCount: 3
+    MaxRequiredDeliveryCount: 3
+    RequiredRotThreshold: 0
+  - goalType: 5
+    goalState: 0
+    description: "\u0414\u043E\u0441\u0442\u0430\u0432\u0438\u0442\u044C 2\u043A\u0433
+      \u0434\u043E\u0431\u044B\u0447\u0438 \u0441 \u043C\u043E\u043D\u0441\u0442\u0440\u043E\u0432"
+    currentAmount: 0
+    randomAmount: 0
+    minRequiredAmount: 1
+    maxRequiredAmount: 1
+    AdditiveMoneyReward: 0
+    RequiredIDofNPC: 19
+    RequiredLine: 
+    FailingLine: 
+    RequiredItemName: 
+    RequiredItemCategories: 22000000
+    QuestItemsBehaviour: 0
+    RandomDeliveryWeight: 0
+    RandomDeliveryCount: 0
+    MinRequiredDeliveryWeight: 2
+    MaxRequiredDeliveryWeight: 2
     MinRequiredDeliveryCount: 0
     MaxRequiredDeliveryCount: 0
+    RequiredRotThreshold: 0
+  - goalType: 5
+    goalState: 0
+    description: "\u0414\u043E\u0441\u0442\u0430\u0432\u0438\u0442\u044C 4 \u043C\u0430\u0433\u0438\u0447\u0435\u0441\u043A\u0438\u0445
+      \u043F\u0440\u0435\u0434\u043C\u0435\u0442\u0430"
+    currentAmount: 0
+    randomAmount: 0
+    minRequiredAmount: 1
+    maxRequiredAmount: 1
+    AdditiveMoneyReward: 0
+    RequiredIDofNPC: 19
+    RequiredLine: 
+    FailingLine: 
+    RequiredItemName: 
+    RequiredItemCategories: 09000000
+    QuestItemsBehaviour: 0
+    RandomDeliveryWeight: 0
+    RandomDeliveryCount: 0
+    MinRequiredDeliveryWeight: 0
+    MaxRequiredDeliveryWeight: 0
+    MinRequiredDeliveryCount: 4
+    MaxRequiredDeliveryCount: 4
     RequiredRotThreshold: 0
   ItemRewards: []
