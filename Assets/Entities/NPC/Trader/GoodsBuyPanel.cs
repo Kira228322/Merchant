@@ -169,10 +169,7 @@ public class GoodsBuyPanel : MonoBehaviour
         int bannedItem = 1;
         if (BannedItemsHandler.Instance.IsItemBanned(item.Good))
             bannedItem = 2;
-        Debug.Log(item.Good.Name + " " + regionCoef + " " + locationCoef + 
-                  " " + currentQuantityReg + " " + currentQuantityLoca + 
-                  " " + MapManager.CurrentLocation.Region.ItemEconomyParams[item.Good.Name][0]
-                  + " " + MapManager.CurrentLocation.ItemEconomyParams[item.Good.Name][0]);
+        
         float itemTypeCoef = MapManager.CurrentLocation.Region.CoefsForItemTypes[item.Good.TypeOfItem];
         return Convert.ToInt32(Math.Round(item.CurrentPrice * locationCoef * regionCoef * itemTypeCoef * bannedItem));
     }

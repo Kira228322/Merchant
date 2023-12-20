@@ -45,7 +45,7 @@ public class LivingLight : MonoBehaviour
         _light.intensity = _maxIntensity * IntensityArgument + _minIntensity * (1-IntensityArgument);
         float RadiusArgument = (float)Math.Sin(Time.time + _phase + 2 * IntensityArgument)/2 + 0.5f;
         _light.pointLightOuterRadius = _maxRadius * RadiusArgument + _minRadius * (1-RadiusArgument);
-        _light.pointLightInnerRadius = _light.pointLightOuterRadius/2.9f;
+        _light.pointLightInnerRadius = _light.pointLightOuterRadius/2.5f;
     }
 
     private void ChangeIntensityByTime()

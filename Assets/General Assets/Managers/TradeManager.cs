@@ -92,6 +92,8 @@ public class TradeManager : MonoBehaviour
     }
     public void CloseTradeWindow()
     {
+        GoodsBuyPanels.Clear();
+        GoodsSellPanels.Clear();
         StartCoroutine(CloseTradeWindowCoroutine());
     }
 

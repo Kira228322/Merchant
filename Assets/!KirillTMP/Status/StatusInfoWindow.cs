@@ -31,7 +31,7 @@ public class StatusInfoWindow : MonoBehaviour
 
     private IEnumerator FadeOut()
     {
-        WaitForSeconds waitForSeconds = new WaitForSeconds(5);
+        WaitForSeconds waitForSeconds = new WaitForSeconds(3);
         yield return waitForSeconds;
         waitForSeconds = new WaitForSeconds(0.02f);
         for (int i = 0; i < 50; i++)
