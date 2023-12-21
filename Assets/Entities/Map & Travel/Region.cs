@@ -117,17 +117,32 @@ public class Region : MonoBehaviour
     }
     
 
-    public float CalculatePriceCoef(int currentQuantity, int P, int Q, int A, int C)
+    public float CalculatePriceCoefRegion(int currentQuantity, int P, int Q, int A, int C)
     {
         if (currentQuantity <= C)
             currentQuantity = C + 1;
         
         float B = (float)A / (Q - C) - P;
         float result = (float)Math.Round((float)A / (currentQuantity - C) - B) / P;
-        if (result > 1.4f)
-            result = 1.4f;
-        else if (result < 0.71f) // 1/1.4f
-            result = 0.71f;
+        if (result > 1.35f)
+            result = 1.35f;
+        else if (result < 0.74f) // 1/1.35f
+            result = 0.74f;
+        return result;
+    }
+    
+    public float CalculatePriceCoefLocation(int currentQuantity, int P, int Q, int A, int C)
+    {
+        // Отдельный метод для локаций. Тут менее гибкое изменение + меньшее отклонение от единицы (1)
+        if (currentQuantity <= C)
+            currentQuantity = C + 1;
+        
+        float B = (float)A / (Q - C) - P;
+        float result = (float)Math.Round( (A * 0.9f) / (currentQuantity - C) - B) / P;
+        if (result > 1.3f)
+            result = 1.3f;
+        else if (result < 0.77f) // 1/1.3f
+            result = 0.77f;
         return result;
     }
     

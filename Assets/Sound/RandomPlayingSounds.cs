@@ -12,6 +12,7 @@ public class RandomPlayingSounds : MonoBehaviour
     [SerializeField] private List<AudioClip> _sounds;
     [SerializeField] private int _hourStart;
     [SerializeField] private int _hourEnd;
+    [SerializeField] private bool _randomPitch = true;
     private Coroutine _coroutine;
     
     private float _baseVolume;
@@ -65,7 +66,10 @@ public class RandomPlayingSounds : MonoBehaviour
             yield return waitForSeconds;
             _audioSource.clip = _sounds[Random.Range(0, _sounds.Count)];
             _audioSource.volume = Random.Range(_baseVolume, _baseVolume + 0.06f);
-            _audioSource.PlayWithRandomPitch();
+            if (_randomPitch)
+                _audioSource.PlayOneShotWithRandomPitch();
+            else
+                _audioSource.PlayOneShot(_audioSource.clip);
         }
     }
 }

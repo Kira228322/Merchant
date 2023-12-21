@@ -40,9 +40,9 @@ abstract public class NPCMovement : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
         _collider = GetComponent<Collider2D>();
         _groundMask.useLayerMask = true;
-        LayerMask layerMask = new LayerMask();
-        layerMask = 128; // 2^7
-        _groundMask.layerMask = layerMask;
+        // LayerMask layerMask = new LayerMask();
+        // layerMask = 128; // 2^7
+        // _groundMask.layerMask = layerMask;
         ChooseHome();
     }
 

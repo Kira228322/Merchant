@@ -156,12 +156,12 @@ public class GoodsBuyPanel : MonoBehaviour
         int currentQuantityLoca = MapManager.CurrentLocation.CountOfEachItem[item.Good.Name];
         int currentQuantityReg = MapManager.CurrentLocation.Region.CountOfEachItem[item.Good.Name];
         
-        float locationCoef = MapManager.CurrentLocation.Region.CalculatePriceCoef(currentQuantityLoca, item.Good.Price, 
+        float locationCoef = MapManager.CurrentLocation.Region.CalculatePriceCoefLocation(currentQuantityLoca, item.Good.Price, 
                 MapManager.CurrentLocation.ItemEconomyParams[item.Good.Name][0],
                 MapManager.CurrentLocation.ItemEconomyParams[item.Good.Name][1],
                 MapManager.CurrentLocation.ItemEconomyParams[item.Good.Name][2]);
         
-        float regionCoef = MapManager.CurrentLocation.Region.CalculatePriceCoef(currentQuantityReg, item.Good.Price, 
+        float regionCoef = MapManager.CurrentLocation.Region.CalculatePriceCoefRegion(currentQuantityReg, item.Good.Price, 
             MapManager.CurrentLocation.Region.ItemEconomyParams[item.Good.Name][0],
             MapManager.CurrentLocation.Region.ItemEconomyParams[item.Good.Name][1],
             MapManager.CurrentLocation.Region.ItemEconomyParams[item.Good.Name][2]);
