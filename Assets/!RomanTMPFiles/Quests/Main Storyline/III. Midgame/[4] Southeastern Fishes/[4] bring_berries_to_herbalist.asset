@@ -32,6 +32,30 @@ MonoBehaviour:
   MaxExperienceReward: 0
   MinMoneyReward: 0
   MaxMoneyReward: 0
-  NextQuest: {fileID: 0}
-  goals: []
+  QuestLine: {fileID: 0}
+  PrerequisiteQuests: []
+  QuestCompletionDelay: 0
+  goals:
+  - goalType: 4
+    goalState: 0
+    description: "\u041F\u0440\u0438\u043D\u0435\u0441\u0442\u0438 \u0440\u044B\u0431\u044C\u0435\u043C\u0443
+      \u0442\u0440\u0430\u0432\u043D\u0438\u043A\u0443 \u0433\u043E\u043B\u0443\u0431\u0438\u043A\u0443"
+    currentAmount: 0
+    randomAmount: 0
+    minRequiredAmount: 5
+    maxRequiredAmount: 5
+    AdditiveMoneyReward: 0
+    RequiredIDofNPC: 24
+    RequiredLine: bring_berries_to_herbalist
+    FailingLine: 
+    RequiredItemName: "\u0413\u043E\u043B\u0443\u0431\u0438\u043A\u0430"
+    RequiredItemCategories: 
+    QuestItemsBehaviour: 0
+    RandomDeliveryWeight: 0
+    RandomDeliveryCount: 0
+    MinRequiredDeliveryWeight: 0
+    MaxRequiredDeliveryWeight: 0
+    MinRequiredDeliveryCount: 0
+    MaxRequiredDeliveryCount: 0
+    RequiredRotThreshold: 0
   ItemRewards: []
