@@ -333,6 +333,7 @@ GameObject:
   - component: {fileID: 4160798943074809632}
   - component: {fileID: 2682808898618321158}
   - component: {fileID: 7103485249148600119}
+  - component: {fileID: 1206811209956510305}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -455,6 +456,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1206811209956510305}
+        m_TargetAssemblyTypeName: ButtonSound, Assembly-CSharp
+        m_MethodName: PlayButtonSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1206811209956510305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2917369545860819716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 027d2e5be23c384408a765f361e75462, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3908519291327397868
 GameObject:
   m_ObjectHideFlags: 0

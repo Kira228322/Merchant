@@ -147,6 +147,7 @@ GameObject:
   - component: {fileID: 8468447912182750547}
   - component: {fileID: 6249847707099742015}
   - component: {fileID: 4279433855138033616}
+  - component: {fileID: 2263068216262528297}
   m_Layer: 5
   m_Name: TradeButton
   m_TagString: Untagged
@@ -269,6 +270,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2263068216262528297}
+        m_TargetAssemblyTypeName: ButtonSound, Assembly-CSharp
+        m_MethodName: PlayButtonSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2263068216262528297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953741101457160771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 027d2e5be23c384408a765f361e75462, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4118260765309061631
 GameObject:
   m_ObjectHideFlags: 0
@@ -863,6 +888,7 @@ GameObject:
   - component: {fileID: 1902294670389643886}
   - component: {fileID: 7386427854280236968}
   - component: {fileID: 3843175527527333369}
+  - component: {fileID: 1287497671111524916}
   m_Layer: 5
   m_Name: CloseButton
   m_TagString: Untagged
@@ -888,8 +914,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 94.30139, y: 123.26782}
-  m_SizeDelta: {x: 42.8016, y: 42.1316}
+  m_AnchoredPosition: {x: 89.476, y: 120.9}
+  m_SizeDelta: {x: 40.0975, y: 39.4695}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1902294670389643886
 CanvasRenderer:
@@ -985,6 +1011,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1287497671111524916}
+        m_TargetAssemblyTypeName: ButtonSound, Assembly-CSharp
+        m_MethodName: PlayButtonSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1287497671111524916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8289686570142374978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 027d2e5be23c384408a765f361e75462, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8911313467788425958
 GameObject:
   m_ObjectHideFlags: 0
@@ -997,6 +1047,7 @@ GameObject:
   - component: {fileID: 5118006261946344536}
   - component: {fileID: 6892029771487181895}
   - component: {fileID: 3991299094998087793}
+  - component: {fileID: 6980740975691403489}
   m_Layer: 5
   m_Name: TalkButton
   m_TagString: Untagged
@@ -1119,6 +1170,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 6980740975691403489}
+        m_TargetAssemblyTypeName: ButtonSound, Assembly-CSharp
+        m_MethodName: PlayButtonSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &6980740975691403489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8911313467788425958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 027d2e5be23c384408a765f361e75462, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8926478673456103246
 GameObject:
   m_ObjectHideFlags: 0
@@ -1131,6 +1206,7 @@ GameObject:
   - component: {fileID: 8733131498757740980}
   - component: {fileID: 5048942310905439683}
   - component: {fileID: 8046271475934792318}
+  - component: {fileID: 7959546124357804319}
   m_Layer: 5
   m_Name: WagonUpgradeButton
   m_TagString: Untagged
@@ -1253,6 +1329,30 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2263068216262528297}
+        m_TargetAssemblyTypeName: ButtonSound, Assembly-CSharp
+        m_MethodName: PlayButtonSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &7959546124357804319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8926478673456103246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 027d2e5be23c384408a765f361e75462, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9088680431666115470
 GameObject:
   m_ObjectHideFlags: 0

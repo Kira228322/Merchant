@@ -28,6 +28,7 @@ public static class MapManager
     public static GameObject PlayerIcon => _playerIcon;
 
     [HideInInspector] public static List<Window> Windows = new List<Window>();
+    public static bool EventInTravelIsActive;
 
     public static void Init(string travelingScene, SceneTransiter loadScreen, GameObject roadWin, 
             GameObject villageWin, Canvas canvas, GameObject playerIcon, Location startLocation) 
