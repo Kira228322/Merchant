@@ -13,6 +13,7 @@ public class UITabButton : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         _tabGroup.OnTabSelected(this);
+        GameManager.Instance._ButtonAudioSource.PlayOneShot(GameManager.Instance._ButtonAudioSource.clip);
     }
 
     private void Start()

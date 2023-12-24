@@ -11,6 +11,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
 {
     public static GameManager Instance;
+    public AudioSource _ButtonAudioSource;
     [SerializeField] private GameObject _GameIsSavedText;
     [SerializeField] private Canvas _canvas;
     public CanvasGroup PlayerBlock;

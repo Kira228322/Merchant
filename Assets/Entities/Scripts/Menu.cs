@@ -51,8 +51,12 @@ public class Menu : MonoBehaviour
 
     public void OnExitMenuButtonClick()
     {
+        Debug.Log(MapManager.EventInTravelIsActive);
         if (MapManager.IsActiveSceneTravel)
-            GameTime.SetTimeScale(GameTime.TimeScaleInTravel);
+        {
+            if (!MapManager.EventInTravelIsActive)
+                GameTime.SetTimeScale(GameTime.TimeScaleInTravel);
+        }
         else 
             GameTime.SetTimeScale(1);
         Normal.TransitionTo(0.9f);
