@@ -1912,6 +1912,102 @@ RectTransform:
   m_AnchoredPosition: {x: 0.8000488, y: 0.39999962}
   m_SizeDelta: {x: 9, y: 9}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &71696934
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 71696935}
+  - component: {fileID: 71696936}
+  m_Layer: 5
+  m_Name: MiddleRegion
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &71696935
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 71696934}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1045987800}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &71696936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 71696934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee352021ef0171d458b8c5ed1b825c24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _locations:
+  - {fileID: 1592259709}
+  - {fileID: 791283434}
+  - {fileID: 2101206578}
+  - {fileID: 1973853572}
+  - {fileID: 718434869}
+  - {fileID: 886491333}
+  _questGivers: []
+  tmpFloat:
+  - 0.9
+  - 0.85
+  - 0.9
+  - 1
+  - 0.9
+  - 0.87
+  - 1
+  - 0.85
+  - 1
+  - 0.9
+  - 1
+  - 0.85
+  - 1
+  - 0.9
+  - 0.95
+  - 1
+  - 1
+  - 0.9
+  - 0.95
+  - 0.9
+  - 1
+  - 1
+  - 1
+  - 0.9
+  - 0.9
+  - 1
+  - 0.9
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 0.95
+  - 0.9
+  - 0.9
+  - 1
+  cvsEconomyParams: {fileID: 4900000, guid: 7f71be23afe73eb41a5978f85f6f3d78, type: 3}
+  AveragePopulation: 1310
 --- !u!1 &74570078
 GameObject:
   m_ObjectHideFlags: 0
@@ -15031,11 +15127,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _region: {fileID: 815367770}
+  _region: {fileID: 71696936}
   _icon: {fileID: 0}
   _villageName: "\u041F\u0435\u0440\u0435\u0441\u044B\u043F\u044C"
   _description: 
-  _populationOfVillage: 0
+  _populationOfVillage: 190
   _sceneName: Scene17
   _relatedPlaces:
   - {fileID: 1181721215}
@@ -15044,7 +15140,12 @@ MonoBehaviour:
   - {fileID: 1761176325}
   - {fileID: 1168945893}
   _roads: []
-  NpcTraders: []
+  NpcTraders:
+  - {fileID: 11400000, guid: 839e5942acb2882418729d0ec38e0074, type: 2}
+  - {fileID: 11400000, guid: c93eda8899e0dda4189b56fe9995d604, type: 2}
+  - {fileID: 11400000, guid: d95e04632aba36344b6bb5e6be034b81, type: 2}
+  - {fileID: 11400000, guid: e27d9afb19c414c4c9864433bc823bfe, type: 2}
+  - {fileID: 11400000, guid: 8414d1ac0a2414c4a99f624b71c8bc08, type: 2}
   WagonUpgraders: []
 --- !u!222 &718434870
 CanvasRenderer:
@@ -16622,11 +16723,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _region: {fileID: 815367770}
+  _region: {fileID: 71696936}
   _icon: {fileID: 0}
   _villageName: "\u042F\u043D\u0442\u0430\u0440\u044C"
   _description: 
-  _populationOfVillage: 0
+  _populationOfVillage: 400
   _sceneName: Scene20
   _relatedPlaces:
   - {fileID: 1181721215}
@@ -16636,8 +16737,18 @@ MonoBehaviour:
   - {fileID: 1592259709}
   - {fileID: 1168945893}
   _roads: []
-  NpcTraders: []
-  WagonUpgraders: []
+  NpcTraders:
+  - {fileID: 11400000, guid: 938d8d7a96064a542a2b08696efa871b, type: 2}
+  - {fileID: 11400000, guid: 126a824244379414d9f1dc0fa970fb7f, type: 2}
+  - {fileID: 11400000, guid: 46b0010ef93821543973fc49cd7cf290, type: 2}
+  - {fileID: 11400000, guid: cba777b41c761ea41ac944af470668e3, type: 2}
+  - {fileID: 11400000, guid: 66feec6306270de449c8843fa18922c8, type: 2}
+  - {fileID: 11400000, guid: 7e5393d673cde6543a954356745d5898, type: 2}
+  - {fileID: 11400000, guid: 48f38e26a859ecd40aee97742046cc04, type: 2}
+  - {fileID: 11400000, guid: f3ec8c7013d14454a9dd5ecb820f4adc, type: 2}
+  WagonUpgraders:
+  - {fileID: 11400000, guid: 51234430a1100424ca00921e8382b7bb, type: 2}
+  - {fileID: 11400000, guid: 81e33534094087f48bc72d8c3b1d65e8, type: 2}
 --- !u!114 &791283435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18025,17 +18136,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _region: {fileID: 815367770}
+  _region: {fileID: 71696936}
   _icon: {fileID: 0}
   _villageName: "\u042D\u0441\u0442\u0443\u0430\u0440\u0438\u0439"
   _description: 
-  _populationOfVillage: 0
+  _populationOfVillage: 190
   _sceneName: Scene14
   _relatedPlaces:
   - {fileID: 1181721215}
   _roads: []
-  NpcTraders: []
-  WagonUpgraders: []
+  NpcTraders:
+  - {fileID: 11400000, guid: 0430523d9e9725a41a033993bb3786af, type: 2}
+  - {fileID: 11400000, guid: 28f9848ca0e474c40b25edb12624e0a6, type: 2}
+  - {fileID: 11400000, guid: 04326055a73736c429f80f4c3c801057, type: 2}
+  - {fileID: 11400000, guid: 3c11d6a0884eaf54298b0bd869d5611c, type: 2}
+  - {fileID: 11400000, guid: e7d28d47494889f46a121732932a52d7, type: 2}
+  WagonUpgraders:
+  - {fileID: 11400000, guid: a47e9951a87e43746b0fcee92f7d8a9c, type: 2}
 --- !u!222 &886491334
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -22954,6 +23071,7 @@ RectTransform:
   - {fileID: 815367769}
   - {fileID: 848894793}
   - {fileID: 1244471383}
+  - {fileID: 71696935}
   m_Father: {fileID: 4503157603631652564}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -22978,6 +23096,7 @@ MonoBehaviour:
   - {fileID: 815367770}
   - {fileID: 848894794}
   - {fileID: 1244471384}
+  - {fileID: 71696936}
 --- !u!224 &1052105216
 RectTransform:
   m_ObjectHideFlags: 0
@@ -33071,11 +33190,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _region: {fileID: 815367770}
+  _region: {fileID: 71696936}
   _icon: {fileID: 0}
   _villageName: "\u0417\u0430\u0440\u043D\u0438\u0446\u0430"
   _description: 
-  _populationOfVillage: 0
+  _populationOfVillage: 220
   _sceneName: Scene23
   _relatedPlaces:
   - {fileID: 718434869}
@@ -33083,7 +33202,13 @@ MonoBehaviour:
   - {fileID: 1305402264}
   - {fileID: 1168945893}
   _roads: []
-  NpcTraders: []
+  NpcTraders:
+  - {fileID: 11400000, guid: c0d1a751d99ebd4479b8335342d3b650, type: 2}
+  - {fileID: 11400000, guid: 500a841da06f35b4385a3963b0e6c158, type: 2}
+  - {fileID: 11400000, guid: 6ba4214d0ffd22342b1ba5a723619680, type: 2}
+  - {fileID: 11400000, guid: e3f4bbe9765a9b0438c14f01bfafb109, type: 2}
+  - {fileID: 11400000, guid: 83fdbb40f2203944f89e1cd8d66d3f58, type: 2}
+  - {fileID: 11400000, guid: 1da5375f42de8dc4ab6c3227e147fc30, type: 2}
   WagonUpgraders: []
 --- !u!222 &1592259710
 CanvasRenderer:
@@ -41316,11 +41441,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _region: {fileID: 815367770}
+  _region: {fileID: 71696936}
   _icon: {fileID: 0}
   _villageName: "\u0416\u0435\u043C\u0447\u0443\u0436\u043D\u0438\u043A"
   _description: 
-  _populationOfVillage: 0
+  _populationOfVillage: 180
   _sceneName: Scene18
   _relatedPlaces:
   - {fileID: 3977917189124624316}
@@ -41330,7 +41455,13 @@ MonoBehaviour:
   - {fileID: 2101206578}
   - {fileID: 791283434}
   _roads: []
-  NpcTraders: []
+  NpcTraders:
+  - {fileID: 11400000, guid: 5487519d2a9393744a1da119a6558502, type: 2}
+  - {fileID: 11400000, guid: b23ab5eb9d80ec246b7755b3b81daad2, type: 2}
+  - {fileID: 11400000, guid: 4be637d6b3dbee0449e0c659556acb63, type: 2}
+  - {fileID: 11400000, guid: 24b21908c7c82b745b659edfc3ddbf9e, type: 2}
+  - {fileID: 11400000, guid: 85b55f216f58a2e4ba92bc32d209fb66, type: 2}
+  - {fileID: 11400000, guid: 151038b7043477c4eba6e64155062b76, type: 2}
   WagonUpgraders: []
 --- !u!114 &1973853573
 MonoBehaviour:
@@ -43890,11 +44021,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8a055414ecab9458d51c87f41990c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _region: {fileID: 815367770}
+  _region: {fileID: 71696936}
   _icon: {fileID: 0}
   _villageName: "\u041E\u0433\u0440\u0430\u0434\u043D\u0438\u0446\u0430"
   _description: 
-  _populationOfVillage: 0
+  _populationOfVillage: 130
   _sceneName: Scene19
   _relatedPlaces:
   - {fileID: 1719830961}
@@ -43903,7 +44034,11 @@ MonoBehaviour:
   - {fileID: 1067087365}
   - {fileID: 1305402264}
   _roads: []
-  NpcTraders: []
+  NpcTraders:
+  - {fileID: 11400000, guid: 30c007c1ac3de604cbd8f7673e0dcdfc, type: 2}
+  - {fileID: 11400000, guid: b9b6baaea10e1b44491a6bb60ab48d66, type: 2}
+  - {fileID: 11400000, guid: bcd212ef041266a4b9ee27c1872bd6bb, type: 2}
+  - {fileID: 11400000, guid: 14d51f2390f24c24697eb39cd4312606, type: 2}
   WagonUpgraders: []
 --- !u!114 &2101206579
 MonoBehaviour:
