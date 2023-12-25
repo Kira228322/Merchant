@@ -30,18 +30,22 @@ MonoBehaviour:
   MaxExperienceReward: 0
   MinMoneyReward: 0
   MaxMoneyReward: 0
-  NextQuest: {fileID: 0}
+  QuestLine: {fileID: 11400000, guid: cf7269b2fd363d54d9a8fa036849b971, type: 2}
+  PrerequisiteQuests:
+  - {fileID: 11400000, guid: 178b6541269bf19498f0d61f7aec3263, type: 2}
+  QuestCompletionDelay: 0
   goals:
   - goalType: 1
     goalState: 0
-    description: 
+    description: "\u041D\u0430\u0439\u0442\u0438 \u0432\u043E\u0436\u0430\u043A\u0430
+      \u0440\u044B\u0431\u043E\u043B\u044E\u0434\u0435\u0439"
     currentAmount: 0
     randomAmount: 0
-    minRequiredAmount: 0
-    maxRequiredAmount: 0
+    minRequiredAmount: 1
+    maxRequiredAmount: 1
     AdditiveMoneyReward: 0
-    RequiredIDofNPC: 0
-    RequiredLine: 
+    RequiredIDofNPC: 20
+    RequiredLine: fish_headman_introduce
     FailingLine: 
     RequiredItemName: 
     RequiredItemCategories: 

@@ -23,8 +23,8 @@ MonoBehaviour:
     \u0442\u0435\u043A\u0443\u0449\u0435\u0433\u043E \u0441\u0442\u0430\u0440\u043E\u0441\u0442\u0443
     \u0440\u044B\u0431\u043E\u043B\u044E\u0434\u0441\u043A\u043E\u0439 \u0434\u0435\u0440\u0435\u0432\u043D\u0438.
     \u041D\u0443\u0436\u043D\u043E \u0432\u0435\u0440\u043D\u0443\u0442\u044C\u0441\u044F
-    \u043A \u043B\u0438\u0434\u0435\u0440\u0443 \u043E\u043F\u043F\u043E\u0437\u0438\u0446\u0438\u0438
-    \u0438 \u043F\u043E\u043A\u0430\u0437\u0430\u0442\u044C \u0435\u043C\u0443 \u0438\u0445."
+    \u043A \u0424\u043B\u0443\u0440\u043F\u0443 \u0438 \u043F\u043E\u043A\u0430\u0437\u0430\u0442\u044C
+    \u0435\u043C\u0443 \u0438\u0445."
   RandomExp: 0
   RandomReward: 0
   MinExperienceReward: 0
@@ -32,16 +32,17 @@ MonoBehaviour:
   MinMoneyReward: 0
   MaxMoneyReward: 0
   QuestLine: {fileID: 11400000, guid: cf7269b2fd363d54d9a8fa036849b971, type: 2}
-  PrerequisiteQuests: []
+  PrerequisiteQuests:
+  - {fileID: 11400000, guid: cfe51ae5d964664409d3457e307672b3, type: 2}
   QuestCompletionDelay: 0
   goals:
   - goalType: 4
     goalState: 0
-    description: 
+    description: "\u0412\u0435\u0440\u043D\u0443\u0442\u044C\u0441\u044F \u043A \u0424\u043B\u0443\u0440\u043F\u0443"
     currentAmount: 0
     randomAmount: 0
-    minRequiredAmount: 0
-    maxRequiredAmount: 0
+    minRequiredAmount: 1
+    maxRequiredAmount: 1
     AdditiveMoneyReward: 0
     RequiredIDofNPC: 21
     RequiredLine: bring_evidence_to_opposition
