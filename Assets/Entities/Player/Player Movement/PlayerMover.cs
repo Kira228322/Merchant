@@ -227,9 +227,9 @@ public class PlayerMover : MonoBehaviour
             distanceOfOneStep = _currentSpeed * Time.deltaTime;
             travelledDistance += distanceOfOneStep;
             WentDistance += distanceOfOneStep;
-            if (WentDistance >= 1.7f) // подобрано эмпирическим путем
+            if (WentDistance >= 1.75f) // подобрано эмпирическим путем
             {
-                WentDistance -= 1.7f;
+                WentDistance -= 1.75f;
                 PlaySoundOfFootsteps();
             }
             transform.position += distanceOfOneStep * moveDirection;

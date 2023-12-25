@@ -51,7 +51,6 @@ public class Menu : MonoBehaviour
 
     public void OnExitMenuButtonClick()
     {
-        Debug.Log(MapManager.EventInTravelIsActive);
         if (MapManager.IsActiveSceneTravel)
         {
             if (!MapManager.EventInTravelIsActive)
