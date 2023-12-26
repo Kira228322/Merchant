@@ -73,6 +73,7 @@ public class GlobalEventHandler : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().name == "MainMenu" && createdEvent is not GlobalEvent_Weather)
         {
+            Debug.LogWarning("¬ главном меню ивенты кроме дожд€ не запускаютс€");
             return null;
         }
         createdEvent.Execute();

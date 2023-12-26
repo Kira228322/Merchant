@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System.Xml;
+using Unity.VisualScripting;
 
 public class ItemDatabase : MonoBehaviour
 {
@@ -51,11 +53,37 @@ public class ItemDatabase : MonoBehaviour
 
     public static Item GetRandomItemOfThisType(Item.ItemType itemType)
     {
-        List<Item> itemsOfThisType = Instance.Items.ItemList.Where(item => item.TypeOfItem == itemType).ToList();
-        return itemsOfThisType[Random.Range(0, itemsOfThisType.Count)]; 
+        return GetRandomItems(Instance.Items.ItemList.Where(item => item.TypeOfItem == itemType).ToList(), 1)[0];
+    }
+    public static List<Item> GetRandomItemsOfThisType(Item.ItemType itemType, int amount)
+    {
+        return GetRandomItems(Instance.Items.ItemList.Where(item => item.TypeOfItem == itemType).ToList(), amount);
     }
     public static Item GetRandomItem()
     {
-        return Instance.Items.ItemList[Random.Range(0, Instance.Items.ItemList.Count)];
+        return GetRandomItems(Instance.Items.ItemList, 1)[0];
+    }
+    public static List<Item> GetRandomUnbannedItems(int amount)
+    {
+        return GetRandomItems(Instance.Items.ItemList.Except(BannedItemsHandler.Instance.BannedItems).ToList(), amount);
+    }
+    public static List<Item> GetRandomUnbannedItemsOfThisType(Item.ItemType itemType, int amount)
+    {
+        return GetRandomItems(Instance.Items.ItemList.Except(BannedItemsHandler.Instance.BannedItems).Where(item => item.TypeOfItem == itemType).ToList(), amount);
+    }
+    private static List<Item> GetRandomItems(List<Item> itemList, int amount)
+    {
+        if (amount == 1)
+        {
+            return new() { itemList[Random.Range(0, itemList.Count)] };
+        }
+        List<Item> result = new();
+        List<int> indices = Enumerable.Range(0, itemList.Count).ToList();
+        indices.Shuffle();
+        foreach (int index in indices.Take(amount))
+        {
+            result.Add(itemList[index]);
+        }
+        return result;
     }
 }

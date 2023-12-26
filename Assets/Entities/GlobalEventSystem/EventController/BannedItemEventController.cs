@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -9,7 +10,7 @@ public class BannedItemEventController : MonoBehaviour, IEventController<GlobalE
 
     public int LastEventDay { get; set; }
     public int DurationOfEvent { get; set; }
-    public Item ItemToBan { get; private set; }
+    public List<Item> ItemsToBan { get; private set; }
     public int MinDelayToNextEvent => 7;
 
     public int MaxDelayToNextEvent => 9;
@@ -27,7 +28,7 @@ public class BannedItemEventController : MonoBehaviour, IEventController<GlobalE
         GlobalEvent_BannedItem newEvent = new()
         {
             DurationHours = DurationOfEvent * 24,
-            BannedItemName = ItemToBan.Name
+            BannedItemNames = ItemsToBan.Select(item => item.Name).ToList(),
         };
         var eventToAdd = GlobalEventHandler.Instance.AddGlobalEvent(newEvent);
         LastEventDay = GameTime.CurrentDay;
@@ -45,14 +46,14 @@ public class BannedItemEventController : MonoBehaviour, IEventController<GlobalE
         DateOfNextEvent = LastEventDay + Random.Range(MinDelayToNextEvent, MaxDelayToNextEvent + 1);
         HourOfNextEvent = Random.Range(1, 24);
         DurationOfEvent = Random.Range(5, 9); //дней
-        ItemToBan = ItemDatabase.GetRandomItem();
-        if (BannedItemsHandler.Instance.IsItemBanned(ItemToBan))
-        {
-            ItemToBan = ItemDatabase.GetRandomItem(); 
-            //ѕовторно роллитс€, чтобы уменьшить шансы на бан двух одинаковых предметов.
-            //Ўанс и так невысок, а глубокие проверки чтобы достать точно не содержащийс€ рандомный айтем,
-            //кажутс€ невыгодными. ѕоэтому просто роллитс€ два раза в этом случае
-        }
+        int itemsToBanAmount = Random.Range(1, 4);
+        Item randomItem = ItemDatabase.GetRandomItem(); //Ётот рандомный предмет сам не банитс€.
+                                                        //ѕочему? ѕотому что мы роллим один действительно существующий
+                                                        //предмет и по его подобию находим предметы того же типа,
+                                                        //вместо того чтобы роллить один рандомный тип предмета.
+                                                        //¬с€ проблема в том, что у нас есть два типа, которые нельз€ роллить - это "Null" и "Chemicals" (на момент 26.12.23 в Chemicals нет предметов)
+        ItemsToBan = new(ItemDatabase.GetRandomUnbannedItemsOfThisType(randomItem.TypeOfItem, itemsToBanAmount));
+
     }
 
     public EventControllerSaveData SaveData()

@@ -6,10 +6,9 @@ using UnityEngine;
 [Serializable]
 public class GlobalEvent_BannedItem : GlobalEvent_Base
 {
-    public string BannedItemName;
+    public List<string> BannedItemNames;
     public override string GlobalEventName => "Предмет запрещён";
-
-    public override string Description => $"Начиная с этого дня, власти запрещают предмет {BannedItemName}. Дата окончания запрета: {GetAddedTime(DurationHours)}";
+    public override string Description => $"Начиная с этого дня, власти запрещают следующие предметы: {string.Join(", ", BannedItemNames)}. Дата окончания запрета: {GetAddedTime(DurationHours)}";
 
     private string GetAddedTime(int hoursToAdd)
     {
@@ -33,11 +32,13 @@ public class GlobalEvent_BannedItem : GlobalEvent_Base
 
     public override void Execute()
     {
-        BannedItemsHandler.Instance.BanItem(ItemDatabase.GetItem(BannedItemName));
+        foreach (string BannedItemName in BannedItemNames)
+            BannedItemsHandler.Instance.BanItem(ItemDatabase.GetItem(BannedItemName));
     }
 
     public override void Terminate()
     {
-        BannedItemsHandler.Instance.UnbanItem(ItemDatabase.GetItem(BannedItemName));
+        foreach (string BannedItemName in BannedItemNames)
+            BannedItemsHandler.Instance.UnbanItem(ItemDatabase.GetItem(BannedItemName));
     }
 }
