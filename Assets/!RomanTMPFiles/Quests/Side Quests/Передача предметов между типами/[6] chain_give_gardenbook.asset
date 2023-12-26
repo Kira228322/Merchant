@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca299c98acb0c56409a7a3314dcc2b02, type: 3}
+  m_Name: '[6] chain_give_gardenbook'
+  m_EditorClassIdentifier: 
+  StartingState: 0
+  QuestName: "\u041F\u043E\u0434\u0430\u0440\u0438\u0442\u044C \u043A\u043E\u043C\u0443-\u0442\u043E
+    \u043A\u043D\u0438\u0433\u0443 \u043F\u043E \u0443\u0445\u043E\u0434\u0443 \u0437\u0430
+    \u043E\u0433\u043E\u0440\u043E\u0434\u043E\u043C"
+  QuestSummary: chain_give_gardenbook
+  QuestGiverID: 208
+  Description: "\u0418\u0441\u043A\u0430\u0442\u0435\u043B\u044C \u043F\u0440\u0438\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u0439
+    \u043F\u043E\u0434\u0430\u0440\u0438\u043B \u043C\u043D\u0435 \u043A\u043D\u0438\u0433\u0443
+    \u043F\u043E \u0443\u0445\u043E\u0434\u0443 \u0437\u0430 \u043E\u0433\u043E\u0440\u043E\u0434\u043E\u043C.
+    \u041D\u0443\u0436\u043D\u043E \u043F\u043E\u0438\u0441\u043A\u0430\u0442\u044C
+    \u0442\u043E\u0433\u043E, \u043A\u043E\u043C\u0443 \u043E\u043D\u0430 \u0431\u0443\u0434\u0435\u0442
+    \u043F\u043E\u043B\u0435\u0437\u043D\u0430."
+  RandomExp: 0
+  RandomReward: 0
+  MinExperienceReward: 0
+  MaxExperienceReward: 0
+  MinMoneyReward: 0
+  MaxMoneyReward: 0
+  QuestLine: {fileID: 0}
+  PrerequisiteQuests:
+  - {fileID: 11400000, guid: 01b8a7014cc56af4586a171087d5aca9, type: 2}
+  QuestCompletionDelay: 0
+  goals:
+  - goalType: 4
+    goalState: 0
+    description: "\u041E\u0442\u0434\u0430\u0442\u044C \u043E\u0433\u043E\u0440\u043E\u0434\u043D\u0438\u043A\u0443
+      \u043A\u043D\u0438\u0433\u0443"
+    currentAmount: 0
+    randomAmount: 0
+    minRequiredAmount: 1
+    maxRequiredAmount: 1
+    AdditiveMoneyReward: 0
+    RequiredIDofNPC: 209
+    RequiredLine: chain_give_gardenbook
+    FailingLine: 
+    RequiredItemName: "\"\u0423\u0445\u043E\u0434 \u0437\u0430 \u043E\u0433\u043E\u0440\u043E\u0434\u043E\u043C\""
+    RequiredItemCategories: 
+    QuestItemsBehaviour: 0
+    RandomDeliveryWeight: 0
+    RandomDeliveryCount: 0
+    MinRequiredDeliveryWeight: 0
+    MaxRequiredDeliveryWeight: 0
+    MinRequiredDeliveryCount: 0
+    MaxRequiredDeliveryCount: 0
+    RequiredRotThreshold: 0
+  ItemRewards: []
