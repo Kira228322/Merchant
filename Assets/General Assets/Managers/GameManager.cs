@@ -30,6 +30,11 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
     [SerializeField] private GameObject _playerIcone;
     [SerializeField] private Location _startLocation;
 
+    //TODO убрать перед выпуском игры
+    [SerializeField] private TMP_InputField TESTstartLocationInputField;
+    [SerializeField] private Button TESTstartNewGameButton;
+    //end TODO убрать перед выпуском игры
+
     [Header("GameTime")] 
     [FormerlySerializedAs("Timeflow")] [SerializeField] private Timeflow _timeflow;
 
@@ -52,7 +57,11 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
     {
         if (Instance == null)
             Instance = this;
-        
+
+        //TODO убрать перед выпуском игры
+        TESTstartNewGameButton.onClick.AddListener(() => StartNewGame(TESTstartLocationInputField.text));
+        //end TODO убрать перед выпуском игры
+
         MapManager.Init(_travelingScene, _sceneTransiter, _roadWindow, _villageWindow, _canvas, _playerIcone, _startLocation);
         GameTime.Init(_timeflow);
         GameTime.SetTimeScale(13);
@@ -83,6 +92,21 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
         CanvasGroupUIClock.interactable = true;
     }
     
+    //TODO убрать перед выпуском игры
+    public void StartNewGame(string startingSceneName)
+    {
+        Player.Instance.Statistics.OnToughnessChanged();
+        GameTime.SetTimeScale(1);
+        Player.Instance.Needs.CurrentHunger = Player.Instance.Needs.MaxHunger;
+        Player.Instance.Needs.CurrentSleep = Player.Instance.Needs.MaxSleep;
+        _sceneTransiter.StartTransit(MapManager.GetLocationBySceneName(startingSceneName));
+
+        GlobalEventHandler.Instance.ResetEvents();
+
+        GameTime.TimeSet(1, 8, 0);
+        EnableUI();
+    }
+    //end TODO убрать перед выпуском игры
     public void StartNewGame() //По нажатию кнопки Новая игра в MainMenu
     {
         Player.Instance.Statistics.OnToughnessChanged();
