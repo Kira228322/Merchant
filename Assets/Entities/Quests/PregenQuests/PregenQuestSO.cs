@@ -113,6 +113,10 @@ public class PregenQuestSO : ScriptableObject
                     newGoal = new UseItemsGoal(pregenGoal.goalState, pregenGoal.description,
                         pregenGoal.currentAmount, Random.Range(pregenGoal.minRequiredAmount, pregenGoal.maxRequiredAmount), pregenGoal.RequiredItemName);
                     break;
+                case CompactedGoal.GoalType.KeepItemsGoal:
+                    newGoal = new KeepItemsGoal(pregenGoal.goalState, pregenGoal.description,
+                        pregenGoal.currentAmount, Random.Range(pregenGoal.minRequiredAmount, pregenGoal.maxRequiredAmount), pregenGoal.RequiredItemName);
+                    break;
                 default:
                     Debug.LogError("Нет такого типа Goal");
                     break;
@@ -126,7 +130,7 @@ public class PregenQuestSO : ScriptableObject
     [Serializable]
     public class CompactedGoal
     {
-        public enum GoalType { CollectItemsGoal, TalkToNPCGoal, WaitingGoal, TimedGoal, GiveItemsGoal, DeliveryGoal, UseItemsGoal}
+        public enum GoalType { CollectItemsGoal, TalkToNPCGoal, WaitingGoal, TimedGoal, GiveItemsGoal, DeliveryGoal, UseItemsGoal, KeepItemsGoal}
 
         public GoalType goalType;
         public Goal.State goalState;

@@ -224,6 +224,13 @@ class EditorPregenQuest : Editor
                         goal.RequiredItemName = EditorGUILayout.TextField("Required item name", goal.RequiredItemName);
                         EditorGUILayout.EndHorizontal();
                         break;
+                    case PregenQuestSO.CompactedGoal.GoalType.KeepItemsGoal:
+                        GUILayout.Space(10);
+                        EditorGUILayout.BeginHorizontal();
+                        goal.RequiredItemName = EditorGUILayout.TextField("Required item name", goal.RequiredItemName);
+                        EditorGUILayout.EndHorizontal();
+                        break;
+
                 }
 
                 EditorGUILayout.EndVertical();
