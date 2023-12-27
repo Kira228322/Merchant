@@ -15,6 +15,7 @@ public class CraftingHandler : MonoBehaviour
     [SerializeField] private VerticalLayoutGroup _recipesLayoutGroup;
     [SerializeField] private GameObject _recipeInformationWindow;
     [SerializeField] private Image _resultingItemIcon;
+    [SerializeField] private TMP_Text _countOfResultingItem;
     [SerializeField] private TMP_Text _resultingItemDescription;
     [SerializeField] private TMP_Text _requiredCraftingLevelText;
     [SerializeField] private TMP_Text _currentCraftingLevelText;
@@ -22,6 +23,7 @@ public class CraftingHandler : MonoBehaviour
     [SerializeField] private Image[] _plusSigns = new Image[2];
     [SerializeField] private UICraftingItemContainer[] _requiredItemContainers = new UICraftingItemContainer[3];
     [HideInInspector] public CraftingRecipe SelectedRecipe;
+    [SerializeField] private CraftingAnimationPanel _craftingAnimationPanel;
     private CraftingStationType _currentCraftingStation;
 
     public void OnIconClick()
@@ -101,7 +103,8 @@ public class CraftingHandler : MonoBehaviour
             _requiredCraftingStationText.gameObject.SetActive(true);
             _requiredCraftingStationText.text = GetRequiredCraftingStationText(SelectedRecipe.RequiredCraftingStation);
         }
-        
+
+        _countOfResultingItem.text = SelectedRecipe.ResultAmount.ToString();
         _resultingItemIcon.sprite = SelectedRecipe.ResultingItem.Icon;
         _ItemName.text = SelectedRecipe.ResultingItem.Name;
         _resultingItemDescription.text = SelectedRecipe.ResultingItem.Description;
@@ -159,6 +162,9 @@ public class CraftingHandler : MonoBehaviour
         {
             Player.Instance.Inventory.RemoveItemsOfThisItemData(requiredItem.item, requiredItem.amount);
         }
+        
+        _craftingAnimationPanel.StartAnimation(SelectedRecipe);
+        
         InventoryController.Instance.TryCreateAndInsertItem
             (SelectedRecipe.ResultingItem, SelectedRecipe.ResultAmount, 0);
         Refresh();

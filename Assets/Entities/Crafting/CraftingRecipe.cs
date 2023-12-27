@@ -19,5 +19,5 @@ public class CraftingRecipe: ScriptableObject
     
     public Item ResultingItem;
     public int ResultAmount;
-
+    public AudioClip _SoundOfCrafting;
 }
