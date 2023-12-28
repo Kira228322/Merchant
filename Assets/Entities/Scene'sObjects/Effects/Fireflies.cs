@@ -28,7 +28,6 @@ public class Fireflies : MonoBehaviour
     {
         if (GameTime.Hours >= _hourStart || GameTime.Hours < _hourStop)
         {
-            Debug.Log("enable");
             _particleSystem.Play();
             GameTime.HourChanged -= OnHourChangeWhenDisable;
             GameTime.HourChanged += OnHourChangeWhenEnable;
@@ -39,7 +38,6 @@ public class Fireflies : MonoBehaviour
     {
         if (GameTime.Hours >= _hourStop && GameTime.Hours < _hourStart)
         {
-            Debug.Log("disable");
             _particleSystem.Stop();
             GameTime.HourChanged -= OnHourChangeWhenEnable;
             GameTime.HourChanged += OnHourChangeWhenDisable;

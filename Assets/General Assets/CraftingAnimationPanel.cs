@@ -13,11 +13,12 @@ public class CraftingAnimationPanel : MonoBehaviour
     [SerializeField] private Image _secondItem;
     [SerializeField] private Image _thirdItem;
     [SerializeField] private AudioSource _audioSource;
-        
+    private CraftingRecipe _selectedRecipe;
     public void StartAnimation(CraftingRecipe selectedRecipe)
     {
+        _selectedRecipe = selectedRecipe;
         _parent.SetActive(true);
-        _audioSource.PlayOneShot(selectedRecipe._SoundOfCrafting);
+        
         switch (selectedRecipe.RequiredItems.Count)
         {
             case 1:
@@ -50,5 +51,10 @@ public class CraftingAnimationPanel : MonoBehaviour
     public void AnimationOver()
     {
         _parent.SetActive(false);
+    }
+
+    public void PlaySound()
+    {
+        _audioSource.PlayOneShot(_selectedRecipe._SoundOfCrafting);
     }
 }
