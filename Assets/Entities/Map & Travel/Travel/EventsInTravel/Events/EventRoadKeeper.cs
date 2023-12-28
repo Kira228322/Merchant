@@ -5,7 +5,7 @@ using UnityEngine;
 public class EventRoadKeeper : EventInTravel
 {
     private int money;
-    private float _reduceQuality = 0.07f;
+    private float _reduceQuality = 0.06f;
     public override void SetButtons()
     {
         money = Random.Range(28, 38) - Player.Instance.Statistics.Diplomacy.Total - Player.Instance.Statistics.Diplomacy.Total/2;
