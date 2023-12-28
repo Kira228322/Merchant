@@ -34,6 +34,8 @@ public class Road : MonoBehaviour
     public float DangerMultiplier { get; private set; }
     private void Start()
     {
+        DangerMultiplier = 1;
+        
         _lengthsOfWays = new float[WayPoints.Count];
         for (int i = 0; i < WayPoints.Count - 1; i++)
         {
@@ -49,7 +51,6 @@ public class Road : MonoBehaviour
         
         if (_danger * DangerMultiplier > 70)
             DangerMultiplier = 70f / _danger;
-        
     }
 
     public void SetNormalDangerMultiplier()

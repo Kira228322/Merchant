@@ -73,7 +73,6 @@ public class EventWindow : MonoBehaviour
         _description.text = eventInTravel.Description;
         
         MapManager.EventInTravelIsActive = true;
-        Debug.Log(MapManager.EventInTravelIsActive);
         
         EventInTravel travelEvent = Instantiate(eventInTravel.gameObject, _sceneContainer).GetComponent<EventInTravel>();
         travelEvent.Init(this);
@@ -115,7 +114,6 @@ public class EventWindow : MonoBehaviour
     public IEnumerator EventEnd()
     {
         MapManager.EventInTravelIsActive = false;
-        Debug.Log(MapManager.EventInTravelIsActive);
         _animator.SetTrigger("EventEnd");
 
         WaitForSeconds waitForSeconds = new(1);
