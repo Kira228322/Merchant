@@ -25,11 +25,16 @@ INCLUDE ../../MainInkLibrary.ink
 
 === bring ===
 Ну, как наш уговор?
-+[Вот, посмотри.]
-    ~open_item_container("bring_berries_to_herbalist", 0)
+{has_enough_items("bring_berries_to_herbalist"):
++[Вот, посмотри. (Отдать 5 голубики)]
+   ~invoke_dialogue_event("bring_berries_to_herbalist")
     Хм, хм...
     Да, эти ягоды подойдут. Они не очень свежие, но на лучшее не приходится и надеяться.
     Что ж, спасибо, человек. Если что-то будет нужно, спрашивай.
+    ->END
+}
++[Пока ничего.]
+    Не заставляй меня ждать слишком долго...
     ->END
 
 === generic ===

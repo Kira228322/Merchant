@@ -20,11 +20,46 @@ MonoBehaviour:
   CurrentMoney: 387
   ID: 24
   TraderTypes:
-  - {fileID: 11400000, guid: 353eb10bd03863142808bc39ee5786d5, type: 2}
+  - {fileID: 11400000, guid: 6c98176e1bde7ff44b1a17e69930a9d0, type: 2}
   IsBlackMarket: 0
   HaveAdditiveGoods: 1
-  _baseGoods: []
-  _baseBuyCoefficients: []
+  _baseGoods:
+  - Good: {fileID: 11400000, guid: f0c874607887d534c9235b0f8fb70573, type: 2}
+    MaxCount: 2
+    CurrentCount: 2
+    CurrentPrice: 12
+  - Good: {fileID: 11400000, guid: e4a23c54f974e6740a7cc6d083120ca4, type: 2}
+    MaxCount: 2
+    CurrentCount: 2
+    CurrentPrice: 12
+  - Good: {fileID: 11400000, guid: ea4d2f04cf1aa2d438aed69d425837a0, type: 2}
+    MaxCount: 2
+    CurrentCount: 2
+    CurrentPrice: 12
+  - Good: {fileID: 11400000, guid: 642cddc7bf51f4b46b9d42d47a5efe59, type: 2}
+    MaxCount: 2
+    CurrentCount: 2
+    CurrentPrice: 12
+  - Good: {fileID: 11400000, guid: 1a259fa86cbe6cd4e80561592a5dcf07, type: 2}
+    MaxCount: 2
+    CurrentCount: 2
+    CurrentPrice: 12
+  _baseBuyCoefficients:
+  - ItemType: 6
+    Coefficient: 1
+    DefaultCountToBuy: 25
+  - ItemType: 7
+    Coefficient: 1
+    DefaultCountToBuy: 22
+  - ItemType: 8
+    Coefficient: 1
+    DefaultCountToBuy: 15
+  - ItemType: 20
+    Coefficient: 1
+    DefaultCountToBuy: 32
+  - ItemType: 21
+    Coefficient: 1
+    DefaultCountToBuy: 25
   Goods: []
   AdditiveGoods: []
   BuyCoefficients: []

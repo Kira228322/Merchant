@@ -51,7 +51,7 @@ public class RoadWindow : Window
             int durationDays = travelingTime / 24;
             int durationHours = travelingTime % 24;
             _duration.text = 
-                durationDays + " " + TravelTimeCounter.GetLocalizedTime(durationDays, false) + 
+                durationDays + " " + TravelTimeCounter.GetLocalizedTime(durationDays, false) + " " + 
                 durationHours + " " + TravelTimeCounter.GetLocalizedTime(durationHours, true);
         }
         _quality.text = "Качество: " + road[0].Quality;

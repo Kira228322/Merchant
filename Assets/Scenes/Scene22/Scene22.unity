@@ -16532,6 +16532,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6905428230867205554, guid: 06777928d2a2baf4492ecf32bfc13963, type: 3}
+      propertyPath: InkJSON
+      value: 
+      objectReference: {fileID: 4900000, guid: 15c5402206054684ea3ef27706b15f10, type: 3}
     - target: {fileID: 6905428230867205564, guid: 06777928d2a2baf4492ecf32bfc13963, type: 3}
       propertyPath: m_Name
       value: ObjectConversationBase
@@ -18881,8 +18885,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _appearanceBehaviour: 0
   _isInstant: 0
-  _showConditions: []
-  _hideConditions: []
+  _showConditions:
+  - QuestSummary: return_to_opposition_leader
+    questState: 2
+    HoursDelay: 0
+  _hideConditions:
+  - QuestSummary: investigate_hidden_fish_evidence
+    questState: 2
+    HoursDelay: 0
 --- !u!4 &2022796118
 Transform:
   m_ObjectHideFlags: 0
