@@ -28,7 +28,7 @@ public class EventMansCompetition : EventInTravel
                 if (TravelEventHandler.EventFire(_probabilityToWin, true, Player.Instance.Statistics.Toughness))
                 {
                     Player.Instance.Experience.AddExperience(10);
-                    _eventWindow.ChangeDescription("Вы победили в состязаниях!!! Вам вернули входной взнос. К вам прониклись уважением! " +
+                    _eventWindow.ChangeDescription("Вы победили в состязаниях!!! Вам вернули первоначальный взнос. К вам прониклись уважением! " +
                                                    "Вы получили 10 опыта");
                 }
                 else
