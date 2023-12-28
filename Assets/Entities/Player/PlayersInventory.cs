@@ -174,7 +174,8 @@ public class PlayersInventory : MonoBehaviour, ISaveable<PlayersInventorySaveDat
                 }
                 else
                 {
-                    QuestItemGrid.RemoveItemsFromAStack(QuestItemList[i], leftToRemove); 
+                    QuestItemGrid.RemoveItemsFromAStack(QuestItemList[i], leftToRemove);
+                    return;
                 }
             }
         }
@@ -190,6 +191,7 @@ public class PlayersInventory : MonoBehaviour, ISaveable<PlayersInventorySaveDat
                 else
                 {
                     BaseItemGrid.RemoveItemsFromAStack(BaseItemList[i], leftToRemove);
+                    return;
                 }
             }
         }
