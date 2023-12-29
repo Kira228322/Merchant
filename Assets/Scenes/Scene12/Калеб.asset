@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a46bd3596c904af40a170307cb676e23, type: 3}
+  m_Name: "\u041A\u0430\u043B\u0435\u0431"
+  m_EditorClassIdentifier: 
+  Name: "\u041A\u0430\u043B\u0435\u0431"
+  StartWalkingTime: 5
+  FinishWalkingTime: 12
+  GameStartMoney: 122
+  CurrentMoney: 122
+  ID: 91203
+  TraderTypes:
+  - {fileID: 11400000, guid: bc439e9e53dff2a41b5f7b3bc74195c4, type: 2}
+  - {fileID: 11400000, guid: a890ba1c96bb98343953ad400776b023, type: 2}
+  IsBlackMarket: 0
+  HaveAdditiveGoods: 0
+  _baseGoods:
+  - Good: {fileID: 11400000, guid: 9d3bc02dfe493f24b8a6f3e09410d216, type: 2}
+    MaxCount: 25
+    CurrentCount: 25
+    CurrentPrice: 14
+  - Good: {fileID: 11400000, guid: 314c3101819079747b41bae80d4d6203, type: 2}
+    MaxCount: 24
+    CurrentCount: 24
+    CurrentPrice: 37
+  - Good: {fileID: 11400000, guid: 09458c858b4f9b946aeb38dbd30c7338, type: 2}
+    MaxCount: 20
+    CurrentCount: 20
+    CurrentPrice: 89
+  - Good: {fileID: 11400000, guid: 74780108b5fdbec47b834ff2a11373e1, type: 2}
+    MaxCount: 24
+    CurrentCount: 24
+    CurrentPrice: 24
+  - Good: {fileID: 11400000, guid: 9e55719aa8a299742a11b1dc8885dc9a, type: 2}
+    MaxCount: 7
+    CurrentCount: 7
+    CurrentPrice: 140
+  - Good: {fileID: 11400000, guid: dbfad0a2f8526c745a5e0a68dd7dd109, type: 2}
+    MaxCount: 18
+    CurrentCount: 18
+    CurrentPrice: 63
+  - Good: {fileID: 11400000, guid: 3e30dd3f2fb3b8840ba53165b25376e4, type: 2}
+    MaxCount: 14
+    CurrentCount: 14
+    CurrentPrice: 13
+  - Good: {fileID: 11400000, guid: 2f1eb05b649b0f14ea64b3ab2808a498, type: 2}
+    MaxCount: 12
+    CurrentCount: 12
+    CurrentPrice: 30
+  - Good: {fileID: 11400000, guid: 3fa8870e7ddf82849adf409ef626a4b9, type: 2}
+    MaxCount: 8
+    CurrentCount: 8
+    CurrentPrice: 54
+  - Good: {fileID: 11400000, guid: 770095a5b7b7f6b499f93d0a074dbe5c, type: 2}
+    MaxCount: 8
+    CurrentCount: 8
+    CurrentPrice: 62
+  - Good: {fileID: 11400000, guid: 5b68acdec8ba3c64881d067822a0570d, type: 2}
+    MaxCount: 4
+    CurrentCount: 4
+    CurrentPrice: 92
+  _baseBuyCoefficients: []
+  Goods: []
+  AdditiveGoods: []
+  BuyCoefficients: []
