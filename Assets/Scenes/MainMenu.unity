@@ -2064,7 +2064,7 @@ MonoBehaviour:
   - 0.85
   - 0.9
   - 1
-  - 0.9
+  - 1
   - 0.87
   - 1
   - 0.85
@@ -17938,10 +17938,10 @@ MonoBehaviour:
   - 0.85
   - 1
   - 0.95
-  - 0.8
+  - 0.85
   - 1
   - 1
-  - 0.8
+  - 0.85
   - 0.9
   - 0.9
   - 0.85
@@ -17957,7 +17957,7 @@ MonoBehaviour:
   - 0.9
   - 0.9
   - 1
-  - 0.8
+  - 0.85
   - 1
   cvsEconomyParams: {fileID: 4900000, guid: 664fa42a8904c0b4faa701b855f828d0, type: 3}
   AveragePopulation: 1400
@@ -23785,13 +23785,17 @@ MonoBehaviour:
   _icon: {fileID: 0}
   _villageName: "\u0417\u0432\u0435\u0437\u0434\u043E\u0440\u043E\u0436\u044C\u0435"
   _description: 
-  _populationOfVillage: 0
+  _populationOfVillage: 120
   _sceneName: Scene13
   _relatedPlaces:
   - {fileID: 2131877507}
   - {fileID: 1181721215}
   _roads: []
-  NpcTraders: []
+  NpcTraders:
+  - {fileID: 11400000, guid: 1eb62432af844ea42b55c49afd2c5d53, type: 2}
+  - {fileID: 11400000, guid: 4d0df7e6257ae214095ef7a77433eef0, type: 2}
+  - {fileID: 11400000, guid: 40e27c4ce72f38d46a124b904be36457, type: 2}
+  - {fileID: 11400000, guid: eff273f2b689d1a459024a0d1a09a3e9, type: 2}
   WagonUpgraders: []
 --- !u!114 &1042207467
 MonoBehaviour:
@@ -24129,43 +24133,43 @@ MonoBehaviour:
   _questGivers: []
   tmpFloat:
   - 1
+  - 0.85
+  - 1
+  - 1
+  - 0.9
+  - 1
+  - 1
+  - 0.9
+  - 0.95
+  - 1
+  - 1
+  - 0.95
+  - 1
+  - 0.9
+  - 0.95
+  - 1
+  - 0.95
+  - 1
+  - 0.95
+  - 0.85
   - 1
   - 1
   - 1
+  - 0.85
+  - 0.85
+  - 0.95
   - 1
   - 1
+  - 0.9
+  - 0.95
   - 1
+  - 0.9
   - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
-  - 1
+  - 0.95
   - 1
   - 1
   cvsEconomyParams: {fileID: 4900000, guid: ed6a5611dae45dd43a2ce2d75012848e, type: 3}
-  AveragePopulation: 666
+  AveragePopulation: 560
 --- !u!1 &1059788223
 GameObject:
   m_ObjectHideFlags: 0
@@ -27194,7 +27198,7 @@ MonoBehaviour:
   _icon: {fileID: 0}
   _villageName: "\u0411\u0440\u043E\u043D\u0437\u043E\u0443\u0441\u0442\u044C\u0435"
   _description: 
-  _populationOfVillage: 0
+  _populationOfVillage: 240
   _sceneName: Scene15
   _relatedPlaces:
   - {fileID: 2131877507}
@@ -27204,7 +27208,14 @@ MonoBehaviour:
   - {fileID: 791283434}
   - {fileID: 1074804466}
   _roads: []
-  NpcTraders: []
+  NpcTraders:
+  - {fileID: 11400000, guid: ec91d6b8a077a154594b3c76d9fbbc10, type: 2}
+  - {fileID: 11400000, guid: 83846aa251336774684f89a91a0753f7, type: 2}
+  - {fileID: 11400000, guid: 238e6342af0e99c48af8c399f84bafaf, type: 2}
+  - {fileID: 11400000, guid: 224773af0448993468c0b0066908191a, type: 2}
+  - {fileID: 11400000, guid: 38a1ed5d6dba2f544a68f84935d43033, type: 2}
+  - {fileID: 11400000, guid: 3353f38e0785818478485987936830ce, type: 2}
+  - {fileID: 11400000, guid: eb4e47a6bbb40c14f8636806e166b85a, type: 2}
   WagonUpgraders: []
 --- !u!1001 &1186157704
 PrefabInstance:
@@ -47374,7 +47385,7 @@ MonoBehaviour:
   _icon: {fileID: 0}
   _villageName: "\u0417\u043B\u0430\u0442\u043E\u0431\u0435\u0440\u0435\u0433"
   _description: 
-  _populationOfVillage: 0
+  _populationOfVillage: 200
   _sceneName: Scene12
   _relatedPlaces:
   - {fileID: 1027030863}
@@ -47382,7 +47393,13 @@ MonoBehaviour:
   - {fileID: 1042207466}
   - {fileID: 1181721215}
   _roads: []
-  NpcTraders: []
+  NpcTraders:
+  - {fileID: 11400000, guid: 95faccf996c27bf47a041e7a1fb10c87, type: 2}
+  - {fileID: 11400000, guid: a4f58484f1dfe55458638d4faa9f1603, type: 2}
+  - {fileID: 11400000, guid: 17cc96749a9273d4b94d0e5a20e50295, type: 2}
+  - {fileID: 11400000, guid: f777813e9538fbd4baeb4add5fa34411, type: 2}
+  - {fileID: 11400000, guid: 7384b3157980da84eb8bbead680d8f7c, type: 2}
+  - {fileID: 11400000, guid: 99e18daa0c9864048aa0b674511d0abd, type: 2}
   WagonUpgraders: []
 --- !u!222 &2131877508
 CanvasRenderer:
@@ -77246,7 +77263,7 @@ MonoBehaviour:
     Suspension: {fileID: 11400000, guid: e5131dd7eacc94e4cae2107c47fd3a9b, type: 2}
     QualityModifier: 0
   Recipes: []
-  _currentTestedRegion: {fileID: 71696936}
+  _currentTestedRegion: {fileID: 1059038122}
 --- !u!114 &6761086532353248289
 MonoBehaviour:
   m_ObjectHideFlags: 0
