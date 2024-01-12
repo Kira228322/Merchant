@@ -175,9 +175,13 @@ public class QuestLog : MonoBehaviour
                         _questCompleteAnnouncer.ChangeText(quest.QuestName);
                     }
                     AddToFinishedQuests(quest, questLine);
-
                     break;
+
                 case Quest.State.Failed:
+                    if (!newOrLoading)
+                    {
+                        _miscQuestLineActive.QuestsInLine.Remove(pregenQuest);
+                    }
                     AddToFinishedQuests(quest, questLine);
                     break;
             }

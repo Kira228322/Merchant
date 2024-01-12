@@ -208,6 +208,10 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
                         newGoal = new KeepItemsGoal(oldGoal.CurrentState, oldGoal.Description,
                             oldGoal.CurrentAmount, oldGoal.RequiredAmount, oldGoal.RequiredItemName);
                         break;
+                    case StayOnSceneGoal oldGoal:
+                        newGoal = new StayOnSceneGoal(oldGoal.CurrentState, oldGoal.Description,
+                            oldGoal.CurrentAmount, oldGoal.RequiredAmount, oldGoal.RequiredSceneName);
+                        break;
                     default:
                         Debug.LogError("Нет такого типа Goal");
                         break;

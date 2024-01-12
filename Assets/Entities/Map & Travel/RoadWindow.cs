@@ -112,8 +112,7 @@ public class RoadWindow : Window
 
         Player.Instance.Money -= _roads[_numberOfRoad].Cost;
         
-        MapManager.TransitionToTravelScene(_roads[_numberOfRoad]);
-        MapManager.TargetLocation = _place;
+        MapManager.OnPlayerStartedTravel(_roads[_numberOfRoad], _place);
         Destroy(gameObject);
     }
 }

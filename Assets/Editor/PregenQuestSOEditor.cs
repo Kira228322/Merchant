@@ -230,6 +230,12 @@ class EditorPregenQuest : Editor
                         goal.RequiredItemName = EditorGUILayout.TextField("Required item name", goal.RequiredItemName);
                         EditorGUILayout.EndHorizontal();
                         break;
+                    case PregenQuestSO.CompactedGoal.GoalType.StayOnSceneGoal:
+                        GUILayout.Space(10);
+                        EditorGUILayout.BeginHorizontal();
+                        goal.RequiredSceneName = EditorGUILayout.TextField("Required scene name", goal.RequiredSceneName);
+                        EditorGUILayout.EndHorizontal();
+                        break;
 
                 }
 

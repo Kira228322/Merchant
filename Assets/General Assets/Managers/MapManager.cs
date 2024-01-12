@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public static class MapManager
@@ -26,6 +28,8 @@ public static class MapManager
     
     private static GameObject _playerIcon;
     public static GameObject PlayerIcon => _playerIcon;
+
+    public static event UnityAction<Location, Location> PlayerStartedTravel;
 
     [HideInInspector] public static List<Window> Windows = new List<Window>();
     public static bool EventInTravelIsActive;
@@ -55,6 +59,13 @@ public static class MapManager
     public static void TravelInit(Road road)
     {
         CurrentRoad = road;
+    }
+
+    public static void OnPlayerStartedTravel(Road targetRoad, Location targetLocation)
+    {
+        TargetLocation = targetLocation;
+        PlayerStartedTravel?.Invoke(CurrentLocation, targetLocation);
+        TransitionToTravelScene(targetRoad);
     }
 
     public static void OnLocationChange()
