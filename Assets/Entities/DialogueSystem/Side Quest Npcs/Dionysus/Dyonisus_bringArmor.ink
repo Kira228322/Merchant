@@ -1,11 +1,18 @@
 INCLUDE ../../MainInkLibrary.ink
 
 ~temp questSummaries = get_activeQuestList()
+
 {contains(questSummaries, "the_start_of_honor_2"):
 -> secondGreeting
 }
-{not check_if_quest_has_been_taken("the_start_of_honor_2"):
--> giveQuest
+{contains(questSummaries, "the_start_of_honor_return"):
+    {not check_if_quest_has_been_taken("the_start_of_honor_2"):
+        -> giveQuest
+    -else:
+        ->generic
+    }
+-else:
+->generic
 }
 
 === giveQuest ===
@@ -20,7 +27,7 @@ INCLUDE ../../MainInkLibrary.ink
         У меня есть рубин, который достался мне по наследству от бабушки. Она всегда говорила, что он приносит удачу, и поэтому я с ним не расставался. Однако моё положение не было похожим на удачное до того, как я встретил тебя, ха-ха!
         В общем, если ты принесешь мне хороший доспех, то я готов отдать тебе этот рубин. Честно сказать, я не уверен, насколько он ценен, но я хотел бы, чтобы он был у тебя.
         
-            ++[Хорошо, я берусь]
+            ++[Хорошо, я берусь.]
                 ~add_quest("the_start_of_honor_2")
                     Ты очень сильно помогаешь, спасибо тебе большое!
                     ->END
@@ -33,7 +40,7 @@ INCLUDE ../../MainInkLibrary.ink
         ->END
                 
 === secondGreeting ===
-    Привет, дружище. Рад тебя видеть!
+    Тебе ещё не удалось раздобыть для меня доспех? Прости мне мою невежливость, я не тороплю тебя.
         {has_enough_items("the_start_of_honor_2"):
             +[Вот твой доспех.]
                 \*Дионис разглядывает доспех с восхищением*
@@ -50,4 +57,9 @@ INCLUDE ../../MainInkLibrary.ink
         +[Пока нет, я был немного занят.]
             Что ж, ничего страшного. До встречи!
             ->END
-            
+
+=== generic ===
+Как дела?
+    +[Я вернусь попозже.]
+        Я буду тебя ждать!
+        ->END

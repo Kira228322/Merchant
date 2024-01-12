@@ -101,6 +101,7 @@ public class DialogueManager : MonoBehaviour
         _currentStory.BindExternalFunction("invoke_dialogue_event", (string param) =>
         {
             TalkedToNPCAboutSomething?.Invoke(_currentNPC.NpcData, param);
+            _currentNPC.CheckExclamationMark(null);
         });
         _currentStory.BindExternalFunction("invoke_dialogue_event_universal", (string param) =>
         {

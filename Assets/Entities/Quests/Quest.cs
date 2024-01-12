@@ -172,7 +172,8 @@ public class Quest
         {
             if (goal is TalkToNPCGoal talkToNpcGoal)
             {
-                return talkToNpcGoal.RequiredIDOfNPC == ID;
+                if (goal.CurrentState != Goal.State.Completed)
+                    return talkToNpcGoal.RequiredIDOfNPC == ID;
             }
             if (goal is GiveItemsGoal giveItemsGoal)
             {

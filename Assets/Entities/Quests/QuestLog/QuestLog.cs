@@ -143,13 +143,33 @@ public class QuestLog : MonoBehaviour
                     AddToFinishedQuests(quest, questLine);
                     break;
             }
-
-            if (isLast && !newOrLoading && _activeQuestLines.TryGetValue(questLine, out QuestLinePanel activeQuestLinePanel))
+            if (!newOrLoading && _activeQuestLines.TryGetValue(questLine, out QuestLinePanel activeQuestLinePanel))
             {
-                //Если квест последний в цепочке и для него создана QuestLinePanel (а она не будет создана, если это загрузка) то удалить её.
-                //Квест никогда не становится активным из выполненного, а выполненные цепочки никогда не уничтожаются.
-                Destroy(activeQuestLinePanel.gameObject); 
-                _activeQuestLines.Remove(questLine);
+                if (isLast)
+                {
+                    //Если квест последний в цепочке и для него создана QuestLinePanel (а она не будет создана, если это загрузка) то удалить её.
+                    //Квест никогда не становится активным из выполненного, а выполненные цепочки никогда не уничтожаются.
+                    Destroy(activeQuestLinePanel.gameObject);
+                    _activeQuestLines.Remove(questLine);
+                }
+                else
+                {
+                    //12.01.24: Я забыл учесть один каверзный случай: если квест выполняется, а следующий квест поступает с задержкой.
+                    //Активных квестов как бы нету, но панель не удалялась. В этом условии исправляется именно это:
+                    //Так что смотрим, активен ли хоть один квест из этой цепочки. Если нет, то панель цепочки нужно убрать.
+
+                    bool shouldDestroyPanel = true;
+                    foreach (var questInLine in questLine.QuestsInLine)
+                    {
+                        if (QuestHandler.GetActiveQuestBySummary(questInLine.QuestSummary) != null)
+                            shouldDestroyPanel = false;
+                    }
+                    if (shouldDestroyPanel)
+                    {
+                        Destroy(activeQuestLinePanel.gameObject);
+                        _activeQuestLines.Remove(questLine);
+                    }
+                }
             }
         }
         else

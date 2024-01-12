@@ -6142,9 +6142,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _appearanceBehaviour: 0
-  _isInstant: 0
+  _isInstant: 1
   _showConditions:
-  - QuestSummary: the_start_of_honor
+  - QuestSummary: 1_the_start_of_honor
     questState: 2
     HoursDelay: 72
   _hideConditions:
@@ -10419,6 +10419,7 @@ Transform:
   - {fileID: 733430801}
   - {fileID: 448786953}
   - {fileID: 1940987283}
+  - {fileID: 974063246}
   m_Father: {fileID: 899856081}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -11167,6 +11168,89 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &974063245
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 900157498}
+    m_Modifications:
+    - target: {fileID: 3974383717521719754, guid: f818256aa75e4604fb3b49794fa2d640, type: 3}
+      propertyPath: m_Name
+      value: "\u041A\u0443\u0437\u043D\u0435\u0446"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3974383717521719799, guid: f818256aa75e4604fb3b49794fa2d640, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3974383717521719799, guid: f818256aa75e4604fb3b49794fa2d640, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 3974383717521719799, guid: f818256aa75e4604fb3b49794fa2d640, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.92
+      objectReference: {fileID: 0}
+    - target: {fileID: 3974383717521719799, guid: f818256aa75e4604fb3b49794fa2d640, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3974383717521719799, guid: f818256aa75e4604fb3b49794fa2d640, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3974383717521719799, guid: f818256aa75e4604fb3b49794fa2d640, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3974383717521719799, guid: f818256aa75e4604fb3b49794fa2d640, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3974383717521719799, guid: f818256aa75e4604fb3b49794fa2d640, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3974383717521719799, guid: f818256aa75e4604fb3b49794fa2d640, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3974383717521719799, guid: f818256aa75e4604fb3b49794fa2d640, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3974383717521719799, guid: f818256aa75e4604fb3b49794fa2d640, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f818256aa75e4604fb3b49794fa2d640, type: 3}
+--- !u!4 &974063246 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3974383717521719799, guid: f818256aa75e4604fb3b49794fa2d640, type: 3}
+  m_PrefabInstance: {fileID: 974063245}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &974063247 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3974383717521719754, guid: f818256aa75e4604fb3b49794fa2d640, type: 3}
+  m_PrefabInstance: {fileID: 974063245}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &974063248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 974063247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df6ab5e347f61a544b92bcb6d4d270df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NpcData: {fileID: 11400000, guid: d73704b50a83942499154ff3e1693061, type: 2}
+  InkJSON: {fileID: 4900000, guid: 438bf11a8bc9cd84ba61e4886709228e, type: 3}
+  _exclamationMarkPrefab: {fileID: 3147425638445614604, guid: b1260439a5d175441800ad6cac241efb, type: 3}
+  ExclamationMark: {fileID: 0}
 --- !u!1 &982921504
 GameObject:
   m_ObjectHideFlags: 0
@@ -13226,7 +13310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _appearanceBehaviour: 0
-  _isInstant: 0
+  _isInstant: 1
   _showConditions:
   - QuestSummary: the_start_of_honor_2
     questState: 2
@@ -15836,10 +15920,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _appearanceBehaviour: 1
-  _isInstant: 0
+  _isInstant: 1
   _showConditions: []
   _hideConditions:
-  - QuestSummary: the_start_of_honor
+  - QuestSummary: 1_the_start_of_honor
     questState: 2
     HoursDelay: 72
 --- !u!1001 &1534203516

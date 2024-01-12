@@ -1,10 +1,10 @@
 INCLUDE ../../MainInkLibrary.ink
 
 ~temp questSummaries = get_activeQuestList()
-{contains(questSummaries, "the_start_of_honor"):
+{contains(questSummaries, "1_the_start_of_honor"):
 -> secondGreeting
 }
-{not check_if_quest_has_been_taken("the_start_of_honor"):
+{not check_if_quest_has_been_taken("1_the_start_of_honor"):
 -> giveQuest
 -else:
 ->generic
@@ -20,8 +20,9 @@ INCLUDE ../../MainInkLibrary.ink
         Какое-то время назад я обращался к кузнецу и заказал у него новый серебряный меч. Однако, когда я пришел его забрать, он стал требовать дополнительную оплату, о которой мы не договаривались.
         У меня теперь совсем нет денег, поэтому я не смог ему заплатить. Не мог бы ты поговорить с ним?
         К сожалению, мне совсем нечего тебе дать взамен...
-            ++[Хорошо, я постараюсь убедить его]
-                ~add_quest("the_start_of_honor")
+            ++[Хорошо, я постараюсь убедить его.]
+                ~add_quest("1_the_start_of_honor")
+                ~add_quest("the_start_of_honor_free_opportunity")
                     Отлично, я буду очень благодарен тебе!
                     ->END
                 ->END
@@ -33,11 +34,11 @@ INCLUDE ../../MainInkLibrary.ink
         ->END
                 
 === secondGreeting ===
-    Привет, ты ещё не говорил с кузнецом?
-        {has_enough_items("the_start_of_honor"):
+    Привет, тебе ещё не удалось достать меч?
+        {has_enough_items("1_the_start_of_honor"):
             +[Вот твой серебряный меч.]
                 Ого, дружище, невероятно! На самом деле, я был уверен, что этот кузнец не отдаст этот меч.
-                ~invoke_dialogue_event("the_start_of_honor_2_complete")
+                ~invoke_dialogue_event("the_start_of_honor_complete")
                 Я у тебя в долгу. Обещаю, я этого не забуду. Ещё увидимся!
                 ->END
         }

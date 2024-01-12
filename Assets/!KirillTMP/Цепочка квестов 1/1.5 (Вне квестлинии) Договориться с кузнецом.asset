@@ -10,10 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca299c98acb0c56409a7a3314dcc2b02, type: 3}
-  m_Name: "1.5 \u0420\u043E\u0441\u0442\u043A\u0438 \u0447\u0435\u0441\u0442\u0438"
+  m_Name: "1.5 (\u0412\u043D\u0435 \u043A\u0432\u0435\u0441\u0442\u043B\u0438\u043D\u0438\u0438)
+    \u0414\u043E\u0433\u043E\u0432\u043E\u0440\u0438\u0442\u044C\u0441\u044F \u0441
+    \u043A\u0443\u0437\u043D\u0435\u0446\u043E\u043C"
   m_EditorClassIdentifier: 
   StartingState: 0
-  QuestName: "\u0420\u043E\u0441\u0442\u043A\u0438 \u0447\u0435\u0441\u0442\u0438"
+  QuestName: "\u0414\u043E\u0433\u043E\u0432\u043E\u0440\u0438\u0442\u044C\u0441\u044F
+    \u0441 \u043A\u0443\u0437\u043D\u0435\u0446\u043E\u043C"
   QuestSummary: the_start_of_honor_free_opportunity
   QuestGiverID: 201
   Description: "\u0414\u0438\u043E\u043D\u0438\u0441 \u0437\u0430\u043A\u0430\u0437\u0430\u043B
@@ -30,7 +33,9 @@ MonoBehaviour:
   MaxExperienceReward: 45
   MinMoneyReward: 0
   MaxMoneyReward: 0
-  NextQuest: {fileID: 0}
+  QuestLine: {fileID: 0}
+  PrerequisiteQuests: []
+  QuestCompletionDelay: 0
   goals:
   - goalType: 1
     goalState: 0
@@ -45,6 +50,7 @@ MonoBehaviour:
     RequiredLine: silver_sword_obtained
     FailingLine: silver_sword_declined
     RequiredItemName: 
+    RequiredSceneName: 
     RequiredItemCategories: 
     QuestItemsBehaviour: 0
     RandomDeliveryWeight: 0

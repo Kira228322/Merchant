@@ -8,9 +8,7 @@ INCLUDE ../../MainInkLibrary.ink
 {contains(questSummaries, "the_start_of_honor_free_opportunity"):
     -> talk_about_sword
 -else:
-    {check_if_quest_has_been_taken("the_start_of_honor_free_opportunity"):
-    -> generic
-    }
+    ->generic
 }
 
 === talk_about_sword ===
@@ -22,7 +20,9 @@ INCLUDE ../../MainInkLibrary.ink
                     ->negotiations        
     
 === generic ===
+Чего надо? Если хочешь что-то купить, давай торговаться.
     +[Мне пора идти.]
+        Ну иди, я не держу.
         ->END
     
 === negotiations ===
