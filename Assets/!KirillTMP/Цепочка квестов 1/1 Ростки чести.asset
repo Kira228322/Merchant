@@ -33,7 +33,9 @@ MonoBehaviour:
   MaxExperienceReward: 45
   MinMoneyReward: 0
   MaxMoneyReward: 0
-  NextQuest: {fileID: 11400000, guid: f2e9f2840e0f36b478029fddd96097d4, type: 2}
+  QuestLine: {fileID: 0}
+  PrerequisiteQuests: []
+  QuestCompletionDelay: 72
   goals:
   - goalType: 4
     goalState: 0
@@ -49,6 +51,7 @@ MonoBehaviour:
     FailingLine: 
     RequiredItemName: "\u0421\u0435\u0440\u0435\u0431\u0440\u044F\u043D\u044B\u0439
       \u043C\u0435\u0447"
+    RequiredSceneName: 
     RequiredItemCategories: 
     QuestItemsBehaviour: 0
     RandomDeliveryWeight: 0

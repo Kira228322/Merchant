@@ -6,6 +6,8 @@ INCLUDE ../../MainInkLibrary.ink
 }
 {not check_if_quest_has_been_taken("the_start_of_honor"):
 -> giveQuest
+-else:
+->generic
 }
 
 === giveQuest ===
@@ -43,3 +45,8 @@ INCLUDE ../../MainInkLibrary.ink
             Что ж, ничего страшного. До встречи!
             ->END
             
+=== generic ===
+Здравствуй, дружище! Спасибо, что зашёл. Я всё не могу нарадоваться этому мечу, который ты добыл для меня.
+    +[Мне пора идти.]
+        Да, обязательно заходи позже! Я расскажу тебе, какие подвиги мне удалось совершить!
+        ->END
