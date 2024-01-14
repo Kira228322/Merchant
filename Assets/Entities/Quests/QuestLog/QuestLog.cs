@@ -158,11 +158,20 @@ public class QuestLog : MonoBehaviour
                     //јктивных квестов как бы нету, но панель не удал€лась. ¬ этом условии исправл€етс€ именно это:
                     //“ак что смотрим, активен ли хоть один квест из этой цепочки. ≈сли нет, то панель цепочки нужно убрать.
 
+                    //14.01.24: ѕоследний фикс не работает, потому что данный метод реагирует на событие Quest.QuestChangedState.
+                    //¬ этом методе мы находим любой квест из цепочки, который в ActiveQuests у QuestHandler.
+                    //Ќо QuestHandler тоже реагирует на событие Quest.QuestChangedState => может так быть,
+                    //что квест, изменившись, ещЄ не убралс€ из ActiveQuests. ѕоэтому впихиваю простой костыль: найд€ квест,
+                    //будем ещЄ раз чекать его актуальное состо€ние, как бы перепровер€€ за QuestHandler.
+
                     bool shouldDestroyPanel = true;
                     foreach (var questInLine in questLine.QuestsInLine)
                     {
-                        if (QuestHandler.GetActiveQuestBySummary(questInLine.QuestSummary) != null)
+                        Quest foundQuest = QuestHandler.GetActiveQuestBySummary(questInLine.QuestSummary);
+                        if (foundQuest?.CurrentState == Quest.State.Active)
+                        {
                             shouldDestroyPanel = false;
+                        }
                     }
                     if (shouldDestroyPanel)
                     {
