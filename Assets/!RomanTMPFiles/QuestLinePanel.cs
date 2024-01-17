@@ -41,7 +41,7 @@ public class QuestLinePanel : MonoBehaviour
             return;
         }
 
-        bool allCompleted = questPanels.All(questPanel => questPanel.Quest.CurrentState == Quest.State.Completed);
+        bool allCompleted = questPanels.All(questPanel => questPanel.Quest.CurrentState == Quest.State.Completed || questPanel.Quest.CurrentState == Quest.State.Failed);
         bool anyRewardUncollected = questPanels.Any(questPanel => questPanel.Quest.CurrentState == Quest.State.RewardUncollected);
 
         _questLineNameText.color = allCompleted ? _completedColor : _activeColor;
