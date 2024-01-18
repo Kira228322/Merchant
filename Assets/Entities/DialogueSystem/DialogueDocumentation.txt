@@ -9,6 +9,7 @@ set_color(colorName)
 Устанавливает цвет текста. Поддерживаются следующие цвета:
 red, cyan, blue, darkblue, lightblue, purple, yellow, lime, fuchsia, white, silver, grey, black, orange, brown, maroon, green, olive, navy, teal, aqua, magenta
 Или в формате #00FF00
+цвет default или пустая строка возвращают к первоначальному цвету (задан в инспекторе)
 
 add_quest(questSummary)
 Добавляет игроку квест с указанным questSummary. Квест должен быть в датабазе PregenQuestSO.
@@ -29,6 +30,12 @@ has_enough_items(string questSummary)
 Если везде предметов хватает, либо квест не содержал GiveItemsGoal вообще, возвращает true.
 UPD: Проверяет он только для текущего нпс. То есть, если в этом квесте есть несколько разных нпс с разными GiveItemsGoal, то проверяет только GiveItemsGoal для текущего нпс. 
 Но если разные GiveItemsGoal для одного нпс, то в них во всех должно быть достаточно предметов. То есть, работает так, как должен по логике.
+
+has_enough_items_for_this_goal(string questSummary, int giveItemsGoalIndex)
+(К сожалению, ink не поддерживает перегрузку методов...)
+Если квест неактивен/не взят, возвращает "null"
+Иначе проверяет Goal под этим индексом, и возвращает true, если хватает предметов и false иначе.
+Если Goal под этим индексом - не GiveItemsGoal, возвращается "null" и ошибка в Debug.Log.
 
 is_questgiver_ready_to_give_quest()
 Если НПС - квестгивер, и не находится на кулдауне для выдачи квеста, возвращает true. Если кулдаун - false.

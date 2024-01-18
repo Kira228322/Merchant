@@ -133,6 +133,25 @@ public class DialogueManager : MonoBehaviour
             }
             return "null";
         });
+        _currentStory.BindExternalFunction("has_enough_items_for_this_goal", (string questSummary, int giveItemsGoalIndex) =>
+        {
+            Quest quest = QuestHandler.GetActiveQuestBySummary(questSummary);
+            if (quest != null)
+            {
+                if (quest.Goals[giveItemsGoalIndex] is GiveItemsGoal giveItemsGoal)
+                {
+                    return Player.Instance.Inventory.HasEnoughItemsOfThisItemData(
+                                ItemDatabase.GetItem(giveItemsGoal.RequiredItemName),
+                                giveItemsGoal.RequiredAmount);
+                }
+                else
+                {
+                    Debug.LogError("Goal под этим индексом - не GiveItemsGoal. Ошибка в написании диалога");
+                    return "null";
+                }
+            }
+            return "null";
+        });
         _currentStory.BindExternalFunction("is_questgiver_ready_to_give_quest", () =>
         {
             if (_currentNPC.NpcData is NpcQuestGiverData npcQuestGiverData)
