@@ -27,9 +27,50 @@ INCLUDE ../../MainInkLibrary.ink
 ~temp activeQuests = get_activeQuestList()
 {contains(activeQuests, "party_gather_food"):
     Ну, как проходит подготовка?
-    +[Я вернусь позже.]
-        ->END
+    ->bring_items
 -else:
     Спасибо за помощь! Приходи ко мне позже, я подумаю, что делать дальше.
     ->END
 }
+
+=== bring_items ===
+
+{has_enough_items_for_this_goal("party_gather_food", 0) && not is_goal_completed("party_gather_food", 0):
+    +[Я принес пироги.]
+    Отлично! Давай их сюда.
+        ~invoke_dialogue_event("party_gather_pie")
+        ->validation
+    ->END
+}
+{has_enough_items_for_this_goal("party_gather_food", 1) && not is_goal_completed("party_gather_food", 1):
+    +[Я принес чизкейки.]
+    Отлично! Давай их сюда.
+        ~invoke_dialogue_event("party_gather_cheesecake")
+        ->validation
+-else:
+    +[Я вернусь позже.]
+        Без проблем! Только не пропадай надолго, очень уж хочется расслабиться и посидеть с друзьями...
+        ->END
+    
+}
+{not is_goal_completed("party_gather_food", 2):
+    +[Я принёс фрукты.]
+        ~open_item_container("party_gather_food", 2)
+            Отличная работа!
+            ->validation
+}
+
+ === validation ===
+ ~temp currentActive = get_activeQuestList()
+ {not contains(currentActive, "party_gather_food"): //Раньше был активным, сейчас нет => выполнил
+    ->nextStep
+-else:
+    Вижу, ещё чего-то не хватает. Буду ждать, когда соберёшь остальное!
+    ->bring_items
+}
+
+=== nextStep ===
+    Похоже, ты собрал всю еду, которую я заказывал. Отлично!
+    Я подумал, и пришёл к выводу, что на вечеринке нужно расслабиться и чего-нибудь выпить.
+    Не сильно крепкое, например вино отлично подойдёт. Пускай будет и белое, и красное, по паре бутылочек. Приходи, когда соберёшь!
+    ->END

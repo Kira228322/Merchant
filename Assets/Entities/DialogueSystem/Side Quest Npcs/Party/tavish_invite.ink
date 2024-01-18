@@ -2,7 +2,7 @@ INCLUDE ../../MainInkLibrary.ink
 
 ~temp activeQuests = get_activeQuestList()
 
-{contains(activeQuests, "party_gather_tavish"):
+{contains(activeQuests, "party_gather_friends"):
     ->invite
 -else:
     ->generic

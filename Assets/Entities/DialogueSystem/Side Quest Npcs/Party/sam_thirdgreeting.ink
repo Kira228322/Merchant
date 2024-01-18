@@ -12,14 +12,14 @@ INCLUDE ../../MainInkLibrary.ink
 
 === bring_items ===
 
-{has_enough_items_for_this_goal("party_gather_alcohol", 0):
+{has_enough_items_for_this_goal("party_gather_alcohol", 0) && not is_goal_completed("party_gather_alcohol", 0):
     +[Я принес красное вино.]
     Отлично! Давай мне, я уберу в безопасное место.
         ~invoke_dialogue_event("party_gather_redwine")
         ->validation
     ->END
 }
-{has_enough_items_for_this_goal("party_gather_alcohol", 1):
+{has_enough_items_for_this_goal("party_gather_alcohol", 1) && not is_goal_completed("party_gather_alcohol", 1):
     +[Я принес белое вино.]
     Отлично! Давай мне, я уберу в безопасное место.
         ~invoke_dialogue_event("party_gather_whitewine")
