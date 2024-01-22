@@ -318,10 +318,17 @@ public class DialogueManager : MonoBehaviour
         HideChoices();
 
         WaitForSeconds waitForSeconds = new(1 / _typingSpeed);
+        bool currentlyWritingTag = false; // <...> и </...> тэги должны выводиться мгновенно
         foreach (char letter in line.ToCharArray())
         {
+            if (letter == '<')
+                currentlyWritingTag = true;
+            if (letter == '>')
+                currentlyWritingTag = false;
+
             _dialogueText.text += letter;
-            yield return waitForSeconds;
+            if (!currentlyWritingTag)
+                yield return waitForSeconds;
         }
 
         _isCurrentlyWritingALine = false;
