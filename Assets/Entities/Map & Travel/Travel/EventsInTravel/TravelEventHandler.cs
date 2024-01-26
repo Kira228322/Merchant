@@ -158,8 +158,7 @@ public class TravelEventHandler : MonoBehaviour
         if (EventFire(MapManager.CurrentRoad.Danger * MapManager.CurrentRoad.DangerMultiplier))
             _banditEvent = true;
         else _banditEvent = false;
-        Debug.Log(MapManager.CurrentRoad.Danger * MapManager.CurrentRoad.DangerMultiplier);
-        Debug.Log(_banditEvent);
+        
         MapManager.CurrentRoad.SetNormalDangerMultiplier();
         
         RollNextEvent();

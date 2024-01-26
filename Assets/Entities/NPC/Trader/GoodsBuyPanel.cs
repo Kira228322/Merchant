@@ -50,6 +50,7 @@ public class GoodsBuyPanel : MonoBehaviour
         IsOriginatedFromTrader = isOriginatedFromTrader;
         CurrentCount = count;
         _cost = CalculatePrice(_item);
+        ChangeNameColor();
         _costText.text = _cost.ToString();
         _icon.sprite = _item.Good.Icon;
         _itemName.text = goods.Name;
@@ -78,6 +79,7 @@ public class GoodsBuyPanel : MonoBehaviour
         IsOriginatedFromTrader = isOriginatedFromTrader;
         CurrentCount = count;
         _cost = CalculatePrice(_item);
+        ChangeNameColor();
         _costText.text = _cost.ToString();
         _icon.sprite = _item.Good.Icon;
         _itemName.text = goods.Good.Name;
@@ -145,7 +147,24 @@ public class GoodsBuyPanel : MonoBehaviour
     public void RefreshPrice()
     {
         _cost = CalculatePrice(_item);
+        ChangeNameColor();
         _costText.text = _cost.ToString(); 
+    }
+
+    private void ChangeNameColor()
+    {
+        if (_cost < 0.855f * _item.Good.Price) // 1/1.17
+        {
+            _itemName.color = new Color(62 / 255f, 188 / 255f, 0 );
+        }
+        else if (_cost > 1.17f * _item.Good.Price)
+        {
+            _itemName.color = new Color(174/255f,32/255f,14/255f);
+        }
+        else
+        {
+            _itemName.color = new Color(35/255f,50/255f,55/255f);
+        }
     }
 
     private int CalculatePrice(NpcTrader.TraderGood item)

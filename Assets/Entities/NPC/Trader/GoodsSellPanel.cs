@@ -40,6 +40,7 @@ public class GoodsSellPanel : MonoBehaviour
         _currentCount = itemToSell.CurrentItemsInAStack;
         // TODO Посмотреть, не оказывается ли, что трейдер продает такой же предмет и у него цена продажи меньше, чем игрок ему продает
         _cost = CalculatePrice(_item.ItemData);
+        ChangeNameColor();
         _costText.text = _cost.ToString(); 
         _countText.text = _currentCount.ToString();
         _icon.sprite = _item.ItemData.Icon;
@@ -120,7 +121,24 @@ public class GoodsSellPanel : MonoBehaviour
     public void RefreshPrice()
     {
         _cost = CalculatePrice(_item.ItemData);
+        ChangeNameColor();
         _costText.text = _cost.ToString(); 
+    }
+    
+    private void ChangeNameColor()
+    {
+        if (_cost > 1.17f * _item.ItemData.Price) 
+        {
+            _itemName.color = new Color(62 / 255f, 188 / 255f, 0);
+        }
+        else if (_cost < 0.855f * _item.ItemData.Price) // 1/1.17
+        {
+            _itemName.color = new Color(174/255f,32/255f,14/255f);
+        }
+        else
+        {
+            _itemName.color = new Color(35/255f,50/255f,55/255f);
+        }
     }
 
     private int CalculatePrice(Item item)
