@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
     [SerializeField] private GameObject _villageWindow;
     [SerializeField] private GameObject _playerIcone;
     [SerializeField] private Location _startLocation;
+    [HideInInspector] public List<int> IndexesLastEvents = new ();// TODO Этого товарища надо сейвить. Он не мудак, он хороший человек, я его знаю, как хорошего человека
 
     //TODO убрать перед выпуском игры
     [SerializeField] private TMP_InputField TESTstartLocationInputField;
