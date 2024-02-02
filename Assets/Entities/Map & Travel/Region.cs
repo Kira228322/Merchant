@@ -138,7 +138,7 @@ public class Region : MonoBehaviour
             currentQuantity = C + 1;
         
         float B = (float)A / (Q - C) - P;
-        float result = (float)Math.Round( (A * 0.9f) / (currentQuantity - C) - B) / P;
+        float result = (float)Math.Round( (A * 0.8f) / (currentQuantity - C) - B) / P;
         if (result > 1.3f)
             result = 1.3f;
         else if (result < 0.77f) // 1/1.3f
