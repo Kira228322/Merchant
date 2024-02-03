@@ -19,6 +19,7 @@ public class TravelEventHandler : MonoBehaviour
     [SerializeField] private Animator _wagonAnimator;
     [SerializeField] private Animator _donkeyAnimator;
     [SerializeField] private AudioSource _wagonSound;
+    private List<int> _indexesLastEvents;
     private EventInTravel _nextEvent;
     private Transform _mainCanvas;
     [SerializeField] private Transform _cameraTransform;
@@ -28,6 +29,26 @@ public class TravelEventHandler : MonoBehaviour
     private Transform _previousPlayerParent;
 
     public float RoadBadnessMultiplier = 1;
+
+
+    private void Awake()
+    {
+        // Хитрая херня. Заполняю лист последних ивентов рандомными, если эта очередь пуста
+        // Это делатеся в Старте. Чтобы потом в процессе путешествия в дороге не производить
+        // проверку на null. Таким образом всегда в листе 5 элементов -- оптимизация.
+        
+        _indexesLastEvents = GameManager.Instance.IndexesLastEvents; // Ссылочный же тип да? Да, проверил, работает
+        
+        if (_indexesLastEvents.Count != 4)
+        {
+            _indexesLastEvents.Clear();
+            for (int i = 0; i < 4; i++)
+            {
+                _indexesLastEvents.Add(Random.Range(0, _eventsInTravels.Count));
+            }
+        }
+    }
+
     private void Start()
     {
         _mainCanvas = CanvasWarningGenerator.Instance.gameObject.transform;
@@ -209,7 +230,15 @@ public class TravelEventHandler : MonoBehaviour
         List<int> randomWeights = new();
 
         for (int i = 0; i < _eventsInTravels.Count; i++)
-            randomWeights.Add(Random.Range(0, _eventsInTravels[i].Weight + 1));
+        {
+            int decrease = 0;
+            
+            for (int j = 0; j < 4; j++) // Длина листа indexesLastEvents = 4
+                if (_indexesLastEvents[j] == i)
+                    decrease += (_eventsInTravels[i].Weight - decrease) / 5;
+            
+            randomWeights.Add(Random.Range(0, _eventsInTravels[i].Weight - decrease + 1));
+        }
 
         for (int i = 0; i < _eventsInTravels.Count; i++)
             if (max < randomWeights[i])
@@ -219,7 +248,16 @@ public class TravelEventHandler : MonoBehaviour
             if (max == randomWeights[i])
                 index.Add(i);
 
-        return _eventsInTravels[index[Random.Range(0, index.Count)]];
+        int resultIndex = index[Random.Range(0, index.Count)];
+        
+        //Похоже на говно код. Возможно так оно и есть, однако здесь понятно, что происходит и места
+        // занимает не много (4 элемента в листе). Это оптимальнее, чем делать цикл for, просто верь мне
+        _indexesLastEvents[0] = _indexesLastEvents[1];
+        _indexesLastEvents[1] = _indexesLastEvents[2];
+        _indexesLastEvents[2] = _indexesLastEvents[3];
+        _indexesLastEvents[3] = resultIndex;
+        
+        return _eventsInTravels[resultIndex];
     }
 
     
