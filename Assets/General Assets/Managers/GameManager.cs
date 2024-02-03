@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
     [SerializeField] private GameObject _villageWindow;
     [SerializeField] private GameObject _playerIcone;
     [SerializeField] private Location _startLocation;
-    [HideInInspector] public List<int> IndexesLastEvents = new ();// TODO Этого товарища надо сейвить. Он не мудак, он хороший человек, я его знаю, как хорошего человека
+    [HideInInspector] public List<int> IndexesLastEvents = new ();
 
     //TODO убрать перед выпуском игры
     [SerializeField] private TMP_InputField TESTstartLocationInputField;
@@ -154,6 +154,7 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
             GlobalEventHandlerSaveData = GlobalEventHandler.Instance.SaveData(),
             RegionSaveData = _regionHandler.SaveData(),
             SceneSaveData = _sceneTransiter.SaveData(),
+            TravelEventsSaveData = new(IndexesLastEvents),
 
             };
         return saveData;
@@ -179,5 +180,7 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
         GlobalEventHandler.Instance.LoadData(data.GlobalEventHandlerSaveData);
         _regionHandler.LoadData(data.RegionSaveData);
         _sceneTransiter.LoadData(data.SceneSaveData);
+        IndexesLastEvents = new(data.TravelEventsSaveData.SavedIndexes);
+
     }
 }

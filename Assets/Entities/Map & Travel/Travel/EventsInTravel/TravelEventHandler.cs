@@ -38,7 +38,6 @@ public class TravelEventHandler : MonoBehaviour
         // проверку на null. Таким образом всегда в листе 5 элементов -- оптимизация.
         
         _indexesLastEvents = GameManager.Instance.IndexesLastEvents; // Ссылочный же тип да? Да, проверил, работает
-        
         if (_indexesLastEvents.Count != 4)
         {
             _indexesLastEvents.Clear();
