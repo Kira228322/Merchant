@@ -53,12 +53,7 @@ public class GiveItemsGoal : Goal
                 //Списать необходимые предметы у игрока
                 //Подразумевается, что в диалоге эта реплика появляется только если необходимые предметы есть!
 
-                //TODO Дебаг проверка, можно убрать если ошибок не возникает
-                if (!Player.Instance.Inventory.HasEnoughItemsOfThisItemData(RequiredItem, RequiredAmount))
-                {
-                    Debug.LogWarning("Не было достаточно предметов, чтобы их забрать!");
-                    return;
-                }
+                
 
                 Player.Instance.Inventory.RemoveItemsOfThisItemData(RequiredItem, RequiredAmount);
                 CurrentAmount += RequiredAmount;

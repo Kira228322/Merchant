@@ -52,8 +52,6 @@ public class PlayerStats : ISaveable<PlayerStatsSaveData>
     public float StatusDurationModifier = 1;
     public void OnToughnessChanged()
     {
-        // TODO делать, когда изменяется стойкость
-
         Player.Instance.Needs.HungerDecayRate = 16 + Toughness.Total + Toughness.Total/2;
         Player.Instance.Needs.SleepDecayRate = 19 + Toughness.Total + (Toughness.Total+1)/2;
         Player.Instance.Needs.MaxHunger = 90 + Toughness.Total * 3;

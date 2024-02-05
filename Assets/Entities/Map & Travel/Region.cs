@@ -59,8 +59,6 @@ public class Region : MonoBehaviour
         for (int i = 1; i < rows.Length - 1; i++)
         {
             string[] cells = rows[i].Split(';');
-            // Debug.Log(i + " " + cells[0]);
-            // TODO посмотреть, нужно ли -1 в цикле или нет 
             ItemEconomyParams.Add(cells[0], new [] 
             {Convert.ToInt32(cells[1]), Convert.ToInt32(cells[2]),Convert.ToInt32(cells[3])});
         }

@@ -92,15 +92,7 @@ public static class MapManager
             return null;
         }
     }
-    public static Road GetRoadByName (string name)
-    //TODO: нигде не используется и очень дорогой метод. Что-то хотели сделать, но в итоге сделали иначе?
-    {
-        RegionHandler regionHandler = Object.FindObjectOfType<RegionHandler>(true);
-        return regionHandler.Regions
-            .SelectMany(region => region.Locations)
-            .SelectMany(location => location._roads)
-            .FirstOrDefault(road => road.RoadName == name);
-    }
+    
     public static Location GetRandomLocation(Region region)
     {
         return region.Locations[Random.Range(0, region.Locations.Count)];

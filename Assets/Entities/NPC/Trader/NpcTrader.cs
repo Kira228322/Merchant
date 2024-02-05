@@ -88,9 +88,7 @@ public class NpcTrader : Npc
     }
 
     public List<TraderGood> Goods => _npcTraderData.Goods;
-    public List<TraderGood> AdditiveGoods => _npcTraderData.AdditiveGoods; // TODO ≈ще не знаю как это работает,
-                                                                           // но если вдруг осталось 0 предметов, то удал€етс€ ли 
-                                                                           // из листа элемент? надо провер€ть.
+    public List<TraderGood> AdditiveGoods => _npcTraderData.AdditiveGoods; 
     public List<BuyCoefficient> BuyCoefficients => _npcTraderData.BuyCoefficients; //“аких BuyCoefficients будет столько, сколько всего есть Item.ItemType (см.ниже)
     public void OpenTradeWindow()
     {

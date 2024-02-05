@@ -49,6 +49,7 @@ public class SleepDurationPanel : MonoBehaviour
         _player.HidePlayer(false);
         Player.Instance.PlayerMover.EnableMove();
         StartCoroutine(FadeOutBlackScreen());
+        GameManager.Instance.SaveGame();
     }
 
     public void OnDoneButtonPressed()

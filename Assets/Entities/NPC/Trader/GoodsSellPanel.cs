@@ -38,7 +38,6 @@ public class GoodsSellPanel : MonoBehaviour
         _trader = trader;
         _item = itemToSell;
         _currentCount = itemToSell.CurrentItemsInAStack;
-        // TODO Посмотреть, не оказывается ли, что трейдер продает такой же предмет и у него цена продажи меньше, чем игрок ему продает
         _cost = CalculatePrice(_item.ItemData);
         ChangeNameColor();
         _costText.text = _cost.ToString(); 

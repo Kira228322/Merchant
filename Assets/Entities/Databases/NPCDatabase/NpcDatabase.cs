@@ -73,7 +73,6 @@ public class NpcDatabase : MonoBehaviour, ISaveable<NpcDatabaseSaveData>
         foreach (NpcData npcData in NpcDatabaseSO.NpcList)
         {
             NpcSaveData npcSaveData;
-            //TODO обновлять switch с появлением новых типов NPC
             switch (npcData)
             {
                 case NpcTraderData traderData:
@@ -105,7 +104,6 @@ public class NpcDatabase : MonoBehaviour, ISaveable<NpcDatabaseSaveData>
 
         foreach (var npcAndSaveData in npcDataAndSaveData)
         {
-            //TODO обновлять switch с появлением новых типов NPC
             switch (npcAndSaveData.npcData)
             {
                 case NpcTraderData npcTraderData:

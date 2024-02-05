@@ -16,8 +16,6 @@ public class GoodsBuyPanel : MonoBehaviour
     [SerializeField] private TMP_Text _itemName;
     private int _cost;
     private int _currentCount;
-    //TODO: Какой смысл в _currentCount, если это можно отслеживать в _item.CurrentCount?
-    //Грубо говоря, зачем разделять CurrentCount у панели и у того TraderGood, который она содержит?
     private float _boughtDaysAgo;
     private NpcTrader.TraderGood _item;
     private NpcTrader _trader;
@@ -45,7 +43,7 @@ public class GoodsBuyPanel : MonoBehaviour
     {
         TradeManager.Instance.GoodsBuyPanels.Add(this);
         _trader = trader;
-        _item = new NpcTrader.TraderGood(goods.Name, 1,1, goods.Price); //TODO проверить: должно быть 1, 1 или count, count
+        _item = new NpcTrader.TraderGood(goods.Name, 1,1, goods.Price); 
         _boughtDaysAgo = boughtDaysAgo;
         IsOriginatedFromTrader = isOriginatedFromTrader;
         CurrentCount = count;
@@ -61,7 +59,7 @@ public class GoodsBuyPanel : MonoBehaviour
         //Нужно для того, чтобы создавать новую GoodsBuyPanel из GoodsSellPanel. Чтобы игрок мог "выкупить" предмет
         //по той цене, по которой продал до закрытия окна торговли.
         _trader = trader;
-        _item = new NpcTrader.TraderGood(goods.Name, 1, 1, goods.Price); //TODO проверить: должно быть 1, 1 или count, count
+        _item = new NpcTrader.TraderGood(goods.Name, 1, 1, goods.Price); 
         _boughtDaysAgo = boughtDaysAgo;
         IsOriginatedFromTrader = isOriginatedFromTrader;
         CurrentCount = count;
