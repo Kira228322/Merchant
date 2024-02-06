@@ -25,6 +25,55 @@ MonoBehaviour:
   HaveAdditiveGoods: 1
   _baseGoods:
   - Good: {fileID: 11400000, guid: f0c874607887d534c9235b0f8fb70573, type: 2}
+    MaxCount: 4
+    CurrentCount: 4
+    CurrentPrice: 56
+  - Good: {fileID: 11400000, guid: e4a23c54f974e6740a7cc6d083120ca4, type: 2}
+    MaxCount: 4
+    CurrentCount: 4
+    CurrentPrice: 56
+  - Good: {fileID: 11400000, guid: ea4d2f04cf1aa2d438aed69d425837a0, type: 2}
+    MaxCount: 12
+    CurrentCount: 12
+    CurrentPrice: 10
+  - Good: {fileID: 11400000, guid: 642cddc7bf51f4b46b9d42d47a5efe59, type: 2}
+    MaxCount: 5
+    CurrentCount: 5
+    CurrentPrice: 30
+  - Good: {fileID: 11400000, guid: 1a259fa86cbe6cd4e80561592a5dcf07, type: 2}
+    MaxCount: 5
+    CurrentCount: 5
+    CurrentPrice: 31
+  - Good: {fileID: 11400000, guid: d4f8a469ad5581343806bc2e2ba1ca7f, type: 2}
+    MaxCount: 16
+    CurrentCount: 16
+    CurrentPrice: 15
+  - Good: {fileID: 11400000, guid: 93e4e5c126bbd3547a669e72aaed4228, type: 2}
+    MaxCount: 18
+    CurrentCount: 18
+    CurrentPrice: 37
+  - Good: {fileID: 11400000, guid: 6a9fb5329fb3e8741aac1c50cf40fc78, type: 2}
+    MaxCount: 13
+    CurrentCount: 13
+    CurrentPrice: 29
+  - Good: {fileID: 11400000, guid: bd0fb9ee6c138024d9f6cbfa65fa9e8a, type: 2}
+    MaxCount: 11
+    CurrentCount: 11
+    CurrentPrice: 41
+  - Good: {fileID: 11400000, guid: 723eaf042268d86489735f5c5cc26823, type: 2}
+    MaxCount: 15
+    CurrentCount: 15
+    CurrentPrice: 71
+  - Good: {fileID: 11400000, guid: c2208960dad988e4d880adeca11bde0e, type: 2}
+    MaxCount: 20
+    CurrentCount: 20
+    CurrentPrice: 9
+  _baseBuyCoefficients:
+  - ItemType: 27
+    Coefficient: 1
+    DefaultCountToBuy: 25
+  Goods:
+  - Good: {fileID: 11400000, guid: f0c874607887d534c9235b0f8fb70573, type: 2}
     MaxCount: 2
     CurrentCount: 2
     CurrentPrice: 12
@@ -44,22 +93,8 @@ MonoBehaviour:
     MaxCount: 2
     CurrentCount: 2
     CurrentPrice: 12
-  _baseBuyCoefficients:
-  - ItemType: 6
-    Coefficient: 1
-    DefaultCountToBuy: 25
-  - ItemType: 7
-    Coefficient: 1
-    DefaultCountToBuy: 22
-  - ItemType: 8
-    Coefficient: 1
-    DefaultCountToBuy: 15
-  - ItemType: 20
-    Coefficient: 1
-    DefaultCountToBuy: 32
-  - ItemType: 21
-    Coefficient: 1
-    DefaultCountToBuy: 25
-  Goods: []
   AdditiveGoods: []
-  BuyCoefficients: []
+  BuyCoefficients:
+  - ItemType: 27
+    Coefficient: 1
+    DefaultCountToBuy: 25

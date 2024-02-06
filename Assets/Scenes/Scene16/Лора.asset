@@ -77,7 +77,23 @@ MonoBehaviour:
     MaxCount: 2
     CurrentCount: 2
     CurrentPrice: 42
-  _baseBuyCoefficients: []
+  - Good: {fileID: 11400000, guid: f0c874607887d534c9235b0f8fb70573, type: 2}
+    MaxCount: 11
+    CurrentCount: 11
+    CurrentPrice: 56
+  _baseBuyCoefficients:
+  - ItemType: 27
+    Coefficient: 1
+    DefaultCountToBuy: 25
+  - ItemType: 32
+    Coefficient: 1
+    DefaultCountToBuy: 25
+  - ItemType: 16
+    Coefficient: 1
+    DefaultCountToBuy: 25
+  - ItemType: 17
+    Coefficient: 1
+    DefaultCountToBuy: 25
   Goods: []
   AdditiveGoods: []
   BuyCoefficients: []
