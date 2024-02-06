@@ -80,9 +80,10 @@ public class TutorialStateTracker : MonoBehaviour, ISaveable<TutorialStateTracke
             }
         }
 
-        //TODO: Уничтожать себя нельзя, потому что этот объект нужен GameManager для сохранения
-        //(Он будет вызывать FindObjectOfType, случится Nullref). Если все презентации просмотрены,
-        //можно просто отписываться от ивента QuestHandler
+        if (QuestTriggerConditions.All(item => item.Value))
+        {
+            QuestHandler.QuestChangedState -= OnQuestChangedState;
+        }
     }
 
     public TutorialStateTrackerSaveData SaveData()
