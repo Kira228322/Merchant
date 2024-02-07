@@ -109,7 +109,7 @@ public class CraftingHandler : MonoBehaviour
         _ItemName.text = SelectedRecipe.ResultingItem.Name;
         _resultingItemDescription.text = SelectedRecipe.ResultingItem.Description;
         _requiredCraftingLevelText.text = "Требуемый уровень навыка: " + SelectedRecipe.RequiredCraftingLevel.ToString();
-        _currentCraftingLevelText.text = "Текущий уровень навыка: " + (Player.Instance.Statistics.Crafting.Total < SelectedRecipe.RequiredCraftingLevel ? $"<color=red>" : "") + Player.Instance.Statistics.Crafting.Total;
+        _currentCraftingLevelText.text = (Player.Instance.Statistics.Crafting.Total < SelectedRecipe.RequiredCraftingLevel ? $"<color=red>" : "") + "Текущий уровень навыка: " + Player.Instance.Statistics.Crafting.Total;
         bool isCraftButtonEnabled = IsCraftButtonEnabled(); //соответствует ли уровень навыка и текущая крафтингстанция
 
         for (int i = 0; i < SelectedRecipe.RequiredItems.Count; i++)

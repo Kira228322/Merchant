@@ -369,7 +369,7 @@ public class ItemInfo : MonoBehaviour
     {
         foreach (var craftRecipe in _currentUsableItem.Recipes)
         {
-            if (Player.Instance.Recipes.Any(recipe => recipe.ResultingItem.Name == craftRecipe.ResultingItem.Name))
+            if (Player.Instance.Recipes.Any(recipe => recipe == craftRecipe))
             {
                 CanvasWarningGenerator.Instance.CreateWarning("Рецепт уже известен", 
                     $"Вы уже изучили рецепт {craftRecipe.ResultingItem.Name}");
