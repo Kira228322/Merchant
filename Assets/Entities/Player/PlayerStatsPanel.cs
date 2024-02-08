@@ -120,8 +120,19 @@ public class PlayerStatsPanel : MonoBehaviour
     }
     public void LevelUpCrafting()
     {
-        _playerStats.Crafting.IncreaseStat();
-        OnStatLvlUpButtonPressed();
+        if (_playerStats.Crafting.Base == 2)
+        {
+            CanvasWarningGenerator.Instance.CreateWarning("Крафтинг макс. уровня", "Вы полностью изучили крафтинг");
+            return;
+        }
+        if (_playerExperience.CurrentLevel > 2)
+        {
+            _playerStats.Crafting.IncreaseStat();
+            OnStatLvlUpButtonPressed();
+        }
+        else
+            CanvasWarningGenerator.Instance.CreateWarning("Недостаточный уровень", "Изучить крафтинг можно только с 3 уровня");
+        
     }
     private void OnStatLvlUpButtonPressed()
     {
