@@ -70,7 +70,7 @@ public class PlayerMover : MonoBehaviour
     {
         if (_currentMove != null)
         {
-            _animator.SetTrigger("IDLE");
+            _animator.SetBool("Move", false);
             StopCoroutine(_currentMove);
             _currentMove = null;
             _rigidbody.velocity = new Vector2(0,0);
@@ -95,7 +95,7 @@ public class PlayerMover : MonoBehaviour
             _currentMove = null;
             _rigidbody.velocity = new Vector2(0,0);
         }
-        else _animator.SetTrigger("Move");
+        
         _currentMove = StartCoroutine(Move(startPos, targetPos));
     }
     
@@ -177,13 +177,13 @@ public class PlayerMover : MonoBehaviour
         // если точка задана на лестницу, то движение не продолжается
         if (_lastNodePos.x < transform.position.x && _lastNodePos.x + 0.5f >_finishTargetPos.x)
         {
-            _animator.SetTrigger("IDLE");
+            _animator.SetBool("Move", false);
             _currentMove = null;
             return;
         }
         if (_lastNodePos.x > transform.position.x && _lastNodePos.x - 0.5f < _finishTargetPos.x)
         {
-            _animator.SetTrigger("IDLE");
+            _animator.SetBool("Move", false);
             _currentMove = null;
             return;
         }
@@ -218,26 +218,34 @@ public class PlayerMover : MonoBehaviour
         {
             distance = Math.Abs(targetPos.x - startPos.x);
         }
-        
-        
-        float travelledDistance = 0f;
-        float distanceOfOneStep;
-        while (travelledDistance < distance)
+
+        if (distance > 0.02f)
         {
-            distanceOfOneStep = _currentSpeed * Time.deltaTime;
-            travelledDistance += distanceOfOneStep;
-            WentDistance += distanceOfOneStep;
-            if (WentDistance >= 1.75f) // подобрано эмпирическим путем
+            _animator.SetBool("Move", true);
+            
+            float travelledDistance = 0f;
+            float distanceOfOneStep;
+            while (travelledDistance < distance)
             {
-                WentDistance -= 1.75f;
-                PlaySoundOfFootsteps();
+                distanceOfOneStep = _currentSpeed * Time.deltaTime;
+                travelledDistance += distanceOfOneStep;
+                WentDistance += distanceOfOneStep;
+                if (WentDistance >= 1.75f) // подобрано эмпирическим путем
+                {
+                    WentDistance -= 1.75f;
+                    PlaySoundOfFootsteps();
+                }
+
+                transform.position += distanceOfOneStep * moveDirection;
+                BackgroundController.UpdateBackground(transform.position.x);
+                yield return forEndOfFrameUnit;
             }
-            transform.position += distanceOfOneStep * moveDirection;
-            BackgroundController.UpdateBackground(transform.position.x);
-            yield return forEndOfFrameUnit;
+            
+            _animator.SetBool("Move", false);
         }
-        _animator.SetTrigger("IDLE");
+
         _currentMove = null;
+        
     }
 
     public void PlaySoundOfFootsteps()
