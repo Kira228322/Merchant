@@ -48,6 +48,7 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
 
     private void OnEnable()
     {
+        Application.targetFrameRate = 100;
         _sceneTransiter.EnteredVillageScene += SaveGame;
     }
     private void OnDisable()
@@ -63,6 +64,8 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
         //TODO убрать перед выпуском игры
         TESTstartNewGameButton.onClick.AddListener(() => StartNewGame(TESTstartLocationInputField.text));
         //end TODO убрать перед выпуском игры
+
+        Application.targetFrameRate = 100;
 
         MapManager.Init(_travelingScene, _sceneTransiter, _roadWindow, _villageWindow, _canvas, _playerIcone, _startLocation);
         GameTime.Init(_timeflow);
