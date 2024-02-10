@@ -40,6 +40,7 @@ public class SceneTransiter : MonoBehaviour, ISaveable<SceneSaveData>
         Destroy(GameManager.Instance.CurrentFunctionalWindow);
         Destroy(GameManager.Instance.CurrentWarningWindow);
         
+        
         _mapButton.isOn = false;
         _road = road;
         MapManager.TravelInit(_road);
@@ -81,10 +82,12 @@ public class SceneTransiter : MonoBehaviour, ISaveable<SceneSaveData>
         _loadingSceneOperation.allowSceneActivation = true;
         if (_road != null)
         {
+            GameManager.Instance.Camera.SetActive(false);
             GameTime.SetTimeScale(GameTime.TimeScaleInTravel);
         }
         else
         {
+            GameManager.Instance.Camera.SetActive(true);
             MapManager.PlayerIcon.transform.position = MapManager.CurrentLocation.transform.position;
         }
         _animator.SetTrigger("EndTransition");

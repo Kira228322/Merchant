@@ -3795,6 +3795,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1671313635}
   - component: {fileID: 1671313636}
+  - component: {fileID: 1671313637}
   m_Layer: 0
   m_Name: mover
   m_TagString: Untagged
@@ -3845,6 +3846,14 @@ MonoBehaviour:
   _speed: 1.9
   ground1: {fileID: 1480416221}
   ground2: {fileID: 1783224592}
+--- !u!81 &1671313637
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1671313634}
+  m_Enabled: 1
 --- !u!1001 &1742366866
 PrefabInstance:
   m_ObjectHideFlags: 0
