@@ -37,7 +37,8 @@ public class RestockHandler : MonoBehaviour, ISaveable<RestockSaveData>
     {
         if (_lastRestockDay + 2 < GameTime.CurrentDay)
         { 
-            Restock();
+            Debug.Log("&&&");
+            StartCoroutine(Restock());
         }
     }
     private void OnTimeSkipped(int skippedDays, int skippedHours, int skippedMinutes)
@@ -45,13 +46,17 @@ public class RestockHandler : MonoBehaviour, ISaveable<RestockSaveData>
         CheckRestock();
     }
     
-    public void Restock()
+    public IEnumerator Restock()
     {
+        WaitForSeconds waitForSeconds = new WaitForSeconds(1.5f);
         _lastRestockDay = GameTime.CurrentDay;
         foreach (var location in _locations)
         {
+            Debug.Log(location);
+            yield return waitForSeconds;
             RestockTraders(location);
             RestockWagonUpgraders(location);
+            yield return waitForSeconds;
         }
         foreach (var region in _regionHandler.Regions)
             region.CountAllItemsInRegion();
@@ -61,8 +66,6 @@ public class RestockHandler : MonoBehaviour, ISaveable<RestockSaveData>
         //TODO: Каждый из этих методов проходит через foreach заново всех трейдеров.
         //Сделать методы для одного трейдера и запихнуть под общий foreach (var trader in location)?
         
-        
-        //TODO убрать потом
         if (location.NpcTraders.Count <= 0)
             return;
         
@@ -174,7 +177,6 @@ public class RestockHandler : MonoBehaviour, ISaveable<RestockSaveData>
             // budget (последний параметр метода) основывается на населении локации и на интересе в этом типе предмета локацией (CoefsForItemTypes)
             // чем интерес в этом предмете больше значит тем он редкостнее и его прирастает меньше.
             activeTraders.Clear();
-            Debug.Log(item.Name);
             
             foreach (var trader in traders) // из всех трейдеров выбирамем тех, кто торгует таким товаром
             foreach (var traderGood in trader.Goods)
@@ -200,11 +202,13 @@ public class RestockHandler : MonoBehaviour, ISaveable<RestockSaveData>
             }
             
             
-            gainCount = location.Region.CalculateGainOnMarket(location.CountOfEachItem[item.Name], item.Price,
-                location.ItemEconomyParams[item.Name][0], location.ItemEconomyParams[item.Name][1],
-                location.ItemEconomyParams[item.Name][2],
-                (int)(location.PopulationOfVillage * (2 - location.Region.CoefsForItemTypes[item.TypeOfItem])));
+            // gainCount = location.Region.CalculateGainOnMarket(location.CountOfEachItem[item.Name], item.Price,
+            //     location.ItemEconomyParams[item.Name][0], location.ItemEconomyParams[item.Name][1],
+            //     location.ItemEconomyParams[item.Name][2],
+            //     (int)(location.PopulationOfVillage * (2 - location.Region.CoefsForItemTypes[item.TypeOfItem])));
 
+            gainCount = Random.Range(-5, 5);
+            
             if (gainCount == 0)
                 continue;
 
