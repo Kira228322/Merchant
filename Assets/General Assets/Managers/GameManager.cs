@@ -48,7 +48,6 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
 
     private void OnEnable()
     {
-        Application.targetFrameRate = 100;
         _sceneTransiter.EnteredVillageScene += SaveGame;
     }
     private void OnDisable()
