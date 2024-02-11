@@ -90,7 +90,7 @@ public class EventTraveler : EventInTravel
                         }
                         else
                         {
-                            _eventWindow.ChangeDescription($"Вы пообещали дать путнику {_first.ItemData.Name}. Но вместо этого съедаете это лакомство сами. Он еле сдерживая слезы пошел прочь.");
+                            _eventWindow.ChangeDescription($"Вы пообещали дать путнику {_first.ItemData.Name}, но вместо этого съедаете это лакомство сами. Он, еле сдерживая слезы, пошёл прочь.");
                         }
                         break;
                     case 1:
