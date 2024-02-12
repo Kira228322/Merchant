@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
     public static GameManager Instance;
     public GameObject Camera;
     public AudioSource _ButtonAudioSource;
+    public Toggle CraftingToggle;
     [SerializeField] private GameObject _GameIsSavedText;
     [SerializeField] private Canvas _canvas;
     public CanvasGroup PlayerBlock;

@@ -13,7 +13,7 @@ public class JournalController : MonoBehaviour
 
     public void OnJournalButtonClick()
     {
-        gameObject.SetActive(true);
+        gameObject.SetActive(!gameObject.activeSelf);
         
         if (CurrentActivePanel != null)
             CurrentActivePanel.SetActive(false);

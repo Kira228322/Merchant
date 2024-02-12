@@ -41,7 +41,7 @@ public class CraftingHandler : MonoBehaviour
 
     public void SetCraftingStation(Sprite icon, CraftingStationType type)
     {
-        gameObject.SetActive(true);
+        GameManager.Instance.CraftingToggle.isOn = true;
         _craftingStationIcon.sprite = icon;
         _currentCraftingStation = type;
         Refresh();
