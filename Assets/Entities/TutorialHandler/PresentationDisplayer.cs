@@ -60,6 +60,7 @@ public class PresentationDisplayer : MonoBehaviour
             _slideCounterElements.Add(slideCounterElement);
         }
         _currentSlideNumber = 0;
+        _closeButton.interactable = false;
 
         ChangeSlide(0);
 
@@ -114,7 +115,9 @@ public class PresentationDisplayer : MonoBehaviour
 
         _leftButton.interactable = _currentSlideNumber > 0;
         _rightButton.interactable = _currentSlideNumber < CurrentPresentation.Slides.Count - 1;
-        _closeButton.interactable = _currentSlideNumber == CurrentPresentation.Slides.Count - 1;
+
+        if (!_closeButton.interactable && _currentSlideNumber == CurrentPresentation.Slides.Count - 1)
+            _closeButton.interactable = true;
 
     }
 

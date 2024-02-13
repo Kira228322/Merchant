@@ -2841,7 +2841,7 @@ RectTransform:
   - {fileID: 1589670502}
   - {fileID: 1129845109}
   m_Father: {fileID: 7602701845263479846}
-  m_RootOrder: 15
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -3741,7 +3741,7 @@ RectTransform:
   - {fileID: 202092561}
   - {fileID: 1891146828}
   m_Father: {fileID: 7602701845263479846}
-  m_RootOrder: 17
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -3906,6 +3906,14 @@ MonoBehaviour:
     PresentationSummary: craft_basic
   - RequiredQuestSummary: crafting_lesson_make_planks
     PresentationSummary: craft_station
+  - RequiredQuestSummary: tutorial_buy_relic_from_richard
+    PresentationSummary: trading
+  - RequiredQuestSummary: tutorial_talk_to_thomas_after_obtaining_relic
+    PresentationSummary: noticeboard
+  - RequiredQuestSummary: tutorial_talk_to_mark
+    PresentationSummary: wagon_upgrade
+  - RequiredQuestSummary: give_first_relic_to_magefriend
+    PresentationSummary: regions
 --- !u!1 &151568240
 GameObject:
   m_ObjectHideFlags: 0
@@ -5502,7 +5510,7 @@ RectTransform:
   - {fileID: 502358626}
   - {fileID: 609176091}
   m_Father: {fileID: 7602701845263479846}
-  m_RootOrder: 19
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -5909,7 +5917,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _region: {fileID: 815367770}
-  _icon: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 3e1a557555987034fbd6edd0ad5b5ff5, type: 3}
   _villageName: "\u0422\u0430\u0439\u043D\u043E\u043A\u0440\u0430\u0439"
   _description: "\u0422\u0438\u0445\u0430\u044F, \u0441\u043F\u043E\u043A\u043E\u0439\u043D\u0430\u044F
     \u0434\u0435\u0440\u0435\u0432\u043D\u044F"
@@ -7991,7 +7999,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5508047470961868739, guid: aae20a2c617fc624b8b6fe0e4b828a4f, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -29.591202
+      value: -25.87886
       objectReference: {fileID: 0}
     - target: {fileID: 5508047470961868739, guid: aae20a2c617fc624b8b6fe0e4b828a4f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -9411,7 +9419,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _region: {fileID: 815367770}
-  _icon: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 3e1a557555987034fbd6edd0ad5b5ff5, type: 3}
   _villageName: "\u0427\u0430\u0440\u043E\u043B\u0435\u0441\u044C\u0435"
   _description: 
   _populationOfVillage: 230
@@ -9982,7 +9990,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5508047470961868739, guid: aae20a2c617fc624b8b6fe0e4b828a4f, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -29.591202
+      value: -25.87886
       objectReference: {fileID: 0}
     - target: {fileID: 5508047470961868739, guid: aae20a2c617fc624b8b6fe0e4b828a4f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -11915,7 +11923,7 @@ RectTransform:
   - {fileID: 786159926}
   - {fileID: 1372081341}
   m_Father: {fileID: 7602701845263479846}
-  m_RootOrder: 18
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -14198,7 +14206,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5508047470961868739, guid: aae20a2c617fc624b8b6fe0e4b828a4f, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -29.591202
+      value: -25.87886
       objectReference: {fileID: 0}
     - target: {fileID: 5508047470961868739, guid: aae20a2c617fc624b8b6fe0e4b828a4f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -14661,7 +14669,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _region: {fileID: 815367770}
-  _icon: {fileID: 21300000, guid: 6e0f265dd23692147a07dece72e95299, type: 3}
+  _icon: {fileID: 21300000, guid: 3e1a557555987034fbd6edd0ad5b5ff5, type: 3}
   _villageName: "\u0422\u0440\u0430\u0432\u043E\u0441\u0442\u043E\u0439"
   _description: "\u0414\u0435\u0440\u0435\u0432\u043D\u044F \u0420\u043E\u043C\u0430\u0433\u0430"
   _populationOfVillage: 210
@@ -15578,7 +15586,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _region: {fileID: 71696936}
-  _icon: {fileID: 0}
+  _icon: {fileID: 1205332893, guid: 632506fc40effed4bb144e3c6a67a5ae, type: 3}
   _villageName: "\u041F\u0435\u0440\u0435\u0441\u044B\u043F\u044C"
   _description: 
   _populationOfVillage: 190
@@ -17389,7 +17397,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _region: {fileID: 71696936}
-  _icon: {fileID: 0}
+  _icon: {fileID: 1205332893, guid: 632506fc40effed4bb144e3c6a67a5ae, type: 3}
   _villageName: "\u042F\u043D\u0442\u0430\u0440\u044C"
   _description: 
   _populationOfVillage: 400
@@ -19014,7 +19022,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _region: {fileID: 71696936}
-  _icon: {fileID: 0}
+  _icon: {fileID: 1205332893, guid: 632506fc40effed4bb144e3c6a67a5ae, type: 3}
   _villageName: "\u042D\u0441\u0442\u0443\u0430\u0440\u0438\u0439"
   _description: 
   _populationOfVillage: 190
@@ -22007,6 +22015,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7cac69dd8d8ec3242a38db0ed9c38bf5, type: 2}
   - {fileID: 11400000, guid: 15bbf6d095258254cbe9e0812bd4bc2a, type: 2}
   - {fileID: 11400000, guid: c973f46c8a59b314f8cf5992a4c0322b, type: 2}
+  - {fileID: 11400000, guid: 7f0ce13a9f948b94b9798b2af546029b, type: 2}
+  - {fileID: 11400000, guid: 7035c48b019c7284bafd244ee39bc000, type: 2}
+  - {fileID: 11400000, guid: 58d05d374d2f8af4fb8276361379144f, type: 2}
+  - {fileID: 11400000, guid: 758e26bc9f9303745bce1d9db837e514, type: 2}
+  - {fileID: 11400000, guid: 6dc735ab9c9b88648a0b0b3cc1a0ba86, type: 2}
 --- !u!1 &983470489
 GameObject:
   m_ObjectHideFlags: 0
@@ -22242,7 +22255,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5508047470961868739, guid: aae20a2c617fc624b8b6fe0e4b828a4f, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -29.591202
+      value: -25.87886
       objectReference: {fileID: 0}
     - target: {fileID: 5508047470961868739, guid: aae20a2c617fc624b8b6fe0e4b828a4f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -22610,7 +22623,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _region: {fileID: 815367770}
-  _icon: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 3e1a557555987034fbd6edd0ad5b5ff5, type: 3}
   _villageName: "\u0422\u0430\u043B\u044C\u0432\u0435\u0433"
   _description: 
   _populationOfVillage: 280
@@ -22936,7 +22949,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _region: {fileID: 1244471384}
-  _icon: {fileID: 0}
+  _icon: {fileID: 21300000, guid: d5d7f95582604484a87a97c246803bc7, type: 3}
   _villageName: "\u0412\u0435\u0440\u0445\u043E\u0433\u043E\u0440\u044C\u0435"
   _description: 
   _populationOfVillage: 200
@@ -23882,7 +23895,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _region: {fileID: 1059038122}
-  _icon: {fileID: 0}
+  _icon: {fileID: -1851644854, guid: 68310c0bcb76eea4da6d7dbb46aca76b, type: 3}
   _villageName: "\u0417\u0432\u0435\u0437\u0434\u043E\u0440\u043E\u0436\u044C\u0435"
   _description: 
   _populationOfVillage: 140
@@ -24620,7 +24633,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _region: {fileID: 1223136438}
-  _icon: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 966ff550585ec504896a28b55fd7281c, type: 3}
   _villageName: "\u0418\u0432\u043E\u0432\u0430\u044F \u041F\u043E\u043B\u044F\u043D\u0430"
   _description: 
   _populationOfVillage: 190
@@ -25012,7 +25025,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _region: {fileID: 0}
-  _icon: {fileID: 0}
+  _icon: {fileID: 21300000, guid: d0c05b9125ed56349a5385e1a77547b7, type: 3}
   _villageName: "\u0421\u0435\u0440\u0435\u0431\u0440\u044F\u043D\u043A\u0430"
   _description: 
   _populationOfVillage: 0
@@ -25274,7 +25287,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5508047470961868739, guid: aae20a2c617fc624b8b6fe0e4b828a4f, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -29.591202
+      value: -25.87886
       objectReference: {fileID: 0}
     - target: {fileID: 5508047470961868739, guid: aae20a2c617fc624b8b6fe0e4b828a4f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -26803,7 +26816,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _region: {fileID: 0}
-  _icon: {fileID: 0}
+  _icon: {fileID: 21300000, guid: d0c05b9125ed56349a5385e1a77547b7, type: 3}
   _villageName: "\u0411\u0443\u0440\u0435\u0445\u043B\u0430\u0434"
   _description: 
   _populationOfVillage: 0
@@ -27085,7 +27098,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _region: {fileID: 848894794}
-  _icon: {fileID: 0}
+  _icon: {fileID: -1028451589, guid: 924666e2184015f448c2ae437f6614b0, type: 3}
   _villageName: "\u0411\u0430\u0440\u0445\u0430\u043D"
   _description: 
   _populationOfVillage: 190
@@ -27300,7 +27313,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _region: {fileID: 1059038122}
-  _icon: {fileID: 0}
+  _icon: {fileID: -1851644854, guid: 68310c0bcb76eea4da6d7dbb46aca76b, type: 3}
   _villageName: "\u0411\u0440\u043E\u043D\u0437\u043E\u0443\u0441\u0442\u044C\u0435"
   _description: 
   _populationOfVillage: 250
@@ -28354,7 +28367,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _region: {fileID: 815367770}
-  _icon: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 3e1a557555987034fbd6edd0ad5b5ff5, type: 3}
   _villageName: "\u0421\u0442\u0440\u0435\u0436\u0435\u043D\u044C"
   _description: 
   _populationOfVillage: 160
@@ -28596,7 +28609,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30.4
+  m_fontSize: 29.35
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -30022,7 +30035,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _region: {fileID: 1223136438}
-  _icon: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 966ff550585ec504896a28b55fd7281c, type: 3}
   _villageName: "\u0421\u0442\u0430\u0440\u043E\u043F\u0440\u0443\u0434\u044C\u0435"
   _description: 
   _populationOfVillage: 180
@@ -31595,7 +31608,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5508047470961868739, guid: aae20a2c617fc624b8b6fe0e4b828a4f, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -29.591202
+      value: -25.87886
       objectReference: {fileID: 0}
     - target: {fileID: 5508047470961868739, guid: aae20a2c617fc624b8b6fe0e4b828a4f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -34001,7 +34014,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 49.5
+  m_fontSize: 40.05
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -35118,7 +35131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _region: {fileID: 71696936}
-  _icon: {fileID: 0}
+  _icon: {fileID: 1205332893, guid: 632506fc40effed4bb144e3c6a67a5ae, type: 3}
   _villageName: "\u0417\u0430\u0440\u043D\u0438\u0446\u0430"
   _description: 
   _populationOfVillage: 220
@@ -37735,7 +37748,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _region: {fileID: 1223136438}
-  _icon: {fileID: 0}
+  _icon: {fileID: 21300000, guid: 966ff550585ec504896a28b55fd7281c, type: 3}
   _villageName: "\u041C\u0430\u0440\u044C"
   _description: 
   _populationOfVillage: 180
@@ -38921,7 +38934,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _region: {fileID: 0}
-  _icon: {fileID: 0}
+  _icon: {fileID: 21300000, guid: d0c05b9125ed56349a5385e1a77547b7, type: 3}
   _villageName: "\u0417\u0430\u0441\u043D\u0435\u0436\u044C\u0435"
   _description: 
   _populationOfVillage: 0
@@ -41040,7 +41053,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5508047470961868739, guid: aae20a2c617fc624b8b6fe0e4b828a4f, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -29.591202
+      value: -25.87886
       objectReference: {fileID: 0}
     - target: {fileID: 5508047470961868739, guid: aae20a2c617fc624b8b6fe0e4b828a4f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -41594,9 +41607,9 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1872021874}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.99999994, y: 0.99999994, z: 0.99999994}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 948805706}
@@ -41605,7 +41618,7 @@ RectTransform:
   m_AnchorMin: {x: 0.21300001, y: 0.34600002}
   m_AnchorMax: {x: 0.78825015, y: 0.9250001}
   m_AnchoredPosition: {x: -1, y: -1}
-  m_SizeDelta: {x: 1.9050293, y: -5.68219}
+  m_SizeDelta: {x: 1.9050903, y: -5.68219}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1872021876
 MonoBehaviour:
@@ -42854,8 +42867,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19fec4436d0a4f49b00ed2105cf7174, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _roadName: road 1
-  _description: papsld aspl daspld alsd alpd
+  _roadName: "\u041F\u0440\u044F\u043C\u0430\u044F \u0434\u043E\u0440\u043E\u0433\u0430"
+  _description: "\u041F\u0443\u0442\u044C, \u043D\u0430\u043F\u0440\u044F\u043C\u0443\u044E
+    \u0441\u043E\u0435\u0434\u0438\u043D\u044F\u044E\u0449\u0438\u0439 \u0434\u0432\u0435
+    \u0434\u0435\u0440\u0435\u0432\u043D\u0438."
   _travelingTime: 16
   _quality: 46
   _danger: 21
@@ -43789,7 +43804,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _region: {fileID: 71696936}
-  _icon: {fileID: 0}
+  _icon: {fileID: 1205332893, guid: 632506fc40effed4bb144e3c6a67a5ae, type: 3}
   _villageName: "\u0416\u0435\u043C\u0447\u0443\u0436\u043D\u0438\u043A"
   _description: 
   _populationOfVillage: 180
@@ -44302,7 +44317,7 @@ RectTransform:
   - {fileID: 1874446336}
   - {fileID: 1017588146}
   m_Father: {fileID: 7602701845263479846}
-  m_RootOrder: 16
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -44619,7 +44634,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _region: {fileID: 1244471384}
-  _icon: {fileID: 0}
+  _icon: {fileID: 21300000, guid: d5d7f95582604484a87a97c246803bc7, type: 3}
   _villageName: "\u0410\u0440\u043A\u0430\u043D\u0438\u044F"
   _description: 
   _populationOfVillage: 190
@@ -46370,7 +46385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _region: {fileID: 71696936}
-  _icon: {fileID: 0}
+  _icon: {fileID: 1205332893, guid: 632506fc40effed4bb144e3c6a67a5ae, type: 3}
   _villageName: "\u041E\u0433\u0440\u0430\u0434\u043D\u0438\u0446\u0430"
   _description: 
   _populationOfVillage: 130
@@ -46892,8 +46907,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19fec4436d0a4f49b00ed2105cf7174, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _roadName: road 2
-  _description: papsld aspl daspld alsd alpd
+  _roadName: "\u041F\u0435\u0440\u0435\u043F\u0443\u0442\u044C\u0435"
+  _description: "\u0411\u043E\u043B\u0435\u0435 \u0434\u043B\u0438\u043D\u043D\u0430\u044F
+    \u0434\u043E\u0440\u043E\u0433\u0430 \u0441 \u043F\u0440\u0435\u043A\u0440\u0430\u0441\u043D\u044B\u043C
+    \u0432\u0438\u0434\u043E\u043C \u043D\u0430 \u0437\u0435\u043B\u0451\u043D\u044B\u0435
+    \u043F\u043E\u043B\u044F \u0438 \u043B\u0443\u0433\u0430."
   _travelingTime: 18
   _quality: 38
   _danger: 16
@@ -47010,7 +47028,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _region: {fileID: 815367770}
-  _icon: {fileID: 21300000, guid: ff13c62c9935261479b6f75351f1711a, type: 3}
+  _icon: {fileID: 21300000, guid: 3e1a557555987034fbd6edd0ad5b5ff5, type: 3}
   _villageName: "\u0412\u0435\u0442\u0440\u043E\u043B\u0435\u0441"
   _description: "\u0422\u0438\u0445\u043E \u0438 \u0441\u043F\u043E\u043A\u043E\u0439\u043D\u043E"
   _populationOfVillage: 150
@@ -47370,7 +47388,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _region: {fileID: 848894794}
-  _icon: {fileID: 0}
+  _icon: {fileID: -1028451589, guid: 924666e2184015f448c2ae437f6614b0, type: 3}
   _villageName: "\u0421\u043E\u043B\u043D\u0446\u0435\u0434\u043E\u043B\u044C\u0435"
   _description: 
   _populationOfVillage: 170
@@ -47503,7 +47521,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _region: {fileID: 1059038122}
-  _icon: {fileID: 0}
+  _icon: {fileID: -1851644854, guid: 68310c0bcb76eea4da6d7dbb46aca76b, type: 3}
   _villageName: "\u0417\u043B\u0430\u0442\u043E\u0431\u0435\u0440\u0435\u0433"
   _description: 
   _populationOfVillage: 200
@@ -67695,7 +67713,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _region: {fileID: 1244471384}
-  _icon: {fileID: 21300000, guid: da7129ed6a246f048a49d8d97de2d2d4, type: 3}
+  _icon: {fileID: 21300000, guid: d5d7f95582604484a87a97c246803bc7, type: 3}
   _villageName: "\u041E\u0442\u0440\u043E\u0433"
   _description: Village with apples. A lot of apples.
   _populationOfVillage: 200
@@ -70184,7 +70202,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.117000006, y: 0.14926492}
   m_AnchorMax: {x: 0.8834629, y: 0.843453}
-  m_AnchoredPosition: {x: 0, y: 1.4999084}
+  m_AnchoredPosition: {x: 0, y: 1.5000916}
   m_SizeDelta: {x: -7.696289, y: -7.312401}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4523655441370404981
@@ -75689,8 +75707,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19fec4436d0a4f49b00ed2105cf7174, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _roadName: road 1
-  _description: papsld aspl daspld alsd alpd
+  _roadName: 
+  _description: 
   _travelingTime: 10
   _quality: 38
   _danger: 19
@@ -75733,8 +75751,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19fec4436d0a4f49b00ed2105cf7174, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _roadName: road 2
-  _description: la lal lalalal lalalalal
+  _roadName: 
+  _description: 
   _travelingTime: 16
   _quality: 39
   _danger: 14
@@ -76772,7 +76790,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5508047470961868739, guid: aae20a2c617fc624b8b6fe0e4b828a4f, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -29.591202
+      value: -25.87886
       objectReference: {fileID: 0}
     - target: {fileID: 5508047470961868739, guid: aae20a2c617fc624b8b6fe0e4b828a4f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -77852,11 +77870,11 @@ RectTransform:
   - {fileID: 832777895}
   - {fileID: 120616673}
   - {fileID: 1499739527}
-  - {fileID: 96207915}
   - {fileID: 1984353309}
   - {fileID: 140320754}
   - {fileID: 528489242}
   - {fileID: 213283715}
+  - {fileID: 96207915}
   - {fileID: 962795703}
   - {fileID: 1656018836}
   - {fileID: 23866298}
@@ -83839,9 +83857,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _region: {fileID: 815367770}
-  _icon: {fileID: 21300000, guid: ce993d5f7ca6ea8459974fd88e71861d, type: 3}
+  _icon: {fileID: 21300000, guid: 3e1a557555987034fbd6edd0ad5b5ff5, type: 3}
   _villageName: "\u0421\u043E\u0441\u043D\u043E\u0432\u043A\u0430"
-  _description: It is good village if you want to escape from goverment
+  _description: "\u041D\u0435\u0431\u043E\u043B\u044C\u0448\u0430\u044F \u0434\u0435\u0440\u0435\u0432\u043D\u044F,
+    \u0438\u0437\u0432\u0435\u0441\u0442\u043D\u0430\u044F \u0441\u0432\u043E\u0438\u043C\u0438
+    \u0433\u043E\u0441\u0442\u0435\u043F\u0440\u0438\u0438\u043C\u043D\u044B\u043C\u0438
+    \u0436\u0438\u0442\u0435\u043B\u044F\u043C\u0438, \u0433\u043E\u0442\u043E\u0432\u044B\u043C\u0438
+    \u043F\u043E\u043A\u0430\u0437\u0430\u0442\u044C \u0433\u043E\u0441\u0442\u044F\u043C
+    \u0432\u0441\u044E \u043A\u0440\u0430\u0441\u043E\u0442\u0443 \u043E\u043A\u0440\u0443\u0433\u0438."
   _populationOfVillage: 170
   _sceneName: Scene0
   _relatedPlaces:
