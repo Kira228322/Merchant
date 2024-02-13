@@ -19,7 +19,9 @@ MonoBehaviour:
   CurrentMoney: 700
   ID: 200
   TraderTypes:
-  - {fileID: 11400000, guid: 2c23820895536ce44accaec2e6216e02, type: 2}
+  - {fileID: 11400000, guid: f29d03ed2d07c134cab2fdb0a7eb164d, type: 2}
+  - {fileID: 11400000, guid: 398d6b76375642043995eda1002fa13e, type: 2}
+  - {fileID: 11400000, guid: d0aa10ea882b32249af581f9c7dee7a7, type: 2}
   IsBlackMarket: 0
   HaveAdditiveGoods: 0
   _baseGoods:
@@ -68,12 +70,27 @@ MonoBehaviour:
     CurrentCount: 14
     CurrentPrice: 16
   _baseBuyCoefficients:
-  - ItemType: 25
-    Coefficient: 1
-    DefaultCountToBuy: 14
-  - ItemType: 19
-    Coefficient: 1
+  - ItemType: 2
+    Coefficient: 0.95
     DefaultCountToBuy: 5
+  - ItemType: 28
+    Coefficient: 1
+    DefaultCountToBuy: 12
+  - ItemType: 31
+    Coefficient: 1
+    DefaultCountToBuy: 35
+  - ItemType: 4
+    Coefficient: 1
+    DefaultCountToBuy: 20
+  - ItemType: 32
+    Coefficient: 1
+    DefaultCountToBuy: 25
+  - ItemType: 29
+    Coefficient: 0.96
+    DefaultCountToBuy: 5
+  - ItemType: 33
+    Coefficient: 0.96
+    DefaultCountToBuy: 7
   Goods: []
   AdditiveGoods: []
   BuyCoefficients: []
