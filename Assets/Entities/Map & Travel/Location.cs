@@ -52,13 +52,6 @@ public class Location : MonoBehaviour
             if (road.Points[1] == this)
                 _roads.Add(road);
         }
-        
-        // TODO Проверка ! перед выпуском игры надо будет проехаться по всем локам
-        if (MapManager.CurrentLocation == this)
-        {
-            if (NpcTraders.Count != FindObjectsOfType<NpcTrader>().Length)
-                Debug.Log("!!! Число нпс на сцене не совпадает с числом в инспекторе !!!");
-        }
     }
 
     public void FillDictionary()

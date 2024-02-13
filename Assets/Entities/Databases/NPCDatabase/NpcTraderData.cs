@@ -24,9 +24,9 @@ public class NpcTraderData : NpcData, IResetOnExitPlaymode, ISaveable<NpcTraderS
     public void RestockCoefficients()
     {
         if (CurrentMoney > GameStartMoney)
-            CurrentMoney -= (CurrentMoney - GameStartMoney + 3) / 4;
+            CurrentMoney -= (CurrentMoney - GameStartMoney) / 2;
         else
-            CurrentMoney += (GameStartMoney - CurrentMoney + 1) / 2;
+            CurrentMoney += (GameStartMoney - CurrentMoney) / 2;
         
         foreach (var buyCoefficient in BuyCoefficients)
         {
