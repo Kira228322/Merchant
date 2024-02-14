@@ -67,6 +67,14 @@ public class TutorialStateTracker : MonoBehaviour, ISaveable<TutorialStateTracke
         }
     }
 
+    public void AddAllPresentations()
+    {
+        foreach (PresentationInfo info in QuestTriggerConditions.Keys)
+        {
+            Diary.Instance.AddTutorial(info);
+        }
+    }
+
     public void LoadData(TutorialStateTrackerSaveData data)
     {
         QuestTriggerConditions = data.SavedDictionary;

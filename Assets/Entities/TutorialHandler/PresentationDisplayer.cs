@@ -5,6 +5,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static TutorialStateTracker;
 
 public class PresentationDisplayer : MonoBehaviour
 {
@@ -45,6 +46,7 @@ public class PresentationDisplayer : MonoBehaviour
     {
         CurrentPresentation = presentation;
         _currentPresentationSlidesCount = presentation.Slides.Count;
+        _presentationTitle.text = presentation.Title;
 
         RectTransform slideCounterTransform = _slideCounterLayoutGroup.GetComponent<RectTransform>();
 

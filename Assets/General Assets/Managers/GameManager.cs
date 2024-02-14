@@ -110,6 +110,8 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
 
         GameTime.TimeSet(1, 8, 0);
         EnableUI();
+
+        FindObjectOfType<TutorialStateTracker>().AddAllPresentations();
     }
     //end TODO убрать перед выпуском игры
     public void StartNewGame() //По нажатию кнопки Новая игра в MainMenu

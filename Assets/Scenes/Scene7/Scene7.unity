@@ -8557,6 +8557,25 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6989498611158667246, guid: 4385927b661966c429529b2104473cf5, type: 3}
   m_PrefabInstance: {fileID: 452894919}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &452894923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 452894920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f44f38a1f112404196c4abf8b76be7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _appearanceBehaviour: 1
+  _isInstant: 0
+  _showConditions: []
+  _hideConditions:
+  - QuestSummary: bridge_completion
+    questState: 2
+    HoursDelay: 36
 --- !u!1001 &463891537
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18916,6 +18935,28 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6989498611158667246, guid: 4385927b661966c429529b2104473cf5, type: 3}
   m_PrefabInstance: {fileID: 1832458951}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1832458955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1832458952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f44f38a1f112404196c4abf8b76be7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _appearanceBehaviour: 1
+  _isInstant: 0
+  _showConditions:
+  - QuestSummary: 
+    questState: 2
+    HoursDelay: 36
+  _hideConditions:
+  - QuestSummary: bridge_completion
+    questState: 2
+    HoursDelay: 36
 --- !u!1001 &1849121967
 PrefabInstance:
   m_ObjectHideFlags: 0
