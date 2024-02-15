@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
 
     [Header("Main Menu Buttons")]
     [SerializeField] private Button _loadGameButton;
+    [SerializeField] private GameObject _newGameWarningWindow;
 
     private void OnEnable()
     {
@@ -115,6 +116,17 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
     }
     //end TODO убрать перед выпуском игры
     public void StartNewGame() //По нажатию кнопки Новая игра в MainMenu
+    {
+        if (_loadGameButton.interactable)
+        {
+            _newGameWarningWindow.SetActive(true);
+        }
+        else
+        {
+            NewGameProcess();
+        }
+    }
+    public void NewGameProcess()
     {
         Player.Instance.Statistics.OnToughnessChanged();
         GameTime.SetTimeScale(1);
