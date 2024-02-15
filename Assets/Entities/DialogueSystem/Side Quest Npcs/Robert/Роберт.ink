@@ -50,7 +50,7 @@ INCLUDE ../../MainInkLibrary.ink
 === making_planks ===
 Ну как, получилось распилить бревно?
     {has_enough_items("crafting_lesson_make_planks"):
-        +[Вот, погляди. (Отдать 3х Деревянная доска)]
+        +[Вот, погляди. (Отдать 2х Деревянная доска)]
             ~invoke_dialogue_event("crafting_lesson_make_planks")
             Замечательно, спасибо тебе за помощь! Доски мне пригодятся, а вот пояс можешь оставить себе.
                 ~place_item("Пояс", 1, 0)
