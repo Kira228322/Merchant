@@ -126,6 +126,12 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
             NewGameProcess();
         }
     }
+
+    public void SliderNewGameConfirm(Slider slider) // Стоит отметить, что так стал бы делать только конченный ебанат. Ибо зачем иначе передавать в OnValueChange каждый раз компонент. Объясняю. Я не ебанат. Не полностью. Таким образом не надо создавать в GameManager лишнее поле для запоминания скроллбара. Это сэкономит память. Но сам процесс перетаскивания слайдера игроком будет весьма затратным по всем ресурсам, однако это будет только в главном меню и только для 0.2-0.5 секунд жизни 3-10% игроков, так что потерпят. 
+    {
+        if (slider.value == 1)
+            NewGameProcess();
+    }
     public void NewGameProcess()
     {
         Player.Instance.Statistics.OnToughnessChanged();
