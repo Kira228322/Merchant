@@ -15,8 +15,16 @@ public class WagonUpgradeWindow : MonoBehaviour
     [SerializeField] private TMP_Text _slotsText;
     [SerializeField] private TMP_Text _weightText;
     [SerializeField] private TMP_Text _modifierText;
+    public AdditiveGoldAnimation AdditiveGoldAnimation;
+    [SerializeField] private TMP_Text _gold;
 
     private NpcWagonUpgrader _wagonUpgrader;
+
+    private void OnEnable()
+    {
+        _gold.text = Player.Instance.Money.ToString();
+    }
+
     public void Init(NpcWagonUpgrader wagonUpgrader)
     {
         _wagonUpgrader = wagonUpgrader;
