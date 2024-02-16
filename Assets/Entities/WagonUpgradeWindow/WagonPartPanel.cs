@@ -19,8 +19,13 @@ public abstract class WagonPartPanel : MonoBehaviour
     {
         if (Player.Instance.Money >= _wagonPart.UpgradePrice)
         {
+            _window.AdditiveGoldAnimation.PlayGoldDecrease(_wagonPart.UpgradePrice);
             Player.Instance.WagonStats.UpgradeWagonPart(_wagonPart);
             _window.OnPlayerBoughtAnything(_wagonPart);
+        }
+        else
+        {
+            _window.AdditiveGoldAnimation.gameObject.GetComponent<Animator>().SetTrigger("NotEnoughMoney");
         }
     }
 }
