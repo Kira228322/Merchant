@@ -26,13 +26,14 @@ MonoBehaviour:
     \u0432 \u0441\u043E\u0441\u0435\u0434\u043D\u0438\u0445 \u0434\u0435\u0440\u0435\u0432\u043D\u044F\u0445."
   RandomExp: 0
   RandomReward: 0
-  MinExperienceReward: 0
-  MaxExperienceReward: 0
+  MinExperienceReward: 40
+  MaxExperienceReward: 40
   MinMoneyReward: 0
   MaxMoneyReward: 0
-  QuestLine: {fileID: 0}
+  QuestLine: {fileID: 11400000, guid: 9ceebf69e352b3242b06663f2d4f92b3, type: 2}
   PrerequisiteQuests:
   - {fileID: 11400000, guid: 65f91365a8de00d4baad5106899d84cc, type: 2}
+  QuestCompletionDelay: 0
   goals:
   - goalType: 1
     goalState: 0
@@ -47,6 +48,7 @@ MonoBehaviour:
     RequiredLine: asking_about_bandit_camp
     FailingLine: 
     RequiredItemName: 
+    RequiredSceneName: 
     RequiredItemCategories: 
     QuestItemsBehaviour: 0
     RandomDeliveryWeight: 0

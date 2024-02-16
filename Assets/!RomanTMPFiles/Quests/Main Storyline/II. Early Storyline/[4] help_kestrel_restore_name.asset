@@ -30,11 +30,11 @@ MonoBehaviour:
     \u0431\u0430\u043D\u0434\u0438\u0442\u043E\u0432."
   RandomExp: 0
   RandomReward: 0
-  MinExperienceReward: 0
-  MaxExperienceReward: 0
-  MinMoneyReward: 0
-  MaxMoneyReward: 0
-  QuestLine: {fileID: 0}
+  MinExperienceReward: 115
+  MaxExperienceReward: 115
+  MinMoneyReward: 100
+  MaxMoneyReward: 100
+  QuestLine: {fileID: 11400000, guid: 9ceebf69e352b3242b06663f2d4f92b3, type: 2}
   PrerequisiteQuests:
   - {fileID: 11400000, guid: f170410fc1ee59b4c81eb34a19a33e93, type: 2}
   QuestCompletionDelay: 0
@@ -52,6 +52,7 @@ MonoBehaviour:
     RequiredLine: 
     FailingLine: 
     RequiredItemName: 
+    RequiredSceneName: 
     RequiredItemCategories: 1d0000001e00000021000000
     QuestItemsBehaviour: 0
     RandomDeliveryWeight: 0
@@ -61,4 +62,8 @@ MonoBehaviour:
     MinRequiredDeliveryCount: 7
     MaxRequiredDeliveryCount: 7
     RequiredRotThreshold: 0
-  ItemRewards: []
+  ItemRewards:
+  - itemName: "\u0420\u0435\u0446\u0435\u043F\u0442 (\u043A\u043E\u0436\u0430\u043D\u0430\u044F
+      \u0431\u0440\u043E\u043D\u044F)"
+    amount: 1
+    daysBoughtAgo: 0

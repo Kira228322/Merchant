@@ -28,11 +28,11 @@ MonoBehaviour:
     \u043D\u0430\u043B\u0451\u0442 \u043D\u0430 \u044D\u0442\u043E\u0442 \u043B\u0430\u0433\u0435\u0440\u044C."
   RandomExp: 0
   RandomReward: 0
-  MinExperienceReward: 0
-  MaxExperienceReward: 0
+  MinExperienceReward: 25
+  MaxExperienceReward: 25
   MinMoneyReward: 0
   MaxMoneyReward: 0
-  QuestLine: {fileID: 0}
+  QuestLine: {fileID: 11400000, guid: 9ceebf69e352b3242b06663f2d4f92b3, type: 2}
   PrerequisiteQuests:
   - {fileID: 11400000, guid: 532801eca65b78643b5c6359f501e8fd, type: 2}
   QuestCompletionDelay: 0
@@ -50,6 +50,7 @@ MonoBehaviour:
     RequiredLine: start_raid_on_bandit_camp
     FailingLine: 
     RequiredItemName: 
+    RequiredSceneName: 
     RequiredItemCategories: 
     QuestItemsBehaviour: 0
     RandomDeliveryWeight: 0

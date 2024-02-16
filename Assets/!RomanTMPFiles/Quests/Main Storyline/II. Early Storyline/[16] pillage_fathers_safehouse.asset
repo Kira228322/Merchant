@@ -25,11 +25,11 @@ MonoBehaviour:
     \u0441\u0432\u043E\u0438 \u0437\u0430\u043F\u0438\u0441\u0438 \u0438 \u043F\u043E\u0438\u0441\u043A\u0430\u0442\u044C
     \u0442\u0430\u043C \u043F\u043E\u043B\u0435\u0437\u043D\u0443\u044E \u0438\u043D\u0444\u043E\u0440\u043C\u0430\u0446\u0438\u044E."
   RandomExp: 0
-  RandomReward: 0
-  MinExperienceReward: 0
-  MaxExperienceReward: 0
-  MinMoneyReward: 0
-  MaxMoneyReward: 0
+  RandomReward: 1
+  MinExperienceReward: 60
+  MaxExperienceReward: 60
+  MinMoneyReward: 17
+  MaxMoneyReward: 35
   QuestLine: {fileID: 11400000, guid: ca60bf4898237d04baed3a27047b69b5, type: 2}
   PrerequisiteQuests:
   - {fileID: 11400000, guid: a97d6c416838a144b8aa8a6627f163cf, type: 2}
@@ -48,6 +48,7 @@ MonoBehaviour:
     RequiredLine: pillage_fathers_safehouse
     FailingLine: 
     RequiredItemName: "\u041A\u043E\u043B\u044C\u0446\u043E \u043E\u0442\u0446\u0430"
+    RequiredSceneName: 
     RequiredItemCategories: 
     QuestItemsBehaviour: 0
     RandomDeliveryWeight: 0

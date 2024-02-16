@@ -68,24 +68,24 @@ public class DayNightCycle : MonoBehaviour
         float cosineValue;
         switch (GameTime.Hours)
         {
-            case int n when n >= 22 || n <= 2:
+            case int n when n >= 23 || n <= 2:
                 volumeWeight = 1;
                 break;
             case int n when n >= 3 && n <= 10:
-                cosineValue = ((GameTime.Hours-3) * 60 + GameTime.Minutes) / 540f; // изменяется от 0 до 1, когда время изменяется от 3 до 12
+                cosineValue = ((GameTime.Hours-3) * 60 + GameTime.Minutes) / 480f; // изменяется от 0 до 1, когда время изменяется от 3 до 12
                 volumeWeight = Mathf.Cos(cosineValue * Mathf.PI) * 0.5f + 0.5f; // см f(x) = cos(Px)/2 + 0.5f
                 break;
             case int n when n >= 11 && n <= 16:
                 volumeWeight = 0;
                 break;
-            case int n when n >= 17 && n <= 21:
-                cosineValue = 1 - ((GameTime.Hours - 17) * 60 + GameTime.Minutes) / 300f; // изменяется от 1 до 0, когда время изменяется от 17 до 22
+            case int n when n >= 17 && n <= 22:
+                cosineValue = 1 - ((GameTime.Hours - 17) * 60 + GameTime.Minutes) / 360f; // изменяется от 1 до 0, когда время изменяется от 17 до 22
                 volumeWeight = Mathf.Cos(cosineValue * Mathf.PI) * 0.5f + 0.5f;
                 break;
         }
         
         _volume.weight = volumeWeight + _rainWeightOffset;
-        _sun.intensity = Mathf.Lerp(0.08f, 0.975f, 1-volumeWeight); // 0.07 и 0.975 это min и max значения которыми может быть освещение
+        _sun.intensity = Mathf.Lerp(0.1f, 0.975f, 1-volumeWeight); // 0.1 и 0.975 это min и max значения которыми может быть освещение
         _nearBackground.color = Color.Lerp(_white, _darkGrey, volumeWeight);
         _farBackground.color = Color.Lerp(_grey, _black, volumeWeight);
         

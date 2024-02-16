@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: "\u0412\u0430\u0446\u043B\u0430\u0432"
   m_EditorClassIdentifier: 
   Name: "\u0412\u0430\u0446\u043B\u0430\u0432"
-  StartWalkingTime: 9
-  FinishWalkingTime: 20
+  StartWalkingTime: 8
+  FinishWalkingTime: 21
   GameStartMoney: 333
   CurrentMoney: 333
   ID: 91802
@@ -112,6 +112,10 @@ MonoBehaviour:
     MaxCount: 3
     CurrentCount: 3
     CurrentPrice: 260
+  - Good: {fileID: 11400000, guid: 82e0d2cb614ac7140995ad02c530f4b7, type: 2}
+    MaxCount: 1
+    CurrentCount: 1
+    CurrentPrice: 20
   _baseBuyCoefficients:
   - ItemType: 29
     Coefficient: 1
@@ -126,7 +130,7 @@ MonoBehaviour:
     Coefficient: 1
     DefaultCountToBuy: 9
   - ItemType: 18
-    Coefficient: 0.9
+    Coefficient: 0.95
     DefaultCountToBuy: 10
   - ItemType: 14
     Coefficient: 1
@@ -265,7 +269,7 @@ MonoBehaviour:
     Coefficient: 1
     DefaultCountToBuy: 9
   - ItemType: 18
-    Coefficient: 0.9
+    Coefficient: 0.95
     DefaultCountToBuy: 10
   - ItemType: 14
     Coefficient: 1

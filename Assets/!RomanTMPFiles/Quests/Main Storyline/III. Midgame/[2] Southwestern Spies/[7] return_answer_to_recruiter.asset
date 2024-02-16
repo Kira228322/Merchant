@@ -23,10 +23,10 @@ MonoBehaviour:
     \u0441 \u043D\u0435\u043A\u043E\u0439 \u043A\u043E\u0440\u043E\u0431\u043A\u043E\u0439."
   RandomExp: 0
   RandomReward: 0
-  MinExperienceReward: 0
-  MaxExperienceReward: 0
-  MinMoneyReward: 0
-  MaxMoneyReward: 0
+  MinExperienceReward: 70
+  MaxExperienceReward: 70
+  MinMoneyReward: 125
+  MaxMoneyReward: 125
   QuestLine: {fileID: 11400000, guid: 56ec3176d91fb854aa43ec74e2ebf30c, type: 2}
   PrerequisiteQuests:
   - {fileID: 11400000, guid: 24cb5b4496ca28349a903a565d48d139, type: 2}
@@ -45,6 +45,7 @@ MonoBehaviour:
     RequiredLine: return_answer_to_recruiter
     FailingLine: 
     RequiredItemName: "\u0428\u043F\u0438\u043E\u043D\u0441\u043A\u0430\u044F \u043F\u043E\u0441\u044B\u043B\u043A\u0430"
+    RequiredSceneName: 
     RequiredItemCategories: 
     QuestItemsBehaviour: 0
     RandomDeliveryWeight: 0

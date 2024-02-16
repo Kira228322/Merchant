@@ -22,11 +22,11 @@ MonoBehaviour:
     \u041D\u0443\u0436\u043D\u043E \u0443\u0437\u043D\u0430\u0442\u044C \u0443 \u043A\u0430\u043F\u0438\u0442\u0430\u043D\u0430
     \u0421\u0435\u043B\u0435\u043D\u044B, \u043A\u0430\u043A \u043E\u043D \u043F\u0440\u043E\u0448\u0451\u043B."
   RandomExp: 0
-  RandomReward: 0
-  MinExperienceReward: 0
-  MaxExperienceReward: 0
-  MinMoneyReward: 0
-  MaxMoneyReward: 0
+  RandomReward: 1
+  MinExperienceReward: 15
+  MaxExperienceReward: 15
+  MinMoneyReward: 96
+  MaxMoneyReward: 114
   QuestLine: {fileID: 11400000, guid: 9ceebf69e352b3242b06663f2d4f92b3, type: 2}
   PrerequisiteQuests:
   - {fileID: 11400000, guid: da90d72756519634093597c2e3738930, type: 2}
@@ -45,6 +45,7 @@ MonoBehaviour:
     RequiredLine: ask_about_raid_results
     FailingLine: 
     RequiredItemName: 
+    RequiredSceneName: 
     RequiredItemCategories: 
     QuestItemsBehaviour: 0
     RandomDeliveryWeight: 0

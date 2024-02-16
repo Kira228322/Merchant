@@ -24,11 +24,11 @@ MonoBehaviour:
     \u0435\u0433\u043E \u0445\u043E\u0440\u043E\u0448\u0438\u043C\u0438 \u043D\u043E\u0432\u043E\u0441\u0442\u044F\u043C\u0438"
   RandomExp: 0
   RandomReward: 0
-  MinExperienceReward: 0
-  MaxExperienceReward: 0
-  MinMoneyReward: 0
-  MaxMoneyReward: 0
-  QuestLine: {fileID: 0}
+  MinExperienceReward: 60
+  MaxExperienceReward: 60
+  MinMoneyReward: 100
+  MaxMoneyReward: 100
+  QuestLine: {fileID: 11400000, guid: f2aa6fe2f4d26c24ea0f2bbf4b822f91, type: 2}
   PrerequisiteQuests:
   - {fileID: 11400000, guid: ea5fc16a3edb6e541b6e77662edbaf23, type: 2}
   QuestCompletionDelay: 0
@@ -45,6 +45,7 @@ MonoBehaviour:
     RequiredLine: love_get_letter
     FailingLine: 
     RequiredItemName: 
+    RequiredSceneName: 
     RequiredItemCategories: 
     QuestItemsBehaviour: 0
     RandomDeliveryWeight: 0

@@ -27,8 +27,8 @@ MonoBehaviour:
     \u0448\u043F\u0438\u043E\u043D\u043E\u0432."
   RandomExp: 0
   RandomReward: 0
-  MinExperienceReward: 0
-  MaxExperienceReward: 0
+  MinExperienceReward: 100
+  MaxExperienceReward: 100
   MinMoneyReward: 0
   MaxMoneyReward: 0
   QuestLine: {fileID: 11400000, guid: 56ec3176d91fb854aa43ec74e2ebf30c, type: 2}
@@ -49,6 +49,7 @@ MonoBehaviour:
     RequiredLine: deliver_letter_to_spy
     FailingLine: 
     RequiredItemName: "\u041F\u0438\u0441\u044C\u043C\u043E \u0448\u043F\u0438\u043E\u043D\u0430"
+    RequiredSceneName: 
     RequiredItemCategories: 
     QuestItemsBehaviour: 0
     RandomDeliveryWeight: 0
@@ -58,4 +59,7 @@ MonoBehaviour:
     MinRequiredDeliveryCount: 0
     MaxRequiredDeliveryCount: 0
     RequiredRotThreshold: 0
-  ItemRewards: []
+  ItemRewards:
+  - itemName: "\u0411\u0443\u043C\u0430\u0433\u0430"
+    amount: 4
+    daysBoughtAgo: 0

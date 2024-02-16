@@ -27,8 +27,8 @@ MonoBehaviour:
     \u0434\u043E\u0441\u0442\u0430\u0442\u043E\u0447\u043D\u043E."
   RandomExp: 0
   RandomReward: 0
-  MinExperienceReward: 0
-  MaxExperienceReward: 0
+  MinExperienceReward: 50
+  MaxExperienceReward: 50
   MinMoneyReward: 0
   MaxMoneyReward: 0
   QuestLine: {fileID: 11400000, guid: cf7269b2fd363d54d9a8fa036849b971, type: 2}
@@ -49,6 +49,7 @@ MonoBehaviour:
     RequiredLine: vice_headman_met
     FailingLine: 
     RequiredItemName: 
+    RequiredSceneName: 
     RequiredItemCategories: 
     QuestItemsBehaviour: 0
     RandomDeliveryWeight: 0
@@ -71,6 +72,7 @@ MonoBehaviour:
     RequiredLine: vice_headman_bribed
     FailingLine: 
     RequiredItemName: 
+    RequiredSceneName: 
     RequiredItemCategories: 
     QuestItemsBehaviour: 0
     RandomDeliveryWeight: 0

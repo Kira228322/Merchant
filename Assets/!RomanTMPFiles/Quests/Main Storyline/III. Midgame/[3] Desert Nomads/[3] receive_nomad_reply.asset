@@ -24,8 +24,8 @@ MonoBehaviour:
     \u043E\u0442\u0432\u0435\u0442."
   RandomExp: 0
   RandomReward: 0
-  MinExperienceReward: 0
-  MaxExperienceReward: 0
+  MinExperienceReward: 25
+  MaxExperienceReward: 25
   MinMoneyReward: 0
   MaxMoneyReward: 0
   QuestLine: {fileID: 11400000, guid: deac9b5a4faf75e44a67034dbb0dc386, type: 2}
@@ -46,6 +46,7 @@ MonoBehaviour:
     RequiredLine: receive_nomad_reply
     FailingLine: 
     RequiredItemName: 
+    RequiredSceneName: 
     RequiredItemCategories: 
     QuestItemsBehaviour: 0
     RandomDeliveryWeight: 0
@@ -55,4 +56,7 @@ MonoBehaviour:
     MinRequiredDeliveryCount: 0
     MaxRequiredDeliveryCount: 0
     RequiredRotThreshold: 0
-  ItemRewards: []
+  ItemRewards:
+  - itemName: "\u0418\u0437\u044F\u0449\u043D\u044B\u0439 \u043A\u0430\u043A\u0442\u0443\u0441"
+    amount: 1
+    daysBoughtAgo: 0
