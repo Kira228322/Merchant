@@ -280,6 +280,10 @@ public class PlayersInventory : MonoBehaviour, ISaveable<PlayersInventorySaveDat
             {
                 item.BoughtDaysAgo += hoursSkipped / 24f; // +hoursSkipped часов к испорченности
                 item.RefreshSliderValue();
+
+                if (item.ItemData.IsQuestItem && item.BoughtDaysAgo > item.ItemData.DaysToSpoil)
+                    InventoryController.Instance.DestroyItem(QuestItemGrid, item);
+                //„тобы полностью прогнившие квестовые предметы, которые игрок не может удалить, исчезали сами.
             }
         }
     }
