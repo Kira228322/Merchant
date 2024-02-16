@@ -8,7 +8,7 @@ INCLUDE ../../MainInkLibrary.ink
 
 ~temp questSummaries = get_activeQuestList()
 {contains(questSummaries, "tutorial_talk_to_richard"):
-    +[Привет, ты Ричард? Я ищу своего отца. Он сказал, что пошёл забрать какую-то вещь у бандитов]
+    +[Привет, ты Ричард? Я ищу своего отца. Он сказал, что должен был выполнить какой-то заказ.]
         -> about_relic
 }
 {contains(questSummaries, "tutorial_buy_relic_from_richard"):
