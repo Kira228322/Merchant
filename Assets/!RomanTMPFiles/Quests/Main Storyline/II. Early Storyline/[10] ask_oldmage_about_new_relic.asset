@@ -29,8 +29,8 @@ MonoBehaviour:
     \u0441 \u043D\u0438\u043C."
   RandomExp: 0
   RandomReward: 0
-  MinExperienceReward: 0
-  MaxExperienceReward: 0
+  MinExperienceReward: 20
+  MaxExperienceReward: 20
   MinMoneyReward: 0
   MaxMoneyReward: 0
   QuestLine: {fileID: 11400000, guid: 02015db3d2d401c46814517726db1909, type: 2}
@@ -51,6 +51,7 @@ MonoBehaviour:
     RequiredLine: ask_oldmage_about_new_relic
     FailingLine: 
     RequiredItemName: 
+    RequiredSceneName: 
     RequiredItemCategories: 
     QuestItemsBehaviour: 0
     RandomDeliveryWeight: 0

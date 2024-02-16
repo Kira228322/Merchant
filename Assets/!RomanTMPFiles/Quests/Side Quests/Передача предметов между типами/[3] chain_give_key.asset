@@ -26,11 +26,11 @@ MonoBehaviour:
     \u0447\u0435\u043B\u043E\u0432\u0435\u043A\u0430."
   RandomExp: 0
   RandomReward: 0
-  MinExperienceReward: 0
-  MaxExperienceReward: 0
+  MinExperienceReward: 9
+  MaxExperienceReward: 9
   MinMoneyReward: 0
   MaxMoneyReward: 0
-  QuestLine: {fileID: 0}
+  QuestLine: {fileID: 11400000, guid: 8bcc8dabe43665842a5c87ee6b975d30, type: 2}
   PrerequisiteQuests:
   - {fileID: 11400000, guid: ada05b29dae51394c9f0e9e69c432332, type: 2}
   QuestCompletionDelay: 0
@@ -48,6 +48,7 @@ MonoBehaviour:
     RequiredLine: chain_give_key
     FailingLine: 
     RequiredItemName: "\u041A\u043B\u044E\u0447"
+    RequiredSceneName: 
     RequiredItemCategories: 
     QuestItemsBehaviour: 0
     RandomDeliveryWeight: 0

@@ -26,11 +26,11 @@ MonoBehaviour:
     \u0437\u0430\u0445\u043E\u0447\u0435\u0442 \u043D\u0430\u0439\u0442\u0438 \u043A\u043B\u0430\u0434."
   RandomExp: 0
   RandomReward: 0
-  MinExperienceReward: 0
-  MaxExperienceReward: 0
+  MinExperienceReward: 13
+  MaxExperienceReward: 13
   MinMoneyReward: 0
   MaxMoneyReward: 0
-  QuestLine: {fileID: 0}
+  QuestLine: {fileID: 11400000, guid: 8bcc8dabe43665842a5c87ee6b975d30, type: 2}
   PrerequisiteQuests:
   - {fileID: 11400000, guid: 869e1dbc50f295a42bae10702c83e5db, type: 2}
   QuestCompletionDelay: 0
@@ -48,6 +48,7 @@ MonoBehaviour:
     RequiredLine: chain_give_treasuremap
     FailingLine: 
     RequiredItemName: "\u041A\u0430\u0440\u0442\u0430 \u0441 \u043A\u043B\u0430\u0434\u043E\u043C"
+    RequiredSceneName: 
     RequiredItemCategories: 
     QuestItemsBehaviour: 0
     RandomDeliveryWeight: 0

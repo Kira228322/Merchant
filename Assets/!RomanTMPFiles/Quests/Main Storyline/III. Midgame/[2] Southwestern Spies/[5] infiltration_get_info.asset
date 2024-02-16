@@ -32,11 +32,11 @@ MonoBehaviour:
     \u0432\u0441\u0442\u0443\u043F\u043B\u0435\u043D\u0438\u044F \u0432 \u044F\u0447\u0435\u0439\u043A\u0443."
   RandomExp: 0
   RandomReward: 0
-  MinExperienceReward: 0
-  MaxExperienceReward: 0
+  MinExperienceReward: 70
+  MaxExperienceReward: 70
   MinMoneyReward: 0
   MaxMoneyReward: 0
-  QuestLine: {fileID: 0}
+  QuestLine: {fileID: 11400000, guid: 56ec3176d91fb854aa43ec74e2ebf30c, type: 2}
   PrerequisiteQuests:
   - {fileID: 11400000, guid: bea7043d1b7a4894891f63d8e3718a3f, type: 2}
   QuestCompletionDelay: 0
@@ -54,6 +54,7 @@ MonoBehaviour:
     RequiredLine: infiltration_get_info
     FailingLine: 
     RequiredItemName: 
+    RequiredSceneName: 
     RequiredItemCategories: 
     QuestItemsBehaviour: 0
     RandomDeliveryWeight: 0

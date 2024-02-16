@@ -29,11 +29,11 @@ MonoBehaviour:
     \u0432\u043A\u0443\u0441\u044B."
   RandomExp: 0
   RandomReward: 0
-  MinExperienceReward: 0
-  MaxExperienceReward: 0
+  MinExperienceReward: 15
+  MaxExperienceReward: 15
   MinMoneyReward: 0
   MaxMoneyReward: 0
-  QuestLine: {fileID: 0}
+  QuestLine: {fileID: 11400000, guid: f2aa6fe2f4d26c24ea0f2bbf4b822f91, type: 2}
   PrerequisiteQuests: []
   QuestCompletionDelay: 0
   goals:
@@ -50,6 +50,7 @@ MonoBehaviour:
     RequiredLine: love_gather_intel
     FailingLine: 
     RequiredItemName: 
+    RequiredSceneName: 
     RequiredItemCategories: 
     QuestItemsBehaviour: 0
     RandomDeliveryWeight: 0

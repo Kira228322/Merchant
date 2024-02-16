@@ -30,8 +30,8 @@ MonoBehaviour:
     \u041F\u0435\u0440\u0435\u0441\u044B\u043F\u044C \u043E\u0431 \u044D\u0442\u043E\u043C."
   RandomExp: 0
   RandomReward: 0
-  MinExperienceReward: 0
-  MaxExperienceReward: 0
+  MinExperienceReward: 45
+  MaxExperienceReward: 45
   MinMoneyReward: 0
   MaxMoneyReward: 0
   QuestLine: {fileID: 11400000, guid: f7087148149db15498fe3770ee30f68f, type: 2}
@@ -51,6 +51,7 @@ MonoBehaviour:
     RequiredLine: suggest_opening_inn
     FailingLine: 
     RequiredItemName: 
+    RequiredSceneName: 
     RequiredItemCategories: 
     QuestItemsBehaviour: 0
     RandomDeliveryWeight: 0
@@ -60,4 +61,7 @@ MonoBehaviour:
     MinRequiredDeliveryCount: 0
     MaxRequiredDeliveryCount: 0
     RequiredRotThreshold: 0
-  ItemRewards: []
+  ItemRewards:
+  - itemName: "\u041A\u0440\u0430\u0441\u043D\u043E\u0435 \u0432\u0438\u043D\u043E"
+    amount: 1
+    daysBoughtAgo: 0

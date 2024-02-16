@@ -36,10 +36,10 @@ MonoBehaviour:
     \u0441 \u043D\u0438\u043C."
   RandomExp: 0
   RandomReward: 0
-  MinExperienceReward: 0
-  MaxExperienceReward: 0
-  MinMoneyReward: 0
-  MaxMoneyReward: 0
+  MinExperienceReward: 100
+  MaxExperienceReward: 100
+  MinMoneyReward: 100
+  MaxMoneyReward: 100
   QuestLine: {fileID: 11400000, guid: 56ec3176d91fb854aa43ec74e2ebf30c, type: 2}
   PrerequisiteQuests:
   - {fileID: 11400000, guid: e2a172bf03a8c654cb25a0ad10ee2b61, type: 2}
@@ -57,6 +57,7 @@ MonoBehaviour:
     RequiredLine: intercept_smuggled_goods_1
     FailingLine: 
     RequiredItemName: 
+    RequiredSceneName: 
     RequiredItemCategories: 
     QuestItemsBehaviour: 0
     RandomDeliveryWeight: 0

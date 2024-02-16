@@ -27,11 +27,11 @@ MonoBehaviour:
     \u043E\u043D\u0438 \u043D\u0435 \u0438\u0441\u043F\u043E\u0440\u0442\u0438\u043B\u0438\u0441\u044C."
   RandomExp: 0
   RandomReward: 0
-  MinExperienceReward: 0
-  MaxExperienceReward: 0
-  MinMoneyReward: 0
-  MaxMoneyReward: 0
-  QuestLine: {fileID: 0}
+  MinExperienceReward: 60
+  MaxExperienceReward: 60
+  MinMoneyReward: 25
+  MaxMoneyReward: 25
+  QuestLine: {fileID: 11400000, guid: 944fa630fa91ed04bbfaccca2740927b, type: 2}
   PrerequisiteQuests:
   - {fileID: 11400000, guid: 87bbc7df656cf85498e92647a8f418fa, type: 2}
   QuestCompletionDelay: 0
@@ -50,6 +50,7 @@ MonoBehaviour:
     FailingLine: 
     RequiredItemName: "\u041F\u0440\u043E\u0434\u0443\u043A\u0442\u044B \u0434\u043B\u044F
       \u0411\u043E\u0431\u0430"
+    RequiredSceneName: 
     RequiredItemCategories: 
     QuestItemsBehaviour: 0
     RandomDeliveryWeight: 0
@@ -71,6 +72,7 @@ MonoBehaviour:
     RequiredLine: 
     FailingLine: 
     RequiredItemName: 
+    RequiredSceneName: 
     RequiredItemCategories: 
     QuestItemsBehaviour: 0
     RandomDeliveryWeight: 0

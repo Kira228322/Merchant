@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: "\u0411\u0440\u0430\u043D\u0434\u0430\u043D"
   m_EditorClassIdentifier: 
   Name: "\u0411\u0440\u0430\u043D\u0434\u0430\u043D"
-  StartWalkingTime: 7
-  FinishWalkingTime: 21
+  StartWalkingTime: 6
+  FinishWalkingTime: 22
   GameStartMoney: 333
   CurrentMoney: 333
   ID: 9207
@@ -123,9 +123,6 @@ MonoBehaviour:
     CurrentCount: 9
     CurrentPrice: 33
   _baseBuyCoefficients:
-  - ItemType: 0
-    Coefficient: 1
-    DefaultCountToBuy: 11
   - ItemType: 5
     Coefficient: 1
     DefaultCountToBuy: 10
@@ -136,8 +133,17 @@ MonoBehaviour:
     Coefficient: 1
     DefaultCountToBuy: 9
   - ItemType: 34
-    Coefficient: 0.9
-    DefaultCountToBuy: 20
+    Coefficient: 0.95
+    DefaultCountToBuy: 16
+  - ItemType: 4
+    Coefficient: 0.7
+    DefaultCountToBuy: 5
+  - ItemType: 31
+    Coefficient: 1
+    DefaultCountToBuy: 8
+  - ItemType: 0
+    Coefficient: 1
+    DefaultCountToBuy: 11
   - ItemType: 3
     Coefficient: 1
     DefaultCountToBuy: 14
@@ -172,14 +178,11 @@ MonoBehaviour:
     Coefficient: 0.95
     DefaultCountToBuy: 5
   - ItemType: 29
-    Coefficient: 0.95
-    DefaultCountToBuy: 3
+    Coefficient: 0.96
+    DefaultCountToBuy: 5
   - ItemType: 33
-    Coefficient: 0.95
-    DefaultCountToBuy: 6
-  - ItemType: 31
-    Coefficient: 1
-    DefaultCountToBuy: 8
+    Coefficient: 0.96
+    DefaultCountToBuy: 7
   Goods:
   - Good: {fileID: 11400000, guid: f46c1b872a7fea742ad5baaa3ac6af6c, type: 2}
     MaxCount: 21
@@ -279,9 +282,6 @@ MonoBehaviour:
     CurrentPrice: 33
   AdditiveGoods: []
   BuyCoefficients:
-  - ItemType: 0
-    Coefficient: 1
-    DefaultCountToBuy: 11
   - ItemType: 5
     Coefficient: 1
     DefaultCountToBuy: 10
@@ -292,8 +292,17 @@ MonoBehaviour:
     Coefficient: 1
     DefaultCountToBuy: 9
   - ItemType: 34
-    Coefficient: 0.9
-    DefaultCountToBuy: 20
+    Coefficient: 0.95
+    DefaultCountToBuy: 16
+  - ItemType: 4
+    Coefficient: 0.7
+    DefaultCountToBuy: 5
+  - ItemType: 31
+    Coefficient: 1
+    DefaultCountToBuy: 8
+  - ItemType: 0
+    Coefficient: 1
+    DefaultCountToBuy: 11
   - ItemType: 3
     Coefficient: 1
     DefaultCountToBuy: 14
@@ -328,11 +337,8 @@ MonoBehaviour:
     Coefficient: 0.95
     DefaultCountToBuy: 5
   - ItemType: 29
-    Coefficient: 0.95
-    DefaultCountToBuy: 3
+    Coefficient: 0.96
+    DefaultCountToBuy: 5
   - ItemType: 33
-    Coefficient: 0.95
-    DefaultCountToBuy: 6
-  - ItemType: 31
-    Coefficient: 1
-    DefaultCountToBuy: 8
+    Coefficient: 0.96
+    DefaultCountToBuy: 7

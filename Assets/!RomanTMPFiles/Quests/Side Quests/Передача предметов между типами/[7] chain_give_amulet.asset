@@ -23,11 +23,11 @@ MonoBehaviour:
     \u0435\u0433\u043E \u043A\u0442\u043E-\u0442\u043E \u043F\u043E\u0442\u0435\u0440\u044F\u043B."
   RandomExp: 0
   RandomReward: 0
-  MinExperienceReward: 0
-  MaxExperienceReward: 0
+  MinExperienceReward: 200
+  MaxExperienceReward: 200
   MinMoneyReward: 0
   MaxMoneyReward: 0
-  QuestLine: {fileID: 0}
+  QuestLine: {fileID: 11400000, guid: 8bcc8dabe43665842a5c87ee6b975d30, type: 2}
   PrerequisiteQuests:
   - {fileID: 11400000, guid: 174cb8619969e47428953a7ef98cf900, type: 2}
   QuestCompletionDelay: 0
@@ -45,6 +45,7 @@ MonoBehaviour:
     RequiredLine: chain_give_amulet
     FailingLine: 
     RequiredItemName: "\u0421\u0442\u0440\u0430\u043D\u043D\u044B\u0439 \u0430\u043C\u0443\u043B\u0435\u0442"
+    RequiredSceneName: 
     RequiredItemCategories: 
     QuestItemsBehaviour: 0
     RandomDeliveryWeight: 0

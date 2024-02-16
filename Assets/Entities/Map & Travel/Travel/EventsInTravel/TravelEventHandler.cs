@@ -174,11 +174,16 @@ public class TravelEventHandler : MonoBehaviour
             MapManager.Advertisement = true;
         else if (MapManager.Advertisement == false)
             MapManager.Advertisement = null;
-        
-        if (EventFire(MapManager.CurrentRoad.Danger * MapManager.CurrentRoad.DangerMultiplier))
-            _banditEvent = true;
-        else _banditEvent = false;
-        
+
+        if (GameTime.CurrentDay < 5)
+            _banditEvent = false;
+        else
+        {
+            if (EventFire(MapManager.CurrentRoad.Danger * MapManager.CurrentRoad.DangerMultiplier))
+                _banditEvent = true;
+            else _banditEvent = false;
+        }
+
         MapManager.CurrentRoad.SetNormalDangerMultiplier();
         
         RollNextEvent();

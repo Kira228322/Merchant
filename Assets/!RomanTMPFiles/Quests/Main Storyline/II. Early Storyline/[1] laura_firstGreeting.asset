@@ -27,11 +27,11 @@ MonoBehaviour:
     \u0435\u0439 \u0440\u0435\u043B\u0438\u043A\u0432\u0438\u044E \u043E\u0442\u0446\u0430."
   RandomExp: 0
   RandomReward: 0
-  MinExperienceReward: 0
-  MaxExperienceReward: 0
+  MinExperienceReward: 15
+  MaxExperienceReward: 15
   MinMoneyReward: 0
   MaxMoneyReward: 0
-  QuestLine: {fileID: 0}
+  QuestLine: {fileID: 11400000, guid: 9ceebf69e352b3242b06663f2d4f92b3, type: 2}
   PrerequisiteQuests:
   - {fileID: 11400000, guid: e13669e02e7fbae4fb262185b5961d86, type: 2}
   QuestCompletionDelay: 0
@@ -49,6 +49,7 @@ MonoBehaviour:
     RequiredLine: laura_firstGreeting
     FailingLine: 
     RequiredItemName: "\u0421\u0442\u0440\u0430\u043D\u043D\u0430\u044F \u0440\u0435\u043B\u0438\u043A\u0432\u0438\u044F"
+    RequiredSceneName: 
     RequiredItemCategories: 
     QuestItemsBehaviour: 0
     RandomDeliveryWeight: 0
