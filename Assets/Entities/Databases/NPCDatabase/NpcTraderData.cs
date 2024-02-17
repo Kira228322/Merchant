@@ -12,15 +12,17 @@ public class NpcTraderData : NpcData, IResetOnExitPlaymode, ISaveable<NpcTraderS
 
     [HideInInspector, SerializeField] private List<NpcTrader.TraderGood> _baseGoods = new ();
     [HideInInspector, SerializeField] private List<NpcTrader.BuyCoefficient> _baseBuyCoefficients = new ();
+    [SerializeField] private List<NpcTrader.TraderGood> _baseRecipes = new ();
     //AdditiveGoods рассчитываются только в рантайме или при загрузке, с инспектором никак не связаны
 
     [HideInInspector] public List<NpcTrader.TraderGood> BaseGoods => _baseGoods;
     [HideInInspector] public List<NpcTrader.BuyCoefficient> BaseBuyCoefficients => _baseBuyCoefficients;
+    [HideInInspector] public List<NpcTrader.TraderGood> BaseRecipes => _baseRecipes;
 
     [HideInInspector] public List<NpcTrader.TraderGood> Goods;
     [HideInInspector] public List<NpcTrader.TraderGood> AdditiveGoods;
-    public List<NpcTrader.TraderGood> Recipes = new (); // TODO надо тоже сохранять теперь
     [HideInInspector] public List<NpcTrader.BuyCoefficient> BuyCoefficients;
+    [HideInInspector] public List<NpcTrader.TraderGood> Recipes;
     
     public void RestockCoefficients()
     {
@@ -39,7 +41,7 @@ public class NpcTraderData : NpcData, IResetOnExitPlaymode, ISaveable<NpcTraderS
 
     NpcTraderSaveData ISaveable<NpcTraderSaveData>.SaveData()
     {
-        return new(ID, CurrentMoney, Goods, AdditiveGoods, BuyCoefficients);
+        return new(ID, CurrentMoney, Goods, AdditiveGoods, BuyCoefficients, Recipes);
     }
 
     void ISaveable<NpcTraderSaveData>.LoadData(NpcTraderSaveData data)
@@ -51,6 +53,8 @@ public class NpcTraderData : NpcData, IResetOnExitPlaymode, ISaveable<NpcTraderS
         AdditiveGoods = data.AdditiveGoods.Select(good => new NpcTrader.TraderGood(good)).ToList();
 
         BuyCoefficients = data.BuyCoefficients.Select(buyCoefficient => new NpcTrader.BuyCoefficient(buyCoefficient)).ToList();
+
+        Recipes = data.Recipes.Select(recipe => new NpcTrader.TraderGood(recipe)).ToList();
     }
 
     private void OnEnable()
@@ -60,6 +64,7 @@ public class NpcTraderData : NpcData, IResetOnExitPlaymode, ISaveable<NpcTraderS
             AdditiveGoods.Clear(); //AdditiveGoods рассчитываются только в рантайме или при загрузке сохранения, с инспектором никак не связаны
         SetBuyCoefficients();
         BuyCoefficients = _baseBuyCoefficients.Select(buyCoefficient => new NpcTrader.BuyCoefficient(buyCoefficient)).ToList();
+        Recipes = _baseRecipes.Select(recipe => new NpcTrader.TraderGood(recipe)).ToList();
     }
     void IResetOnExitPlaymode.ResetOnExitPlaymode()
     {
@@ -67,6 +72,7 @@ public class NpcTraderData : NpcData, IResetOnExitPlaymode, ISaveable<NpcTraderS
         Goods.Clear();
         AdditiveGoods.Clear();
         BuyCoefficients.Clear();
+        Recipes.Clear();
     }
     private void SetBuyCoefficients()
     {

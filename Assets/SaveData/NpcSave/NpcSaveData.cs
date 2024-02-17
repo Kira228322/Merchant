@@ -42,8 +42,9 @@ public class NpcTraderSaveData : NpcSaveData
 
     public List<SavedTraderGood> Goods = new();
     public List<SavedTraderGood> AdditiveGoods = new();
+    public List<SavedTraderGood> Recipes = new();
     public List<NpcTrader.BuyCoefficient> BuyCoefficients;
-    public NpcTraderSaveData(int id, int money, List<NpcTrader.TraderGood> goods, List<NpcTrader.TraderGood> additiveGoods, List<NpcTrader.BuyCoefficient> buyCoefficients) : base(id, money)
+    public NpcTraderSaveData(int id, int money, List<NpcTrader.TraderGood> goods, List<NpcTrader.TraderGood> additiveGoods, List<NpcTrader.BuyCoefficient> buyCoefficients, List<NpcTrader.TraderGood> recipes) : base(id, money)
     {
         foreach (NpcTrader.TraderGood traderGood in goods)
         {
@@ -52,6 +53,10 @@ public class NpcTraderSaveData : NpcSaveData
         foreach (NpcTrader.TraderGood traderGood in additiveGoods)
         {
             AdditiveGoods.Add(new(traderGood));
+        }
+        foreach (NpcTrader.TraderGood recipe in recipes)
+        {
+            Recipes.Add(new(recipe));
         }
         BuyCoefficients = buyCoefficients;
     }
