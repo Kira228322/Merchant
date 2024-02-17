@@ -111,7 +111,8 @@ public class GoodsBuyPanel : MonoBehaviour
             Player.Instance.Money -= _cost;
             _trader.NpcData.CurrentMoney += _cost;
             TradeManager.Instance.ChangeTraderMoneyText(_trader.NpcData.CurrentMoney);
-            MapManager.CurrentLocation.ChangeCountOfCurrentItemOnScene(_item.Good.Name, -1);
+            if (_item.Good.TypeOfItem != global::Item.ItemType.Null)
+                MapManager.CurrentLocation.ChangeCountOfCurrentItemOnScene(_item.Good.Name, -1);
             TradeManager.Instance.RefreshPriceOfThisGood(_item.Good.Name);
             CurrentCount--;
             

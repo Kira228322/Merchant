@@ -142,6 +142,8 @@ public class GoodsSellPanel : MonoBehaviour
 
     private int CalculatePrice(Item item)
     {
+        if (item.TypeOfItem == global::Item.ItemType.Null)
+            return item.Price;
         int currentQuantityLoca = MapManager.CurrentLocation.CountOfEachItem[item.Name];
         int currentQuantityReg = MapManager.CurrentLocation.Region.CountOfEachItem[item.Name];
         

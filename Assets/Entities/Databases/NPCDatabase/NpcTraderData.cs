@@ -19,6 +19,7 @@ public class NpcTraderData : NpcData, IResetOnExitPlaymode, ISaveable<NpcTraderS
 
     [HideInInspector] public List<NpcTrader.TraderGood> Goods;
     [HideInInspector] public List<NpcTrader.TraderGood> AdditiveGoods;
+    public List<NpcTrader.TraderGood> Recipes = new (); // TODO надо тоже сохранять теперь
     [HideInInspector] public List<NpcTrader.BuyCoefficient> BuyCoefficients;
     
     public void RestockCoefficients()

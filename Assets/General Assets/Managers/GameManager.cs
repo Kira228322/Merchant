@@ -124,6 +124,7 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
         else
         {
             NewGameProcess();
+            
         }
     }
 
@@ -144,6 +145,7 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
 
         GameTime.TimeSet(1, 8, 0);
         EnableUI();
+        GetComponent<RestockHandler>().enabled = true;
     }
     public void LoadGame() //По нажатию кнопки Продолжить в MainMenu
     {
