@@ -17,6 +17,11 @@ public class EventQuestGiver : EventInTravel
         switch (n)
         {
             case 0:
+                NpcQuestGiverData questGiver = MapManager.CurrentRegion.GetRandomFreeQuestGiver();
+                if (questGiver != null)
+                {
+                    questGiver.GiveRandomQuest();
+                }
                 break;
             case 1:
                 break;
