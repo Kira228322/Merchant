@@ -7,7 +7,7 @@ public class DangerousRoadEventController : MonoBehaviour, IEventController<Glob
 {
     public int MinDelayToNextEvent => 3;
 
-    public int MaxDelayToNextEvent => 5;
+    public int MaxDelayToNextEvent => 4;
 
     public int DateOfNextEvent { get; set; }
     public int HourOfNextEvent { get; set; }

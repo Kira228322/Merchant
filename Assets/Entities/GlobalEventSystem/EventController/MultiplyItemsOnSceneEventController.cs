@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class MultiplyItemsOnSceneEventController : MonoBehaviour, IEventController<GlobalEvent_MultiplyItemsOnScene>, ISaveable<EventControllerSaveData>
 {
-    public int MinDelayToNextEvent => 6;
-    public int MaxDelayToNextEvent => 13;
+    public int MinDelayToNextEvent => 5;
+    public int MaxDelayToNextEvent => 9;
 
     public int DateOfNextEvent { get; set; }
     public int HourOfNextEvent { get; set; }
