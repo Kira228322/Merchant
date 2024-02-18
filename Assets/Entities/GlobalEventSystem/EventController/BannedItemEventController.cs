@@ -11,9 +11,9 @@ public class BannedItemEventController : MonoBehaviour, IEventController<GlobalE
     public int LastEventDay { get; set; }
     public int DurationOfEvent { get; set; }
     public List<Item> ItemsToBan { get; private set; }
-    public int MinDelayToNextEvent => 7;
+    public int MinDelayToNextEvent => 6;
 
-    public int MaxDelayToNextEvent => 9;
+    public int MaxDelayToNextEvent => 8;
 
     public int DateOfNextEvent { get; set; }
     public int HourOfNextEvent { get; set; }

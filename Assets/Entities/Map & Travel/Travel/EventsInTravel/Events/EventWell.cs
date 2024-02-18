@@ -7,7 +7,7 @@ public class EventWell : EventInTravel
 {
     [SerializeField] private Status _wellBuff;
     private bool _haveBottle = false;
-    private int _probabilityOfWater = 40;
+    private int _probabilityOfWater = 55;
     public override void SetButtons()
     {
         SetInfoButton($"¬еро€тность того, что в колодце будет вода {TravelEventHandler.GetProbability(_probabilityOfWater, Player.Instance.Statistics.Luck)}%." +
