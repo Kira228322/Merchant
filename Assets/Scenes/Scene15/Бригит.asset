@@ -161,6 +161,11 @@ MonoBehaviour:
   - ItemType: 26
     Coefficient: 0.95
     DefaultCountToBuy: 20
+  _baseRecipes:
+  - Good: {fileID: 11400000, guid: e9c0c8a9b4b82ad4cbca06365f7b0c16, type: 2}
+    MaxCount: 1
+    CurrentCount: 1
+    CurrentPrice: 45
   Goods:
   - Good: {fileID: 11400000, guid: 47714c0b6d1412347a6617dc26c20b9e, type: 2}
     MaxCount: 19
@@ -255,11 +260,6 @@ MonoBehaviour:
     CurrentCount: 16
     CurrentPrice: 34
   AdditiveGoods: []
-  Recipes:
-  - Good: {fileID: 11400000, guid: e9c0c8a9b4b82ad4cbca06365f7b0c16, type: 2}
-    MaxCount: 1
-    CurrentCount: 1
-    CurrentPrice: 45
   BuyCoefficients:
   - ItemType: 5
     Coefficient: 1
@@ -303,3 +303,4 @@ MonoBehaviour:
   - ItemType: 26
     Coefficient: 0.95
     DefaultCountToBuy: 20
+  Recipes: []
