@@ -200,8 +200,9 @@ abstract public class NPCMovement : MonoBehaviour
                 StopCoroutine(_currentCoroutine);
                 _currentCoroutine = null;
             }
+            if (!_currentStateIsIDLE)
+                Animator.SetTrigger("IDLE");
             EnableNPC(false);
-            Animator.SetTrigger("IDLE");
         }
     }
     
