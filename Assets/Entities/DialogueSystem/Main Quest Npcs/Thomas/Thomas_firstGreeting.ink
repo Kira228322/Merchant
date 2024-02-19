@@ -40,7 +40,7 @@ INCLUDE ../../MainInkLibrary.ink
 Ещё он просил передать тебе вот этот конверт.
 
 ~place_item("Конверт от отца", 1, 0)
-~add_quest("tutorial_readletter")
+~invoke_dialogue_event("game_start")
 \* Томас вручает вам конверт... \*
 -> END
 

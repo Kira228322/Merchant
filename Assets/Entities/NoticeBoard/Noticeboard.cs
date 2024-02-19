@@ -164,29 +164,10 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
     private void RefreshSprite()
     {
         int fullness = _compactedNoticeArray.Count(notice => notice != null);
-        int spriteIndex;
-        switch (fullness)
-        {
-            case 0:
-                spriteIndex = 0;
-                break;
-            case 1:
-                spriteIndex = 1;
-                break;
-            case 2:
-                spriteIndex = 2;
-                break;
-            case 3:
-                spriteIndex = 3;
-                break;
-            case 4:
-                spriteIndex = 4;
-                break;
-            default:
-                spriteIndex = 5;
-                break;
-        }
-        _currentBoardSprite.sprite = _boardSprites[spriteIndex];
+        if (fullness > 5)
+            _currentBoardSprite.sprite = _boardSprites[5];
+        else
+            _currentBoardSprite.sprite = _boardSprites[fullness];
 
     }
 

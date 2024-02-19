@@ -45,7 +45,8 @@ public class CooldownHandler: MonoBehaviour, ISaveable<CooldownHandlerSaveData>
 
     public void Register(string uniqueID, int cooldownHours)
     {
-        ObjectsOnCooldown.Add(new(uniqueID, cooldownHours));
+        if (!ObjectsOnCooldown.Any(item => item.UniqueID == uniqueID))
+            ObjectsOnCooldown.Add(new(uniqueID, cooldownHours));
     }
     public void Unregister(string uniqueID)
     {

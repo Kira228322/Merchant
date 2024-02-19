@@ -27,8 +27,9 @@ MonoBehaviour:
   MaxExperienceReward: 0
   MinMoneyReward: 0
   MaxMoneyReward: 0
-  QuestLine: {fileID: 0}
-  PrerequisiteQuests: []
+  QuestLine: {fileID: 11400000, guid: 18a707f74e149bd428971f2f8ac109bb, type: 2}
+  PrerequisiteQuests:
+  - {fileID: 11400000, guid: 6709e815ea78447488b0b8fa324d578d, type: 2}
   QuestCompletionDelay: 0
   goals:
   - goalType: 6
@@ -44,6 +45,7 @@ MonoBehaviour:
     RequiredLine: 
     FailingLine: 
     RequiredItemName: "\u041A\u043E\u043D\u0432\u0435\u0440\u0442 \u043E\u0442 \u043E\u0442\u0446\u0430"
+    RequiredSceneName: 
     RequiredItemCategories: 
     QuestItemsBehaviour: 0
     RandomDeliveryWeight: 0

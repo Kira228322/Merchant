@@ -145,6 +145,7 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
 
         GameTime.TimeSet(1, 8, 0);
         EnableUI();
+        QuestHandler.AddQuest("game_start");
         GetComponent<RestockHandler>().enabled = true;
     }
     public void LoadGame() //По нажатию кнопки Продолжить в MainMenu
