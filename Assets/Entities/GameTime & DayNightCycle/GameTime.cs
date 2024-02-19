@@ -7,8 +7,7 @@ public static class GameTime
 {
 
     private static Timeflow _timeflow;
-    //TODO: _timeScaleInTravel = 20 
-    private static float _timeScaleInTravel = 100; 
+    private static float _timeScaleInTravel = 20; 
     public static float TimeScaleInTravel => _timeScaleInTravel; 
     private static int _currentDay = 1;
     private static int _hours = 0;

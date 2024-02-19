@@ -18,7 +18,7 @@ public class InfoButtonInStats : MonoBehaviour
         if (_panel.activeSelf)
         {
             StopAllCoroutines();
-            StartCoroutine(AppearAndDisappear());
+            _panel.SetActive(false);
         }
         else
         {
