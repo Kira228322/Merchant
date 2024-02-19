@@ -19,17 +19,17 @@ public class EventSunflower : EventInTravel
                 if (InventoryController.Instance.TryCreateAndInsertItem(ItemDatabase.GetItem("Подсолнух"), 2, 0))
                 {
                     int skippedMinutes = Random.Range(5, 16);
-                    _eventWindow.ChangeDescription($"Вы собрали пару подсолнухов и потратили на это 1 час и {skippedMinutes} минут");
+                    _eventWindow.ChangeDescription($"Вы собрали пару подсолнухов и потратили на это 1 час и {skippedMinutes} минут.");
                     GameTime.TimeSkip(0,1,skippedMinutes);
                 }
                 else
                 {
-                    _eventWindow.ChangeDescription("У вас не было места в инвентаре, и вы поехали дальше");
+                    _eventWindow.ChangeDescription("У вас не было места в инвентаре, и вы поехали дальше.");
                 }
                 
                 break;
             case 1:
-                _eventWindow.ChangeDescription("Вы решили не задерживаться в своем пути");
+                _eventWindow.ChangeDescription("Вы решили не задерживаться в своем пути.");
                 break;
         }
         

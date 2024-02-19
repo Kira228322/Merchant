@@ -24,19 +24,19 @@ public class EventRoadKeeper : EventInTravel
                     FindObjectOfType<TravelEventHandler>().RoadBadnessMultiplier += _reduceQuality;
                     _eventWindow.ChangeDescription("” вас не было достаточно золота. " +
                                                    "’ранитель разозлилс€ и ударил по вашему колесу молотом. " +
-                                                   "Ёто может привести к увеличенному количеству сломанных предметов после поездки");
+                                                   "Ёто может привести к увеличенному количеству сломанных предметов после поездки.");
                 }
                 else
                 {
                     Player.Instance.Money -= money;
                     _eventWindow.ChangeDescription("’ранитель дороги был рад прин€ть налог за проезд. ќн ухмыльнулс€," +
-                                                   " хрюкнул и позволил вам проехать");
+                                                   " хрюкнул и позволил вам проехать.");
                 }
                 break;
             case 1:
                 FindObjectOfType<TravelEventHandler>().RoadBadnessMultiplier += _reduceQuality;
                 _eventWindow.ChangeDescription("’ранитель разозлилс€ и ударил по вашему колесу молотом. " +
-                                               "Ёто может привести к увеличенному количеству сломанных предметов после поездки");
+                                               "Ёто может привести к увеличенному количеству сломанных предметов после поездки.");
                 break;
         }
     }

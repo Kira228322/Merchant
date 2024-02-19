@@ -35,7 +35,7 @@ public class EventWagonTrade : EventInTravel
                     if (InventoryController.Instance.TryCreateAndInsertItem
                             (item, 1, 0) != null)
                     {
-                        _eventWindow.ChangeDescription($"Внутри оказался ценный товар: {item.Name}. Вы с удовольствием забираете его себе, платя торговцу его 100 золотых");
+                        _eventWindow.ChangeDescription($"Внутри оказался ценный товар: {item.Name}. Вы с удовольствием забираете его себе, платя торговцу его 100 золотых.");
                         Player.Instance.Money -= 100;
                     }
                     else
@@ -49,7 +49,7 @@ public class EventWagonTrade : EventInTravel
                     if (InventoryController.Instance.TryCreateAndInsertItem
                             (item, 1, 0) != null)
                     {
-                        _eventWindow.ChangeDescription($"Внутри совсем не ценный товар: {item.Name}. Вы с разочарованием забираете его себе, платя торговцу его грязные 100 золотых");
+                        _eventWindow.ChangeDescription($"Внутри совсем не ценный товар: {item.Name}. Вы с разочарованием забираете его себе, платя торговцу его грязные 100 золотых.");
                         Player.Instance.Money -= 100;
                     }
                     else

@@ -10,7 +10,7 @@ public class EventTemple : EventInTravel
     public override void SetButtons()
     {
         ButtonsLabel.Add("Помолиться");
-        SetInfoButton($"Вы можете получить благославение с шансом {TravelEventHandler.GetProbability(_probability, Player.Instance.Statistics.Luck)}%." +
+        SetInfoButton($"Вы можете получить благословение с шансом {TravelEventHandler.GetProbability(_probability, Player.Instance.Statistics.Luck)}%." +
                       $"\nШанс успеха зависит от вашей удачи");
     }
 
@@ -22,7 +22,7 @@ public class EventTemple : EventInTravel
                 if (TravelEventHandler.EventFire(_probability, true, Player.Instance.Statistics.Luck))
                 {
                     StatusManager.Instance.AddStatusForPlayer(MerickasBlessing);
-                    _eventWindow.ChangeDescription("Богиня одарила вас своим благославлением!");
+                    _eventWindow.ChangeDescription("Богиня одарила вас своим благословением!");
                 }
                 else
                     _eventWindow.ChangeDescription("Богиня не услышала ваши молитвы...");

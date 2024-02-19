@@ -31,13 +31,13 @@ public class EventGraveyard : EventInTravel
                     }
                     else
                     {
-                        _eventWindow.ChangeDescription("У вас не было места для ожерелья и вы решили не прикосаться к этой зловещей штуке");
+                        _eventWindow.ChangeDescription("У вас не было места для ожерелья и вы решили не прикасаться к этой зловещей штуке.");
                     }
                 }
                 else
                 {
                     StatusManager.Instance.AddStatusForPlayer(_curse);
-                    _eventWindow.ChangeDescription("Ожерелья оказалось проклято! Вы взяли его в руки и оно тот час же рассыпалось. " +
+                    _eventWindow.ChangeDescription("Ожерелье оказалось проклято! Вы взяли его в руки и оно тотчас же рассыпалось. " +
                                                    "Вы ощутили пронзительный холод. Теперь вы осквернены.");
                 }
                 break;

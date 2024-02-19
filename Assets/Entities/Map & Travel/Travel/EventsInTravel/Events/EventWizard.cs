@@ -26,7 +26,7 @@ public class EventWizard : EventInTravel
                 int index;
                 if (Player.Instance.Money < cost)
                 {
-                    _eventWindow.ChangeDescription("У вас не было достаточно золота. Маг посмотрел на вас презренно");
+                    _eventWindow.ChangeDescription("У вас не было достаточно золота. Маг посмотрел на вас презренно.");
                     return;
                 }
                 
@@ -36,7 +36,7 @@ public class EventWizard : EventInTravel
                 {
                     index = Random.Range(0, _rareStatuses.Count);
                     StatusManager.Instance.AddStatusForPlayer(_rareStatuses[index]);
-                    _eventWindow.ChangeDescription($"Чародей наложил на вас редкое заклинание, дарующее эффект {_rareStatuses[index].StatusName}. Маг надеется, что это именно то, что вы хотели");
+                    _eventWindow.ChangeDescription($"Чародей наложил на вас редкое заклинание, дарующее эффект {_rareStatuses[index].StatusName}. Маг надеется, что это именно то, что вы хотели.");
                 }
                 else
                 {
@@ -47,7 +47,7 @@ public class EventWizard : EventInTravel
                 }
                 break;
             case 1:
-                _eventWindow.ChangeDescription("Чародей раздосадован, что не предоставилось возможности поколдовать");
+                _eventWindow.ChangeDescription("Чародей раздосадован, что не предоставилось возможности поколдовать...");
                 break;
         }
         

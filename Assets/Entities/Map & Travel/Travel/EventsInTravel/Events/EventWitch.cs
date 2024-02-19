@@ -38,7 +38,7 @@ public class EventWitch : EventInTravel
                     
                 break;
             case 1:
-                _eventWindow.ChangeDescription("От греха подальше вы отказываетесь от  щедрого предложения странной ведьмы.");
+                _eventWindow.ChangeDescription("От греха подальше вы отказываетесь от щедрого предложения странной ведьмы.");
                 break;
         }
     }

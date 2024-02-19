@@ -86,7 +86,7 @@ public class EventTraveler : EventInTravel
                             Player.Instance.Inventory.RemoveItemsOfThisItemData(_first.ItemData, 1);
                             
                             Player.Instance.Experience.AddExperience(_first.ItemData.Price/4 + 1);
-                            _eventWindow.ChangeDescription($"Путник был рад принять в дар {_first.ItemData.Name}. Он поблагодарил вас и отправился дальше. Вы получили {_first.ItemData.Price/4 + 1} опыта");
+                            _eventWindow.ChangeDescription($"Путник был рад принять в дар {_first.ItemData.Name}. Он поблагодарил вас и отправился дальше. Вы получили {_first.ItemData.Price/4 + 1} опыта.");
                         }
                         else
                         {
@@ -115,11 +115,11 @@ public class EventTraveler : EventInTravel
                             Player.Instance.Inventory.RemoveItemsOfThisItemData(_first.ItemData, 1);
                             
                             Player.Instance.Experience.AddExperience(_first.ItemData.Price/4 + 1);
-                            _eventWindow.ChangeDescription($"Путник был рад принять в дар {_first.ItemData.Name}. Он поблагодарил вас и отправился дальше. Вы получили {_first.ItemData.Price/4 + 1} опыта");
+                            _eventWindow.ChangeDescription($"Путник был рад принять в дар {_first.ItemData.Name}. Он поблагодарил вас и отправился дальше. Вы получили {_first.ItemData.Price/4 + 1} опыта.");
                         }
                         else
                         {
-                            _eventWindow.ChangeDescription($"Вы пообещали дать путнику {_first.ItemData.Name}. Но вместо этого съедаете это лакомство сами. Он еле сдерживая слезы пошел прочь.");
+                            _eventWindow.ChangeDescription($"Вы пообещали дать путнику {_first.ItemData.Name}, но вместо этого съедаете это лакомство сами. Он, еле сдерживая слезы, пошел прочь.");
                         }
                         break;
                     case 1:
@@ -136,11 +136,11 @@ public class EventTraveler : EventInTravel
                             Player.Instance.Inventory.RemoveItemsOfThisItemData(_second.ItemData, 1);
                             
                             Player.Instance.Experience.AddExperience(_second.ItemData.Price/4 + 1);
-                            _eventWindow.ChangeDescription($"Путник был рад принять в дар {_second.ItemData.Name}. Он поблагодарил вас и отправился дальше. Вы получили {_second.ItemData.Price/4 + 1} опыта");
+                            _eventWindow.ChangeDescription($"Путник был рад принять в дар {_second.ItemData.Name}. Он поблагодарил вас и отправился дальше. Вы получили {_second.ItemData.Price/4 + 1} опыта.");
                         }
                         else
                         {
-                            _eventWindow.ChangeDescription($"Вы пообещали дать путнику {_second.ItemData.Name}. Но вместо этого съедаете это лакомство сами. Он еле сдерживая слезы пошел прочь.");
+                            _eventWindow.ChangeDescription($"Вы пообещали дать путнику {_second.ItemData.Name}, но вместо этого съедаете это лакомство сами. Он, еле сдерживая слезы, пошел прочь.");
                         }
                         break;
                     case 2:
