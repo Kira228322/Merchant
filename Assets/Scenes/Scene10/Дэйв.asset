@@ -21,6 +21,9 @@ MonoBehaviour:
   TraderTypes:
   - {fileID: 11400000, guid: c60371b152847c14d93c25ee27d5cfc7, type: 2}
   - {fileID: 11400000, guid: fe76a7f31f4783a4c86837cf2988700e, type: 2}
+  - {fileID: 11400000, guid: d0aa10ea882b32249af581f9c7dee7a7, type: 2}
+  - {fileID: 11400000, guid: 353eb10bd03863142808bc39ee5786d5, type: 2}
+  - {fileID: 11400000, guid: 8509d4b7ebb2a1b41a145df38bbad92f, type: 2}
   IsBlackMarket: 0
   HaveAdditiveGoods: 0
   _baseGoods:
@@ -126,14 +129,14 @@ MonoBehaviour:
     Coefficient: 0.95
     DefaultCountToBuy: 11
   - ItemType: 6
-    Coefficient: 0.95
-    DefaultCountToBuy: 12
+    Coefficient: 1
+    DefaultCountToBuy: 25
   - ItemType: 7
-    Coefficient: 0.95
-    DefaultCountToBuy: 3
+    Coefficient: 1
+    DefaultCountToBuy: 22
   - ItemType: 8
-    Coefficient: 0.85
-    DefaultCountToBuy: 2
+    Coefficient: 1
+    DefaultCountToBuy: 15
   - ItemType: 11
     Coefficient: 0.8
     DefaultCountToBuy: 6
@@ -151,10 +154,10 @@ MonoBehaviour:
     DefaultCountToBuy: 12
   - ItemType: 16
     Coefficient: 1
-    DefaultCountToBuy: 8
+    DefaultCountToBuy: 25
   - ItemType: 17
     Coefficient: 1
-    DefaultCountToBuy: 12
+    DefaultCountToBuy: 25
   - ItemType: 9
     Coefficient: 1
     DefaultCountToBuy: 18
@@ -178,13 +181,20 @@ MonoBehaviour:
     DefaultCountToBuy: 7
   - ItemType: 32
     Coefficient: 1
-    DefaultCountToBuy: 11
+    DefaultCountToBuy: 25
   - ItemType: 34
     Coefficient: 1
     DefaultCountToBuy: 14
   - ItemType: 18
     Coefficient: 0.95
     DefaultCountToBuy: 10
+  - ItemType: 20
+    Coefficient: 1
+    DefaultCountToBuy: 32
+  - ItemType: 21
+    Coefficient: 1
+    DefaultCountToBuy: 25
+  _baseRecipes: []
   Goods:
   - Good: {fileID: 11400000, guid: 492c47c37b9a53a40a85a006fed29c83, type: 2}
     MaxCount: 7
@@ -289,14 +299,14 @@ MonoBehaviour:
     Coefficient: 0.95
     DefaultCountToBuy: 11
   - ItemType: 6
-    Coefficient: 0.95
-    DefaultCountToBuy: 12
+    Coefficient: 1
+    DefaultCountToBuy: 25
   - ItemType: 7
-    Coefficient: 0.95
-    DefaultCountToBuy: 3
+    Coefficient: 1
+    DefaultCountToBuy: 22
   - ItemType: 8
-    Coefficient: 0.85
-    DefaultCountToBuy: 2
+    Coefficient: 1
+    DefaultCountToBuy: 15
   - ItemType: 11
     Coefficient: 0.8
     DefaultCountToBuy: 6
@@ -314,10 +324,10 @@ MonoBehaviour:
     DefaultCountToBuy: 12
   - ItemType: 16
     Coefficient: 1
-    DefaultCountToBuy: 8
+    DefaultCountToBuy: 25
   - ItemType: 17
     Coefficient: 1
-    DefaultCountToBuy: 12
+    DefaultCountToBuy: 25
   - ItemType: 9
     Coefficient: 1
     DefaultCountToBuy: 18
@@ -341,10 +351,17 @@ MonoBehaviour:
     DefaultCountToBuy: 7
   - ItemType: 32
     Coefficient: 1
-    DefaultCountToBuy: 11
+    DefaultCountToBuy: 25
   - ItemType: 34
     Coefficient: 1
     DefaultCountToBuy: 14
   - ItemType: 18
     Coefficient: 0.95
     DefaultCountToBuy: 10
+  - ItemType: 20
+    Coefficient: 1
+    DefaultCountToBuy: 32
+  - ItemType: 21
+    Coefficient: 1
+    DefaultCountToBuy: 25
+  Recipes: []

@@ -16,12 +16,15 @@ public class UsableYellowStone : UsableEnvironment
         {
             case 0:
             case 1:
-                value =  3 * Player.Instance.Experience.CurrentLevel + Random.Range(10, 20 + Player.Instance.Experience.CurrentLevel);
+                value =  3 * Player.Instance.Experience.CurrentLevel + Player.Instance.Statistics.Luck.Total * 2 +
+                         Random.Range(12, 22 + Player.Instance.Experience.CurrentLevel);
+                if (value <= 0)
+                    value = 1;
                 Player.Instance.Money += value;
                 CanvasWarningGenerator.Instance.CreateWarning("Вы внезапно разбогатели", $"Вы получили {value} золота");
                 break;
             case 2:
-                value =  2 * Player.Instance.Experience.CurrentLevel + Random.Range(10, 16);
+                value =  2 * Player.Instance.Experience.CurrentLevel + Random.Range(12, 18) - Player.Instance.Statistics.Luck.Total;
                 if (Player.Instance.Money < value)
                 {
                     CanvasWarningGenerator.Instance.CreateWarning("Вы внезапно обеднели", $"Вы потеряли {Player.Instance.Money} золота");
