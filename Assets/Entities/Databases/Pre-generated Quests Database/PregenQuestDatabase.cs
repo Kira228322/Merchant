@@ -42,11 +42,4 @@ public class PregenQuestDatabase : MonoBehaviour
         return pregenQuestSO.GenerateQuestParams();
 
     }
-    public static QuestParams GetRandomQuest(out string name, out string description)
-    {
-        var pregenQuestSO = Instance.Quests.RandomQuests[Random.Range(0, Instance.Quests.RandomQuests.Count)];
-        name = pregenQuestSO.Name;
-        description = pregenQuestSO.Description;
-        return pregenQuestSO.RandomQuest.GenerateQuestParams();
-    }
 }

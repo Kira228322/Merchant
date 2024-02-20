@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class EventQuestGiver : EventInTravel
@@ -18,6 +19,12 @@ public class EventQuestGiver : EventInTravel
         {
             case 0:
                 NpcQuestGiverData questGiver = MapManager.CurrentRegion.GetRandomFreeQuestGiver();
+
+                if (questGiver == null) //Если в текущем регионе нет свободного квестгивера, он берётся из любого региона
+                {
+                    List<Region> otherRegions = FindObjectOfType<RegionHandler>().Regions.Where(region => region != MapManager.CurrentRegion).ToList();
+                    questGiver = otherRegions[Random.Range(0, otherRegions.Count)].GetRandomFreeQuestGiver();
+                }
                 if (questGiver != null)
                 {
                     questGiver.GiveRandomQuest();
