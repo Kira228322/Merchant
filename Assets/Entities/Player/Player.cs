@@ -154,6 +154,7 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
         if (Input.GetKeyDown(KeyCode.S))
         {
             Debug.Log("Test Save");
+
             FindObjectOfType<GameManager>().SaveGame();
         }
         if (Input.GetKeyDown(KeyCode.L))

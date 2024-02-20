@@ -19,7 +19,10 @@ public class AwaitingQuest
     {
         this.questParams = questParams;
         this.delay = delay;
-
+        
+    }
+    public void Initialize()
+    {
         GameTime.HourChanged += OnHourChanged;
         GameTime.TimeSkipped += OnTimeSkipped;
     }

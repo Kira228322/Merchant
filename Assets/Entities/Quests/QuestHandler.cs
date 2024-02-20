@@ -67,6 +67,7 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
                 {
                     AwaitingQuest awaitingQuest = new(pregenQuest, quest.QuestCompletionDelay);
                     awaitingQuest.AwaitingQuestGiven += OnAwaitingQuestGiven;
+                    awaitingQuest.Initialize();
                     AwaitingQuests.Add(awaitingQuest);
                 }
                 else
@@ -120,7 +121,8 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
     }
     public static bool HasQuestBeenTaken(string summary)
     {
-        return Instance.Quests.Any(quest => quest.QuestSummary == summary);
+        return Instance.Quests.Any(quest => quest.QuestSummary == summary) 
+            || Instance.AwaitingQuests.Any(quest => quest.questParams.questSummary == summary);
     }
     public static bool HasQuestBeenCompleted(string summary)
     {
@@ -157,6 +159,12 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
                 questName = quest.QuestName,
                 questSummary = quest.QuestSummary,
                 description = quest.Description,
+                questCompletionDelay = quest.QuestCompletionDelay,
+                questGiverID = quest.QuestGiverID,
+                dayStartedOn = quest.DayStartedOn,
+                hourStartedOn = quest.HourStartedOn,
+                dayFinishedOn = quest.DayFinishedOn,
+                hourFinishedOn = quest.HourFinishedOn,
                 experienceReward = quest.ExperienceReward,
                 moneyReward = quest.MoneyReward,
                 itemRewards = quest.ItemRewards,
@@ -236,8 +244,9 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
         }
         foreach (AwaitingQuest awaitingQuest in data.awaitingQuests)
         {
-            awaitingQuest.AwaitingQuestGiven += OnAwaitingQuestGiven;
             AwaitingQuests.Add(new(awaitingQuest.questParams, awaitingQuest.delay));
+            awaitingQuest.AwaitingQuestGiven += OnAwaitingQuestGiven;
+            awaitingQuest.Initialize();
         }
     }
     #endregion
