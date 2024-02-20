@@ -15,7 +15,7 @@ public class AdNotice : Notice
 
     public override void OnNoticeTake()
     {
-        if (!RewardedAds.Instance.IsAdLoaded)
+        if (RewardedAds.Instance.IsAdLoaded)
         {
             RewardedAds.Instance.ShowAd();
             Noticeboard.RemoveNotice(SpawnPointIndex);

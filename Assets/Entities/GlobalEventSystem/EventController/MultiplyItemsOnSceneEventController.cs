@@ -20,8 +20,6 @@ public class MultiplyItemsOnSceneEventController : MonoBehaviour, IEventControll
     [SerializeField] private bool _isPositive;
 
     public List<Location> PossibleLocations = new();
-    //TODO: по готовности локаций вставить в инспекторе те, которые имеют хорошие услови€ дл€ роста продуктов
-
     public GlobalEvent_MultiplyItemsOnScene AddEvent()
     {
         GlobalEvent_MultiplyItemsOnScene newEvent = new()
@@ -50,7 +48,7 @@ public class MultiplyItemsOnSceneEventController : MonoBehaviour, IEventControll
         else
             MultiplyCoefficient = Random.Range(0.6f, 0.8f);
 
-        List<Location> sameRegionLocations = PossibleLocations.Where(location => location.Region == MapManager.CurrentRegion).ToList();
+        List<Location> sameRegionLocations = PossibleLocations.Where(location => location.Region == MapManager.CurrentRegion).ToList(); 
         Location = sameRegionLocations[Random.Range(0, sameRegionLocations.Count)];
         SelectedItem = SelectApplicableItem();
     }
@@ -77,9 +75,7 @@ public class MultiplyItemsOnSceneEventController : MonoBehaviour, IEventControll
             })
             .OrderByDescending(group => group.TotalCount)
             .ToList();
-        if (sortedItems.Count < 5)
-            Debug.LogError("Ќа локации меньше 5 предметов!!!"); //TODO убрать на релизе
-
+        
         return sortedItems[Random.Range(0, 5)].Item.Name;
     }
 

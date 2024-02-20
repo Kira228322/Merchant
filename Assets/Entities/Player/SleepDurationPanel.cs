@@ -11,7 +11,7 @@ public class SleepDurationPanel : MonoBehaviour
     [SerializeField] private Button _closeButton;
     [SerializeField] private Image _blackScreen;
     
-    private int _timeScaleWhenSleeping = 30;
+    private int _timeScaleWhenSleeping = 45;
     private Player _player;
     private Timeflow _timeflow;
 

@@ -18,8 +18,7 @@ public class FloodEventController : MonoBehaviour, IEventController<GlobalEvent_
     [HideInInspector] public string SelectedItem;
 
     public List<Location> PossibleLocations = new();
-    //TODO: по готовности локаций вставить в инспекторе те, которые имеют риск наводнения
-
+    
     public GlobalEvent_Flood AddEvent()
     {
         GlobalEvent_Flood newEvent = new()
