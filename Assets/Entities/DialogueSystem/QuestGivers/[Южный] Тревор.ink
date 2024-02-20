@@ -2,15 +2,7 @@ INCLUDE ../MainInkLibrary.ink
 
 ~temp activeQuests = get_activeQuestList()
 
-{contains(activeQuests, Экзотический):
-    ->active_quest
-}
-
-{contains(activeQuests, Домашний):
-    ->active_quest
-}
-
-{contains(activeQuests, Категория):
+{contains(activeQuests, "questgiver_south_swords"):
     ->active_quest
 }
 
@@ -18,35 +10,20 @@ INCLUDE ../MainInkLibrary.ink
 
 
 === active_quest ===
-{contains(activeQuests, Экзотический) && has_enough_items(Экзотический):
-    +[Я принёс тебе экзотические предметы.]
-        Замечательно, ты отлично справился!
-        ->exotic_reward
-}
-{contains(activeQuests, Домашний) && has_enough_items(Домашний):
-    +[Я принес тебе местные предметы.]
-        Замечательно, ты отлично справился!
-        ->domestic_reward
-}
-{contains(activeQuests, Категория):
-    +[Я принес тебе предметы определенной категории.]
-        ~open_item_container(Категория, 0)
-            Ну-ка, показывай, что у тебя...
-            ->category_reward
-        
+{contains(activeQuests, "questgiver_south_swords"):
+    {has_enough_items("questgiver_south_swords"):
+        +[Я принёс тебе железные мечи.]
+            Отлично! Осталось только дать нашим бравым ребятам эти мечи, и никакие бандиты нам не страшны! Молодец, отличная работа! 
+            ->exotic_reward
+    }
 -else:
     +[Я вернусь позже.]
+        Пока.
+        ->END
 }
 
 === exotic_reward ===
-~invoke_dialogue_event(Экзотический)
-Вот, возьми свою награду. С тобой приятно иметь дело!
-->END
-=== domestic_reward ===
-~invoke_dialogue_event(Домашний)
-Вот, возьми свою награду. С тобой приятно иметь дело!
-->END
-=== category_reward ===
+~invoke_dialogue_event("questgiver_south_swords")
 Вот, возьми свою награду. С тобой приятно иметь дело!
 ->END
 
@@ -65,17 +42,11 @@ INCLUDE ../MainInkLibrary.ink
 ~temp randomQuest = get_random_questparams_of_questgiver()
 
 {
- - contains(randomQuest, Экзотический):
-    ~add_quest(Экзотический)
-        ЭкзотическийОписание
-        ->END
- - contains(randomQuest, Домашний):
-    ~add_quest(Домашний)
-        ДомашнийОписание
-        ->END
- - contains(randomQuest, Категория):
-    ~add_quest(Категория)
-        КатегорияОписание
+ - contains(randomQuest, "questgiver_south_swords"):
+    ~add_quest("questgiver_south_swords")
+        У нашей деревни сейчас некоторые проблемы. В последнее время участились нападения бандитов. Они грабят торговцев и вымогают деньги с простых людей
+        Непонятно, куда смотрит стража... В общем, я договорился с крепкими мужиками, они согласны патрулировать окрестности.
+        Не хватает только оружия для них. Пожалуйста, раздобудь где-нибудь железные мечи и притащи мне. Ты сослужишь очень хорошую службу для деревни. Разумеется, я также заплачу тебе деньгами.
         ->END
 }
 

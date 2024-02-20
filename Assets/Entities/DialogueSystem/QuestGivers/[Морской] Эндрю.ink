@@ -2,15 +2,15 @@ INCLUDE ../MainInkLibrary.ink
 
 ~temp activeQuests = get_activeQuestList()
 
-{contains(activeQuests, Экзотический):
+{contains(activeQuests, "questgiver_sea_exotic_items"):
     ->active_quest
 }
 
-{contains(activeQuests, Домашний):
+{contains(activeQuests, "questgiver_sea_domestic_items"):
     ->active_quest
 }
 
-{contains(activeQuests, Категория):
+{contains(activeQuests, "questgiver_sea_categories"):
     ->active_quest
 }
 
@@ -18,36 +18,42 @@ INCLUDE ../MainInkLibrary.ink
 
 
 === active_quest ===
-{contains(activeQuests, Экзотический) && has_enough_items(Экзотический):
-    +[Я принёс тебе экзотические предметы.]
-        Замечательно, ты отлично справился!
-        ->exotic_reward
+{contains(activeQuests, "questgiver_sea_exotic_items"):
+    {has_enough_items("questgiver_sea_exotic_items"):
+        +[Я принёс тебе экзотические предметы.]
+            Отлично! Это серебряное ожерелье - то что нужно. Оно очень красивое, спасибо! 
+            ->exotic_reward
+    }
 }
-{contains(activeQuests, Домашний) && has_enough_items(Домашний):
-    +[Я принес тебе местные предметы.]
-        Замечательно, ты отлично справился!
-        ->domestic_reward
+{contains(activeQuests, "questgiver_sea_domestic_items"): 
+    {has_enough_items("questgiver_sea_domestic_items"):
+        +[Я принес тебе местные предметы.]
+            Ах да, непромокаемые плащи! Теперь мы готовы отправляться в путешествие. Спасибо!
+            ->domestic_reward
+    }
 }
-{contains(activeQuests, Категория):
+{contains(activeQuests, "questgiver_sea_categories"):
     +[Я принес тебе предметы определенной категории.]
-        ~open_item_container(Категория, 0)
+        ~open_item_container("questgiver_sea_categories", 0)
             Ну-ка, показывай, что у тебя...
             ->category_reward
         
 -else:
     +[Я вернусь позже.]
+        Пока.
+        ->END
 }
 
 === exotic_reward ===
-~invoke_dialogue_event(Экзотический)
+~invoke_dialogue_event("questgiver_sea_exotic_items")
 Вот, возьми свою награду. С тобой приятно иметь дело!
 ->END
 === domestic_reward ===
-~invoke_dialogue_event(Домашний)
+~invoke_dialogue_event("questgiver_sea_domestic_items")
 Вот, возьми свою награду. С тобой приятно иметь дело!
 ->END
 === category_reward ===
-Вот, возьми свою награду. С тобой приятно иметь дело!
+Отлично, это то, что нужно! Вот, возьми свою награду. С тобой приятно иметь дело!
 ->END
 
 === check_cooldown ===
@@ -65,17 +71,20 @@ INCLUDE ../MainInkLibrary.ink
 ~temp randomQuest = get_random_questparams_of_questgiver()
 
 {
- - contains(randomQuest, Экзотический):
-    ~add_quest(Экзотический)
-        ЭкзотическийОписание
+ - contains(randomQuest, "questgiver_sea_exotic_items"):
+    ~add_quest("questgiver_sea_exotic_items")
+        Задание довольно простое - я хотел приобрести серебряное ожерелье. Мне всегда нравилось, как серебро своим тусклым блеском напоминает о морской воде...
+        Что-то меня потянуло на философские изречения, извини. В общем, просто принеси ожерелье, а я тебе отплачу.
         ->END
- - contains(randomQuest, Домашний):
-    ~add_quest(Домашний)
-        ДомашнийОписание
+ - contains(randomQuest, "questgiver_sea_domestic_items"):
+    ~add_quest("questgiver_sea_domestic_items")
+        Скоро мы с другом отправляемся в путешествие на яхте. У нас уже всё готово, но не хватает плащей для защиты от непогоды. Сможешь доставить их мне?
+        Только учти, что нужно успеть до того, как мы отплывём.
         ->END
- - contains(randomQuest, Категория):
-    ~add_quest(Категория)
-        КатегорияОписание
+ - contains(randomQuest, "questgiver_sea_categories"):
+    ~add_quest("questgiver_sea_categories")
+        Для моряка очень важно потреблять достаточно витаминов и полезных веществ, а не то заболеешь! Больше всего витаминов в свежих южных ягодах и фруктах, а также они очень вкусные.
+        Пожалуйста, принеси лобых южных ягод или фруктов, а я в долгу не останусь.
         ->END
 }
 

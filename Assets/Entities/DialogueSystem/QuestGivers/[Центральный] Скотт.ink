@@ -2,15 +2,11 @@ INCLUDE ../MainInkLibrary.ink
 
 ~temp activeQuests = get_activeQuestList()
 
-{contains(activeQuests, Экзотический):
+{contains(activeQuests, "questgiver_middle_shields"):
     ->active_quest
 }
 
-{contains(activeQuests, Домашний):
-    ->active_quest
-}
-
-{contains(activeQuests, Категория):
+{contains(activeQuests, "questgiver_middle_arrows"):
     ->active_quest
 }
 
@@ -18,35 +14,31 @@ INCLUDE ../MainInkLibrary.ink
 
 
 === active_quest ===
-{contains(activeQuests, Экзотический) && has_enough_items(Экзотический):
-    +[Я принёс тебе экзотические предметы.]
-        Замечательно, ты отлично справился!
-        ->exotic_reward
+{contains(activeQuests, "questgiver_middle_shields"):
+    {has_enough_items("questgiver_middle_shields"):
+        +[Я принёс тебе железные щиты по заказу.]
+            Отлично! Будь уверен, они послужат на славу нашей гильдии и спасут множество жизней!
+            ->exotic_reward
+    }
 }
-{contains(activeQuests, Домашний) && has_enough_items(Домашний):
-    +[Я принес тебе местные предметы.]
-        Замечательно, ты отлично справился!
-        ->domestic_reward
-}
-{contains(activeQuests, Категория):
-    +[Я принес тебе предметы определенной категории.]
-        ~open_item_container(Категория, 0)
-            Ну-ка, показывай, что у тебя...
-            ->category_reward
-        
+{contains(activeQuests, "questgiver_middle_arrows"): 
+    {has_enough_items("questgiver_middle_arrows"):
+        +[Я принес тебе стрелы по заказу.]
+            Отлично, наши запасы как раз подходили к концу. Спасибо тебе!
+            ->domestic_reward
+    }
 -else:
     +[Я вернусь позже.]
+        Пока.
+        ->END
 }
 
 === exotic_reward ===
-~invoke_dialogue_event(Экзотический)
+~invoke_dialogue_event("questgiver_middle_shields")
 Вот, возьми свою награду. С тобой приятно иметь дело!
 ->END
 === domestic_reward ===
-~invoke_dialogue_event(Домашний)
-Вот, возьми свою награду. С тобой приятно иметь дело!
-->END
-=== category_reward ===
+~invoke_dialogue_event("questgiver_middle_arrows")
 Вот, возьми свою награду. С тобой приятно иметь дело!
 ->END
 
@@ -65,17 +57,16 @@ INCLUDE ../MainInkLibrary.ink
 ~temp randomQuest = get_random_questparams_of_questgiver()
 
 {
- - contains(randomQuest, Экзотический):
-    ~add_quest(Экзотический)
-        ЭкзотическийОписание
+ - contains(randomQuest, "questgiver_middle_shields"):
+    ~add_quest("questgiver_middle_shields")
+        Наша Гильдия бойцов проводит набор всех желающих. Разумеется, тебе не предлагаю, ведь ты торговец, но я хотел попросить тебя о другом.
+        Для новобранцев понадобится экипировка. Мечи у нас есть, но не хватает железных щитов, а боец без защиты - всё равно что лист при урагане.
+        В общем, добудь несколько щитов и привези нам, а мы тебя хорошо вознаградим.
         ->END
- - contains(randomQuest, Домашний):
-    ~add_quest(Домашний)
-        ДомашнийОписание
-        ->END
- - contains(randomQuest, Категория):
-    ~add_quest(Категория)
-        КатегорияОписание
+ - contains(randomQuest, "questgiver_middle_arrows"):
+    ~add_quest("questgiver_middle_arrows")
+        Наша Гильдия бойцов сейчас тренирует новичков. К сожалению, не все из них ответственные, и некоторые теряют экипировку. 
+        Особенно тяжело сейчас со стрелами. Будь добр, раздобудь где нибудь несколько колчанов стрел, и мы вознаградим тебя. 
         ->END
 }
 
