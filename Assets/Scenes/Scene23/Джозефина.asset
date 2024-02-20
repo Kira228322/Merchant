@@ -23,6 +23,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fe76a7f31f4783a4c86837cf2988700e, type: 2}
   - {fileID: 11400000, guid: 51dbe90d250181740b25a6b934ec84ab, type: 2}
   - {fileID: 11400000, guid: a890ba1c96bb98343953ad400776b023, type: 2}
+  - {fileID: 11400000, guid: 89793728e8e1c874487cc8de797df426, type: 2}
   IsBlackMarket: 0
   HaveAdditiveGoods: 0
   _baseGoods:
@@ -105,6 +106,16 @@ MonoBehaviour:
   - ItemType: 19
     Coefficient: 0.95
     DefaultCountToBuy: 5
+  - ItemType: 29
+    Coefficient: 1
+    DefaultCountToBuy: 10
+  - ItemType: 33
+    Coefficient: 1
+    DefaultCountToBuy: 16
+  - ItemType: 28
+    Coefficient: 1
+    DefaultCountToBuy: 5
+  _baseRecipes: []
   Goods:
   - Good: {fileID: 11400000, guid: 66b34ed78918a4d4a8bbb6e04c5a36c3, type: 2}
     MaxCount: 12
@@ -186,3 +197,13 @@ MonoBehaviour:
   - ItemType: 19
     Coefficient: 0.95
     DefaultCountToBuy: 5
+  - ItemType: 29
+    Coefficient: 1
+    DefaultCountToBuy: 10
+  - ItemType: 33
+    Coefficient: 1
+    DefaultCountToBuy: 16
+  - ItemType: 28
+    Coefficient: 1
+    DefaultCountToBuy: 5
+  Recipes: []

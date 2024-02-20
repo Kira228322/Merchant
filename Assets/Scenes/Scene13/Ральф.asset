@@ -21,6 +21,9 @@ MonoBehaviour:
   TraderTypes:
   - {fileID: 11400000, guid: aed36b579c7de6747933743b71d5a46f, type: 2}
   - {fileID: 11400000, guid: bc439e9e53dff2a41b5f7b3bc74195c4, type: 2}
+  - {fileID: 11400000, guid: 298653ab2374be1469edfb6ec1d4e97f, type: 2}
+  - {fileID: 11400000, guid: 89793728e8e1c874487cc8de797df426, type: 2}
+  - {fileID: 11400000, guid: b46466ca5b6ec2a47809294b357861c4, type: 2}
   IsBlackMarket: 0
   HaveAdditiveGoods: 0
   _baseGoods:
@@ -230,10 +233,10 @@ MonoBehaviour:
     DefaultCountToBuy: 13
   - ItemType: 28
     Coefficient: 1
-    DefaultCountToBuy: 13
+    DefaultCountToBuy: 30
   - ItemType: 14
     Coefficient: 1
-    DefaultCountToBuy: 10
+    DefaultCountToBuy: 11
   - ItemType: 2
     Coefficient: 1
     DefaultCountToBuy: 3
@@ -243,6 +246,25 @@ MonoBehaviour:
   - ItemType: 1
     Coefficient: 1
     DefaultCountToBuy: 3
+  - ItemType: 13
+    Coefficient: 1
+    DefaultCountToBuy: 25
+  - ItemType: 26
+    Coefficient: 0.95
+    DefaultCountToBuy: 20
+  - ItemType: 23
+    Coefficient: 1
+    DefaultCountToBuy: 30
+  - ItemType: 29
+    Coefficient: 1
+    DefaultCountToBuy: 10
+  - ItemType: 33
+    Coefficient: 1
+    DefaultCountToBuy: 16
+  - ItemType: 30
+    Coefficient: 1
+    DefaultCountToBuy: 20
+  _baseRecipes: []
   Goods:
   - Good: {fileID: 11400000, guid: 484e0d3ad59a9ec458818249df2df45f, type: 2}
     MaxCount: 9
@@ -451,10 +473,10 @@ MonoBehaviour:
     DefaultCountToBuy: 13
   - ItemType: 28
     Coefficient: 1
-    DefaultCountToBuy: 13
+    DefaultCountToBuy: 30
   - ItemType: 14
     Coefficient: 1
-    DefaultCountToBuy: 10
+    DefaultCountToBuy: 11
   - ItemType: 2
     Coefficient: 1
     DefaultCountToBuy: 3
@@ -464,3 +486,22 @@ MonoBehaviour:
   - ItemType: 1
     Coefficient: 1
     DefaultCountToBuy: 3
+  - ItemType: 13
+    Coefficient: 1
+    DefaultCountToBuy: 25
+  - ItemType: 26
+    Coefficient: 0.95
+    DefaultCountToBuy: 20
+  - ItemType: 23
+    Coefficient: 1
+    DefaultCountToBuy: 30
+  - ItemType: 29
+    Coefficient: 1
+    DefaultCountToBuy: 10
+  - ItemType: 33
+    Coefficient: 1
+    DefaultCountToBuy: 16
+  - ItemType: 30
+    Coefficient: 1
+    DefaultCountToBuy: 20
+  Recipes: []
