@@ -12,7 +12,7 @@ public class MarkerSpawner : MonoBehaviour
     private Marker _currentMarker;
     private BoxCollider2D _boxCollider2D;
 
-    private void Start()
+    private void Awake()
     {
         _boxCollider2D = GetComponent<BoxCollider2D>();
     }
