@@ -244,9 +244,10 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
         }
         foreach (AwaitingQuest awaitingQuest in data.awaitingQuests)
         {
-            AwaitingQuests.Add(new(awaitingQuest.questParams, awaitingQuest.delay));
-            awaitingQuest.AwaitingQuestGiven += OnAwaitingQuestGiven;
-            awaitingQuest.Initialize();
+            AwaitingQuest loadedQuest = new(awaitingQuest.questParams, awaitingQuest.delay);
+            AwaitingQuests.Add(loadedQuest);
+            loadedQuest.AwaitingQuestGiven += OnAwaitingQuestGiven;
+            loadedQuest.Initialize();
         }
     }
     #endregion
