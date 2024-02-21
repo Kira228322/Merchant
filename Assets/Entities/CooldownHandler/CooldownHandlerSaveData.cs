@@ -5,10 +5,10 @@ using UnityEngine;
 [System.Serializable]
 public class CooldownHandlerSaveData
 {
-    public List<CooldownHandler.ObjectOnCooldown> ObjectsOnCooldown = new();
+    public List<CooldownHandler.ObjectOnCooldown> ObjectsOnCooldown;
 
     public CooldownHandlerSaveData(CooldownHandler cooldownHandler)
     {
-        ObjectsOnCooldown.AddRange(cooldownHandler.ObjectsOnCooldown);
+        ObjectsOnCooldown = new(cooldownHandler.ObjectsOnCooldown);
     }
 }
