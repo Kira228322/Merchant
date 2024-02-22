@@ -58,7 +58,11 @@ public class QuestPanel : MonoBehaviour
             else
             {
                 completionImage.gameObject.SetActive(false);
-                _goalTexts[i].text = _quest.Goals[i].Description + " " + _quest.Goals[i].CurrentAmount + " / " + _quest.Goals[i].RequiredAmount;
+                if (_quest.Goals[i] is TimedGoal || _quest.Goals[i] is WaitingGoal)
+                {  
+                    _goalTexts[i].text = _quest.Goals[i].Description + ": " + GetFormattedTime(_quest.Goals[i].CurrentAmount) + " / " + GetFormattedTime(_quest.Goals[i].RequiredAmount);
+                }
+                else _goalTexts[i].text = _quest.Goals[i].Description + ": " + _quest.Goals[i].CurrentAmount + " / " + _quest.Goals[i].RequiredAmount;
             }
         }
 
@@ -82,6 +86,19 @@ public class QuestPanel : MonoBehaviour
         }
 
         Refresh();
+    }
+
+    private string GetFormattedTime(int totalhours)
+    {
+        int days = totalhours / 24;
+        int hoursRemainder = totalhours % 24;
+        if (days == 0) 
+            return totalhours + " " + TravelTimeCounter.GetLocalizedTime(totalhours, true);
+        else
+        {
+            string result = days + " " + TravelTimeCounter.GetLocalizedTime(days, false) + " " + hoursRemainder + " " + TravelTimeCounter.GetLocalizedTime(hoursRemainder, true);
+            return result;
+        }
     }
     public void Refresh()
     {
@@ -112,7 +129,13 @@ public class QuestPanel : MonoBehaviour
             if (_quest.Goals[i].RequiredAmount == 1)
                 _goalTexts[i].text = _quest.Goals[i].Description + " ";
             else
-                _goalTexts[i].text = _quest.Goals[i].Description + ": " + _quest.Goals[i].CurrentAmount + " / " + _quest.Goals[i].RequiredAmount;
+            {
+                if (_quest.Goals[i] is TimedGoal || _quest.Goals[i] is WaitingGoal)
+                {
+                    _goalTexts[i].text = _quest.Goals[i].Description + ": " + GetFormattedTime(_quest.Goals[i].CurrentAmount) + " / " + GetFormattedTime(_quest.Goals[i].RequiredAmount);
+                }
+                else _goalTexts[i].text = _quest.Goals[i].Description + ": " + _quest.Goals[i].CurrentAmount + " / " + _quest.Goals[i].RequiredAmount;
+            }
             switch (_quest.Goals[i].CurrentState)
             {
                 case Goal.State.Active:
