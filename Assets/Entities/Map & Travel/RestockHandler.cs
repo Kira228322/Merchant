@@ -58,9 +58,7 @@ public class RestockHandler : MonoBehaviour, ISaveable<RestockSaveData>
     }
     private void RestockTraders(Location location)
     {
-        //TODO: Каждый из этих методов проходит через foreach заново всех трейдеров.
-        //Сделать методы для одного трейдера и запихнуть под общий foreach (var trader in location)?
-        
+
         if (location.NpcTraders.Count <= 0)
             return;
         

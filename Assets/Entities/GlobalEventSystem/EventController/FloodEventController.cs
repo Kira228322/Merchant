@@ -70,8 +70,6 @@ public class FloodEventController : MonoBehaviour, IEventController<GlobalEvent_
             })
             .OrderByDescending(group => group.TotalCount)
             .ToList();
-        if (sortedItems.Count < 5)
-            Debug.LogError($"На локации {Location.VillageName} меньше 5 предметов!!!"); //TODO убрать на релизе
 
         return sortedItems[Random.Range(0, 5)].Item.Name;
     }

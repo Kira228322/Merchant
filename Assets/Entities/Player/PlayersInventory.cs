@@ -109,8 +109,6 @@ public class PlayersInventory : MonoBehaviour, ISaveable<PlayersInventorySaveDat
     }
     public bool HasEnoughItemsOfThisItemData(Item itemData, int amount)
     {
-        //TODO ѕротестировать оба инвентар€, чтобы не было сомнений что здесь не возникнет бага никогда
-        //Debug.Log($"GetCount {itemData.Name}: base {GetCount(itemData)}, additional {_questItemHolder.GetCount(itemData)}");
         if (GetCount(itemData) >= amount)
             return true;
         return false;

@@ -361,7 +361,6 @@ public class ItemInfo : MonoBehaviour
 
     private void UseTeleport()
     {
-        //TODO логика телепорта здесь
         AfterUse();
     }
 

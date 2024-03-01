@@ -189,11 +189,6 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
 
     public void LoadData(GlobalSaveData data)
     {
-        //TODO: (просто информация для размышления, но надо убрать в конце)
-        //На момент 14.09.23 появилась разница в порядке загрузки:
-        //TutorialTrackerSaveData должен загружаться ДО JournalSaveData (т.е QuestSaveData)
-        //потому что иначе TutorialTracker покажет презентацию, прежде чем узнает что она уже была показана.
-        //Конечно это не страшно, но довольно примечательно что до этого ничего не зависело от порядка загрузки
 
         Player.Instance.LoadData(data.PlayerData);
         FindObjectOfType<TutorialStateTracker>().LoadData(data.TutorialTrackerSaveData);

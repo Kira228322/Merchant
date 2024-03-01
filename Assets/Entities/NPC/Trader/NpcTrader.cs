@@ -89,7 +89,7 @@ public class NpcTrader : Npc
 
     public List<TraderGood> Goods => _npcTraderData.Goods;
     public List<TraderGood> AdditiveGoods => _npcTraderData.AdditiveGoods; 
-    public List<TraderGood> Recipes => _npcTraderData.Recipes;   // TODO надо тоже сохранять теперь
+    public List<TraderGood> Recipes => _npcTraderData.Recipes;
     public List<BuyCoefficient> BuyCoefficients => _npcTraderData.BuyCoefficients; //Таких BuyCoefficients будет столько, сколько всего есть Item.ItemType (см.ниже)
     public void OpenTradeWindow()
     {

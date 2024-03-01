@@ -81,7 +81,6 @@ public class ActiveStatus
                 case Status.Effect.Stat.StatusDurationModifier:
                     Player.Instance.Statistics.StatusDurationModifier += effect.value / 100f;
                     break;
-                    // TODO добавлять новые действия с появлением статов
             }
         }
         IsActive = true;
@@ -111,7 +110,6 @@ public class ActiveStatus
                 case Status.Effect.Stat.StatusDurationModifier:
                     Player.Instance.Statistics.StatusDurationModifier -= effect.value / 100f;
                     break;
-                    // TODO добавлять новые действия с появлением статов
             }
         }
         

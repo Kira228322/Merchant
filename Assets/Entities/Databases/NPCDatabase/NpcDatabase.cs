@@ -22,20 +22,6 @@ public class NpcDatabase : MonoBehaviour, ISaveable<NpcDatabaseSaveData>
         }
     }
 
-    private void Start()
-    {
-        //TODO убрать проверку на уникальность айди когда добавим всех нпс
-        var duplicateGroups = NpcDatabaseSO.NpcList.GroupBy(npc => npc.ID).Where(group => group.Count() > 1);
-        foreach (var group in duplicateGroups)
-        {
-            Debug.LogWarning($"ID {group.Key} повторяется у следующих НПС:");
-            foreach (var npc in group)
-            {
-                Debug.LogWarning($"- {npc.Name}");
-            }
-        }
-    }
-
     public static NpcData GetNPCData(int ID)
     {
         NpcData result = Instance.NpcDatabaseSO.NpcList.FirstOrDefault(npc => npc.ID == ID);
