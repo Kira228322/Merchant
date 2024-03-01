@@ -1106,6 +1106,48 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3003679853564592859, guid: f6d836d3f129c094dbda66d751fed7c5, type: 3}
   m_PrefabInstance: {fileID: 99237618}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &99237622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 99237619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df6ab5e347f61a544b92bcb6d4d270df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NpcData: {fileID: 11400000, guid: fc065fb73f03ac347a221070406cb358, type: 2}
+  InkJSON: {fileID: 0}
+  _exclamationMarkPrefab: {fileID: 3147425638445614604, guid: b1260439a5d175441800ad6cac241efb, type: 3}
+  ExclamationMark: {fileID: 0}
+--- !u!61 &99237623
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 99237619}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.14792061, y: -0.19018352}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2.2857144, y: 2.2857144}
+    newSize: {x: 0.5769231, y: 1.7307693}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.992466, y: 1.9053471}
+  m_EdgeRadius: 0
 --- !u!1001 &106587975
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12729,6 +12771,48 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1245588728404454285, guid: d8686e26f4c0d6b4aab7b3e7d7fd5ba3, type: 3}
   m_PrefabInstance: {fileID: 365887967}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &365887971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 365887968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df6ab5e347f61a544b92bcb6d4d270df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NpcData: {fileID: 11400000, guid: fc065fb73f03ac347a221070406cb358, type: 2}
+  InkJSON: {fileID: 0}
+  _exclamationMarkPrefab: {fileID: 3147425638445614604, guid: b1260439a5d175441800ad6cac241efb, type: 3}
+  ExclamationMark: {fileID: 0}
+--- !u!61 &365887972
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 365887968}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0.92392653}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 0.6086956, y: 2}
+    newSize: {x: 0.5769231, y: 1.7307693}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.6086956, y: 1.8478531}
+  m_EdgeRadius: 0
 --- !u!1001 &372912029
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21072,6 +21156,7 @@ GameObject:
   - component: {fileID: 777055277}
   - component: {fileID: 777055278}
   - component: {fileID: 777055279}
+  - component: {fileID: 777055280}
   m_Layer: 0
   m_Name: FinalDialogueBox
   m_TagString: Untagged
@@ -21134,7 +21219,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _appearanceBehaviour: 0
-  _isInstant: 0
+  _isInstant: 1
   _showConditions:
   - QuestSummary: talk_with_father
     questState: 2
@@ -21166,6 +21251,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 20b075f605e0ff049818dfea794c2b0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &777055280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 777055274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b13169fa7e62554c8a4b52837ce8872, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &780812633
@@ -23385,7 +23482,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _appearanceBehaviour: 0
-  _isInstant: 0
+  _isInstant: 1
   _showConditions:
   - QuestSummary: talk_with_father
     questState: 2
@@ -29697,6 +29794,7 @@ GameObject:
   - component: {fileID: 1123785652}
   - component: {fileID: 1123785650}
   - component: {fileID: 1123785653}
+  - component: {fileID: 1123785654}
   m_Layer: 0
   m_Name: MarkLauraPairDialogue
   m_TagString: Untagged
@@ -29775,6 +29873,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20b075f605e0ff049818dfea794c2b0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1123785654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1123785648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f44f38a1f112404196c4abf8b76be7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _appearanceBehaviour: 1
+  _isInstant: 1
+  _showConditions: []
+  _hideConditions:
+  - QuestSummary: meet_team_in_magicforest
+    questState: 2
+    HoursDelay: 0
 --- !u!1001 &1132618940
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35153,7 +35270,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5
+      scalar: 4.09
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -35904,7 +36021,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 10
+      scalar: 16
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -36344,7 +36461,7 @@ ParticleSystem:
         serializedVersion: 2
         key0: {r: 0, g: 0, b: 1, a: 1}
         key1: {r: 0, g: 0.49803922, b: 1, a: 1}
-        key2: {r: 0, g: 1, b: 1, a: 0}
+        key2: {r: 1, g: 0.9532509, b: 0, a: 0}
         key3: {r: 0, g: 0, b: 0, a: 0}
         key4: {r: 0, g: 0, b: 0, a: 0}
         key5: {r: 0, g: 0, b: 0, a: 0}

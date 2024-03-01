@@ -1,6 +1,6 @@
 INCLUDE ../../MainInkLibrary.ink
 
-~temp activeQuests = get_activeQuestList()
+~temp activeQuests = get_activeQuestList_universal()
 
 {contains(activeQuests, "meet_team_in_magicforest"):
     ->meet
@@ -9,13 +9,15 @@ INCLUDE ../../MainInkLibrary.ink
 }
 
 === meet ===
-<color=green>Марк</color>: Вот и ты, наконец.
+<color=\#ff00ffff>Марк</color>: Вот и ты, наконец.
 Как видишь, мы с Лаурой привезли сюда наше устройство. 
 <color=lightblue>Лаура</color>: Оно практически готово. В этом месте полно магической энергии, так что мы должны найти способ запитать и запустить его.
     +[Смотрите, там кто-то стоит.]
-        <color=green>Марк</color>: Где? Хм, и действительно...
+        <color=\#ff00ffff>Марк</color>: Где? Хм, и действительно...
         <color=lightblue>Лаура</color>: Неужели мы попали в ловушку? Это бандит?
-        <color=green>Марк</color>: Не похож на бандита. Однако этот человек кажется мне знакомым...
+        ~invoke_dialogue_event_universal("meet_team_in_magicforest")
+        <color=\#ff00ffff>Марк</color>: Не похож на бандита. Однако этот человек кажется мне знакомым...
+        Давайте подойдем и узнаем, что ему нужно от нас.
 ->END
 === generic ===
 Ок

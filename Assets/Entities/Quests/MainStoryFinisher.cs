@@ -19,7 +19,7 @@ public class MainStoryFinisher : MonoBehaviour
 
     private void OnQuestChangedState(Quest quest)
     {
-        if (quest.QuestSummary == "activate_device" && quest.CurrentState == Quest.State.Completed)
+        if (quest.QuestSummary == "activate_device" && (quest.CurrentState == Quest.State.Completed || quest.CurrentState == Quest.State.RewardUncollected))
         {
             FindObjectOfType<SceneTransiter>().StartTransit(MapManager.GetLocationBySceneName("Scene20"));
         }
