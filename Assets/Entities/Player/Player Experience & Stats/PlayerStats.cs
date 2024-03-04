@@ -52,8 +52,8 @@ public class PlayerStats : ISaveable<PlayerStatsSaveData>
     public float StatusDurationModifier = 1;
     public void OnToughnessChanged()
     {
-        Player.Instance.Needs.HungerDecayRate = 19 + Toughness.Total + Toughness.Total * 3/4;
-        Player.Instance.Needs.SleepDecayRate = 21 + Toughness.Total + (Toughness.Total+1) * 3/4;
+        Player.Instance.Needs.HungerDecayRate = 19 + 2 * Toughness.Total;
+        Player.Instance.Needs.SleepDecayRate = 21 + 2 * Toughness.Total;
         Player.Instance.Needs.MaxHunger = 90 + Toughness.Total * 3;
     }
     //—охран€ютс€ только базовые статы, потому что аддитивные статы будут добавл€тьс€ через эффекты
