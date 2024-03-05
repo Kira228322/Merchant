@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Linq;
 using UnityEngine.Serialization;
+using static UnityEditor.Progress;
 
 public class ItemInfo : MonoBehaviour
 {
@@ -399,6 +400,7 @@ public class ItemInfo : MonoBehaviour
     {
         _lastItemGridSelected.RemoveItemsFromAStack(_currentItemSelected, 1);
         _quantityText.text = "Количество: " + _currentItemSelected.CurrentItemsInAStack.ToString();
+        _totalWeightText.text = $"Общий вес: {_currentItemSelected.ItemData.Weight * _currentItemSelected.CurrentItemsInAStack:F1}";
 
         if (_currentItemSelected.CurrentItemsInAStack == 0)
         {
