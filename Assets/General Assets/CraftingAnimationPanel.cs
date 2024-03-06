@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,7 +16,7 @@ public class CraftingAnimationPanel : MonoBehaviour
     {
         _selectedRecipe = selectedRecipe;
         _parent.SetActive(true);
-        
+
         switch (selectedRecipe.RequiredItems.Count)
         {
             case 1:

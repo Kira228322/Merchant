@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "newMiscQuestLine", menuName = "Quest/MiscQuestLine")]
@@ -12,6 +10,6 @@ public class MiscQuestLine : QuestLine, IResetOnExitPlaymode
 
     protected override void OnEnable()
     {
-        
+
     }
 }

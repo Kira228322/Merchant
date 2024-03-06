@@ -6,18 +6,18 @@ using Random = UnityEngine.Random;
 
 public class Animal : MonoBehaviour
 {
-    [SerializeField]private float _minMoveDistance; 
-    [SerializeField]private float _maxMoveDistance; 
+    [SerializeField] private float _minMoveDistance;
+    [SerializeField] private float _maxMoveDistance;
 
-    [SerializeField]private float _IDLEDuration;
-    [SerializeField]private float _AFKDuration;
+    [SerializeField] private float _IDLEDuration;
+    [SerializeField] private float _AFKDuration;
     [SerializeField] protected float _speed;
-    
+
     public bool DefaultViewDirectionIsRight = true;
     [HideInInspector] public float MoveDistanceAndDirection;
-    
+
     [SerializeField] protected ContactFilter2D _contactMask;
-    
+
     private Rigidbody2D _rigidbody;
     private SpriteRenderer _spriteRenderer;
     [HideInInspector] public Animator Animator;
@@ -55,28 +55,28 @@ public class Animal : MonoBehaviour
 
         List<RaycastHit2D> raycastHits2D = new();
         _rigidbody.Cast(new Vector2(MoveDistanceAndDirection, 0.1f), _contactMask, raycastHits2D, Math.Abs(MoveDistanceAndDirection));
-        
+
         if (raycastHits2D.Count > 0)
         {
             MoveDistanceAndDirection = (raycastHits2D[0].distance - 0.01f) * Math.Sign(MoveDistanceAndDirection);
         }
         RevertViewDirection(MoveDistanceAndDirection > 0);
     }
-    
+
     private IEnumerator Move()
     {
         ChooseMoveRangeAndDirection();
         Vector3 startPosition = transform.position;
         Vector3 targetPosition = new(startPosition.x + MoveDistanceAndDirection, startPosition.y);
         WaitForFixedUpdate waitForFixedUpdate = new();
-        
+
         float countOfFrames = Math.Abs(MoveDistanceAndDirection / (_speed * Time.fixedDeltaTime));
         for (float i = 0; i < countOfFrames; i++)
         {
-            transform.position = Vector3.Lerp(startPosition, targetPosition, i/countOfFrames);
-            yield return  waitForFixedUpdate;
+            transform.position = Vector3.Lerp(startPosition, targetPosition, i / countOfFrames);
+            yield return waitForFixedUpdate;
         }
-        
+
         transform.position = targetPosition;
         StartCoroutine(IDLEorAFK());
     }

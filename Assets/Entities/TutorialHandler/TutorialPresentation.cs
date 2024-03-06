@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +9,7 @@ public class TutorialPresentation : ScriptableObject
     public class TutorialSlide
     {
         public Sprite Image;
-        [TextArea(3, 15)]public string Text;
+        [TextArea(3, 15)] public string Text;
     }
 
     public string Title;

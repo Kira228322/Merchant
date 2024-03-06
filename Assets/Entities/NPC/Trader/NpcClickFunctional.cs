@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -9,7 +6,7 @@ public class NpcClickFunctional : MonoBehaviour, IPointerClickHandler
 {
     [SerializeField] private GameObject _functionalWindow;
     private Npc _NPC;
-    
+
     private float _distanceToUse = 3.5f;
     private void Start()
     {
@@ -18,7 +15,7 @@ public class NpcClickFunctional : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if(!enabled)
+        if (!enabled)
             return;
         if ((transform.position - Player.Instance.transform.position).magnitude > _distanceToUse)
             return;

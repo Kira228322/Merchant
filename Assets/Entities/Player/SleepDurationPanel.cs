@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +8,7 @@ public class SleepDurationPanel : MonoBehaviour
     [SerializeField] private Button _doneButton;
     [SerializeField] private Button _closeButton;
     [SerializeField] private Image _blackScreen;
-    
+
     private int _timeScaleWhenSleeping = 45;
     private Player _player;
     private Timeflow _timeflow;
@@ -64,19 +62,19 @@ public class SleepDurationPanel : MonoBehaviour
     private IEnumerator FadeInBlackScreen()
     {
         Color color = _blackScreen.color;
-        WaitForSeconds waitForSeconds = new WaitForSeconds(0.02f);
+        WaitForSeconds waitForSeconds = new(0.02f);
         for (int i = 0; i < 60; i++)
         {
             color.a += 0.01f;
             _blackScreen.color = color;
             yield return waitForSeconds;
         }
-    } 
-    
+    }
+
     private IEnumerator FadeOutBlackScreen()
     {
         Color color = _blackScreen.color;
-        WaitForSeconds waitForSeconds = new WaitForSeconds(0.02f);
+        WaitForSeconds waitForSeconds = new(0.02f);
         for (int i = 0; i < 60; i++)
         {
             color.a -= 0.01f;
@@ -95,7 +93,7 @@ public class SleepDurationPanel : MonoBehaviour
     {
         if (Player.Instance.Needs.IsSleeping)
             return;
-        
+
         if (_slider.value == 0)
             _doneButton.interactable = false;
         else

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour, ISaveable<PlayerData>
@@ -49,10 +48,10 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
     {
         Needs.Initialize();
         WagonStats.RecalculateValues();
-        
+
         Needs.HungerDecayRate = Int32.MaxValue;
         Needs.SleepDecayRate = Int32.MaxValue;
-        
+
         Statistics.Toughness.StatChanged += Statistics.OnToughnessChanged;
     }
 
@@ -140,7 +139,7 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
             Recipes.Add(CraftingRecipeDatabase.GetRecipe(recipeName));
         }
     }
-    
+
     // TODO удалить 
     [SerializeField] private Region _currentTestedRegion;
     private void Update()
@@ -169,7 +168,7 @@ public class Player : MonoBehaviour, ISaveable<PlayerData>
             {
                 t += ItemDatabase.Instance.Items.ItemList[i].Name + ItemDatabase.Instance.Items.ItemList[i].Price + "\n";
             }
-            
+
             Debug.Log(t);
         }
 

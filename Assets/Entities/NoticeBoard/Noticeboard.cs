@@ -1,24 +1,22 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Noticeboard: MonoBehaviour, IPointerClickHandler
+public class Noticeboard : MonoBehaviour, IPointerClickHandler
 {
     //Почему не наследуется от UsableEnvironment:
     //Потому что UsableEnvironment предполагает, что у предмета есть кулдаун,
     //партиклы и изменение спрайта при использовании. Ничего из этого здесь не нужно
     //UPD 28.06.23: ну кулдаун всё-таки нужен, но он был реализован отдельно от UsableEnvironment
-    
+
     private UniqueID _uniqueID;
 
     private List<GlobalEvent_Base> _uncheckedActiveGlobalEvents;
 
     [SerializeField] private NoticeboardUI _noticeBoardWindowPrefab;
     [SerializeField] private SpriteRenderer _currentBoardSprite;
-    [SerializeField] private List<Sprite> _boardSprites = new ();
+    [SerializeField] private List<Sprite> _boardSprites = new();
     [SerializeField] private InfoNoticeSO _infoNoticeSO;
     private float _distanceToUse = 3.1f;
     private int _cooldownHours = 48; //Квесты могут появиться только раз в столько часов
@@ -41,7 +39,7 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
         _compactedNoticeArray = new CompactedNotice[_noticeBoardWindowPrefab.NoticeSpawnPoints.Count];
     }
 
-    private void Start() 
+    private void Start()
     {
 
         _randomizedSpawnPoints = _noticeBoardWindowPrefab.NoticeSpawnPoints;
@@ -74,7 +72,7 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
         if (Random.Range(0, 5) != 0) // 80% что заспавнится реклама 
         {
             string description = "";
-            switch (Random.Range(0,4))
+            switch (Random.Range(0, 4))
             {
                 case 0:
                     description = "Таинственный странствующий цирк приглашает вас на представление! " +
@@ -95,7 +93,7 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
             _compactedNoticeArray[spawnPointIndex] = new CompactedAdNotice("Рекламное объявление", description);
             spawnPointIndex++;
         }
-        
+
         //Спавн держи-в-курсе информации по текущим ивентам в мире
 
         _uncheckedActiveGlobalEvents = new(GlobalEventHandler.Instance.ActiveGlobalEvents);
@@ -113,7 +111,7 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
 
         //Спавн бесполезной информации по типу "продам гараж"
 
-        if(spawnPointIndex < _compactedNoticeArray.Length - 1)
+        if (spawnPointIndex < _compactedNoticeArray.Length - 1)
         {
             int infoNoticesToAdd = Random.Range(0, _compactedNoticeArray.Length - spawnPointIndex);
             List<CompactedInfoNotice> compactedNotices = _infoNoticeSO.GetRandomNoticeInfos(infoNoticesToAdd);
@@ -154,7 +152,7 @@ public class Noticeboard: MonoBehaviour, IPointerClickHandler
 
         NoticeboardUI noticeboardUI = Instantiate(_noticeBoardWindowPrefab, _canvas);
         noticeboardUI.Initialize(this, _compactedNoticeArray, _randomizedSpawnPoints);
-        
+
     }
     public void StartCooldown()
     {

@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class EventBumpyRoad : EventInTravel
 {
@@ -24,10 +21,10 @@ public class EventBumpyRoad : EventInTravel
                 _eventWindow.ChangeDescription("Вы решили поехать напрямую, не задерживаясь.");
                 break;
             case 1:
-                FindObjectOfType<TravelEventHandler>().ChangeTravelTime(Random.Range(_minTimeToGoAround, _maxTimeToGoAround +1));
+                FindObjectOfType<TravelEventHandler>().ChangeTravelTime(Random.Range(_minTimeToGoAround, _maxTimeToGoAround + 1));
                 _eventWindow.ChangeDescription("Вы поехали в объезд. Тише едешь - дальше будешь");
                 break;
         }
-        
+
     }
 }

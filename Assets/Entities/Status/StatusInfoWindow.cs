@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,7 +17,7 @@ public class StatusInfoWindow : MonoBehaviour
         StatusManager.Instance.CurrentStatusInfoWindow = gameObject;
         _name.text = name;
         _description.text = description;
-        _duration.text = $"Длительность эффекта: {Math.Round(currentDuration,1)}/{(int)duration} ч";
+        _duration.text = $"Длительность эффекта: {Math.Round(currentDuration, 1)}/{(int)duration} ч";
         _slider.maxValue = duration;
         _slider.value = currentDuration;
         StartCoroutine(FadeOut());
@@ -31,7 +30,7 @@ public class StatusInfoWindow : MonoBehaviour
 
     private IEnumerator FadeOut()
     {
-        WaitForSeconds waitForSeconds = new WaitForSeconds(3);
+        WaitForSeconds waitForSeconds = new(3);
         yield return waitForSeconds;
         waitForSeconds = new WaitForSeconds(0.02f);
         for (int i = 0; i < 50; i++)

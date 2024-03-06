@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -11,9 +9,9 @@ public class ItemContainer : MonoBehaviour
 {
     [SerializeField] private ItemGrid _containerItemGrid;
     public ItemGrid ItemGrid => _containerItemGrid;
-    
+
     [SerializeField] private Toggle InventoryPanelButton;
-    [SerializeField] private Toggle MapButton; 
+    [SerializeField] private Toggle MapButton;
     [SerializeField] private GameObject _itemContainerPanel;
 
     [SerializeField] private TMP_Text _labelText;
@@ -22,7 +20,7 @@ public class ItemContainer : MonoBehaviour
     [SerializeField] private TMP_Text _itemRotThresholdText;
 
     [SerializeField] private Button _acceptButton;
-    public enum QuestItemsBehaviourEnum { NotQuestItems, AnyItems, OnlyQuestItems};
+    public enum QuestItemsBehaviourEnum { NotQuestItems, AnyItems, OnlyQuestItems };
 
     [HideInInspector] public List<Item.ItemType> RequiredItemTypes;
     [HideInInspector] public QuestItemsBehaviourEnum QuestItemsBehaviour;

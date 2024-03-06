@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,14 +28,14 @@ public class BackgroundMusic : MonoBehaviour
             _audioSource.volume = 0.1f;
             _audioSource.Play();
             _previousMusic = currentMusic;
-            
+
             waitForSeconds = new WaitForSeconds(0.1f);
             for (int i = 0; i < 80; i++)
             {
                 _audioSource.volume += 0.01f; // Громкость поднимается до 0.9
                 yield return waitForSeconds;
             }
-            
+
             waitForSeconds = new WaitForSeconds(currentMusic.length - 12);
             yield return waitForSeconds;
             waitForSeconds = new WaitForSeconds(0.1f);

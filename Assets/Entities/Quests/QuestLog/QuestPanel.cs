@@ -1,9 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Events;
-using TMPro;
 
 public class QuestPanel : MonoBehaviour
 {
@@ -58,8 +56,8 @@ public class QuestPanel : MonoBehaviour
             else
             {
                 completionImage.gameObject.SetActive(false);
-                if (_quest.Goals[i] is TimedGoal || _quest.Goals[i] is WaitingGoal)
-                {  
+                if (_quest.Goals[i] is TimedGoal or WaitingGoal)
+                {
                     _goalTexts[i].text = _quest.Goals[i].Description + ": " + GetFormattedTime(_quest.Goals[i].CurrentAmount) + " / " + GetFormattedTime(_quest.Goals[i].RequiredAmount);
                 }
                 else _goalTexts[i].text = _quest.Goals[i].Description + ": " + _quest.Goals[i].CurrentAmount + " / " + _quest.Goals[i].RequiredAmount;
@@ -92,7 +90,7 @@ public class QuestPanel : MonoBehaviour
     {
         int days = totalhours / 24;
         int hoursRemainder = totalhours % 24;
-        if (days == 0) 
+        if (days == 0)
             return totalhours + " " + TravelTimeCounter.GetLocalizedTime(totalhours, true);
         else
         {
@@ -130,7 +128,7 @@ public class QuestPanel : MonoBehaviour
                 _goalTexts[i].text = _quest.Goals[i].Description + " ";
             else
             {
-                if (_quest.Goals[i] is TimedGoal || _quest.Goals[i] is WaitingGoal)
+                if (_quest.Goals[i] is TimedGoal or WaitingGoal)
                 {
                     _goalTexts[i].text = _quest.Goals[i].Description + ": " + GetFormattedTime(_quest.Goals[i].CurrentAmount) + " / " + GetFormattedTime(_quest.Goals[i].RequiredAmount);
                 }

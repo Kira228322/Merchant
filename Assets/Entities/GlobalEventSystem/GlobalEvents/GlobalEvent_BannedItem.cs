@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 [Serializable]
 public class GlobalEvent_BannedItem : GlobalEvent_Base
@@ -27,7 +25,7 @@ public class GlobalEvent_BannedItem : GlobalEvent_Base
             hoursToDisplay -= 24;
         }
 
-        return $"Δενό {daysToDisplay}, {(hoursToDisplay < 10 ? $"0{hoursToDisplay}": $"{hoursToDisplay}")}:00";
+        return $"Δενό {daysToDisplay}, {(hoursToDisplay < 10 ? $"0{hoursToDisplay}" : $"{hoursToDisplay}")}:00";
     }
 
     public override void Execute()

@@ -1,4 +1,3 @@
-using System.Linq;
 using UnityEngine;
 
 public class QuestItemHolder : MonoBehaviour
@@ -36,7 +35,7 @@ public class QuestItemHolder : MonoBehaviour
         _defaultRowCount = _itemGrid.GridSizeHeight;
     }
 
-    private void OnItemPlaced(InventoryItem item) 
+    private void OnItemPlaced(InventoryItem item)
     {
         //Добавлять пустые роу так, чтобы их стало 3. Сортировать после постановки айтема сюда (пустые роу должны быть в конце чтобы норм убирались)
 

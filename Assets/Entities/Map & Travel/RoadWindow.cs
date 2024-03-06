@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class RoadWindow : Window
@@ -24,22 +22,22 @@ public class RoadWindow : Window
         _roads = new Road[road.Count];
         for (int i = 0; i < _roads.Length; i++)
             _roads[i] = road[i];
-        
+
         _image.sprite = road[0].Image;
         _name.text = road[0].RoadName;
         _description.text = road[0].Description;
-        
+
         int travelingTime;
 
         if (Player.Instance.Inventory.IsOverencumbered)
         {
-            _duration.color = new Color(133/255f, 17/255f, 7/255f);
+            _duration.color = new Color(133 / 255f, 17 / 255f, 7 / 255f);
             _duration.fontStyle |= FontStyles.Underline;
             travelingTime = Convert.ToInt32(Math.Ceiling(_roads[_numberOfRoad].TravelingTime * 1.5f));
         }
         else
         {
-            _duration.color = new Color(0, 34/255f, 82/255f);
+            _duration.color = new Color(0, 34 / 255f, 82 / 255f);
             _duration.fontStyle &= ~FontStyles.Underline;
             travelingTime = _roads[_numberOfRoad].TravelingTime;
         }
@@ -50,8 +48,8 @@ public class RoadWindow : Window
         {
             int durationDays = travelingTime / 24;
             int durationHours = travelingTime % 24;
-            _duration.text = 
-                durationDays + " " + TravelTimeCounter.GetLocalizedTime(durationDays, false) + " " + 
+            _duration.text =
+                durationDays + " " + TravelTimeCounter.GetLocalizedTime(durationDays, false) + " " +
                 durationHours + " " + TravelTimeCounter.GetLocalizedTime(durationHours, true);
         }
         _quality.text = "Качество: " + road[0].Quality;
@@ -65,22 +63,22 @@ public class RoadWindow : Window
         if (_numberOfRoad == _roads.Length - 1)
             _numberOfRoad = 0;
         else _numberOfRoad++;
-        
+
         _image.sprite = _roads[_numberOfRoad].Image;
         _name.text = _roads[_numberOfRoad].RoadName;
         _description.text = _roads[_numberOfRoad].Description;
-        
+
         int travelingTime;
 
         if (Player.Instance.Inventory.IsOverencumbered)
         {
-            _duration.color = new Color(133/255f, 17/255f, 7/255f);
+            _duration.color = new Color(133 / 255f, 17 / 255f, 7 / 255f);
             _duration.fontStyle |= FontStyles.Underline;
             travelingTime = Convert.ToInt32(Math.Ceiling(_roads[_numberOfRoad].TravelingTime * 1.5f));
         }
         else
         {
-            _duration.color = new Color(0, 34/255f, 82/255f);
+            _duration.color = new Color(0, 34 / 255f, 82 / 255f);
             _duration.fontStyle &= ~FontStyles.Underline;
             travelingTime = _roads[_numberOfRoad].TravelingTime;
         }
@@ -111,7 +109,7 @@ public class RoadWindow : Window
         }
 
         Player.Instance.Money -= _roads[_numberOfRoad].Cost;
-        
+
         MapManager.OnPlayerStartedTravel(_roads[_numberOfRoad], _place);
         Destroy(gameObject);
     }

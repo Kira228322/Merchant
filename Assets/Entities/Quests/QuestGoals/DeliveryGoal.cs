@@ -1,12 +1,10 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 [Serializable]
 public class DeliveryGoal : Goal
 {
-  
+
     public int RequiredIDOfNPC;
     public List<Item.ItemType> RequiredItemCategories;
     public ItemContainer.QuestItemsBehaviourEnum QuestItemsBehaviour;

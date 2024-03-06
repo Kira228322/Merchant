@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -12,7 +10,7 @@ public class ObjectConversation : MonoBehaviour, IPointerClickHandler
 
     private Npc _npc;
     private float _distanceToUse = 3.1f;
-    
+
     private void Awake()
     {
         _npc = GetComponent<Npc>();
@@ -22,7 +20,7 @@ public class ObjectConversation : MonoBehaviour, IPointerClickHandler
     {
         if ((transform.position - Player.Instance.transform.position).magnitude > _distanceToUse)
             return;
-        
+
         DialogueManager.Instance.EnterDialogueMode(_npc);
     }
 }

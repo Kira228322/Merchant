@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -8,7 +6,7 @@ public class HoldableButton : MonoBehaviour, IPointerDownHandler, IPointerUpHand
 {
 
     public event UnityAction<bool> IsButtonPressed;
-    
+
     public void OnPointerDown(PointerEventData eventData)
     {
         IsButtonPressed?.Invoke(true);

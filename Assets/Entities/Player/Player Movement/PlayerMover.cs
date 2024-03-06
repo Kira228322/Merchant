@@ -1,23 +1,21 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class PlayerMover : MonoBehaviour
 {
-    [FormerlySerializedAs("_backgroundController")] [SerializeField] public BackgroundController BackgroundController;
+    [FormerlySerializedAs("_backgroundController")][SerializeField] public BackgroundController BackgroundController;
     [SerializeField] private ContactFilter2D _contactFilter2D;
 
     [SerializeField] private HoldableButton _holdableButtonRight;
     [SerializeField] private HoldableButton _holdableButtonLeft;
 
-    
+
     private float _speed = 3.9f;
-    [HideInInspector]public float _currentSpeed;
+    [HideInInspector] public float _currentSpeed;
 
     public float SpeedModifier = 0;
 
@@ -28,7 +26,7 @@ public class PlayerMover : MonoBehaviour
 
     private Coroutine _currentMove;
     private Coroutine _tickMove;
-    
+
     private Vector3 _finishTargetPos;
     [HideInInspector] public Vector3 _lastNodePos;
 
@@ -73,7 +71,7 @@ public class PlayerMover : MonoBehaviour
             _animator.SetBool("Move", false);
             StopCoroutine(_currentMove);
             _currentMove = null;
-            _rigidbody.velocity = new Vector2(0,0);
+            _rigidbody.velocity = new Vector2(0, 0);
         }
 
         enabled = false;
@@ -84,21 +82,21 @@ public class PlayerMover : MonoBehaviour
         enabled = true;
     }
 
-    public void StartMove(Vector3 startPos,Vector3 targetPos)
+    public void StartMove(Vector3 startPos, Vector3 targetPos)
     {
         if (enabled == false)
             return;
-        
+
         if (_currentMove != null)
         {
             StopCoroutine(_currentMove);
             _currentMove = null;
-            _rigidbody.velocity = new Vector2(0,0);
+            _rigidbody.velocity = new Vector2(0, 0);
         }
-        
+
         _currentMove = StartCoroutine(Move(startPos, targetPos));
     }
-    
+
     private void ShowMoveButtons()
     {
         _holdableButtonLeft.gameObject.SetActive(true);
@@ -142,7 +140,7 @@ public class PlayerMover : MonoBehaviour
     {
         WaitForSeconds waitForSeconds = new(0.06f);
         float distance;
-        if (rightDirection) 
+        if (rightDirection)
             distance = 0.8f;
         else
             distance = -0.8f;
@@ -157,14 +155,14 @@ public class PlayerMover : MonoBehaviour
     {
         _currentSpeed = _speed * (1 + SpeedModifier);
     }
-    
+
     public void MoveByNode(Node node)
     {
         if (_currentMove != null)
         {
             StopCoroutine(_currentMove);
         }
-        
+
         _currentMove = StartCoroutine(node.MovePlayerByNode(this));
     }
 
@@ -175,7 +173,7 @@ public class PlayerMover : MonoBehaviour
             StopCoroutine(_currentMove);
         }
         // если точка задана на лестницу, то движение не продолжается
-        if (_lastNodePos.x < transform.position.x && _lastNodePos.x + 0.5f >_finishTargetPos.x)
+        if (_lastNodePos.x < transform.position.x && _lastNodePos.x + 0.5f > _finishTargetPos.x)
         {
             _animator.SetBool("Move", false);
             _currentMove = null;
@@ -190,11 +188,11 @@ public class PlayerMover : MonoBehaviour
         // если нужно двигаться дальше
         StartMove(transform.position, _finishTargetPos);
     }
-    
-    public IEnumerator Move(Vector3 startPos,Vector3 targetPos)
+
+    public IEnumerator Move(Vector3 startPos, Vector3 targetPos)
     {
         RevertPlayer(targetPos.x > startPos.x);
-        WaitForEndOfFrame forEndOfFrameUnit = new WaitForEndOfFrame();
+        WaitForEndOfFrame forEndOfFrameUnit = new();
         yield return forEndOfFrameUnit;
         _finishTargetPos = targetPos;
         Vector3 moveDirection;
@@ -202,15 +200,15 @@ public class PlayerMover : MonoBehaviour
             moveDirection = Vector3.right;
         else
             moveDirection = Vector3.left;
-        
+
         RaycastHit2D[] raycastHit2D = new RaycastHit2D[8];
 
-        Vector2 castDirection = new Vector2(targetPos.x - startPos.x, 0.05f); //+0.05y,чтобы не коллизился с полом
+        Vector2 castDirection = new(targetPos.x - startPos.x, 0.05f); //+0.05y,чтобы не коллизился с полом
 
         float distance;
-        
-        if (_rigidbody.Cast(castDirection, _contactFilter2D, raycastHit2D, 
-                Math.Abs(targetPos.x - startPos.x) ) != 0)
+
+        if (_rigidbody.Cast(castDirection, _contactFilter2D, raycastHit2D,
+                Math.Abs(targetPos.x - startPos.x)) != 0)
         {
             distance = raycastHit2D[0].distance;
         }
@@ -222,7 +220,7 @@ public class PlayerMover : MonoBehaviour
         if (distance > 0.02f)
         {
             _animator.SetBool("Move", true);
-            
+
             float travelledDistance = 0f;
             float distanceOfOneStep;
             while (travelledDistance < distance)
@@ -240,12 +238,12 @@ public class PlayerMover : MonoBehaviour
                 BackgroundController.UpdateBackground(transform.position.x);
                 yield return forEndOfFrameUnit;
             }
-            
+
             _animator.SetBool("Move", false);
         }
 
         _currentMove = null;
-        
+
     }
 
     public void PlaySoundOfFootsteps()
@@ -261,5 +259,5 @@ public class PlayerMover : MonoBehaviour
         else
             _spriteRenderer.flipX = true;
     }
-    
+
 }

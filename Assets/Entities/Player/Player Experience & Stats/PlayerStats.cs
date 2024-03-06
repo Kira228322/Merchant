@@ -1,8 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using static PlayerStats;
 using UnityEngine.Events;
 
 public class PlayerStats : ISaveable<PlayerStatsSaveData>
@@ -35,7 +30,7 @@ public class PlayerStats : ISaveable<PlayerStatsSaveData>
         {
             return (float)(1 + 0.08f * Total / (0.08 * Total + 1));
         }
-        public float GetCoefForNegativeEvent() 
+        public float GetCoefForNegativeEvent()
         {
             return (float)(1 - 0.08f * Total / (0.08 * Total + 1));
         }

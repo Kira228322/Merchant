@@ -1,7 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
 
 public class EventPost : EventInTravel
 {
@@ -11,14 +8,14 @@ public class EventPost : EventInTravel
 
     private int probabilityCheapOffer = 50;
     private int probabilityExpensiveOffer = 80;
-    
+
     public override void SetButtons()
     {
         foreach (Item bannedItem in BannedItemsHandler.Instance.BannedItems)
         {
             contrabandItems.AddRange(Player.Instance.Inventory.GetInventoryItemsOfThisData(bannedItem));
         }
-        if (contrabandItems.Count > 0) 
+        if (contrabandItems.Count > 0)
             contrabandSpotted = true;
 
         if (contrabandSpotted)
@@ -45,15 +42,15 @@ public class EventPost : EventInTravel
                 }
             }
             else SetInfoButton("");
-            
+
         }
         else
         {
             ButtonsLabel.Add("Пройти проверку");
             SetInfoButton("");
         }
-        
-        
+
+
     }
 
     public override void OnButtonClick(int n)
@@ -66,7 +63,7 @@ public class EventPost : EventInTravel
                     //Отдать всю контрабанду
                     foreach (Item bannedItem in BannedItemsHandler.Instance.BannedItems)
                         Player.Instance.Inventory.RemoveAllItemsOfThisItemData(bannedItem);
-                    _eventWindow.ChangeDescription("Вы передали всю контрабанду блюстителю порядка");    
+                    _eventWindow.ChangeDescription("Вы передали всю контрабанду блюстителю порядка");
                     break;
                 case 1:
                     //Предложить немного золота, 50% шанс

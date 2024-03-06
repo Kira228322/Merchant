@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CelestialBodiesController : MonoBehaviour
@@ -34,19 +32,19 @@ public class CelestialBodiesController : MonoBehaviour
         moonAndSun.rotation = Quaternion.Euler(transform.rotation.x, transform.rotation.y, -_currentTimeDegrees);
         switch (_currentTimeDegrees)
         {
-            case float n when (n > 315f && n <= 360f) || (n >= 0f && n <= 75f): //полностью темно, 21:00 - 05:00
+            case float n when n is > 315f and <= 360f or >= 0f and <= 75f: //полностью темно, 21:00 - 05:00
                 StarsSetAlpha(stars, 1f);
                 break;
 
-            case float n when n > 75f && n <= 135f:   //рассвет, 05:00 - 09:00
+            case float n when n is > 75f and <= 135f:   //рассвет, 05:00 - 09:00
                 StarsSetAlpha(stars, 1f - (n - 75f) / 60f);
                 break;
 
-            case float n when n > 135f && n <= 255f:  //полностью светло, 09:00 - 17:00
+            case float n when n is > 135f and <= 255f:  //полностью светло, 09:00 - 17:00
                 StarsSetAlpha(stars, 0f);
                 break;
 
-            case float n when n > 255f && n <= 315f:  //закат, 17:00 - 21:00 
+            case float n when n is > 255f and <= 315f:  //закат, 17:00 - 21:00 
                 StarsSetAlpha(stars, (n - 255f) / 60f);
                 break;
         }

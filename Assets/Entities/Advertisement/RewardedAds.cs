@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Advertisements;
 using Random = UnityEngine.Random;
 
@@ -16,7 +14,7 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
     private string androidAdID = "Rewarded_Android";
     private string iOSAdID = "Rewarded_iOS";
 
-    [SerializeField] private List<Item> _rewardList = new ();
+    [SerializeField] private List<Item> _rewardList = new();
     private int _moneyReward = 150;
     private int _expirienceBonus = 5;
     private string adID;
@@ -36,7 +34,7 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
             Player.Instance.Experience.AddExperience(exp);
         }
         StatusManager.Instance.AddStatusForPlayer(StatusDatabase.GetStatus("Восхищение представлением"));
-        
+
         if (Random.Range(0, 10) == 0)
         {
             GiveMoneyReward(exp);
@@ -45,7 +43,7 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
         {
             Item item = _rewardList[Random.Range(0, _rewardList.Count)];
             int count = item.Price <= 100 ? 2 : 1;
-            
+
             if (InventoryController.Instance.TryCreateAndInsertItem(
                      ItemDatabase.GetItem(item.Name), count, 0))
             {
@@ -97,7 +95,7 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
 
     public void OnUnityAdsFailedToLoad(string placementId, UnityAdsLoadError error, string message)
     {
-        Debug.Log($"Error loading Ad Unit {adID}: {error.ToString()} - {message}");
+        Debug.Log($"Error loading Ad Unit {adID}: {error} - {message}");
         IsAdLoaded = false;
     }
 
@@ -117,11 +115,11 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
     public void OnUnityAdsShowComplete(string adUnitId, UnityAdsShowCompletionState showCompletionState)
     {
         LoadAd();
-        
+
         if (adUnitId.Equals(adID) && showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED))
         {
             GiveRewardToPlayer();
         }
     }
-    
+
 }

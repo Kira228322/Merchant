@@ -1,8 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Collections;
-using UnityEngine;
 
 [Serializable]
 public class GiveItemsGoal : Goal
@@ -53,7 +49,7 @@ public class GiveItemsGoal : Goal
                 //Списать необходимые предметы у игрока
                 //Подразумевается, что в диалоге эта реплика появляется только если необходимые предметы есть!
 
-                
+
 
                 Player.Instance.Inventory.RemoveItemsOfThisItemData(RequiredItem, RequiredAmount);
                 CurrentAmount += RequiredAmount;

@@ -1,8 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.IO.IsolatedStorage;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -97,7 +94,7 @@ public class QuestLog : MonoBehaviour
         Destroy(quest.questPanel.gameObject);
         quest.questPanel.transform.SetParent(null); // Destroy не срабатывает сразу, и QuestLinePanel будет помнить про эту панель до конца фрейма, что мешает правильному отображению красной точки (29.11.23)
         CheckQuestLineAndAddNewPanel(quest, newState, false);
-  
+
     }
     private void CheckQuestLineAndAddNewPanel(Quest quest, Quest.State newState, bool newOrLoading)
     {
@@ -227,7 +224,7 @@ public class QuestLog : MonoBehaviour
     private void OnQuestUpdated(Quest quest)
     {
         quest.questPanel.Refresh();
-        
+
     }
 
     private void SortPanels(bool activePanels)
@@ -262,7 +259,7 @@ public class QuestLog : MonoBehaviour
                 orderedQuestLinePanels[i].QuestLinePanel.transform.SetSiblingIndex(i);
             }
         }
-        else 
+        else
         {
             List<OrderedQuestLinePanel> orderedQuestLinePanels = _finishedQuestLines
                 .Select(questLinePanel =>

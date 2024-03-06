@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -48,7 +47,7 @@ public class MultiplyItemsOnSceneEventController : MonoBehaviour, IEventControll
         else
             MultiplyCoefficient = Random.Range(0.6f, 0.8f);
 
-        List<Location> sameRegionLocations = PossibleLocations.Where(location => location.Region == MapManager.CurrentRegion).ToList(); 
+        List<Location> sameRegionLocations = PossibleLocations.Where(location => location.Region == MapManager.CurrentRegion).ToList();
         Location = sameRegionLocations[Random.Range(0, sameRegionLocations.Count)];
         SelectedItem = SelectApplicableItem();
     }
@@ -75,7 +74,7 @@ public class MultiplyItemsOnSceneEventController : MonoBehaviour, IEventControll
             })
             .OrderByDescending(group => group.TotalCount)
             .ToList();
-        
+
         return sortedItems[Random.Range(0, 5)].Item.Name;
     }
 

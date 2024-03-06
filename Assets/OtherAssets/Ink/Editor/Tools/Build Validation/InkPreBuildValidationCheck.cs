@@ -8,57 +8,67 @@ using System.Linq;
 using UnityEditor.Build.Reporting;
 #endif
 
-class InkPreBuildValidationCheck : 
+class InkPreBuildValidationCheck :
 #if UNITY_2018_1_OR_NEWER
 IPreprocessBuildWithReport
 #else
 IPreprocessBuild
 #endif
 {
-	public int callbackOrder { get { return 0; } }
-	
-    #if UNITY_2018_1_OR_NEWER
-    public void OnPreprocessBuild(BuildReport report) {
+    public int callbackOrder { get { return 0; } }
+
+#if UNITY_2018_1_OR_NEWER
+    public void OnPreprocessBuild(BuildReport report)
+    {
         PreprocessValidationStep();
     }
-    #else
+#else
     public void OnPreprocessBuild(BuildTarget target, string path) {
 		PreprocessValidationStep();
 	}
-    #endif
+#endif
 
-    static void PreprocessValidationStep () {
+    static void PreprocessValidationStep()
+    {
         AssertNotCompiling();
         CheckForInvalidFiles();
     }
 
-    static void AssertNotCompiling () {
-        if(InkCompiler.compiling) {
+    static void AssertNotCompiling()
+    {
+        if (InkCompiler.compiling)
+        {
             StringBuilder sb = new StringBuilder("Ink is currently compiling!");
             var errorString = sb.ToString();
             InkCompiler.buildBlocked = true;
-            if(UnityEditor.EditorUtility.DisplayDialog("Ink Build Error!", errorString, "Ok")) {
+            if (UnityEditor.EditorUtility.DisplayDialog("Ink Build Error!", errorString, "Ok"))
+            {
                 Debug.LogError(errorString);
             }
         }
     }
     // When syncronous compilation is allowed we should try to replace this error with a compile.
-    static void CheckForInvalidFiles () {
+    static void CheckForInvalidFiles()
+    {
         var filesToRecompile = InkLibrary.GetFilesRequiringRecompile();
-        if(filesToRecompile.Any()) {
+        if (filesToRecompile.Any())
+        {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("There are Ink files which should be compiled, but appear not to be. You can resolve this by either:");
             sb.AppendLine(" - Compiling your files via 'Assets/Recompile Ink'");
-            var resolveStep = " - Disabling 'Compile Automatically' "+(InkSettings.instance.compileAutomatically ? "in your Ink Settings file" : "for each of the files listed below");
+            var resolveStep = " - Disabling 'Compile Automatically' " + (InkSettings.instance.compileAutomatically ? "in your Ink Settings file" : "for each of the files listed below");
             sb.AppendLine(resolveStep);
             sb.AppendLine();
             sb.AppendLine("Files:");
             var filesAsString = string.Join(", ", filesToRecompile.Select(x => x.filePath).ToArray());
             sb.AppendLine(filesAsString);
             var errorString = sb.ToString();
-            if(!UnityEditor.EditorUtility.DisplayDialog("Ink Build Error!", errorString, "Build anyway", "Cancel build")) {
+            if (!UnityEditor.EditorUtility.DisplayDialog("Ink Build Error!", errorString, "Build anyway", "Cancel build"))
+            {
                 Debug.LogError(errorString);
-            } else {
+            }
+            else
+            {
                 Debug.LogWarning(errorString);
             }
         }

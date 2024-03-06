@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EventMansCompetition : EventInTravel
@@ -7,7 +5,7 @@ public class EventMansCompetition : EventInTravel
     private int _probabilityToWin = 18;
     public override void SetButtons()
     {
-        _probabilityToWin += Player.Instance.Statistics.Toughness.Total + Random.Range(0,5);
+        _probabilityToWin += Player.Instance.Statistics.Toughness.Total + Random.Range(0, 5);
         ButtonsLabel.Add("Участвовать");
         ButtonsLabel.Add("Проехать мимо");
         SetInfoButton($"Вероятность победить в состязаниях {TravelEventHandler.GetProbability(_probabilityToWin, Player.Instance.Statistics.Toughness)}%." +
@@ -40,6 +38,6 @@ public class EventMansCompetition : EventInTravel
             case 1:
                 _eventWindow.ChangeDescription("Жители деревни зазывали вас поучаствовать, но вы просто уехали.");
                 break;
-        }   
+        }
     }
 }

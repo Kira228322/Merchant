@@ -1,11 +1,6 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UI;
 
 public class EventWindow : MonoBehaviour
 {
@@ -21,7 +16,7 @@ public class EventWindow : MonoBehaviour
     private string _infoText;
     private Animator _animator;
     private TravelEventHandler _eventHandler;
-    
+
     public void SetInfoButton(string text)
     {
         if (text == "")
@@ -38,7 +33,7 @@ public class EventWindow : MonoBehaviour
         if (_currentInfoPanel != null)
             Destroy(_currentInfoPanel.gameObject);
 
-        _currentInfoPanel = Instantiate(_infoPanelPrefab.gameObject,transform)
+        _currentInfoPanel = Instantiate(_infoPanelPrefab.gameObject, transform)
             .GetComponent<EventInTravelInfoPanel>();
         _currentInfoPanel.Init(this);
         _currentInfoPanel.transform.position = _infoButton.transform.position;
@@ -58,7 +53,7 @@ public class EventWindow : MonoBehaviour
     {
         _animator = GetComponent<Animator>();
         _eventHandler = FindObjectOfType<TravelEventHandler>();
-        
+
     }
 
     public void ChangeDescription(string text)
@@ -71,17 +66,17 @@ public class EventWindow : MonoBehaviour
         eventInTravel.Init(this);
         _eventNameText.text = eventInTravel.EventName;
         _description.text = eventInTravel.Description;
-        
+
         MapManager.EventInTravelIsActive = true;
-        
+
         EventInTravel travelEvent = Instantiate(eventInTravel.gameObject, _sceneContainer).GetComponent<EventInTravel>();
         travelEvent.Init(this);
-        
+
         // travelEvent.gameObject.transform.localScale = 
         //     new Vector3(travelEvent.gameObject.transform.localScale.x, travelEvent.gameObject.transform.localScale.y,1);
-        
+
         // Debug.Log(Screen.currentResolution.width + " " + Screen.currentResolution.height);
-        
+
         travelEvent.SetButtons();
 
         for (int i = 0; i < travelEvent.ButtonsLabel.Count; i++)
@@ -104,13 +99,13 @@ public class EventWindow : MonoBehaviour
     {
         for (int i = 0; i < _contentButtons.childCount; i++)
             Destroy(_contentButtons.GetChild(_contentButtons.childCount - 1 - i).gameObject);
-        
+
         EventInTravelButton button = Instantiate(_buttonPrefab, _contentButtons).GetComponent<EventInTravelButton>();
         button.ButtonComponent.onClick.AddListener(() => _eventHandler.EventEnd());
         button.ButtonComponent.onClick.AddListener(() => PlaySound());
         button.ButtonText.text = "Продолжить";
     }
-    
+
     public IEnumerator EventEnd()
     {
         MapManager.EventInTravelIsActive = false;
@@ -118,10 +113,10 @@ public class EventWindow : MonoBehaviour
 
         WaitForSeconds waitForSeconds = new(1);
         yield return waitForSeconds;
-        
+
         for (int i = 0; i < _contentButtons.childCount; i++)
             Destroy(_contentButtons.GetChild(_contentButtons.childCount - 1 - i).gameObject);
-        
+
         Destroy(_sceneContainer.GetChild(0).gameObject);
         DestroyInfoPanel();
         gameObject.SetActive(false);

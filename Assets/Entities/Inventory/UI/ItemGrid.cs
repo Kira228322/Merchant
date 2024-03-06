@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -28,7 +27,7 @@ public class ItemGrid : MonoBehaviour
 
     [SerializeField] private int _gridSizeWidth;
     [SerializeField] private int _gridSizeHeight;
-   
+
     private List<InventoryRow> _storedInventoryItems;
     private RectTransform _rectTransform;
     private Vector2 _positionOnTheGrid = new();
@@ -78,7 +77,7 @@ public class ItemGrid : MonoBehaviour
         {
             for (int y = 0; y < height; y++)
             {
-                if(_storedInventoryItems[positionY + y].itemArray[positionX + x] != null)
+                if (_storedInventoryItems[positionY + y].itemArray[positionX + x] != null)
                 {
                     return true;
                 }
@@ -148,7 +147,7 @@ public class ItemGrid : MonoBehaviour
                 if ((itemInInventory.ItemData.MaxItemsInAStack - itemInInventory.CurrentItemsInAStack) >= targetItem.CurrentItemsInAStack)
                 {
                     if ((itemInInventory.BoughtDaysAgo - targetItem.BoughtDaysAgo) < 1)
-                    return true;
+                        return true;
                 }
             }
         }
@@ -198,10 +197,11 @@ public class ItemGrid : MonoBehaviour
 
     public Vector2 CalculatePositionOnTheGrid(InventoryItem item, int positionX, int positionY) // Понять, где визуально расположить предмет (нужно для предметов, больших чем 1x1)
     {
-        Vector2 position = new();
-
-        position.x = positionX * TileSizeWidth + TileSizeWidth * item.Width / 2;
-        position.y = -(positionY * TileSizeHeight + TileSizeHeight * item.Height / 2);
+        Vector2 position = new()
+        {
+            x = positionX * TileSizeWidth + TileSizeWidth * item.Width / 2,
+            y = -(positionY * TileSizeHeight + TileSizeHeight * item.Height / 2)
+        };
         return position;
     }
     public Vector2Int? FindSpaceForItemInsertion(InventoryItem itemToInsert, bool isFillingStackFirst)
@@ -311,10 +311,10 @@ public class ItemGrid : MonoBehaviour
             return item;
         }
         if (!IsOverlappingWithTheSameItemType(item, positionX, positionY, item.Width, item.Height, out InventoryItem itemInInventory))
-            { return null; }
+        { return null; }
         if (!IsRotDifferenceBetweenTwoItemsLessThanOne(item, itemInInventory))
-            { return null; }
-        
+        { return null; }
+
         //Все условия состакивания выполнены, можно состакивать
 
         InventoryItem result = TryPlaceItemInAStack(item, itemInInventory, out InventoryItem leftoverItem, out int howManyWerePlaced);
@@ -389,9 +389,9 @@ public class ItemGrid : MonoBehaviour
 
     #endregion
     #region Методы действий с инвентарём (добавить ячейки и многое-многое другое)
-    public void AddRowsToInventory(int numberOfRowsToAdd) 
+    public void AddRowsToInventory(int numberOfRowsToAdd)
     {
-        if (numberOfRowsToAdd <= 0)  return; 
+        if (numberOfRowsToAdd <= 0) return;
         for (int i = 0; i < numberOfRowsToAdd; i++)
         {
             InventoryRow newInventoryRow = new(_gridSizeWidth);

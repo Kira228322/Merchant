@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class InventoryHighlight : MonoBehaviour
@@ -13,9 +11,11 @@ public class InventoryHighlight : MonoBehaviour
 
     public void SetSize(InventoryItem targetItem)
     {
-        Vector2 size = new();
-        size.x = targetItem.Width * ItemGrid.TileSizeWidth;
-        size.y = targetItem.Height * ItemGrid.TileSizeHeight;
+        Vector2 size = new()
+        {
+            x = targetItem.Width * ItemGrid.TileSizeWidth,
+            y = targetItem.Height * ItemGrid.TileSizeHeight
+        };
         _highlighter.sizeDelta = size;
     }
 

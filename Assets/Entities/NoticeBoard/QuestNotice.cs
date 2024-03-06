@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class QuestNotice : Notice
 {
     public QuestParams RandomQuest;
@@ -27,4 +23,3 @@ public class QuestNotice : Notice
         Noticeboard.RemoveNotice(SpawnPointIndex);
     }
 }
-    

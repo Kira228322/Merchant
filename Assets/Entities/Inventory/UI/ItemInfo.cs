@@ -1,21 +1,19 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 using System.Linq;
+using TMPro;
+using UnityEngine;
 using UnityEngine.Serialization;
-using static UnityEditor.Progress;
+using UnityEngine.UI;
 
 public class ItemInfo : MonoBehaviour
 {
     #region Поля
-    
+
     [SerializeField] private Image _itemIcon;
     [SerializeField] private Button _splitButton;
     [SerializeField] private Button _rotateButton;
-    [FormerlySerializedAs("_eatButton")] [SerializeField] private Button _useButton;
+    [FormerlySerializedAs("_eatButton")][SerializeField] private Button _useButton;
     [SerializeField] private Button _destroyButton;
     [SerializeField] private ItemInfoSplitSlider _splitSliderPanel;
 
@@ -93,7 +91,7 @@ public class ItemInfo : MonoBehaviour
         _maxItemsInAStackText.text = $"Макс. количество: {item.ItemData.MaxItemsInAStack}";
         _fragilityText.text = $"Хрупкость: {item.ItemData.Fragility}";
         _averagePriceText.text = $"Средняя цена: {item.ItemData.Price}";
-        
+
         if (item.ItemData.IsPerishable)
         {
             _daysToHalfSpoilText.alpha = 1;
@@ -111,13 +109,13 @@ public class ItemInfo : MonoBehaviour
         }
         if (item.ItemData is UsableItem)
         {
-            
+
             _currentUsableItem = _currentItemSelected.ItemData as UsableItem;
             if (_currentUsableItem.UsableItemType == UsableItem.UsableType.Edible)
             {
                 _foodValueText.alpha = 1;
                 if (item.BoughtDaysAgo >= item.ItemData.DaysToHalfSpoil && item.ItemData.IsPerishable)
-                    _foodValueText.text = $"+<color=#F8523C>{_currentUsableItem.UsableValue/2}</color> сытости";
+                    _foodValueText.text = $"+<color=#F8523C>{_currentUsableItem.UsableValue / 2}</color> сытости";
                 else
                     _foodValueText.text = $"+{_currentUsableItem.UsableValue} сытости";
             }
@@ -126,22 +124,22 @@ public class ItemInfo : MonoBehaviour
                 _foodValueText.alpha = 1;
                 if (item.BoughtDaysAgo >= item.ItemData.DaysToHalfSpoil)
                 {
-                    _foodValueText.text = $"+<color=#F8523C>{_currentUsableItem.UsableValue/2}</color> сытости" +
-                                          $"  +<color=#F8523C>{_currentUsableItem.SecondValue/2}</color> бодрости";
+                    _foodValueText.text = $"+<color=#F8523C>{_currentUsableItem.UsableValue / 2}</color> сытости" +
+                                          $"  +<color=#F8523C>{_currentUsableItem.SecondValue / 2}</color> бодрости";
                 }
                 else
-                    _foodValueText.text = 
+                    _foodValueText.text =
                      $"+{_currentUsableItem.UsableValue} сытости  +{_currentUsableItem.SecondValue} бодрости";
             }
             else
             {
                 _foodValueText.alpha = 0;
             }
-            
+
             _useButton.gameObject.SetActive(true);
             if (item.ItemData.IsPerishable)
                 if (item.BoughtDaysAgo >= item.ItemData.DaysToSpoil)
-                     _useButton.interactable = false;
+                    _useButton.interactable = false;
         }
         else
         {
@@ -150,7 +148,7 @@ public class ItemInfo : MonoBehaviour
             _useButton.gameObject.SetActive(false);
         }
     }
-    
+
     public void Initialize(InventoryItem item)
     {
         //присвоение текста и иконок
@@ -161,7 +159,7 @@ public class ItemInfo : MonoBehaviour
             _itemTypeText.text = "Категория предмета: " + Item.TranslateItemType(item.ItemData.TypeOfItem);
         else
             _itemTypeText.text = "";
-        
+
         _splitButton.interactable = false;
         _rotateButton.interactable = false;
         _destroyButton.interactable = false;
@@ -172,7 +170,7 @@ public class ItemInfo : MonoBehaviour
         _maxItemsInAStackText.text = $"Макс. количество: {item.ItemData.MaxItemsInAStack}";
         _fragilityText.text = $"Хрупкость: {item.ItemData.Fragility}";
         _averagePriceText.text = $"Средняя цена: {item.ItemData.Price}";
-        
+
         if (item.ItemData.IsPerishable)
         {
             _daysToHalfSpoilText.alpha = 1;
@@ -190,13 +188,13 @@ public class ItemInfo : MonoBehaviour
         }
         if (item.ItemData is UsableItem)
         {
-            
+
             UsableItem currentUsableItem = item.ItemData as UsableItem;
             if (currentUsableItem.UsableItemType == UsableItem.UsableType.Edible)
             {
                 _foodValueText.alpha = 1;
                 if (item.BoughtDaysAgo >= item.ItemData.DaysToHalfSpoil && item.ItemData.IsPerishable)
-                    _foodValueText.text = $"+<color=#F8523C>{currentUsableItem.UsableValue/2}</color> сытости";
+                    _foodValueText.text = $"+<color=#F8523C>{currentUsableItem.UsableValue / 2}</color> сытости";
                 else
                     _foodValueText.text = $"+{currentUsableItem.UsableValue} сытости";
             }
@@ -205,18 +203,18 @@ public class ItemInfo : MonoBehaviour
                 _foodValueText.alpha = 1;
                 if (item.BoughtDaysAgo >= item.ItemData.DaysToHalfSpoil)
                 {
-                    _foodValueText.text = $"+<color=#F8523C>{currentUsableItem.UsableValue/2}</color> сытости" +
-                                          $"  +<color=#F8523C>{currentUsableItem.SecondValue/2}</color> бодрости";
+                    _foodValueText.text = $"+<color=#F8523C>{currentUsableItem.UsableValue / 2}</color> сытости" +
+                                          $"  +<color=#F8523C>{currentUsableItem.SecondValue / 2}</color> бодрости";
                 }
                 else
-                    _foodValueText.text = 
+                    _foodValueText.text =
                      $"+{currentUsableItem.UsableValue} сытости  +{currentUsableItem.SecondValue} бодрости";
             }
             else
             {
                 _foodValueText.alpha = 0;
             }
-            
+
             _useButton.gameObject.SetActive(true);
             _useButton.interactable = false;
         }
@@ -227,7 +225,7 @@ public class ItemInfo : MonoBehaviour
             _useButton.gameObject.SetActive(false);
         }
     }
-    
+
     public void Initialize(Item item)
     {
         //присвоение текста и иконок
@@ -249,7 +247,7 @@ public class ItemInfo : MonoBehaviour
         _maxItemsInAStackText.text = $"Макс. количество: {item.MaxItemsInAStack}";
         _fragilityText.text = $"Хрупкость: {item.Fragility}";
         _averagePriceText.text = $"Средняя цена: {item.Price}";
-        
+
         if (item.IsPerishable)
         {
             _daysToHalfSpoilText.alpha = 1;
@@ -281,7 +279,7 @@ public class ItemInfo : MonoBehaviour
             {
                 _foodValueText.alpha = 0;
             }
-            
+
             _useButton.interactable = false;
         }
         else
@@ -334,7 +332,7 @@ public class ItemInfo : MonoBehaviour
     private void Eat()
     {
         if (_currentItemSelected.BoughtDaysAgo >= _currentItemSelected.ItemData.DaysToHalfSpoil && _currentItemSelected.ItemData.IsPerishable)
-            _player.Needs.RestoreHunger(_currentUsableItem.UsableValue/2);
+            _player.Needs.RestoreHunger(_currentUsableItem.UsableValue / 2);
         else
             _player.Needs.RestoreHunger(_currentUsableItem.UsableValue);
         AfterUse();
@@ -344,8 +342,8 @@ public class ItemInfo : MonoBehaviour
     {
         if (_currentItemSelected.BoughtDaysAgo >= _currentItemSelected.ItemData.DaysToHalfSpoil && _currentItemSelected.ItemData.IsPerishable)
         {
-            _player.Needs.RestoreHunger(_currentUsableItem.UsableValue/2);
-            _player.Needs.RestoreSleep(_currentUsableItem.SecondValue/2);
+            _player.Needs.RestoreHunger(_currentUsableItem.UsableValue / 2);
+            _player.Needs.RestoreSleep(_currentUsableItem.SecondValue / 2);
         }
         else
         {
@@ -371,13 +369,13 @@ public class ItemInfo : MonoBehaviour
         {
             if (Player.Instance.Recipes.Any(recipe => recipe == craftRecipe))
             {
-                CanvasWarningGenerator.Instance.CreateWarning("Рецепт уже известен", 
+                CanvasWarningGenerator.Instance.CreateWarning("Рецепт уже известен",
                     $"Вы уже изучили рецепт {craftRecipe.ResultingItem.Name}");
                 continue;
             }
             Player.Instance.Recipes.Add(craftRecipe);
         }
-        
+
         AfterUse();
     }
 
@@ -421,7 +419,7 @@ public class ItemInfo : MonoBehaviour
                 countLeftToAdd -= itemData.MaxItemsInAStack;
             }
             InventoryController.Instance.TryCreateAndInsertItem
-                (itemData, 
+                (itemData,
                 countLeftToAdd, item.daysBoughtAgo);
         }
     }

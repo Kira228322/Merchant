@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -44,7 +41,7 @@ public class MapZoom : MonoBehaviour
             else
             {
                 _scrollRect.enabled = false;
-                _contentRectTransform.position = new Vector3(Screen.width/2, Screen.height/2);
+                _contentRectTransform.position = new Vector3(Screen.width / 2, Screen.height / 2);
             }
         }
         // TODO убрать перед релизом
@@ -63,7 +60,7 @@ public class MapZoom : MonoBehaviour
             else
             {
                 _scrollRect.enabled = false;
-                _contentRectTransform.position = new Vector3(Screen.width/2, Screen.height/2);
+                _contentRectTransform.position = new Vector3(Screen.width / 2, Screen.height / 2);
             }
         }
         if (Input.GetKey(KeyCode.O))
@@ -81,7 +78,7 @@ public class MapZoom : MonoBehaviour
             else
             {
                 _scrollRect.enabled = false;
-                _contentRectTransform.position = new Vector3(Screen.width/2, Screen.height/2);
+                _contentRectTransform.position = new Vector3(Screen.width / 2, Screen.height / 2);
             }
         }
     }
@@ -89,7 +86,7 @@ public class MapZoom : MonoBehaviour
     private void OnDisable()
     {
         _scrollRect.enabled = false;
-        _contentRectTransform.position = new Vector3(Screen.width/2, Screen.height/2);
+        _contentRectTransform.position = new Vector3(Screen.width / 2, Screen.height / 2);
         _contentRectTransform.localScale = Vector3.one;
     }
 }

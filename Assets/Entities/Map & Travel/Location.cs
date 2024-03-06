@@ -1,10 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Events;
-using Random = UnityEngine.Random;
 
 public class Location : MonoBehaviour
 {
@@ -16,29 +13,29 @@ public class Location : MonoBehaviour
     public Sprite Icon => _icon;
     [SerializeField] private string _villageName;
     public string VillageName => _villageName;
-    [SerializeField] [TextArea(2,4)] private string _description;
+    [SerializeField][TextArea(2, 4)] private string _description;
     public string Description => _description;
-    
+
     [Space(12)]
     [Header("Economy")]
-    [HideInInspector] public Dictionary<string , int[]> ItemEconomyParams = new (); // основан на таком же dictionary своего региона Dictionary<string (ItemName), List<int (Q;A;C)>>
+    [HideInInspector] public Dictionary<string, int[]> ItemEconomyParams = new(); // основан на таком же dictionary своего региона Dictionary<string (ItemName), List<int (Q;A;C)>>
     [SerializeField] private int _populationOfVillage; // будет корректировать dictionary сверху, зававая параметры Q и C 
     public int PopulationOfVillage => _populationOfVillage;
     [HideInInspector] public Dictionary<string, int> CountOfEachItem;
-    
-    
+
+
     [Space(12)]
     [Header("Initialization")]
 
-    [SerializeField]private string _sceneName;
+    [SerializeField] private string _sceneName;
     public string SceneName => _sceneName;
     [SerializeField] private List<Location> _relatedPlaces;
     // места в которые можно попасть из данного места (как ребра в графе) 
     public List<Location> RelatedPlaces => _relatedPlaces;
     [HideInInspector] public List<Road> _roads = new();
-    public List<NpcTraderData> NpcTraders = new ();
+    public List<NpcTraderData> NpcTraders = new();
     public List<NpcWagonUpgraderData> WagonUpgraders = new();
-    
+
     private void Start()
     {
         Road[] roads = FindObjectsOfType<Road>();
@@ -62,7 +59,7 @@ public class Location : MonoBehaviour
         foreach (var EconomyParam in _region.ItemEconomyParams)
         {
             ItemEconomyParams.Add(EconomyParam.Key, new[]
-                    {Convert.ToInt32(Math.Round(EconomyParam.Value[0] * coef)), 
+                    {Convert.ToInt32(Math.Round(EconomyParam.Value[0] * coef)),
                         Convert.ToInt32(Math.Round(EconomyParam.Value[1] * coef)),
                         Convert.ToInt32(Math.Round(EconomyParam.Value[2] * coef))});
         }
@@ -74,7 +71,7 @@ public class Location : MonoBehaviour
         CountOfEachItem = new();
         foreach (var item in ItemEconomyParams)
         { // инициализация словаря всеми предметами в игре 
-            CountOfEachItem.Add(item.Key, item.Value[0]); 
+            CountOfEachItem.Add(item.Key, item.Value[0]);
         }
     }
 
@@ -122,7 +119,7 @@ public class Location : MonoBehaviour
         {
             traderGood.CurrentCount = (int)(traderGood.CurrentCount * coef);
         }
-        
+
         CountAllItemsOnScene();
         _region.CountAllItemsInRegion();
     }
@@ -132,5 +129,5 @@ public class Location : MonoBehaviour
         GameObject win = Instantiate(MapManager.VillageWindow, MapManager.Canvas.transform);
         win.GetComponent<VillageWindow>().Init(this);
     }
-    
+
 }

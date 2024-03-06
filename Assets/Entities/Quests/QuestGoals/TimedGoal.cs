@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 /// <summary>
 /// Цель, которая проваливается по прошествии RequiredAmount часов
 ///Не путать с WaitingGoal <см. cref ="WaitingGoal" />
@@ -26,7 +22,7 @@ public class TimedGoal : Goal
         GameTime.MinuteChanged -= OnMinuteChanged;
         GameTime.TimeSkipped -= OnTimeSkipped;
     }
-    private void OnTimeSkipped (int days, int hours, int minutes)
+    private void OnTimeSkipped(int days, int hours, int minutes)
     {
         int totalMinutesSkipped = (days * 24 + hours) * 60 + minutes;
         _timeCounter += totalMinutesSkipped;

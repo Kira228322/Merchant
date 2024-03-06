@@ -1,14 +1,11 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
 
 [CreateAssetMenu(fileName = "newTraderType", menuName = "Trader/TraderType")]
 public class TraderType : ScriptableObject
 {
-    [HideInInspector] public List<TraderGoodType> TraderGoodTypes = new ();
+    [HideInInspector] public List<TraderGoodType> TraderGoodTypes = new();
     [System.Serializable]
     public class TraderGoodType
     {

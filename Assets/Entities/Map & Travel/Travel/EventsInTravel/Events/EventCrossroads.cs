@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EventCrossroads : EventInTravel
@@ -23,6 +21,6 @@ public class EventCrossroads : EventInTravel
                 break;
         }
 
-        FindObjectOfType<TravelEventHandler>().ChangeTravelTime(Random.Range(1,4));
+        FindObjectOfType<TravelEventHandler>().ChangeTravelTime(Random.Range(1, 4));
     }
 }

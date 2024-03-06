@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -12,12 +11,12 @@ abstract public class NPCMovement : MonoBehaviour
     [SerializeField] protected ContactFilter2D _groundMask;
     [SerializeField] protected float _speed = 2f;
     public float Speed => _speed;
-    protected float _minIDLEDuration = 5f; 
-    protected float _maxIDLEDuration = 15f; 
+    protected float _minIDLEDuration = 5f;
+    protected float _maxIDLEDuration = 15f;
     [HideInInspector] public float MoveDistanceAndDirection;
     [HideInInspector] public Vector3 StartPosition;
     protected Coroutine _currentCoroutine;
-    
+
     protected Rigidbody2D _rigidbody;
     protected Collider2D _collider;
     public Collider2D Collider => _collider;
@@ -29,7 +28,7 @@ abstract public class NPCMovement : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     [HideInInspector] public Animator Animator;
     private NpcClickFunctional _clickFunctional;
-    private bool _currentStateIsIDLE; 
+    private bool _currentStateIsIDLE;
 
     protected virtual void Awake()
     {
@@ -96,16 +95,16 @@ abstract public class NPCMovement : MonoBehaviour
     {
         if (_currentCoroutine != null)
             StopCoroutine(_currentCoroutine);
-        
+
         _currentCoroutine = StartCoroutine(IDLEWhileBusy());
         TurnToPlayer();
     }
-    
+
     private IEnumerator IDLEWhileBusy()
     {
         if (!_currentStateIsIDLE)
             Animator.SetTrigger("IDLE");
-        WaitForSeconds waitForSeconds = new WaitForSeconds(100f);
+        WaitForSeconds waitForSeconds = new(100f);
         while (true)
         {
             yield return waitForSeconds;
@@ -138,13 +137,13 @@ abstract public class NPCMovement : MonoBehaviour
                 _spriteRenderer.flipX = false;
         }
     }
-    
+
     protected abstract IEnumerator Move();
-    
+
     private void ChooseHome()
     {
         Home[] homes = FindObjectsOfType<Home>();
-        
+
         _home = homes.OrderBy(home => Vector3.Distance(transform.position, home.DoorTransform.position))
             .FirstOrDefault().DoorTransform.position;
     }
@@ -167,7 +166,7 @@ abstract public class NPCMovement : MonoBehaviour
                 return;
             }
         }
-        
+
         GameTime.MinuteChanged += OnMinuteChange;
         GameTime.HourChanged -= OnHourChangeWhenNotAtHome;
         _clickFunctional.enabled = false;
@@ -182,7 +181,7 @@ abstract public class NPCMovement : MonoBehaviour
 
     private void OnMinuteChange()
     {
-        if (MoveByNodeIsActive) 
+        if (MoveByNodeIsActive)
             return;
         if (_isGoingToHome)
         {
@@ -195,7 +194,7 @@ abstract public class NPCMovement : MonoBehaviour
         {
             GameTime.MinuteChanged -= OnMinuteChange;
             GameTime.HourChanged += OnHourChangeWhenAtHome;
-            if (_currentCoroutine!= null)
+            if (_currentCoroutine != null)
             {
                 StopCoroutine(_currentCoroutine);
                 _currentCoroutine = null;
@@ -205,7 +204,7 @@ abstract public class NPCMovement : MonoBehaviour
             EnableNPC(false);
         }
     }
-    
+
     public void OnCollisionWithNode(Node node)
     {
         if (_currentCoroutine != null)
@@ -213,7 +212,7 @@ abstract public class NPCMovement : MonoBehaviour
         _currentCoroutine = StartCoroutine(node.MoveNPCByNode(this));
     }
 
-    
+
 
     private void OnHourChangeWhenAtHome()
     {
@@ -232,17 +231,17 @@ abstract public class NPCMovement : MonoBehaviour
                 return;
             }
         }
-        
+
         GameTime.HourChanged -= OnHourChangeWhenAtHome;
         GameTime.HourChanged += OnHourChangeWhenNotAtHome;
         EnableNPC(true);
-        if (_currentCoroutine!= null)
+        if (_currentCoroutine != null)
         {
             StopCoroutine(_currentCoroutine);
             _currentCoroutine = null;
         }
         StartIDLE(true);
-        
+
     }
 
     private void EnableNPC(bool enable)
@@ -252,7 +251,7 @@ abstract public class NPCMovement : MonoBehaviour
         _rigidbody.simulated = enable;
         _clickFunctional.enabled = enable;
     }
-    
+
     private IEnumerator MoveDirectlyAtHome(float targetPosX)
     {
         _isGoingToHome = true;
@@ -260,16 +259,16 @@ abstract public class NPCMovement : MonoBehaviour
         StartPosition = transform.position;
         Vector3 targetPosition = new(targetPosX, StartPosition.y);
         WaitForFixedUpdate waitForFixedUpdate = new();
-        
+
         RevertViewDirection(targetPosition.x - StartPosition.x > 0);
-        
+
         float countOfFrames = Math.Abs(MoveDistanceAndDirection / (_speed * Time.fixedDeltaTime));
         for (float i = 0; i < countOfFrames; i++)
         {
-            transform.position = Vector3.Lerp(StartPosition, targetPosition, i/countOfFrames);
-            yield return  waitForFixedUpdate;
+            transform.position = Vector3.Lerp(StartPosition, targetPosition, i / countOfFrames);
+            yield return waitForFixedUpdate;
         }
-        
+
         transform.position = targetPosition;
         _isGoingToHome = false;
     }

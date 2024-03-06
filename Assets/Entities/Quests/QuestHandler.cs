@@ -1,20 +1,18 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
+using UnityEngine;
 using UnityEngine.Events;
 
 public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
 {
     #region ѕол€, свойства и событи€
-    
+
     public static QuestLog QuestLog => Instance._questLog;
-    public static event UnityAction<Quest> QuestChangedState; 
+    public static event UnityAction<Quest> QuestChangedState;
     public static QuestHandler Instance;
 
     [SerializeField] private QuestLog _questLog; //UI- вестЋог
-    
+
     public List<Quest> Quests = new(); // —одержит все квесты, в том числе проваленные или выполненные
     public List<Quest> ActiveQuests = new(); // »змен€ет свой набор в AddQuest и OnQuestChangedState
 
@@ -75,10 +73,10 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
             }
         }
 
-        if (newState == Quest.State.Completed || newState == Quest.State.Failed)
+        if (newState is Quest.State.Completed or Quest.State.Failed)
             quest.QuestChangedState -= Instance.OnQuestChangedState;
         QuestChangedState?.Invoke(quest);
-        
+
     }
 
     private void OnAwaitingQuestGiven(AwaitingQuest quest)
@@ -121,7 +119,7 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
     }
     public static bool HasQuestBeenTaken(string summary)
     {
-        return Instance.Quests.Any(quest => quest.QuestSummary == summary) 
+        return Instance.Quests.Any(quest => quest.QuestSummary == summary)
             || Instance.AwaitingQuests.Any(quest => quest.questParams.questSummary == summary);
     }
     public static bool HasQuestBeenCompleted(string summary)
@@ -151,7 +149,7 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
 
         QuestSaveData saveData = new();
 
-        foreach (Quest quest in Instance.Quests) 
+        foreach (Quest quest in Instance.Quests)
         {
             QuestParams questParams = new()
             {
@@ -182,19 +180,19 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
                 switch (goal)
                 {
                     case CollectItemsGoal oldGoal:
-                        newGoal = new CollectItemsGoal(oldGoal.CurrentState, oldGoal.Description, 
+                        newGoal = new CollectItemsGoal(oldGoal.CurrentState, oldGoal.Description,
                             oldGoal.CurrentAmount, oldGoal.RequiredAmount, oldGoal.RequiredItemName);
                         break;
                     case TalkToNPCGoal oldGoal:
-                        newGoal = new TalkToNPCGoal(oldGoal.CurrentState, oldGoal.Description, 
+                        newGoal = new TalkToNPCGoal(oldGoal.CurrentState, oldGoal.Description,
                             oldGoal.CurrentAmount, oldGoal.RequiredAmount, oldGoal.RequiredIDOfNPC, oldGoal.RequiredLine, oldGoal.FailingLine);
                         break;
                     case WaitingGoal oldGoal:
-                        newGoal = new WaitingGoal(oldGoal.CurrentState, oldGoal.Description, 
+                        newGoal = new WaitingGoal(oldGoal.CurrentState, oldGoal.Description,
                             oldGoal.CurrentAmount, oldGoal.RequiredAmount);
                         break;
                     case TimedGoal oldGoal:
-                        newGoal = new TimedGoal(oldGoal.CurrentState, oldGoal.Description, 
+                        newGoal = new TimedGoal(oldGoal.CurrentState, oldGoal.Description,
                             oldGoal.CurrentAmount, oldGoal.RequiredAmount);
                         break;
                     case GiveItemsGoal oldGoal:

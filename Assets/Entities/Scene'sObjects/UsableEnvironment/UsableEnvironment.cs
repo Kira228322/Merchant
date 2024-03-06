@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -48,17 +46,17 @@ public abstract class UsableEnvironment : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (!_isActive) 
+        if (!_isActive)
             return;
         if ((transform.position - Player.Instance.transform.position).magnitude > _distanceToUse)
             return;
-        
-        if(IsFunctionalComplete())
+
+        if (IsFunctionalComplete())
         {
             CosmeticUse();
             _cooldownHandler.Register(_uniqueID.ID, _cooldownHours);
-            
-            
+
+
             _audioSource.PlayWithRandomPitch();
         }
         else
@@ -66,7 +64,7 @@ public abstract class UsableEnvironment : MonoBehaviour, IPointerClickHandler
     }
     protected abstract bool IsFunctionalComplete(); // возвращает true если все прошло как надо
 
-    private void CosmeticUse() 
+    private void CosmeticUse()
     {
         GetComponent<SpriteRenderer>().sprite = _spriteAfterUse;
         _particleSystem.Stop();

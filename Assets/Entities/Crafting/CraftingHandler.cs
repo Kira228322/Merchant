@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class CraftingHandler : MonoBehaviour
 {
@@ -31,7 +28,7 @@ public class CraftingHandler : MonoBehaviour
         ItemInfo itemInfoPanel = Instantiate(_itemInfoPanel, MapManager.Canvas.transform).GetComponent<ItemInfo>();
         itemInfoPanel.Initialize(SelectedRecipe.ResultingItem);
     }
-    
+
     public void ToggleActive()
     {
         gameObject.SetActive(!gameObject.activeSelf);
@@ -49,15 +46,12 @@ public class CraftingHandler : MonoBehaviour
 
     private string GetRequiredCraftingStationText(CraftingStationType craftingStationType)
     {
-        switch (craftingStationType)
+        return craftingStationType switch
         {
-            case CraftingStationType.Campfire:
-                return "Требуется источник огня";
-            case CraftingStationType.CraftingTable:
-                return "Требуется стол мастера";
-            default:
-                return "";
-        }
+            CraftingStationType.Campfire => "Требуется источник огня",
+            CraftingStationType.CraftingTable => "Требуется стол мастера",
+            _ => "",
+        };
     }
     public void Refresh()
     {
@@ -77,7 +71,7 @@ public class CraftingHandler : MonoBehaviour
         //Очистка завершена, можно заполнять заново
 
         foreach (CraftingRecipe recipe in Player.Instance.Recipes)
-            //Наспавнить рецепты на панель слева
+        //Наспавнить рецепты на панель слева
         {
             GameObject recipeUI = Instantiate(_recipeUIPrefab.gameObject, _recipesLayoutGroup.transform);
             recipeUI.GetComponent<UICraftingRecipe>().Init(this, recipe);
@@ -86,7 +80,7 @@ public class CraftingHandler : MonoBehaviour
         if (_currentCraftingStation != CraftingStationType.Null)
         {
             _craftingStationIcon.transform.parent.gameObject.SetActive(true);
-            
+
         }
 
         if (SelectedRecipe == null)
@@ -113,7 +107,7 @@ public class CraftingHandler : MonoBehaviour
         bool isCraftButtonEnabled = IsCraftButtonEnabled(); //соответствует ли уровень навыка и текущая крафтингстанция
 
         for (int i = 0; i < SelectedRecipe.RequiredItems.Count; i++)
-            //ожидается, что i никогда не больше 2, ибо у нас всего 3 клеточки под предметы
+        //ожидается, что i никогда не больше 2, ибо у нас всего 3 клеточки под предметы
         {
             if (i > 0) _plusSigns[i - 1].gameObject.SetActive(true);
             int currentCount = Player.Instance.Inventory.GetCount(SelectedRecipe.RequiredItems[i].item);
@@ -133,7 +127,7 @@ public class CraftingHandler : MonoBehaviour
 
         if (MapManager.IsActiveSceneTravel)
             _craftButton.interactable = false;
-        else 
+        else
             _craftButton.interactable = isCraftButtonEnabled;
     }
 
@@ -141,7 +135,7 @@ public class CraftingHandler : MonoBehaviour
     {
         if (Player.Instance.Statistics.Crafting.Total < SelectedRecipe.RequiredCraftingLevel)
             return false;
-        if (SelectedRecipe.RequiredCraftingStation != CraftingStationType.Null && 
+        if (SelectedRecipe.RequiredCraftingStation != CraftingStationType.Null &&
             SelectedRecipe.RequiredCraftingStation != _currentCraftingStation)
             return false;
         return true;
@@ -154,7 +148,7 @@ public class CraftingHandler : MonoBehaviour
             return;
         }
         if (!InventoryController.Instance.CanInsertItem(SelectedRecipe.ResultingItem, SelectedRecipe.ResultAmount))
-        {       
+        {
             CanvasWarningGenerator.Instance.CreateWarning("Недостаточно места", "Освободите место в инвентаре, чтобы создать предмет");
             return;
         }
@@ -162,9 +156,9 @@ public class CraftingHandler : MonoBehaviour
         {
             Player.Instance.Inventory.RemoveItemsOfThisItemData(requiredItem.item, requiredItem.amount);
         }
-        
+
         _craftingAnimationPanel.StartAnimation(SelectedRecipe);
-        
+
         InventoryController.Instance.TryCreateAndInsertItem
             (SelectedRecipe.ResultingItem, SelectedRecipe.ResultAmount, 0);
         Refresh();

@@ -1,9 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
-using static NpcTrader;
 
 [CreateAssetMenu(fileName = "newWagonUpgraderData", menuName = "NPCs/WagonUpgraderData")]
 public class NpcWagonUpgraderData : NpcData, IResetOnExitPlaymode, ISaveable<NpcWagonUpgraderSaveData>

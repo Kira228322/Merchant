@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 
@@ -11,19 +10,19 @@ public class FunctionalWindow : MonoBehaviour
     private Npc _NPC;
     private Transform _canvas;
 
-    
+
     public void Init(Npc npc)
     {
         _canvas = CanvasWarningGenerator.Instance.transform;
         _NPC = npc;
-        
+
         _NPC.StartInteraction();
-        
+
         _NPCName.text = _NPC.NpcData.Name;
 
         if (_NPC.NpcData.ID >= 9000) // не квестовый нпс
             _NPCName.color = new Color(58f / 255, 58f / 255, 58f / 255, 1);
-        
+
         switch (_NPC)
         {
             case NpcTrader:
@@ -38,7 +37,7 @@ public class FunctionalWindow : MonoBehaviour
                 break;
         }
     }
-    
+
     public void OnTalkButtonClick()
     {
         DialogueManager.Instance.EnterDialogueMode(_NPC);
@@ -49,7 +48,7 @@ public class FunctionalWindow : MonoBehaviour
     {
         NpcTrader trader = (NpcTrader)_NPC;
         trader.OpenTradeWindow();
-        
+
         Destroy(gameObject);
     }
 

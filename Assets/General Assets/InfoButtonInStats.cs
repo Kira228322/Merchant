@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class InfoButtonInStats : MonoBehaviour
@@ -26,11 +24,11 @@ public class InfoButtonInStats : MonoBehaviour
             StartCoroutine(AppearAndDisappear());
         }
     }
-    
+
     private IEnumerator AppearAndDisappear()
     {
-        WaitForSeconds waitForSeconds = new WaitForSeconds(0.02f);
-        
+        WaitForSeconds waitForSeconds = new(0.02f);
+
         _canvasGroup.alpha = 0.066f;
         for (int i = 0; i < 28; i++)
         {
@@ -41,7 +39,7 @@ public class InfoButtonInStats : MonoBehaviour
         _canvasGroup.alpha = 1f;
         waitForSeconds = new WaitForSeconds(5f);
         yield return waitForSeconds;
-        
+
         waitForSeconds = new WaitForSeconds(0.02f);
         for (int i = 0; i < 40; i++)
         {

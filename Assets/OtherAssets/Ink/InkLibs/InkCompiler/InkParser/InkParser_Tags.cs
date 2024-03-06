@@ -1,50 +1,52 @@
-﻿using System.Text;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Ink
 {
     public partial class InkParser
     {
-        protected Parsed.Tag Tag ()
+        protected Parsed.Tag Tag()
         {
-            Whitespace ();
+            Whitespace();
 
-            if (ParseString ("#") == null)
+            if (ParseString("#") == null)
                 return null;
 
-            Whitespace ();
+            Whitespace();
 
-            var sb = new StringBuilder ();
-            do {
+            var sb = new StringBuilder();
+            do
+            {
                 // Read up to another #, end of input or newline
-                string tagText = ParseUntilCharactersFromCharSet (_endOfTagCharSet);
-                sb.Append (tagText);
+                string tagText = ParseUntilCharactersFromCharSet(_endOfTagCharSet);
+                sb.Append(tagText);
 
                 // Escape character
-                if (ParseString ("\\") != null) {
-                    char c = ParseSingleCharacter ();
-                    if( c != (char)0 ) sb.Append(c);
+                if (ParseString("\\") != null)
+                {
+                    char c = ParseSingleCharacter();
+                    if (c != (char)0) sb.Append(c);
                     continue;
                 }
 
                 break;
-            } while ( true );
+            } while (true);
 
-            var fullTagText = sb.ToString ().Trim();
+            var fullTagText = sb.ToString().Trim();
 
-            return new Parsed.Tag (new Runtime.Tag (fullTagText));
+            return new Parsed.Tag(new Runtime.Tag(fullTagText));
         }
 
-        protected List<Parsed.Tag> Tags ()
+        protected List<Parsed.Tag> Tags()
         {
-            var tags = OneOrMore (Tag);
+            var tags = OneOrMore(Tag);
             if (tags == null) return null;
 
             return tags.Cast<Parsed.Tag>().ToList();
         }
 
-        CharacterSet _endOfTagCharSet = new CharacterSet ("#\n\r\\");
+        CharacterSet _endOfTagCharSet = new CharacterSet("#\n\r\\");
     }
 }
 

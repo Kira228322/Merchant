@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ButtonSound : MonoBehaviour
@@ -8,5 +6,5 @@ public class ButtonSound : MonoBehaviour
     {
         GameManager.Instance._ButtonAudioSource.PlayOneShot(GameManager.Instance._ButtonAudioSource.clip);
     }
-    
+
 }

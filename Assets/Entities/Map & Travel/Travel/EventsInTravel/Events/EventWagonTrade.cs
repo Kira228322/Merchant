@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -57,12 +56,12 @@ public class EventWagonTrade : EventInTravel
                         _eventWindow.ChangeDescription($"Внутри совсем не ценный товар: {item.Name}. Но у вас не было места в инвентаре, чтобы поместить его. Торговец решил оставить этот товар себе. (Вы ничего не заплатили)");
                     }
                 }
-                
+
                 break;
             case 1:
                 _eventWindow.ChangeDescription("Загадка тайного товара странствующего торговца не будет раскрыта...");
                 break;
         }
-        
+
     }
 }

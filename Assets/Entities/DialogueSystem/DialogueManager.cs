@@ -1,14 +1,10 @@
-using System;
+using Ink.Runtime;
 using System.Collections;
 using System.Collections.Generic;
-using Ink.Runtime;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Events;
-using System.Text.RegularExpressions;
-using System.Linq;
-using System.Data;
+using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -22,7 +18,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField] private Button _continueButton;
     [SerializeField] private GameObject _lineFinishedIndicator;
     [SerializeField] private float _typingSpeed = 25f;
-    [SerializeField] private TextAutoSizeController _autoSizeController; 
+    [SerializeField] private TextAutoSizeController _autoSizeController;
     [SerializeField] private Color _defaultTextColor;
 
     [SerializeField] private ItemContainer _itemContainer;
@@ -42,7 +38,7 @@ public class DialogueManager : MonoBehaviour
     #region External функции Ink и всё что связано с ними
     private void SetTextColor(string colorName)
     {
-        if (colorName == "default" || colorName == "")
+        if (colorName is "default" or "")
         {
             _dialogueText.color = _defaultTextColor;
             return;
@@ -377,10 +373,10 @@ public class DialogueManager : MonoBehaviour
             string newLine = _currentStory.Continue();
             _currentDisplayLineCoroutine = StartCoroutine(DisplayLine(newLine));
         }
-        else if (_currentStory.currentChoices.Count == 0) 
+        else if (_currentStory.currentChoices.Count == 0)
             ExitDialogueMode();
     }
-    
+
     private void ExitDialogueMode()
     {
         Player.Instance.PlayerMover.EnableMove();

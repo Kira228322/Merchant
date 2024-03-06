@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
@@ -18,13 +15,13 @@ public class Mover : MonoBehaviour
     private int n = 1;
 
     private float RawImageChange;
-    void Update() 
+    void Update()
     {
         transform.position += new Vector3(_speed * Time.deltaTime, 0);
 
         RawImageChange += _speed * Time.deltaTime / 125;
         NearBG.uvRect = new Rect(RawImageChange, 0, NearBG.uvRect.width, NearBG.uvRect.height);
-        FarBG.uvRect = new Rect(RawImageChange/4, 0, FarBG.uvRect.width, FarBG.uvRect.height);
+        FarBG.uvRect = new Rect(RawImageChange / 4, 0, FarBG.uvRect.width, FarBG.uvRect.height);
     }
 
     private void FixedUpdate() // супер кастыльно (скрипт что бы земля двигалась) 

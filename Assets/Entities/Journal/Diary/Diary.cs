@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -31,7 +29,7 @@ public class Diary : MonoBehaviour, ISaveable<DiarySaveData>
 
     public DiaryEntry AddEntry(string header, string text, bool news)
     {
-        string dateTime = $"<i>Δενό {GameTime.CurrentDay}, {(GameTime.Hours < 10? "0": "")}{GameTime.Hours}:{(GameTime.Minutes < 10 ? "0" : "")}{GameTime.Minutes}: </i>";
+        string dateTime = $"<i>Δενό {GameTime.CurrentDay}, {(GameTime.Hours < 10 ? "0" : "")}{GameTime.Hours}:{(GameTime.Minutes < 10 ? "0" : "")}{GameTime.Minutes}: </i>";
 
         DiaryEntry newEntry;
         if (news)

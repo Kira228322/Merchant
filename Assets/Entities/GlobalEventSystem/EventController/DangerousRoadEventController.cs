@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -42,10 +41,10 @@ public class DangerousRoadEventController : MonoBehaviour, IEventController<Glob
         DateOfNextEvent = LastEventDay + Random.Range(MinDelayToNextEvent, MaxDelayToNextEvent + 1);
         HourOfNextEvent = Random.Range(1, 24);
         DurationOfEvent = 24;
-        MultiplyCoefficient = Random.Range(1.5f, 1.8f); 
+        MultiplyCoefficient = Random.Range(1.5f, 1.8f);
         List<Road> sameRegionRoads = PossibleRoads.Where(
-            road => 
-            road.Points[0].Region == MapManager.CurrentRegion || 
+            road =>
+            road.Points[0].Region == MapManager.CurrentRegion ||
             road.Points[1].Region == MapManager.CurrentRegion).ToList();
         TargetRoad = sameRegionRoads[Random.Range(0, sameRegionRoads.Count)];
     }
@@ -58,7 +57,7 @@ public class DangerousRoadEventController : MonoBehaviour, IEventController<Glob
 
     public void RemoveEvent()
     {
-        
+
     }
 
     public EventControllerSaveData SaveData()

@@ -1,9 +1,5 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 using Random = UnityEngine.Random;
 
 public class RandomBGGenerator : MonoBehaviour
@@ -47,11 +43,11 @@ public class RandomBGGenerator : MonoBehaviour
             groundObject._lastTimeSpawn += Time.deltaTime;
             if (groundObject._lastTimeSpawn >= groundObject._minTimeSpawn)
             {
-                if (Random.Range(0, 10) == 0) 
-                    groundObject._lastTimeSpawn = groundObject._minTimeSpawn/3;
+                if (Random.Range(0, 10) == 0)
+                    groundObject._lastTimeSpawn = groundObject._minTimeSpawn / 3;
                 else
-                    groundObject._lastTimeSpawn = Random.Range(-groundObject._minTimeSpawn/2, 0);
-                
+                    groundObject._lastTimeSpawn = Random.Range(-groundObject._minTimeSpawn / 2, 0);
+
                 SpawnObject(groundObject);
                 if (groundObject._minTimeSpawn != _minTimeGrassSpawn) // Если заспавненный объект не трава
                 {
@@ -73,24 +69,24 @@ public class RandomBGGenerator : MonoBehaviour
             CloudsOnScene.Add(Instantiate(_cloud[Random.Range(0, _cloud.Count)],
                  _cloudPointSpawn.position + new Vector3(0, Random.Range(0f, 1.4f)), Quaternion.identity)
                 .GetComponent<Cloud>());
-            if (Random.Range(0, 4) == 0) 
-                _lastTimeCloudSpawn = _minTimeCloudSpawn/3;
+            if (Random.Range(0, 4) == 0)
+                _lastTimeCloudSpawn = _minTimeCloudSpawn / 3;
             else
-                _lastTimeCloudSpawn = Random.Range(-_lastTimeCloudSpawn/2, 0);
+                _lastTimeCloudSpawn = Random.Range(-_lastTimeCloudSpawn / 2, 0);
         }
     }
 
     private void SpawnObject(BackGroundObject groundObject)
     {
-        GameObject randObj = groundObject._objects[Random.Range(0, groundObject._objects.Count)]; 
+        GameObject randObj = groundObject._objects[Random.Range(0, groundObject._objects.Count)];
         // выбираем случайный объект из перечня и немного его редактируем случайным образом 
-        
+
         GameObject spawnedObj = Instantiate(randObj, _spawnPoint.position, Quaternion.identity);
         spawnedObj.AddComponent<CircleCollider2D>();
         SpriteRenderer renderer = spawnedObj.GetComponent<SpriteRenderer>();
 
         Vector3 localScale = spawnedObj.transform.localScale;
-        localScale = new Vector2(Random.Range(localScale.x * 0.93f, localScale.x * 1.08f), 
+        localScale = new Vector2(Random.Range(localScale.x * 0.93f, localScale.x * 1.08f),
              Random.Range(localScale.y * 0.93f, localScale.y * 1.08f));
         spawnedObj.transform.localScale = localScale;
 
@@ -104,7 +100,7 @@ public class RandomBGGenerator : MonoBehaviour
             color.g /= 1.08f;
             color.b /= 1.08f;
             renderer.color = color;
-            if (renderer.gameObject.transform.childCount != 0) 
+            if (renderer.gameObject.transform.childCount != 0)
             {
                 for (int i = 0; i < renderer.gameObject.transform.childCount; i++)
                 {

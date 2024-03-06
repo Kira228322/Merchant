@@ -1,8 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 [Serializable]
 public class GlobalEvent_DangerousRoad : GlobalEvent_Base
@@ -24,7 +21,7 @@ public class GlobalEvent_DangerousRoad : GlobalEvent_Base
         Location firstLocation = MapManager.GetLocationBySceneName(FirstPointLocationSceneName);
         Location secondLocation = MapManager.GetLocationBySceneName(SecondPointLocationSceneName);
         targetRoad = controller.PossibleRoads
-            .Where(road => 
+            .Where(road =>
             (road.Points[0] == firstLocation && road.Points[1] == secondLocation) ||
             (road.Points[0] == secondLocation && road.Points[1] == firstLocation))
             .FirstOrDefault(road => road.RoadName == TargetRoadName);

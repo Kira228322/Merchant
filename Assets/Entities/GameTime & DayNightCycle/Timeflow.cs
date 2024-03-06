@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Timeflow : MonoBehaviour, ISaveable<TimeFlowSaveData>
@@ -23,8 +21,8 @@ public class Timeflow : MonoBehaviour, ISaveable<TimeFlowSaveData>
     private void Update()
     {
         _timeCounter += Time.deltaTime * TimeScale;
-        if (_timeCounter >= 1f) 
-        { 
+        if (_timeCounter >= 1f)
+        {
             GameTime.Minutes++;
             _timeCounter = 0;
         }

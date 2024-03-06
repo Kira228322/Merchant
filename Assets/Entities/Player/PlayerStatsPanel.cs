@@ -1,10 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using TMPro;
 public class PlayerStatsPanel : MonoBehaviour
 {
     [SerializeField] private TMP_Text _currentLevelText;
@@ -132,7 +130,7 @@ public class PlayerStatsPanel : MonoBehaviour
         }
         else
             CanvasWarningGenerator.Instance.CreateWarning("Недостаточный уровень", "Изучить крафтинг можно только с 3 уровня");
-        
+
     }
     private void OnStatLvlUpButtonPressed()
     {

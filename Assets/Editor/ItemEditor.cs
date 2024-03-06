@@ -1,14 +1,11 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
 [CustomEditor(typeof(Item))]
 public class ItemEditor : Editor
 {
     private Item item;
-    protected virtual  void OnEnable()
+    protected virtual void OnEnable()
     {
         item = (Item)target;
     }
@@ -18,7 +15,7 @@ public class ItemEditor : Editor
         base.OnInspectorGUI();
 
         item.Icon = (Sprite)EditorGUILayout.ObjectField("Icon", item.Icon, typeof(Sprite), false);
-        
+
         EditorGUILayout.Space(5);
 
         EditorGUILayout.BeginHorizontal();

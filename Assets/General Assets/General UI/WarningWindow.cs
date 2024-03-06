@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -8,7 +5,7 @@ public class WarningWindow : Window
 {
     [SerializeField] private TMP_Text _warningLabel;
     [SerializeField] private TMP_Text _warningMessage;
-    
+
 
     private void OnDisable()
     {
@@ -18,10 +15,10 @@ public class WarningWindow : Window
     protected override void Start()
     {
         RectTransform rectTransform = GetComponent<RectTransform>();
-        
+
         float screenWidth = Screen.width;
         float screenHeight = Screen.height;
-        Vector3 newPosition = new Vector3(screenWidth - rectTransform.rect.width, rectTransform.rect.height / 2, 0);
+        Vector3 newPosition = new(screenWidth - rectTransform.rect.width, rectTransform.rect.height / 2, 0);
         newPosition.x /= screenWidth;
         newPosition.y /= screenHeight;
 
@@ -29,10 +26,10 @@ public class WarningWindow : Window
         rectTransform.anchorMax = new Vector2(1, 0);
         rectTransform.pivot = new Vector2(1, 0);
         rectTransform.anchoredPosition = newPosition;
-        
+
         StartCoroutine(AppearenceAnimation(0.5f, 0.02f, rectTransform.rect.height));
     }
-    
+
     public void Init(string label, string message)
     {
         if (GameManager.Instance.CurrentWarningWindow != null)

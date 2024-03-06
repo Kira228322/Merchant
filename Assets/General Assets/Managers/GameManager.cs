@@ -1,10 +1,7 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
@@ -24,22 +21,22 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
 
     [SerializeField] private Menu _optionsMenu;
 
-    [Header("MapManager")] 
+    [Header("MapManager")]
     [SerializeField] private string _travelingScene;
     [SerializeField] private SceneTransiter _sceneTransiter;
     [SerializeField] private GameObject _roadWindow;
     [SerializeField] private GameObject _villageWindow;
     [SerializeField] private GameObject _playerIcone;
     [SerializeField] private Location _startLocation;
-    [HideInInspector] public List<int> IndexesLastEvents = new ();
+    [HideInInspector] public List<int> IndexesLastEvents = new();
 
     //TODO убрать перед выпуском игры
     [SerializeField] private TMP_InputField TESTstartLocationInputField;
     [SerializeField] private Button TESTstartNewGameButton;
     //end TODO убрать перед выпуском игры
 
-    [Header("GameTime")] 
-    [FormerlySerializedAs("Timeflow")] [SerializeField] private Timeflow _timeflow;
+    [Header("GameTime")]
+    [FormerlySerializedAs("Timeflow")][SerializeField] private Timeflow _timeflow;
 
     [Header("Regions & Scenes")]
     [SerializeField] private RegionHandler _regionHandler;
@@ -97,7 +94,7 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
         CanvasGroupUIClock.alpha = 1;
         CanvasGroupUIClock.interactable = true;
     }
-    
+
     //TODO убрать перед выпуском игры
     public void StartNewGame(string startingSceneName)
     {
@@ -124,7 +121,7 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
         else
         {
             NewGameProcess();
-            
+
         }
     }
 
@@ -183,7 +180,7 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
             SceneSaveData = _sceneTransiter.SaveData(),
             TravelEventsSaveData = new(IndexesLastEvents),
 
-            };
+        };
         return saveData;
     }
 

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,7 +5,7 @@ public class EventAbandonedHut : EventInTravel
 {
     [SerializeField] private List<Item> _loot;
     [SerializeField] private List<Item> _rareLoot;
-    
+
     private int _probabilityOfGoodResult = 50;
     public override void SetButtons()
     {
@@ -52,7 +51,7 @@ public class EventAbandonedHut : EventInTravel
         string loot = "";
         string missedLoot = "";
         Item item;
-        
+
         for (int i = 0; i < countOfCommonLoot - 1; i++)
         {
             item = _loot[Random.Range(0, _loot.Count)];
@@ -76,26 +75,26 @@ public class EventAbandonedHut : EventInTravel
                 {
                     _eventWindow.ChangeDescription(
                         "К счастью, в хижине никого не оказалось, и вы обыскали её. Среди полезных вещей вы нашли: "
-                        + loot + "а так же ценный предмет " + item.Name +$". К тому же вы нашли {money} золота. " +
+                        + loot + "а так же ценный предмет " + item.Name + $". К тому же вы нашли {money} золота. " +
                         $"Среди полезных вещей так же были: {missedLoot} но вы не смогли их взять, из-за нехватки свободного места в инвентаре.");
                 }
                 else
                 {
                     _eventWindow.ChangeDescription(
                         "К счастью, в хижине никого не оказалось, и вы обыскали её. Среди полезных вещей вы нашли: "
-                        + loot + "а так же ценный предмет " + item.Name +$". К тому же вы нашли {money} золота.");
+                        + loot + "а так же ценный предмет " + item.Name + $". К тому же вы нашли {money} золота.");
                 }
             }
             else
             {
                 missedLoot += item.Name + ", ";
-                money += item.Price/2 + 1;
+                money += item.Price / 2 + 1;
                 if (missedLoot != "")
                 {
                     _eventWindow.ChangeDescription("К счастью, в хижине никого не оказалось, и вы обыскали её. Среди полезных вещей вы нашли: " +
                                                    loot + $"а так же {money} золота" + $" Среди полезных вещей так же были: {missedLoot} но вы не смогли их взять из-за нехватки свободного места в инвентаре.");
                 }
-                else 
+                else
                     _eventWindow.ChangeDescription("К счастью, в хижине никого не оказалось, и вы обыскали её. Среди полезных вещей вы нашли: " +
                                                    loot + $"а так же {money} золота.");
             }
@@ -110,16 +109,16 @@ public class EventAbandonedHut : EventInTravel
             else
             {
                 missedLoot += item.Name + ", ";
-                money += item.Price/2 + 1;
+                money += item.Price / 2 + 1;
             }
 
             if (missedLoot != "")
             {
-                _eventWindow.ChangeDescription("К счастью, хижина оказалась пуста, и вы обыскали ее. Среди полезных вещей вы нашли: "+
+                _eventWindow.ChangeDescription("К счастью, хижина оказалась пуста, и вы обыскали ее. Среди полезных вещей вы нашли: " +
                                                loot + $"а так же {money} золота" + $" Среди полезных вещей так же были: {missedLoot} но вы не смогли их взять, из-за нехватки свободного места в инвентаре.");
             }
-            else 
-                _eventWindow.ChangeDescription("К счастью, хижина оказалась пуста, и вы обыскали ее. Среди полезных вещей вы нашли: "+
+            else
+                _eventWindow.ChangeDescription("К счастью, хижина оказалась пуста, и вы обыскали ее. Среди полезных вещей вы нашли: " +
                                                 loot + $"а так же {money} золота.");
         }
     }

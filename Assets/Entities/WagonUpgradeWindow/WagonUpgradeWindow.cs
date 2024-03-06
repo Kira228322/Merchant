@@ -34,7 +34,7 @@ public class WagonUpgradeWindow : MonoBehaviour
         _slotsText.text = $"Количество слотов: {Player.Instance.WagonStats.Body.InventoryRows * 5}";
         _weightText.text = $"Макс. масса груза: {Player.Instance.WagonStats.Suspension.MaxWeight}кг";
         _modifierText.text = $"Модификатор дороги: {Math.Round(Player.Instance.WagonStats.Wheel.QualityModifier - 1, 2) * 100}";
-        
+
         foreach (var upgrades in wagonUpgrader.CurrentUpgrades)
         {
             if (upgrades == null) // Если вдруг игрок вкачался на максимум, то в рестоке у wagonUpgradera будут null'ы
@@ -51,7 +51,7 @@ public class WagonUpgradeWindow : MonoBehaviour
             else if (upgrades is Body)
             {
                 Instantiate(_bodyPanelPrefab.gameObject, _container).GetComponent<BodyPanel>().Init(upgrades, this);
-            } 
+            }
         }
     }
 
@@ -67,7 +67,7 @@ public class WagonUpgradeWindow : MonoBehaviour
                 break;
             }
         }
-        
+
         for (int i = 0; i < _container.childCount; i++)
             Destroy(_container.GetChild(i).gameObject);
 

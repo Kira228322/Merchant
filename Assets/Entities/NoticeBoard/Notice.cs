@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 public abstract class Notice : MonoBehaviour
@@ -10,7 +9,7 @@ public abstract class Notice : MonoBehaviour
     [HideInInspector] public string NoticeDescription;
     protected Noticeboard Noticeboard; //Нужно иметь ссылку на доску объявлений
     protected int SpawnPointIndex; //Нужно знать, какое по счёту это объявление на доске
-                                                  //для того, чтобы их правильно убирать
+                                   //для того, чтобы их правильно убирать
     public Button DisplayButton;
     public abstract void Initialize(Noticeboard noticeboard, string name, string text, int number);
     public abstract void OnNoticeTake();

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EventTemple : EventInTravel
@@ -26,7 +24,7 @@ public class EventTemple : EventInTravel
                 }
                 else
                     _eventWindow.ChangeDescription("Богиня не услышала ваши молитвы...");
-                
+
                 break;
         }
     }

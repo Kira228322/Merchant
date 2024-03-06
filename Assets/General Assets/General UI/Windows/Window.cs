@@ -9,7 +9,7 @@ public abstract class Window : MonoBehaviour
     protected virtual void Start()
     {
         MapManager.Windows.Add(this);
-        
+
         CorrectPosition();
         StartCoroutine(AppearenceAnimation(0.74f, 0.02f, 50));
     }
@@ -19,17 +19,17 @@ public abstract class Window : MonoBehaviour
         CanvasGroup canvasGroup = GetComponent<CanvasGroup>();
         float alpha = canvasGroup.alpha;
         alpha = 0.31f;
-        
+
         Image image = GetComponent<Image>();
         Color color = image.color;
         color.a = 0.74f;
-        
-        WaitForSeconds frequency = new WaitForSeconds(animationFrequency);
-        
+
+        WaitForSeconds frequency = new(animationFrequency);
+
         transform.position -= new Vector3(0, appearDistance);
         int count = Convert.ToInt32(duration / animationFrequency);
-        Vector3 delta = new Vector3(0,appearDistance/count);
-        
+        Vector3 delta = new(0, appearDistance / count);
+
         for (int i = 0; i < count; i++)
         {
             transform.position += delta;
@@ -45,29 +45,29 @@ public abstract class Window : MonoBehaviour
     {
         RectTransform rectTransform = GetComponent<RectTransform>();
         // Image image = GetComponent<Image>();
-        
+
         transform.position = Input.mousePosition;
         switch (rectTransform.position)
         {// Спавним окно не ровно в точке, куда тыкнули, а рядом с ним, чтобы угол окна касался точки нажатия и находился в
             // в пространстве, где больше всего места 
-            case Vector3 pos when pos.x > Screen.width/2 && pos.y > Screen.height/2: // 1 четверть
-                transform.position += new Vector3(-rectTransform.rect.width, -rectTransform.rect.height)/2;
+            case Vector3 pos when pos.x > Screen.width / 2 && pos.y > Screen.height / 2: // 1 четверть
+                transform.position += new Vector3(-rectTransform.rect.width, -rectTransform.rect.height) / 2;
                 break;
-            case Vector3 pos when pos.x < Screen.width/2 && pos.y > Screen.height/2: // 2 четверть
-                transform.position += new Vector3(rectTransform.rect.width, -rectTransform.rect.height)/2;
+            case Vector3 pos when pos.x < Screen.width / 2 && pos.y > Screen.height / 2: // 2 четверть
+                transform.position += new Vector3(rectTransform.rect.width, -rectTransform.rect.height) / 2;
                 break;
-            case Vector3 pos when pos.x < Screen.width/2 && pos.y < Screen.height/2: // 3 четверть
-                transform.position += new Vector3(rectTransform.rect.width, rectTransform.rect.height)/2;
+            case Vector3 pos when pos.x < Screen.width / 2 && pos.y < Screen.height / 2: // 3 четверть
+                transform.position += new Vector3(rectTransform.rect.width, rectTransform.rect.height) / 2;
                 break;
-            case Vector3 pos when pos.x > Screen.width/2 && pos.y < Screen.height/2: // 4 четверть
-                transform.position += new Vector3(-rectTransform.rect.width, rectTransform.rect.height)/2;
+            case Vector3 pos when pos.x > Screen.width / 2 && pos.y < Screen.height / 2: // 4 четверть
+                transform.position += new Vector3(-rectTransform.rect.width, rectTransform.rect.height) / 2;
                 break;
         }
-        
+
         // Нижний код оказался не нужен, потому что придумал верхний. Этот код пригодится,
         // если будет какое-то широкое или высокое окно, пока закомментим для повышения производительности
-        
-        Vector3 delta = new Vector3();
+
+        Vector3 delta = new();
         if (rectTransform.position.y + rectTransform.rect.height / 2 > Screen.height)
         { // чтобы окно не заспавнилось вне экрана сверху
             delta.y = rectTransform.position.y + rectTransform.rect.height / 2 - Screen.height;
@@ -82,10 +82,10 @@ public abstract class Window : MonoBehaviour
             delta.x = 0;
             transform.position -= delta;
         }
-        
+
         if (rectTransform.position.x + rectTransform.rect.width / 2 > Screen.width)
         {// чтобы окно не заспавнилось вне экрана справа
-            delta.x = rectTransform.position.x + rectTransform.rect.width / 2  - Screen.width;
+            delta.x = rectTransform.position.x + rectTransform.rect.width / 2 - Screen.width;
             delta.x *= 1.01f;
             delta.y = 0;
             transform.position -= delta;

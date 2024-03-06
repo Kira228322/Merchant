@@ -21,7 +21,7 @@ public class RegionEditor : Editor
         if (GUILayout.Button("Reset"))
         {
             _region.tmpFloat = new List<float>();
-        
+
             foreach (var _ in Enum.GetValues(typeof(Item.ItemType)))
             {
                 _region.tmpFloat.Add(1);
@@ -30,12 +30,12 @@ public class RegionEditor : Editor
 
         if (GUI.changed)
             EditorUtility.SetDirty(_region);
-        
+
         if (_region.tmpFloat.Count != Enum.GetValues(typeof(Item.ItemType)).Length)
         {
             return;
         }
-    
+
         GUILayout.Space(5);
         int i = 0;
         if (_region.tmpFloat.Count > 0)
@@ -55,11 +55,11 @@ public class RegionEditor : Editor
                 EditorGUILayout.EndVertical();
             }
         }
-        
+
         if (GUI.changed)
             EditorUtility.SetDirty(_region);
-        
+
     }
-    
-    
+
+
 }

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,12 +6,12 @@ using UnityEngine;
 public class NpcTraderData : NpcData, IResetOnExitPlaymode, ISaveable<NpcTraderSaveData>
 {
     public List<TraderType> TraderTypes;
-    [Tooltip("Будет ли торговец покупать запрещенные предметы")]public bool IsBlackMarket;
-    [Tooltip("Будет ли торговец продавать то, что купил у игрока")]public bool HaveAdditiveGoods;
+    [Tooltip("Будет ли торговец покупать запрещенные предметы")] public bool IsBlackMarket;
+    [Tooltip("Будет ли торговец продавать то, что купил у игрока")] public bool HaveAdditiveGoods;
 
-    [HideInInspector, SerializeField] private List<NpcTrader.TraderGood> _baseGoods = new ();
-    [HideInInspector, SerializeField] private List<NpcTrader.BuyCoefficient> _baseBuyCoefficients = new ();
-    [SerializeField] private List<NpcTrader.TraderGood> _baseRecipes = new ();
+    [HideInInspector, SerializeField] private List<NpcTrader.TraderGood> _baseGoods = new();
+    [HideInInspector, SerializeField] private List<NpcTrader.BuyCoefficient> _baseBuyCoefficients = new();
+    [SerializeField] private List<NpcTrader.TraderGood> _baseRecipes = new();
     //AdditiveGoods рассчитываются только в рантайме или при загрузке, с инспектором никак не связаны
 
     [HideInInspector] public List<NpcTrader.TraderGood> BaseGoods => _baseGoods;
@@ -23,14 +22,14 @@ public class NpcTraderData : NpcData, IResetOnExitPlaymode, ISaveable<NpcTraderS
     [HideInInspector] public List<NpcTrader.TraderGood> AdditiveGoods;
     [HideInInspector] public List<NpcTrader.BuyCoefficient> BuyCoefficients;
     [HideInInspector] public List<NpcTrader.TraderGood> Recipes;
-    
+
     public void RestockCoefficients()
     {
         if (CurrentMoney > GameStartMoney)
             CurrentMoney -= (CurrentMoney - GameStartMoney) / 2;
         else
             CurrentMoney += (GameStartMoney - CurrentMoney) / 2;
-        
+
         foreach (var buyCoefficient in BuyCoefficients)
         {
             buyCoefficient.CountToBuy += buyCoefficient.DefaultCountToBuy / 4 + Player.Instance.Statistics.Diplomacy.Total + 1;
@@ -85,12 +84,12 @@ public class NpcTraderData : NpcData, IResetOnExitPlaymode, ISaveable<NpcTraderS
         //то его коэффициент и CountToBuy останутся прежними)
 
         var allGoodTypes = TraderTypes
-            .SelectMany(tt => tt.TraderGoodTypes)               
-            .Select(traderGoodType => new TraderType.TraderGoodType(traderGoodType))                       
+            .SelectMany(tt => tt.TraderGoodTypes)
+            .Select(traderGoodType => new TraderType.TraderGoodType(traderGoodType))
             .ToList();
 
         var mergedTraderGoods = allGoodTypes
-            .GroupBy(item => item.ItemType)                             
+            .GroupBy(item => item.ItemType)
             .ToDictionary(group => group.Key, group =>
             {
                 float averageCoefficient = group.Average(item => item.Coefficient);
@@ -106,5 +105,5 @@ public class NpcTraderData : NpcData, IResetOnExitPlaymode, ISaveable<NpcTraderS
         _baseBuyCoefficients.Clear();
         _baseBuyCoefficients.AddRange(mergedTraderGoods.Values.Select(type => new NpcTrader.BuyCoefficient(type)));
     }
-    
+
 }

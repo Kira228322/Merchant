@@ -1,9 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
 using UnityEditor;
-using UnityEditor.Rendering;
-using UnityEditor.TerrainTools;
 using UnityEngine;
 
 [CustomEditor(typeof(UniqueID))]
@@ -27,5 +22,5 @@ public class UniqueIDEditor : Editor
         if (GUI.changed)
             EditorUtility.SetDirty(uniqueID);
     }
-    
+
 }

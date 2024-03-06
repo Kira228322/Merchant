@@ -14,7 +14,7 @@ public class UIClock : MonoBehaviour
     private WeatherController _weatherController;
     private Coroutine _currentCoroutine;
     private Coroutine _sleepCoroutine;
-    
+
 
 
     private void OnEnable()
@@ -41,17 +41,17 @@ public class UIClock : MonoBehaviour
     {
         switch (GameTime.Hours)
         {
-            case int n when n >= 5 && n <= 14:
+            case int n when n is >= 5 and <= 14:
                 if ((int)_weatherController.WeatherStrength == 2) // сильный дождь
                     _nextTimeImage.sprite = _weatherSprites[3];
                 else _nextTimeImage.sprite = _weatherSprites[0];
                 break;
-            case int n when n >= 15 && n <= 21:
+            case int n when n is >= 15 and <= 21:
                 if ((int)_weatherController.WeatherStrength == 2) // сильный дождь
                     _nextTimeImage.sprite = _weatherSprites[4];
                 else _nextTimeImage.sprite = _weatherSprites[1];
                 break;
-            case int n when n >= 22 || n <= 4:
+            case int n when n is >= 22 or <= 4:
                 if ((int)_weatherController.WeatherStrength == 2) // сильный дождь
                     _nextTimeImage.sprite = _weatherSprites[5];
                 else _nextTimeImage.sprite = _weatherSprites[2];
@@ -78,22 +78,22 @@ public class UIClock : MonoBehaviour
         }
         switch (GameTime.Hours)
         {
-            case int n when n >= 5 && n <= 9:
+            case int n when n is >= 5 and <= 9:
                 _nextTimeImage.sprite = _timeSprites[0];
                 break;
-            case int n when n >= 10 && n <= 14:
+            case int n when n is >= 10 and <= 14:
                 _nextTimeImage.sprite = _timeSprites[1];
                 break;
-            case int n when n >= 15 && n <= 18:
+            case int n when n is >= 15 and <= 18:
                 _nextTimeImage.sprite = _timeSprites[2];
                 break;
-            case int n when n >= 19 && n <= 21:
+            case int n when n is >= 19 and <= 21:
                 _nextTimeImage.sprite = _timeSprites[3];
                 break;
-            case int n when n >= 22 || n <= 1:
+            case int n when n is >= 22 or <= 1:
                 _nextTimeImage.sprite = _timeSprites[4];
                 break;
-            case int n when n >= 2 && n <= 4:
+            case int n when n is >= 2 and <= 4:
                 _nextTimeImage.sprite = _timeSprites[5];
                 break;
         }
@@ -127,7 +127,7 @@ public class UIClock : MonoBehaviour
         _currentTimeImage.color = nextColor; // альфа 1
         _nextTimeImage.color = currentColor; // альфа 0
     }
-    
+
     public void OnClockClicked()
     {
         if (_currentCoroutine != null)
@@ -153,7 +153,7 @@ public class UIClock : MonoBehaviour
     {
         WaitForSeconds waitForSeconds = new(0.1f);
         _detailedTimeObject.SetActive(true);
-        while(true)
+        while (true)
         {
             _detailedTime.text = $"День {GameTime.CurrentDay}\n{GameTime.Hours:D2}:{GameTime.Minutes:D2}";
             yield return waitForSeconds;

@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 [System.Serializable]
-public class GlobalSaveData 
+public class GlobalSaveData
 {
     //Сборник всех компонентов, которые нужно сейвить. Чтобы сохранение было единым файлом, а не кучей разных.
     public PlayerData PlayerData;

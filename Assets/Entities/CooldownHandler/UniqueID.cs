@@ -1,9 +1,7 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class UniqueID: MonoBehaviour 
+public class UniqueID : MonoBehaviour
 {
     [Header("Поле ID должно быть пустым, если это меню префаба")]
     [SerializeField] private string _id;

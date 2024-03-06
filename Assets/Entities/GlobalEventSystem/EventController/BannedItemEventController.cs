@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -32,7 +30,7 @@ public class BannedItemEventController : MonoBehaviour, IEventController<GlobalE
         };
         var eventToAdd = GlobalEventHandler.Instance.AddGlobalEvent(newEvent);
         LastEventDay = GameTime.CurrentDay;
-        
+
         return eventToAdd;
     }
 

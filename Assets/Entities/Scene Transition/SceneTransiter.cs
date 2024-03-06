@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -39,21 +37,21 @@ public class SceneTransiter : MonoBehaviour, ISaveable<SceneSaveData>
     {
         Destroy(GameManager.Instance.CurrentFunctionalWindow);
         Destroy(GameManager.Instance.CurrentWarningWindow);
-        
-        
+
+
         _mapButton.isOn = false;
         _road = road;
         MapManager.TravelInit(_road);
-        
+
         enabled = true;
         _animator.SetTrigger("StartTransition");
-        
-        
+
+
         _loadingSceneOperation = SceneManager.LoadSceneAsync(scene);
         _loadingSceneOperation.allowSceneActivation = false;
         MapManager.IsActiveSceneTravel = true;
     }
-    
+
     public void StartTransit(Location location)
     {
         _mapButton.isOn = false;
@@ -76,7 +74,7 @@ public class SceneTransiter : MonoBehaviour, ISaveable<SceneSaveData>
             enabled = false;
         }
     }
-    
+
     public void OnAnimationOver()
     {
         _loadingSceneOperation.allowSceneActivation = true;

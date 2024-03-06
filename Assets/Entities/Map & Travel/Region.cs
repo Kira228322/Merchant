@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,12 +10,12 @@ public class Region : MonoBehaviour
     [SerializeField] private List<Location> _locations;
 
     [SerializeField] private List<NpcQuestGiverData> _questGivers = new();
-    
-    [HideInInspector, SerializeField] private Dictionary<Item.ItemType, float> _coefsForItemTypes = new (); 
+
+    [HideInInspector, SerializeField] private Dictionary<Item.ItemType, float> _coefsForItemTypes = new();
     public Dictionary<Item.ItemType, float> CoefsForItemTypes => _coefsForItemTypes;
-    
-    [HideInInspector]public List<float> tmpFloat; // пока без этого не обойтись. нужен для кастом эдитора
-    public Dictionary<string, int[]> ItemEconomyParams = new ();
+
+    [HideInInspector] public List<float> tmpFloat; // пока без этого не обойтись. нужен для кастом эдитора
+    public Dictionary<string, int[]> ItemEconomyParams = new();
     [SerializeField] private TextAsset cvsEconomyParams;
     public int AveragePopulation; // параметр нужный для заполенения подобного dictionary в каждой Location данного региона
     [HideInInspector] public Dictionary<string, int> CountOfEachItem;
@@ -45,12 +44,12 @@ public class Region : MonoBehaviour
 
         return availableQuestGivers[Random.Range(0, availableQuestGivers.Count)];
     }
-    
-    
+
+
     public void FillEconomyParamsDictionary()
     {
         char lineEnding = '\n';
-        
+
         Encoding encoding = Encoding.UTF8;
         byte[] fileBytes = cvsEconomyParams.bytes;
         string fileContent = encoding.GetString(fileBytes);
@@ -59,7 +58,7 @@ public class Region : MonoBehaviour
         for (int i = 1; i < rows.Length - 1; i++)
         {
             string[] cells = rows[i].Split(';');
-            ItemEconomyParams.Add(cells[0], new [] 
+            ItemEconomyParams.Add(cells[0], new[]
             {Convert.ToInt32(cells[1]), Convert.ToInt32(cells[2]),Convert.ToInt32(cells[3])});
         }
         FillDictionariesOfLocations();
@@ -85,7 +84,7 @@ public class Region : MonoBehaviour
             CountOfEachItem.Add(item.Key, item.Value[0]); // item.Value[0] равновесное число
         }
         InitializeLocations();
-        
+
     }
     private void InitializeLocations()
     {
@@ -106,20 +105,20 @@ public class Region : MonoBehaviour
     {
         foreach (var item in ItemEconomyParams)
             CountOfEachItem[item.Key] = 0;
-        
+
         for (int i = 0; i < _locations.Count; i++)
             foreach (var countOfItem in _locations[i].CountOfEachItem)
             {
                 CountOfEachItem[countOfItem.Key] += countOfItem.Value;
             }
     }
-    
+
 
     public float CalculatePriceCoefRegion(int currentQuantity, int P, int Q, int A, int C)
     {
         if (currentQuantity <= C)
             currentQuantity = C + 1;
-        
+
         float B = (float)A / (Q - C) - P;
         float result = (float)Math.Round((float)A / (currentQuantity - C) - B) / P;
         if (result > 1.35f)
@@ -128,34 +127,34 @@ public class Region : MonoBehaviour
             result = 0.74f;
         return result;
     }
-    
+
     public float CalculatePriceCoefLocation(int currentQuantity, int P, int Q, int A, int C)
     {
         // Отдельный метод для локаций. Тут менее гибкое изменение + меньшее отклонение от единицы (1)
         if (currentQuantity <= C)
             currentQuantity = C + 1;
-        
+
         float B = (float)A / (Q - C) - P;
-        float result = (float)Math.Round( (A * 0.8f) / (currentQuantity - C) - B) / P;
+        float result = (float)Math.Round((A * 0.8f) / (currentQuantity - C) - B) / P;
         if (result > 1.3f)
             result = 1.3f;
         else if (result < 0.77f) // 1/1.3f
             result = 0.77f;
         return result;
     }
-    
+
     public int CalculateGainOnMarket(int currentQuantity, int P, int Q, int A, int C, int budget)
     {
         // upd раньше С было число отрицательное, теперь положительное. Везде поменял знаки (в десмосе все еще отрицательное, в таблицу записывать по модулю)
         int C1 = A + C - 2 * Q;
         float B = (float)A / (Q - C) - P;
-        
+
         if (currentQuantity <= C)
             currentQuantity = C + 1;
         else if (currentQuantity >= A - C1)
             currentQuantity = A - C1 - 1;
 
-        budget += P / 2 + Random.Range(-budget/10, budget/10 + 1);
+        budget += P / 2 + Random.Range(-budget / 10, budget / 10 + 1);
 
         float boughtPrice = (float)A / (currentQuantity - C) - B;
         float producePrice = (float)A / (-currentQuantity + A - C1) - B;
@@ -164,10 +163,10 @@ public class Region : MonoBehaviour
             boughtPrice = P / 10f;
         else if (producePrice < P / 10f)
             producePrice = P / 10f;
-        
+
         int boughtCount = (int)Math.Round(budget / boughtPrice);
         int produceCount = (int)Math.Round(budget / producePrice);
-        
+
         if (produceCount - boughtCount < -currentQuantity) // если купить предметов нужно больше, чем их есть
             return -currentQuantity + Q; // то купить надо будет столько, сколько приведет количество к Q 
         return produceCount - boughtCount;

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -27,7 +25,7 @@ public class StatusUIObject : MonoBehaviour
     {
         if (!_activeStatus.IsActive)
             Destroy(gameObject);
-        
+
         _shell.fillAmount = _activeStatus.CurrentDurationHours / _activeStatus.StatusData.HourDuration;
     }
     public void OnClick()
@@ -41,7 +39,7 @@ public class StatusUIObject : MonoBehaviour
             _activeStatus.CurrentDurationHours,
             _activeStatus.StatusData.HourDuration);
 
-        Vector3 position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
+        Vector3 position = new(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z);
         position += new Vector3(0, _icon.rectTransform.rect.height + window.GetComponent<Image>().rectTransform.rect.height / 2, 0);
 
         window.transform.position = position;

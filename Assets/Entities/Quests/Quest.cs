@@ -1,8 +1,5 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 using UnityEngine.Events;
 
 public class Quest
@@ -40,7 +37,7 @@ public class Quest
     public int DayStartedOn;
     public int HourStartedOn;
 
-    public int DayFinishedOn;  
+    public int DayFinishedOn;
     public int HourFinishedOn;
 
     public int QuestCompletionDelay;
@@ -157,16 +154,16 @@ public class Quest
         CheckGoals();
     }
     public bool IsNpcSourceOfQuest(int ID)
-        //Ќужно дл€ проверки на активные квесты, чтобы пон€ть относитс€ ли этот квест к этому Ќѕ—.
-        //Ќо не св€зано с восклицательным знаком, потому что то что он выдал этот квест ещЄ не €вл€етс€
-        //основанием того что с ним об€зательно надо взаимодействовать
+    //Ќужно дл€ проверки на активные квесты, чтобы пон€ть относитс€ ли этот квест к этому Ќѕ—.
+    //Ќо не св€зано с восклицательным знаком, потому что то что он выдал этот квест ещЄ не €вл€етс€
+    //основанием того что с ним об€зательно надо взаимодействовать
     {
         if (QuestGiverID == ID)
             return true;
         return false;
     }
-    public bool IsNpcTargetOfQuest(int ID) 
-        //«аслуживает ли NPC с этим айди, чтобы над ним горел восклицательный знак
+    public bool IsNpcTargetOfQuest(int ID)
+    //«аслуживает ли NPC с этим айди, чтобы над ним горел восклицательный знак
     {
         return Goals.Any(goal =>
         {

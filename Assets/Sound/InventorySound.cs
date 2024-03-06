@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class InventorySound : MonoBehaviour
@@ -32,7 +29,7 @@ public class InventorySound : MonoBehaviour
     {
         _audioSource.PlayWithRandomPitch();
     }
-    
+
     public void PlaySound(InventoryItem item, int amount)
     {
         if (amount > 0)

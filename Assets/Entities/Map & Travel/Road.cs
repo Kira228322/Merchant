@@ -1,7 +1,4 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
 using UnityEngine;
 
 public class Road : MonoBehaviour
@@ -12,10 +9,10 @@ public class Road : MonoBehaviour
     public string RoadName => _roadName;
     [SerializeField] private string _description;
     public string Description => _description;
-    
+
     [SerializeField] private int _travelingTime; // измеряется в игровых часах
-    public int TravelingTime => _travelingTime;  
-    [SerializeField] [Min(25)] private int _quality;
+    public int TravelingTime => _travelingTime;
+    [SerializeField][Min(25)] private int _quality;
     public int Quality => _quality;
     [SerializeField] private int _danger;
     public int Danger => _danger;
@@ -35,7 +32,7 @@ public class Road : MonoBehaviour
     private void Start()
     {
         DangerMultiplier = 1;
-        
+
         _lengthsOfWays = new float[WayPoints.Count];
         for (int i = 0; i < WayPoints.Count - 1; i++)
         {
@@ -48,7 +45,7 @@ public class Road : MonoBehaviour
     //Java?
     {
         DangerMultiplier = value;
-        
+
         if (_danger * DangerMultiplier > 70)
             DangerMultiplier = 70f / _danger;
     }

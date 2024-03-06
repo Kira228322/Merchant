@@ -1,8 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -14,15 +11,16 @@ public class PregenQuestSO : ScriptableObject
     public string QuestSummary;
 
     [Tooltip("Айди нпс, который выдал квест. Используется для проверок в " +
-        "диалогах, но не влияет на ExclamationMark над головой")] public int QuestGiverID;
+        "диалогах, но не влияет на ExclamationMark над головой")]
+    public int QuestGiverID;
 
-    [TextArea(2,5)] public string Description;
+    [TextArea(2, 5)] public string Description;
 
     [HideInInspector] public bool RandomExp;
     [HideInInspector] public bool RandomReward;
 
-    [HideInInspector] public int MinExperienceReward; 
-    [HideInInspector] public int MaxExperienceReward; 
+    [HideInInspector] public int MinExperienceReward;
+    [HideInInspector] public int MaxExperienceReward;
     [HideInInspector] public int MinMoneyReward;
     [HideInInspector] public int MaxMoneyReward;
 
@@ -55,10 +53,9 @@ public class PregenQuestSO : ScriptableObject
             moneyReward = Random.Range(MinMoneyReward, MaxMoneyReward + 1),
             dayStartedOn = GameTime.CurrentDay,
             hourStartedOn = GameTime.Hours,
-            itemRewards = ItemRewards
+            itemRewards = ItemRewards,
+            goals = new()
         };
-
-        questParams.goals = new();
         foreach (CompactedGoal pregenGoal in goals)
         {
             Goal newGoal = new();
@@ -67,13 +64,13 @@ public class PregenQuestSO : ScriptableObject
             {
                 case CompactedGoal.GoalType.CollectItemsGoal:
                     additiveRewardItemCount = Random.Range(pregenGoal.minRequiredAmount, pregenGoal.maxRequiredAmount);
-                    
-                    newGoal = new CollectItemsGoal(pregenGoal.goalState, pregenGoal.description, 
+
+                    newGoal = new CollectItemsGoal(pregenGoal.goalState, pregenGoal.description,
                         pregenGoal.currentAmount, additiveRewardItemCount, pregenGoal.RequiredItemName);
-                    
+
                     if (pregenGoal.AdditiveMoneyReward)
                         questParams.moneyReward += ItemDatabase.GetItem(pregenGoal.RequiredItemName).Price * additiveRewardItemCount;
-                    
+
                     break;
 
                 case CompactedGoal.GoalType.TalkToNPCGoal:
@@ -105,8 +102,8 @@ public class PregenQuestSO : ScriptableObject
                     break;
                 case CompactedGoal.GoalType.DeliveryGoal:
                     newGoal = new DeliveryGoal(pregenGoal.goalState, pregenGoal.description,
-                        pregenGoal.currentAmount, 1, pregenGoal.RequiredIDofNPC, pregenGoal.RequiredItemCategories, 
-                        pregenGoal.QuestItemsBehaviour, (float)Math.Round(Random.Range(pregenGoal.MinRequiredDeliveryWeight, pregenGoal.MaxRequiredDeliveryWeight), 1), 
+                        pregenGoal.currentAmount, 1, pregenGoal.RequiredIDofNPC, pregenGoal.RequiredItemCategories,
+                        pregenGoal.QuestItemsBehaviour, (float)Math.Round(Random.Range(pregenGoal.MinRequiredDeliveryWeight, pregenGoal.MaxRequiredDeliveryWeight), 1),
                         Random.Range(pregenGoal.MinRequiredDeliveryCount, pregenGoal.MaxRequiredDeliveryCount), pregenGoal.RequiredRotThreshold);
                     break;
                 case CompactedGoal.GoalType.UseItemsGoal:
@@ -134,13 +131,13 @@ public class PregenQuestSO : ScriptableObject
     [Serializable]
     public class CompactedGoal
     {
-        public enum GoalType { CollectItemsGoal, TalkToNPCGoal, WaitingGoal, TimedGoal, GiveItemsGoal, DeliveryGoal, UseItemsGoal, KeepItemsGoal, StayOnSceneGoal}
+        public enum GoalType { CollectItemsGoal, TalkToNPCGoal, WaitingGoal, TimedGoal, GiveItemsGoal, DeliveryGoal, UseItemsGoal, KeepItemsGoal, StayOnSceneGoal }
 
         public GoalType goalType;
         public Goal.State goalState;
         public string description;
         public int currentAmount;
-        
+
         public bool randomAmount;
         public int minRequiredAmount;
         public int maxRequiredAmount;

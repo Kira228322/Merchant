@@ -1,13 +1,9 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor;
-using UnityEngine;
 
 [Serializable]
 public class TalkToNPCGoal : Goal
 {
-    [NonSerialized]public NpcData RequiredNPC;
+    [NonSerialized] public NpcData RequiredNPC;
     public int RequiredIDOfNPC;
     public string RequiredLine; //То, о чём надо поговорить. В Ink вызывается как invoke(RequiredLine) пример в Ink: invoke(talked_about_trading)
     public string FailingLine; //Если поговорил об этом, то квест зафейлится.

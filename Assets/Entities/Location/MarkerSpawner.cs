@@ -1,14 +1,10 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class MarkerSpawner : MonoBehaviour
 {
-    [SerializeField] private MonoBehaviour _usableObject; 
+    [SerializeField] private MonoBehaviour _usableObject;
     [SerializeField] private GameObject _markerPrefab;
-    [SerializeField] private Transform _spawnPoint; 
+    [SerializeField] private Transform _spawnPoint;
     private Marker _currentMarker;
     private BoxCollider2D _boxCollider2D;
 

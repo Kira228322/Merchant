@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine;
 
 public class InventoryPanel : MonoBehaviour
 {
@@ -13,7 +10,7 @@ public class InventoryPanel : MonoBehaviour
     [SerializeField] private TMP_Text _weightText;
     [SerializeField] private QuestItemHolder _questItemHolder;
     [SerializeField] private GameObject _questItemHolderPanel;
-    
+
     private void OnEnable()
     {
         _playersInventory.WeightChanged += OnWeightChanged;

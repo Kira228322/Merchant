@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -12,7 +10,7 @@ public class QuestLinePanel : MonoBehaviour
 
     [HideInInspector] public int DayFinishedOn;
     [HideInInspector] public int HourFinishedOn;
-    
+
     public Transform ItemContentTransform;
     [SerializeField] private TMP_Text _questLineNameText;
     [SerializeField] private Color _activeColor;
@@ -41,7 +39,7 @@ public class QuestLinePanel : MonoBehaviour
             return;
         }
 
-        bool allCompleted = questPanels.All(questPanel => questPanel.Quest.CurrentState == Quest.State.Completed || questPanel.Quest.CurrentState == Quest.State.Failed);
+        bool allCompleted = questPanels.All(questPanel => questPanel.Quest.CurrentState is Quest.State.Completed or Quest.State.Failed);
         bool anyRewardUncollected = questPanels.Any(questPanel => questPanel.Quest.CurrentState == Quest.State.RewardUncollected);
 
         _questLineNameText.color = allCompleted ? _completedColor : _activeColor;

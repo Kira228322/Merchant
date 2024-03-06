@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,7 +13,7 @@ public class RandomPlayingSounds : MonoBehaviour
     [SerializeField] private int _hourEnd;
     [SerializeField] private bool _randomPitch = true;
     private Coroutine _coroutine;
-    
+
     private float _baseVolume;
 
     private void OnEnable()
@@ -56,7 +55,7 @@ public class RandomPlayingSounds : MonoBehaviour
             _coroutine = null;
         }
     }
-    
+
     private IEnumerator PlaySound()
     {
         WaitForSeconds waitForSeconds;

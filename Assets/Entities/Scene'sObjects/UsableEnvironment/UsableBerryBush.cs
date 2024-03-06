@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class UsableBerryBush : UsableEnvironment
@@ -8,7 +6,7 @@ public class UsableBerryBush : UsableEnvironment
     protected override bool IsFunctionalComplete()
     {
         if (InventoryController.Instance.TryCreateAndInsertItem
-                (_berry, 1, 0) != null) 
+                (_berry, 1, 0) != null)
             return true;
         return false;
     }

@@ -19,23 +19,18 @@ public class TravelTimeCounter : MonoBehaviour
     private float count;
     public static string GetLocalizedTime(int amount, bool hours)
     {
-        if (amount % 100 >= 11 && amount % 100 <= 14)
+        if (amount % 100 is >= 11 and <= 14)
         {
             return hours ? "часов" : "дней";
         }
 
         int lastDigit = amount % 10;
-        switch (lastDigit)
+        return lastDigit switch
         {
-            case 1:
-                return hours ? "час" : "день";
-            case 2:
-            case 3:
-            case 4:
-                return hours ? "часа" : "дня";
-            default:
-                return hours ? "часов" : "дней";
-        }
+            1 => hours ? "час" : "день",
+            2 or 3 or 4 => hours ? "часа" : "дня",
+            _ => hours ? "часов" : "дней",
+        };
     }
 
     public void ChangeDuraion(int addTime)
@@ -55,7 +50,7 @@ public class TravelTimeCounter : MonoBehaviour
         _travelingTime = road.TravelingTime;
         if (Player.Instance.Inventory.IsOverencumbered)
             _duration = Convert.ToInt32(Math.Ceiling(road.TravelingTime * 1.5f));
-        else 
+        else
             _duration = road.TravelingTime;
         _minutes = 0;
         enabled = true;

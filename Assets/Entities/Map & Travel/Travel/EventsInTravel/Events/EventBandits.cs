@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
 
 public class EventBandits : EventInTravel
@@ -24,7 +21,7 @@ public class EventBandits : EventInTravel
         _itemTotalWealth = 0;
         foreach (InventoryItem item in Player.Instance.Inventory.BaseItemList)
         {
-            if (item.ItemData.IsQuestItem) 
+            if (item.ItemData.IsQuestItem)
                 continue; //квестовые предметы не учитываются в подсчете общей стоимости
             _itemTotalWealth += item.ItemData.Price * item.CurrentItemsInAStack;
         }
@@ -64,7 +61,7 @@ public class EventBandits : EventInTravel
                 _eventWindow.ChangeDescription($"Ограбление. Бандиты забрали вещи на сумму {(int)(_playerTotalWealth * _wealthTaken)} золота");
                 break;
         }
-        
+
     }
 
     private void TryRunningAway()

@@ -1,17 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WagonFunctionalWindow : MonoBehaviour
 {
     [SerializeField] private GameObject _sleepPanelPrefab;
- 
+
     private void OnEnable()
     {
         Player.Instance.PlayerMover.DisableMove();
         GameManager.Instance.CurrentFunctionalWindow = gameObject;
     }
-    
+
     public void OnSleepButtonClick()
     {
         Instantiate(_sleepPanelPrefab, MapManager.Canvas.transform);

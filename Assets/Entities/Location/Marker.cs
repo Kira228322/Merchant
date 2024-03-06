@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -11,7 +9,7 @@ public class Marker : MonoBehaviour, IPointerClickHandler
     {
         _usableObject = obj;
     }
-    
+
     public void OnPointerClick(PointerEventData eventData)
     {
         if (_usableObject is UsableEnvironment usableEnvironment)

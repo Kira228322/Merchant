@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -31,7 +30,8 @@ public class InventoryController : MonoBehaviour
     private ItemGrid _gridPickedUpFrom;
     private Vector2Int _itemPickedUpFromPosition;
 
-    public InventoryItem CurrentSelectedItem {
+    public InventoryItem CurrentSelectedItem
+    {
         get
         { return _selectedItem; }
         private set
@@ -200,16 +200,16 @@ public class InventoryController : MonoBehaviour
                 default:
                     break;
             }
-        } 
+        }
         if (SelectedItemGrid == _questItemHolder.ItemGrid) //–аботаем с левым доп.контейнером
-        { 
+        {
             //«десь можно было бы даже не делать проверку и всегда возвращать false,
             //потому что в этот контейнер вообще ничего нельз€ положить, только достать.
             //Ќо € всЄ-таки добавлю, чтобы в него можно было ложить квестовые айтемы,
             //на случай если они всЄ-же как-то оказались в основном инвентаре
             if (!CurrentSelectedItem.ItemData.IsQuestItem)
                 return false;
-        } 
+        }
         if (CurrentSelectedItem.ItemData.IsQuestItem)   //–аботаем с основным инвентарем
             return false;
 
@@ -293,7 +293,7 @@ public class InventoryController : MonoBehaviour
         }
         public CompactedItem()
         {
-            
+
         }
     }
     #region CanInsertMultipleItems
@@ -302,10 +302,12 @@ public class InventoryController : MonoBehaviour
         List<CompactedItem> items = new();
         foreach (var item in rewardItems)
         {
-            CompactedItem newItemReward = new();
-            newItemReward.item = ItemDatabase.GetItem(item.itemName);
-            newItemReward.amount = item.amount;
-            newItemReward.daysBoughtAgo = item.daysBoughtAgo;
+            CompactedItem newItemReward = new()
+            {
+                item = ItemDatabase.GetItem(item.itemName),
+                amount = item.amount,
+                daysBoughtAgo = item.daysBoughtAgo
+            };
         }
         /*
          ћетод провер€ет, есть ли место дл€ размещени€ нескольких предметов. —ам не размещает (почему - комментарий внизу)
@@ -540,7 +542,7 @@ public class InventoryController : MonoBehaviour
     {
         CurrentSelectedItem = SelectedItemGrid.PickUpItem(tileGridPosition.x, tileGridPosition.y);
         _gridPickedUpFrom = SelectedItemGrid;
-        _itemPickedUpFromPosition = new Vector2Int (CurrentSelectedItem.XPositionOnTheGrid, CurrentSelectedItem.YPositionOnTheGrid);
+        _itemPickedUpFromPosition = new Vector2Int(CurrentSelectedItem.XPositionOnTheGrid, CurrentSelectedItem.YPositionOnTheGrid);
         if (CurrentSelectedItem != null)
         {
             _rectTransform = CurrentSelectedItem.GetComponent<RectTransform>();
@@ -664,12 +666,12 @@ public class InventoryController : MonoBehaviour
         }
         return result;
     }
-    private InventoryItem TryInsertItem (InventoryItem itemToInsert, bool isFillingStackFirst)
+    private InventoryItem TryInsertItem(InventoryItem itemToInsert, bool isFillingStackFirst)
     {
         Vector2Int? posOnGrid = SelectedItemGrid.FindSpaceForItemInsertion(itemToInsert, isFillingStackFirst);
-        if (posOnGrid == null) 
+        if (posOnGrid == null)
         {
-            return null; 
+            return null;
         }
         InventoryItem result = SelectedItemGrid.TryPlaceItem(itemToInsert, posOnGrid.Value.x, posOnGrid.Value.y);
         return result;

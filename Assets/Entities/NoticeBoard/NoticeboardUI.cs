@@ -1,8 +1,5 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class NoticeboardUI : MonoBehaviour
@@ -31,7 +28,7 @@ public class NoticeboardUI : MonoBehaviour
             {
                 case Noticeboard.CompactedQuestNotice questNotice:
                     QuestNotice newQuestNotice = AddQuestNotice(i, questNotice.name, questNotice.description, questNotice.questParams);
-                    newQuestNotice.QuestGiverID = questNotice.questGiverID; 
+                    newQuestNotice.QuestGiverID = questNotice.questGiverID;
                     break;
                 case Noticeboard.CompactedEventNotice eventNotice:
                     AddEventNotice(i, eventNotice.name, eventNotice.description, eventNotice.globalEvent);

@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,8 +6,9 @@ using UnityEngine;
 public class PregenQuestDatabaseSO : ScriptableObject
 {
     public List<PregenQuestSO> ScriptedQuests;
-    
-    [Serializable] public class RandomQuestSO
+
+    [Serializable]
+    public class RandomQuestSO
     {
         public PregenQuestSO RandomQuest;
         public string Name;

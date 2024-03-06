@@ -1,10 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
 
 public static class MapManager
 {
@@ -16,7 +13,7 @@ public static class MapManager
     public static Road CurrentRoad;
     public static bool IsActiveSceneTravel;
     public static bool? Advertisement = true; // троичная логика на месте
-    
+
     private static string _travelingScene;
     private static SceneTransiter _loadScreen;
     public static SceneTransiter SceneTransiter => _loadScreen;
@@ -25,18 +22,18 @@ public static class MapManager
     public static GameObject RoadWindow => _roadWindow;
     private static GameObject _villageWindow;
     public static GameObject VillageWindow => _villageWindow;
-    
+
     private static GameObject _playerIcon;
     public static GameObject PlayerIcon => _playerIcon;
 
     public static event UnityAction<Location, Location> PlayerStartedTravel;
 
-    [HideInInspector] public static List<Window> Windows = new List<Window>();
+    [HideInInspector] public static List<Window> Windows = new();
     public static bool EventInTravelIsActive;
 
-    public static void Init(string travelingScene, SceneTransiter loadScreen, GameObject roadWin, 
-            GameObject villageWin, Canvas canvas, GameObject playerIcon, Location startLocation) 
-        // В начале игры надо будет инициализировать
+    public static void Init(string travelingScene, SceneTransiter loadScreen, GameObject roadWin,
+            GameObject villageWin, Canvas canvas, GameObject playerIcon, Location startLocation)
+    // В начале игры надо будет инициализировать
     {
         _travelingScene = travelingScene;
         _loadScreen = loadScreen;
@@ -92,11 +89,11 @@ public static class MapManager
             return null;
         }
     }
-    
+
     public static Location GetRandomLocation(Region region)
     {
         return region.Locations[Random.Range(0, region.Locations.Count)];
     }
 
-    
+
 }

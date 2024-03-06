@@ -1,10 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
-using Unity.VisualScripting;
-using UnityEngine;
 
 [Serializable]
 public class NpcSaveData
@@ -66,7 +62,7 @@ public class NpcQuestGiverSaveData : NpcSaveData
 {
 
     public int LastGiveQuestDay;
-    public NpcQuestGiverSaveData(int id, int money, int day) : base(id,money)
+    public NpcQuestGiverSaveData(int id, int money, int day) : base(id, money)
     {
         LastGiveQuestDay = day;
     }

@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
+using UnityEngine;
 
 public class EventWell : EventInTravel
 {
@@ -14,7 +12,7 @@ public class EventWell : EventInTravel
                       $"\nШанс успеха зависит от вашей удачи");
         foreach (var item in Player.Instance.Inventory.BaseItemList)
         {
-            if (item.ItemData.Name == "Пустая бутылка" || item.ItemData.Name == "Бутылка с водой")
+            if (item.ItemData.Name is "Пустая бутылка" or "Бутылка с водой")
             {
                 ButtonsLabel.Add("Наполнить бутыль");
                 _haveBottle = true;
@@ -23,7 +21,7 @@ public class EventWell : EventInTravel
         }
         if (_haveBottle == false)
             ButtonsLabel.Add("Нет бутылки");
-        
+
     }
 
     public override void OnButtonClick(int n)
@@ -48,7 +46,7 @@ public class EventWell : EventInTravel
                         {
                             StatusManager.Instance.AddStatusForPlayer(_wellBuff);
                         }
-                        
+
                         foreach (var item in Player.Instance.Inventory.BaseItemList)
                         {
                             if (item.ItemData.Name == "Пустая бутылка")
@@ -65,7 +63,7 @@ public class EventWell : EventInTravel
                         _eventWindow.ChangeDescription("В колодце оказалась вода, но у вас не оказалось пустой бутылки. " +
                                                        "Вы выпили воду из своей бутылки, а затем наполнили ее.");
                     }
-                    else 
+                    else
                         _eventWindow.ChangeDescription("К несчастью, колодец оказался иссохшим.");
                 }
                 break;

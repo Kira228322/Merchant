@@ -1,8 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
+using UnityEngine;
 
 public class WagonPartDatabase : MonoBehaviour
 {
@@ -24,7 +21,7 @@ public class WagonPartDatabase : MonoBehaviour
     public static WagonPart GetWagonPart(string name)
     {
         WagonPart result = Instance.WagonParts.WagonPartsList.FirstOrDefault(wagonPart => wagonPart.Name == name);
- 
+
         if (result != null)
         {
             return result;
@@ -37,7 +34,7 @@ public class WagonPartDatabase : MonoBehaviour
     public static WagonPart GetWagonPartByLvl<T>(int lvl)
     {
         WagonPart result = Instance.WagonParts.WagonPartsList.FirstOrDefault(wagonPart => wagonPart is T && wagonPart.Level == lvl);
-        
+
         if (result != null)
         {
             return result;

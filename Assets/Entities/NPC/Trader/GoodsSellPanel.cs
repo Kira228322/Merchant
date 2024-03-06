@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -10,7 +8,7 @@ using UnityEngine.UI;
 public class GoodsSellPanel : MonoBehaviour
 {
     [SerializeField] private GameObject _itemInfoPanel;
-    [FormerlySerializedAs("_cost")] [SerializeField] private TMP_Text _costText;
+    [FormerlySerializedAs("_cost")][SerializeField] private TMP_Text _costText;
     [SerializeField] private TMP_Text _countText;
     [SerializeField] private Image _icon;
     [SerializeField] private TMP_Text _itemName;
@@ -23,8 +21,8 @@ public class GoodsSellPanel : MonoBehaviour
     private NpcTrader _trader;
 
     public InventoryItem Item { get => _item; }
-    
-    
+
+
     public void OnIconClick()
     {
         ItemInfo itemInfoPanel = Instantiate(_itemInfoPanel, MapManager.Canvas.transform).GetComponent<ItemInfo>();
@@ -40,7 +38,7 @@ public class GoodsSellPanel : MonoBehaviour
         _currentCount = itemToSell.CurrentItemsInAStack;
         _cost = CalculatePrice(_item.ItemData);
         ChangeNameColor();
-        _costText.text = _cost.ToString(); 
+        _costText.text = _cost.ToString();
         _countText.text = _currentCount.ToString();
         _icon.sprite = _item.ItemData.Icon;
         _itemName.text = _item.ItemData.Name;
@@ -69,7 +67,7 @@ public class GoodsSellPanel : MonoBehaviour
         NpcTraderData traderData = (NpcTraderData)_trader.NpcData;
         if (!traderData.IsBlackMarket && BannedItemsHandler.Instance.IsItemBanned(_item.ItemData))
             _sellButton.interactable = false;
-        
+
         _currentCount = _item.CurrentItemsInAStack;
         _countText.text = _currentCount.ToString();
     }
@@ -81,13 +79,13 @@ public class GoodsSellPanel : MonoBehaviour
             TradeManager.Instance.NotEnoughTraderMoney();
             return;
         }
-        
-        
+
+
         TradeManager.Instance.PlayerGoldIncrease(_cost);
         Player.Instance.Money += _cost;
         _trader.NpcData.CurrentMoney -= _cost;
         TradeManager.Instance.ChangeTraderMoneyText(_trader.NpcData.CurrentMoney);
-        
+
         _playerInventoryItemGrid.RemoveItemsFromAStack(_item, 1);
         _currentCount--;
         //Уменьшить CountToBuy у коэффициента с этим типом товара
@@ -121,22 +119,22 @@ public class GoodsSellPanel : MonoBehaviour
     {
         _cost = CalculatePrice(_item.ItemData);
         ChangeNameColor();
-        _costText.text = _cost.ToString(); 
+        _costText.text = _cost.ToString();
     }
-    
+
     private void ChangeNameColor()
     {
-        if (_cost > 1.17f * _item.ItemData.Price) 
+        if (_cost > 1.17f * _item.ItemData.Price)
         {
             _itemName.color = new Color(62 / 255f, 188 / 255f, 0);
         }
         else if (_cost < 0.855f * _item.ItemData.Price) // 1/1.17
         {
-            _itemName.color = new Color(174/255f,32/255f,14/255f);
+            _itemName.color = new Color(174 / 255f, 32 / 255f, 14 / 255f);
         }
         else
         {
-            _itemName.color = new Color(35/255f,50/255f,55/255f);
+            _itemName.color = new Color(35 / 255f, 50 / 255f, 55 / 255f);
         }
     }
 
@@ -146,13 +144,13 @@ public class GoodsSellPanel : MonoBehaviour
             return item.Price;
         int currentQuantityLoca = MapManager.CurrentLocation.CountOfEachItem[item.Name];
         int currentQuantityReg = MapManager.CurrentLocation.Region.CountOfEachItem[item.Name];
-        
-        float locationCoef = MapManager.CurrentLocation.Region.CalculatePriceCoefLocation(currentQuantityLoca, item.Price, 
+
+        float locationCoef = MapManager.CurrentLocation.Region.CalculatePriceCoefLocation(currentQuantityLoca, item.Price,
             MapManager.CurrentLocation.ItemEconomyParams[item.Name][0],
             MapManager.CurrentLocation.ItemEconomyParams[item.Name][1],
             MapManager.CurrentLocation.ItemEconomyParams[item.Name][2]);
-        
-        float regionCoef = MapManager.CurrentLocation.Region.CalculatePriceCoefRegion(currentQuantityReg, item.Price, 
+
+        float regionCoef = MapManager.CurrentLocation.Region.CalculatePriceCoefRegion(currentQuantityReg, item.Price,
             MapManager.CurrentLocation.Region.ItemEconomyParams[item.Name][0],
             MapManager.CurrentLocation.Region.ItemEconomyParams[item.Name][1],
             MapManager.CurrentLocation.Region.ItemEconomyParams[item.Name][2]);

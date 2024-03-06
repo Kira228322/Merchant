@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 [Serializable]
 public class GlobalEvent_Weather : GlobalEvent_Base
@@ -16,7 +13,7 @@ public class GlobalEvent_Weather : GlobalEvent_Base
         UnityEngine.Object.FindObjectOfType<WeatherController>().StartWeather();
     }
 
-    public override void Terminate() 
+    public override void Terminate()
     {
         UnityEngine.Object.FindObjectOfType<WeatherController>().RemoveEvent();
     }

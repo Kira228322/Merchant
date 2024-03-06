@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class SuspensionPanel : WagonPartPanel
 {
     public override void Init(WagonPart wagonPart, WagonUpgradeWindow window)

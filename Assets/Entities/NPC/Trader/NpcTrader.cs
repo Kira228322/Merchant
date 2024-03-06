@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class NpcTrader : Npc
 {
@@ -55,7 +54,7 @@ public class NpcTrader : Npc
             set
             {
                 _countToBuy = value;
-                
+
             }
         }
         public int DefaultCountToBuy; // Главное, чтобы set этого значения выполнялся 1 раз в самом начале игры
@@ -79,7 +78,7 @@ public class NpcTrader : Npc
 
         }
     }
-    
+
     private NpcTraderData _npcTraderData;
 
     private void Awake()
@@ -88,7 +87,7 @@ public class NpcTrader : Npc
     }
 
     public List<TraderGood> Goods => _npcTraderData.Goods;
-    public List<TraderGood> AdditiveGoods => _npcTraderData.AdditiveGoods; 
+    public List<TraderGood> AdditiveGoods => _npcTraderData.AdditiveGoods;
     public List<TraderGood> Recipes => _npcTraderData.Recipes;
     public List<BuyCoefficient> BuyCoefficients => _npcTraderData.BuyCoefficients; //Таких BuyCoefficients будет столько, сколько всего есть Item.ItemType (см.ниже)
     public void OpenTradeWindow()

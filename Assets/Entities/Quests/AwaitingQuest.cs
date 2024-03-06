@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.Events;
 
 /// <summary>
@@ -19,7 +16,7 @@ public class AwaitingQuest
     {
         this.questParams = questParams;
         this.delay = delay;
-        
+
     }
     public void Initialize()
     {

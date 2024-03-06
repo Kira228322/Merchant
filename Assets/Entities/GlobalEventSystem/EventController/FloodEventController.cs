@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -18,7 +17,7 @@ public class FloodEventController : MonoBehaviour, IEventController<GlobalEvent_
     [HideInInspector] public string SelectedItem;
 
     public List<Location> PossibleLocations = new();
-    
+
     public GlobalEvent_Flood AddEvent()
     {
         GlobalEvent_Flood newEvent = new()

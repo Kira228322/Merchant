@@ -66,7 +66,7 @@ public class PlayerExperience
         LevelUp?.Invoke();
     }
 
-    public void AddExperience (int amount) 
+    public void AddExperience(int amount)
     {
         _currentExperience += Convert.ToInt32(Math.Round(amount * (1 + ExpGain)));
         if (CurrentExperience >= ExperienceNeededForNextLevel())

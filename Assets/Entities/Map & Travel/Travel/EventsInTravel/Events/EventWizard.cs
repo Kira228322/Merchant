@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -29,9 +28,9 @@ public class EventWizard : EventInTravel
                     _eventWindow.ChangeDescription("У вас не было достаточно золота. Маг посмотрел на вас презренно.");
                     return;
                 }
-                
+
                 Player.Instance.Money -= cost;
-                
+
                 if (TravelEventHandler.EventFire(_rareBuffProbability, true, Player.Instance.Statistics.Diplomacy))
                 {
                     index = Random.Range(0, _rareStatuses.Count);
@@ -50,6 +49,6 @@ public class EventWizard : EventInTravel
                 _eventWindow.ChangeDescription("Чародей раздосадован, что не предоставилось возможности поколдовать...");
                 break;
         }
-        
+
     }
 }

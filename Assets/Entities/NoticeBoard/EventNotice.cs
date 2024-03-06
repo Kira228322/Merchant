@@ -1,10 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class EventNotice : Notice
-{   
-    public override void Initialize(Noticeboard noticeboard, string name, string text, int number)   
+{
+    public override void Initialize(Noticeboard noticeboard, string name, string text, int number)
     {
         Noticeboard = noticeboard;
         NoticeName = name;

@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class TabGroup : MonoBehaviour
 {
@@ -20,7 +18,7 @@ public class TabGroup : MonoBehaviour
             _tabButtons = new List<UITabButton>();
         }
 
-         _tabButtons.Add(button);
+        _tabButtons.Add(button);
     }
 
     public void OnTabSelected(UITabButton button)

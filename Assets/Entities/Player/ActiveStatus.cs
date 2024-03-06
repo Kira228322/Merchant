@@ -1,6 +1,4 @@
-using Unity.VisualScripting;
 using UnityEngine.Events;
-using UnityEngine;
 
 public class ActiveStatus
 {
@@ -8,7 +6,7 @@ public class ActiveStatus
     public Status StatusData { get; private set; }
     public float CurrentDurationHours { get; private set; }
     public event UnityAction StatusUpdated;
-    
+
     public void Init(Status status)
     {
         StatusData = status;
@@ -44,7 +42,7 @@ public class ActiveStatus
         }
         StatusUpdated?.Invoke();
     }
-    
+
     public void DecreaseDuration(float hoursSkipped)
     {
         CurrentDurationHours -= hoursSkipped;
@@ -112,7 +110,7 @@ public class ActiveStatus
                     break;
             }
         }
-        
+
         IsActive = false;
     }
 }

@@ -1,13 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
+using UnityEngine;
 
 public class CraftingRecipeDatabase : MonoBehaviour
 {
     public CraftingRecipeDatabaseSO Recipes;
     private static CraftingRecipeDatabase Instance; //—инглтон приватный, потому что обращение с базой только через методы GetItem (статические, это важно),
-                                           //другим челам не нужен доступ именно к синглтону
+                                                    //другим челам не нужен доступ именно к синглтону
 
     private void Awake()
     {
@@ -29,7 +27,7 @@ public class CraftingRecipeDatabase : MonoBehaviour
         {
             return result;
         }
-        
+
         Debug.LogWarning("“акого ресипе не существует!");
         return null;
     }

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -41,9 +40,9 @@ public class PlayersInventory : MonoBehaviour, ISaveable<PlayersInventorySaveDat
         {
             if (value > _maxTotalWeight)
                 IsOverencumbered = true;
-            else 
+            else
                 IsOverencumbered = false;
-            
+
             _currentTotalWeight = value;
             WeightChanged?.Invoke(CurrentTotalWeight, MaxTotalWeight);
         }
@@ -63,8 +62,8 @@ public class PlayersInventory : MonoBehaviour, ISaveable<PlayersInventorySaveDat
         BaseItemGrid.Init();
     }
 
-    private void OnEnable() 
-    { 
+    private void OnEnable()
+    {
         GameTime.HourChanged += OnHourChanged;
         GameTime.TimeSkipped += OnTimeSkipped;
         _inventoryItemGrid.ItemPlacedInTheGrid += AddItemInInventory;
@@ -75,8 +74,8 @@ public class PlayersInventory : MonoBehaviour, ISaveable<PlayersInventorySaveDat
         QuestItemGrid.ItemRemovedFromTheGrid += RemoveItemInQuestItems;
 
     }
-    private void OnDisable() 
-    { 
+    private void OnDisable()
+    {
         GameTime.HourChanged -= OnHourChanged;
         GameTime.TimeSkipped -= OnTimeSkipped;
         _inventoryItemGrid.ItemPlacedInTheGrid -= AddItemInInventory;
@@ -140,7 +139,7 @@ public class PlayersInventory : MonoBehaviour, ISaveable<PlayersInventorySaveDat
                 break;
             }
             priceLeftToRemove -= item.TotalPrice;
-            itemsToRemove.Add(item);        
+            itemsToRemove.Add(item);
         }
         for (int i = itemsToRemove.Count - 1; i >= 0; i--)
         {
@@ -295,7 +294,7 @@ public class PlayersInventory : MonoBehaviour, ISaveable<PlayersInventorySaveDat
 
     public void LoadData(PlayersInventorySaveData saveData)
     {
-        foreach(var item in saveData.items)
+        foreach (var item in saveData.items)
         {
             InventoryItem inventoryItem = InventoryController.Instance.TryCreateAndInsertItem(
                 ItemDatabase.GetItem(item.itemName), item.currentItemsInAStack, item.boughtDaysAgo);

@@ -1,7 +1,4 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class EventTraveler : EventInTravel
 {
@@ -11,22 +8,22 @@ public class EventTraveler : EventInTravel
     public override void SetButtons()
     {
         List<InventoryItem> inventory = Player.Instance.Inventory.ItemList;
-        List<InventoryItem> edibleItems = new List<InventoryItem>();
-        
+        List<InventoryItem> edibleItems = new();
+
         for (int i = 0; i < inventory.Count; i++)
         {
-            if (inventory[i].ItemData is UsableItem)
+            if (inventory[i].ItemData is UsableItem usableitem)
                 if (inventory[i].BoughtDaysAgo < inventory[i].ItemData.DaysToHalfSpoil)
                 {
-                    UsableItem item = (UsableItem)inventory[i].ItemData;
+                    UsableItem item = usableitem;
                     if (item.UsableItemType == UsableItem.UsableType.Edible)
                         edibleItems.Add(inventory[i]);
                 }
-            
+
         }
 
         _countOfEdibleItems = edibleItems.Count;
-        
+
         switch (_countOfEdibleItems)
         {
             case 0:
@@ -84,9 +81,9 @@ public class EventTraveler : EventInTravel
                         if (exist)
                         {
                             Player.Instance.Inventory.RemoveItemsOfThisItemData(_first.ItemData, 1);
-                            
-                            Player.Instance.Experience.AddExperience(_first.ItemData.Price/4 + 1);
-                            _eventWindow.ChangeDescription($"Путник был рад принять в дар {_first.ItemData.Name}. Он поблагодарил вас и отправился дальше. Вы получили {_first.ItemData.Price/4 + 1} опыта.");
+
+                            Player.Instance.Experience.AddExperience(_first.ItemData.Price / 4 + 1);
+                            _eventWindow.ChangeDescription($"Путник был рад принять в дар {_first.ItemData.Name}. Он поблагодарил вас и отправился дальше. Вы получили {_first.ItemData.Price / 4 + 1} опыта.");
                         }
                         else
                         {
@@ -113,9 +110,9 @@ public class EventTraveler : EventInTravel
                         if (exist)
                         {
                             Player.Instance.Inventory.RemoveItemsOfThisItemData(_first.ItemData, 1);
-                            
-                            Player.Instance.Experience.AddExperience(_first.ItemData.Price/4 + 1);
-                            _eventWindow.ChangeDescription($"Путник был рад принять в дар {_first.ItemData.Name}. Он поблагодарил вас и отправился дальше. Вы получили {_first.ItemData.Price/4 + 1} опыта.");
+
+                            Player.Instance.Experience.AddExperience(_first.ItemData.Price / 4 + 1);
+                            _eventWindow.ChangeDescription($"Путник был рад принять в дар {_first.ItemData.Name}. Он поблагодарил вас и отправился дальше. Вы получили {_first.ItemData.Price / 4 + 1} опыта.");
                         }
                         else
                         {
@@ -134,9 +131,9 @@ public class EventTraveler : EventInTravel
                         if (exist)
                         {
                             Player.Instance.Inventory.RemoveItemsOfThisItemData(_second.ItemData, 1);
-                            
-                            Player.Instance.Experience.AddExperience(_second.ItemData.Price/4 + 1);
-                            _eventWindow.ChangeDescription($"Путник был рад принять в дар {_second.ItemData.Name}. Он поблагодарил вас и отправился дальше. Вы получили {_second.ItemData.Price/4 + 1} опыта.");
+
+                            Player.Instance.Experience.AddExperience(_second.ItemData.Price / 4 + 1);
+                            _eventWindow.ChangeDescription($"Путник был рад принять в дар {_second.ItemData.Name}. Он поблагодарил вас и отправился дальше. Вы получили {_second.ItemData.Price / 4 + 1} опыта.");
                         }
                         else
                         {
@@ -149,7 +146,7 @@ public class EventTraveler : EventInTravel
                 }
                 break;
         }
-        
-        
+
+
     }
 }

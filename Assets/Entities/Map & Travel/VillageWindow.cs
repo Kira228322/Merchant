@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -47,7 +46,7 @@ public class VillageWindow : Window
     public void OnChooseRoadButtonClick()
     {
         GameObject win = Instantiate(MapManager.RoadWindow, MapManager.Canvas.transform);
-        List<Road> roads = new List<Road>();
+        List<Road> roads = new();
         foreach (var road in _place._roads)
         {
             if (road.Points[0] == MapManager.CurrentLocation || road.Points[1] == MapManager.CurrentLocation)

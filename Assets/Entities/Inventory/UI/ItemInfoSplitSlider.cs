@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class ItemInfoSplitSlider : MonoBehaviour
 {
@@ -20,12 +18,12 @@ public class ItemInfoSplitSlider : MonoBehaviour
     {
         _slider.maxValue = currentItem.CurrentItemsInAStack - 1;
         _maxSliderValueText.text = (currentItem.CurrentItemsInAStack - 1).ToString();
-        
+
     }
     public void OnSliderValueChanged()
     {
         _currentSliderValueText.text = _slider.value.ToString();
-    } 
+    }
     public void Split()
     {
         _parentItemInfo.Split((int)_slider.value);

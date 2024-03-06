@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,7 +5,7 @@ public class EventWitch : EventInTravel
 {
     [SerializeField] private List<Status> _positiveStatuses;
     [SerializeField] private List<Status> _negativeStatuses;
-    
+
     private int _probabilityOfGoodCast = 50;
     public override void SetButtons()
     {
@@ -35,7 +34,7 @@ public class EventWitch : EventInTravel
                     _eventWindow.ChangeDescription($"Вам не повезло и ведьма наложила на вас {status.StatusName}. " +
                                                    $"Ведьма предупреждала, что исход может быть и таков.");
                 }
-                    
+
                 break;
             case 1:
                 _eventWindow.ChangeDescription("От греха подальше вы отказываетесь от щедрого предложения странной ведьмы.");

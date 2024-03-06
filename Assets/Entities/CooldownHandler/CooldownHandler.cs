@@ -1,10 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class CooldownHandler: MonoBehaviour, ISaveable<CooldownHandlerSaveData>
+public class CooldownHandler : MonoBehaviour, ISaveable<CooldownHandlerSaveData>
 {
     [System.Serializable]
     public class ObjectOnCooldown

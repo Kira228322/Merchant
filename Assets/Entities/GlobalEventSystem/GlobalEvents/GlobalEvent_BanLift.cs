@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -18,7 +17,7 @@ public class GlobalEvent_BanLift : GlobalEvent_Base
     public override void Execute()
     {
         GlobalEvent_BannedItem foundEvent = (GlobalEvent_BannedItem)GlobalEventHandler.Instance.ActiveGlobalEvents.FirstOrDefault
-            (globalEvent => globalEvent is GlobalEvent_BannedItem bannedItemEvent 
+            (globalEvent => globalEvent is GlobalEvent_BannedItem bannedItemEvent
             && bannedItemEvent.BannedItemNames.Contains(BanLiftedItemName));
         if (foundEvent == null)
         {

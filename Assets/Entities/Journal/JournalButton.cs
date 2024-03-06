@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class JournalButton : MonoBehaviour
@@ -12,7 +8,7 @@ public class JournalButton : MonoBehaviour
 
     [SerializeField] private RectTransform _rectTransform;
     [SerializeField] private Button _button;
-    
+
 
     public void OnSelectButton()
     {
@@ -31,7 +27,7 @@ public class JournalButton : MonoBehaviour
         _controller.CurrentActivePanel.SetActive(false);
         _controller.CurrentActivePanel = _panel;
         _controller.CurrentActivePanel.SetActive(true);
-        
+
         _controller.CurrentActiveButton.OnDeselectButton();
         _controller.CurrentActiveButton = this;
         _controller.CurrentActiveButton.OnSelectButton();

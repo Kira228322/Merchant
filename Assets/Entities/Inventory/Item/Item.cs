@@ -8,24 +8,24 @@ public class Item : ScriptableObject
 
     public enum ItemType
     {
-        Null = 1337, 
+        Null = 1337,
         //1337 чтобы добавить Null, но не засрать уже существующие предметы
         //(Ќу обращение ведь по номеру этого Enum. ≈сли бы € сделал ему номер 0,
         //то все существующие предметы сдвинулись бы на одну категорию назад)
-        RichClothes = 0, WarmClothes, LightClothes, CeramicProduct, EverydayItem, CostumeJewelry, SouthPlant, NorthPlant, 
+        RichClothes = 0, WarmClothes, LightClothes, CeramicProduct, EverydayItem, CostumeJewelry, SouthPlant, NorthPlant,
         Cactus, MagicThing, Chemicals, Cosmetics, SouthFood, NorthFood, Food, Tea, Spices, EastSpices, MagicMaterial,
-        Fish, Seeds, MagicSeeds, SouthFruitAndBerry, NorthFruitAndBerry, Sushi, AlcoholDrink, Drink, Potion, Equipment, Armor, RangeWeapon, 
+        Fish, Seeds, MagicSeeds, SouthFruitAndBerry, NorthFruitAndBerry, Sushi, AlcoholDrink, Drink, Potion, Equipment, Armor, RangeWeapon,
         Materials, PreciousMetalsGems, MeleeWeapon, LootFromMonster
     }
-    
+
     public ItemType TypeOfItem;
-    
-    
-    
-    [TextArea(2,5)]public string Description;
-    [HideInInspector]public Sprite Icon;
+
+
+
+    [TextArea(2, 5)] public string Description;
+    [HideInInspector] public Sprite Icon;
     public int Price;
-    [Range(0,50)]public int Fragility; 
+    [Range(0, 50)] public int Fragility;
 
     public float Weight;
     public int MaxItemsInAStack;
@@ -35,7 +35,7 @@ public class Item : ScriptableObject
 
     [HideInInspector] public bool IsPerishable;
     [HideInInspector] public bool IsQuestItem;
-    
+
     [HideInInspector] public float DaysToHalfSpoil;
     [HideInInspector] public float DaysToSpoil;
 
@@ -86,5 +86,5 @@ public class Item : ScriptableObject
         { ItemType.LootFromMonster , "ƒобыча с монстра"}
     };
 
-    
+
 }

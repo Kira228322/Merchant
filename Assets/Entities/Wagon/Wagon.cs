@@ -1,18 +1,15 @@
-    using System;
-    using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-    using UnityEngine.EventSystems;
 
-    public class Wagon : MonoBehaviour
+public class Wagon : MonoBehaviour
 {
-    
-    
+
+
     [SerializeField] private GameObject _wheelGameObject;
     [SerializeField] private GameObject _bodyGameObject;
     [SerializeField] private GameObject _suspensionGameObject;
-    [SerializeField] private List<GameObject> _mediumWeightObjects = new ();
-    [SerializeField] private List<GameObject> _highWeightObjects = new ();
+    [SerializeField] private List<GameObject> _mediumWeightObjects = new();
+    [SerializeField] private List<GameObject> _highWeightObjects = new();
 
     public Wheel Wheel;
     public Body Body;
@@ -51,7 +48,7 @@ using UnityEngine;
         {
             foreach (var gameObject in _mediumWeightObjects)
                 gameObject.SetActive(true);
-            
+
             foreach (var gameObject in _highWeightObjects)
                 gameObject.SetActive(true);
         }
@@ -59,7 +56,7 @@ using UnityEngine;
         {
             foreach (var gameObject in _mediumWeightObjects)
                 gameObject.SetActive(true);
-            
+
             foreach (var gameObject in _highWeightObjects)
                 gameObject.SetActive(false);
         }
@@ -67,7 +64,7 @@ using UnityEngine;
         {
             foreach (var gameObject in _mediumWeightObjects)
                 gameObject.SetActive(false);
-            
+
             foreach (var gameObject in _highWeightObjects)
                 gameObject.SetActive(false);
         }
@@ -84,5 +81,5 @@ using UnityEngine;
         _suspensionGameObject.GetComponent<SpriteRenderer>().sprite = Suspension.Sprite;
     }
 
-    
+
 }

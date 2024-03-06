@@ -1,5 +1,3 @@
-
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,8 +31,8 @@ public class TradeManager : MonoBehaviour
     private Animator _buyPanelAnimator;
     private Animator _sellPanelAnimator;
     private Animator _traderMoneyAnimator;
-    public List<GoodsBuyPanel> GoodsBuyPanels = new ();
-    public List<GoodsSellPanel> GoodsSellPanels = new ();
+    public List<GoodsBuyPanel> GoodsBuyPanels = new();
+    public List<GoodsSellPanel> GoodsSellPanels = new();
     private NpcTrader _trader;
     private void Start()
     {
@@ -76,8 +74,8 @@ public class TradeManager : MonoBehaviour
     {
         _inventoryAnimator.SetTrigger("NotEnoughSpace");
     }
-    
-    
+
+
     public void OpenTradeWindow(NpcTrader trader)
     {
         InventoryController.Instance.enabled = false;
@@ -85,7 +83,7 @@ public class TradeManager : MonoBehaviour
         _playerBlock.blocksRaycasts = false;
         GameManager.Instance.ButtonsBlock.SetActive(false);
         _closeTradeButton.SetActive(true);
-        
+
         OpenBuyPanel(trader);
         OpenSellPanel(trader);
         OpenInventory();
@@ -103,25 +101,25 @@ public class TradeManager : MonoBehaviour
         _inventoryBlockAnimator.SetTrigger("Close");
         _sellPanelAnimator.SetTrigger("Close");
         _buyPanelAnimator.SetTrigger("Close");
-        
-        WaitForSeconds oneSecond = new WaitForSeconds(1f);
+
+        WaitForSeconds oneSecond = new(1f);
         yield return oneSecond;
-        
+
         List<GoodsBuyPanel> goodsBuyPanels = BuyPanelContent.GetComponentsInChildren<GoodsBuyPanel>().
             Where(panel => panel.IsOriginatedFromTrader == false).ToList();
-        
+
         foreach (var panel in goodsBuyPanels)
         {
             NpcTrader.TraderGood traderGood =
                 panel.Trader.Goods.FirstOrDefault(item => item.Good.Name == panel.Item.Good.Name);
-            if ( traderGood != null)
+            if (traderGood != null)
             {
                 traderGood.CurrentCount += panel.CurrentCount;
                 continue;
             }
 
             traderGood = panel.Trader.AdditiveGoods.FirstOrDefault(item => item.Good.Name == panel.Item.Good.Name);
-            if ( traderGood != null)
+            if (traderGood != null)
             {
                 traderGood.CurrentCount += panel.CurrentCount;
                 continue;
@@ -130,11 +128,11 @@ public class TradeManager : MonoBehaviour
             int newPrice = panel.Item.CurrentPrice;
             if (newPrice < panel.Item.Good.Price)
                 newPrice = panel.Item.Good.Price + Random.Range(1, panel.Item.Good.Price / 12 + 2);
-            
+
             panel.Trader.AdditiveGoods.Add(new NpcTrader.TraderGood
                 (panel.Item.Good.Name, panel.CurrentCount, panel.CurrentCount, newPrice));
         }
-        
+
         Player.Instance.Inventory.InventoryPanel.GetComponent<CanvasGroup>().blocksRaycasts = true;
         InventoryController.Instance.enabled = true;
         _playerBlock.alpha = 1;
@@ -150,7 +148,7 @@ public class TradeManager : MonoBehaviour
     {
         _trader = trader;
         BuyPanel.SetActive(true);
-        
+
         for (int i = BuyPanelContent.childCount - 1; i >= 0; i--)
             Destroy(BuyPanelContent.GetChild(i).gameObject);
 
@@ -178,9 +176,9 @@ public class TradeManager : MonoBehaviour
     private void OpenSellPanel(NpcTrader trader)
     {
         SellPanel.SetActive(true);
-        
+
         ChangeTraderMoneyText(trader.NpcData.CurrentMoney);
-        
+
         for (int i = SellPanelContent.childCount - 1; i >= 0; i--)
             Destroy(SellPanelContent.GetChild(i).gameObject);
 

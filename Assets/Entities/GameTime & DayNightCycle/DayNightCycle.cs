@@ -1,25 +1,22 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
-using Unity.VisualScripting;
+using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 [RequireComponent(typeof(Volume))]
 public class DayNightCycle : MonoBehaviour
 {
-    [SerializeField]private RawImage _farBackground;
-    [SerializeField]private RawImage _nearBackground;
-    private Color _white = new Color(0.84f,0.84f,0.84f);
-    private Color _grey = new Color(0.78f,0.78f,0.78f);
-    private Color _darkGrey = new Color(0.2f,0.2f,0.2f);
-    private Color _black = new Color(0.14f,0.14f,0.14f);
-    
+    [SerializeField] private RawImage _farBackground;
+    [SerializeField] private RawImage _nearBackground;
+    private Color _white = new(0.84f, 0.84f, 0.84f);
+    private Color _grey = new(0.78f, 0.78f, 0.78f);
+    private Color _darkGrey = new(0.2f, 0.2f, 0.2f);
+    private Color _black = new(0.14f, 0.14f, 0.14f);
+
     private Volume _volume;
     private Light2D _sun;
     private List<Light2D> _lights = new();
@@ -68,27 +65,27 @@ public class DayNightCycle : MonoBehaviour
         float cosineValue;
         switch (GameTime.Hours)
         {
-            case int n when n >= 23 || n <= 2:
+            case int n when n is >= 23 or <= 2:
                 volumeWeight = 1;
                 break;
-            case int n when n >= 3 && n <= 10:
-                cosineValue = ((GameTime.Hours-3) * 60 + GameTime.Minutes) / 480f; // изменяется от 0 до 1, когда время изменяется от 3 до 12
+            case int n when n is >= 3 and <= 10:
+                cosineValue = ((GameTime.Hours - 3) * 60 + GameTime.Minutes) / 480f; // изменяется от 0 до 1, когда время изменяется от 3 до 12
                 volumeWeight = Mathf.Cos(cosineValue * Mathf.PI) * 0.5f + 0.5f; // см f(x) = cos(Px)/2 + 0.5f
                 break;
-            case int n when n >= 11 && n <= 16:
+            case int n when n is >= 11 and <= 16:
                 volumeWeight = 0;
                 break;
-            case int n when n >= 17 && n <= 22:
+            case int n when n is >= 17 and <= 22:
                 cosineValue = 1 - ((GameTime.Hours - 17) * 60 + GameTime.Minutes) / 360f; // изменяется от 1 до 0, когда время изменяется от 17 до 22
                 volumeWeight = Mathf.Cos(cosineValue * Mathf.PI) * 0.5f + 0.5f;
                 break;
         }
-        
+
         _volume.weight = volumeWeight + _rainWeightOffset;
-        _sun.intensity = Mathf.Lerp(0.1f, 0.975f, 1-volumeWeight); // 0.1 и 0.975 это min и max значения которыми может быть освещение
+        _sun.intensity = Mathf.Lerp(0.1f, 0.975f, 1 - volumeWeight); // 0.1 и 0.975 это min и max значения которыми может быть освещение
         _nearBackground.color = Color.Lerp(_white, _darkGrey, volumeWeight);
         _farBackground.color = Color.Lerp(_grey, _black, volumeWeight);
-        
+
         if (_volume.weight >= 1) _volume.weight = 1;
         if (!_activateLights)
         {
@@ -125,16 +122,16 @@ public class DayNightCycle : MonoBehaviour
     }
     private void IncreaseWeatherWeightOffset()
     {
-        _rainWeightOffset += _weatherStrength/100f;
-        if (_rainWeightOffset >= _weatherStrength/10f)
+        _rainWeightOffset += _weatherStrength / 100f;
+        if (_rainWeightOffset >= _weatherStrength / 10f)
         {
-            _rainWeightOffset = _weatherStrength/10f;
+            _rainWeightOffset = _weatherStrength / 10f;
             GameTime.MinuteChanged -= IncreaseWeatherWeightOffset;
         }
     }
     private void DecreaseWeatherWeightOffset()
     {
-        _rainWeightOffset -= _weatherStrength/100f;
+        _rainWeightOffset -= _weatherStrength / 100f;
         if (_rainWeightOffset <= 0)
         {
             _rainWeightOffset = 0;

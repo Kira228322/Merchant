@@ -1,8 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class TestCheatGlobalEvents : MonoBehaviour
@@ -56,7 +54,7 @@ public class TestCheatGlobalEvents : MonoBehaviour
         foreach (GlobalEvent_Base globalEvent in GlobalEventHandler.Instance.ActiveGlobalEvents)
         {
             informationField.text += $"" +
-                $"{(globalEvent.GlobalEventName == "" || globalEvent.GlobalEventName == null? "Безымянный": globalEvent.GlobalEventName)}. " +
+                $"{(globalEvent.GlobalEventName is "" or null ? "Безымянный" : globalEvent.GlobalEventName)}. " +
                 $"Осталось {globalEvent.DurationHours} часов. {globalEvent.Description}\n";
         }
     }

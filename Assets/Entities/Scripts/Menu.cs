@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -56,14 +55,14 @@ public class Menu : MonoBehaviour
             if (!MapManager.EventInTravelIsActive)
                 GameTime.SetTimeScale(GameTime.TimeScaleInTravel);
         }
-        else 
+        else
             GameTime.SetTimeScale(1);
         Normal.TransitionTo(0.9f);
         StopAllCoroutines();
         if (_leftButtonImage.color.a != 0)
             StartCoroutine(FadeOutPlayerMovePanels());
         _animator.SetTrigger("FadeOut");
-        
+
         SaveData();
     }
 
@@ -72,7 +71,7 @@ public class Menu : MonoBehaviour
         _menuPanel.SetActive(false);
     }
 
-    
+
     public void OnSoundValueChange()
     {
         float value = math.lerp(-80, 0, (float)Math.Pow(_soundSlider.value, 0.33f));
@@ -92,9 +91,9 @@ public class Menu : MonoBehaviour
         float value = math.lerp(0, 490, _playerPanelSlider.value);
         _leftButton.sizeDelta = new Vector2(value, _leftButton.sizeDelta.y);
         _rightButton.sizeDelta = new Vector2(value, _rightButton.sizeDelta.y);
-        
+
         _playerMovePanelsTimer = 2.2f;
-        
+
         if (FadeIn == null)
         {
             if (FadeOut != null)
@@ -111,7 +110,7 @@ public class Menu : MonoBehaviour
 
     private IEnumerator Timer()
     {
-        WaitForSeconds waitForSeconds = new WaitForSeconds(0.05f);
+        WaitForSeconds waitForSeconds = new(0.05f);
         while (_playerMovePanelsTimer >= 0)
         {
             _playerMovePanelsTimer -= 0.05f;
@@ -123,7 +122,7 @@ public class Menu : MonoBehaviour
 
     private IEnumerator FadeInPlayerMovePanels()
     {
-        WaitForSeconds waitForSeconds = new WaitForSeconds(0.02f);
+        WaitForSeconds waitForSeconds = new(0.02f);
 
         Color color = _leftButtonImage.color;
         color.a = 0.05f;
@@ -142,8 +141,8 @@ public class Menu : MonoBehaviour
     private IEnumerator FadeOutPlayerMovePanels()
     {
         FadeIn = null;
-        WaitForSeconds waitForSeconds = new WaitForSeconds(0.02f);
-        
+        WaitForSeconds waitForSeconds = new(0.02f);
+
         Color color = _leftButtonImage.color;
         color.a = 0.65f;
         for (int i = 0; i < 20; i++)

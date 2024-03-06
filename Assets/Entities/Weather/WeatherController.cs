@@ -3,7 +3,6 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Events;
-using UnityEngine.Rendering.Universal.Internal;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
@@ -12,7 +11,7 @@ public class WeatherController : MonoBehaviour, IEventController<GlobalEvent_Wea
     [SerializeField] private ParticleSystem _rain;
     [SerializeField] private AudioMixerGroup _audioMixer;
     [SerializeField] private WindSound _windSound;
-    public enum StrengthOfWeather {Light, Medium, Heavy}
+    public enum StrengthOfWeather { Light, Medium, Heavy }
     private StrengthOfWeather _strengthOfWeather;
     public StrengthOfWeather WeatherStrength => _strengthOfWeather;
 
@@ -24,7 +23,7 @@ public class WeatherController : MonoBehaviour, IEventController<GlobalEvent_Wea
 
     public int MinDelayToNextEvent => 3;
     public int MaxDelayToNextEvent => 7;
-    
+
 
     public event UnityAction WeatherStarted;
     public event UnityAction WeatherFinished;
@@ -33,7 +32,7 @@ public class WeatherController : MonoBehaviour, IEventController<GlobalEvent_Wea
     [SerializeField] private AudioClip _strongRain;
     [SerializeField] private AudioSource _audioSource;
     private Coroutine _currentSound;
-    
+
     public void StartWeather()
     {
         switch (_strengthOfWeather)
@@ -51,7 +50,7 @@ public class WeatherController : MonoBehaviour, IEventController<GlobalEvent_Wea
         _rain.Play();
         _currentSound = StartCoroutine(PlaySound(_strengthOfWeather));
         WeatherStarted?.Invoke();
-        _rain.transform.rotation = Quaternion.Euler(0,0, -Random.Range(10, 16));
+        _rain.transform.rotation = Quaternion.Euler(0, 0, -Random.Range(10, 16));
     }
 
     private IEnumerator PlaySound(StrengthOfWeather strength)
@@ -86,7 +85,7 @@ public class WeatherController : MonoBehaviour, IEventController<GlobalEvent_Wea
         waitForSeconds = new WaitForSeconds(0.02f);
         for (int i = 0; i < 100; i++)
         {
-            _audioSource.volume += maxVolume/100;
+            _audioSource.volume += maxVolume / 100;
             yield return waitForSeconds;
         }
 
@@ -98,11 +97,11 @@ public class WeatherController : MonoBehaviour, IEventController<GlobalEvent_Wea
         _windSound.Volume = 0.67f;
         _audioMixer.audioMixer.GetFloat("MusicParentVolume", out var MusicParentVolume);
         _audioMixer.audioMixer.SetFloat("MusicParentVolume", MusicParentVolume + 2.25f);
-        WaitForSeconds waitForSeconds = new WaitForSeconds(0.02f);
+        WaitForSeconds waitForSeconds = new(0.02f);
         float maxVolume = _audioSource.volume;
         for (int i = 0; i < 50; i++)
         {
-            _audioSource.volume -= maxVolume/50;
+            _audioSource.volume -= maxVolume / 50;
             yield return waitForSeconds;
         }
         _audioSource.Stop();
@@ -141,7 +140,7 @@ public class WeatherController : MonoBehaviour, IEventController<GlobalEvent_Wea
     {
         var emissionModule = _rain.emission;
         emissionModule.rateOverTime = rateOverTime;
-        
+
         var mainModule = _rain.main;
         mainModule.startSpeed = speed;
 

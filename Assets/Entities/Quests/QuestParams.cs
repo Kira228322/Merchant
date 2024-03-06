@@ -1,11 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 [System.Serializable]
 public class QuestParams
 {
-    public enum State { Active, RewardUncollected, Completed, Failed}
+    public enum State { Active, RewardUncollected, Completed, Failed }
     public State currentState;
 
     public string questName;

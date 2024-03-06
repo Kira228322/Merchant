@@ -10,7 +10,7 @@ public class QuestAppearanceController : MonoBehaviour
     {
         public string QuestSummary;
         public Quest.State questState;
-        [Tooltip("—колько часов должно пройти с момента выполнени€ квеста, чтобы изменени€ вступили в силу")] 
+        [Tooltip("—колько часов должно пройти с момента выполнени€ квеста, чтобы изменени€ вступили в силу")]
         public int HoursDelay;
         public bool IsReady()
         {
@@ -33,7 +33,7 @@ public class QuestAppearanceController : MonoBehaviour
         }
     }
 
-    private enum AppearanceBehavior { HideThenShow, ShowThenHide}
+    private enum AppearanceBehavior { HideThenShow, ShowThenHide }
 
     [Tooltip("—мотрит на поведение _appearanceBehaviour. " +
         "≈сли HideThenShow, то объект начинает скрытым. " +
@@ -73,7 +73,7 @@ public class QuestAppearanceController : MonoBehaviour
 
         foreach (AppearanceControls control in controls)
         {
-            if (!control.IsReady()) 
+            if (!control.IsReady())
             {
                 return false;
             }
@@ -85,7 +85,7 @@ public class QuestAppearanceController : MonoBehaviour
     {
         if (_hideConditions.Any(control => control.QuestSummary == quest.QuestSummary)
             || _showConditions.Any(control => control.QuestSummary == quest.QuestSummary))
-                CheckAppearance();
+            CheckAppearance();
     }
 
     private void CheckAppearance()

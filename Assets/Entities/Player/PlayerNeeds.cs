@@ -1,11 +1,9 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 [Serializable]
-public class PlayerNeeds: ISaveable<PlayerNeedsSaveData>
+public class PlayerNeeds : ISaveable<PlayerNeedsSaveData>
 {
     [SerializeField] private SlidersController _hungerScale;
     [SerializeField] private SlidersController _sleepScale;
@@ -105,7 +103,7 @@ public class PlayerNeeds: ISaveable<PlayerNeedsSaveData>
         _generalTimeCounter++;
         if (_currentHunger <= 0 || _currentSleep <= 0)
             StatusManager.Instance.AddLowNeedsDebuff();
-        
+
         if (_generalTimeCounter % HungerDecayRate == 0)
         {
             CurrentHunger--;

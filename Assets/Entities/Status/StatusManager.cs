@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -41,7 +39,7 @@ public class StatusManager : MonoBehaviour, ISaveable<StatusManagerSaveData>
             {
                 ActiveStatuses.RemoveAt(i);
                 if (ActiveStatuses.Count == 0)
-                    _statusPanelRayCastTargeting.ChangeEnable(false); 
+                    _statusPanelRayCastTargeting.ChangeEnable(false);
             }
         }
     }

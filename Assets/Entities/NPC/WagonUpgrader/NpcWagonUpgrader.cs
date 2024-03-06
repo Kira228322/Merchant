@@ -1,7 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEngine;
 
 public class NpcWagonUpgrader : Npc
 {
@@ -13,6 +10,6 @@ public class NpcWagonUpgrader : Npc
     }
 
     public List<WagonPart> CurrentUpgrades => _npcWagonUpgraderData.CurrentWagonUpgrades;
-    
-    
+
+
 }

@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -24,8 +22,8 @@ public class EventInTravelInfoPanel : MonoBehaviour
 
     private IEnumerator AppearAndDisappear()
     {
-        WaitForSeconds waitForSeconds = new WaitForSeconds(0.02f);
-        
+        WaitForSeconds waitForSeconds = new(0.02f);
+
         for (int i = 0; i < 30; i++)
         {
             _canvasGroup.alpha += 0.033f;
@@ -35,7 +33,7 @@ public class EventInTravelInfoPanel : MonoBehaviour
         _canvasGroup.alpha = 1f;
         waitForSeconds = new WaitForSeconds(5f);
         yield return waitForSeconds;
-        
+
         waitForSeconds = new WaitForSeconds(0.02f);
         for (int i = 0; i < 40; i++)
         {

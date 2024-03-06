@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -31,7 +28,7 @@ public class NpcDatabase : MonoBehaviour, ISaveable<NpcDatabaseSaveData>
         Debug.LogWarning($"НПС с таким айди ({ID}) не существует!");
         return null;
     }
-    
+
     public static NpcData GetNPCData(string name)
     {
         NpcData result = Instance.NpcDatabaseSO.NpcList.FirstOrDefault(npc => npc.Name == name);
@@ -58,19 +55,12 @@ public class NpcDatabase : MonoBehaviour, ISaveable<NpcDatabaseSaveData>
 
         foreach (NpcData npcData in NpcDatabaseSO.NpcList)
         {
-            NpcSaveData npcSaveData;
-            switch (npcData)
+            NpcSaveData npcSaveData = npcData switch
             {
-                case NpcTraderData traderData:
-                    npcSaveData = ((ISaveable<NpcTraderSaveData>)traderData).SaveData();
-                    break;
-                case NpcQuestGiverData questGiverData:
-                    npcSaveData = ((ISaveable<NpcQuestGiverSaveData>)questGiverData).SaveData();
-                    break;
-                default:
-                    npcSaveData = npcData.SaveData();
-                    break;
-            }
+                NpcTraderData traderData => ((ISaveable<NpcTraderSaveData>)traderData).SaveData(),
+                NpcQuestGiverData questGiverData => ((ISaveable<NpcQuestGiverSaveData>)questGiverData).SaveData(),
+                _ => npcData.SaveData(),
+            };
             saveData.savedNpcDatas.Add(npcSaveData);
         }
 

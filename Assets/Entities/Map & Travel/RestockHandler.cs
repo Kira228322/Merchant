@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -30,13 +28,13 @@ public class RestockHandler : MonoBehaviour, ISaveable<RestockSaveData>
             location.CountAllItemsOnScene();
         foreach (var region in _regionHandler.Regions)
             region.CountAllItemsInRegion();
-        
+
     }
 
     private void CheckRestock()
     {
         if (_lastRestockDay + 2 < GameTime.CurrentDay)
-        { 
+        {
             Restock();
         }
     }
@@ -44,7 +42,7 @@ public class RestockHandler : MonoBehaviour, ISaveable<RestockSaveData>
     {
         CheckRestock();
     }
-    
+
     public void Restock()
     {
         _lastRestockDay = GameTime.CurrentDay;
@@ -61,8 +59,8 @@ public class RestockHandler : MonoBehaviour, ISaveable<RestockSaveData>
 
         if (location.NpcTraders.Count <= 0)
             return;
-        
-        
+
+
         RestockMainGoods(location.NpcTraders, location);
         AddAdditiveGoods(location.NpcTraders);
         RestockBuyCoefficients(location.NpcTraders);
@@ -97,7 +95,7 @@ public class RestockHandler : MonoBehaviour, ISaveable<RestockSaveData>
                         trader.AdditiveGoods.RemoveAt(Random.Range(0, trader.AdditiveGoods.Count));
                 }
             }
-            
+
             if (!trader.HaveAdditiveGoods)
                 continue;
 
@@ -109,15 +107,15 @@ public class RestockHandler : MonoBehaviour, ISaveable<RestockSaveData>
             {
                 Item newItem;
                 bool reallyNew;
-    
+
                 while (true)
                 {
                     reallyNew = true;
-                    
+
                     newItem = ItemDatabase.GetRandomItem();
 
                     if (BannedItemsHandler.Instance.IsItemBanned(newItem))
-                            continue;
+                        continue;
 
                     foreach (var goods in trader.Goods)
                     {
@@ -130,7 +128,7 @@ public class RestockHandler : MonoBehaviour, ISaveable<RestockSaveData>
 
                     if (!reallyNew)
                         continue;
-                    
+
                     foreach (var goods in trader.AdditiveGoods)
                     {
                         if (goods.Good.Name == newItem.Name)
@@ -139,7 +137,7 @@ public class RestockHandler : MonoBehaviour, ISaveable<RestockSaveData>
                             break;
                         }
                     }
-                    
+
                     if (!reallyNew)
                         continue;
 
@@ -150,7 +148,7 @@ public class RestockHandler : MonoBehaviour, ISaveable<RestockSaveData>
                     if (newItem.Price < 25)
                         randomCount++;
 
-                    NpcTrader.TraderGood newGood = new NpcTrader.TraderGood(newItem.Name, randomCount,
+                    NpcTrader.TraderGood newGood = new(newItem.Name, randomCount,
                         randomCount, newItem.Price + Random.Range(1, newItem.Price / 20 + 2));
 
                     trader.AdditiveGoods.Add(newGood);
@@ -162,9 +160,9 @@ public class RestockHandler : MonoBehaviour, ISaveable<RestockSaveData>
 
     private void RestockMainGoods(List<NpcTraderData> traders, Location location)
     {
-        List<NpcTraderData> activeTraders = new List<NpcTraderData>(); // трейдеры которые будут учавствовать в очередной итерации foreach
+        List<NpcTraderData> activeTraders = new(); // трейдеры которые будут учавствовать в очередной итерации foreach
         int gainCount;
-        
+
         foreach (var item in ItemDatabase.Instance.Items.ItemList)
         {
             // считаем сколько должно прирасти таких предметов на локации
@@ -175,7 +173,7 @@ public class RestockHandler : MonoBehaviour, ISaveable<RestockSaveData>
                 location.ItemEconomyParams[item.Name][2],
                 (int)(location.PopulationOfVillage * (2 - location.Region.CoefsForItemTypes[item.TypeOfItem])));
 
-            
+
             if (gainCount == 0)
                 continue;
 
@@ -208,15 +206,15 @@ public class RestockHandler : MonoBehaviour, ISaveable<RestockSaveData>
             }
 
             activeTraders.Clear();
-            
+
             foreach (var trader in traders) // из всех трейдеров выбирамем тех, кто торгует таким товаром
-            foreach (var traderGood in trader.Goods)
-                if (item.Name == traderGood.Good.Name)
-                {
-                    activeTraders.Add(trader);
-                    break;
-                }
-            
+                foreach (var traderGood in trader.Goods)
+                    if (item.Name == traderGood.Good.Name)
+                    {
+                        activeTraders.Add(trader);
+                        break;
+                    }
+
             activeTraders.Shuffle(); // Благодаря бездушной машине сделал расширения для List 
                                      // этот метод перемешивает мместами элементы в листе в случайном порядке
                                      // Для чего это нужно? чтобы ресток не начинался с одного и того же трейдера каждый раз 
@@ -250,12 +248,12 @@ public class RestockHandler : MonoBehaviour, ISaveable<RestockSaveData>
                     }
 
                     while (gainCount > 0) // если после этого еще надо добавить предметов то добавляем их уже сверх Max 
-                    {   
+                    {
                         foreach (var trader in activeTraders)
                         {
                             NpcTrader.TraderGood traderGood =
                                 trader.Goods.FirstOrDefault(good => good.Good.Name == item.Name);
-                            
+
                             traderGood.CurrentCount++;
                             gainCount--;
 
@@ -264,7 +262,7 @@ public class RestockHandler : MonoBehaviour, ISaveable<RestockSaveData>
                         }
                     }
                 }
-                
+
             }
 
             else // убывание товара
@@ -277,7 +275,7 @@ public class RestockHandler : MonoBehaviour, ISaveable<RestockSaveData>
                             break;
                         }
                 if (activeTraders.Count == 0)
-                { 
+                {
                     continue;
                 }
                 // а вот тут по идеи не может случиться такой ситуации, когда gaincount != 0 
@@ -288,8 +286,8 @@ public class RestockHandler : MonoBehaviour, ISaveable<RestockSaveData>
                     {
                         NpcTrader.TraderGood traderGood =
                             trader.AdditiveGoods.FirstOrDefault(good => good.Good.Name == item.Name);
-                        
-                        
+
+
                         if (traderGood != null)
                         {
                             traderGood.CurrentCount--;
@@ -324,7 +322,7 @@ public class RestockHandler : MonoBehaviour, ISaveable<RestockSaveData>
     public RestockSaveData SaveData()
     {
         RestockSaveData saveData = new(_lastRestockDay);
-        return saveData;   
+        return saveData;
     }
 
 

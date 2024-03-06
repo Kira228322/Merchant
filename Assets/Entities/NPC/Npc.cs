@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class Npc : MonoBehaviour
@@ -11,14 +10,14 @@ public class Npc : MonoBehaviour
     public void StartInteraction()
     {
         Player.Instance.PlayerMover.DisableMove();
-        if(gameObject.TryGetComponent(out NPCMovement movement))
+        if (gameObject.TryGetComponent(out NPCMovement movement))
             movement.MakeNPCBusy();
     }
 
     public void StopInteraction()
     {
         Player.Instance.PlayerMover.EnableMove();
-        if(gameObject.TryGetComponent(out NPCMovement movement))
+        if (gameObject.TryGetComponent(out NPCMovement movement))
             movement.NPCMakeFree();
     }
 
@@ -26,7 +25,7 @@ public class Npc : MonoBehaviour
     {
         QuestHandler.QuestChangedState += CheckExclamationMark;
     }
-    
+
     private void OnDisable()
     {
         QuestHandler.QuestChangedState -= CheckExclamationMark;
@@ -38,7 +37,7 @@ public class Npc : MonoBehaviour
     }
 
     public void CheckExclamationMark(Quest quest)
-    {   
+    {
         if (QuestHandler.IsNpcTargetOfAnyActiveQuest(NpcData.ID))
         {
             if (ExclamationMark == null)

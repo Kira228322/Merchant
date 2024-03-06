@@ -1,11 +1,9 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
 [Serializable]
-public class PlayerWagonStats: ISaveable<PlayerWagonStatsSaveData>
+public class PlayerWagonStats : ISaveable<PlayerWagonStatsSaveData>
 {
     public Wheel Wheel;
     public Body Body;
@@ -17,12 +15,12 @@ public class PlayerWagonStats: ISaveable<PlayerWagonStatsSaveData>
 
     public void UpgradeWagonPart(WagonPart wagonPart)
     {
-        if (wagonPart is Wheel)
-            Wheel = (Wheel)wagonPart;
-        if (wagonPart is Body)
-            Body = (Body)wagonPart;
-        if (wagonPart is Suspension)
-            Suspension = (Suspension)wagonPart;
+        if (wagonPart is Wheel wheel)
+            Wheel = wheel;
+        if (wagonPart is Body body)
+            Body = body;
+        if (wagonPart is Suspension suspension)
+            Suspension = suspension;
         RecalculateValues();
     }
 
