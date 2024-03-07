@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class BanLiftEventController : MonoBehaviour, IEventController<GlobalEvent_BanLift>, ISaveable<EventControllerSaveData>
 {
-    public int MinDelayToNextEvent => 21;
+    public int MinDelayToNextEvent => 18;
 
-    public int MaxDelayToNextEvent => 28;
+    public int MaxDelayToNextEvent => 24;
 
     public int DateOfNextEvent { get; set; }
     public int HourOfNextEvent { get; set; }

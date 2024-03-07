@@ -9,9 +9,9 @@ public class BannedItemEventController : MonoBehaviour, IEventController<GlobalE
     public int LastEventDay { get; set; }
     public int DurationOfEvent { get; set; }
     public List<Item> ItemsToBan { get; private set; }
-    public int MinDelayToNextEvent => 6;
+    public int MinDelayToNextEvent => 5;
 
-    public int MaxDelayToNextEvent => 8;
+    public int MaxDelayToNextEvent => 7;
 
     public int DateOfNextEvent { get; set; }
     public int HourOfNextEvent { get; set; }
@@ -43,7 +43,7 @@ public class BannedItemEventController : MonoBehaviour, IEventController<GlobalE
     {
         DateOfNextEvent = LastEventDay + Random.Range(MinDelayToNextEvent, MaxDelayToNextEvent + 1);
         HourOfNextEvent = Random.Range(1, 24);
-        DurationOfEvent = Random.Range(5, 9); //дней
+        DurationOfEvent = Random.Range(5, 15); //дней
         int itemsToBanAmount = Random.Range(1, 4);
         Item randomItem = ItemDatabase.GetRandomItem(); //Ётот рандомный предмет сам не банитс€.
                                                         //ѕочему? ѕотому что мы роллим один действительно существующий
