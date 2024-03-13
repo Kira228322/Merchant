@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - ActiveArea
+  - MovementNode
+  - SpawnPoint
+  - Toggleable Light
   layers:
   - Default
   - TransparentFX
@@ -11,15 +15,15 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Ground
+  - NPC
+  - Node
+  - Roof
+  - Animal
+  - AnimalFence
+  - MarkerSpawner
+  - BarierForNPC
   - 
   - 
   - 
@@ -38,6 +42,30 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background Sky
+    uniqueID: 3896569793
+    locked: 0
+  - name: Celestial Bodies
+    uniqueID: 612648329
+    locked: 0
+  - name: Background Objects
+    uniqueID: 260148485
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: BackgroundSkyTopLayer
+    uniqueID: 3742941587
+    locked: 0
+  - name: CelestialBodiesTopLayer
+    uniqueID: 813096171
+    locked: 0
+  - name: BackgroundTopLayer
+    uniqueID: 633885367
+    locked: 0
+  - name: DefaultTopLayer
+    uniqueID: 1665372325
+    locked: 0
+  - name: HighestLayer
+    uniqueID: 4108075807
     locked: 0

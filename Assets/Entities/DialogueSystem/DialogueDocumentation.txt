@@ -1,0 +1,78 @@
+get_quest_state(questSummary)
+Возвращает quest.CurrentState или null, если квест не был взят.
+
+check_if_quest_has_been_taken(questSummary)
+Возвращает true, если квест с таким summary был когда-либо взят (в том числе завершен), или false иначе.
+Мало смысла использовать для многоразовых (дублирующихся) квестов.
+
+set_color(colorName)
+Устанавливает цвет текста. Поддерживаются следующие цвета:
+red, cyan, blue, darkblue, lightblue, purple, yellow, lime, fuchsia, white, silver, grey, black, orange, brown, maroon, green, olive, navy, teal, aqua, magenta
+Или в формате #00FF00
+цвет default или пустая строка возвращают к первоначальному цвету (задан в инспекторе)
+
+add_quest(questSummary)
+Добавляет игроку квест с указанным questSummary. Квест должен быть в датабазе PregenQuestSO.
+
+invoke_dialogue_event(line)
+Вызывает ивент, на который реагируют квесты. line должна быть такая, как указано в квесте. (RequiredLine или FailingLine)
+
+invoke_dialogue_event_universal(line)
+То же, что и invoke_dialogue_event(line), но не обращает внимания на то, какой нпс вызвал этот ивент. 
+То есть, по сути, игнорируется поле "НПС, с которым нужно поговорить". Полезно, если нужно поговорить с одним любым из нескольких нпс.
+
+debug_log(param)
+Дублирует Debug.Log(string param).
+
+has_enough_items(string questSummary)
+Если квест неактивен/не взят, возвращает "null"
+Иначе проверяет все GiveItemsGoal в этом квесте и возвращает false, если хотя бы в одном GiveItemsGoal не хватает предметов.
+Если везде предметов хватает, либо квест не содержал GiveItemsGoal вообще, возвращает true.
+UPD: Проверяет он только для текущего нпс. То есть, если в этом квесте есть несколько разных нпс с разными GiveItemsGoal, то проверяет только GiveItemsGoal для текущего нпс. 
+Но если разные GiveItemsGoal для одного нпс, то в них во всех должно быть достаточно предметов. То есть, работает так, как должен по логике.
+
+has_enough_items_for_this_goal(string questSummary, int giveItemsGoalIndex)
+(К сожалению, ink не поддерживает перегрузку методов...)
+Если квест неактивен/не взят, возвращает "null"
+Иначе проверяет Goal под этим индексом, и возвращает true, если хватает предметов и false иначе.
+Если Goal под этим индексом - не GiveItemsGoal, возвращается "null" и ошибка в Debug.Log.
+
+is_questgiver_ready_to_give_quest()
+Если НПС - квестгивер, и не находится на кулдауне для выдачи квеста, возвращает true. Если кулдаун - false.
+Если НПС - не квестгивер, возвращается "null" и ошибка в Debug.Log.
+
+get_random_questparams_of_questgiver()
+Получает случайную строку questParams от этого квестгивера и уводит его на кулдаун.
+Если НПС - не квестгивер, возвращается "null" и ошибка в Debug.Log.
+
+is_goal_completed(questSummary, goalIndex)
+Возвращает true, если в quest с указанным questSummary выполнен goal под номером goalIndex.
+Возвращает false иначе или если квест не взят.
+
+get_activeQuestList()
+Возвращает строку, в которой соединены все questSummary активных квестов для этого нпс.
+Строку необходимо обрабатывать через метод contains(source, substring).
+get_activeQuestList_universal()
+Возвращает строку, в которой соединены все questSummary активных квестов для всех нпс.
+
+contains(source, substring)
+Возвращает true, если строка source содержит строку substring. Иначе возвращает false.
+
+is_empty(str)
+Возвращает true, если строка выглядит как "". Иначе возвращает false.
+
+open_item_container(questSummary, deliveryGoalNumber)
+Если квест questSummary активен и его Goals[deliveryGoalNumber] это DeliveryGoal, то
+скрывает диалоговую панель, открывает контейнер и настраивает его для этого goal.
+Нажатие кнопки отмены закрывает диалог, кнопка принятия продолжает диалог с того места где он остановился
+
+has_money(amount)
+Возвращает true, если у игрока больше или равно денег чем (int)amount. Иначе возвращает false.
+
+change_money(amount)
+Добавляет игроку amount денег. 
+Никаких предупреждений, если денег стало меньше нуля (тогда их всё равно будет 0 благодаря свойству в Player.Money, типа автокорректировка). Верхнего предела денег тоже нет
+
+place_item(itemName, amount, daysBoughtAgo)
+Непосредственно пробует поместить айтем с именем itemName в количестве amount и гнилостностью daysBoughtAgo. 
+Никаких проверок не нужно, если предмет не влезает, то отправляется в доп.инвентарь

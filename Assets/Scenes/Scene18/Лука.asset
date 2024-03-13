@@ -1,0 +1,316 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a46bd3596c904af40a170307cb676e23, type: 3}
+  m_Name: "\u041B\u0443\u043A\u0430"
+  m_EditorClassIdentifier: 
+  Name: "\u041B\u0443\u043A\u0430"
+  StartWalkingTime: 4
+  FinishWalkingTime: 14
+  GameStartMoney: 280
+  CurrentMoney: 280
+  ID: 91805
+  TraderTypes:
+  - {fileID: 11400000, guid: f29d03ed2d07c134cab2fdb0a7eb164d, type: 2}
+  - {fileID: 11400000, guid: a19f5b5c8dfe21f4e90ade716dc35c6b, type: 2}
+  IsBlackMarket: 0
+  HaveAdditiveGoods: 1
+  _baseGoods:
+  - Good: {fileID: 11400000, guid: f46c1b872a7fea742ad5baaa3ac6af6c, type: 2}
+    MaxCount: 20
+    CurrentCount: 20
+    CurrentPrice: 14
+  - Good: {fileID: 11400000, guid: 74738657e3d6630498e6988aecc7d306, type: 2}
+    MaxCount: 12
+    CurrentCount: 12
+    CurrentPrice: 18
+  - Good: {fileID: 11400000, guid: 0b9d5cd908008dc43b4c38c5619292dc, type: 2}
+    MaxCount: 15
+    CurrentCount: 15
+    CurrentPrice: 27
+  - Good: {fileID: 11400000, guid: ea4d2f04cf1aa2d438aed69d425837a0, type: 2}
+    MaxCount: 21
+    CurrentCount: 21
+    CurrentPrice: 10
+  - Good: {fileID: 11400000, guid: a313505e6b787384ebb09fe35bdca50f, type: 2}
+    MaxCount: 8
+    CurrentCount: 8
+    CurrentPrice: 91
+  - Good: {fileID: 11400000, guid: 6bdd24ea0cc66a54a90549bc4537cba9, type: 2}
+    MaxCount: 9
+    CurrentCount: 9
+    CurrentPrice: 78
+  - Good: {fileID: 11400000, guid: c50c58a1adcdf6b4b889282b629416c7, type: 2}
+    MaxCount: 13
+    CurrentCount: 13
+    CurrentPrice: 36
+  - Good: {fileID: 11400000, guid: ce1bed0d0ef5a204dbe2749afea65fba, type: 2}
+    MaxCount: 5
+    CurrentCount: 5
+    CurrentPrice: 52
+  - Good: {fileID: 11400000, guid: 5bf088e08624b884c8feed7297234f8c, type: 2}
+    MaxCount: 15
+    CurrentCount: 15
+    CurrentPrice: 14
+  - Good: {fileID: 11400000, guid: 47c26d2664100ad4fac6a5701dceaaa2, type: 2}
+    MaxCount: 13
+    CurrentCount: 13
+    CurrentPrice: 44
+  - Good: {fileID: 11400000, guid: 813eda2a1b39fd84cae055a11cc6c229, type: 2}
+    MaxCount: 10
+    CurrentCount: 10
+    CurrentPrice: 72
+  - Good: {fileID: 11400000, guid: 47714c0b6d1412347a6617dc26c20b9e, type: 2}
+    MaxCount: 16
+    CurrentCount: 16
+    CurrentPrice: 62
+  - Good: {fileID: 11400000, guid: 1cd5e64c387b5824b80ae33a5e5cd7a9, type: 2}
+    MaxCount: 8
+    CurrentCount: 8
+    CurrentPrice: 68
+  - Good: {fileID: 11400000, guid: 4186b201227fa044ba16555571ffb819, type: 2}
+    MaxCount: 19
+    CurrentCount: 19
+    CurrentPrice: 19
+  - Good: {fileID: 11400000, guid: 5c361d6600f12ee4dacfcb4ceee1b9da, type: 2}
+    MaxCount: 10
+    CurrentCount: 10
+    CurrentPrice: 61
+  - Good: {fileID: 11400000, guid: a2202b0b4e1c26440a17ddb130816e99, type: 2}
+    MaxCount: 6
+    CurrentCount: 6
+    CurrentPrice: 90
+  - Good: {fileID: 11400000, guid: 96fa73843fa7f31448e761a9c517946f, type: 2}
+    MaxCount: 9
+    CurrentCount: 9
+    CurrentPrice: 26
+  - Good: {fileID: 11400000, guid: e87f5f068dc96434e9929d592f77b26f, type: 2}
+    MaxCount: 17
+    CurrentCount: 17
+    CurrentPrice: 13
+  - Good: {fileID: 11400000, guid: 82885d50db90a2b4399ec530583c5d85, type: 2}
+    MaxCount: 18
+    CurrentCount: 18
+    CurrentPrice: 13
+  - Good: {fileID: 11400000, guid: d26fb36da5047fd42b5cf38e3d8ec8f9, type: 2}
+    MaxCount: 16
+    CurrentCount: 16
+    CurrentPrice: 16
+  - Good: {fileID: 11400000, guid: 7d2a1d726230f5649ae0813944d50e96, type: 2}
+    MaxCount: 18
+    CurrentCount: 18
+    CurrentPrice: 39
+  - Good: {fileID: 11400000, guid: 0f59fe119e6594b48afb5257c9617423, type: 2}
+    MaxCount: 10
+    CurrentCount: 10
+    CurrentPrice: 17
+  - Good: {fileID: 11400000, guid: 1ce2d99af4e564149940038de4432362, type: 2}
+    MaxCount: 9
+    CurrentCount: 9
+    CurrentPrice: 11
+  - Good: {fileID: 11400000, guid: 9798aefd184a7a04d81b7ffb84e495a0, type: 2}
+    MaxCount: 15
+    CurrentCount: 15
+    CurrentPrice: 15
+  - Good: {fileID: 11400000, guid: 6dfad5fc336abd74489c337438f114f9, type: 2}
+    MaxCount: 6
+    CurrentCount: 6
+    CurrentPrice: 9
+  - Good: {fileID: 11400000, guid: d4f8a469ad5581343806bc2e2ba1ca7f, type: 2}
+    MaxCount: 14
+    CurrentCount: 14
+    CurrentPrice: 16
+  - Good: {fileID: 11400000, guid: 93e4e5c126bbd3547a669e72aaed4228, type: 2}
+    MaxCount: 21
+    CurrentCount: 21
+    CurrentPrice: 38
+  - Good: {fileID: 11400000, guid: 6a9fb5329fb3e8741aac1c50cf40fc78, type: 2}
+    MaxCount: 7
+    CurrentCount: 7
+    CurrentPrice: 29
+  - Good: {fileID: 11400000, guid: c2208960dad988e4d880adeca11bde0e, type: 2}
+    MaxCount: 20
+    CurrentCount: 20
+    CurrentPrice: 9
+  - Good: {fileID: 11400000, guid: 723eaf042268d86489735f5c5cc26823, type: 2}
+    MaxCount: 8
+    CurrentCount: 8
+    CurrentPrice: 71
+  - Good: {fileID: 11400000, guid: bd0fb9ee6c138024d9f6cbfa65fa9e8a, type: 2}
+    MaxCount: 7
+    CurrentCount: 7
+    CurrentPrice: 42
+  - Good: {fileID: 11400000, guid: 0582792869819374bb8da67bd5544a3a, type: 2}
+    MaxCount: 18
+    CurrentCount: 18
+    CurrentPrice: 17
+  _baseBuyCoefficients:
+  - ItemType: 2
+    Coefficient: 0.95
+    DefaultCountToBuy: 5
+  - ItemType: 28
+    Coefficient: 1
+    DefaultCountToBuy: 12
+  - ItemType: 31
+    Coefficient: 1
+    DefaultCountToBuy: 35
+  - ItemType: 4
+    Coefficient: 1
+    DefaultCountToBuy: 20
+  - ItemType: 3
+    Coefficient: 1
+    DefaultCountToBuy: 20
+  Goods:
+  - Good: {fileID: 11400000, guid: f46c1b872a7fea742ad5baaa3ac6af6c, type: 2}
+    MaxCount: 20
+    CurrentCount: 20
+    CurrentPrice: 14
+  - Good: {fileID: 11400000, guid: 74738657e3d6630498e6988aecc7d306, type: 2}
+    MaxCount: 12
+    CurrentCount: 12
+    CurrentPrice: 18
+  - Good: {fileID: 11400000, guid: 0b9d5cd908008dc43b4c38c5619292dc, type: 2}
+    MaxCount: 15
+    CurrentCount: 15
+    CurrentPrice: 27
+  - Good: {fileID: 11400000, guid: ea4d2f04cf1aa2d438aed69d425837a0, type: 2}
+    MaxCount: 21
+    CurrentCount: 21
+    CurrentPrice: 10
+  - Good: {fileID: 11400000, guid: a313505e6b787384ebb09fe35bdca50f, type: 2}
+    MaxCount: 8
+    CurrentCount: 8
+    CurrentPrice: 91
+  - Good: {fileID: 11400000, guid: 6bdd24ea0cc66a54a90549bc4537cba9, type: 2}
+    MaxCount: 9
+    CurrentCount: 9
+    CurrentPrice: 78
+  - Good: {fileID: 11400000, guid: c50c58a1adcdf6b4b889282b629416c7, type: 2}
+    MaxCount: 13
+    CurrentCount: 13
+    CurrentPrice: 36
+  - Good: {fileID: 11400000, guid: ce1bed0d0ef5a204dbe2749afea65fba, type: 2}
+    MaxCount: 5
+    CurrentCount: 5
+    CurrentPrice: 52
+  - Good: {fileID: 11400000, guid: 5bf088e08624b884c8feed7297234f8c, type: 2}
+    MaxCount: 15
+    CurrentCount: 15
+    CurrentPrice: 14
+  - Good: {fileID: 11400000, guid: 47c26d2664100ad4fac6a5701dceaaa2, type: 2}
+    MaxCount: 13
+    CurrentCount: 13
+    CurrentPrice: 44
+  - Good: {fileID: 11400000, guid: 813eda2a1b39fd84cae055a11cc6c229, type: 2}
+    MaxCount: 10
+    CurrentCount: 10
+    CurrentPrice: 72
+  - Good: {fileID: 11400000, guid: 47714c0b6d1412347a6617dc26c20b9e, type: 2}
+    MaxCount: 16
+    CurrentCount: 16
+    CurrentPrice: 62
+  - Good: {fileID: 11400000, guid: 1cd5e64c387b5824b80ae33a5e5cd7a9, type: 2}
+    MaxCount: 8
+    CurrentCount: 8
+    CurrentPrice: 68
+  - Good: {fileID: 11400000, guid: 4186b201227fa044ba16555571ffb819, type: 2}
+    MaxCount: 19
+    CurrentCount: 19
+    CurrentPrice: 19
+  - Good: {fileID: 11400000, guid: 5c361d6600f12ee4dacfcb4ceee1b9da, type: 2}
+    MaxCount: 10
+    CurrentCount: 10
+    CurrentPrice: 61
+  - Good: {fileID: 11400000, guid: a2202b0b4e1c26440a17ddb130816e99, type: 2}
+    MaxCount: 6
+    CurrentCount: 6
+    CurrentPrice: 90
+  - Good: {fileID: 11400000, guid: 96fa73843fa7f31448e761a9c517946f, type: 2}
+    MaxCount: 9
+    CurrentCount: 9
+    CurrentPrice: 26
+  - Good: {fileID: 11400000, guid: e87f5f068dc96434e9929d592f77b26f, type: 2}
+    MaxCount: 17
+    CurrentCount: 17
+    CurrentPrice: 13
+  - Good: {fileID: 11400000, guid: 82885d50db90a2b4399ec530583c5d85, type: 2}
+    MaxCount: 18
+    CurrentCount: 18
+    CurrentPrice: 13
+  - Good: {fileID: 11400000, guid: d26fb36da5047fd42b5cf38e3d8ec8f9, type: 2}
+    MaxCount: 16
+    CurrentCount: 16
+    CurrentPrice: 16
+  - Good: {fileID: 11400000, guid: 7d2a1d726230f5649ae0813944d50e96, type: 2}
+    MaxCount: 18
+    CurrentCount: 18
+    CurrentPrice: 39
+  - Good: {fileID: 11400000, guid: 0f59fe119e6594b48afb5257c9617423, type: 2}
+    MaxCount: 10
+    CurrentCount: 10
+    CurrentPrice: 17
+  - Good: {fileID: 11400000, guid: 1ce2d99af4e564149940038de4432362, type: 2}
+    MaxCount: 9
+    CurrentCount: 9
+    CurrentPrice: 11
+  - Good: {fileID: 11400000, guid: 9798aefd184a7a04d81b7ffb84e495a0, type: 2}
+    MaxCount: 15
+    CurrentCount: 15
+    CurrentPrice: 15
+  - Good: {fileID: 11400000, guid: 6dfad5fc336abd74489c337438f114f9, type: 2}
+    MaxCount: 6
+    CurrentCount: 6
+    CurrentPrice: 9
+  - Good: {fileID: 11400000, guid: d4f8a469ad5581343806bc2e2ba1ca7f, type: 2}
+    MaxCount: 14
+    CurrentCount: 14
+    CurrentPrice: 16
+  - Good: {fileID: 11400000, guid: 93e4e5c126bbd3547a669e72aaed4228, type: 2}
+    MaxCount: 21
+    CurrentCount: 21
+    CurrentPrice: 38
+  - Good: {fileID: 11400000, guid: 6a9fb5329fb3e8741aac1c50cf40fc78, type: 2}
+    MaxCount: 7
+    CurrentCount: 7
+    CurrentPrice: 29
+  - Good: {fileID: 11400000, guid: c2208960dad988e4d880adeca11bde0e, type: 2}
+    MaxCount: 20
+    CurrentCount: 20
+    CurrentPrice: 9
+  - Good: {fileID: 11400000, guid: 723eaf042268d86489735f5c5cc26823, type: 2}
+    MaxCount: 8
+    CurrentCount: 8
+    CurrentPrice: 71
+  - Good: {fileID: 11400000, guid: bd0fb9ee6c138024d9f6cbfa65fa9e8a, type: 2}
+    MaxCount: 7
+    CurrentCount: 7
+    CurrentPrice: 42
+  - Good: {fileID: 11400000, guid: 0582792869819374bb8da67bd5544a3a, type: 2}
+    MaxCount: 18
+    CurrentCount: 18
+    CurrentPrice: 17
+  AdditiveGoods: []
+  BuyCoefficients:
+  - ItemType: 2
+    Coefficient: 0.95
+    DefaultCountToBuy: 5
+  - ItemType: 28
+    Coefficient: 1
+    DefaultCountToBuy: 12
+  - ItemType: 31
+    Coefficient: 1
+    DefaultCountToBuy: 35
+  - ItemType: 4
+    Coefficient: 1
+    DefaultCountToBuy: 20
+  - ItemType: 3
+    Coefficient: 1
+    DefaultCountToBuy: 20

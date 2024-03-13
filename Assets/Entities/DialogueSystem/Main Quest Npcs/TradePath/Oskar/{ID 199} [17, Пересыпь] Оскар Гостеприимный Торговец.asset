@@ -1,0 +1,92 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a46bd3596c904af40a170307cb676e23, type: 3}
+  m_Name: "{ID 199} [17, \u041F\u0435\u0440\u0435\u0441\u044B\u043F\u044C] \u041E\u0441\u043A\u0430\u0440
+    \u0413\u043E\u0441\u0442\u0435\u043F\u0440\u0438\u0438\u043C\u043D\u044B\u0439
+    \u0422\u043E\u0440\u0433\u043E\u0432\u0435\u0446"
+  m_EditorClassIdentifier: 
+  Name: "\u041E\u0441\u043A\u0430\u0440 \u0413\u043E\u0441\u0442\u0435\u043F\u0440\u0438\u0438\u043C\u043D\u044B\u0439"
+  StartWalkingTime: 8
+  FinishWalkingTime: 20
+  GameStartMoney: 676
+  CurrentMoney: 676
+  ID: 199
+  TraderTypes:
+  - {fileID: 11400000, guid: a890ba1c96bb98343953ad400776b023, type: 2}
+  - {fileID: 11400000, guid: 2c23820895536ce44accaec2e6216e02, type: 2}
+  IsBlackMarket: 0
+  HaveAdditiveGoods: 0
+  _baseGoods:
+  - Good: {fileID: 11400000, guid: f46c1b872a7fea742ad5baaa3ac6af6c, type: 2}
+    MaxCount: 8
+    CurrentCount: 8
+    CurrentPrice: 14
+  - Good: {fileID: 11400000, guid: 1cd5e64c387b5824b80ae33a5e5cd7a9, type: 2}
+    MaxCount: 6
+    CurrentCount: 6
+    CurrentPrice: 67
+  - Good: {fileID: 11400000, guid: 4186b201227fa044ba16555571ffb819, type: 2}
+    MaxCount: 10
+    CurrentCount: 10
+    CurrentPrice: 19
+  - Good: {fileID: 11400000, guid: 5c361d6600f12ee4dacfcb4ceee1b9da, type: 2}
+    MaxCount: 9
+    CurrentCount: 9
+    CurrentPrice: 61
+  - Good: {fileID: 11400000, guid: a2202b0b4e1c26440a17ddb130816e99, type: 2}
+    MaxCount: 9
+    CurrentCount: 9
+    CurrentPrice: 90
+  - Good: {fileID: 11400000, guid: b97281cec5b977c42b7938ae0ac32475, type: 2}
+    MaxCount: 10
+    CurrentCount: 10
+    CurrentPrice: 28
+  _baseBuyCoefficients:
+  - ItemType: 14
+    Coefficient: 1
+    DefaultCountToBuy: 22
+  - ItemType: 12
+    Coefficient: 1
+    DefaultCountToBuy: 15
+  - ItemType: 13
+    Coefficient: 1
+    DefaultCountToBuy: 15
+  - ItemType: 15
+    Coefficient: 0.9
+    DefaultCountToBuy: 3
+  - ItemType: 16
+    Coefficient: 0.9
+    DefaultCountToBuy: 4
+  - ItemType: 17
+    Coefficient: 0.9
+    DefaultCountToBuy: 3
+  - ItemType: 22
+    Coefficient: 0.95
+    DefaultCountToBuy: 10
+  - ItemType: 23
+    Coefficient: 0.95
+    DefaultCountToBuy: 10
+  - ItemType: 24
+    Coefficient: 1
+    DefaultCountToBuy: 8
+  - ItemType: 26
+    Coefficient: 1
+    DefaultCountToBuy: 16
+  - ItemType: 19
+    Coefficient: 1
+    DefaultCountToBuy: 5
+  - ItemType: 25
+    Coefficient: 1
+    DefaultCountToBuy: 14
+  Goods: []
+  AdditiveGoods: []
+  BuyCoefficients: []
