@@ -79,15 +79,15 @@ abstract public class NPCMovement : MonoBehaviour
     }
     private IEnumerator IDLE(bool quick)
     {
-        Animator.SetTrigger("IDLE");
+        Animator.SetBool("Move", false);
         WaitForSeconds waitForSeconds;
         if (quick)
             waitForSeconds = new(Random.Range(0.75f, 1.25f));
         else
             waitForSeconds = new(Random.Range(_minIDLEDuration, _maxIDLEDuration));
         yield return waitForSeconds;
+        Animator.SetBool("Move", true);
         _currentCoroutine = StartCoroutine(Move());
-        Animator.SetTrigger("Move");
         _currentStateIsIDLE = false;
     }
 
@@ -103,7 +103,7 @@ abstract public class NPCMovement : MonoBehaviour
     private IEnumerator IDLEWhileBusy()
     {
         if (!_currentStateIsIDLE)
-            Animator.SetTrigger("IDLE");
+            Animator.SetBool("Move", false);
         WaitForSeconds waitForSeconds = new(100f);
         while (true)
         {
@@ -114,8 +114,8 @@ abstract public class NPCMovement : MonoBehaviour
     public void NPCMakeFree()
     {
         StopCoroutine(_currentCoroutine);
+        Animator.SetBool("Move", true);
         _currentCoroutine = StartCoroutine(Move());
-        Animator.SetTrigger("Move");
         _currentStateIsIDLE = false;
     }
 
@@ -174,8 +174,8 @@ abstract public class NPCMovement : MonoBehaviour
         {
             if (_currentCoroutine != null)
                 StopCoroutine(_currentCoroutine);
+            Animator.SetBool("Move", true);
             _currentCoroutine = StartCoroutine(MoveDirectlyAtHome(_home.x));
-            Animator.SetTrigger("Move");
         }
     }
 
@@ -187,8 +187,8 @@ abstract public class NPCMovement : MonoBehaviour
         {
             if (_currentCoroutine != null)
                 StopCoroutine(_currentCoroutine);
+            Animator.SetBool("Move", true);
             _currentCoroutine = StartCoroutine(MoveDirectlyAtHome(_home.x));
-            Animator.SetTrigger("Move");
         }
         else
         {
@@ -200,7 +200,7 @@ abstract public class NPCMovement : MonoBehaviour
                 _currentCoroutine = null;
             }
             if (!_currentStateIsIDLE)
-                Animator.SetTrigger("IDLE");
+                Animator.SetBool("Move", false);
             EnableNPC(false);
         }
     }

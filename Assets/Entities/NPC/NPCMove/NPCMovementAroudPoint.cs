@@ -27,7 +27,7 @@ public class NPCMovementAroudPoint : NPCMovement
         if (_currentCoroutine == null)
         {
             _currentCoroutine = StartCoroutine(Move());
-            Animator.SetTrigger("Move");
+            Animator.SetBool("Move", true);
         }
     }
 
