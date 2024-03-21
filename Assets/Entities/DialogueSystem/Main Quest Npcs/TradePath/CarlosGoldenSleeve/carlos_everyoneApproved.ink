@@ -19,7 +19,6 @@ INCLUDE ../../../MainInkLibrary.ink
             ->END
 === generic ===
 И снова здравствуйте, молодой человек! Как ваши успехи?
-TODO questions
     +[Мне пора идти.]
         До свидания!
             ->END
