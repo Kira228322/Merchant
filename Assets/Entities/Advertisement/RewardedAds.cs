@@ -1,23 +1,85 @@
+using Mycom.Target.Unity.Ads;
+using Mycom.Target.Unity.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Advertisements;
+using Object = System.Object;
 using Random = UnityEngine.Random;
 
-public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowListener
+public class RewardedAds : MonoBehaviour
 {
     public static RewardedAds Instance;
 
     [HideInInspector] public bool IsAdLoaded = false;
 
-    private string androidAdID = "Rewarded_Android";
-    private string iOSAdID = "Rewarded_iOS";
-
     [SerializeField] private List<Item> _rewardList = new();
     private int _moneyReward = 150;
     private int _expirienceBonus = 5;
-    private string adID;
+
+
+    private InterstitialAd CreateInterstitialAd()
+    {
+        UInt32 slotId = 0;
+#if UNITY_ANDROID
+        slotId = 1532040;
+#elif UNITY_IOS
+   slotId = IOS_SLOT_ID;
+#endif
+        // Включение режима отладки
+        //MyTargetManager.DebugMode = true;
+        // Создаем экземпляр InterstitialAd
+        return new InterstitialAd(slotId);
+    }
+
+    private InterstitialAd _interstitialAd;
+
+    private void InitAd()
+    {
+        // Создаем экземпляр InterstitialAd
+        _interstitialAd = CreateInterstitialAd();
+        // Устанавливаем обработчики событий
+        _interstitialAd.AdLoadCompleted += OnLoadCompleted;
+        _interstitialAd.AdDisplayed += OnAdDisplayed;
+        _interstitialAd.AdDismissed += OnAdDismissed;
+        _interstitialAd.AdVideoCompleted += OnAdVideoCompleted;
+        _interstitialAd.AdClicked += OnAdClicked;
+        _interstitialAd.AdLoadFailed += OnAdLoadFailed;
+
+        // Запускаем загрузку данных
+        LoadAd();
+    }
+
+    private void OnLoadCompleted(Object sender, EventArgs e)
+    {
+        Debug.Log("load completed");
+        IsAdLoaded = true;
+    }
+    private void OnAdDisplayed(Object sender, EventArgs e)
+    {
+    }
+
+    private void OnAdDismissed(Object sender, EventArgs e)
+    {
+        CanvasWarningGenerator.Instance.CreateWarning("Не удалось показать рекламу", "Награда не будет выдана");
+    }
+
+    private void OnAdVideoCompleted(Object sender, EventArgs e)
+    {
+        GiveRewardToPlayer();
+    }
+
+    private void OnAdClicked(Object sender, EventArgs e)
+    {
+    }
+
+    private void OnAdLoadFailed(Object sender, ErrorEventArgs e)
+    {
+        Debug.Log("OnAdLoadFailed: " + e.Message);
+        IsAdLoaded = false;
+    }
+
 
     private void GiveRewardToPlayer()
     {
@@ -67,59 +129,23 @@ public class RewardedAds : MonoBehaviour, IUnityAdsLoadListener, IUnityAdsShowLi
 
     private void Awake()
     {
-        adID = (Application.platform == RuntimePlatform.IPhonePlayer)
-            ? iOSAdID
-            : androidAdID;
+        InitAd();
     }
 
     private void Start()
     {
-        LoadAd();
         Instance = this;
     }
 
     public void LoadAd()
     {
-        Advertisement.Load(adID, this);
+        Debug.Log("load started");
+        _interstitialAd.Load();
     }
 
     public void ShowAd()
     {
-        Advertisement.Show(adID, this);
-    }
-
-    public void OnUnityAdsAdLoaded(string adUnitId)
-    {
-        IsAdLoaded = true;
-    }
-
-    public void OnUnityAdsFailedToLoad(string placementId, UnityAdsLoadError error, string message)
-    {
-        Debug.Log($"Error loading Ad Unit {adID}: {error} - {message}");
-        IsAdLoaded = false;
-    }
-
-    public void OnUnityAdsShowFailure(string placementId, UnityAdsShowError error, string message)
-    {
-        CanvasWarningGenerator.Instance.CreateWarning("Не удалось показать рекламу", "Награда не будет выдана");
-    }
-
-    public void OnUnityAdsShowStart(string placementId)
-    {
-    }
-
-    public void OnUnityAdsShowClick(string placementId)
-    {
-    }
-
-    public void OnUnityAdsShowComplete(string adUnitId, UnityAdsShowCompletionState showCompletionState)
-    {
-        LoadAd();
-
-        if (adUnitId.Equals(adID) && showCompletionState.Equals(UnityAdsShowCompletionState.COMPLETED))
-        {
-            GiveRewardToPlayer();
-        }
+        _interstitialAd.Show();
     }
 
 }
