@@ -24,5 +24,12 @@ INCLUDE ../../MainInkLibrary.ink
 ->END
 }
 === generic ===
-Ик! Вечеринка, я иду к тебе!
-->END
+{check_if_quest_has_been_taken("party_gather_friends"):
+    Уважаемый, у вас не будет монетки?
+        +[Извините, нет.]
+            Эх, перевелись добрые люди... Ик!
+            ->END
+-else:
+    Ик! Вечеринка, я иду к тебе!
+    ->END
+}

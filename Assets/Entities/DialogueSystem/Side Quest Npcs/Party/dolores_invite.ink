@@ -23,5 +23,12 @@ INCLUDE ../../MainInkLibrary.ink
 ->END
 }
 === generic ===
-Да-да, я уже собираюсь ехать.
-->END
+{check_if_quest_has_been_taken("party_gather_friends"):
+    Тебе что-то нужно, сладкий?
+        +[Извините, я пойду.]
+            Пока!
+            ->END
+-else:
+    Да-да, я уже собираюсь ехать.
+    ->END
+}
