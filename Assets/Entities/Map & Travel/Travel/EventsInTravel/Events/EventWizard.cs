@@ -10,7 +10,7 @@ public class EventWizard : EventInTravel
     private int cost;
     public override void SetButtons()
     {
-        cost = Random.Range(75, 111);
+        cost = Random.Range(40, 60) + Player.Instance.Experience.CurrentLevel * 5;
         ButtonsLabel.Add($"Получить улучшение ({cost} золота)");
         ButtonsLabel.Add("Спасибо, не нужно");
         SetInfoButton($"Существует {TravelEventHandler.GetProbability(_rareBuffProbability, Player.Instance.Statistics.Diplomacy)}% " +
