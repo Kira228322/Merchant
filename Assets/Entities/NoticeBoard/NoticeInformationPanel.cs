@@ -33,19 +33,11 @@ public class NoticeInformationPanel : MonoBehaviour
     }
     private void DestroyNotice()
     {
-        if (_currentNotice is AdNotice && !RewardedAds.Instance.IsAdLoaded)
-        {
-            CanvasWarningGenerator.Instance.CreateWarning("Нет подключения к Интернету",
-                "Пожалуйста, проверьте подключение к сети, чтобы посмотреть рекламу");
-        }
-        else
-        {
             _currentNotice.OnNoticeTake();
             _takeButton.onClick.RemoveListener(DestroyNotice);
             Destroy(_currentNotice.gameObject);
             _currentNotice = null;
             RefreshPanel();
-        }
     }
     private void ShowElements(bool value)
     {

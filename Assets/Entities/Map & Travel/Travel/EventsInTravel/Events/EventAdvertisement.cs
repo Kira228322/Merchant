@@ -2,6 +2,7 @@ public class EventAdvertisement : EventInTravel
 {
     public override void SetButtons()
     {
+        RewardedAds.Instance.InitAd();
         ButtonsLabel.Add("Посмотреть представление");
         ButtonsLabel.Add("Проехать мимо");
         SetInfoButton("");
@@ -20,7 +21,7 @@ public class EventAdvertisement : EventInTravel
                 }
                 else
                 {
-                    _eventWindow.ChangeDescription("Похоже, у вас нет подключения к интернету. Пожалуйста, проверьте подключение к сети, чтобы получить награду.");
+                    _eventWindow.ChangeDescription("Похоже, у вас нет подключения к интернету или для вас нет подходящей рекламы. Пожалуйста, проверьте подключение к сети, чтобы получить награду или вернитесь позднее.");
                 }
                 break;
             case 1:

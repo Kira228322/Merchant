@@ -6,6 +6,8 @@ public class AdNotice : Notice
         NoticeName = name;
         NoticeDescription = text;
         SpawnPointIndex = number;
+
+        RewardedAds.Instance.InitAd();
     }
 
     public override void OnNoticeTake()
@@ -14,6 +16,11 @@ public class AdNotice : Notice
         {
             RewardedAds.Instance.ShowAd();
             Noticeboard.RemoveNotice(SpawnPointIndex);
+        }
+        else
+        {
+            CanvasWarningGenerator.Instance.CreateWarning("Ошибка при показе рекламы",
+                "Пожалуйста, проверьте подключение к сети, чтобы посмотреть рекламу, или вернитесь позднее.");
         }
     }
 }

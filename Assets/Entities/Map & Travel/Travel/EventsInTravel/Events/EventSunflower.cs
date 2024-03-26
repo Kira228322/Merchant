@@ -27,7 +27,8 @@ public class EventSunflower : EventInTravel
 
                 break;
             case 1:
-                _eventWindow.ChangeDescription("Вы решили не задерживаться в своем пути.");
+                Player.Instance.Experience.AddExperience(2);
+                _eventWindow.ChangeDescription("Вы решили не воровать чужой урожай. Вы получили 2 опыта");
                 break;
         }
 
