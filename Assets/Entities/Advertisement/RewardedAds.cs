@@ -55,7 +55,6 @@ public class RewardedAds : MonoBehaviour
     private void OnAdDisplayed(Object sender, EventArgs e)
     {
         GiveRewardToPlayer();
-        IsAdLoaded = false;
     }
 
     private void OnAdDismissed(Object sender, EventArgs e)
@@ -69,13 +68,12 @@ public class RewardedAds : MonoBehaviour
 
     private void OnAdClicked(Object sender, EventArgs e)
     {
-        Debug.Log("OnAdClick");
+
     }
 
     private void OnAdLoadFailed(Object sender, ErrorEventArgs e)
     {
-        Debug.Log("OnAdLoadFailed: " + e.Message);
-        IsAdLoaded = false;
+
     }
 
 
@@ -138,6 +136,7 @@ public class RewardedAds : MonoBehaviour
     public void ShowAd()
     {
         _interstitialAd.Show();
+        IsAdLoaded = false; //Все случаи рекламы загружают её заново, т.е даже если она не была показана, позже она перезагрузится
     }
 
 }
