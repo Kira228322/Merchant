@@ -105,6 +105,7 @@ public class GoodsBuyPanel : MonoBehaviour
                 _trader.BuyCoefficients.FirstOrDefault(x => x.ItemType == _item.Good.TypeOfItem).CountToBuy++;
             }
 
+            int cost = _cost;
             TradeManager.Instance.PlayerGoldDecrease(_cost);
             Player.Instance.Money -= _cost;
             _trader.NpcData.CurrentMoney += _cost;
@@ -135,7 +136,7 @@ public class GoodsBuyPanel : MonoBehaviour
             }
             //“акой селлѕанели не обнаружено:
             GameObject tradersGoods = Instantiate(TradeManager.Instance.GoodsSellPanelPrefab.gameObject, TradeManager.Instance.SellPanelContent);
-            tradersGoods.GetComponent<GoodsSellPanel>().Init(_trader, boughtItem, Player.Instance.Inventory.BaseItemGrid);
+            tradersGoods.GetComponent<GoodsSellPanel>().Init(true, _trader, boughtItem, Player.Instance.Inventory.BaseItemGrid);
 
 
         }
@@ -150,11 +151,11 @@ public class GoodsBuyPanel : MonoBehaviour
 
     private void ChangeNameColor()
     {
-        if (_cost < 0.855f * _item.Good.Price) // 1/1.17
+        if (_cost < 0.855f * _item.Good.Price || _cost < _item.Good.Price - 10) // 1/1.17
         {
             _itemName.color = new Color(62 / 255f, 188 / 255f, 0);
         }
-        else if (_cost > 1.17f * _item.Good.Price)
+        else if (_cost > 1.17f * _item.Good.Price || _cost > _item.Good.Price + 10)
         {
             _itemName.color = new Color(174 / 255f, 32 / 255f, 14 / 255f);
         }
@@ -187,6 +188,7 @@ public class GoodsBuyPanel : MonoBehaviour
             bannedItem = 2;
 
         float itemTypeCoef = MapManager.CurrentLocation.Region.CoefsForItemTypes[item.Good.TypeOfItem];
+        
         return Convert.ToInt32(Math.Round(item.CurrentPrice * locationCoef * regionCoef * itemTypeCoef * bannedItem));
     }
 }

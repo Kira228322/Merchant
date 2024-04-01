@@ -56,6 +56,35 @@ public class GoodsSellPanel : MonoBehaviour
         }
         Refresh();
     }
+    
+    public void Init(bool traderHave, NpcTrader trader, InventoryItem itemToSell, ItemGrid playerInventoryItemGrid)
+    {
+        TradeManager.Instance.GoodsSellPanels.Add(this);
+        _playerInventoryItemGrid = playerInventoryItemGrid;
+        _trader = trader;
+        _item = itemToSell;
+        _currentCount = itemToSell.CurrentItemsInAStack;
+        _cost = CalculatePriceIfTraderHaveThisGood(_item.ItemData);
+        ChangeNameColor();
+        _costText.text = _cost.ToString();
+        _countText.text = _currentCount.ToString();
+        _icon.sprite = _item.ItemData.Icon;
+        _itemName.text = _item.ItemData.Name;
+
+
+        if (itemToSell.ItemData.IsPerishable)
+        {
+            _spoilSlider.gameObject.SetActive(true);
+            _spoilSlider.SetValue(_item.ItemData.DaysToSpoil - _item.BoughtDaysAgo, _item.ItemData.DaysToSpoil);
+            if (_item.BoughtDaysAgo > _item.ItemData.DaysToHalfSpoil)
+            {
+                Color yellow = new(178f / 255, 179f / 255, 73f / 255);
+                _spoilSlider.SetColour(yellow);
+            }
+        }
+        Refresh();
+    }
+    
     public void Refresh()
     {
         NpcTrader.BuyCoefficient buyCoefficient = _trader.BuyCoefficients.FirstOrDefault(x => x.ItemType == _item.ItemData.TypeOfItem);
@@ -124,11 +153,11 @@ public class GoodsSellPanel : MonoBehaviour
 
     private void ChangeNameColor()
     {
-        if (_cost > 1.17f * _item.ItemData.Price)
+        if (_cost > 1.17f * _item.ItemData.Price || _cost > _item.ItemData.Price + 10)
         {
             _itemName.color = new Color(62 / 255f, 188 / 255f, 0);
         }
-        else if (_cost < 0.855f * _item.ItemData.Price) // 1/1.17
+        else if (_cost < 0.855f * _item.ItemData.Price || _cost < _item.ItemData.Price - 10) // 1/1.17
         {
             _itemName.color = new Color(174 / 255f, 32 / 255f, 14 / 255f);
         }
@@ -169,6 +198,48 @@ public class GoodsSellPanel : MonoBehaviour
         int bannedItem = 1;
         if (BannedItemsHandler.Instance.IsItemBanned(item))
             bannedItem = 2;
+        
+        return Convert.ToInt32(Math.Round(item.Price * locationCoef * regionCoef * itemTypeCoef * traderTypeCoef * bannedItem));
+    }
+    
+    private int CalculatePriceIfTraderHaveThisGood(Item item)
+    {
+        if (item.TypeOfItem == global::Item.ItemType.Null)
+            return item.Price;
+        int PlayersCountOfThisItem = 0;
+        foreach (var inventoryItem in Player.Instance.Inventory.ItemList)
+        {
+            if (inventoryItem.ItemData.Name == item.Name)
+                PlayersCountOfThisItem += inventoryItem.CurrentItemsInAStack;
+        }
+        int currentQuantityLoca = MapManager.CurrentLocation.CountOfEachItem[item.Name] + PlayersCountOfThisItem;
+        int currentQuantityReg = MapManager.CurrentLocation.Region.CountOfEachItem[item.Name] + PlayersCountOfThisItem;
+
+        float locationCoef = MapManager.CurrentLocation.Region.CalculatePriceCoefLocation(currentQuantityLoca, item.Price,
+            MapManager.CurrentLocation.ItemEconomyParams[item.Name][0],
+            MapManager.CurrentLocation.ItemEconomyParams[item.Name][1],
+            MapManager.CurrentLocation.ItemEconomyParams[item.Name][2]);
+
+        float regionCoef = MapManager.CurrentLocation.Region.CalculatePriceCoefRegion(currentQuantityReg, item.Price,
+            MapManager.CurrentLocation.Region.ItemEconomyParams[item.Name][0],
+            MapManager.CurrentLocation.Region.ItemEconomyParams[item.Name][1],
+            MapManager.CurrentLocation.Region.ItemEconomyParams[item.Name][2]);
+        float itemTypeCoef = MapManager.CurrentLocation.Region.CoefsForItemTypes[item.TypeOfItem];
+
+        float traderTypeCoef = 0;
+        for (int i = 0; i < _trader.BuyCoefficients.Count; i++)
+        {
+            if (_trader.BuyCoefficients[i].ItemType == item.TypeOfItem)
+            {
+                traderTypeCoef = _trader.BuyCoefficients[i].Coefficient;
+                break;
+            }
+        }
+
+        int bannedItem = 1;
+        if (BannedItemsHandler.Instance.IsItemBanned(item))
+            bannedItem = 2;
+        
         return Convert.ToInt32(Math.Round(item.Price * locationCoef * regionCoef * itemTypeCoef * traderTypeCoef * bannedItem));
     }
 }

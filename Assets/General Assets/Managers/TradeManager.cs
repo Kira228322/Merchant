@@ -185,6 +185,20 @@ public class TradeManager : MonoBehaviour
         for (int i = 0; i < Player.Instance.Inventory.BaseItemList.Count; i++)
         {
             GameObject tradersGoods = Instantiate(GoodsSellPanelPrefab.gameObject, SellPanelContent);
+            var complexityItem = trader.Goods.FirstOrDefault(traderItem =>
+                traderItem.Good.Name == Player.Instance.Inventory.BaseItemList[i].ItemData.Name);
+            if (complexityItem != null)
+            {
+                tradersGoods.GetComponent<GoodsSellPanel>().Init(true, trader, Player.Instance.Inventory.BaseItemList[i], Player.Instance.Inventory.BaseItemGrid);
+                continue;
+            }
+            complexityItem = trader.AdditiveGoods.FirstOrDefault(traderItem =>
+                traderItem.Good.Name == Player.Instance.Inventory.BaseItemList[i].ItemData.Name);
+            if (complexityItem != null)
+            {
+                tradersGoods.GetComponent<GoodsSellPanel>().Init(true,trader, Player.Instance.Inventory.BaseItemList[i], Player.Instance.Inventory.BaseItemGrid);
+                continue;
+            }
             tradersGoods.GetComponent<GoodsSellPanel>().Init(trader, Player.Instance.Inventory.BaseItemList[i], Player.Instance.Inventory.BaseItemGrid);
         }
     }

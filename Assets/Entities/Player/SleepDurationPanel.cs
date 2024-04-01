@@ -12,7 +12,8 @@ public class SleepDurationPanel : MonoBehaviour
     private int _timeScaleWhenSleeping = 45;
     private Player _player;
     private Timeflow _timeflow;
-
+    private bool _animationFinished = true;
+    private Coroutine _currentCoroutine;
     private void OnEnable()
     {
         _player.Needs.FinishedSleeping += OnFinishedSleeping;
@@ -46,7 +47,9 @@ public class SleepDurationPanel : MonoBehaviour
         _slider.interactable = true;
         _player.HidePlayer(false);
         Player.Instance.PlayerMover.EnableMove();
-        StartCoroutine(FadeOutBlackScreen());
+        if (!_animationFinished)
+            StopCoroutine(_currentCoroutine);
+        _currentCoroutine = StartCoroutine(FadeOutBlackScreen());
         GameManager.Instance.SaveGame();
     }
 
@@ -56,23 +59,30 @@ public class SleepDurationPanel : MonoBehaviour
         _timeflow.TimeScale = _timeScaleWhenSleeping;
         _slider.interactable = false;
         _player.HidePlayer(true);
-        StartCoroutine(FadeInBlackScreen());
+        if (!_animationFinished)
+            StopCoroutine(_currentCoroutine);
+        _currentCoroutine = StartCoroutine(FadeInBlackScreen());
     }
 
     private IEnumerator FadeInBlackScreen()
     {
+        _animationFinished = false;
         Color color = _blackScreen.color;
         WaitForSeconds waitForSeconds = new(0.02f);
+        color.a = 0;
         for (int i = 0; i < 60; i++)
         {
             color.a += 0.01f;
             _blackScreen.color = color;
             yield return waitForSeconds;
         }
+
+        _animationFinished = true;
     }
 
     private IEnumerator FadeOutBlackScreen()
     {
+        _animationFinished = false;
         Color color = _blackScreen.color;
         WaitForSeconds waitForSeconds = new(0.02f);
         for (int i = 0; i < 60; i++)
@@ -81,6 +91,7 @@ public class SleepDurationPanel : MonoBehaviour
             _blackScreen.color = color;
             yield return waitForSeconds;
         }
+        _animationFinished = true;
     }
 
     public void OnExitButtonClick()
