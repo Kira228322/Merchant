@@ -31,8 +31,11 @@ public class EventWindow : MonoBehaviour
     public void OnInfoButtonClick()
     {
         if (_currentInfoPanel != null)
+		{
             Destroy(_currentInfoPanel.gameObject);
-
+			return;
+		}
+		
         _currentInfoPanel = Instantiate(_infoPanelPrefab.gameObject, transform)
             .GetComponent<EventInTravelInfoPanel>();
         _currentInfoPanel.Init(this);
