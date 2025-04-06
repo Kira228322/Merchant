@@ -14,7 +14,7 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] private HoldableButton _holdableButtonLeft;
 
 
-    private float _speed = 3.9f;
+    private float _speed = 4.2f;
     [HideInInspector] public float _currentSpeed;
 
     public float SpeedModifier = 0;
@@ -32,7 +32,6 @@ public class PlayerMover : MonoBehaviour
 
     [FormerlySerializedAs("_wentDistance")]
     [Header("Sound")]
-    [HideInInspector] public float WentDistance;
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private List<AudioClip> _footSteps;
 
@@ -227,12 +226,6 @@ public class PlayerMover : MonoBehaviour
             {
                 distanceOfOneStep = _currentSpeed * Time.deltaTime;
                 travelledDistance += distanceOfOneStep;
-                WentDistance += distanceOfOneStep;
-                if (WentDistance >= 1.75f) // подобрано эмпирическим путем
-                {
-                    WentDistance -= 1.75f;
-                    PlaySoundOfFootsteps();
-                }
 
                 transform.position += distanceOfOneStep * moveDirection;
                 BackgroundController.UpdateBackground(transform.position.x);

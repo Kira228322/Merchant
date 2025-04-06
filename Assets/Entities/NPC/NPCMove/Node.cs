@@ -76,8 +76,7 @@ public class Node : MonoBehaviour
             movement.BackgroundController.UpdateBackground(movement.transform.position.x);
             yield return waitForFixedUpdate; // по ступенькам поднимаемся
         }
-        movement.PlaySoundOfFootsteps();
-        movement.WentDistance = 1;
+        
         for (float i = countOfFrames / 2; i < countOfFrames; i++)
         {
             movement.transform.position = Vector3.Lerp(startPos, AnotherNode.position, i / countOfFrames);
