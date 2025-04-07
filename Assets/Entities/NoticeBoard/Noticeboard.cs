@@ -71,6 +71,7 @@ public class Noticeboard : MonoBehaviour, IPointerClickHandler
         //Спавн одного рекламного объявления
         if (Random.Range(0, 5) != 0) // 80% что заспавнится реклама 
         {
+            RewardedAds.Instance.InitAd();
             string description = "";
             switch (Random.Range(0, 4))
             {

@@ -2,7 +2,6 @@ public class EventAdvertisement : EventInTravel
 {
     public override void SetButtons()
     {
-        RewardedAds.Instance.InitAd();
         ButtonsLabel.Add("Посмотреть представление");
         ButtonsLabel.Add("Проехать мимо");
         SetInfoButton("");

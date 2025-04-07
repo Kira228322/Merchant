@@ -7,7 +7,7 @@ public class AdNotice : Notice
         NoticeDescription = text;
         SpawnPointIndex = number;
 
-        RewardedAds.Instance.InitAd();
+       
     }
 
     public override void OnNoticeTake()
