@@ -250,6 +250,9 @@ abstract public class NPCMovement : MonoBehaviour
         _collider.enabled = enable;
         _rigidbody.simulated = enable;
         _clickFunctional.enabled = enable;
+        if (_npc.ExclamationMark != null)
+            _npc.ExclamationMark.GetComponent<SpriteRenderer>().enabled = enable;
+
     }
 
     private IEnumerator MoveDirectlyAtHome(float targetPosX)
