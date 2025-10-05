@@ -88,7 +88,7 @@ public class Menu : MonoBehaviour
 
     public void OnPlayerMovePanelValueChange()
     {
-        float value = math.lerp(0, 490, _playerPanelSlider.value);
+        float value = math.lerp(0, 750, _playerPanelSlider.value);
         _leftButton.sizeDelta = new Vector2(value, _leftButton.sizeDelta.y);
         _rightButton.sizeDelta = new Vector2(value, _rightButton.sizeDelta.y);
 

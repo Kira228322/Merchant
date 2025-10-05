@@ -224,7 +224,7 @@ public class TravelEventHandler : MonoBehaviour
     {
         if (MapManager.Advertisement == true)
         {
-            RewardedAds.Instance.InitAd();
+            RewardedAds.Instance.ShowAd();
             MapManager.Advertisement = false;
             return _eventAdvertisement;
         }

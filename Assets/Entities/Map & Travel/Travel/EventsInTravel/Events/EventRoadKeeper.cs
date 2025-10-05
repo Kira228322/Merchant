@@ -6,7 +6,9 @@ public class EventRoadKeeper : EventInTravel
     private float _reduceQuality = 0.06f;
     public override void SetButtons()
     {
-        money = Random.Range(28, 38) - Player.Instance.Statistics.Diplomacy.Total - Player.Instance.Statistics.Diplomacy.Total / 2;
+        money = Random.Range(19, 32) - Player.Instance.Statistics.Diplomacy.Total - Player.Instance.Statistics.Diplomacy.Total / 2;
+        if (money < 5)
+            money = 5;
         ButtonsLabel.Add("Заплатить");
         ButtonsLabel.Add("Игнорировать");
         SetInfoButton($"Хранитель дороги требует {money} золота.\nВаша дипломатия уменьшает стоимость платы.");

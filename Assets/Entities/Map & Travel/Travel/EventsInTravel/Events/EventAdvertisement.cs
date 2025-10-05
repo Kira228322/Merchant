@@ -13,15 +13,15 @@ public class EventAdvertisement : EventInTravel
         switch (n)
         {
             case 0:
-                if (RewardedAds.Instance.IsAdLoaded)
+                // if (RewardedAds.Instance.IsAdLoaded)
                 {
                     RewardedAds.Instance.ShowAd();
                     _eventWindow.ChangeDescription("Вы просмотрели представление и получили награду! Приходите еще!");
                 }
-                else
-                {
-                    _eventWindow.ChangeDescription("Похоже, у вас нет подключения к интернету или для вас нет подходящей рекламы. Пожалуйста, проверьте подключение к сети, чтобы получить награду или вернитесь позднее.");
-                }
+                // else
+                // {
+                //     _eventWindow.ChangeDescription("Похоже, у вас нет подключения к интернету или для вас нет подходящей рекламы. Пожалуйста, проверьте подключение к сети, чтобы получить награду или вернитесь позднее.");
+                // }
                 break;
             case 1:
                 _eventWindow.ChangeDescription("Вам предлагали радушный и теплый прием, но вы отказались...");

@@ -6,7 +6,7 @@ public class EventAbandonedHut : EventInTravel
     [SerializeField] private List<Item> _loot;
     [SerializeField] private List<Item> _rareLoot;
 
-    private int _probabilityOfGoodResult = 50;
+    private int _probabilityOfGoodResult = 40;
     public override void SetButtons()
     {
         ButtonsLabel.Add("Войти внутрь");
@@ -27,8 +27,8 @@ public class EventAbandonedHut : EventInTravel
                 }
                 else
                 {
-                    int stoleMoney = Player.Instance.Money / 2 + Player.Instance.Money % 2;
-                    if (stoleMoney < 20)
+                    int stoleMoney = 10 + Player.Instance.Money / 2;
+                    if (stoleMoney < 30)
                         stoleMoney = Player.Instance.Money;
                     if (stoleMoney > 200)
                         stoleMoney = 200;

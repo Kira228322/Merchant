@@ -107,6 +107,26 @@ public class PlayerMover : MonoBehaviour
         _holdableButtonRight.gameObject.SetActive(false);
     }
 
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            OnRightButtonChangedState(true);
+        }
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            OnLeftButtonChangedState(true);
+        }
+        if (Input.GetKeyUp(KeyCode.D))
+        {
+            OnRightButtonChangedState(false);
+        }
+        if (Input.GetKeyUp(KeyCode.A))
+        {
+            OnLeftButtonChangedState(false);
+        }
+    }
+
     private void OnLeftButtonChangedState(bool isPressed)
     {
         if (isPressed && _tickMove == null && enabled)

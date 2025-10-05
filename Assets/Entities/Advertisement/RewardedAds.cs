@@ -7,76 +7,92 @@ using UnityEngine;
 using UnityEngine.Advertisements;
 using Object = System.Object;
 using Random = UnityEngine.Random;
+using YG;
 
 public class RewardedAds : MonoBehaviour
 {
     public static RewardedAds Instance;
 
-    [HideInInspector] public bool IsAdLoaded = false;
+    // [HideInInspector] public bool IsAdLoaded = false;
 
     [SerializeField] private List<Item> _rewardList = new();
     private int _moneyReward = 150;
     private int _expirienceBonus = 5;
 
+// --- VK ADS ---
+//
+//     private InterstitialAd CreateInterstitialAd()
+//     {
+//         uint slotId = 0;
+// #if UNITY_ANDROID
+//         slotId = 1532040;
+// #elif UNITY_IOS
+//    slotId = IOS_SLOT_ID;
+// #endif
+//         return new InterstitialAd(slotId);
+//     }
+//
+//     private InterstitialAd _interstitialAd;
+//
+//     public void InitAd()
+//     {
+//         // Создаем экземпляр InterstitialAd
+//         _interstitialAd = CreateInterstitialAd();
+//         // Устанавливаем обработчики событий
+//         _interstitialAd.AdLoadCompleted += OnLoadCompleted;
+//         _interstitialAd.AdDisplayed += OnAdDisplayed;
+//         _interstitialAd.AdDismissed += OnAdDismissed;
+//         _interstitialAd.AdVideoCompleted += OnAdVideoCompleted;
+//         _interstitialAd.AdClicked += OnAdClicked;
+//         _interstitialAd.AdLoadFailed += OnAdLoadFailed;
+//
+//         // Запускаем загрузку данных
+//         LoadAd();
+//     }
+//     public void LoadAd()
+//     {
+//         _interstitialAd.Load();
+//     }
+//
+//     public void ShowAd()
+//     {
+//         _interstitialAd.Show();
+//         IsAdLoaded = false; //Все случаи рекламы загружают её заново, т.е даже если она не была показана, позже она перезагрузится
+//     }
+//
+//     private void OnLoadCompleted(Object sender, EventArgs e)
+//     {
+//         IsAdLoaded = true;
+//     }
+//     private void OnAdDisplayed(Object sender, EventArgs e)
+//     {
+//         GiveRewardToPlayer();
+//     }
+//
+//     private void OnAdDismissed(Object sender, EventArgs e)
+//     {
+//     }
+//
+//     private void OnAdVideoCompleted(Object sender, EventArgs e)
+//     {
+//
+//     }
+//
+//     private void OnAdClicked(Object sender, EventArgs e)
+//     {
+//
+//     }
+//
+//     private void OnAdLoadFailed(Object sender, ErrorEventArgs e)
+//     {
+//
+//     }
+//
 
-    private InterstitialAd CreateInterstitialAd()
+    public void ShowAd()
     {
-        uint slotId = 0;
-#if UNITY_ANDROID
-        slotId = 1532040;
-#elif UNITY_IOS
-   slotId = IOS_SLOT_ID;
-#endif
-        return new InterstitialAd(slotId);
-    }
-
-    private InterstitialAd _interstitialAd;
-
-    public void InitAd()
-    {
-        // Создаем экземпляр InterstitialAd
-        _interstitialAd = CreateInterstitialAd();
-        // Устанавливаем обработчики событий
-        _interstitialAd.AdLoadCompleted += OnLoadCompleted;
-        _interstitialAd.AdDisplayed += OnAdDisplayed;
-        _interstitialAd.AdDismissed += OnAdDismissed;
-        _interstitialAd.AdVideoCompleted += OnAdVideoCompleted;
-        _interstitialAd.AdClicked += OnAdClicked;
-        _interstitialAd.AdLoadFailed += OnAdLoadFailed;
-
-        // Запускаем загрузку данных
-        LoadAd();
-    }
-
-    private void OnLoadCompleted(Object sender, EventArgs e)
-    {
-        IsAdLoaded = true;
-    }
-    private void OnAdDisplayed(Object sender, EventArgs e)
-    {
-        GiveRewardToPlayer();
-    }
-
-    private void OnAdDismissed(Object sender, EventArgs e)
-    {
-    }
-
-    private void OnAdVideoCompleted(Object sender, EventArgs e)
-    {
-
-    }
-
-    private void OnAdClicked(Object sender, EventArgs e)
-    {
-
-    }
-
-    private void OnAdLoadFailed(Object sender, ErrorEventArgs e)
-    {
-
-    }
-
-
+        YG2.RewardedAdvShow("0", GiveRewardToPlayer);
+    } 
     private void GiveRewardToPlayer()
     {
         int exp;
@@ -128,15 +144,6 @@ public class RewardedAds : MonoBehaviour
         Instance = this;
     }
 
-    public void LoadAd()
-    {
-        _interstitialAd.Load();
-    }
-
-    public void ShowAd()
-    {
-        _interstitialAd.Show();
-        IsAdLoaded = false; //Все случаи рекламы загружают её заново, т.е даже если она не была показана, позже она перезагрузится
-    }
+    
 
 }
