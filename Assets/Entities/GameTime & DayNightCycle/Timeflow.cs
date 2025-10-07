@@ -3,7 +3,7 @@ using UnityEngine;
 public class Timeflow : MonoBehaviour, ISaveable<TimeFlowSaveData>
 {
     public float TimeScale; // TimeScale должен влиять на скорость времени суток и на скорость порчи продуктов
-
+    
     private float _timeCounter;
 
     public TimeFlowSaveData SaveData()
@@ -14,7 +14,7 @@ public class Timeflow : MonoBehaviour, ISaveable<TimeFlowSaveData>
     public void LoadData(TimeFlowSaveData data)
     {
         GameTime.TimeSet(data.CurrentDay, data.CurrentHour, data.CurrentMinute);
-        TimeScale = data.TimeScale;
+        // TimeScale = data.TimeScale;
     }
 
 

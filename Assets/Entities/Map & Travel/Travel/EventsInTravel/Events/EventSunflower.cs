@@ -27,8 +27,15 @@ public class EventSunflower : EventInTravel
 
                 break;
             case 1:
-                Player.Instance.Experience.AddExperience(2);
-                _eventWindow.ChangeDescription("Вы решили не воровать чужой урожай. Вы получили 2 опыта");
+                if (Random.Range(0,2) == 0)
+                {
+                    Player.Instance.Experience.AddExperience(2);
+                    _eventWindow.ChangeDescription("Вы решили не воровать чужой урожай. Вы получили 2 опыта.");
+                }
+                else
+                {
+                    _eventWindow.ChangeDescription("Вы решили не воровать чужой урожай.");
+                }
                 break;
         }
 

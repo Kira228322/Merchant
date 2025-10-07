@@ -76,8 +76,7 @@ public class TutorialStateTracker : MonoBehaviour, ISaveable<TutorialStateTracke
 
     public void LoadData(TutorialStateTrackerSaveData data)
     {
-        QuestTriggerConditions = data.SavedDictionary;
-
+        QuestTriggerConditions = data.GetDictionary();
         Diary diary = Diary.Instance;
         foreach (var savedPresentation in QuestTriggerConditions)
         {
@@ -95,8 +94,8 @@ public class TutorialStateTracker : MonoBehaviour, ISaveable<TutorialStateTracke
 
     public TutorialStateTrackerSaveData SaveData()
     {
-        ;
         TutorialStateTrackerSaveData saveData = new(QuestTriggerConditions);
+        Debug.Log(QuestTriggerConditions);
         return saveData;
     }
 }

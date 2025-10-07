@@ -1,9 +1,12 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using YG;
+using YG.Insides;
 
 public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
 {
@@ -45,6 +48,7 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
     {
         _sceneTransiter.EnteredVillageScene += SaveGame;
     }
+
     private void OnDisable()
     {
         _sceneTransiter.EnteredVillageScene -= SaveGame;
@@ -125,26 +129,29 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
         GameTime.SetTimeScale(1);
 
         GlobalEventHandler.Instance.ResetEvents(); //Важно, что это происходит до загрузки
-
-        LoadData(SaveLoadSystem<GlobalSaveData>.LoadData("GlobalSave"));
-        Player.Instance.Statistics.OnToughnessChanged();
+        
+        YGInsides.LoadProgress();
+        LoadData(YG2.saves.GlobalSaveData);
+        Player.Instance.Statistics.OnToughnessChanged(); 
         EnableUI();
     }
     public void SaveGame()
     {
-        SaveLoadSystem<GlobalSaveData>.SaveData(SaveData(), "GlobalSave");
+        // SaveLoadSystem<GlobalSaveData>.SaveData(SaveData(), "GlobalSave");
+        YG2.saves.GlobalSaveData = SaveData();
+        YG2.SaveProgress();
         _GameIsSavedText.SetActive(true);
     }
 
     public GlobalSaveData SaveData()
     {
-
         GlobalSaveData saveData = new()
         {
             PlayerData = Player.Instance.SaveData(),
             TutorialTrackerSaveData = FindObjectOfType<TutorialStateTracker>().SaveData(),
             StatusManagerSaveData = StatusManager.Instance.SaveData(),
-            JournalSaveData = new(),
+            QuestSaveData = QuestHandler.SaveQuests(),
+            DiarySaveData = Diary.Instance.SaveData(),
             BannedItemsSaveData = FindObjectOfType<BannedItemsHandler>().SaveData(),
             NpcDatabaseSaveData = NpcDatabase.SaveNPCs(),
             RestockSaveData = GetComponent<RestockHandler>().SaveData(),
@@ -156,6 +163,7 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
             TravelEventsSaveData = new(IndexesLastEvents),
 
         };
+        
         return saveData;
     }
 
@@ -165,8 +173,8 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
         Player.Instance.LoadData(data.PlayerData);
         FindObjectOfType<TutorialStateTracker>().LoadData(data.TutorialTrackerSaveData);
         StatusManager.Instance.LoadData(data.StatusManagerSaveData);
-        QuestHandler.LoadQuests(data.JournalSaveData.QuestsSaveData);
-        Diary.Instance.LoadData(data.JournalSaveData.DiarySaveData);
+        QuestHandler.LoadQuests(data.QuestSaveData);
+        Diary.Instance.LoadData(data.DiarySaveData);
         NpcDatabase.LoadNPCs(data.NpcDatabaseSaveData);
         GetComponent<RestockHandler>().LoadData(data.RestockSaveData);
         GameTime.LoadData(data.TimeFlowSaveData);
