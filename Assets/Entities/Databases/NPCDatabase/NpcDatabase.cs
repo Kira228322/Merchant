@@ -71,22 +71,18 @@ public class NpcDatabase : MonoBehaviour, ISaveable<NpcDatabaseSaveData>
     public void LoadData(NpcDatabaseSaveData data)
     {
         var npcDataAndSaveData = NpcDatabaseSO.NpcList.Join(data.savedNpcDatas,
-        npcData => npcData.ID, savedNpcData => savedNpcData.ID,
-        (npcData, savedNpcData) => new { npcData, savedNpcData });
-        //^^ This code first creates a variable called npcDataAndSaveData using the Join method to
-        // match the NPCData objects with their corresponding NpcSaveData objects based on the ID property.
-        // The result is an enumerable of anonymous types containing both the NPCData object and the
-        // matching NpcSaveData object.
+            npcData => npcData.ID, savedNpcData => savedNpcData.ID,
+            (npcData, savedNpcData) => new { npcData, savedNpcData });
 
         foreach (var npcAndSaveData in npcDataAndSaveData)
         {
-            switch (npcAndSaveData.npcData)
+            switch (npcAndSaveData)
             {
-                case NpcTraderData npcTraderData:
-                    ((ISaveable<NpcTraderSaveData>)npcTraderData).LoadData((NpcTraderSaveData)npcAndSaveData.savedNpcData);
+                case { npcData: NpcTraderData traderData, savedNpcData: NpcTraderSaveData traderSaveData }:
+                    ((ISaveable<NpcTraderSaveData>)traderData).LoadData(traderSaveData);
                     break;
-                case NpcQuestGiverData npcQuestGiverData:
-                    ((ISaveable<NpcQuestGiverSaveData>)npcQuestGiverData).LoadData((NpcQuestGiverSaveData)npcAndSaveData.savedNpcData);
+                case { npcData: NpcQuestGiverData questGiverData, savedNpcData: NpcQuestGiverSaveData questGiverSaveData }:
+                    ((ISaveable<NpcQuestGiverSaveData>)questGiverData).LoadData(questGiverSaveData);
                     break;
                 default:
                     npcAndSaveData.npcData.LoadData(npcAndSaveData.savedNpcData);

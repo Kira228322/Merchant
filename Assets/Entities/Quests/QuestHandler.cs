@@ -145,94 +145,112 @@ public class QuestHandler : MonoBehaviour, ISaveable<QuestSaveData>
     }
 
     public QuestSaveData SaveData()
+{
+    QuestSaveData saveData = new();
+
+    foreach (Quest quest in Instance.Quests)
     {
+        if (quest == null) continue;
 
-        QuestSaveData saveData = new();
-
-        foreach (Quest quest in Instance.Quests)
+        QuestParams questParams = new()
         {
-            QuestParams questParams = new()
-            {
-                currentState = (QuestParams.State)quest.CurrentState,
-                questName = quest.QuestName,
-                questSummary = quest.QuestSummary,
-                description = quest.Description,
-                questCompletionDelay = quest.QuestCompletionDelay,
-                questGiverID = quest.QuestGiverID,
-                dayStartedOn = quest.DayStartedOn,
-                hourStartedOn = quest.HourStartedOn,
-                dayFinishedOn = quest.DayFinishedOn,
-                hourFinishedOn = quest.HourFinishedOn,
-                experienceReward = quest.ExperienceReward,
-                moneyReward = quest.MoneyReward,
-                itemRewards = quest.ItemRewards,
+            currentState = (QuestParams.State)quest.CurrentState,
+            questName = quest.QuestName,
+            questSummary = quest.QuestSummary,
+            description = quest.Description,
+            questCompletionDelay = quest.QuestCompletionDelay,
+            questGiverID = quest.QuestGiverID,
+            dayStartedOn = quest.DayStartedOn,
+            hourStartedOn = quest.HourStartedOn,
+            dayFinishedOn = quest.DayFinishedOn,
+            hourFinishedOn = quest.HourFinishedOn,
+            experienceReward = quest.ExperienceReward,
+            moneyReward = quest.MoneyReward,
+            itemRewards = quest.ItemRewards
+        };
 
-                goals = new()
-            };
-            foreach (Goal goal in quest.Goals)
-            {
-                //Я всегда топлю за обобщение и на самом деле не люблю делать подобные switch с перечислением всех возможных типов,
-                //но если делать обобщенно, то начинается полнейшая дичь с использованием словарей и System.Reflection.
-                //Очень волосато и не мой уровень. Я спрашивал у ChatGPT, очень-очень волосатый код.
-                //Главное когда будут новые Goal не забыть их добавить вот сюда, иначе не будет сейвиться игра...
+        // Распределяем цели по соответствующим спискам
+        foreach (Goal goal in quest.Goals)
+        {
+            if (goal == null) continue;
 
-                Goal newGoal = null;
-                switch (goal)
-                {
-                    case CollectItemsGoal oldGoal:
-                        newGoal = new CollectItemsGoal(oldGoal.CurrentState, oldGoal.Description,
-                            oldGoal.CurrentAmount, oldGoal.RequiredAmount, oldGoal.RequiredItemName);
-                        break;
-                    case TalkToNPCGoal oldGoal:
-                        newGoal = new TalkToNPCGoal(oldGoal.CurrentState, oldGoal.Description,
-                            oldGoal.CurrentAmount, oldGoal.RequiredAmount, oldGoal.RequiredIDOfNPC, oldGoal.RequiredLine, oldGoal.FailingLine);
-                        break;
-                    case WaitingGoal oldGoal:
-                        newGoal = new WaitingGoal(oldGoal.CurrentState, oldGoal.Description,
-                            oldGoal.CurrentAmount, oldGoal.RequiredAmount);
-                        break;
-                    case TimedGoal oldGoal:
-                        newGoal = new TimedGoal(oldGoal.CurrentState, oldGoal.Description,
-                            oldGoal.CurrentAmount, oldGoal.RequiredAmount);
-                        break;
-                    case GiveItemsGoal oldGoal:
-                        newGoal = new GiveItemsGoal(oldGoal.CurrentState, oldGoal.Description,
-                            oldGoal.CurrentAmount, oldGoal.RequiredAmount, oldGoal.RequiredItemName,
-                            oldGoal.RequiredIDOfNPC, oldGoal.RequiredLine);
-                        break;
-                    case DeliveryGoal oldGoal:
-                        newGoal = new DeliveryGoal(oldGoal.CurrentState, oldGoal.Description,
-                            oldGoal.CurrentAmount, oldGoal.RequiredAmount, oldGoal.RequiredIDOfNPC, oldGoal.RequiredItemCategories,
-                            oldGoal.QuestItemsBehaviour, oldGoal.RequiredWeight, oldGoal.RequiredCount,
-                            oldGoal.RequiredRotThreshold);
-                        break;
-                    case UseItemsGoal oldGoal:
-                        newGoal = new UseItemsGoal(oldGoal.CurrentState, oldGoal.Description,
-                            oldGoal.CurrentAmount, oldGoal.RequiredAmount, oldGoal.RequiredItemName);
-                        break;
-                    case KeepItemsGoal oldGoal:
-                        newGoal = new KeepItemsGoal(oldGoal.CurrentState, oldGoal.Description,
-                            oldGoal.CurrentAmount, oldGoal.RequiredAmount, oldGoal.RequiredItemName);
-                        break;
-                    case StayOnSceneGoal oldGoal:
-                        newGoal = new StayOnSceneGoal(oldGoal.CurrentState, oldGoal.Description,
-                            oldGoal.CurrentAmount, oldGoal.RequiredAmount, oldGoal.RequiredSceneName);
-                        break;
-                    default:
-                        Debug.LogError("Нет такого типа Goal");
-                        break;
-                }
-                questParams.goals.Add(newGoal);
+            switch (goal)
+            {
+                case CollectItemsGoal collectGoal:
+                    questParams.collectItemsGoals.Add(new CollectItemsGoal(
+                        collectGoal.CurrentState, collectGoal.Description,
+                        collectGoal.CurrentAmount, collectGoal.RequiredAmount, 
+                        collectGoal.RequiredItemName));
+                    break;
+                case TalkToNPCGoal talkGoal:
+                    questParams.talkToNPCGoals.Add(new TalkToNPCGoal(
+                        talkGoal.CurrentState, talkGoal.Description,
+                        talkGoal.CurrentAmount, talkGoal.RequiredAmount, 
+                        talkGoal.RequiredIDOfNPC, talkGoal.RequiredLine, 
+                        talkGoal.FailingLine));
+                    break;
+                case WaitingGoal waitingGoal:
+                    questParams.waitingGoals.Add(new WaitingGoal(
+                        waitingGoal.CurrentState, waitingGoal.Description,
+                        waitingGoal.CurrentAmount, waitingGoal.RequiredAmount));
+                    break;
+                case TimedGoal timedGoal:
+                    questParams.timedGoals.Add(new TimedGoal(
+                        timedGoal.CurrentState, timedGoal.Description,
+                        timedGoal.CurrentAmount, timedGoal.RequiredAmount));
+                    break;
+                case GiveItemsGoal giveGoal:
+                    questParams.giveItemsGoals.Add(new GiveItemsGoal(
+                        giveGoal.CurrentState, giveGoal.Description,
+                        giveGoal.CurrentAmount, giveGoal.RequiredAmount, 
+                        giveGoal.RequiredItemName, giveGoal.RequiredIDOfNPC, 
+                        giveGoal.RequiredLine));
+                    break;
+                case DeliveryGoal deliveryGoal:
+                    questParams.deliveryGoals.Add(new DeliveryGoal(
+                        deliveryGoal.CurrentState, deliveryGoal.Description,
+                        deliveryGoal.CurrentAmount, deliveryGoal.RequiredAmount, 
+                        deliveryGoal.RequiredIDOfNPC, deliveryGoal.RequiredItemCategories,
+                        deliveryGoal.QuestItemsBehaviour, deliveryGoal.RequiredWeight, 
+                        deliveryGoal.RequiredCount, deliveryGoal.RequiredRotThreshold));
+                    break;
+                case UseItemsGoal useGoal:
+                    questParams.useItemsGoals.Add(new UseItemsGoal(
+                        useGoal.CurrentState, useGoal.Description,
+                        useGoal.CurrentAmount, useGoal.RequiredAmount, 
+                        useGoal.RequiredItemName));
+                    break;
+                case KeepItemsGoal keepGoal:
+                    questParams.keepItemsGoals.Add(new KeepItemsGoal(
+                        keepGoal.CurrentState, keepGoal.Description,
+                        keepGoal.CurrentAmount, keepGoal.RequiredAmount, 
+                        keepGoal.RequiredItemName));
+                    break;
+                case StayOnSceneGoal sceneGoal:
+                    questParams.stayOnSceneGoals.Add(new StayOnSceneGoal(
+                        sceneGoal.CurrentState, sceneGoal.Description,
+                        sceneGoal.CurrentAmount, sceneGoal.RequiredAmount, 
+                        sceneGoal.RequiredSceneName));
+                    break;
+                default:
+                    Debug.LogError($"Неизвестный тип Goal: {goal.GetType().Name} в квесте '{quest.QuestName}'");
+                    break;
             }
-
-            saveData.savedQuestParams.Add(questParams);
         }
-        foreach (AwaitingQuest awaitingQuest in Instance.AwaitingQuests)
+
+        saveData.savedQuestParams.Add(questParams);
+    }
+
+    foreach (AwaitingQuest awaitingQuest in Instance.AwaitingQuests)
+    {
+        if (awaitingQuest != null)
         {
             saveData.awaitingQuests.Add(new(awaitingQuest.questParams, awaitingQuest.delay));
         }
-        return saveData;
     }
+    
+    return saveData;
+}
 
     public void LoadData(QuestSaveData data)
     {

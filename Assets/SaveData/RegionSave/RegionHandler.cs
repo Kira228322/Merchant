@@ -35,10 +35,10 @@ public class RegionHandler : MonoBehaviour, ISaveable<RegionSaveData>
     {
         for (int i = 0; i < Regions.Count; i++)
         {
-            Regions[i].CountOfEachItem = new(data.savedRegions[i].countOfEachItem);
+            Regions[i].CountOfEachItem = new(data.savedRegions[i].GetCountOfEachItemDict());
             for (int j = 0; j < Regions[i].Locations.Count; j++)
             {
-                Regions[i].Locations[j].CountOfEachItem = new(data.savedRegions[i].locationCounts[j]);
+                Regions[i].Locations[j].CountOfEachItem = new(data.savedRegions[i].GetLocationsCountList()[j]);
             }
         }
     }

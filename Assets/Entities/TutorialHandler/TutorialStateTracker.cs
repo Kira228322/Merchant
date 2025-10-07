@@ -95,7 +95,6 @@ public class TutorialStateTracker : MonoBehaviour, ISaveable<TutorialStateTracke
     public TutorialStateTrackerSaveData SaveData()
     {
         TutorialStateTrackerSaveData saveData = new(QuestTriggerConditions);
-        Debug.Log(QuestTriggerConditions);
         return saveData;
     }
 }

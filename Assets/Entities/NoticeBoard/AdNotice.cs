@@ -12,15 +12,15 @@ public class AdNotice : Notice
 
     public override void OnNoticeTake()
     {
-        if (RewardedAds.Instance.IsAdLoaded)
+        // if (RewardedAds.Instance.IsAdLoaded)
         {
             RewardedAds.Instance.ShowAd();
             Noticeboard.RemoveNotice(SpawnPointIndex);
         }
-        else
-        {
-            CanvasWarningGenerator.Instance.CreateWarning("Ошибка при показе рекламы",
-                "Пожалуйста, проверьте подключение к сети, чтобы посмотреть рекламу, или вернитесь позднее.");
-        }
+        // else
+        // {
+        //     CanvasWarningGenerator.Instance.CreateWarning("Ошибка при показе рекламы",
+        //         "Пожалуйста, проверьте подключение к сети, чтобы посмотреть рекламу, или вернитесь позднее.");
+        // }
     }
 }

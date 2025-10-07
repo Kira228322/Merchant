@@ -10,7 +10,7 @@ public class PregenQuestSO : ScriptableObject
     public string QuestName;
     public string QuestSummary;
 
-    [Tooltip("Айди нпс, который выдал квест. Используется для проверок в " +
+    [Tooltip("Айди нпс, который выдал квест. Используется для проверкам в " +
         "диалогах, но не влияет на ExclamationMark над головой")]
     public int QuestGiverID;
 
@@ -24,7 +24,6 @@ public class PregenQuestSO : ScriptableObject
     [HideInInspector] public int MinMoneyReward;
     [HideInInspector] public int MaxMoneyReward;
 
-
     [Tooltip("Назначается автоматически в QuestLine.OnEnable, здесь это поле лучше не трогать")]
     public QuestLine QuestLine;
 
@@ -37,7 +36,6 @@ public class PregenQuestSO : ScriptableObject
     [HideInInspector] public List<CompactedGoal> goals = new();
 
     [HideInInspector] public List<ItemReward> ItemRewards = new();
-
 
     public QuestParams GenerateQuestParams()
     {
@@ -54,77 +52,107 @@ public class PregenQuestSO : ScriptableObject
             dayStartedOn = GameTime.CurrentDay,
             hourStartedOn = GameTime.Hours,
             itemRewards = ItemRewards,
-            goals = new()
+            // Инициализируем все списки целей
+            collectItemsGoals = new List<CollectItemsGoal>(),
+            talkToNPCGoals = new List<TalkToNPCGoal>(),
+            waitingGoals = new List<WaitingGoal>(),
+            timedGoals = new List<TimedGoal>(),
+            giveItemsGoals = new List<GiveItemsGoal>(),
+            deliveryGoals = new List<DeliveryGoal>(),
+            useItemsGoals = new List<UseItemsGoal>(),
+            keepItemsGoals = new List<KeepItemsGoal>(),
+            stayOnSceneGoals = new List<StayOnSceneGoal>()
         };
+
         foreach (CompactedGoal pregenGoal in goals)
         {
-            Goal newGoal = new();
             int additiveRewardItemCount;
+            
             switch (pregenGoal.goalType)
             {
                 case CompactedGoal.GoalType.CollectItemsGoal:
                     additiveRewardItemCount = Random.Range(pregenGoal.minRequiredAmount, pregenGoal.maxRequiredAmount);
 
-                    newGoal = new CollectItemsGoal(pregenGoal.goalState, pregenGoal.description,
+                    var collectGoal = new CollectItemsGoal(pregenGoal.goalState, pregenGoal.description,
                         pregenGoal.currentAmount, additiveRewardItemCount, pregenGoal.RequiredItemName);
+
+                    questParams.collectItemsGoals.Add(collectGoal);
 
                     if (pregenGoal.AdditiveMoneyReward)
                         questParams.moneyReward += ItemDatabase.GetItem(pregenGoal.RequiredItemName).Price * additiveRewardItemCount;
-
                     break;
 
                 case CompactedGoal.GoalType.TalkToNPCGoal:
-                    newGoal = new TalkToNPCGoal(pregenGoal.goalState, pregenGoal.description,
+                    var talkGoal = new TalkToNPCGoal(pregenGoal.goalState, pregenGoal.description,
                         pregenGoal.currentAmount, Random.Range(pregenGoal.minRequiredAmount, pregenGoal.maxRequiredAmount),
                         pregenGoal.RequiredIDofNPC, pregenGoal.RequiredLine, pregenGoal.FailingLine);
+
+                    questParams.talkToNPCGoals.Add(talkGoal);
                     break;
 
                 case CompactedGoal.GoalType.TimedGoal:
-                    newGoal = new TimedGoal(pregenGoal.goalState, pregenGoal.description,
+                    var timedGoal = new TimedGoal(pregenGoal.goalState, pregenGoal.description,
                         pregenGoal.currentAmount, Random.Range(pregenGoal.minRequiredAmount, pregenGoal.maxRequiredAmount));
+
+                    questParams.timedGoals.Add(timedGoal);
                     break;
 
                 case CompactedGoal.GoalType.WaitingGoal:
-                    newGoal = new WaitingGoal(pregenGoal.goalState, pregenGoal.description,
+                    var waitingGoal = new WaitingGoal(pregenGoal.goalState, pregenGoal.description,
                         pregenGoal.currentAmount, Random.Range(pregenGoal.minRequiredAmount, pregenGoal.maxRequiredAmount));
+
+                    questParams.waitingGoals.Add(waitingGoal);
                     break;
 
                 case CompactedGoal.GoalType.GiveItemsGoal:
-
                     additiveRewardItemCount = Random.Range(pregenGoal.minRequiredAmount, pregenGoal.maxRequiredAmount);
 
-                    newGoal = new GiveItemsGoal(pregenGoal.goalState, pregenGoal.description,
+                    var giveGoal = new GiveItemsGoal(pregenGoal.goalState, pregenGoal.description,
                         pregenGoal.currentAmount, additiveRewardItemCount,
                         pregenGoal.RequiredItemName, pregenGoal.RequiredIDofNPC, pregenGoal.RequiredLine);
+
+                    questParams.giveItemsGoals.Add(giveGoal);
 
                     if (pregenGoal.AdditiveMoneyReward)
                         questParams.moneyReward += ItemDatabase.GetItem(pregenGoal.RequiredItemName).Price * additiveRewardItemCount;
                     break;
+
                 case CompactedGoal.GoalType.DeliveryGoal:
-                    newGoal = new DeliveryGoal(pregenGoal.goalState, pregenGoal.description,
+                    var deliveryGoal = new DeliveryGoal(pregenGoal.goalState, pregenGoal.description,
                         pregenGoal.currentAmount, 1, pregenGoal.RequiredIDofNPC, pregenGoal.RequiredItemCategories,
                         pregenGoal.QuestItemsBehaviour, (float)Math.Round(Random.Range(pregenGoal.MinRequiredDeliveryWeight, pregenGoal.MaxRequiredDeliveryWeight), 1),
                         Random.Range(pregenGoal.MinRequiredDeliveryCount, pregenGoal.MaxRequiredDeliveryCount), pregenGoal.RequiredRotThreshold);
+
+                    questParams.deliveryGoals.Add(deliveryGoal);
                     break;
+
                 case CompactedGoal.GoalType.UseItemsGoal:
-                    newGoal = new UseItemsGoal(pregenGoal.goalState, pregenGoal.description,
+                    var useGoal = new UseItemsGoal(pregenGoal.goalState, pregenGoal.description,
                         pregenGoal.currentAmount, Random.Range(pregenGoal.minRequiredAmount, pregenGoal.maxRequiredAmount), pregenGoal.RequiredItemName);
+
+                    questParams.useItemsGoals.Add(useGoal);
                     break;
+
                 case CompactedGoal.GoalType.KeepItemsGoal:
-                    newGoal = new KeepItemsGoal(pregenGoal.goalState, pregenGoal.description,
+                    var keepGoal = new KeepItemsGoal(pregenGoal.goalState, pregenGoal.description,
                         pregenGoal.currentAmount, Random.Range(pregenGoal.minRequiredAmount, pregenGoal.maxRequiredAmount), pregenGoal.RequiredItemName);
+
+                    questParams.keepItemsGoals.Add(keepGoal);
                     break;
+
                 case CompactedGoal.GoalType.StayOnSceneGoal:
-                    newGoal = new StayOnSceneGoal(pregenGoal.goalState, pregenGoal.description,
+                    var sceneGoal = new StayOnSceneGoal(pregenGoal.goalState, pregenGoal.description,
                         pregenGoal.currentAmount, Random.Range(pregenGoal.minRequiredAmount, pregenGoal.maxRequiredAmount), pregenGoal.RequiredSceneName);
+
+                    questParams.stayOnSceneGoals.Add(sceneGoal);
                     break;
+
                 default:
                     Debug.LogError("Нет такого типа Goal");
                     break;
             }
-            questParams.goals.Add(newGoal);
-
         }
+
         return questParams;
     }
 
@@ -161,5 +189,4 @@ public class PregenQuestSO : ScriptableObject
         public int MaxRequiredDeliveryCount;
         public float RequiredRotThreshold;
     }
-
 }

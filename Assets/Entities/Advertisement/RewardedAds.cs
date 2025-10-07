@@ -17,7 +17,7 @@ public class RewardedAds : MonoBehaviour
 
     [SerializeField] private List<Item> _rewardList = new();
     private int _moneyReward = 150;
-    private int _expirienceBonus = 5;
+    private int _expirienceBonus = 4;
 
 // --- VK ADS ---
 //

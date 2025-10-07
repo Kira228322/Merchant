@@ -67,7 +67,7 @@ public class Quest
         DayFinishedOn = questParams.dayFinishedOn;
         HourFinishedOn = questParams.hourFinishedOn;
 
-        Goals = questParams.goals;
+        Goals = questParams.AllGoals;
 
         foreach (Goal goal in Goals)
         {

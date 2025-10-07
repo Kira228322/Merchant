@@ -78,12 +78,14 @@ public class CooldownHandler : MonoBehaviour, ISaveable<CooldownHandlerSaveData>
 
     public CooldownHandlerSaveData SaveData()
     {
+        Debug.Log(ObjectsOnCooldown.Count);
         CooldownHandlerSaveData saveData = new(this);
         return saveData;
     }
 
     public void LoadData(CooldownHandlerSaveData data)
     {
+        Debug.Log(data.ObjectsOnCooldown);
         ObjectsOnCooldown.AddRange(data.ObjectsOnCooldown);
     }
 }

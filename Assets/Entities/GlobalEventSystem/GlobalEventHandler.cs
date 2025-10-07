@@ -159,7 +159,21 @@ public class GlobalEventHandler : MonoBehaviour
     }
     public void LoadData(GlobalEventHandlerSaveData saveData)
     {
-        foreach (GlobalEvent_Base globalEvent in saveData.SavedGlobalEvents)
+        List<GlobalEvent_Base> events = new List<GlobalEvent_Base>();
+        foreach (var _event in saveData.SavedRoads)
+            events.Add(_event);
+        foreach (var _event in saveData.SavedFloods)
+            events.Add(_event);
+        foreach (var _event in saveData.SavedWeathers)
+            events.Add(_event);
+        foreach (var _event in saveData.SavedBanLifts)
+            events.Add(_event);
+        foreach (var _event in saveData.SavedBannedItems)
+            events.Add(_event);
+        foreach (var _event in saveData.SavedMultiplyItemsOnScenes)
+            events.Add(_event);
+        
+        foreach (GlobalEvent_Base globalEvent in events)
         {
             ActiveGlobalEvents.Add(globalEvent);
             globalEvent.Execute();

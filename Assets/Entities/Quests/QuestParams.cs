@@ -24,5 +24,32 @@ public class QuestParams
     public int moneyReward;
     public List<ItemReward> itemRewards;
 
-    public List<Goal> goals;
+    // Отдельные списки для каждого типа целей
+    public List<CollectItemsGoal> collectItemsGoals = new();
+    public List<TalkToNPCGoal> talkToNPCGoals = new();
+    public List<WaitingGoal> waitingGoals = new();
+    public List<TimedGoal> timedGoals = new();
+    public List<GiveItemsGoal> giveItemsGoals = new();
+    public List<DeliveryGoal> deliveryGoals = new();
+    public List<UseItemsGoal> useItemsGoals = new();
+    public List<KeepItemsGoal> keepItemsGoals = new();
+    public List<StayOnSceneGoal> stayOnSceneGoals = new();
+    
+    public List<Goal> AllGoals
+    {
+        get
+        {
+            List<Goal> allGoals = new List<Goal>();
+            allGoals.AddRange(collectItemsGoals);
+            allGoals.AddRange(talkToNPCGoals);
+            allGoals.AddRange(waitingGoals);
+            allGoals.AddRange(timedGoals);
+            allGoals.AddRange(giveItemsGoals);
+            allGoals.AddRange(deliveryGoals);
+            allGoals.AddRange(useItemsGoals);
+            allGoals.AddRange(keepItemsGoals);
+            allGoals.AddRange(stayOnSceneGoals);
+            return allGoals;
+        }
+    }
 }

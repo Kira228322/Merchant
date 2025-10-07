@@ -109,11 +109,11 @@ public class PlayerMover : MonoBehaviour
 
     public void Update()
     {
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKey(KeyCode.D))
         {
             OnRightButtonChangedState(true);
         }
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKey(KeyCode.A))
         {
             OnLeftButtonChangedState(true);
         }
@@ -187,6 +187,7 @@ public class PlayerMover : MonoBehaviour
 
     public void MoveAfterNode()
     {
+        OnLeftButtonChangedState(false);
         if (_currentMove != null)
         {
             StopCoroutine(_currentMove);
