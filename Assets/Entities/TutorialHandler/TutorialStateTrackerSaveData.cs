@@ -6,16 +6,26 @@ using Unity.VisualScripting;
 [Serializable]
 public class TutorialStateTrackerSaveData
 {
-    public Dictionary<TutorialStateTracker.PresentationInfo, bool> SavedDictionary;
-    public List<TutorialStateTracker.PresentationInfo> PresentationInfos;
-    public List<bool> Bools;
+    public List<TutorialStateTracker.PresentationInfo> PresentationInfos = new ();
+    public List<bool> Bools = new ();
     public TutorialStateTrackerSaveData(Dictionary<TutorialStateTracker.PresentationInfo, bool> dictionary)
     {
-        SavedDictionary = dictionary;
         foreach (var el in dictionary)
-        {
+        { 
             PresentationInfos.Add(el.Key);
             Bools.Add(el.Value);
         }
+    }
+
+    public Dictionary<TutorialStateTracker.PresentationInfo, bool> GetDictionary()
+    {
+        Dictionary<TutorialStateTracker.PresentationInfo, bool> dictionary =
+            new Dictionary<TutorialStateTracker.PresentationInfo, bool>();
+        for (int i = 0; i < PresentationInfos.Count; i++)
+        {
+            dictionary.Add(PresentationInfos[i], Bools[i]);
+        }
+
+        return dictionary;
     }
 }

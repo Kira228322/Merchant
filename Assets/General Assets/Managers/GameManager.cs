@@ -131,9 +131,7 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
         GlobalEventHandler.Instance.ResetEvents(); //Важно, что это происходит до загрузки
         
         YGInsides.LoadProgress();
-        Debug.Log(YG2.saves.GlobalSaveData.TutorialTrackerSaveData.SavedDictionary);
         LoadData(YG2.saves.GlobalSaveData);
-        Debug.Log(YG2.saves.GlobalSaveData.TutorialTrackerSaveData.SavedDictionary + " 2");
         Player.Instance.Statistics.OnToughnessChanged(); 
         EnableUI();
     }

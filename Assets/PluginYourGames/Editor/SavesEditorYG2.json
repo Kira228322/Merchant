@@ -7,7 +7,7 @@
         false,
         false
     ],
-    "idSave": 8,
+    "idSave": 12,
     "GlobalSaveData": {
         "PlayerData": {
             "Money": 0,
@@ -34,7 +34,7 @@
             },
             "Needs": {
                 "currentHunger": 90,
-                "currentSleep": 99,
+                "currentSleep": 100,
                 "maxHunger": 90,
                 "maxSleep": 100
             },
@@ -379,7 +379,7 @@
         "TimeFlowSaveData": {
             "CurrentDay": 1,
             "CurrentHour": 8,
-            "CurrentMinute": 13,
+            "CurrentMinute": 10,
             "TimeScale": 1.0
         },
         "CooldownHandlerSaveData": {
@@ -413,7 +413,57 @@
         "SceneSaveData": {
             "sceneName": "Scene3"
         },
-        "TutorialTrackerSaveData": {},
+        "TutorialTrackerSaveData": {
+            "PresentationInfos": [
+                {
+                    "RequiredQuestSummary": "tutorial_readletter",
+                    "PresentationSummary": "use_items"
+                },
+                {
+                    "RequiredQuestSummary": "tutorial_talk_to_richard",
+                    "PresentationSummary": "travel"
+                },
+                {
+                    "RequiredQuestSummary": "crafting_lesson_make_belt",
+                    "PresentationSummary": "craft_basic"
+                },
+                {
+                    "RequiredQuestSummary": "crafting_lesson_make_planks",
+                    "PresentationSummary": "craft_station"
+                },
+                {
+                    "RequiredQuestSummary": "tutorial_buy_relic_from_richard",
+                    "PresentationSummary": "trading"
+                },
+                {
+                    "RequiredQuestSummary": "tutorial_talk_to_thomas_after_obtaining_relic",
+                    "PresentationSummary": "noticeboard"
+                },
+                {
+                    "RequiredQuestSummary": "tutorial_talk_to_mark",
+                    "PresentationSummary": "wagon_upgrade"
+                },
+                {
+                    "RequiredQuestSummary": "laura_firstGreeting",
+                    "PresentationSummary": "regions"
+                },
+                {
+                    "RequiredQuestSummary": "game_start",
+                    "PresentationSummary": "starting_window"
+                }
+            ],
+            "Bools": [
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                true
+            ]
+        },
         "TravelEventsSaveData": {
             "SavedIndexes": []
         }
