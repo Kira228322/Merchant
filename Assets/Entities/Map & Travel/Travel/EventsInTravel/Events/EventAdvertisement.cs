@@ -2,9 +2,16 @@ public class EventAdvertisement : EventInTravel
 {
     public override void SetButtons()
     {
-        ButtonsLabel.Add("Посмотреть представление");
+        ButtonsLabel.Add("Посмотреть рекламу за награду");
         ButtonsLabel.Add("Проехать мимо");
-        SetInfoButton("");
+        string txt = "Список случайных предметов: ";
+        txt += RewardedAds.Instance._rewardList[0].Name;
+        for (int i = 1; i <  RewardedAds.Instance._rewardList.Count; i++)
+        {
+            txt += ", ";
+            txt += RewardedAds.Instance._rewardList[i].Name;
+        }
+        SetInfoButton(txt);
     }
 
     public override void OnButtonClick(int n)

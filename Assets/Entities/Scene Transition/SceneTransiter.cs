@@ -67,7 +67,7 @@ public class SceneTransiter : MonoBehaviour, ISaveable<SceneSaveData>
 
     private void Update()
     {
-        _loadingText.text = "Loading... " + Mathf.RoundToInt(_loadingSceneOperation.progress * 100) + "%";
+        _loadingText.text = "Загрузка... " + Mathf.RoundToInt(_loadingSceneOperation.progress * 100) + "%";
         _loadingBar.fillAmount = _loadingSceneOperation.progress;
         if (_loadingSceneOperation.isDone)
         {

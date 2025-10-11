@@ -15,8 +15,8 @@ public class RewardedAds : MonoBehaviour
 
     // [HideInInspector] public bool IsAdLoaded = false;
 
-    [SerializeField] private List<Item> _rewardList = new();
-    private int _moneyReward = 150;
+    [SerializeField] public List<Item> _rewardList = new();
+    private int _moneyReward = 125;
     private int _expirienceBonus = 4;
 
 // --- VK ADS ---
@@ -133,7 +133,7 @@ public class RewardedAds : MonoBehaviour
 
     private void GiveMoneyReward(int exp)
     {
-        int money = _moneyReward + Random.Range(Player.Instance.Experience.CurrentLevel, Player.Instance.Experience.CurrentLevel * 10);
+        int money = _moneyReward;
         Player.Instance.Money += money;
         CanvasWarningGenerator.Instance.CreateWarning("Спасибо за просмотр", $"Вы получили {money} золота, " +
                                                                              $"а так же {Convert.ToInt32(Math.Round(exp * (1 + Player.Instance.Experience.ExpGain)))} опыта");

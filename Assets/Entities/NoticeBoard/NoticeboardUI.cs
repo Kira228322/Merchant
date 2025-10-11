@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -10,6 +11,7 @@ public class NoticeboardUI : MonoBehaviour
     [SerializeField] private List<GameObject> _infoNoticePrefabs;
     [SerializeField] private List<GameObject> _adNoticePrefabs;
     [SerializeField] private NoticeInformationPanel _noticeInformationPanel;
+    [SerializeField] private TMP_Text _takeText;
     public List<Transform> NoticeSpawnPoints => _noticeSpawnPoints;
     private Noticeboard _noticeboard;
     private List<Transform> _randomizedSpawnPoints;
@@ -88,6 +90,10 @@ public class NoticeboardUI : MonoBehaviour
     public void OnNoticeClick(Notice notice)
     {
         _noticeInformationPanel.DisplayNotice(notice);
+        if (notice is AdNotice)
+            _takeText.text = "Посмотреть рекламу за вознаграждение";
+        else
+            _takeText.text = "Забрать";
     }
     public void OnCloseButtonClick()
     {
