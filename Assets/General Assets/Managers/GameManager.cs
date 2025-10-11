@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour, ISaveable<GlobalSaveData>
 
         _regionHandler.InitializeAll(); //Регионы подсосут из текстовика и создадут словари
 
-        if (File.Exists(Application.persistentDataPath + "/GlobalSave.data")) //Если нету сейва то кнопка продолжить будет неактивной
+        if (YG2.saves.GlobalSaveData != null) //Если нету сейва то кнопка продолжить будет неактивной
             _loadGameButton.interactable = true;
         else _loadGameButton.interactable = false;
 
