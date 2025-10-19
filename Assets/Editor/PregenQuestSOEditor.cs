@@ -23,13 +23,14 @@ class EditorPregenQuest : Editor
 
         if (_quest.goals.Count > 0)
         {
-            foreach (var goal in _quest.goals)
+            for (int i = 0; i <  _quest.goals.Count; i++)
             {
+                PregenQuestSO.CompactedGoal goal = _quest.goals[i];
+
                 GUILayout.Space(-1);
                 EditorGUILayout.BeginVertical("box");
 
                 EditorGUILayout.BeginHorizontal();
-
                 if (GUILayout.Button("X", GUILayout.Height(17), GUILayout.Width(18)))
                 {
                     _quest.goals.Remove(goal);

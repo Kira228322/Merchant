@@ -6,7 +6,10 @@ using UnityEngine.Events;
 [Serializable]
 public class Goal
 {
-
+    [HideInInspector] public int IntendedIndex; //В результате внедрения новой системы сохранения при переходе на облако
+                                                //Яндекс Игр, пришлось сделать несколько списков для каждого типа Goal и
+                                                //при загрузке делать AddRange. Это привело к тому, что оригинальный индекс
+                                                //Goal терялся. Это свойство призвано запомнить оригинальный индекс.
     public enum State { Active, Completed, Failed }
 
     [SerializeField] private State _currentState;

@@ -49,6 +49,9 @@ public class QuestParams
             allGoals.AddRange(useItemsGoals);
             allGoals.AddRange(keepItemsGoals);
             allGoals.AddRange(stayOnSceneGoals);
+
+            allGoals.Sort((a, b) => a.IntendedIndex.CompareTo(b.IntendedIndex));
+
             return allGoals;
         }
     }
